@@ -1,4 +1,4 @@
-﻿# site.js API 参考文档
+# site.js API 参考文档
 
 **创建日期**: 2026-06-28 | **版本**: v=16（最新）
 **文件位置**: `calculator-site/js/site.js`

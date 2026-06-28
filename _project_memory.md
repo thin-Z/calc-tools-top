@@ -1,4 +1,4 @@
-﻿# 项目记忆
+# 项目记忆
 
 > 工作流规则：当我说"任务完成"时，Codex 自动执行：
 > 1. **总结问题** — 用简洁的语言说明本次完成的内容和解决的问题
@@ -235,3 +235,18 @@
 - **涉及文件**：`css/site.css`（添加注释）、`index.html`（修复标签+版本号）、`en/index.html`（版本号）
 - **部署方式**：Git Data API（commit: 0a184ae + 0bb2f3e）
 - **相关链接**：[[docs/部署配置技术手册.md#4.1 推送方案对比]]
+
+## 2026-06-28（第九次）— 修复热门工具点击数不显示 + trend-badge 重叠 + script 标签缺失
+- **信息摘要**：修复 4 个问题：热门工具点击数未显示、script 标签缺少闭合、h3 文本溢出导致"今日热门"与排序标签重叠、CSS 重复规则
+- **详细内容**：
+  - **js/site.js**：hot-likes 从条件渲染（>0 时显示）改为恒为 true，始终渲染 `✨ N`（0 也渲染），确保用户明确看到点击量功能存在
+  - **index.html**：`<script src="js/site.js" defer>` 缺少 `</script>` 闭合，导致 cookie-consent.js 加载异常和 JSON-LD 失效 — 已补上闭合标签
+  - **css/site.css**：
+    - 为 .hot-likes 添加 `z-index: 2`，确保徽章不被卡片内容遮挡
+    - 为 .hot-tool-card .tool-card h3 添加 overflow + text-overflow + white-space，防止超长工具名 + trend-badge 溢出引起与排序标签重叠
+    - 删除尾部第二份相同的 `[data-theme="dark"] .trend-hot/.trend-up` 重复规则
+  - **缓存版本**：site.js v=16 → v=17
+- **涉及文件**：index.html, js/site.js, css/site.css
+- **commit**：e673cda
+- **部署方式**：git push（GitHub 502 恢复后推送成功）→ Vercel 自动部署
+- **线上验证**：calc-tools.top 功能正常 ✅
