@@ -837,7 +837,6 @@
 .hot-tool-card .tool-card .icon {
     font-size: 1.8rem;
     margin-bottom: 8px;
-    background: linear-gradient(135deg, #FFFBEB, #F59E0B);
     border-radius: 12px;
     padding: 10px;
     color: #fff;
@@ -871,9 +870,6 @@
 }
 
 /* End .hot-tool-card .hot-likes */
-[data-theme="dark"] .hot-tool-card .tool-card .icon {
-    background: linear-gradient(135deg, #451A03, #D97706);
-}
 @media (max-width: 768px) {
     .hot-tools-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
 }
@@ -1047,6 +1043,17 @@
     border-color: rgba(251,191,36,0.3);
 }
 [data-theme="dark"] .hot-tool-card .hot-likes { background: rgba(251,191,36,0.15); color: #fbbf24; }
+[data-theme="dark"] .trend-hot {
+    background: rgba(220,38,38,0.2);
+    color: #fca5a5;
+    border-color: rgba(220,38,38,0.3);
+}
+[data-theme="dark"] .trend-up {
+    background: rgba(234,88,12,0.2);
+    color: #fdba74;
+    border-color: rgba(234,88,12,0.3);
+}
+
 
 [data-theme="dark"] .tool-content {
     background: var(--bg-elevated);
@@ -1091,3 +1098,14 @@
 [data-theme="dark"] .search-bar input:focus {
     box-shadow: 0 0 0 3px rgba(10,132,255,0.25);
 }
+[data-theme="dark"] .trend-hot {
+    background: rgba(220,38,38,0.2);
+    color: #fca5a5;
+    border-color: rgba(220,38,38,0.3);
+}
+[data-theme="dark"] .trend-up {
+    background: rgba(234,88,12,0.2);
+    color: #fdba74;
+    border-color: rgba(234,88,12,0.3);
+}
+
