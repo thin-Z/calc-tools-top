@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -60,12 +60,12 @@
 </head>
 <body>
     <header>
-        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="��������" class="site-logo"></a>
+        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
         <nav>
             <a href="/en/">Home</a>
             <select class="lang-switch" onchange="switchLang(this.value)">
                 <option value="en" selected>???? English</option>
-                <option value="zh">???? ����</option>
+                <option value="zh">🇨🇳 中文</option>
             </select>
         </nav>
     </header>
@@ -75,7 +75,7 @@
             <h1 data-i18n="tax2026Title">Tax Calculator 2026</h1>
             <p data-i18n="tax2026DescFull">Calculate tax payable and after-tax income based on the latest 2026 tax rates</p>
         </div>
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="tax2026"><span class="heart">?</span> <span class="count">0</span></button></div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="tax2026"><span class="heart">❤</span> <span class="count">0</span></button></div>
 
         <!-- Ad Slot A -->
         <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">Ad Space - Available</div>
@@ -149,7 +149,7 @@
 </main>
 
     <footer>
-        <p data-i18n="copyright">? 2026 Online Calculators | Free Online Calculators</p>
+        <p data-i18n="copyright">© 2026 Online Calculators | Free Online Calculators</p>
     </footer>
 
     <script>
@@ -177,10 +177,10 @@
             const resultArea = document.getElementById("resultArea");
             resultArea.style.display = "block";
 
-            document.getElementById("taxableIncomeValue").textContent = "��" + formatNumber(result.taxableIncome);
+            document.getElementById("taxableIncomeValue").textContent = "$$" + formatNumber(result.taxableIncome);
             document.getElementById("taxRateValue").textContent = formatRate(result.taxRate);
-            document.getElementById("taxPayableValue").textContent = "��" + formatNumber(result.taxPayable);
-            document.getElementById("afterTaxValue").textContent = "��" + formatNumber(result.afterTax);
+            document.getElementById("taxPayableValue").textContent = "$$" + formatNumber(result.taxPayable);
+            document.getElementById("afterTaxValue").textContent = "$$" + formatNumber(result.afterTax);
 
             // Bar chart
             const chartContainer = document.getElementById("chartContainer");
@@ -196,7 +196,7 @@
                 data: {
                     labels: [labels.salary || "Pre-Tax Monthly Salary", labels.afterTax || "After-Tax Monthly Salary"],
                     datasets: [{
-                        label: "��",
+                        label: "$$",
                         data: [salary, result.afterTax],
                         backgroundColor: ["#2563eb", "#16a34a"],
                         borderRadius: 6,
@@ -212,7 +212,7 @@
                         y: {
                             beginAtZero: true,
                             ticks: {
-                                callback: function(value) { return "��" + formatNumber(value); }
+                                callback: function(value) { return "$$" + formatNumber(value); }
                             }
                         }
                     }
@@ -255,5 +255,6 @@ if(nc>0)b.classList.add("liked");else b.classList.remove("liked")};})();
     <script src="../js/cookie-consent.js" defer></script>
 </body>
 </html>
+
 
 

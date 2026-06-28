@@ -1,0 +1,31 @@
+#!/bin/sh
+# Pre-commit hook: validate HTML files for U+FFFD encoding corruption
+# Blocks commits that contain replacement characters in .html files.
+
+REPO_ROOT=$(git rev-parse --show-toplevel)
+BAD_FILES=""
+
+for file in $(git diff --cached --name-only --diff-filter=ACMR); do
+    case "$file" in
+        *.html)
+            FULL_PATH="$REPO_ROOT/$file"
+            if [ -f "$FULL_PATH" ]; then
+                xxd -p "$FULL_PATH" 2>/dev/null | grep -q "efbfbd"
+                if [ $? -eq 0 ]; then
+                    BAD_FILES="$BAD_FILES  - $file\\n"
+                fi
+            fi
+            ;;
+    esac
+done
+
+if [ -n "$BAD_FILES" ]; then
+    printf "\\n"
+    printf "[\033[31mREJECTED\033[0m] Encoding corruption detected!\\n"
+    printf "The following staged files contain U+FFFD replacement characters:\\n"
+    printf "$BAD_FILES"
+    printf "Fix with: powershell -ExecutionPolicy Bypass -File scripts/validate-encoding.ps1 -Fix\\n"
+    printf "\\n"
+    exit 1
+fi
+exit 0

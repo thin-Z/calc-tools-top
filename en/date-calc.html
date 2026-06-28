@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -59,12 +59,12 @@
 </head>
 <body>
     <header>
-        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="��������" class="site-logo"></a>
+        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
         <nav>
             <a href="/en/">Home</a>
             <select class="lang-switch" onchange="switchLang(this.value)">
                 <option value="en" selected>???? English</option>
-                <option value="zh">???? ����</option>
+                <option value="zh">🇨🇳 中文</option>
             </select>
         </nav>
     </header>
@@ -74,7 +74,7 @@
             <h1 data-i18n="dateCalcTitle">Date Calculator</h1>
             <p data-i18n="dateCalcDescFull">Date difference, date arithmetic, and business day calculation</p>
         </div>
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="date-calc"><span class="heart">?</span> <span class="count">0</span></button></div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="date-calc"><span class="heart">❤</span> <span class="count">0</span></button></div>
 
         <!-- Ad Slot A -->
         <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">Ad Space - Available</div>
@@ -174,7 +174,7 @@
 </main>
 
     <footer>
-        <p data-i18n="copyright">? 2026 Online Calculators | Free Online Calculators</p>
+        <p data-i18n="copyright">© 2026 Online Calculators | Free Online Calculators</p>
     </footer>
 
     <script>
@@ -216,11 +216,11 @@
             const days = parseInt(document.getElementById('daysInput').value);
 
             if (!startDate) {
-                alert(getLang() === 'zh' ? '��ѡ��ʼ����' : 'Please select a start date');
+                alert(getLang() === 'zh' ? '$$ѡ$$ʼ$$$$' : 'Please select a start date');
                 return;
             }
             if (isNaN(days)) {
-                alert(getLang() === 'zh' ? '��������Ч����' : 'Please enter a valid number of days');
+                alert(getLang() === 'zh' ? '$$$$$$$$Ч$$$$' : 'Please enter a valid number of days');
                 return;
             }
 
@@ -241,12 +241,12 @@
             const endDate = document.getElementById('endDate').value;
 
             if (!startDate || !endDate) {
-                alert(getLang() === 'zh' ? '��ѡ��ʼ���ںͽ�������' : 'Please select both start and end dates');
+                alert(getLang() === 'zh' ? '$$ѡ$$ʼ$$$ںͽ$$$$$$$' : 'Please select both start and end dates');
                 return;
             }
 
             const diff = daysBetween(startDate, endDate);
-            document.getElementById('resultDaysDiff').textContent = diff + ' ' + (getLang() === 'zh' ? '��' : 'days');
+            document.getElementById('resultDaysDiff').textContent = diff + ' ' + (getLang() === 'zh' ? '$$' : 'days');
             document.getElementById('resultA').style.display = 'none';
             document.getElementById('resultB').style.display = 'block';
             document.getElementById('resultArea').style.display = 'block';
@@ -288,5 +288,6 @@ if(nc>0)b.classList.add("liked");else b.classList.remove("liked")};})();
     <script src="../js/cookie-consent.js" defer></script>
 </body>
 </html>
+
 
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -43,7 +43,7 @@
             "name": "How is BMI calculated?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "BMI = weight(kg) / height(m)2. For example, 60kg at 1.7m: BMI = 60 / (1.7 �� 1.7) = 20.76."
+                "text": "BMI = weight(kg) / height(m)2. For example, 60kg at 1.7m: BMI = 60 / (1.7 $$ 1.7) = 20.76."
             }
         },
         {
@@ -60,12 +60,12 @@
 </head>
 <body>
     <header>
-        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="��������" class="site-logo"></a>
+        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
         <nav>
             <a href="/en/">Home</a>
             <select class="lang-switch" onchange="switchLang(this.value)">
                 <option value="en" selected>???? English</option>
-                <option value="zh">???? ����</option>
+                <option value="zh">🇨🇳 中文</option>
             </select>
         </nav>
     </header>
@@ -75,7 +75,7 @@
             <h1 data-i18n="bmiTitle">BMI Calculator</h1>
             <p data-i18n="bmiDescFull">Calculate Body Mass Index based on your height and weight</p>
         </div>
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="bmi"><span class="heart">?</span> <span class="count">0</span></button></div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="bmi"><span class="heart">❤</span> <span class="count">0</span></button></div>
 
         <!-- Ad Slot A -->
         <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">Ad Space - Available</div>
@@ -129,7 +129,7 @@
     <h2>BMI Calculator Guide</h2>
     <p>BMI (Body Mass Index) is an internationally recognized measure of body fat based on height and weight. It applies to most adults aged 18-65.</p>
     <h3>BMI Reference Range</h3>
-    <p>Underweight: < 18.5 | Normal: 18.5-24.9 | Overweight: 25-29.9 | Obese: �� 30</p>
+    <p>Underweight: < 18.5 | Normal: 18.5-24.9 | Overweight: 25-29.9 | Obese: $$ 30</p>
     <p>Note: BMI is a screening tool, not a diagnostic test. Combine with other metrics for a complete health assessment.</p>
 </div>
 <div class="related-tools">
@@ -142,7 +142,7 @@
 </main>
 
     <footer>
-        <p data-i18n="copyright">? 2026 Online Calculators | Free Online Calculators</p>
+        <p data-i18n="copyright">© 2026 Online Calculators | Free Online Calculators</p>
     </footer>
 
     <script>
@@ -151,20 +151,20 @@
         function getCategoryLabel(categoryZh) {
             const lang = getLang();
             const map = {
-                "ƫ��": lang === "en" ? "Underweight" : "ƫ��",
-                "����": lang === "en" ? "Normal" : "����",
-                "����": lang === "en" ? "Overweight" : "����",
-                "����": lang === "en" ? "Obese" : "����"
+                "ƫ$$": lang === "en" ? "Underweight" : "ƫ$$",
+                "$$$$": lang === "en" ? "Normal" : "$$$$",
+                "$$$$": lang === "en" ? "Overweight" : "$$$$",
+                "$$$$": lang === "en" ? "Obese" : "$$$$"
             };
             return map[categoryZh] || categoryZh;
         }
 
         function getAdviceKey(categoryZh) {
             const map = {
-                "ƫ��": "adviceUnderweight",
-                "����": "adviceNormal",
-                "����": "adviceOverweight",
-                "����": "adviceObese"
+                "ƫ$$": "adviceUnderweight",
+                "$$$$": "adviceNormal",
+                "$$$$": "adviceOverweight",
+                "$$$$": "adviceObese"
             };
             return map[categoryZh] || "";
         }
@@ -366,5 +366,6 @@ if(nc>0)b.classList.add("liked");else b.classList.remove("liked")};})();
     <script src="../js/cookie-consent.js" defer></script>
 </body>
 </html>
+
 
 

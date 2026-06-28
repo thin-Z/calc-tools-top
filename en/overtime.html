@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -53,12 +53,12 @@
 </head>
 <body>
     <header>
-        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="��������" class="site-logo"></a>
+        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
         <nav>
-            <a href="/en/"><span data-i18n="siteName">��ҳ</span></a>
+            <a href="/en/"><span data-i18n="siteName">$$ҳ</span></a>
             <select class="lang-switch" onchange="switchLang(this.value)">
                 <option value="en" selected>???? English</option>
-                <option value="zh">???? ����</option>
+                <option value="zh">🇨🇳 中文</option>
             </select>
         </nav>
     </header>
@@ -68,9 +68,9 @@
             <h1>Overtime Calculator - Calculate Overtime Pay Online</h1>
             <p>Free online overtime pay calculator. Calculate overtime wages for weekdays, weekends, and holidays based on standard labor law rates.</p>
         </div>
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="overtime"><span class="heart">?</span> <span class="count">0</span></button></div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="overtime"><span class="heart">❤</span> <span class="count">0</span></button></div>
 
-        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">���λ - ������</div>
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">$$$λ - $$$$$$</div>
 
         <div class="tool-form">
             <div class="form-group"><label>Monthly Salary ($)</label><input type="number" id="monthlySalary" value="5000" min="1000" step="100"></div><div class="form-group"><label>Weekday Overtime (hours)</label><input type="number" id="weekdayOvertime" value="0" min="0" step="0.5"></div><div class="form-group"><label>Weekend Overtime (hours)</label><input type="number" id="weekendOvertime" value="0" min="0" step="0.5"></div><div class="form-group"><label>Holiday Overtime (hours)</label><input type="number" id="holidayOvertime" value="0" min="0" step="0.5"></div><div class="form-actions"><button type="button" class="btn btn-primary" onclick="doCalculate()">Calculate</button><button type="reset" class="btn btn-secondary" onclick="resetForm()">Reset</button></div>
@@ -80,7 +80,7 @@
             <div style="text-align:center;padding:1rem;"><p style="font-size:0.9rem;color:#6b7280;">Total Overtime Pay</p><p style="font-size:2rem;font-weight:bold;color:#ef4444;">$<span id="totalOvertimePay"></span></p><hr style="margin:1rem 0;"><p>Weekday: $<span id="weekdayPay"></span> (1.5x)</p><p>Weekend: $<span id="weekendPay"></span> (2x)</p><p>Holiday: $<span id="holidayPay"></span> (3x)</p><p>Hourly Rate: $<span id="hourlyRate"></span></p></div>
         </div>
 
-        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">���λ - ������</div>
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">$$$λ - $$$$$$</div>
 
         <div class="tool-content"><h2>Overtime Calculator Guide</h2><p>Calculate your overtime pay based on standard labor law rates. Enter your monthly salary and overtime hours to see what you should earn.</p><h3>Overtime Rates</h3><p>Weekday: 150% | Weekend (no comp time): 200% | Holiday: 300% of hourly rate</p></div>
 
@@ -88,7 +88,7 @@
     </main>
 
     <footer>
-        <p data-i18n="copyright">? 2026 Online Calculators | Free Online Calculators</p>
+        <p data-i18n="copyright">© 2026 Online Calculators | Free Online Calculators</p>
     </footer>
 
     <script>
@@ -114,4 +114,5 @@ if(nc>0)b.classList.add("liked");else b.classList.remove("liked")};})();
     <script src="../js/cookie-consent.js" defer></script>
 </body>
 </html>
+
 

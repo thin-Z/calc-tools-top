@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -60,12 +60,12 @@
 </head>
 <body>
     <header>
-        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="��������" class="site-logo"></a>
+        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
         <nav>
             <a href="/en/">Home</a>
             <select class="lang-switch" onchange="switchLang(this.value)">
                 <option value="en" selected>???? English</option>
-                <option value="zh">???? ����</option>
+                <option value="zh">🇨🇳 中文</option>
             </select>
         </nav>
     </header>
@@ -75,7 +75,7 @@
             <h1 data-i18n="mortgageTitle">Mortgage Calculator</h1>
             <p data-i18n="mortgageDescFull">Supports commercial and housing fund loans with equal installment or equal principal</p>
         </div>
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="mortgage"><span class="heart">?</span> <span class="count">0</span></button></div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="mortgage"><span class="heart">❤</span> <span class="count">0</span></button></div>
 
         <!-- Ad Slot A -->
         <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">Ad Space - Available</div>
@@ -154,7 +154,7 @@
 </main>
 
     <footer>
-        <p data-i18n="copyright">? 2026 Online Calculators | Free Online Calculators</p>
+        <p data-i18n="copyright">© 2026 Online Calculators | Free Online Calculators</p>
     </footer>
 
     <script>
@@ -184,14 +184,14 @@
 
             if (result.method === 'equal-payment') {
                 monthlyLabel.textContent = labels.monthlyPayment + ' (' + labels.equalInstallment + ')';
-                monthlyValue.textContent = '��' + formatNumber(result.monthlyPayment);
+                monthlyValue.textContent = '$$' + formatNumber(result.monthlyPayment);
             } else {
                 monthlyLabel.textContent = labels.firstPayment + ' ~ ' + labels.lastPayment + ' (' + labels.equalPrincipal + ')';
-                monthlyValue.textContent = '��' + formatNumber(result.firstPayment) + ' ~ ��' + formatNumber(result.lastPayment);
+                monthlyValue.textContent = '$$' + formatNumber(result.firstPayment) + ' ~ $$' + formatNumber(result.lastPayment);
             }
 
-            document.getElementById('totalPaymentValue').textContent = '��' + formatNumber(result.totalPayment);
-            document.getElementById('totalInterestValue').textContent = '��' + formatNumber(result.totalInterest);
+            document.getElementById('totalPaymentValue').textContent = '$$' + formatNumber(result.totalPayment);
+            document.getElementById('totalInterestValue').textContent = '$$' + formatNumber(result.totalInterest);
 
             // Pie chart
             const chartContainer = document.getElementById('chartContainer');
@@ -264,5 +264,10 @@ if(nc>0)b.classList.add("liked");else b.classList.remove("liked")};})();
     <script src="../js/cookie-consent.js" defer></script>
 </body>
 </html>
+
+
+
+
+
 
 

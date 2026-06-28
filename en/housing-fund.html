@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -60,12 +60,12 @@
 </head>
 <body>
     <header>
-        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="��������" class="site-logo"></a>
+        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
         <nav>
             <a href="/en/">Home</a>
             <select class="lang-switch" onchange="switchLang(this.value)">
                 <option value="en" selected>???? English</option>
-                <option value="zh">???? ����</option>
+                <option value="zh">🇨🇳 中文</option>
             </select>
         </nav>
     </header>
@@ -75,7 +75,7 @@
             <h1 data-i18n="housingFundTitle">Housing Fund Calculator</h1>
             <p data-i18n="housingFundDescFull">Housing fund loan amount calculation with latest interest rates</p>
         </div>
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="housing-fund"><span class="heart">?</span> <span class="count">0</span></button></div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="housing-fund"><span class="heart">❤</span> <span class="count">0</span></button></div>
 
         <!-- Ad Slot A -->
         <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">Ad Space - Available</div>
@@ -147,7 +147,7 @@
 </main>
 
     <footer>
-        <p data-i18n="copyright">? 2026 Online Calculators | Free Online Calculators</p>
+        <p data-i18n="copyright">© 2026 Online Calculators | Free Online Calculators</p>
     </footer>
 
     <script>
@@ -169,9 +169,9 @@
             const labels = i18n[lang];
 
             document.getElementById('resultArea').style.display = 'block';
-            document.getElementById('monthlyValue').textContent = '��' + formatNumber(result.monthlyPayment);
-            document.getElementById('totalPaymentValue').textContent = '��' + formatNumber(result.totalPayment);
-            document.getElementById('totalInterestValue').textContent = '��' + formatNumber(result.totalInterest);
+            document.getElementById('monthlyValue').textContent = '$$' + formatNumber(result.monthlyPayment);
+            document.getElementById('totalPaymentValue').textContent = '$$' + formatNumber(result.totalPayment);
+            document.getElementById('totalInterestValue').textContent = '$$' + formatNumber(result.totalInterest);
 
             // Pie chart
             const chartContainer = document.getElementById('chartContainer');
@@ -243,5 +243,6 @@ if(nc>0)b.classList.add("liked");else b.classList.remove("liked")};})();
     <script src="../js/cookie-consent.js" defer></script>
 </body>
 </html>
+
 
 

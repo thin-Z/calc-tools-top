@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -34,7 +34,7 @@
             "name": "How to calculate fuel consumption?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Fill the tank, drive a distance, refill. Fuel consumption = (liters refilled / km driven) �� 100."
+                "text": "Fill the tank, drive a distance, refill. Fuel consumption = (liters refilled / km driven) $$ 100."
             }
         },
         {
@@ -53,12 +53,12 @@
 </head>
 <body>
     <header>
-        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="��������" class="site-logo"></a>
+        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
         <nav>
-            <a href="/en/"><span data-i18n="siteName">��ҳ</span></a>
+            <a href="/en/"><span data-i18n="siteName">$$ҳ</span></a>
             <select class="lang-switch" onchange="switchLang(this.value)">
                 <option value="en" selected>???? English</option>
-                <option value="zh">???? ����</option>
+                <option value="zh">🇨🇳 中文</option>
             </select>
         </nav>
     </header>
@@ -68,9 +68,9 @@
             <h1>Fuel Cost Calculator - Calculate Gas Expense Online</h1>
             <p>Free online fuel cost calculator. Enter distance, fuel consumption per 100km, and fuel price to calculate total fuel cost.</p>
         </div>
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="fuel-cost"><span class="heart">?</span> <span class="count">0</span></button></div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="fuel-cost"><span class="heart">❤</span> <span class="count">0</span></button></div>
 
-        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">���λ - ������</div>
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">$$$λ - $$$$$$</div>
 
         <div class="tool-form">
             <div class="form-group"><label>Distance (km)</label><input type="number" id="distance" value="100" min="1" step="1"></div><div class="form-group"><label>Fuel per 100km (L)</label><input type="number" id="fuelPer100" value="8" min="0.1" step="0.1"></div><div class="form-group"><label>Price per Liter ($, optional)</label><input type="number" id="pricePerLiter" value="1.0" min="0" step="0.01"></div><div class="form-actions"><button type="button" class="btn btn-primary" onclick="doCalculate()">Calculate</button><button type="reset" class="btn btn-secondary" onclick="resetForm()">Reset</button></div>
@@ -80,7 +80,7 @@
             <div style="text-align:center;padding:1rem;"><p style="font-size:0.9rem;color:#6b7280;">Total Fuel Used</p><p style="font-size:2rem;font-weight:bold;color:#3b82f6;"><span id="fuelUsed"></span> L</p><hr style="margin:1rem 0;"><p>Total Cost: $<span id="totalCost"></span></p><p>Cost per km: $<span id="costPerKm"></span></p></div>
         </div>
 
-        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">���λ - ������</div>
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">$$$λ - $$$$$$</div>
 
         <div class="tool-content"><h2>Fuel Cost Calculator Guide</h2><p>Calculate fuel costs for your trip. Enter distance, fuel consumption rate, and fuel price for accurate cost estimation.</p><h3>Fuel Saving Tips</h3><p>Maintain steady speed, avoid rapid acceleration, keep tires properly inflated, and service your vehicle regularly.</p></div>
 
@@ -88,7 +88,7 @@
     </main>
 
     <footer>
-        <p data-i18n="copyright">? 2026 Online Calculators | Free Online Calculators</p>
+        <p data-i18n="copyright">© 2026 Online Calculators | Free Online Calculators</p>
     </footer>
 
     <script>
@@ -114,4 +114,5 @@ if(nc>0)b.classList.add("liked");else b.classList.remove("liked")};})();
     <script src="../js/cookie-consent.js" defer></script>
 </body>
 </html>
+
 

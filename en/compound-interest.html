@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -33,22 +33,22 @@
 </head>
 <body>
     <header>
-        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="��������" class="site-logo"></a>
+        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
         <nav>
-            <a href="/en/">��ҳ</a>
+            <a href="/en/">$$ҳ</a>
             <select class="lang-switch" onchange="switchLang(this.value)">
                 <option value="en" selected>???? English</option>
-                <option value="zh">???? ����</option>
+                <option value="zh">🇨🇳 中文</option>
             </select>
         </nav>
     </header>
     <main>
         <div class="page-header"><h1>Compound Interest Calculator</h1><p>Calculate the future value of your investment with compound interest. See how your money grows over time.</p></div>
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="compound-interest"><span class="heart">?</span> <span class="count">0</span></button></div>
-        <div class="ad-slot ad-placeholder">���λ</div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="compound-interest"><span class="heart">❤</span> <span class="count">0</span></button></div>
+        <div class="ad-slot ad-placeholder">$$$λ</div>
         <div class="tool-form"><div class="form-group"><label>Principal ($)</label><input type="number" id="principal" value="10000" min="1" step="100"></div><div class="form-group"><label>Annual Rate (%)</label><input type="number" id="annualRate" value="5" min="0" step="0.1"></div><div class="form-group"><label>Years</label><input type="number" id="years" value="10" min="1" max="50" step="1"></div><div class="form-group"><label>Compound</label><select id="compoundFreq"><option value="1">Yearly</option><option value="4">Quarterly</option><option value="12" selected>Monthly</option></select></div><div class="form-actions"><button type="button" class="btn btn-primary" onclick="doCalculate()">Calculate</button><button type="reset" class="btn btn-secondary" onclick="resetForm()">Reset</button></div></div>
         <div class="result-card" id="resultArea" style="display:none;"><div style="text-align:center;padding:1rem;"><p style="font-size:0.9rem;color:#6b7280;">Future Value</p><p style="font-size:2rem;font-weight:bold;color:#22c55e;">$<span id="finalAmount"></span></p><hr><p>Return: $<span id="totalInterest"></span></p><p>Rate: <span id="interestRate"></span>%</p></div></div>
-        <div class="ad-slot ad-placeholder">���λ</div>
+        <div class="ad-slot ad-placeholder">$$$λ</div>
         <div class='tool-content'><h2>Compound Interest Calculator Guide</h2><p>Calculate the future value of your investment with compound interest. See how your money grows over time.</p></div>
         <div class='related-tools'><h3>Related Tools</h3><ul><li><a href='/en/mortgage.html'>Mortgage Calculator</a></li><li><a href='/en/tax2026.html'>Tax Calculator</a></li></ul></div>
     </main>
@@ -77,4 +77,5 @@ if(nc>0)b.classList.add("liked");else b.classList.remove("liked")};})();
     <script src="../js/cookie-consent.js" defer></script>
 </body>
 </html>
+
 
