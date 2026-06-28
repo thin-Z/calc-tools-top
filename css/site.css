@@ -845,6 +845,9 @@
     font-size: 15px;
     font-weight: 600;
     color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     margin-bottom: 4px;
 }
 .hot-tool-card .tool-card p {
@@ -857,6 +860,7 @@
 .hot-tool-card .hot-likes {
     background: rgba(245,158,11,0.1);
     position: absolute;
+    z-index: 2;
     top: 8px;
     right: 8px;
     font-size: 0.75rem;
@@ -1098,14 +1102,3 @@
 [data-theme="dark"] .search-bar input:focus {
     box-shadow: 0 0 0 3px rgba(10,132,255,0.25);
 }
-[data-theme="dark"] .trend-hot {
-    background: rgba(220,38,38,0.2);
-    color: #fca5a5;
-    border-color: rgba(220,38,38,0.3);
-}
-[data-theme="dark"] .trend-up {
-    background: rgba(234,88,12,0.2);
-    color: #fdba74;
-    border-color: rgba(234,88,12,0.3);
-}
-

@@ -577,7 +577,7 @@ function initHotTools() {
         
         html += '<div class="hot-tool-card">'
             + '<div class="hot-badge">#' + (idx + 1) + '</div>'
-            + (getTotalClicks(entry.id) > 0 ? '<span class="hot-likes">✨ ' + getTotalClicks(entry.id) + '</span>' : '')
+            + (true ? '<span class="hot-likes">✨ ' + getTotalClicks(entry.id) + '</span>' : '')
             + '<a href="' + prefix + entry.id + '.html" class="tool-card" data-category="' + cats.join(',') + '" data-keywords-zh="' + (TOOL_KEYWORDS_ZH[entry.id] || '') + '" style="text-decoration:none;color:inherit;">'
             + '<div class="icon icon-' + firstCat + '">' + tool.icon + '</div>'
             + '<h3>' + name + ' ' + trendBadge + '</h3>'
