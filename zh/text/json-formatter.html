@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON 格式化工具 - 在线 JSON 格式化、压缩和校验</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="免费在线 JSON 格式化工具。支持 JSON 格式化、压缩和错误校验，自动检测 JSON 语法错误并定位行号。浏览器本地处理，数据不上传服务器。">
+    <link rel="canonical" href="https://calc-tools.top/zh/text/json-formatter.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/text/json-formatter.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/text/json-formatter.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/text/json-formatter.html">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/site.css">
+    <link rel="stylesheet" href="../../css/text-tools.css">
+    <link rel="stylesheet" href="../css/cookie-consent.css">
+    <script src="../../js/i18n.js" defer></script>
+    <script src="../../js/text-tools/json-formatter.js" defer></script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "在线工具", "item": "https://calc-tools.top/" },
+        { "@type": "ListItem", "position": 2, "name": "JSON 格式化", "item": "https://calc-tools.top/zh/text/json-formatter" }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "JSON 格式化和压缩有什么区别？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "JSON 格式化会将 JSON 数据添加缩进和换行，使其更易读，方便调试和开发。JSON 压缩则是移除所有空白字符，减小数据体积，适用于网络传输和存储场景，可显著减少数据传输量。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "JSON 格式化工具能帮我找语法错误吗？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "能。当 JSON 数据存在语法错误时，工具会自动检测并显示错误描述和具体位置（行号和列号），帮助你快速定位和修复问题。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "我的数据安全吗？会被上传到服务器吗？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "安全。所有 JSON 处理都在你的浏览器本地完成，内容不会离开你的设备，确保完全隐私和安全。"
+            }
+        }
+    ]
+}
+</script>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+        <nav>
+            <a href="/">首页</a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="zh" selected>🇨🇳 中文</option>
+                <option value="en">🇺🇸 English</option>
+            </select>
+        </nav>
+    </header>
+    <main>
+        <div class="tool-page">
+            <div class="tool-header">
+                <h1>📋 JSON 格式化工具</h1>
+                <p>在线 JSON 格式化、压缩和校验工具。支持格式化美化、压缩优化和语法错误检测，自动定位错误行号。浏览器本地处理，数据不上传服务器。</p>
+            </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="json-formatter"><span class="heart">❤</span> <span class="count">0</span></button></div>
+
+            <!-- 广告位 -->
+            <div class="ad-slot ad-placeholder">广告位 - 招商中</div>
+
+            <div class="tool-controls">
+                <textarea class="text-input" id="jsonInput" placeholder="请粘贴或输入 JSON 数据...">{"name":"在线工具箱","version":"1.0.0","features":["JSON格式化","JSON压缩","语法校验"],"config":{"theme":"dark","lang":"zh-CN"},"active":true}</textarea>
+
+                <!-- 模式切换按钮 -->
+                <div class="mode-chips">
+                    <button class="mode-chip mode-btn active" data-mode="format" onclick="switchJSONMode('format')">🎨 格式化</button>
+                    <button class="mode-chip mode-btn" data-mode="minify" onclick="switchJSONMode('minify')">⚡ 压缩</button>
+                </div>
+
+                <div class="action-bar">
+                    <button class="btn btn-primary" onclick="doFormat()">格式化</button>
+                    <button class="btn btn-secondary" onclick="clearJSON()">清空</button>
+                </div>
+
+                <!-- 错误提示 -->
+                <div class="result-area error-section" id="errorSection" style="display:none;border-color:#ef4444;background:#fef2f2;">
+                    <div class="result-label" style="color:#ef4444;">❌ JSON 语法错误</div>
+                    <div class="result-content" style="color:#dc2626;">
+                        <p><strong>位置：</strong>第 <span id="errorLine">0</span> 行，第 <span id="errorCol">0</span> 列</p>
+                        <p><strong>描述：</strong><span id="errorMsg"></span></p>
+                    </div>
+                </div>
+
+                <!-- 结果区域 -->
+                <div id="resultSection" class="result-section" style="display:none;">
+                    <h3>输出结果</h3>
+                    <pre class="result-area" id="resultArea" style="font-family: 'SF Mono', 'Fira Code', 'Consolas', 'Courier New', monospace; font-size: 0.9rem; line-height: 1.5; padding: 16px; overflow-x: auto; white-space: pre; word-wrap: normal;"></pre>
+                    <div class="result-meta" id="statsSection" style="display:none;margin-top:8px;">
+                        <span class="char-badge">原始大小：<strong id="originalSize">0</strong> 字节</span>
+                        <span class="char-badge">处理后大小：<strong id="formattedSize">0</strong> 字节</span>
+                    </div>
+                    <button class="btn btn-copy" id="copyJSONBtn" onclick="copyJSONResult()">📋 复制结果</button>
+                </div>
+            </div>
+
+            <!-- SEO 内容区 -->
+            <div class="seo-content">
+                <h2>什么是 JSON 格式化？</h2>
+                <p>JSON（JavaScript Object Notation）是一种轻量级的数据交换格式，广泛用于 Web API、配置文件和数据存储。JSON 格式化是指将压缩的 JSON 数据添加缩进和换行，使其结构清晰、易于阅读和调试。</p>
+                <p>当 JSON 数据包含语法错误时，本工具会自动检测并提供错误描述和位置（行号和列号），帮助你快速定位和修正问题。压缩模式则移除所有不必要的空白字符，减小数据体积，适用于网络传输和存储。</p>
+
+                <h3>JSON 工具的特点</h3>
+                <ul>
+                    <li><strong>格式化美化</strong> — 添加 2 空格缩进和换行，让 JSON 结构一目了然</li>
+                    <li><strong>压缩优化</strong> — 移除空白字符，最大程度减小数据体积</li>
+                    <li><strong>语法校验</strong> — 自动检测 JSON 语法错误，精确定位到行号列号</li>
+                    <li><strong>一键复制</strong> — 轻松复制格式化或压缩后的结果</li>
+                    <li><strong>本地处理</strong> — 所有操作在浏览器本地完成，数据不上传服务器</li>
+                </ul>
+
+                <h3>JSON 格式化的常见场景</h3>
+                <ul>
+                    <li><strong>API 调试</strong> — 格式化 API 返回的 JSON 数据，便于查看数据结构</li>
+                    <li><strong>配置文件编辑</strong> — 格式化 package.json、tsconfig.json 等配置文件</li>
+                    <li><strong>数据交换</strong> — 压缩 JSON 数据减少网络传输体积</li>
+                    <li><strong>学习 JSON</strong> — 通过格式化快速理解 JSON 的数据层级结构</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2026 calc-tools.top | <a href="/">在线工具箱</a> | <a href="/zh/text/word-counter.html">字数统计</a> | <a href="/zh/text/case-converter.html">大小写转换</a> | <a href="/zh/text/json-formatter.html">JSON 格式化</a></p>
+    </footer>
+    <script src="../../js/like.js" defer></script>
+    <script src="../js/cookie-consent.js" defer></script>
+</body>
+</html>

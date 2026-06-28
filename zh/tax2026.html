@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个税计算器 2026 - 最新个税税率，一键计算税后收入</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="2026年最新个人所得税计算器，根据最新个税税率表，快速计算应纳税所得额、适用税率、应缴税款和税后月薪，附带税前税后对比图表。">
+    <link rel="canonical" href="https://calc-tools.top/zh/tax2026.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/tax2026.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/tax2026.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/tax2026.html">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/cookie-consent.css">
+    <link rel="stylesheet" href="../css/site.css?v=9">
+    <script src="../js/i18n.js" defer></script>
+    <script src="../js/like.js" defer></script>
+    <script src="../js/calculators/tax2026.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "在线工具", "item": "https://calc-tools.top/" },
+        { "@type": "ListItem", "position": 2, "name": "个税计算器", "item": "https://calc-tools.top/zh/tax2026" }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "2026 年个税起征点是多少？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "2026 年个税起征点为每月 5000 元（年收入 6 万元），超过部分按累进税率计算。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "个税税率表是怎样的？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "2026 年个税采用 7 级超额累进税率：3%（0-3.6万）、10%（3.6-14.4万）、20%（14.4-30万）、25%（30-42万）、30%（42-66万）、35%（66-96万）、45%（96万以上）。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "哪些专项附加扣除可以抵扣个税？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "2026 年专项附加扣除包括：子女教育（每个子女每月 2000 元）、继续教育、大病医疗、住房贷款利息（每月 1000 元）、住房租金（800-1500 元/月）、赡养老人（每月 3000 元）、3 岁以下婴幼儿照护（每月 2000 元）。"
+            }
+        }
+    ]
+}
+</script>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+        <nav>
+            <a href="/"><span data-i18n="siteName">首页</span></a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="zh" selected>🇨🇳 中文</option>
+                <option value="en">🇬🇧 English</option>
+            </select>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h1 data-i18n="tax2026Title">个税计算器 2026</h1>
+            <p data-i18n="tax2026DescFull">根据2026年最新个人所得税税率表，快速计算应缴税款和税后收入</p>
+        </div>
+        <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="tax2026"><span class="heart">&#10084;</span> <span class="count">0</span></button></div>
+
+        <!-- 广告位 A -->
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中</div>
+
+        <div class="calculator-form">
+            <h2 data-i18n="tax2026Title">个税计算器 2026</h2>
+            <form id="taxForm" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="salary" data-i18n="salary">税前月薪（元）</label>
+                    <input type="number" id="salary" value="15000" min="0" step="500">
+                </div>
+                <div class="form-group">
+                    <label for="insurance" data-i18n="insurance">社保公积金扣除（元）</label>
+                    <input type="number" id="insurance" value="2000" min="0" step="100">
+                </div>
+                <div class="form-group">
+                    <label for="specialDeduction" data-i18n="specialDeduction">专项附加扣除（元/月）</label>
+                    <input type="number" id="specialDeduction" value="2000" min="0" step="100">
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" onclick="doCalculate()" data-i18n="calculate">开始计算</button>
+                    <button type="reset" class="btn btn-secondary" onclick="resetForm()" data-i18n="reset">重置</button>
+                </div>
+            </form>
+
+            <!-- 结果区域 -->
+            <div id="resultArea" class="result-card" style="display:none;">
+                <h3 data-i18n="result">计算结果</h3>
+                <div class="form-row" style="margin-top:12px;grid-template-columns:1fr 1fr;">
+                    <div>
+                        <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="taxableIncome">应纳税所得额</div>
+                        <div style="font-size:1.1rem;font-weight:700;color:var(--text);" id="taxableIncomeValue"></div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="taxRate">适用税率</div>
+                        <div style="font-size:1.1rem;font-weight:700;color:var(--text);" id="taxRateValue"></div>
+                    </div>
+                </div>
+                <div style="margin-top:16px;">
+                    <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="taxPayable">应缴个税</div>
+                    <div style="font-size:1.3rem;font-weight:700;color:#dc2626;" id="taxPayableValue"></div>
+                </div>
+                <div style="margin-top:16px;padding-top:16px;border-top:1px solid #bfdbfe;">
+                    <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="afterTax">税后月薪</div>
+                    <div style="font-size:2rem;font-weight:700;color:var(--primary);" id="afterTaxValue"></div>
+                </div>
+            </div>
+
+            <!-- 图表容器 -->
+            <div class="chart-container" id="chartContainer" style="display:none;">
+                <canvas id="taxChart"></canvas>
+            </div>
+        </div>
+
+        <!-- 广告位 B -->
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中</div>
+    
+<div class="tool-content">
+    <h2>个税计算器使用说明</h2>
+    <p>个税计算器根据 2026 年最新个税政策，快速计算您的应缴税款和税后收入。输入月收入和专项附加扣除即可得出精确结果。</p>
+    <h3>如何合理降低个税</h3>
+    <p>充分利用专项附加扣除项目是合法的减税方式。每月 5000 元起征点加上各项附加扣除，月收入 1 万元以下的纳税人实际税负很低。建议按时申报所有符合条件的扣除项目。</p>
+</div>
+<div class="related-tools">
+    <h3>相关工具</h3>
+    <ul>
+        <li><a href="/zh/mortgage.html">房贷计算器</a></li>
+        <li><a href="/zh/bmi.html">BMI 计算器</a></li>
+    </ul>
+</div>
+</main>
+
+    <footer>
+        <p data-i18n="copyright">© 2026 在线工具 | 免费工具</p>
+    </footer>
+
+    <script>
+        let chartInstance = null;
+
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        function formatRate(rate) {
+            return (rate * 100).toFixed(0) + "%";
+        }
+
+        function doCalculate() {
+            const salary = parseFloat(document.getElementById("salary").value);
+            const insurance = parseFloat(document.getElementById("insurance").value);
+            const specialDeduction = parseFloat(document.getElementById("specialDeduction").value);
+
+            if (!salary || salary <= 0) return;
+
+            const result = calculateTax(salary, insurance, specialDeduction);
+            const lang = getLang();
+            const labels = i18n[lang];
+
+            const resultArea = document.getElementById("resultArea");
+            resultArea.style.display = "block";
+
+            document.getElementById("taxableIncomeValue").textContent = "¥" + formatNumber(result.taxableIncome);
+            document.getElementById("taxRateValue").textContent = formatRate(result.taxRate);
+            document.getElementById("taxPayableValue").textContent = "¥" + formatNumber(result.taxPayable);
+            document.getElementById("afterTaxValue").textContent = "¥" + formatNumber(result.afterTax);
+
+            // 条形图
+            const chartContainer = document.getElementById("chartContainer");
+            chartContainer.style.display = "block";
+
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+
+            const ctx = document.getElementById("taxChart").getContext("2d");
+            chartInstance = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: [labels.salary || "税前月薪", labels.afterTax || "税后月薪"],
+                    datasets: [{
+                        label: "¥",
+                        data: [salary, result.afterTax],
+                        backgroundColor: ["#2563eb", "#16a34a"],
+                        borderRadius: 6,
+                        maxBarThickness: 80
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) { return "¥" + formatNumber(value); }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function resetForm() {
+            document.getElementById("salary").value = 15000;
+            document.getElementById("insurance").value = 2000;
+            document.getElementById("specialDeduction").value = 2000;
+            document.getElementById("resultArea").style.display = "none";
+            document.getElementById("chartContainer").style.display = "none";
+            if (chartInstance) {
+                chartInstance.destroy();
+                chartInstance = null;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll("[data-i18n]").forEach(function(el) {
+                const key = el.getAttribute("data-i18n");
+                el.textContent = t(key);
+            });
+            setTimeout(doCalculate, 100);
+        });
+    </script>
+    <script src="../js/cookie-consent.js" defer></script>
+</body>
+</html>
+
+
+

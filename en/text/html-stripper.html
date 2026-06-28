@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Stripper - Free Online HTML Tag Remover | Strip HTML to Text</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online HTML tag stripper. Remove HTML tags and get plain text. Optionally keep specific tags (br, p, b, i, a). All processing happens locally in your browser for complete privacy.">
+    <link rel="canonical" href="https://calc-tools.top/en/text/html-stripper.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/text/html-stripper.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/text/html-stripper.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/en/text/html-stripper.html">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/site.css">
+    <link rel="stylesheet" href="../../css/text-tools.css">
+    <link rel="stylesheet" href="../css/cookie-consent.css">
+    <script src="../../js/i18n.js" defer></script>
+    <script src="../../js/text-tools/html-stripper.js" defer></script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Online Tools", "item": "https://calc-tools.top/" },
+        { "@type": "ListItem", "position": 2, "name": "HTML Stripper", "item": "https://calc-tools.top/en/text/html-stripper" }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What is HTML stripping?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "HTML stripping is the process of removing all or some HTML tags from code, leaving only plain text. This is useful for extracting text from web pages, cleaning rich text content, preprocessing data, and more."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I keep certain HTML tags?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. This tool allows you to choose which HTML tags to keep, including br (line break), p (paragraph), b (bold), i (italic), and a (link). Simply check the corresponding checkboxes to preserve these tags."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Does stripping HTML tags affect my original data?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. All processing is done locally in your browser. Your original data is never uploaded or modified. You can use it with confidence."
+            }
+        }
+    ]
+}
+</script>
+</head>
+<body>
+    <header>
+        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+        <nav>
+            <a href="/en/">Home</a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="en" selected>🇺🇸 English</option>
+                <option value="zh">🇨🇳 中文</option>
+            </select>
+        </nav>
+    </header>
+    <main>
+        <div class="tool-page">
+            <div class="tool-header">
+                <h1>🏷️ HTML Stripper</h1>
+                <p>Free online HTML tag remover. Quickly strip HTML tags and get clean plain text. Optionally keep specific tags (br, p, b, i, a). All processing happens locally in your browser.</p>
+            </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="html-stripper"><span class="heart">❤️</span> <span class="count">0</span></button></div>
+
+            <!-- Ad Slot -->
+            <div class="ad-slot ad-placeholder">Ad Space - Available</div>
+
+            <div class="tool-controls">
+                <textarea class="text-input" id="htmlInput" placeholder="Paste HTML content here..." oninput="executeStrip()"><h1>Welcome to My Website</h1>
+<p>This is <b>bold</b> and <i>italic</i> text.</p>
+<ul>
+  <li>Item 1</li>
+  <li>Item 2</li>
+</ul>
+<p>Learn more <a href="https://example.com">here</a>.</p></textarea>
+
+                <!-- Keep Tag Options -->
+                <div class="cleaner-options" style="margin-top:12px;">
+                    <span style="font-weight:600;display:block;margin-bottom:6px;">Keep these tags:</span>
+                    <label class="cleaner-option"><input type="checkbox" class="keep-tag-option" value="br" onchange="executeStrip()"> &lt;br&gt;</label>
+                    <label class="cleaner-option"><input type="checkbox" class="keep-tag-option" value="p" onchange="executeStrip()"> &lt;p&gt;</label>
+                    <label class="cleaner-option"><input type="checkbox" class="keep-tag-option" value="b" onchange="executeStrip()"> &lt;b&gt;</label>
+                    <label class="cleaner-option"><input type="checkbox" class="keep-tag-option" value="i" onchange="executeStrip()"> &lt;i&gt;</label>
+                    <label class="cleaner-option"><input type="checkbox" class="keep-tag-option" value="a" onchange="executeStrip()"> &lt;a&gt;</label>
+                </div>
+
+                <div class="action-bar">
+                    <button class="btn btn-primary" onclick="executeStrip()">Strip Tags</button>
+                    <button class="btn btn-secondary" onclick="resetStripper()">Reset</button>
+                </div>
+
+                <!-- Result Area -->
+                <div id="resultSection" class="result-section" style="display:none;">
+                    <h3>Stripped Result</h3>
+                    <div class="stats-row">
+                        <span class="stat-badge">Before: <strong id="charBefore">0</strong> chars</span>
+                        <span class="stat-badge">After: <strong id="charAfter">0</strong> chars</span>
+                    </div>
+                    <pre class="result-area" id="resultArea" style="font-family: 'SF Mono', 'Fira Code', 'Consolas', 'Courier New', monospace; font-size: 0.9rem; line-height: 1.5; padding: 16px; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"></pre>
+                    <button class="btn btn-copy" id="copyBtn" onclick="copyStripResult()">📋 Copy Result</button>
+                </div>
+            </div>
+
+            <!-- SEO Content -->
+            <div class="seo-content">
+                <h2>What is HTML Stripping?</h2>
+                <p>HTML stripping is the process of removing all or some HTML tags from code, leaving only plain text content. This is useful for extracting plain text from web pages, cleaning rich text editor content, preprocessing data for analysis, or converting HTML emails to plain text format.</p>
+                <p>All processing is done entirely in your browser—no data is uploaded to any server, ensuring your privacy.</p>
+
+                <h3>Supported Tags to Keep</h3>
+                <ul>
+                    <li><strong>&lt;br&gt;</strong> — Keep line breaks to maintain text structure</li>
+                    <li><strong>&lt;p&gt;</strong> — Keep paragraph tags for text segmentation</li>
+                    <li><strong>&lt;b&gt;</strong> — Keep bold tags</li>
+                    <li><strong>&lt;i&gt;</strong> — Keep italic tags</li>
+                    <li><strong>&lt;a&gt;</strong> — Keep link tags to preserve hyperlinks</li>
+                </ul>
+
+                <h3>Use Cases</h3>
+                <ul>
+                    <li><strong>Web content extraction</strong> — Extract clean text from HTML pages</li>
+                    <li><strong>Rich text conversion</strong> — Convert rich text editor content to plain text</li>
+                    <li><strong>Data preprocessing</strong> — Clean HTML-formatted datasets for analysis</li>
+                    <li><strong>Email conversion</strong> — Convert HTML emails to plain text format</li>
+                    <li><strong>SEO optimization</strong> — Review plain text readability of your pages</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2026 calc-tools.top | <a href="/en/">Online Tools</a> | <a href="/en/text/word-counter.html">Word Counter</a> | <a href="/en/text/case-converter.html">Case Converter</a> | <a href="/en/text/json-formatter.html">JSON Formatter</a> | <a href="/en/text/base64.html">Base64 Encode/Decode</a> | <a href="/en/text/text-cleaner.html">Text Cleaner</a> | <a href="/en/text/html-stripper.html">HTML Stripper</a></p>
+    </footer>
+    <script src="../../js/like.js" defer></script>
+    <script src="../js/cookie-consent.js" defer></script>
+</body>
+</html>

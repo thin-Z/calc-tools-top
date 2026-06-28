@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Time Calculator - Free Online Article Reading Time Estimator</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online reading time calculator. Automatically estimate reading and speaking time based on word count. Supports English and Chinese text with slow, normal, and fast speed settings. Includes text difficulty level assessment.">
+    <link rel="canonical" href="https://calc-tools.top/en/text/reading-time.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/text/reading-time.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/text/reading-time.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/en/text/reading-time.html">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/site.css">
+    <link rel="stylesheet" href="../../css/text-tools.css">
+    <link rel="stylesheet" href="../css/cookie-consent.css">
+    <script src="../../js/i18n.js" defer></script>
+    <script src="../../js/text-tools/reading-time.js" defer></script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Online Calculators", "item": "https://calc-tools.top/" },
+        { "@type": "ListItem", "position": 2, "name": "Reading Time", "item": "https://calc-tools.top/en/text/reading-time" }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "How is reading time calculated?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Reading time is estimated based on total word count (Chinese characters + English words). Three reading speeds are provided: slow (200 wpm), normal (300 wpm), and fast (400 wpm). Speaking time is estimated at 100 wpm (slow), 150 wpm (normal), and 200 wpm (fast)."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How is difficulty level determined?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Difficulty level is determined by total word count: 1000+ words is professional level, 500-1000 is college level, 200-500 is high school level, 50-200 is middle school level, and under 50 is elementary school level."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What languages are supported?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "This tool supports both Chinese and English text. Chinese characters are counted individually, while English text is counted by words. The total is used as the basis for reading time estimation."
+            }
+        }
+    ]
+}
+</script>
+<style>
+.rt-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 1rem; }
+.rt-stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; text-align: center; }
+.rt-stat-card .rt-stat-value { font-size: 1.6rem; font-weight: 700; color: var(--primary); line-height: 1.2; }
+.rt-stat-card .rt-stat-label { font-size: 0.8rem; color: var(--text-secondary); margin-top: 6px; }
+.speed-chips { display: flex; gap: 0.5rem; margin: 0.8rem 0; }
+.speed-chip { padding: 0.4rem 1rem; border-radius: 20px; border: 1.5px solid var(--border); background: var(--bg-card); color: var(--text-secondary); font-size: 0.85rem; cursor: pointer; transition: all 0.2s; user-select: none; }
+.speed-chip:hover { border-color: var(--primary); color: var(--primary); }
+.speed-chip.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+</style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="Toolbox" class="site-logo"></a>
+        <nav>
+            <a href="/en/">Home</a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="zh">🇨🇳 中文</option>
+                <option value="en" selected>🇬🇧 English</option>
+            </select>
+        </nav>
+    </header>
+    <main>
+        <div class="tool-page">
+            <div class="tool-header">
+                <h1>⏱️ Reading Time Calculator</h1>
+                <p>Estimate reading and speaking time based on text word count. Supports English and Chinese mixed text.</p>
+            </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="reading-time"><span class="heart">❤</span> <span class="count">0</span></button></div>
+
+            <div class="ad-slot ad-placeholder">Ad Space - Available</div>
+
+            <textarea class="text-input" id="rtInput" placeholder="Paste or type your text here for reading time analysis..." oninput="scheduleReadingTime()">A reading time calculator is a practical online tool that helps authors and editors quickly estimate how long it takes to read an article. Whether you're writing a blog post, preparing a speech, or editing a news article, knowing the reading time helps you control content length and pacing. This tool supports both English and Chinese text, and provides three speed settings: slow (200 wpm), normal (300 wpm), and fast (400 wpm). It also assesses text difficulty level from elementary to professional.</textarea>
+
+            <div class="speed-chips">
+                <span class="speed-chip" data-speed="slow" onclick="setReadingSpeed('slow')">🐢 Slow</span>
+                <span class="speed-chip active" data-speed="normal" onclick="setReadingSpeed('normal')">🚶 Normal</span>
+                <span class="speed-chip" data-speed="fast" onclick="setReadingSpeed('fast')">🏃 Fast</span>
+            </div>
+
+            <div class="action-bar">
+                <button class="btn btn-primary" onclick="doReadingTime()">📊 Analyze</button>
+                <button class="btn btn-secondary" onclick="resetReadingTime()">🗑️ Clear</button>
+                <button class="copy-btn" id="copyRtBtn" onclick="copyReadingTime()">📋 Copy Results</button>
+            </div>
+
+            <div class="rt-stats-grid">
+                <div class="rt-stat-card">
+                    <div class="rt-stat-value" id="rtTotalChars">0</div>
+                    <div class="rt-stat-label">Total Characters</div>
+                </div>
+                <div class="rt-stat-card">
+                    <div class="rt-stat-value" id="rtChineseChars">0</div>
+                    <div class="rt-stat-label">Chinese Characters</div>
+                </div>
+                <div class="rt-stat-card">
+                    <div class="rt-stat-value" id="rtEnglishWords">0</div>
+                    <div class="rt-stat-label">English Words</div>
+                </div>
+                <div class="rt-stat-card">
+                    <div class="rt-stat-value" id="rtTotalWords">0</div>
+                    <div class="rt-stat-label">Total (CN+EN)</div>
+                </div>
+                <div class="rt-stat-card">
+                    <div class="rt-stat-value" id="rtReadingTime">0 min</div>
+                    <div class="rt-stat-label">Reading Time</div>
+                </div>
+                <div class="rt-stat-card">
+                    <div class="rt-stat-value" id="rtSpeakingTime">0 min</div>
+                    <div class="rt-stat-label">Speaking Time</div>
+                </div>
+                <div class="rt-stat-card">
+                    <div class="rt-stat-value" id="rtDifficulty">-</div>
+                    <div class="rt-stat-label">Difficulty</div>
+                </div>
+            </div>
+
+            <div class="seo-content">
+                <h2>About Reading Time Calculator</h2>
+                <p>This reading time calculator helps you estimate how long it takes to read and speak any text based on word count statistics.</p>
+                <h3>Speed Reference</h3>
+                <ul>
+                    <li><strong>Slow</strong> — 200 wpm reading, 100 wpm speaking</li>
+                    <li><strong>Normal</strong> — 300 wpm reading, 150 wpm speaking</li>
+                    <li><strong>Fast</strong> — 400 wpm reading, 200 wpm speaking</li>
+                </ul>
+                <h3>Difficulty Levels</h3>
+                <ul>
+                    <li>Elementary: Under 50 words</li>
+                    <li>Middle School: 50-200 words</li>
+                    <li>High School: 200-500 words</li>
+                    <li>College: 500-1000 words</li>
+                    <li>Professional: 1000+ words</li>
+                </ul>
+                <h3>Use Cases</h3>
+                <ul>
+                    <li>Blog writing - estimate reader engagement time</li>
+                    <li>Speech preparation - control presentation length</li>
+                    <li>News editing - manage article length</li>
+                    <li>Academic papers - assess content depth</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2026 calc-tools.top | <a href="/en/">Online Tools</a> | <a href="/en/text/word-counter.html">Word Counter</a> | <a href="/en/text/case-converter.html">Case Converter</a> | <a href="/en/text/json-formatter.html">JSON Formatter</a> | <a href="/en/text/text-diff.html">Text Diff</a> | <a href="/en/text/generator.html">UUID Generator</a> | <a href="/en/text/reading-time.html">Reading Time</a></p>
+    </footer>
+    <script src="../../js/like.js" defer></script>
+    <script src="../js/cookie-consent.js" defer></script>
+</body>
+</html>

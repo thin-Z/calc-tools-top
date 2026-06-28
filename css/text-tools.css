@@ -1,0 +1,255 @@
+/* ===== Text Tools Styles ===== */
+
+/* Textarea Input */
+.text-input {
+    width: 100%;
+    min-height: 200px;
+    padding: 16px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-lg);
+    font-family: "SF Mono", "Fira Code", "Consolas", "Courier New", monospace;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text);
+    background: var(--bg-card);
+    resize: vertical;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+.text-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+}
+.text-input::placeholder {
+    color: #94a3b8;
+}
+
+/* Mode Toggle Chips */
+.mode-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+.mode-chip {
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+}
+.mode-chip:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+.mode-chip.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+}
+
+/* Result Area */
+.result-area {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin-top: 1rem;
+}
+.result-area .result-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+.result-area .result-content {
+    font-family: "SF Mono", "Fira Code", "Consolas", "Courier New", monospace;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text);
+    word-break: break-all;
+    white-space: pre-wrap;
+}
+
+/* Copy Button */
+.copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.4rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.copy-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--primary-light);
+}
+.copy-btn.copied {
+    border-color: #16a34a;
+    color: #16a34a;
+    background: #f0fdf4;
+}
+
+/* Text Diff: Side-by-Side Layout */
+.diff-container {
+    display: flex;
+    gap: 16px;
+    margin-top: 1rem;
+}
+.diff-pane {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.diff-pane textarea {
+    min-height: 250px;
+}
+@media (max-width: 768px) {
+    .diff-container {
+        flex-direction: column;
+    }
+}
+
+/* Statistics Cards Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-top: 1rem;
+}
+.stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    text-align: center;
+}
+.stat-card .stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1.2;
+}
+.stat-card .stat-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+/* Keyword Frequency List */
+.keyword-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0;
+}
+.keyword-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+}
+.keyword-item:last-child {
+    border-bottom: none;
+}
+.keyword-rank {
+    font-weight: 700;
+    color: var(--text-secondary);
+    min-width: 28px;
+    text-align: center;
+}
+.keyword-word {
+    flex: 1;
+    color: var(--text);
+}
+.keyword-count {
+    font-weight: 600;
+    color: var(--text-secondary);
+    min-width: 40px;
+    text-align: right;
+}
+.keyword-bar {
+    width: 80px;
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.keyword-bar-fill {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 4px;
+    transition: width 0.3s;
+}
+
+/* Password Strength Indicator */
+.strength-meter {
+    display: flex;
+    gap: 6px;
+    margin: 12px 0;
+}
+.strength-segment {
+    flex: 1;
+    height: 8px;
+    border-radius: 4px;
+    background: #e2e8f0;
+    transition: background 0.3s;
+}
+.strength-segment.weak { background: #ef4444; }
+.strength-segment.fair { background: #f59e0b; }
+.strength-segment.strong { background: #eab308; }
+.strength-segment.very-strong { background: #16a34a; }
+.strength-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 4px;
+}
+.strength-label.weak { color: #ef4444; }
+.strength-label.fair { color: #f59e0b; }
+.strength-label.strong { color: #eab308; }
+.strength-label.very-strong { color: #16a34a; }
+
+/* Action Bar */
+.action-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 1rem 0;
+}
+.action-bar .btn {
+    flex: none;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+/* Character count badges */
+.char-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    padding: 4px 10px;
+    background: #f1f5f9;
+    border-radius: 999px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .text-input { min-height: 150px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .keyword-bar { width: 50px; }
+}

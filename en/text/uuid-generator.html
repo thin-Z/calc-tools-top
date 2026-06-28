@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UUID Generator & Password Generator - Free Online Tool</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online UUID v4 uuid-generator and random password uuid-generator. Batch generate UUIDs, create strong passwords with configurable character sets, and evaluate password strength. Browser-based, privacy-first.">
+    <link rel="canonical" href="https://calc-tools.top/en/text/uuid-generator.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/text/uuid-generator.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/text/uuid-generator.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/en/text/uuid-generator.html">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/site.css">
+    <link rel="stylesheet" href="../../css/text-tools.css">
+    <link rel="stylesheet" href="../css/cookie-consent.css">
+    <script src="../../js/i18n.js" defer></script>
+    <script src="../../js/text-tools/uuid-generator.js" defer></script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Online Calculators", "item": "https://calc-tools.top/" },
+        { "@type": "ListItem", "position": 2, "name": "UUID/Password Generator", "item": "https://calc-tools.top/en/text/uuid-generator" }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Is the UUID and password uuid-generator secure?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "This tool uses the browser's built-in crypto.randomUUID() and Crypto API to generate random values. All generation happens locally in your browser — no data is uploaded to any server, ensuring security and privacy."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How is password strength evaluated?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Password strength is evaluated based on length and character type diversity: 16+ characters with all four types (upper, lower, digits, symbols) is very strong; 12-15 with at least three types is strong; 8-11 with at least two types is fair; less than 8 characters or only one type is weak."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What is a UUID?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "UUID (Universally Unique Identifier) is a globally unique identifier standard. This tool generates UUID v4 based on random numbers, widely used for database primary keys, distributed system identifiers, session IDs, and more."
+            }
+        }
+    ]
+}
+</script>
+<style>
+.gen-tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+.gen-tab { padding: 0.5rem 1.2rem; border-radius: 20px; border: 1.5px solid var(--border); background: var(--bg-card); color: var(--text-secondary); font-size: 0.9rem; cursor: pointer; transition: all 0.2s; user-select: none; }
+.gen-tab:hover { border-color: var(--primary); color: var(--primary); }
+.gen-tab.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+.gen-panel { display: none; }
+.uuid-row { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--border); font-family: "SF Mono", "Fira Code", "Consolas", "Courier New", monospace; font-size: 0.85rem; }
+.uuid-row:last-child { border-bottom: none; }
+.uuid-text { flex: 1; word-break: break-all; color: var(--text); }
+.pw-options { display: flex; flex-wrap: wrap; gap: 16px; margin: 1rem 0; align-items: center; }
+.pw-options label { display: flex; align-items: center; gap: 6px; font-size: 0.9rem; cursor: pointer; }
+.pw-length-wrap { display: flex; align-items: center; gap: 10px; }
+.pw-length-wrap input[type="range"] { width: 200px; }
+.pw-length-val { font-weight: 700; color: var(--primary); min-width: 30px; text-align: center; }
+#pwStrength { margin: 12px 0; }
+</style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="Toolbox" class="site-logo"></a>
+        <nav>
+            <a href="/en/">Home</a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="zh">🇨🇳 中文</option>
+                <option value="en" selected>🇬🇧 English</option>
+            </select>
+        </nav>
+    </header>
+    <main>
+        <div class="tool-page">
+            <div class="tool-header">
+                <h1>🎲 UUID / Password Generator</h1>
+                <p>Generate UUID v4 identifiers or configure strong passwords. All processing is done locally in your browser.</p>
+            </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="uuid-uuid-generator"><span class="heart">❤</span> <span class="count">0</span></button></div>
+
+            <div class="ad-slot ad-placeholder">Ad Space - Available</div>
+
+            <div class="gen-tabs">
+                <span class="gen-tab active" data-tab="uuid" onclick="switchGeneratorTab('uuid')">🔖 UUID</span>
+                <span class="gen-tab" data-tab="password" onclick="switchGeneratorTab('password')">🔑 Password</span>
+            </div>
+
+            <!-- UUID Panel -->
+            <div id="uuidPanel" class="gen-panel" style="display:block;">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem;flex-wrap:wrap;">
+                    <label style="font-size:0.9rem;">Count:</label>
+                    <select id="uuidCount" style="padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:0.9rem;">
+                        <option value="1">1</option>
+                        <option value="3" selected>3</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="doGenerateUUIDs()">🎲 Generate UUIDs</button>
+                    <button class="copy-btn" id="copyGenAllBtn" onclick="copyGeneratorAll()">📋 Copy All</button>
+                </div>
+                <div class="result-area">
+                    <div class="result-label">Generated UUIDs:</div>
+                    <div id="uuidResult"></div>
+                </div>
+            </div>
+
+            <!-- Password Panel -->
+            <div id="passwordPanel" class="gen-panel" style="display:none;">
+                <div class="pw-options">
+                    <div class="pw-length-wrap">
+                        <label style="font-size:0.9rem;">Length:</label>
+                        <input type="range" id="pwLength" min="8" max="64" value="16" oninput="updatePwLength(this.value)">
+                        <span class="pw-length-val" id="pwLengthVal">16</span>
+                    </div>
+                    <label><input type="checkbox" id="pwUpper" checked> Uppercase (A-Z)</label>
+                    <label><input type="checkbox" id="pwLower" checked> Lowercase (a-z)</label>
+                    <label><input type="checkbox" id="pwDigits" checked> Digits (0-9)</label>
+                    <label><input type="checkbox" id="pwSymbols" checked> Symbols (!@#$%^&*)</label>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem;flex-wrap:wrap;">
+                    <label style="font-size:0.9rem;">Count:</label>
+                    <select id="pwCount" style="padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:0.9rem;">
+                        <option value="1" selected>1</option>
+                        <option value="3">3</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="doGeneratePassword()">🔑 Generate</button>
+                    <button class="copy-btn" id="copyGenAllBtnPw" onclick="copyGeneratorAll()">📋 Copy All</button>
+                </div>
+                <div id="pwStrength"></div>
+                <div class="result-area">
+                    <div class="result-label">Generated Passwords:</div>
+                    <div id="pwResult"></div>
+                </div>
+            </div>
+
+            <div class="seo-content">
+                <h2>UUID & Password Generator</h2>
+                <p>This tool offers two functions: UUID v4 batch generation and customizable password generation. UUIDs are ideal for database primary keys, session IDs, and distributed system identifiers. The password uuid-generator lets you configure character types and length, and evaluates password strength.</p>
+                <h3>Password Strength Levels</h3>
+                <ul>
+                    <li><strong style="color:#16a34a;">Very Strong</strong> — 16+ characters with all 4 character types</li>
+                    <li><strong style="color:#eab308;">Strong</strong> — 12-15 characters with at least 3 types</li>
+                    <li><strong style="color:#f59e0b;">Fair</strong> — 8-11 characters with at least 2 types</li>
+                    <li><strong style="color:#ef4444;">Weak</strong> — Less than 8 characters or only 1 type</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2026 calc-tools.top | <a href="/en/">Online Tools</a> | <a href="/en/text/word-counter.html">Word Counter</a> | <a href="/en/text/case-converter.html">Case Converter</a> | <a href="/en/text/json-formatter.html">JSON Formatter</a> | <a href="/en/text/text-diff.html">Text Diff</a> | <a href="/en/text/uuid-generator.html">UUID Generator</a> | <a href="/en/text/reading-time.html">Reading Time</a></p>
+    </footer>
+    <script src="../../js/like.js" defer></script>
+    <script src="../js/cookie-consent.js" defer></script>
+</body>
+</html>

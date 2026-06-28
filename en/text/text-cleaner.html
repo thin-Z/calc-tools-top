@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Cleaner - Free Online Text Cleaning Tool | Remove Extra Spaces &amp; Line Breaks</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online text cleaner. Remove extra spaces, line breaks, empty lines, trim whitespace, and remove punctuation. All processing happens locally in your browser for complete privacy.">
+    <link rel="canonical" href="https://calc-tools.top/en/text/text-cleaner.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/text/text-cleaner.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/text/text-cleaner.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/en/text/text-cleaner.html">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/site.css">
+    <link rel="stylesheet" href="../../css/text-tools.css">
+    <link rel="stylesheet" href="../css/cookie-consent.css">
+    <script src="../../js/i18n.js" defer></script>
+    <script src="../../js/text-tools/text-cleaner.js" defer></script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Online Tools", "item": "https://calc-tools.top/" },
+        { "@type": "ListItem", "position": 2, "name": "Text Cleaner", "item": "https://calc-tools.top/en/text/text-cleaner" }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What is a text cleaner?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A text cleaner is a one-stop text cleaning tool that supports removing extra spaces, deleting line breaks, clearing empty lines, trimming whitespace, and removing punctuation. You can freely combine multiple cleaning operations to format text in one go."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Does the text cleaner send my data to a server?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. All text processing happens entirely in your browser locally. No data is uploaded to any server, so you can safely clean sensitive or private text content."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What cleaning operations are supported?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Five cleaning operations are supported: remove extra spaces (collapse multiple spaces into one), remove all line breaks, remove empty lines, trim leading and trailing whitespace, and remove punctuation. All options can be freely combined."
+            }
+        }
+    ]
+}
+</script>
+</head>
+<body>
+    <header>
+        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+        <nav>
+            <a href="/en/">Home</a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="en" selected>🇺🇸 English</option>
+                <option value="zh">🇨🇳 中文</option>
+            </select>
+        </nav>
+    </header>
+    <main>
+        <div class="tool-page">
+            <div class="tool-header">
+                <h1>🧹 Text Cleaner</h1>
+                <p>Free online text cleaning tool. Remove extra spaces, line breaks, empty lines, trim whitespace, and remove punctuation. Combine multiple operations freely. All processing is done locally in your browser.</p>
+            </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="text-cleaner"><span class="heart">❤️</span> <span class="count">0</span></button></div>
+
+            <!-- Ad Slot -->
+            <div class="ad-slot ad-placeholder">Ad Space - Available</div>
+
+            <div class="tool-controls">
+                <textarea class="text-input" id="textInput" placeholder="Enter text to clean..." oninput="executeClean()">Welcome to the Text Cleaner tool!
+
+    This text has     extra spaces,   
+
+
+empty lines,   and  punctuation!!!</textarea>
+
+                <!-- Cleaning Options -->
+                <div class="cleaner-options">
+                    <label class="cleaner-option"><input type="checkbox" id="optExtraSpaces" checked onchange="executeClean()"> Remove extra spaces</label>
+                    <label class="cleaner-option"><input type="checkbox" id="optLineBreaks" checked onchange="executeClean()"> Remove line breaks</label>
+                    <label class="cleaner-option"><input type="checkbox" id="optEmptyLines" checked onchange="executeClean()"> Remove empty lines</label>
+                    <label class="cleaner-option"><input type="checkbox" id="optTrim" checked onchange="executeClean()"> Trim whitespace</label>
+                    <label class="cleaner-option"><input type="checkbox" id="optPunctuation" onchange="executeClean()"> Remove punctuation</label>
+                </div>
+
+                <div class="action-bar">
+                    <button class="btn btn-primary" onclick="executeClean()">Clean Text</button>
+                    <button class="btn btn-secondary" onclick="resetTextCleaner()">Reset</button>
+                </div>
+
+                <!-- Result Area -->
+                <div id="resultSection" class="result-section" style="display:none;">
+                    <h3>Cleaned Result</h3>
+                    <div class="stats-row">
+                        <span class="stat-badge">Before: <strong id="charBefore">0</strong> chars</span>
+                        <span class="stat-badge">After: <strong id="charAfter">0</strong> chars</span>
+                    </div>
+                    <pre class="result-area" id="resultArea" style="font-family: 'SF Mono', 'Fira Code', 'Consolas', 'Courier New', monospace; font-size: 0.9rem; line-height: 1.5; padding: 16px; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"></pre>
+                    <button class="btn btn-copy" id="copyBtn" onclick="copyTextCleanerResult()">📋 Copy Result</button>
+                </div>
+            </div>
+
+            <!-- SEO Content -->
+            <div class="seo-content">
+                <h2>What is a Text Cleaner?</h2>
+                <p>A text cleaner is an online text cleaning tool that helps you quickly format and clean text data. Whether you are copying text from web pages, processing log files, organizing database export data, or preparing draft content for publishing, this tool can remove extra spaces, line breaks, empty lines, and other clutter in one click.</p>
+                <p>All processing is done entirely in your browser—no data is uploaded to any server, ensuring your privacy.</p>
+
+                <h3>Five Cleaning Operations</h3>
+                <ul>
+                    <li><strong>Remove extra spaces</strong> — Collapse multiple consecutive spaces into one, and trim spaces at the start and end of each line</li>
+                    <li><strong>Remove line breaks</strong> — Delete all line breaks and merge multiple lines into a single line</li>
+                    <li><strong>Remove empty lines</strong> — Delete all blank lines, keeping only content lines</li>
+                    <li><strong>Trim whitespace</strong> — Remove leading and trailing whitespace (spaces, tabs, line breaks) from the text</li>
+                    <li><strong>Remove punctuation</strong> — Delete all punctuation, keeping only letters, numbers, spaces, and Chinese characters</li>
+                </ul>
+
+                <h3>Use Cases</h3>
+                <ul>
+                    <li><strong>Web content extraction</strong> — Clean up extra formatting when copying text from web pages</li>
+                    <li><strong>Data processing</strong> — Clean messy text from CSV files or logs</li>
+                    <li><strong>Content publishing</strong> — Format draft text and remove unnecessary formatting</li>
+                    <li><strong>Development</strong> — Clean up abnormal whitespace in code comments or config files</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2026 calc-tools.top | <a href="/en/">Online Tools</a> | <a href="/en/text/word-counter.html">Word Counter</a> | <a href="/en/text/case-converter.html">Case Converter</a> | <a href="/en/text/json-formatter.html">JSON Formatter</a> | <a href="/en/text/base64.html">Base64 Encode/Decode</a> | <a href="/en/text/text-cleaner.html">Text Cleaner</a></p>
+    </footer>
+    <script src="../../js/like.js" defer></script>
+    <script src="../js/cookie-consent.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片转Base64 - 免费在线转换工具</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="免费在线图片转Base64工具，浏览器本地处理。将图片转换为 Base64 编码字符串。">
+    <link rel="canonical" href="https://calc-tools.top/zh/image/base64.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/image/base64.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/image/base64.html">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/site.css">
+    <link rel="stylesheet" href="../css/cookie-consent.css">
+    <script src="../../js/i18n.js" defer></script>
+    <script src="../../js/tools/base64.js" defer></script>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+        <nav>
+            <a href="/">首页</a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="zh" selected>🇨🇳 中文</option>
+                <option value="en">🇬🇧 English</option>
+            </select>
+        </nav>
+    </header>
+    <main>
+        <div class="tool-page">
+            <div class="tool-header">
+                <span class="tool-privacy-badge">🔒 浏览器本地处理 · 不上传服务器</span><h1>图片转 Base64</h1>
+                <p>将图片转换为 Base64 编码字符串，方便嵌入 HTML、CSS。</p>
+            </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="base64"><span class="heart">❤</span> <span class="count">0</span></button></div>
+            <div class="upload-zone" id="dropZone">
+                <div class="upload-icon">📁</div>
+                <h3>拖拽图片到此处，或点击选择文件</h3><div class="upload-btn">📁 选择文件</div>
+                <div class="upload-formats"><span class="format-badge">JPG</span><span class="format-badge">PNG</span><span class="format-badge">WebP</span><span class="format-badge">BMP</span><span class="format-badge">GIF</span></div><p style="margin-top:10px;margin-bottom:0;font-size:0.8rem;color:#94a3b8;">最大 50MB · 浏览器本地处理</p>
+                <input type="file" id="fileInput" accept="image/*">
+            </div>
+            <div class="preview-container" id="previewContainer">
+                <div class="preview-card">
+                    <div class="preview-area" >
+                        <div class="preview-box" >
+                            <img id="previewImg" src="" alt="预览图片" >
+                        </div>
+                        <div class="file-info" id="fileInfo"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="tool-controls">
+                <h3>生成设置</h3>
+                <div class="control-group">
+                    <label><input type="checkbox" id="includePrefix" checked> 包含 data:image 前缀</label>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="generateBtn" disabled>生成 Base64</button>
+                    <button class="btn btn-secondary" id="resetBtn">重置</button>
+                </div>
+            </div>
+            <div class="result-summary" id="outputContainer">
+                <h3>Base64 编码结果</h3>
+                <p >编码长度: <span id="outputLen">0</span></p>
+                <div class="code-output" id="base64Output"></div>
+                <div class="btn-group" >
+                    <button class="btn btn-success copy-btn" id="copyBtn" disabled data-label="复制 Base64" data-copied-label="已复制!">复制 Base64</button>
+                </div>
+            </div>
+            <div class="tool-content">
+                <h2>图片转 Base64 - 开发者工具</h2>
+                <p>将图片转为 Base64 后，可以直接嵌入 HTML、CSS 文件中，减少 HTTP 请求次数。</p>
+                <h3>使用场景</h3>
+                <p>HTML 直接嵌入 img 标签、CSS 背景图片、邮件签名、离线应用打包。</p>
+                <h3>注意事项</h3>
+                <p>Base64 编码后大小约为原始文件的 1.37 倍，建议仅对小图片（< 100KB）使用。</p>
+            </div>
+            <div class="related-tools">
+                <h3>相关工具</h3>
+                <ul>
+                    <li><a href="compress.html">🗜️ 图片压缩</a></li>
+                    <li><a href="convert.html">🔄 图片格式转换</a></li>
+                    <li><a href="color-picker.html">🎨 图片取色器</a></li>
+                    <li><a href="../..">🏠 返回首页</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="ad-placeholder">广告位 - 招商中</div>
+    </main>
+    <footer>
+        <p>© 2026 工具箱里 | 免费在线工具</p>
+        <p><a href="/">返回首页</a></p>
+    </footer>
+
+    <script src="../../js/like.js" defer></script>
+    <script src="../js/cookie-consent.js" defer></script>
+</body>
+</html>
+

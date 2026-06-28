@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Counter - Free Online Character & Keyword Density Analyzer</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online word counter with keyword density analysis. Supports English and Chinese text. Count characters, words, paragraphs, sentences, lines, and analyze keyword frequency. Privacy-first, all processing in browser.">
+    <link rel="canonical" href="https://calc-tools.top/en/text/word-counter.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/text/word-counter.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/text/word-counter.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/en/text/word-counter.html">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/site.css">
+    <link rel="stylesheet" href="../../css/text-tools.css">
+    <link rel="stylesheet" href="../css/cookie-consent.css">
+    <script src="../../js/i18n.js" defer></script>
+    <script src="../../js/text-tools/word-counter.js" defer></script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Online Calculators", "item": "https://calc-tools.top/" },
+        { "@type": "ListItem", "position": 2, "name": "Word Counter", "item": "https://calc-tools.top/en/text/word-counter" }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What metrics does the word counter provide?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The word counter provides 9 metrics: total characters, Chinese characters, English words, paragraphs, sentences, lines, visible characters, digits, and punctuation marks."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How is keyword density calculated?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "For English text, keywords are split by word boundaries and common stop words (the, a, is, etc.) are filtered out. For Chinese text, each character is analyzed individually. Density is calculated as (word count / total words) 脳 100%, showing the top 20 keywords."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my text uploaded to any server?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. All text processing happens locally in your browser. Your content never leaves your device, ensuring complete privacy."
+            }
+        }
+    ]
+}
+</script>
+</head>
+<body>
+    <header>
+        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="宸ュ叿绠遍噷" class="site-logo"></a>
+        <nav>
+            <a href="/en/">Home</a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="en" selected>馃嚞馃嚙 English</option>
+                <option value="zh">馃嚚馃嚦 涓枃</option>
+            </select>
+        </nav>
+    </header>
+    <main>
+        <div class="tool-page">
+            <div class="tool-header">
+                <h1>馃摑 Online Word Counter</h1>
+                <p>Count characters, words, paragraphs, sentences, and analyze keyword frequency. All processing happens locally in your browser.</p>
+            </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="word-counter"><span class="heart">鉂?/span> <span class="count">0</span></button></div>
+
+            <!-- Ad Slot -->
+            <div class="ad-slot ad-placeholder">Ad Space - Available</div>
+
+            <div class="tool-controls">
+                <textarea class="text-input" id="textInput" placeholder="Paste or type your text here to analyze...">Welcome to the online word counter tool! This free tool helps you quickly analyze your text. It counts total characters, words, paragraphs, sentences, lines, and more. You can also check keyword density to optimize your content for better search engine rankings. All data processing is done locally in your browser for maximum privacy protection.</textarea>
+
+                <!-- Mode Toggle -->
+                <div class="mode-chips">
+                    <span class="mode-chip active" data-mode="stats" onclick="switchMode('stats')">馃搳 Word Count</span>
+                    <span class="mode-chip" data-mode="keywords" onclick="switchMode('keywords')">馃攽 Keyword Density</span>
+                </div>
+
+                <div class="action-bar">
+                    <button class="btn btn-primary" onclick="doAnalyze()">Analyze</button>
+                    <button class="btn btn-secondary" onclick="resetTool()">Clear</button>
+                    <button class="copy-btn" id="copyResultBtn" onclick="copyResult()">馃搵 Copy Results</button>
+                </div>
+            </div>
+
+            <!-- Stats Mode -->
+            <div class="result-area" id="statsArea">
+                <div class="result-label">馃搳 Statistics</div>
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-value" id="statTotalChars">0</div><div class="stat-label">Total Characters</div></div>
+                    <div class="stat-card"><div class="stat-value" id="statChineseChars">0</div><div class="stat-label">Chinese Chars</div></div>
+                    <div class="stat-card"><div class="stat-value" id="statEnglishWords">0</div><div class="stat-label">English Words</div></div>
+                    <div class="stat-card"><div class="stat-value" id="statParagraphs">0</div><div class="stat-label">Paragraphs</div></div>
+                    <div class="stat-card"><div class="stat-value" id="statSentences">0</div><div class="stat-label">Sentences</div></div>
+                    <div class="stat-card"><div class="stat-value" id="statLines">0</div><div class="stat-label">Lines</div></div>
+                    <div class="stat-card"><div class="stat-value" id="statVisibleChars">0</div><div class="stat-label">Visible Chars</div></div>
+                    <div class="stat-card"><div class="stat-value" id="statDigits">0</div><div class="stat-label">Digits</div></div>
+                    <div class="stat-card"><div class="stat-value" id="statPunctuation">0</div><div class="stat-label">Punctuation</div></div>
+                </div>
+            </div>
+
+            <!-- Keyword Mode -->
+            <div class="result-area" id="keywordsArea" style="display:none;">
+                <div class="result-label">馃攽 Top 20 Keywords by Frequency</div>
+                <ul class="keyword-list" id="keywordList">
+                    <li style="text-align:center;color:var(--text-secondary);padding:20px;">Enter text and click "Analyze" to see keywords</li>
+                </ul>
+            </div>
+
+            <div class="tool-content">
+                <h2>Online Word Counter & Keyword Density Analyzer</h2>
+                <p>Our free word counter and keyword density analyzer helps writers, editors, students, and SEO professionals quickly understand their text metrics.</p>
+                <h3>Word Count Mode</h3>
+                <p>Quickly count total characters, Chinese characters, English words, paragraphs, sentences, lines, visible characters, digits, and punctuation marks in real time.</p>
+                <h3>Keyword Density Analysis</h3>
+                <p>For English text, words are split by boundaries and common stop words are automatically filtered out for accurate results. For Chinese text, each character is analyzed individually. The top 20 keywords are displayed sorted by frequency with density percentage.</p>
+                <h3>Privacy First</h3>
+                <p>All text processing is performed locally in your browser. Your content never leaves your device, ensuring complete privacy.</p>
+                <h3>Use Cases</h3>
+                <p>SEO content writing: optimize keyword density for better rankings. Academic writing: meet word count requirements. Social media: stay within character limits. Translation: compare source and target text lengths.</p>
+            </div>
+            <div class="related-tools">
+                <h3>Related Tools</h3>
+                <ul>
+                    <li><a href="/en/image/base64.html">馃敜 Base64 Encode/Decode</a></li>
+                    <li><a href="/en/">馃彔 Back to Home</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="ad-placeholder">Ad Space - Available</div>
+    </main>
+    <footer>
+        <p>漏 2026 ToolBox Inside | Free Online Tools</p>
+        <p><a href="/en/">Back to Home</a></p>
+    </footer>
+
+
+    <script src="../../js/like.js" defer></script>
+    <script src="../js/cookie-consent.js" defer></script>
+</body>
+</html>

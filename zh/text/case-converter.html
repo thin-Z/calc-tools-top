@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线大小写转换工具 - 免费文本大小写转换器</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="免费在线大小写转换工具。支持大写、小写、首字母大写、句子首字母大写、驼峰式、蛇形式、连字符式、交替式共8种大小写转换模式，浏览器本地处理，不上传服务器。">
+    <link rel="canonical" href="https://calc-tools.top/zh/text/case-converter.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/text/case-converter.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/text/case-converter.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/text/case-converter.html">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/site.css">
+    <link rel="stylesheet" href="../../css/text-tools.css">
+    <link rel="stylesheet" href="../css/cookie-consent.css">
+    <script src="../../js/i18n.js" defer></script>
+    <script src="../../js/text-tools/case-converter.js" defer></script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "在线工具", "item": "https://calc-tools.top/" },
+        { "@type": "ListItem", "position": 2, "name": "大小写转换", "item": "https://calc-tools.top/zh/text/case-converter" }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "大小写转换工具有哪些转换模式？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "本工具提供8种转换模式：全部大写（UPPER）、全部小写（lower）、首字母大写（Title Case）、句子首字母大写（Sentence case）、驼峰式（camelCase）、蛇形式（snake_case）、连字符式（kebab-case）和交替式（AlTeRnAtInG）。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "驼峰式和蛇形式有什么用途？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "驼峰式（camelCase）和蛇形式（snake_case）是编程中常用的命名规范。驼峰式常用于JavaScript变量和函数命名，蛇形式常用于Python变量和数据库字段命名。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "我的文本会上传到服务器吗？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "不会。所有文本转换都在你的浏览器本地完成，内容不会离开你的设备，确保完全隐私安全。"
+            }
+        }
+    ]
+}
+</script>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+        <nav>
+            <a href="/">首页</a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="zh" selected>🇨🇳 中文</option>
+                <option value="en">🇬🇧 English</option>
+            </select>
+        </nav>
+    </header>
+    <main>
+        <div class="tool-page">
+            <div class="tool-header">
+                <h1>🔤 在线大小写转换工具</h1>
+                <p>支持8种大小写转换模式，包括大写、小写、首字母大写、句子大写、驼峰式、蛇形式、连字符式和交替式。浏览器本地处理，文本不上传服务器。</p>
+            </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="case-converter"><span class="heart">❤</span> <span class="count">0</span></button></div>
+
+            <!-- 广告位 -->
+            <div class="ad-slot ad-placeholder">广告位 - 招商中</div>
+
+            <div class="tool-controls">
+                <textarea class="text-input" id="textInput" placeholder="请输入你要转换的文字内容，或将文本粘贴到此处...">hello world, welcome to Case Converter! this tool supports 8 different case conversion modes.</textarea>
+
+                <!-- 模式切换芯片 -->
+                <div class="mode-chips">
+                    <span class="mode-chip active" data-mode="upper" onclick="switchMode('upper')">🔠 大写</span>
+                    <span class="mode-chip" data-mode="lower" onclick="switchMode('lower')">🔡 小写</span>
+                    <span class="mode-chip" data-mode="title" onclick="switchMode('title')">📗 首字母大写</span>
+                    <span class="mode-chip" data-mode="sentence" onclick="switchMode('sentence')">📕 句子大写</span>
+                    <span class="mode-chip" data-mode="camel" onclick="switchMode('camel')">🐪 驼峰式</span>
+                    <span class="mode-chip" data-mode="snake" onclick="switchMode('snake')">🐍 蛇形式</span>
+                    <span class="mode-chip" data-mode="kebab" onclick="switchMode('kebab')">🥟 连字符式</span>
+                    <span class="mode-chip" data-mode="alternating" onclick="switchMode('alternating')">🎭 交替式</span>
+                </div>
+
+                <div class="action-bar">
+                    <button class="btn btn-primary" onclick="doConvert()">转换</button>
+                    <button class="btn btn-secondary" onclick="resetTool()">清空</button>
+                </div>
+
+                <!-- 结果区 -->
+                <div class="result-section">
+                    <h3>转换结果</h3>
+                    <textarea class="result-area" id="resultArea" readonly placeholder="转换结果将显示在此处..."></textarea>
+                    <div class="result-meta">
+                        <span>字符数：<strong id="charCount">0</strong></span>
+                        <span>词数：<strong id="wordCount">0</strong></span>
+                    </div>
+                    <button class="btn btn-copy" id="copyResultBtn" onclick="copyResult()">📋 复制结果</button>
+                </div>
+            </div>
+
+            <!-- SEO 内容区 -->
+            <div class="seo-content">
+                <h2>什么是大小写转换？</h2>
+                <p>大小写转换是指将文本中的字母在大写和小写之间进行转换的操作。不同的场景需要使用不同的大小写格式：编程命名规范（如camelCase、snake_case）、文章标题格式（Title Case）、日常文本处理（大写/小写）等。</p>
+                <p>本工具提供8种常见的大小写转换模式，满足写作、编程、数据处理等各种场景的需求。所有操作在浏览器本地完成，确保你的文本数据安全。</p>
+
+                <h3>8种转换模式详解</h3>
+                <ul>
+                    <li><strong>大写（UPPERCASE）</strong>：将所有字母转换为大写，适用于标题强调或警示文字。</li>
+                    <li><strong>小写（lowercase）</strong>：将所有字母转换为小写，适用于统一文本格式。</li>
+                    <li><strong>首字母大写（Title Case）</strong>：每个单词的首字母大写，适用于标题、书名等。</li>
+                    <li><strong>句子大写（Sentence case）</strong>：每句话的首字母大写，适用于文章正文。</li>
+                    <li><strong>驼峰式（camelCase）</strong>：首词小写，后续单词首字母大写，适用于JavaScript变量命名。</li>
+                    <li><strong>蛇形式（snake_case）</strong>：所有字母小写，单词间用下划线分隔，适用于Python变量命名。</li>
+                    <li><strong>连字符式（kebab-case）</strong>：所有字母小写，单词间用连字符分隔，适用于CSS类名和URL。</li>
+                    <li><strong>交替式（aLtErNaTiNg）</strong>：奇数字母大写、偶数字母小写，用于创意文本效果。</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2026 calc-tools.top | <a href="/">在线工具箱</a> | <a href="/zh/text/word-counter.html">字数统计</a> | <a href="/zh/text/case-converter.html">大小写转换</a></p>
+    </footer>
+    <script src="../../js/like.js" defer></script>
+    <script src="../js/cookie-consent.js" defer></script>
+</body>
+</html>

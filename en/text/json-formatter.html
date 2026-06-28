@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Formatter - Free Online JSON Format, Minify & Validate Tool</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online JSON formatter tool. Format, minify and validate JSON data with syntax error detection and line number localization. All processing in browser, no data uploaded.">
+    <link rel="canonical" href="https://calc-tools.top/en/text/json-formatter.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/text/json-formatter.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/text/json-formatter.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/en/text/json-formatter.html">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/site.css">
+    <link rel="stylesheet" href="../../css/text-tools.css">
+    <link rel="stylesheet" href="../css/cookie-consent.css">
+    <script src="../../js/i18n.js" defer></script>
+    <script src="../../js/text-tools/json-formatter.js" defer></script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Online Tools", "item": "https://calc-tools.top/" },
+        { "@type": "ListItem", "position": 2, "name": "JSON Formatter", "item": "https://calc-tools.top/en/text/json-formatter" }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What is the difference between JSON format and minify?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "JSON formatting adds indentation and line breaks to make the data more readable, ideal for debugging and development. JSON minification removes all whitespace to reduce data size, which is useful for network transfer and storage to minimize bandwidth usage."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can this tool find JSON syntax errors?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. When JSON data contains syntax errors, the tool automatically detects them and displays the error message along with the exact line and column numbers, helping you quickly locate and fix issues."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my data safe? Will it be uploaded to any server?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, your data is completely safe. All JSON processing is done locally in your browser. Your data never leaves your device, ensuring full privacy and security."
+            }
+        }
+    ]
+}
+</script>
+</head>
+<body>
+    <header>
+        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+        <nav>
+            <a href="/en/">Home</a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="en" selected>🇺🇸 English</option>
+                <option value="zh">🇨🇳 中文</option>
+            </select>
+        </nav>
+    </header>
+    <main>
+        <div class="tool-page">
+            <div class="tool-header">
+                <h1>📋 JSON Formatter</h1>
+                <p>Online JSON formatter, minifier and validator. Format with indentation, minify for smaller size, and validate with syntax error detection and line number localization. All processing happens locally in your browser.</p>
+            </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="json-formatter"><span class="heart">❤</span> <span class="count">0</span></button></div>
+
+            <!-- Ad Slot -->
+            <div class="ad-slot ad-placeholder">Ad Space - Available</div>
+
+            <div class="tool-controls">
+                <textarea class="text-input" id="jsonInput" placeholder="Paste or type JSON data here...">{"name":"Online Toolbox","version":"1.0.0","features":["JSON Format","JSON Minify","Validation"],"config":{"theme":"dark","lang":"en"},"active":true}</textarea>
+
+                <!-- Mode Toggle Buttons -->
+                <div class="mode-chips">
+                    <button class="mode-chip mode-btn active" data-mode="format" onclick="switchJSONMode('format')">🎨 Format</button>
+                    <button class="mode-chip mode-btn" data-mode="minify" onclick="switchJSONMode('minify')">⚡ Minify</button>
+                </div>
+
+                <div class="action-bar">
+                    <button class="btn btn-primary" onclick="doFormat()">Process</button>
+                    <button class="btn btn-secondary" onclick="clearJSON()">Clear</button>
+                </div>
+
+                <!-- Error Display -->
+                <div class="result-area error-section" id="errorSection" style="display:none;border-color:#ef4444;background:#fef2f2;">
+                    <div class="result-label" style="color:#ef4444;">❌ JSON Syntax Error</div>
+                    <div class="result-content" style="color:#dc2626;">
+                        <p><strong>Location:</strong> Line <span id="errorLine">0</span>, Column <span id="errorCol">0</span></p>
+                        <p><strong>Message:</strong> <span id="errorMsg"></span></p>
+                    </div>
+                </div>
+
+                <!-- Result Section -->
+                <div id="resultSection" class="result-section" style="display:none;">
+                    <h3>Output</h3>
+                    <pre class="result-area" id="resultArea" style="font-family: 'SF Mono', 'Fira Code', 'Consolas', 'Courier New', monospace; font-size: 0.9rem; line-height: 1.5; padding: 16px; overflow-x: auto; white-space: pre; word-wrap: normal;"></pre>
+                    <div class="result-meta" id="statsSection" style="display:none;margin-top:8px;">
+                        <span class="char-badge">Original: <strong id="originalSize">0</strong> bytes</span>
+                        <span class="char-badge">Processed: <strong id="formattedSize">0</strong> bytes</span>
+                    </div>
+                    <button class="btn btn-copy" id="copyJSONBtn" onclick="copyJSONResult()">📋 Copy Result</button>
+                </div>
+            </div>
+
+            <!-- SEO Content -->
+            <div class="seo-content">
+                <h2>What is JSON Formatting?</h2>
+                <p>JSON (JavaScript Object Notation) is a lightweight data interchange format widely used in Web APIs, configuration files, and data storage. JSON formatting adds indentation and line breaks to compressed JSON data, making its structure clear and easy to read and debug.</p>
+                <p>When JSON data contains syntax errors, this tool automatically detects them and provides error descriptions with exact locations (line and column numbers). Minify mode removes all unnecessary whitespace to reduce data size, ideal for network transfer and storage.</p>
+
+                <h3>JSON Tool Features</h3>
+                <ul>
+                    <li><strong>Beautify</strong> — Adds 2-space indentation and line breaks for clear JSON structure</li>
+                    <li><strong>Minify</strong> — Removes all whitespace to minimize data size</li>
+                    <li><strong>Validation</strong> — Automatically detects syntax errors with precise line & column location</li>
+                    <li><strong>One-click Copy</strong> — Easily copy formatted or minified results</li>
+                    <li><strong>Local Processing</strong> — All operations done in your browser, no data uploaded</li>
+                </ul>
+
+                <h3>Common Use Cases</h3>
+                <ul>
+                    <li><strong>API Debugging</strong> — Format API response JSON to inspect data structures</li>
+                    <li><strong>Config Editing</strong> — Format package.json, tsconfig.json and other config files</li>
+                    <li><strong>Data Transfer</strong> — Minify JSON to reduce network transfer size</li>
+                    <li><strong>Learning JSON</strong> — Understand JSON hierarchy through formatted visualization</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2026 calc-tools.top | <a href="/en/">Online Toolbox</a> | <a href="/en/text/word-counter.html">Word Counter</a> | <a href="/en/text/case-converter.html">Case Converter</a> | <a href="/en/text/json-formatter.html">JSON Formatter</a></p>
+    </footer>
+    <script src="../../js/like.js" defer></script>
+    <script src="../js/cookie-consent.js" defer></script>
+</body>
+</html>

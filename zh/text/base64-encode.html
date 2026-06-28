@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64 编码解码工具 - 在线 Base64 加密解密</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="免费在线 Base64 编解码工具。支持文本和 Base64 互转，UTF-8 安全编码，中文无乱码。浏览器本地处理，数据不上传服务器，保护隐私安全。">
+    <link rel="canonical" href="https://calc-tools.top/zh/text/base64-encode.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/text/base64-encode.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/text/base64-encode.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/text/base64-encode.html">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/site.css">
+    <link rel="stylesheet" href="../../css/text-tools.css">
+    <link rel="stylesheet" href="../css/cookie-consent.css">
+    <script src="../../js/i18n.js" defer></script>
+    <script src="../../js/text-tools/base64-encode.js" defer></script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "在线工具", "item": "https://calc-tools.top/" },
+        { "@type": "ListItem", "position": 2, "name": "Base64 编解码", "item": "https://calc-tools.top/zh/text/base64-encode" }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "什么是 Base64 编码？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Base64 是一种用 64 个可打印字符表示二进制数据的编码方式。它将每 3 个字节（24 位）编码为 4 个可打印字符，广泛用于在文本协议中传输二进制数据，如邮件附件、图片嵌入和 API 数据传输。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Base64 编码中文会乱码吗？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "使用 TextEncoder/TextDecoder 进行 UTF-8 安全编解码不会出现乱码。本工具基于标准 Web API 实现，确保中文、日文、韩文等 Unicode 字符在编码和解码过程中完整无损。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Base64 编码是加密吗？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "不是。Base64 是一种编码方式而非加密算法，它只是将数据转换为可打印字符形式，不提供任何保密性。任何人都可以轻松解码 Base64 数据，不应将其用于保护敏感信息。"
+            }
+        }
+    ]
+}
+</script>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+        <nav>
+            <a href="/">首页</a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="zh" selected>🇨🇳 中文</option>
+                <option value="en">🇬🇧 English</option>
+            </select>
+        </nav>
+    </header>
+    <main>
+        <div class="tool-page">
+            <div class="tool-header">
+                <h1>🔐 Base64 编码解码工具</h1>
+                <p>在线 Base64 加密解密工具，支持文本与 Base64 互转。基于标准 Web API 实现 UTF-8 安全编解码，中文无乱码。浏览器本地处理，数据不上传服务器。</p>
+            </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="base64-encode"><span class="heart">❤</span> <span class="count">0</span></button></div>
+
+            <!-- 广告位 -->
+            <div class="ad-slot ad-placeholder">广告位 - 招商中</div>
+
+            <div class="tool-controls">
+                <textarea class="text-input" id="textInput" placeholder="请输入要编码或解码的文本..." oninput="doConvert()">你好，欢迎使用 Base64 编码解码工具！</textarea>
+
+                <!-- 模式切换 -->
+                <div class="mode-chips">
+                    <span class="mode-chip active" data-mode="encode" onclick="switchBase64Mode('encode')">🔒 编码</span>
+                    <span class="mode-chip" data-mode="decode" onclick="switchBase64Mode('decode')">🔓 解码</span>
+                </div>
+
+                <div class="action-bar">
+                    <button class="btn btn-primary" onclick="doConvert()">转换</button>
+                    <button class="btn btn-secondary" onclick="clearTool()">清空</button>
+                </div>
+
+                <!-- 错误提示 -->
+                <div class="result-area error-section" id="errorSection" style="display:none;border-color:#ef4444;background:#fef2f2;">
+                    <div class="result-label" style="color:#ef4444;">❌ 解码错误</div>
+                    <div class="result-content" style="color:#dc2626;">
+                        <p><strong>描述：</strong><span id="errorMsg"></span></p>
+                    </div>
+                </div>
+
+                <!-- 结果区域 -->
+                <div id="resultSection" class="result-section" style="display:none;">
+                    <h3>输出结果</h3>
+                    <pre class="result-area" id="resultArea" style="font-family: 'SF Mono', 'Fira Code', 'Consolas', 'Courier New', monospace; font-size: 0.9rem; line-height: 1.5; padding: 16px; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"></pre>
+                    <button class="btn btn-copy" id="copyBtn" onclick="copyBase64Result()">📋 复制结果</button>
+                </div>
+            </div>
+
+            <!-- SEO 内容区 -->
+            <div class="seo-content">
+                <h2>什么是 Base64 编码？</h2>
+                <p>Base64 是一种基于 64 个可打印字符来表示二进制数据的编码方式。它广泛用于电子邮件附件（MIME）、网页中嵌入图片（Data URI）、API 数据传输、JSON Web Token (JWT) 等场景。Base64 将每 3 个字节编码为 4 个字符，编码后数据大小约为原始数据的 133%。</p>
+                <p>本工具使用浏览器内置的 <code>TextEncoder</code> 和 <code>TextDecoder</code> API 实现 UTF-8 安全编解码，确保中文、日文、韩文等非 ASCII 字符在编码和解码过程中不会出现乱码问题。</p>
+
+                <h3>Base64 编解码的常见场景</h3>
+                <ul>
+                    <li><strong>数据 URI 嵌入图片</strong> — 将图片转换为 Base64 嵌入 HTML/CSS，减少 HTTP 请求</li>
+                    <li><strong>API 数据传输</strong> — 在 JSON 中安全传输二进制数据</li>
+                    <li><strong>JWT Token 解析</strong> — 解码 JWT 的 Payload 部分查看内容</li>
+                    <li><strong>配置文件加密</strong> — 简单混淆配置中的敏感信息（注意：不是真正的加密）</li>
+                    <li><strong>邮件附件</strong> — MIME 协议使用 Base64 编码邮件附件</li>
+                </ul>
+
+                <h3>注意事项</h3>
+                <p>Base64 编码不是加密算法，它只是一种数据表示方式。任何人都可以轻松解码 Base64 数据，因此不要把 Base64 当作密码保护手段。如果你需要保护数据安全，请使用 AES、RSA 等标准加密算法。</p>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2026 calc-tools.top | <a href="/">在线工具箱</a> | <a href="/zh/text/word-counter.html">字数统计</a> | <a href="/zh/text/case-converter.html">大小写转换</a> | <a href="/zh/text/json-formatter.html">JSON 格式化</a> | <a href="/zh/text/base64-encode.html">Base64 编解码</a></p>
+    </footer>
+    <script src="../../js/like.js" defer></script>
+    <script src="../js/cookie-consent.js" defer></script>
+</body>
+</html>

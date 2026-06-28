@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工具箱里 - 实用工具聚合</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="工具箱里 - 免费在线工具集合，快捷易用。">
+    <link rel="canonical" href="https://calc-tools.top/">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/">
+    <link rel="stylesheet" href="css/site.css?v=10">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/text-tools.css">
+    <link rel="stylesheet" href="css/cookie-consent.css">
+    <script src="js/i18n.js" defer></script>
+    <script src="js/site.js?v=16" defer>
+    <script src="js/cookie-consent.js" defer></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "name": "在线工具",
+                "url": "https://calc-tools.top/",
+                "description": "工具箱里 - 免费在线工具集合，快捷易用。",
+                "inLanguage": "zh-CN"
+            },
+            {
+                "@type": "CollectionPage",
+                "name": "在线工具 - 免费工具",
+                "description": "工具箱里 - 免费在线工具集合，快捷易用。",
+                "url": "https://calc-tools.top/",
+                "inLanguage": "zh-CN",
+                "mainEntity": {
+                    "@type": "ItemList",
+                    "itemListElement": [
+                        { "@type": "SoftwareApplication", "name": "房贷计算器", "url": "https://calc-tools.top/zh/mortgage" },
+                        { "@type": "SoftwareApplication", "name": "个税计算器", "url": "https://calc-tools.top/zh/tax2026" },
+                        { "@type": "SoftwareApplication", "name": "BMI 计算器", "url": "https://calc-tools.top/zh/bmi" },
+                        { "@type": "SoftwareApplication", "name": "日期计算器", "url": "https://calc-tools.top/zh/date-calc" },
+                        { "@type": "SoftwareApplication", "name": "公积金计算器", "url": "https://calc-tools.top/zh/housing-fund" },
+                        { "@type": "SoftwareApplication", "name": "年龄计算器", "url": "https://calc-tools.top/zh/age-calc" },
+                        { "@type": "SoftwareApplication", "name": "折扣计算器", "url": "https://calc-tools.top/zh/discount" },
+                        { "@type": "SoftwareApplication", "name": "油耗计算器", "url": "https://calc-tools.top/zh/fuel-cost" },
+                        { "@type": "SoftwareApplication", "name": "电费计算器", "url": "https://calc-tools.top/zh/electricity" },
+                        { "@type": "SoftwareApplication", "name": "标准体重计算器", "url": "https://calc-tools.top/zh/ideal-weight" },
+                        { "@type": "SoftwareApplication", "name": "加班费计算器", "url": "https://calc-tools.top/zh/overtime" },
+                        { "@type": "SoftwareApplication", "name": "单位换算器", "url": "https://calc-tools.top/zh/unit-converter" },
+                        { "@type": "SoftwareApplication", "name": "排卵期计算器", "url": "https://calc-tools.top/zh/ovulation" },
+                        { "@type": "SoftwareApplication", "name": "贷款对比计算器", "url": "https://calc-tools.top/zh/loan-compare" },
+                        { "@type": "SoftwareApplication", "name": "复利计算器", "url": "https://calc-tools.top/zh/compound-interest" },
+                        { "@type": "SoftwareApplication", "name": "车贷计算器", "url": "https://calc-tools.top/zh/car-loan" },
+                        { "@type": "SoftwareApplication", "name": "图片压缩", "url": "https://calc-tools.top/zh/image/compress" },
+                        { "@type": "SoftwareApplication", "name": "格式转换", "url": "https://calc-tools.top/zh/image/convert" },
+                        { "@type": "SoftwareApplication", "name": "裁剪缩放", "url": "https://calc-tools.top/zh/image/resize" },
+                        { "@type": "SoftwareApplication", "name": "图片转Base64", "url": "https://calc-tools.top/zh/image/base64" },
+                        { "@type": "SoftwareApplication", "name": "图片取色器", "url": "https://calc-tools.top/zh/image/color-picker" }
+                    ]
+                }
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+        <nav>
+            <a href="/"><span data-i18n="siteName">首页</span></a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="zh" selected>🇨🇳 中文</option>
+                <option value="en">🇬🇧 English</option>
+            </select>
+            <button id="theme-toggle" class="theme-toggle" aria-label="切换暗色模式">
+                <span class="theme-icon">☀️</span>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h1>工具箱里 - 实用工具聚合</h1>
+            <p data-i18n="pageDesc">工具箱里 - 免费在线工具集合，快捷易用。</p>
+        </div>
+
+        <div class="search-bar">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="搜索工具..." aria-label="搜索工具">
+            <button class="search-clear">✕</button>
+        </div>
+
+        <div class="category-filters"><button class="category-chip active" data-category="all">全部</button>
+            <button class="category-chip" data-category="finance">💰 财务</button>
+            <button class="category-chip" data-category="health">🏥 健康</button>
+            <button class="category-chip" data-category="life">🏠 生活</button>
+            <button class="category-chip" data-category="shopping">🛒 购物</button>
+            <button class="category-chip" data-category="travel">🚗 出行</button>
+            <button class="category-chip" data-category="utility">🔧 工具</button>
+            <button class="category-chip" data-category="image">🖼️ 图片</button>
+            <button class="category-chip" data-category="text">✏️ 文字</button>
+        </div>
+        <div class="hot-search" style="display:none;"><span class="hot-search-label">🔥 大家都在搜：</span><span class="hot-search-terms"></span></div><div class="hot-section" id="hotToolsContainer" style="display:none;"><div class="section-divider"><h2>🔥 热门工具</h2></div><div class="hot-tools-grid" id="hotToolsGrid"></div></div><div class="section-divider"><h2>🧮 计算工具</h2></div><div class="tool-grid">
+            <div class="tool-card-wrap"><a href="/zh/mortgage.html" class="tool-card" data-category="finance" style="text-decoration:none;color:inherit;">
+                <div class="icon">🏠</div>
+                <h3 data-i18n="mortgage">房贷计算器</h3>
+                <p data-i18n="mortgageDesc">等额本息 & 等额本金，支持商业贷款、公积金贷款、组合贷款</p></a><div class="tool-tags"><a href="/" class="tag tag-finance" data-tag="finance">💰 财务</a></div><button class="like-btn" data-like-id="mortgage"><span class="heart">❤</span><span class="count">0</span></button></div>            <div class="tool-card-wrap"><a href="/zh/tax2026.html" class="tool-card" data-category="finance" style="text-decoration:none;color:inherit;">
+                <div class="icon">📋</div>
+                <h3 data-i18n="tax2026">个税计算器</h3>
+                <p data-i18n="tax2026Desc">2026年最新个税税率，一键计算应缴税款与税后收入</p></a><div class="tool-tags"><a href="/" class="tag tag-finance" data-tag="finance">💰 财务</a></div><button class="like-btn" data-like-id="tax2026"><span class="heart">❤</span><span class="count">0</span></button></div>            <div class="tool-card-wrap"><a href="/zh/bmi.html" class="tool-card" data-category="health" style="text-decoration:none;color:inherit;">
+                <div class="icon">⚖️</div>
+                <h3 data-i18n="bmi">BMI 计算器</h3>
+                <p data-i18n="bmiDesc">根据身高体重计算身体质量指数，了解体重健康状况</p></a><div class="tool-tags"><a href="/" class="tag tag-health" data-tag="health">🏥 健康</a></div><button class="like-btn" data-like-id="bmi"><span class="heart">❤</span><span class="count">0</span></button></div>            <div class="tool-card-wrap"><a href="/zh/date-calc.html" class="tool-card" data-category="life" style="text-decoration:none;color:inherit;">
+                <div class="icon">📅</div>
+                <h3 data-i18n="dateCalc">日期计算器</h3>
+                <p data-i18n="dateCalcDesc">计算日期差、推算目标日期、工作日计算</p></a><div class="tool-tags"><a href="/" class="tag tag-life" data-tag="life">🏠 生活</a></div><button class="like-btn" data-like-id="date-calc"><span class="heart">❤</span><span class="count">0</span></button></div>            <div class="tool-card-wrap"><a href="/zh/housing-fund.html" class="tool-card" data-category="finance" style="text-decoration:none;color:inherit;">
+                <div class="icon">💰</div>
+                <h3 data-i18n="housingFund">公积金计算器</h3>
+                <p data-i18n="housingFundDesc">公积金贷款额度与利率计算，支持最新政策</p></a><div class="tool-tags"><a href="/" class="tag tag-finance" data-tag="finance">💰 财务</a></div><button class="like-btn" data-like-id="housing-fund"><span class="heart">❤</span><span class="count">0</span></button></div>            <div class="tool-card-wrap"><a href="/zh/age-calc.html" class="tool-card" data-category="life" style="text-decoration:none;color:inherit;">
+                <div class="icon">🎂</div>
+                <h3>年龄计算器</h3>
+                <p>精确计算周岁年龄、出生天数和生肖</p></a><div class="tool-tags"><a href="/" class="tag tag-life" data-tag="life">🏠 生活</a></div><button class="like-btn" data-like-id="age-calc"><span class="heart">❤</span><span class="count">0</span></button></div>            <div class="tool-card-wrap"><a href="/zh/discount.html" class="tool-card" data-category="shopping,finance" style="text-decoration:none;color:inherit;">
+                <div class="icon">🏷️</div>
+                <h3>折扣计算器</h3>
+                <p>快速计算打折价格和节省金额</p></a><div class="tool-tags"><a href="/" class="tag tag-shopping" data-tag="shopping">🛒 购物</a><a href="/" class="tag tag-finance" data-tag="finance">💰 财务</a></div><button class="like-btn" data-like-id="discount"><span class="heart">❤</span><span class="count">0</span></button></div>            <div class="tool-card-wrap"><a href="/zh/fuel-cost.html" class="tool-card" data-category="travel,finance" style="text-decoration:none;color:inherit;">
+                <div class="icon">⛽</div>
+                <h3>油耗计算器</h3>
+                <p>计算油费支出和每公里成本</p></a><div class="tool-tags"><a href="/" class="tag tag-travel" data-tag="travel">🚗 出行</a><a href="/" class="tag tag-finance" data-tag="finance">💰 财务</a></div><button class="like-btn" data-like-id="fuel-cost"><span class="heart">❤</span><span class="count">0</span></button></div>            <div class="tool-card-wrap"><a href="/zh/electricity.html" class="tool-card" data-category="life,finance" style="text-decoration:none;color:inherit;">
+                <div class="icon">💡</div>
+                <h3>电费计算器</h3>
+                <p>计算电器耗电量和电费</p></a><div class="tool-tags"><a href="/" class="tag tag-life" data-tag="life">🏠 生活</a><a href="/" class="tag tag-finance" data-tag="finance">💰 财务</a></div><button class="like-btn" data-like-id="electricity"><span class="heart">❤</span><span class="count">0</span></button></div>            <div class="tool-card-wrap"><a href="/zh/ideal-weight.html" class="tool-card" data-category="health" style="text-decoration:none;color:inherit;">
+                <div class="icon">🎯</div>
+                <h3>标准体重计算器</h3>
+                <p>基于多种公式计算健康体重范围</p></a><div class="tool-tags"><a href="/" class="tag tag-health" data-tag="health">🏥 健康</a></div><button class="like-btn" data-like-id="ideal-weight"><span class="heart">❤</span><span class="count">0</span></button></div>            <div class="tool-card-wrap"><a href="/zh/overtime.html" class="tool-card" data-category="finance" style="text-decoration:none;color:inherit;">
+                <div class="icon">⏰</div>
+                <h3>加班费计算器</h3>
+                <p>按劳动法计算加班工资</p></a><div class="tool-tags"><a href="/" class="tag tag-finance" data-tag="finance">💰 财务</a></div><button class="like-btn" data-like-id="overtime"><span class="heart">❤</span><span class="count">0</span></button></div>            <div class="tool-card-wrap"><a href="/zh/unit-converter.html" class="tool-card" data-category="utility" style="text-decoration:none;color:inherit;"><div class="icon">📏</div><h3>单位换算器</h3><p>长度/重量/温度/面积换算</p></a><div class="tool-tags"><a href="/" class="tag tag-utility" data-tag="utility">🔧 工具</a></div><button class="like-btn" data-like-id="unit-converter"><span class="heart">❤</span><span class="count">0</span></button></div>            <div class="tool-card-wrap"><a href="/zh/ovulation.html" class="tool-card" data-category="health,life" style="text-decoration:none;color:inherit;"><div class="icon">🌸</div><h3>排卵期计算器</h3><p>推算排卵日和易孕期</p></a><div class="tool-tags"><a href="/" class="tag tag-health" data-tag="health">🏥 健康</a><a href="/" class="tag tag-life" data-tag="life">🏠 生活</a></div><button class="like-btn" data-like-id="ovulation"><span class="heart">❤</span><span class="count">0</span></button></div>            <div class="tool-card-wrap"><a href="/zh/loan-compare.html" class="tool-card" data-category="finance" style="text-decoration:none;color:inherit;"><div class="icon">📊</div><h3>贷款对比计算器</h3><p>比较不同利率的月供差异</p></a><div class="tool-tags"><a href="/" class="tag tag-finance" data-tag="finance">💰 财务</a></div><button class="like-btn" data-like-id="loan-compare"><span class="heart">❤</span><span class="count">0</span></button></div>            <div class="tool-card-wrap"><a href="/zh/compound-interest.html" class="tool-card" data-category="finance" style="text-decoration:none;color:inherit;"><div class="icon">📈</div><h3>复利计算器</h3><p>计算复利终值和投资收益</p></a><div class="tool-tags"><a href="/" class="tag tag-finance" data-tag="finance">💰 财务</a></div><button class="like-btn" data-like-id="compound-interest"><span class="heart">❤</span><span class="count">0</span></button></div>            <div class="tool-card-wrap"><a href="/zh/car-loan.html" class="tool-card" data-category="finance" style="text-decoration:none;color:inherit;"><div class="icon">🚗</div><h3>车贷计算器</h3><p>计算汽车贷款月供和利息</p></a><div class="tool-tags"><a href="/" class="tag tag-finance" data-tag="finance">💰 财务</a></div><button class="like-btn" data-like-id="car-loan"><span class="heart">❤</span><span class="count">0</span></button></div>        </div>
+
+        <div class="section-divider"><h2>🖼️ 图片工具 <span class="privacy-badge-sm">🔒 本地处理 · 不上传</span></h2></div><div class="tool-grid">
+            <div class="tool-card-wrap"><a href="/zh/image/compress.html" class="tool-card" data-category="image" style="text-decoration:none;color:inherit;"><div class="icon">🗜️</div><h3>图片压缩</h3><p>压缩图片大小，保持清晰度</p></a><div class="tool-tags"><a href="/" class="tag tag-image" data-tag="image">🖼️ 图片</a></div><button class="like-btn" data-like-id="compress"><span class="heart">❤</span><span class="count">0</span></button></div>
+            <div class="tool-card-wrap"><a href="/zh/image/convert.html" class="tool-card" data-category="image" style="text-decoration:none;color:inherit;"><div class="icon">🔄</div><h3>格式转换</h3><p>转换 JPG/PNG/WebP 格式</p></a><div class="tool-tags"><a href="/" class="tag tag-image" data-tag="image">🖼️ 图片</a></div><button class="like-btn" data-like-id="convert"><span class="heart">❤</span><span class="count">0</span></button></div>
+            <div class="tool-card-wrap"><a href="/zh/image/resize.html" class="tool-card" data-category="image" style="text-decoration:none;color:inherit;"><div class="icon">📐</div><h3>裁剪缩放</h3><p>调整尺寸，保持宽高比</p></a><div class="tool-tags"><a href="/" class="tag tag-image" data-tag="image">🖼️ 图片</a></div><button class="like-btn" data-like-id="resize"><span class="heart">❤</span><span class="count">0</span></button></div>
+            <div class="tool-card-wrap"><a href="/zh/image/base64.html" class="tool-card" data-category="image" style="text-decoration:none;color:inherit;"><div class="icon">🔣</div><h3>图片转Base64</h3><p>转为 Base64 嵌入代码</p></a><div class="tool-tags"><a href="/" class="tag tag-image" data-tag="image">🖼️ 图片</a></div><button class="like-btn" data-like-id="base64"><span class="heart">❤</span><span class="count">0</span></button></div>
+            <div class="tool-card-wrap"><a href="/zh/image/color-picker.html" class="tool-card" data-category="image" style="text-decoration:none;color:inherit;"><div class="icon">🎨</div><h3>图片取色器</h3><p>提取图片中的颜色值</p></a><div class="tool-tags"><a href="/" class="tag tag-image" data-tag="image">🖼️ 图片</a></div><button class="like-btn" data-like-id="color-picker"><span class="heart">❤</span><span class="count">0</span></button></div>
+        </div>
+
+        <div class="section-divider"><h2>📝 文字工具</h2></div><div class="tool-grid">
+            <div class="tool-card-wrap"><a href="/zh/text/word-counter.html" class="tool-card" data-category="text" style="text-decoration:none;color:inherit;"><div class="icon">🔤</div><h3>字数统计</h3><p>统计字符数、单词数、段落数</p></a><div class="tool-tags"><a href="/" class="tag tag-text" data-tag="text">📝 文字</a></div><button class="like-btn" data-like-id="word-counter"><span class="heart">❤</span><span class="count">0</span></button></div>
+            <div class="tool-card-wrap"><a href="/zh/text/case-converter.html" class="tool-card" data-category="text" style="text-decoration:none;color:inherit;"><div class="icon">🔠</div><h3>大小写转换</h3><p>文本全大、全小写、首字母大写</p></a><div class="tool-tags"><a href="/" class="tag tag-text" data-tag="text">📝 文字</a></div><button class="like-btn" data-like-id="case-converter"><span class="heart">❤</span><span class="count">0</span></button></div>
+            <div class="tool-card-wrap"><a href="/zh/text/json-formatter.html" class="tool-card" data-category="text" style="text-decoration:none;color:inherit;"><div class="icon">📋</div><h3>JSON 格式化</h3><p>格式化/压缩 JSON 数据</p></a><div class="tool-tags"><a href="/" class="tag tag-text" data-tag="text">📝 文字</a></div><button class="like-btn" data-like-id="json-formatter"><span class="heart">❤</span><span class="count">0</span></button></div>
+            <div class="tool-card-wrap"><a href="/zh/text/base64-encode.html" class="tool-card" data-category="text" style="text-decoration:none;color:inherit;"><div class="icon">🔐</div><h3>Base64 编解码</h3><p>文本与 Base64 互转</p></a><div class="tool-tags"><a href="/" class="tag tag-text" data-tag="text">📝 文字</a></div><button class="like-btn" data-like-id="base64-encode"><span class="heart">❤</span><span class="count">0</span></button></div>
+            <div class="tool-card-wrap"><a href="/zh/text/url-encode.html" class="tool-card" data-category="text" style="text-decoration:none;color:inherit;"><div class="icon">🔗</div><h3>URL 编解码</h3><p>URL 编码与解码</p></a><div class="tool-tags"><a href="/" class="tag tag-text" data-tag="text">📝 文字</a></div><button class="like-btn" data-like-id="url-encode"><span class="heart">❤</span><span class="count">0</span></button></div>
+            <div class="tool-card-wrap"><a href="/zh/text/text-cleaner.html" class="tool-card" data-category="text" style="text-decoration:none;color:inherit;"><div class="icon">🧹</div><h3>文本清理</h3><p>清除多余空格、空行、特殊字符</p></a><div class="tool-tags"><a href="/" class="tag tag-text" data-tag="text">📝 文字</a></div><button class="like-btn" data-like-id="text-cleaner"><span class="heart">❤</span><span class="count">0</span></button></div>
+            <div class="tool-card-wrap"><a href="/zh/text/html-stripper.html" class="tool-card" data-category="text" style="text-decoration:none;color:inherit;"><div class="icon">🏷️</div><h3>HTML 剥离</h3><p>移除 HTML 标签，提取纯文本</p></a><div class="tool-tags"><a href="/" class="tag tag-text" data-tag="text">📝 文字</a></div><button class="like-btn" data-like-id="html-stripper"><span class="heart">❤</span><span class="count">0</span></button></div>
+            <div class="tool-card-wrap"><a href="/zh/text/text-diff.html" class="tool-card" data-category="text" style="text-decoration:none;color:inherit;"><div class="icon">📊</div><h3>文本对比</h3><p>比较两段文本的差异</p></a><div class="tool-tags"><a href="/" class="tag tag-text" data-tag="text">📝 文字</a></div><button class="like-btn" data-like-id="text-diff"><span class="heart">❤</span><span class="count">0</span></button></div>
+            <div class="tool-card-wrap"><a href="/zh/text/uuid-generator.html" class="tool-card" data-category="text" style="text-decoration:none;color:inherit;"><div class="icon">🆔</div><h3>UUID 生成</h3><p>生成 UUID v4 唯一标识符</p></a><div class="tool-tags"><a href="/" class="tag tag-text" data-tag="text">📝 文字</a></div><button class="like-btn" data-like-id="uuid-generator"><span class="heart">❤</span><span class="count">0</span></button></div>
+            <div class="tool-card-wrap"><a href="/zh/text/reading-time.html" class="tool-card" data-category="text" style="text-decoration:none;color:inherit;"><div class="icon">📖</div><h3>阅读时间</h3><p>估算文章阅读所需时间</p></a><div class="tool-tags"><a href="/" class="tag tag-text" data-tag="text">📝 文字</a></div><button class="like-btn" data-like-id="reading-time"><span class="heart">❤</span><span class="count">0</span></button></div>
+            <div class="tool-card-wrap"><a href="/zh/text/keyword-density.html" class="tool-card" data-category="text" style="text-decoration:none;color:inherit;"><div class="icon">🎯</div><h3>关键词密度</h3><p>分析关键词出现频率与密度</p></a><div class="tool-tags"><a href="/" class="tag tag-text" data-tag="text">📝 文字</a></div><button class="like-btn" data-like-id="keyword-density"><span class="heart">❤</span><span class="count">0</span></button></div>
+        </div>
+
+        <div class="ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中</div>
+            <div class="no-results">没有找到匹配的工具</div>
+                <div class="blog-section">
+            <h2>📖 工具指南</h2>
+            <div class="article-list homepage-article-list">
+                <article class="article-item" data-category="finance">
+                    <h4><a href="/blog/zh/equal-installment-vs-equal-principal.html">等额本息 vs 等额本金怎么选？真实案例对比</a></h4>
+                    <p class="article-meta">📅 2026-06-25</p><button class="article-like" data-blog-id="blog_equal_installment_vs_equal_principal"><span class="heart">❤</span> <span class="like-count">0</span></button>
+                    <p class="article-summary">买房贷款选等额本息还是等额本金？通过真实案例对比两种还款方式的利息差异和适用人群。</p>
+                    <div class="article-tags"><a href="/blog/zh/" class="tag tag-finance" data-tag="finance">💰 财务</a></div>
+                </article>
+                <article class="article-item" data-category="finance">
+                    <h4><a href="/blog/zh/mortgage-rate-trend-2026.html">2026 房贷利率最新趋势解读</a></h4>
+                    <p class="article-meta">📅 2026-06-25</p><button class="article-like" data-blog-id="blog_mortgage_rate_trend_2026"><span class="heart">❤</span> <span class="like-count">0</span></button>
+                    <p class="article-summary">2026 年房贷利率最新政策解读，分析 LPR 走势和未来趋势，帮您把握购房时机。</p>
+                    <div class="article-tags"><a href="/blog/zh/" class="tag tag-finance" data-tag="finance">💰 财务</a></div>
+                </article>
+                <article class="article-item" data-category="finance">
+                    <h4><a href="/blog/zh/tax-deduction-guide-2026.html">2026 个税抵扣全攻略，这样申报最省钱</a></h4>
+                    <p class="article-meta">📅 2026-06-25</p><button class="article-like" data-blog-id="blog_tax_deduction_guide_2026"><span class="heart">❤</span> <span class="like-count">0</span></button>
+                    <p class="article-summary">2026 年个税专项附加扣除全攻略，子女教育、房贷利息、赡养老人等抵扣项目详解。</p>
+                    <div class="article-tags"><a href="/blog/zh/" class="tag tag-finance" data-tag="finance">💰 财务</a></div>
+                </article>
+                <article class="article-item" data-category="health">
+                    <h4><a href="/blog/zh/bmi-normal-range-guide.html">BMI 多少算正常？标准范围全面解读</a></h4>
+                    <p class="article-meta">📅 2026-06-25</p><button class="article-like" data-blog-id="blog_bmi_normal_range_guide"><span class="heart">❤</span> <span class="like-count">0</span></button>
+                    <p class="article-summary">BMI 正常范围是多少？了解 BMI 指数标准和计算方法，附健康管理建议。</p>
+                    <div class="article-tags"><a href="/blog/zh/" class="tag tag-health" data-tag="health">🏥 健康</a></div>
+                </article>
+                <article class="article-item" data-category="finance">
+                    <h4><a href="/blog/zh/housing-fund-loan-guide.html">公积金贷款额度怎么算？2026 最新政策</a></h4>
+                    <p class="article-meta">📅 2026-06-25</p><button class="article-like" data-blog-id="blog_housing_fund_loan_guide"><span class="heart">❤</span> <span class="like-count">0</span></button>
+                    <p class="article-summary">公积金贷款额度计算方法详解，缴存年限、账户余额、月缴存额对额度的影响。</p>
+                    <div class="article-tags"><a href="/blog/zh/" class="tag tag-finance" data-tag="finance">💰 财务</a></div>
+                </article>
+                <article class="article-item" data-category="life">
+                    <h4><a href="/blog/zh/date-calculation-tips.html">日期计算实用技巧，工作生活都用得上</a></h4>
+                    <p class="article-meta">📅 2026-06-25</p><button class="article-like" data-blog-id="blog_date_calculation_tips"><span class="heart">❤</span> <span class="like-count">0</span></button>
+                    <p class="article-summary">日期计算在日常工作中非常实用，合同管理、项目排期、旅行规划等场景的日期计算方法。</p>
+                    <div class="article-tags"><a href="/blog/zh/" class="tag tag-life" data-tag="life">🏠 生活</a></div>
+                </article>
+                            <article class="article-item" data-category="health">
+                    <h4><a href="/blog/zh/standard-weight-guide.html">标准体重对照表：男女身高体重标准范围</a></h4>
+                    <p class="article-meta">📅 2026-06-26</p><button class="article-like" data-blog-id="blog_standard_weight_guide"><span class="heart">❤</span> <span class="like-count">0</span></button>
+                    <p class="article-summary">标准体重是多少？男性和女性的标准体重对照表，体重标准计算公式参考。</p>
+                    <div class="article-tags"><a href="/blog/zh/" class="tag tag-health" data-tag="health">🏥 健康</a></div>
+                </article>
+                <article class="article-item" data-category="finance">
+                    <h4><a href="/blog/zh/overtime-pay-guide.html">加班工资怎么算？劳动法加班费计算标准</a></h4>
+                    <p class="article-meta">📅 2026-06-26</p><button class="article-like" data-blog-id="blog_overtime_pay_guide"><span class="heart">❤</span> <span class="like-count">0</span></button>
+                    <p class="article-summary">加班工资计算标准详解，工作日1.5倍、休息日2倍、法定节假日3倍，附加班费计算方法。</p>
+                    <div class="article-tags"><a href="/blog/zh/" class="tag tag-finance" data-tag="finance">💰 财务</a></div>
+                </article>
+                <article class="article-item" data-category="image">
+                    <h4><a href="/blog/zh/image-compression-guide.html">图片太大怎么压缩？在线图片压缩完全指南</a></h4>
+                    <p class="article-meta">📅 2026-06-26</p><button class="article-like" data-blog-id="blog_image_compression_guide"><span class="heart">❤</span> <span class="like-count">0</span></button>
+                    <p class="article-summary">免费在线图片压缩指南，浏览器本地处理不上传，支持 JPG/PNG/WebP 压缩。</p>
+                    <div class="article-tags"><a href="/blog/zh/" class="tag tag-image" data-tag="image">🖼️ 图片</a></div>
+                </article>
+                <article class="article-item" data-category="shopping">
+                    <h4><a href="/blog/zh/discount-calculation-tips.html">打折怎么算？折扣计算公式与省钱技巧</a></h4>
+                    <p class="article-meta">📅 2026-06-26</p><button class="article-like" data-blog-id="blog_discount_calculation_tips"><span class="heart">❤</span> <span class="like-count">0</span></button>
+                    <p class="article-summary">折扣计算公式、打折计算方法、满减和折扣的区别，帮你快速计算折后价格。</p>
+                    <div class="article-tags"><a href="/blog/zh/" class="tag tag-shopping" data-tag="shopping">🛒 购物</a></div>
+                </article>
+                <article class="article-item" data-category="finance">
+                    <h4><a href="/blog/zh/compound-interest-guide.html">复利是什么意思？复利计算公式与投资指南</a></h4>
+                    <p class="article-meta">📅 2026-06-26</p><button class="article-like" data-blog-id="blog_compound_interest_guide"><span class="heart">❤</span> <span class="like-count">0</span></button>
+                    <p class="article-summary">复利是什么意思？复利计算公式详解，如何利用复利进行长期投资理财。</p>
+                    <div class="article-tags"><a href="/blog/zh/" class="tag tag-finance" data-tag="finance">💰 财务</a></div>
+                </article>
+                <article class="article-item" data-category="finance">
+                    <h4><a href="/blog/zh/car-loan-calculator-guide.html">买车贷款怎么算？车贷月供和利息全解析</a></h4>
+                    <p class="article-meta">📅 2026-06-26</p><button class="article-like" data-blog-id="blog_car_loan_calculator_guide"><span class="heart">❤</span> <span class="like-count">0</span></button>
+                    <p class="article-summary">车贷月供计算、利息计算、首付比例选择，汽车贷款计算器帮你了解月供和总利息。</p>
+                    <div class="article-tags"><a href="/blog/zh/" class="tag tag-finance" data-tag="finance">💰 财务</a></div>
+                </article></div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="/">首页</a>
+            <a href="/about.html">关于</a>
+            <a href="/privacy.html">隐私政策</a>
+            <a href="/contact.html">联系</a>
+            <a href="/blog/zh/">博客</a>
+        </div>
+        <p data-i18n="copyright">© 2026 工具箱里 | 免费在线工具</p>
+    </footer>
+</body>
+</html>

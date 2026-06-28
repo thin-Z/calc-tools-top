@@ -1,0 +1,17 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 90" width="180" height="45">
+  <defs>
+    <linearGradient id="hg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5"/><stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="hl" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <rect x="6" y="24" width="44" height="28" rx="5" fill="url(#hg)"/>
+  <path d="M 6 24 L 6 16 Q 6 10 12 8 L 44 8 Q 50 10 50 16 L 50 24 Z" fill="url(#hl)"/>
+  <rect x="20" y="22" width="16" height="4" rx="2" fill="#fbbf24"/>
+  <circle cx="10" cy="11" r="1.5" fill="#fbbf24" opacity="0.8"/>
+  <circle cx="46" cy="11" r="1.5" fill="#34d399" opacity="0.8"/>
+  <text x="64" y="34" font-family="'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif" font-size="24" font-weight="700" fill="#1f2937" letter-spacing="2">工具箱里</text>
+  <text x="64" y="48" font-family="'Inter','Segoe UI',sans-serif" font-size="8" fill="#a5b4fc" letter-spacing="2.5" font-weight="600">INSIDE THE TOOLBOX</text>
+</svg>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线字数统计与关键词密度分析工具 - 免费中英文词频分析</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="免费在线字数统计与关键词密度分析工具。支持中文、英文文本统计，一键计算总字符数、中文字数、英文词数、段落数、句子数、行数，并提供关键词词频排名。">
+    <link rel="canonical" href="https://calc-tools.top/zh/text/word-counter.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/text/word-counter.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/text/word-counter.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/text/word-counter.html">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/site.css">
+    <link rel="stylesheet" href="../../css/text-tools.css">
+    <link rel="stylesheet" href="../css/cookie-consent.css">
+    <script src="../../js/i18n.js" defer></script>
+    <script src="../../js/text-tools/word-counter.js" defer></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "在线工具", "item": "https://calc-tools.top/" },
+            { "@type": "ListItem", "position": 2, "name": "字数统计", "item": "https://calc-tools.top/zh/text/word-counter" }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "字数统计包含哪些指标？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "字数统计包含总字符数、中文字数、英文词数、段落数、句子数、行数、可见字符数、数字数和标点数共9项指标，全面覆盖文本分析需求。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "关键词密度分析有什么用处？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "关键词密度分析可以帮助作者了解文本中各个词汇的出现频率，对SEO优化、论文写作、内容创作等场景非常有用，避免关键词堆砌或使用不足。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "支持哪些语言？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "本工具支持中文和英文文本。中文按单个汉字分割统计，英文按单词分割统计并自动过滤常见停用词（如the、a、is等），使分析结果更加准确。"
+                }
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+        <nav>
+            <a href="/">首页</a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="zh" selected>🇨🇳 中文</option>
+                <option value="en">🇬🇧 English</option>
+            </select>
+        </nav>
+    </header>
+    <main>
+        <div class="tool-page">
+            <div class="tool-header">
+                <h1>📑 在线字数统计工具</h1>
+                <p>支持中文、英文文本统计与关键词密度分析。浏览器本地处理，文本不上传服务器。</p>
+            </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="word-counter"><span class="heart">❤</span> <span class="count">0</span></button></div>
+            <!-- 广告位 -->
+            <div class="ad-slot ad-placeholder">广告位 - 招商中</div>
+            <div class="tool-controls">
+                <textarea class="text-input" id="textInput" placeholder="请输入你要统计的文字内容，或将文本粘贴到这里...">你好，欢迎使用在线字数统计工具！本工具可以帮助你快速统计文本的各项指标，包括总字符数、中文字数、英文词数、段落数、句子数、行数等，还能分析关键词出现频率。</textarea>
+                <!-- 模式切换 -->
+                <div class="mode-chips">
+                    <span class="mode-chip active" data-mode="stats" onclick="switchMode('stats')">📳 字数统计</span>
+                    <span class="mode-chip" data-mode="keywords" onclick="switchMode('keywords')">🔽 关键词密度</span>
+                </div>
+                <div class="action-bar">
+                    <button class="btn btn-primary" onclick="doAnalyze()">分析</button>
+                    <button class="btn btn-secondary" onclick="resetTool()">清空</button>
+                    <button class="copy-btn" id="copyResultBtn" onclick="copyResult()">📋 复制结果</button>
+                </div>
+            </div>
+            <!-- 字数统计模式 -->
+            <div class="result-area" id="statsArea">
+                <div class="result-label">📳 统计结果</div>
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-value" id="statTotalChars">0</div><div class="stat-label">总字符</div></div>
+                    <div class="stat-card"><div class="stat-value" id="statChineseChars">0</div><div class="stat-label">中文字数</div></div>
+                    <div class="stat-card"><div class="stat-value" id="statEnglishWords">0</div><div class="stat-label">英文词数</div></div>
+                    <div class="stat-card"><div class="stat-value" id="statParagraphs">0</div><div class="stat-label">段落</div></div>
+                    <div class="stat-card"><div class="stat-value" id="statSentences">0</div><div class="stat-label">句子</div></div>
+                    <div class="stat-card"><div class="stat-value" id="statLines">0</div><div class="stat-label">行数</div></div>
+                    <div class="stat-card"><div class="stat-value" id="statVisibleChars">0</div><div class="stat-label">可见字符</div></div>
+                    <div class="stat-card"><div class="stat-value" id="statDigits">0</div><div class="stat-label">数字</div></div>
+                    <div class="stat-card"><div class="stat-value" id="statPunctuation">0</div><div class="stat-label">标点</div></div>
+                </div>
+            </div>
+            <!-- 关键词密度模式 -->
+            <div class="result-area" id="keywordsArea" style="display:none;">
+                <div class="result-label">🔽 关键词词频 Top 20</div>
+                <ul class="keyword-list" id="keywordList">
+                    <li style="text-align:center;color:var(--text-secondary);padding:20px;">请先输入文本并点击"分析"按钮</li>
+                </ul>
+            </div>
+            <div class="tool-content">
+                <h2>在线字数统计工具 - 功能说明</h2>
+                <p>字数统计和关键词密度分析是内容创作中必不可少的工具。我们的在线字数统计工具可以帮助作者、编辑、学生和SEO从业者快速了解文本的各项指标。</p>
+                <h3>字数统计模式</h3>
+                <p>实时统计文本的总字符数、中文字数、英文词数、段落数、句子数、行数、可见字符数、数字数和标点数。所有数据一目了然。</p>
+                <h3>关键词密度分析</h3>
+                <p>中文文本按单个汉字分割统计频率，英文文本按单词分割并自动过滤常见停用词（如the、a、is等），按出现次数降序排列，显示Top 20的关键词及其占比。</p>
+                <h3>隐私保护</h3>
+                <p>所有文本处理在浏览器本地完成，无需将文本上传到任何服务器，确保你的内容隐私安全。</p>
+                <h3>适用场景</h3>
+                <p>SEO文章写作：分析关键词密度优化排名；论文撰写：控制论文字数要求；社交媒体：限制字数内表达核心；翻译校对：对比原文与译文字数。</p>
+            </div>
+            <div class="related-tools">
+                <h3>相关工具</h3>
+                <ul>
+                    <li><a href="/zh/text/base64-encode.html">🔤 Base64 编解码</a></li>
+                    <li><a href="/">🔝 返回首页</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="ad-placeholder">广告位 - 招商中</div>
+    </main>
+    <footer>
+        <p>&copy; 2026 工具箱里 | 免费在线工具</p>
+        <p><a href="/">返回首页</a></p>
+    </footer>
+    <script src="../../js/like.js" defer></script>
+    <script src="../js/cookie-consent.js" defer></script>
+</body>
+</html>

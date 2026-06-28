@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>���������� - ���߼��㷿���¹�����Ϣ</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="������߷�����������֧�ֵȶϢ�͵ȶ�����ֻ��ʽ�����ټ����¹��������ܶ����Ϣ�ܶ����������Ϣ�Ա�ͼ���">
+    <link rel="canonical" href="https://calc-tools.top/zh/mortgage.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/mortgage.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/mortgage.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/mortgage.html">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/cookie-consent.css">
+    <script src="../js/i18n.js" defer></script>
+    <script src="../js/calculators/mortgage.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "���߹���", "item": "https://calc-tools.top/" },
+        { "@type": "ListItem", "position": 2, "name": "����������", "item": "https://calc-tools.top/zh/mortgage" }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "�ȶϢ�͵ȶ���ĸ����㣿",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "�ȶ������Ϣ���٣���ǰ���¹��ϸߣ��ȶϢÿ�»���̶����ʺ������ȶ��Ĺ����ߡ�����ƻ���ǰ����ȶ������㡣"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "2026 �귿�������Ƕ��٣�",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "2026 �����׷�������ԼΪ 3.0%-3.5%��LPR �����ϸ����������׷�����ԼΪ 3.5%-4.0%��������������С����к͸������ʶ��졣"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "���� 100 �� 30 ��ÿ�»����٣�",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "�������� 3.85% ���㣬���� 100 �� 30 ��ȶϢ�¹�Լ 4688 Ԫ������ϢԼ 68.8 ��Ԫ���ȶ������Լ 5986 Ԫ�����µݼ���"
+            }
+        }
+    ]
+}
+</script>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="��������" class="site-logo"></a>
+        <nav>
+            <a href="/"><span data-i18n="siteName">��ҳ</span></a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="zh" selected>???? ����</option>
+                <option value="en">???? English</option>
+            </select>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h1 data-i18n="mortgageTitle">����������</h1>
+            <p data-i18n="mortgageDescFull">֧����ҵ�����빫�������ȶϢ���ȶ�������л�</p>
+        </div>
+
+        <!-- ���λ A -->
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">���λ - ������</div>
+
+        <div class="calculator-form">
+            <h2 data-i18n="mortgageTitle">����������</h2>
+            <form id="mortgageForm" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="loanAmount" data-i18n="loanAmount">�������Ԫ��</label>
+                    <input type="number" id="loanAmount" value="100" min="1" step="1">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="annualRate" data-i18n="annualRate">�����ʣ�%��</label>
+                        <input type="number" id="annualRate" value="3.85" min="0.1" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="loanYears" data-i18n="loanYears">��������</label>
+                        <input type="number" id="loanYears" value="30" min="1" max="30" step="1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="repaymentMethod" data-i18n="repaymentMethod">���ʽ</label>
+                    <select id="repaymentMethod">
+                        <option value="equal-payment" data-i18n="equalInstallment">�ȶϢ</option>
+                        <option value="equal-principal" data-i18n="equalPrincipal">�ȶ��</option>
+                    </select>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" onclick="doCalculate()" data-i18n="calculate">��ʼ����</button>
+                    <button type="reset" class="btn btn-secondary" onclick="resetForm()" data-i18n="reset">����</button>
+                </div>
+            </form>
+
+            <!-- ������� -->
+            <div id="resultArea" class="result-card" style="display:none;">
+                <h3 data-i18n="result">������</h3>
+                <div id="monthlyPaymentArea" style="margin-bottom:12px;">
+                    <div style="font-size:0.85rem;color:var(--text-secondary);" id="monthlyLabel"></div>
+                    <div class="result-value" id="monthlyValue"></div>
+                </div>
+                <div class="form-row" style="margin-top:16px;grid-template-columns:1fr 1fr;">
+                    <div>
+                        <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="totalPayment">�����ܶ�</div>
+                        <div style="font-size:1.3rem;font-weight:700;color:var(--text);" id="totalPaymentValue"></div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="totalInterest">��Ϣ�ܶ�</div>
+                        <div style="font-size:1.3rem;font-weight:700;color:#dc2626;" id="totalInterestValue"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ͼ������ -->
+            <div class="chart-container" id="chartContainer" style="display:none;">
+                <canvas id="mortgageChart"></canvas>
+            </div>
+        </div>
+
+        <!-- ���λ B -->
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">���λ - ������</div>
+    
+<div class="tool-content">
+    <h2>����������ʹ��˵��</h2>
+    <p>�������������������ٲ�����ҵ������¹�������Ϣ�ͻ�����ϸ��֧�ֵȶϢ�͵ȶ�����ֻ��ʽ������ͼչʾ��������Ϣ���ɡ�</p>
+    <h3>Ӱ���¹�������</h3>
+    <p>�¹�����ɴ�����������ʡ��������޺ͻ��ʽ�ĸ����ؾ�����������Խ�ߡ�����Խ�ߡ�����Խ�����¹�������Ϣ��Խ�ࡣ������������Χ�ھ�������׸����������̴������ޡ�</p>
+</div>
+<div class="related-tools">
+    <h3>��ع���</h3>
+    <ul>
+        <li><a href="/zh/housing-fund.html">��������������</a></li>
+        <li><a href="/zh/tax2026.html">��˰������</a></li>
+    </ul>
+</div>
+</main>
+
+    <footer>
+        <p data-i18n="copyright">? 2026 ���߹��� | ��ѹ���</p>
+    </footer>
+
+    <script>
+        let chartInstance = null;
+
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        function doCalculate() {
+            const amount = parseFloat(document.getElementById('loanAmount').value) * 10000;
+            const rate = parseFloat(document.getElementById('annualRate').value);
+            const years = parseInt(document.getElementById('loanYears').value);
+            const method = document.getElementById('repaymentMethod').value;
+
+            if (!amount || !rate || !years) return;
+
+            const result = calculateMortgage(amount, rate, years, method);
+            const lang = getLang();
+            const labels = i18n[lang];
+
+            const resultArea = document.getElementById('resultArea');
+            resultArea.style.display = 'block';
+
+            const monthlyLabel = document.getElementById('monthlyLabel');
+            const monthlyValue = document.getElementById('monthlyValue');
+
+            if (result.method === 'equal-payment') {
+                monthlyLabel.textContent = labels.monthlyPayment + ' (' + labels.equalInstallment + ')';
+                monthlyValue.textContent = '��' + formatNumber(result.monthlyPayment);
+            } else {
+                monthlyLabel.textContent = labels.firstPayment + ' ~ ' + labels.lastPayment + ' (' + labels.equalPrincipal + ')';
+                monthlyValue.textContent = '��' + formatNumber(result.firstPayment) + ' ~ ��' + formatNumber(result.lastPayment);
+            }
+
+            document.getElementById('totalPaymentValue').textContent = '��' + formatNumber(result.totalPayment);
+            document.getElementById('totalInterestValue').textContent = '��' + formatNumber(result.totalInterest);
+
+            // ��ͼ
+            const chartContainer = document.getElementById('chartContainer');
+            chartContainer.style.display = 'block';
+
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+
+            const ctx = document.getElementById('mortgageChart').getContext('2d');
+            chartInstance = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: [labels.principal, labels.interest],
+                    datasets: [{
+                        data: [amount, result.totalInterest],
+                        backgroundColor: ['#2563eb', '#dc2626'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 16,
+                                font: { size: 14 }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function resetForm() {
+            document.getElementById('loanAmount').value = 100;
+            document.getElementById('annualRate').value = 3.85;
+            document.getElementById('loanYears').value = 30;
+            document.getElementById('repaymentMethod').value = 'equal-payment';
+            document.getElementById('resultArea').style.display = 'none';
+            document.getElementById('chartContainer').style.display = 'none';
+            if (chartInstance) {
+                chartInstance.destroy();
+                chartInstance = null;
+            }
+        }
+
+        // ҳ����غ��Զ�����
+        document.addEventListener('DOMContentLoaded', function() {
+            // ȷ�� data-i18n Ԫ�ط���
+            document.querySelectorAll("[data-i18n]").forEach(function(el) {
+                const key = el.getAttribute("data-i18n");
+                el.textContent = t(key);
+            });
+            // �Զ�����
+            setTimeout(doCalculate, 100);
+        });
+    </script>
+    <script src="../js/cookie-consent.js" defer></script>
+</body>
+</html>
+
+
+

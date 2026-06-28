@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - 页面未找到 | 工具箱里</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="404 - 页面未找到">
+    <link rel="canonical" href="https://calc-tools.top/404">
+    <link rel="stylesheet" href="/css/style.css?v=2">
+    <link rel="stylesheet" href="/css/site.css?v=4">
+    <link rel="stylesheet" href="/css/cookie-consent.css">
+    <style>
+        .error-page { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; text-align: center; padding: 2rem; }
+        .error-code { font-size: 6rem; font-weight: 700; background: linear-gradient(135deg, #4f46e5, #6366f1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.2; margin-bottom: 0.5rem; }
+        .error-title { font-size: 1.5rem; color: var(--text-primary, #1a1a2e); margin-bottom: 1rem; }
+        .error-desc { color: var(--text-secondary, #6b7280); margin-bottom: 2rem; max-width: 400px; }
+        .error-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+        .error-actions .btn { padding: 0.75rem 1.5rem; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.2s ease; }
+        .btn-primary-404 { background: linear-gradient(135deg, #4f46e5, #6366f1); color: #fff; }
+        .btn-primary-404:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(79,70,229,0.3); }
+        .btn-secondary-404 { background: var(--glass-bg, rgba(255,255,255,0.8)); color: var(--text-primary, #1a1a2e); border: 1px solid var(--border, #e5e7eb); backdrop-filter: blur(10px); }
+        .btn-secondary-404:hover { background: var(--glass-bg-hover, rgba(255,255,255,0.95)); transform: translateY(-2px); }
+        .error-icon { font-size: 3rem; margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+        <nav>
+            <a href="/"><span>在线工具</span></a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="error-page">
+            <div class="error-icon">🔍</div>
+            <div class="error-code">404</div>
+            <h1 class="error-title">页面未找到</h1>
+            <p class="error-desc">您访问的页面不存在或已被移动。请检查网址，或返回首页继续使用。</p>
+            <div class="error-actions">
+                <a href="/" class="btn btn-primary-404">🏠 返回首页</a>
+                <a href="/zh/blog/" class="btn btn-secondary-404">📝 浏览博客</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="/">首页</a>
+            <a href="/about.html">关于</a>
+            <a href="/privacy.html">隐私政策</a>
+            <a href="/contact.html">联系</a>
+            <a href="/blog/zh/">博客</a>
+        </div>
+        <p>© 2026 工具箱里 | 免费在线工具</p>
+    </footer>
+<script src="/js/cookie-consent.js" defer></script>
+</body>
+</html>

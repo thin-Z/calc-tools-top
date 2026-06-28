@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阅读时间计算器 - 在线文章阅读时间估算工具</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="免费在线阅读时间计算器。根据文章字数自动估算阅读时间和说话时间，支持中文和英文，提供慢速、正常、快速三档速度调节，并显示文本难度等级。">
+    <link rel="canonical" href="https://calc-tools.top/zh/text/reading-time.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/text/reading-time.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/text/reading-time.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/text/reading-time.html">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/site.css">
+    <link rel="stylesheet" href="../../css/text-tools.css">
+    <link rel="stylesheet" href="../css/cookie-consent.css">
+    <script src="../../js/i18n.js" defer></script>
+    <script src="../../js/text-tools/reading-time.js" defer></script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "在线工具", "item": "https://calc-tools.top/" },
+        { "@type": "ListItem", "position": 2, "name": "阅读时间计算", "item": "https://calc-tools.top/zh/text/reading-time" }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "阅读时间如何计算？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "阅读时间基于文本总字数（中文字数 + 英文词数）估算，提供三档阅读速度：慢速（200字/分钟）、正常（300字/分钟）、快速（400字/分钟）。说话时间基于口语速度估算，慢速100字/分钟、正常150字/分钟、快速200字/分钟。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "难度等级如何划分？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "难度等级根据文本总字数划分：1000字以上为专业级别，500-1000字为大学级别，200-500字为高中级别，50-200字为初中级别，50字以下为小学级别。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "支持哪些语言？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "本工具支持中文和英文混合文本。中文字数按单个汉字统计，英文词数按单词统计，两者相加得到总字数作为阅读时间估算的基础。"
+            }
+        }
+    ]
+}
+</script>
+<style>
+.rt-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 1rem; }
+.rt-stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; text-align: center; }
+.rt-stat-card .rt-stat-value { font-size: 1.6rem; font-weight: 700; color: var(--primary); line-height: 1.2; }
+.rt-stat-card .rt-stat-label { font-size: 0.8rem; color: var(--text-secondary); margin-top: 6px; }
+.speed-chips { display: flex; gap: 0.5rem; margin: 0.8rem 0; }
+.speed-chip { padding: 0.4rem 1rem; border-radius: 20px; border: 1.5px solid var(--border); background: var(--bg-card); color: var(--text-secondary); font-size: 0.85rem; cursor: pointer; transition: all 0.2s; user-select: none; }
+.speed-chip:hover { border-color: var(--primary); color: var(--primary); }
+.speed-chip.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+</style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+        <nav>
+            <a href="/">首页</a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="zh" selected>🇨🇳 中文</option>
+                <option value="en">🇬🇧 English</option>
+            </select>
+        </nav>
+    </header>
+    <main>
+        <div class="tool-page">
+            <div class="tool-header">
+                <h1>⏱️ 阅读时间计算器</h1>
+                <p>根据文本字数自动估算阅读时间和说话时间，支持中文和英文混合文本。</p>
+            </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="reading-time"><span class="heart">❤</span> <span class="count">0</span></button></div>
+
+            <div class="ad-slot ad-placeholder">广告位 - 招商中</div>
+
+            <textarea class="text-input" id="rtInput" placeholder="请输入你要分析的文字内容，支持中文和英文混合文本..." oninput="scheduleReadingTime()">阅读时间计算器是一款非常实用的在线工具，可以帮助作者和编辑快速估算文章的阅读时长。无论是写博客、准备演讲稿，还是编辑新闻稿件，了解阅读时间都能帮助你更好地控制内容长度和节奏。这个工具支持中文和英文混合文本，并提供慢速、正常、快速三档速度调节，满足不同场景的需求。速度芯片：慢速(200字/分钟)、正常(300字/分钟)、快速(400字/分钟)。同时还会评估文本的难度等级，从小学到专业共五个级别。</textarea>
+
+            <div class="speed-chips">
+                <span class="speed-chip" data-speed="slow" onclick="setReadingSpeed('slow')">🐢 慢速</span>
+                <span class="speed-chip active" data-speed="normal" onclick="setReadingSpeed('normal')">🚶 正常</span>
+                <span class="speed-chip" data-speed="fast" onclick="setReadingSpeed('fast')">🏃 快速</span>
+            </div>
+
+            <div class="action-bar">
+                <button class="btn btn-primary" onclick="doReadingTime()">📊 分析</button>
+                <button class="btn btn-secondary" onclick="resetReadingTime()">🗑️ 清空</button>
+                <button class="copy-btn" id="copyRtBtn" onclick="copyReadingTime()">📋 复制结果</button>
+            </div>
+
+            <div class="rt-stats-grid">
+                <div class="rt-stat-card">
+                    <div class="rt-stat-value" id="rtTotalChars">0</div>
+                    <div class="rt-stat-label">总字符数</div>
+                </div>
+                <div class="rt-stat-card">
+                    <div class="rt-stat-value" id="rtChineseChars">0</div>
+                    <div class="rt-stat-label">中文字数</div>
+                </div>
+                <div class="rt-stat-card">
+                    <div class="rt-stat-value" id="rtEnglishWords">0</div>
+                    <div class="rt-stat-label">英文词数</div>
+                </div>
+                <div class="rt-stat-card">
+                    <div class="rt-stat-value" id="rtTotalWords">0</div>
+                    <div class="rt-stat-label">总字数(中文+英文)</div>
+                </div>
+                <div class="rt-stat-card">
+                    <div class="rt-stat-value" id="rtReadingTime">0 分钟</div>
+                    <div class="rt-stat-label">阅读时间</div>
+                </div>
+                <div class="rt-stat-card">
+                    <div class="rt-stat-value" id="rtSpeakingTime">0 分钟</div>
+                    <div class="rt-stat-label">说话时间</div>
+                </div>
+                <div class="rt-stat-card">
+                    <div class="rt-stat-value" id="rtDifficulty">-</div>
+                    <div class="rt-stat-label">难度等级</div>
+                </div>
+            </div>
+
+            <div class="seo-content">
+                <h2>阅读时间计算器说明</h2>
+                <p>阅读时间计算器是一款基于字数统计的实用工具，能够快速估算文本的阅读时间和说话时间。</p>
+                <h3>速度参考</h3>
+                <ul>
+                    <li><strong>慢速</strong> — 阅读200字/分钟，说话100字/分钟</li>
+                    <li><strong>正常</strong> — 阅读300字/分钟，说话150字/分钟</li>
+                    <li><strong>快速</strong> — 阅读400字/分钟，说话200字/分钟</li>
+                </ul>
+                <h3>难度等级</h3>
+                <ul>
+                    <li>小学：50字以下</li>
+                    <li>初中：50-200字</li>
+                    <li>高中：200-500字</li>
+                    <li>大学：500-1000字</li>
+                    <li>专业：1000字以上</li>
+                </ul>
+                <h3>使用场景</h3>
+                <ul>
+                    <li>博客写作估算读者阅读时长</li>
+                    <li>演讲稿准备控制演讲时间</li>
+                    <li>新闻编辑控制稿件长度</li>
+                    <li>学术论文评估内容深度</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2026 calc-tools.top | <a href="/">在线工具</a> | <a href="/zh/text/word-counter.html">字数统计</a> | <a href="/zh/text/case-converter.html">大小写转换</a> | <a href="/zh/text/json-formatter.html">JSON格式化</a> | <a href="/zh/text/text-diff.html">文本对比</a> | <a href="/zh/text/generator.html">UUID生成器</a> | <a href="/zh/text/reading-time.html">阅读时间</a></p>
+    </footer>
+    <script src="../../js/like.js" defer></script>
+    <script src="../js/cookie-consent.js" defer></script>
+</body>
+</html>

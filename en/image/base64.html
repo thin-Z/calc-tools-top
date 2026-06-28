@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image to Base64 - Free Online Converter</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online image to Base64 converter. Browser-local processing. Convert images to Base64 strings for HTML/CSS.">
+    <link rel="canonical" href="https://calc-tools.top/en/image/base64.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/image/base64.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/image/base64.html">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/site.css">
+    <link rel="stylesheet" href="../css/cookie-consent.css">
+    <script src="../../js/i18n.js" defer></script>
+    <script src="../../js/tools/base64.js" defer></script>
+</head>
+<body>
+    <header>
+        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
+        <nav><a href="/en/">Home</a><select class="lang-switch" onchange="switchLang(this.value)"><option value="zh">🇨🇳 中文</option><option value="en" selected>🇬🇧 English</option></select></nav>
+    </header>
+    <main>
+        <div class="tool-page">
+            <div class="tool-header">
+                <span class="tool-privacy-badge">🔒 Processed in your browser · No uploads</span><h1>Image to Base64</h1>
+                <p>Convert images to Base64 strings for embedding in HTML/CSS.</p>
+            </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="base64"><span class="heart">❤</span> <span class="count">0</span></button></div>
+            <div class="upload-zone" id="dropZone">
+                <div class="upload-icon">📁</div>
+                <h3>Drag & drop image here, or click to select</h3><div class="upload-btn">📁 Select File</div>
+                <div class="upload-formats"><span class="format-badge">JPG</span><span class="format-badge">PNG</span><span class="format-badge">WebP</span><span class="format-badge">BMP</span><span class="format-badge">GIF</span></div><p style="margin-top:10px;margin-bottom:0;font-size:0.8rem;color:#94a3b8;">Max 50MB · Browser local processing</p>
+                <input type="file" id="fileInput" accept="image/*">
+            </div>
+            <div class="preview-container" id="previewContainer"><div class="preview-card"><div class="preview-area" ><div class="preview-box" ><img id="previewImg" src="" alt="Preview" ></div><div class="file-info" id="fileInfo"></div></div></div></div>
+            <div class="tool-controls">
+                <h3>Settings</h3>
+                <div class="control-group"><label><input type="checkbox" id="includePrefix" checked> Include data:image prefix</label></div>
+                <div class="btn-group"><button class="btn btn-primary" id="generateBtn" disabled>Generate</button><button class="btn btn-secondary" id="resetBtn">Reset</button></div>
+            </div>
+            <div class="result-summary" id="outputContainer">
+                <h3>Base64 Output</h3>
+                <p >Length: <span id="outputLen">0</span></p>
+                <div class="code-output" id="base64Output"></div>
+                <div class="btn-group" ><button class="btn btn-success copy-btn" id="copyBtn" disabled data-label="Copy" data-copied-label="Copied!">Copy</button></div>
+            </div>
+            <div class="tool-content"><h2>Image to Base64 - Dev Tool</h2><p>Convert images entirely in your browser. No uploads needed.</p></div>
+            <div class="related-tools"><h3>Related</h3><ul><li><a href="compress.html">🗜️ Image Compress</a></li><li><a href="convert.html">🔄 Format Convert</a></li><li><a href="color-picker.html">🎨 Color Picker</a></li><li><a href="../..">🏠 Home</a></li></ul></div>
+        </div>
+        <div class="ad-placeholder">Ad Space - Available</div>
+    </main>
+    <footer>
+        <div class="footer-links">
+            <a href="/en/">Home</a>
+            <a href="/en/about.html">About</a>
+            <a href="/en/privacy.html">Privacy</a>
+            <a href="/en/contact.html">Contact</a>
+            <a href="/blog/en/">Blog</a>
+        </div>
+        <p>© 2026 ToolBox Inside | Free Online Tools</p>
+    </footer>
+
+<script>
+(function(){var k="toolbox_likes";function g(){try{return JSON.parse(localStorage.getItem(k))||{}}catch(e){return {}}}
+function s(l){localStorage.setItem(k,JSON.stringify(l))}
+var b=document.querySelector(".detail-like");if(!b)return;
+var id=b.dataset.likeId,ls=g(),c=ls[id]||0,ce=b.querySelector(".count");
+if(ce)ce.textContent=c;if(c>0)b.classList.add("liked");
+b.onclick=function(e){e.preventDefault();e.stopPropagation();
+var ls=g(),cur=ls[id]||0;ls[id]=cur>0?0:1;s(ls);
+var nc=ls[id];if(ce)ce.textContent=nc;
+if(nc>0)b.classList.add("liked");else b.classList.remove("liked")};})();
+</script>
+    <script src="../js/cookie-consent.js" defer></script>
+</body>
+</html>
+

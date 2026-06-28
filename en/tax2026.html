@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Calculator 2026 - Latest Tax Rates, Calculate After-Tax Income</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="2026 personal income tax calculator. Based on the latest tax rate table, quickly calculate taxable income, applicable tax rate, tax payable, and after-tax monthly salary with comparison chart.">
+    <link rel="canonical" href="https://calc-tools.top/en/tax2026.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/tax2026.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/tax2026.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/en/tax2026.html">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/cookie-consent.css">
+    <script src="../js/i18n.js" defer></script>
+    <script src="../js/calculators/tax2026.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Online Calculators", "item": "https://calc-tools.top/" },
+        { "@type": "ListItem", "position": 2, "name": "Tax Calculator 2026", "item": "https://calc-tools.top/en/tax2026" }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What is the personal income tax threshold in 2026?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The monthly tax threshold is 5,000 yuan (60,000 yuan annual). Income above this amount is taxed using progressive rates."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What are the 2026 tax brackets?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "2026 uses a 7-level progressive tax system: 3% (0-36K), 10% (36-144K), 20% (144-300K), 25% (300-420K), 30% (420-660K), 35% (660-960K), 45% (960K+)."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What tax deductions are available?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "2026 deductions include: children education (2,000/month per child), continuing education, medical expenses, housing loan interest (1,000/month), rent (800-1,500/month), elderly care (3,000/month), and infant care (2,000/month under age 3)."
+            }
+        }
+    ]
+}
+</script>
+</head>
+<body>
+    <header>
+        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="��������" class="site-logo"></a>
+        <nav>
+            <a href="/en/">Home</a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="en" selected>???? English</option>
+                <option value="zh">???? ����</option>
+            </select>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h1 data-i18n="tax2026Title">Tax Calculator 2026</h1>
+            <p data-i18n="tax2026DescFull">Calculate tax payable and after-tax income based on the latest 2026 tax rates</p>
+        </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="tax2026"><span class="heart">?</span> <span class="count">0</span></button></div>
+
+        <!-- Ad Slot A -->
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">Ad Space - Available</div>
+
+        <div class="calculator-form">
+            <h2 data-i18n="tax2026Title">Tax Calculator 2026</h2>
+            <form id="taxForm" onsubmit="return false;">
+                <div class="form-group">
+                    <label for="salary" data-i18n="salary">Pre-Tax Monthly Salary (CNY)</label>
+                    <input type="number" id="salary" value="15000" min="0" step="500">
+                </div>
+                <div class="form-group">
+                    <label for="insurance" data-i18n="insurance">Social Insurance & Housing Fund (CNY)</label>
+                    <input type="number" id="insurance" value="2000" min="0" step="100">
+                </div>
+                <div class="form-group">
+                    <label for="specialDeduction" data-i18n="specialDeduction">Special Deductions (CNY/month)</label>
+                    <input type="number" id="specialDeduction" value="2000" min="0" step="100">
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" onclick="doCalculate()" data-i18n="calculate">Calculate</button>
+                    <button type="reset" class="btn btn-secondary" onclick="resetForm()" data-i18n="reset">Reset</button>
+                </div>
+            </form>
+
+            <!-- Result Area -->
+            <div id="resultArea" class="result-card" style="display:none;">
+                <h3 data-i18n="result">Result</h3>
+                <div class="form-row" style="margin-top:12px;grid-template-columns:1fr 1fr;">
+                    <div>
+                        <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="taxableIncome">Taxable Income</div>
+                        <div style="font-size:1.1rem;font-weight:700;color:var(--text);" id="taxableIncomeValue"></div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="taxRate">Tax Rate</div>
+                        <div style="font-size:1.1rem;font-weight:700;color:var(--text);" id="taxRateValue"></div>
+                    </div>
+                </div>
+                <div style="margin-top:16px;">
+                    <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="taxPayable">Tax Payable</div>
+                    <div style="font-size:1.3rem;font-weight:700;color:#dc2626;" id="taxPayableValue"></div>
+                </div>
+                <div style="margin-top:16px;padding-top:16px;border-top:1px solid #bfdbfe;">
+                    <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="afterTax">After-Tax Monthly Salary</div>
+                    <div style="font-size:2rem;font-weight:700;color:var(--primary);" id="afterTaxValue"></div>
+                </div>
+            </div>
+
+            <!-- Chart Container -->
+            <div class="chart-container" id="chartContainer" style="display:none;">
+                <canvas id="taxChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Ad Slot B -->
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">Ad Space - Available</div>
+    
+<div class="tool-content">
+    <h2>Tax Calculator Guide</h2>
+    <p>Calculate your 2026 personal income tax and after-tax salary instantly. Enter your monthly income and special deductions for accurate results.</p>
+    <h3>How to Reduce Your Tax</h3>
+    <p>Maximize your special deductions to legally reduce tax burden. With the 5,000 yuan threshold plus deductions, taxpayers earning under 10,000 yuan monthly pay minimal tax.</p>
+</div>
+<div class="related-tools">
+    <h3>Related Tools</h3>
+    <ul>
+        <li><a href="/en/mortgage.html">Mortgage Calculator</a></li>
+        <li><a href="/en/bmi.html">BMI Calculator</a></li>
+    </ul>
+</div>
+</main>
+
+    <footer>
+        <p data-i18n="copyright">? 2026 Online Calculators | Free Online Calculators</p>
+    </footer>
+
+    <script>
+        let chartInstance = null;
+
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        function formatRate(rate) {
+            return (rate * 100).toFixed(0) + "%";
+        }
+
+        function doCalculate() {
+            const salary = parseFloat(document.getElementById("salary").value);
+            const insurance = parseFloat(document.getElementById("insurance").value);
+            const specialDeduction = parseFloat(document.getElementById("specialDeduction").value);
+
+            if (!salary || salary <= 0) return;
+
+            const result = calculateTax(salary, insurance, specialDeduction);
+            const lang = getLang();
+            const labels = i18n[lang];
+
+            const resultArea = document.getElementById("resultArea");
+            resultArea.style.display = "block";
+
+            document.getElementById("taxableIncomeValue").textContent = "��" + formatNumber(result.taxableIncome);
+            document.getElementById("taxRateValue").textContent = formatRate(result.taxRate);
+            document.getElementById("taxPayableValue").textContent = "��" + formatNumber(result.taxPayable);
+            document.getElementById("afterTaxValue").textContent = "��" + formatNumber(result.afterTax);
+
+            // Bar chart
+            const chartContainer = document.getElementById("chartContainer");
+            chartContainer.style.display = "block";
+
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+
+            const ctx = document.getElementById("taxChart").getContext("2d");
+            chartInstance = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: [labels.salary || "Pre-Tax Monthly Salary", labels.afterTax || "After-Tax Monthly Salary"],
+                    datasets: [{
+                        label: "��",
+                        data: [salary, result.afterTax],
+                        backgroundColor: ["#2563eb", "#16a34a"],
+                        borderRadius: 6,
+                        maxBarThickness: 80
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) { return "��" + formatNumber(value); }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function resetForm() {
+            document.getElementById("salary").value = 15000;
+            document.getElementById("insurance").value = 2000;
+            document.getElementById("specialDeduction").value = 2000;
+            document.getElementById("resultArea").style.display = "none";
+            document.getElementById("chartContainer").style.display = "none";
+            if (chartInstance) {
+                chartInstance.destroy();
+                chartInstance = null;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll("[data-i18n]").forEach(function(el) {
+                const key = el.getAttribute("data-i18n");
+                el.textContent = t(key);
+            });
+            setTimeout(doCalculate, 100);
+        });
+    </script>
+
+<script>
+(function(){var k="toolbox_likes";function g(){try{return JSON.parse(localStorage.getItem(k))||{}}catch(e){return {}}}
+function s(l){localStorage.setItem(k,JSON.stringify(l))}
+var b=document.querySelector(".detail-like");if(!b)return;
+var id=b.dataset.likeId,ls=g(),c=ls[id]||0,ce=b.querySelector(".count");
+if(ce)ce.textContent=c;if(c>0)b.classList.add("liked");
+b.onclick=function(e){e.preventDefault();e.stopPropagation();
+var ls=g(),cur=ls[id]||0;ls[id]=cur>0?0:1;s(ls);
+var nc=ls[id];if(ce)ce.textContent=nc;
+if(nc>0)b.classList.add("liked");else b.classList.remove("liked")};})();
+</script>
+    <script src="../js/cookie-consent.js" defer></script>
+</body>
+</html>
+
+

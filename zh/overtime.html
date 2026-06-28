@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加班费计算器 - 在线计算加班工资</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="免费在线加班费计算器，输入月薪和工作时长，按劳动法规定计算工作日加班、休息日加班和节假日加班的工资。">
+    <link rel="canonical" href="https://calc-tools.top/zh/overtime.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/overtime.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/overtime.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/overtime.html">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/cookie-consent.css">
+    <link rel="stylesheet" href="../css/site.css?v=9">
+    <script src="../js/i18n.js" defer></script>
+    <script src="../js/like.js" defer></script>
+    <script src="../js/calculators/overtime.js" defer></script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "在线工具", "item": "https://calc-tools.top//" },
+                { "@type": "ListItem", "position": 2, "name": "加班费计算器 - 在线计算加班工资", "item": "https://calc-tools.top/zh/overtime.html" }
+            ]
+        },
+        {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "加班费怎么算？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "工作日加班 1.5 倍时薪，休息日（周末）加班 2 倍时薪，法定节假日加班 3 倍时薪。时薪 = 月薪 ÷ 21.75 ÷ 8。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "21.75 天是怎么来的？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "21.75 天是劳动法规定的月计薪天数，计算公式：(365天 - 104个休息日) ÷ 12个月 = 21.75天/月。"
+            }
+        }
+    ]
+}
+    ]
+}
+    </script>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+        <nav>
+            <a href="/"><span data-i18n="siteName">首页</span></a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="zh" selected>🇨🇳 中文</option>
+                <option value="en">🇬🇧 English</option>
+            </select>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h1>加班费计算器 - 在线计算加班工资</h1>
+            <p>免费在线加班费计算器，输入月薪和工作时长，按劳动法规定计算工作日加班、休息日加班和节假日加班的工资。</p>
+        </div>
+        <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="overtime"><span class="heart">&#10084;</span> <span class="count">0</span></button></div>
+
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中</div>
+
+        <div class="tool-form">
+            <div class="form-group"><label>月薪（元）</label><input type="number" id="monthlySalary" value="8000" min="1000" step="100"></div><div class="form-group"><label>工作日加班（小时）</label><input type="number" id="weekdayOvertime" value="0" min="0" step="0.5"></div><div class="form-group"><label>休息日加班（小时）</label><input type="number" id="weekendOvertime" value="0" min="0" step="0.5"></div><div class="form-group"><label>法定节假日加班（小时）</label><input type="number" id="holidayOvertime" value="0" min="0" step="0.5"></div><div class="form-actions"><button type="button" class="btn btn-primary" onclick="doCalculate()">计算</button><button type="reset" class="btn btn-secondary" onclick="resetForm()">重置</button></div>
+        </div>
+
+        <div class="result-card" id="resultArea" style="display:none;">
+            <div style="text-align:center;padding:1rem;"><p style="font-size:0.9rem;color:#6b7280;">加班费总计</p><p style="font-size:2rem;font-weight:bold;color:#ef4444;"><span id="totalOvertimePay"></span> 元</p><hr style="margin:1rem 0;"><p>工作日加班：<span id="weekdayPay"></span> 元（1.5 倍）</p><p>休息日加班：<span id="weekendPay"></span> 元（2 倍）</p><p>节假日加班：<span id="holidayPay"></span> 元（3 倍）</p><p>小时工资基数：<span id="hourlyRate"></span> 元/小时</p></div>
+        </div>
+
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中</div>
+
+        <div class="tool-content"><h2>加班费计算器使用说明</h2><p>根据劳动法规定，输入您的月薪和加班时长，自动计算应得的加班工资。适用于员工维权和薪资核算。</p><h3>加班费率标准</h3><p>工作日延长工作时间：150% 时薪 | 休息日工作又不能补休：200% 时薪 | 法定节假日工作：300% 时薪</p></div>
+
+        <div class="related-tools"><h3>相关工具</h3><ul><li><a href="/zh/tax2026.html">个税计算器</a></li><li><a href="/zh/age-calc.html">年龄计算器</a></li></ul></div>
+    </main>
+
+    <footer>
+        <p data-i18n="copyright">© 2026 在线工具 | 免费工具</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll("[data-i18n]").forEach(function(el) {
+                const key = el.getAttribute("data-i18n");
+                el.textContent = t(key);
+            });
+        });
+    </script>
+    <script src="../js/cookie-consent.js" defer></script>
+</body>
+</html>
+

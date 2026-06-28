@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64 Encode/Decode - Free Online Base64 Encoder & Decoder</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online Base64 encoder and decoder. Supports UTF-8 safe encoding and decoding with no garbled text. All processing happens locally in your browser for complete privacy.">
+    <link rel="canonical" href="https://calc-tools.top/en/text/base64-encode.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/text/base64-encode.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/text/base64-encode.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/en/text/base64-encode.html">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/site.css">
+    <link rel="stylesheet" href="../../css/text-tools.css">
+    <link rel="stylesheet" href="../css/cookie-consent.css">
+    <script src="../../js/i18n.js" defer></script>
+    <script src="../../js/text-tools/base64-encode.js" defer></script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Online Calculators", "item": "https://calc-tools.top/" },
+        { "@type": "ListItem", "position": 2, "name": "Base64 Encode/Decode", "item": "https://calc-tools.top/en/text/base64-encode" }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What is Base64 encoding?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Base64 is a binary-to-text encoding scheme that represents binary data using 64 printable characters. It encodes every 3 bytes (24 bits) into 4 printable characters and is widely used for transmitting binary data over text-based protocols such as email attachments, image embedding, and API data transmission."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can Base64 handle Chinese characters without garbled text?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. This tool uses TextEncoder and TextDecoder APIs for UTF-8-safe encoding and decoding, ensuring Chinese, Japanese, Korean, and other Unicode characters are handled correctly without garbled text."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is Base64 encoding secure?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Base64 is an encoding scheme, not an encryption algorithm. It merely converts data into a printable character format and provides no confidentiality. Anyone can easily decode Base64 data, so it should never be used to protect sensitive information."
+            }
+        }
+    ]
+}
+</script>
+</head>
+<body>
+    <header>
+        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+        <nav>
+            <a href="/en/">Home</a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="en" selected>🇬🇧 English</option>
+                <option value="zh">🇨🇳 中文</option>
+            </select>
+        </nav>
+    </header>
+    <main>
+        <div class="tool-page">
+            <div class="tool-header">
+                <h1>🔐 Base64 Encode / Decode</h1>
+                <p>Free online Base64 encoder and decoder. Convert text to Base64 and decode Base64 back to text. UTF-8 safe with no garbled characters. All processing happens locally in your browser.</p>
+            </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="base64-encode"><span class="heart">❤</span> <span class="count">0</span></button></div>
+
+            <!-- Ad Slot -->
+            <div class="ad-slot ad-placeholder">Ad Space - Available</div>
+
+            <div class="tool-controls">
+                <textarea class="text-input" id="textInput" placeholder="Enter text to encode or Base64 string to decode..." oninput="doConvert()">Hello, welcome to the Base64 encoder and decoder tool!</textarea>
+
+                <!-- Mode Toggle -->
+                <div class="mode-chips">
+                    <span class="mode-chip active" data-mode="encode" onclick="switchBase64Mode('encode')">🔒 Encode</span>
+                    <span class="mode-chip" data-mode="decode" onclick="switchBase64Mode('decode')">🔓 Decode</span>
+                </div>
+
+                <div class="action-bar">
+                    <button class="btn btn-primary" onclick="doConvert()">Convert</button>
+                    <button class="btn btn-secondary" onclick="clearTool()">Clear</button>
+                </div>
+
+                <!-- Error Display -->
+                <div class="result-area error-section" id="errorSection" style="display:none;border-color:#ef4444;background:#fef2f2;">
+                    <div class="result-label" style="color:#ef4444;">❌ Decode Error</div>
+                    <div class="result-content" style="color:#dc2626;">
+                        <p><strong>Description:</strong> <span id="errorMsg"></span></p>
+                    </div>
+                </div>
+
+                <!-- Result Area -->
+                <div id="resultSection" class="result-section" style="display:none;">
+                    <h3>Output</h3>
+                    <pre class="result-area" id="resultArea" style="font-family: 'SF Mono', 'Fira Code', 'Consolas', 'Courier New', monospace; font-size: 0.9rem; line-height: 1.5; padding: 16px; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"></pre>
+                    <button class="btn btn-copy" id="copyBtn" onclick="copyBase64Result()">📋 Copy Result</button>
+                </div>
+            </div>
+
+            <!-- SEO Content -->
+            <div class="seo-content">
+                <h2>What is Base64 Encoding?</h2>
+                <p>Base64 is a binary-to-text encoding scheme that represents binary data using 64 printable characters (A-Z, a-z, 0-9, +, /). It is widely used in email attachments (MIME), embedding images in web pages (Data URI), API data transmission, JSON Web Tokens (JWT), and many other scenarios. Base64 encodes every 3 bytes (24 bits) into 4 characters, resulting in approximately 33% size overhead.</p>
+                <p>This tool uses the browser's built-in <code>TextEncoder</code> and <code>TextDecoder</code> APIs for UTF-8-safe encoding and decoding, ensuring that Chinese, Japanese, Korean, and other non-ASCII characters are handled correctly without any garbled text.</p>
+
+                <h3>Common Use Cases</h3>
+                <ul>
+                    <li><strong>Data URI for Images</strong> — Embed images as Base64 in HTML/CSS to reduce HTTP requests</li>
+                    <li><strong>API Data Transfer</strong> — Safely transmit binary data within JSON payloads</li>
+                    <li><strong>JWT Token Decoding</strong> — Decode the Payload section of JSON Web Tokens</li>
+                    <li><strong>Configuration Obfuscation</strong> — Simple obfuscation of configuration values (not real encryption)</li>
+                    <li><strong>Email Attachments</strong> — MIME protocol uses Base64 for encoding attachments</li>
+                </ul>
+
+                <h3>Important Note</h3>
+                <p>Base64 is not an encryption algorithm. It is simply a way to represent data in a printable character format. Anyone can easily decode Base64 data, so never use it to protect sensitive or confidential information. Use standard encryption algorithms like AES or RSA for real data protection.</p>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2026 calc-tools.top | <a href="/en/">Online Tools</a> | <a href="/en/text/word-counter.html">Word Counter</a> | <a href="/en/text/case-converter.html">Case Converter</a> | <a href="/en/text/json-formatter.html">JSON Formatter</a> | <a href="/en/text/base64-encode.html">Base64 Encode/Decode</a></p>
+    </footer>
+    <script src="../../js/like.js" defer></script>
+    <script src="../js/cookie-consent.js" defer></script>
+</body>
+</html>

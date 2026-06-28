@@ -1,0 +1,12 @@
+# Baidu Cloud sync files
+*.baiduyun.uploading.cfg
+*.baiduyun.downloading.cfg
+
+# Brainstorming visual companion
+.superpowers/
+
+# OS files
+Thumbs.db
+.DS_Store
+
+.git_backup

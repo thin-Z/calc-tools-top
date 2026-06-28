@@ -1,0 +1,24 @@
+﻿# Cloudflare Pages redirects
+# Image tool redirects (zh)
+/zh/compress /zh/image/compress 301
+/zh/convert /zh/image/convert 301
+/zh/resize /zh/image/resize 301
+/zh/base64 /zh/image/base64 301
+/zh/color-picker /zh/image/color-picker 301
+/zh/compress.html /zh/image/compress 301
+/zh/convert.html /zh/image/convert 301
+/zh/resize.html /zh/image/resize 301
+/zh/base64.html /zh/image/base64 301
+/zh/color-picker.html /zh/image/color-picker 301
+
+# Image tool redirects (en)
+/en/compress /en/image/compress 301
+/en/convert /en/image/convert 301
+/en/resize /en/image/resize 301
+/en/base64 /en/image/base64 301
+/en/color-picker /en/image/color-picker 301
+/en/compress.html /en/image/compress 301
+/en/convert.html /en/image/convert 301
+/en/resize.html /en/image/resize 301
+/en/base64.html /en/image/base64 301
+/en/color-picker.html /en/image/color-picker 301

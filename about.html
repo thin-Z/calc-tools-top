@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我们 - 工具箱里</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="关于工具箱里 - 免费在线工具集合，隐私优先，浏览器本地处理。">
+    <link rel="canonical" href="https://calc-tools.top/about.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/about.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/about.html">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/site.css">
+    <style>
+        .about-page { max-width: 720px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+        .about-page h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-primary); }
+        .about-page h2 { font-size: 1.25rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-primary); }
+        .about-page p, .about-page li { font-size: 0.9375rem; line-height: 1.7; color: var(--text-secondary); margin-bottom: 0.75rem; }
+        .about-page ul { padding-left: 1.25rem; margin-bottom: 1rem; }
+        .about-page li { margin-bottom: 0.5rem; }
+        .about-page strong { color: var(--text-primary); font-weight: 600; }
+        .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+        .feature-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; }
+        .feature-card .icon { font-size: 1.5rem; margin-bottom: 0.5rem; display: block; }
+        .feature-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem; color: var(--text-primary); }
+        .feature-card p { font-size: 0.875rem; margin-bottom: 0; }
+        @media (max-width: 640px) { .feature-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+        <nav>
+            <a href="/"><span>在线工具</span></a>
+            <a href="/about.html"><span>关于</span></a>
+            <a href="/contact.html"><span>联系</span></a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="about-page">
+            <h1>关于工具箱里</h1>
+            <p>工具箱里是一个免费的在线工具集合，提供计算器、图片处理、文字处理等实用工具。所有工具都在您的浏览器本地运行，数据不会上传到任何服务器。</p>
+
+            <h2>我们的理念</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <span class="icon">🔒</span>
+                    <h3>隐私优先</h3>
+                    <p>所有工具在浏览器本地处理数据，不收集个人信息，文件不上传服务器。</p>
+                </div>
+                <div class="feature-card">
+                    <span class="icon">⚡</span>
+                    <h3>快捷易用</h3>
+                    <p>无需注册登录，打开即用。Apple 风格设计，交互流畅直观。</p>
+                </div>
+                <div class="feature-card">
+                    <span class="icon">🌐</span>
+                    <h3>中英双语</h3>
+                    <p>所有工具和博客内容均提供中文和英文版本，服务全球用户。</p>
+                </div>
+                <div class="feature-card">
+                    <span class="icon">💰</span>
+                    <h3>完全免费</h3>
+                    <p>所有工具免费使用，无需付费订阅。通过非侵入式广告维持运营。</p>
+                </div>
+            </div>
+
+            <h2>工具分类</h2>
+            <ul>
+                <li><strong>📐 计算工具（16个）</strong> — 房贷计算器、个税计算器、BMI 计算器、日期计算、公积金贷款、复利计算等</li>
+                <li><strong>🖼️ 图片工具（5个）</strong> — 图片压缩、格式转换、裁剪缩放、Base64 编码、取色器</li>
+                <li><strong>✏️ 文字工具（11个）</strong> — 字数统计、JSON 格式化、Base64 编解码、UUID 生成、文本对比等</li>
+            </ul>
+
+            <h2>技术架构</h2>
+            <p>工具箱里采用纯静态 HTML/CSS/JavaScript 构建，零第三方依赖（除 Chart.js 图表库外）。部署在 Cloudflare Pages 全球 CDN 上，确保全球用户都能快速访问。</p>
+
+            <h2>联系</h2>
+            <p>有任何建议或反馈？欢迎通过 <a href="/contact.html">联系页面</a> 与我们沟通。</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="/">首页</a>
+            <a href="/about.html">关于</a>
+            <a href="/privacy.html">隐私政策</a>
+            <a href="/contact.html">联系</a>
+            <a href="/blog/zh/">博客</a>
+        </div>
+        <p>© 2026 工具箱里 | 免费在线工具</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discount Calculator - Calculate Sale Price Online</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online discount calculator. Enter original price and discount rate to calculate final price and savings instantly.">
+    <link rel="canonical" href="https://calc-tools.top/en/discount.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/discount.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/discount.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/discount.html">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/cookie-consent.css">
+    <script src="../js/i18n.js" defer></script>
+    <script src="../js/calculators/discount.js" defer></script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Online Calculators", "item": "https://calc-tools.top//en/" },
+                { "@type": "ListItem", "position": 2, "name": "Discount Calculator - Calculate Sale Price Online", "item": "https://calc-tools.top/en/discount.html" }
+            ]
+        },
+        {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What does 20% off mean?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "20% off means you pay 80% of the original price. For example,  with 20% off costs ."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Which is better: discount or fixed amount off?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "It depends on the purchase amount. Percentage discounts are usually better for larger purchases, while fixed amount off can be better for smaller purchases."
+            }
+        }
+    ]
+}
+    ]
+}
+    </script>
+</head>
+<body>
+    <header>
+        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="��������" class="site-logo"></a>
+        <nav>
+            <a href="/en/"><span data-i18n="siteName">��ҳ</span></a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="en" selected>???? English</option>
+                <option value="zh">???? ����</option>
+            </select>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h1>Discount Calculator - Calculate Sale Price Online</h1>
+            <p>Free online discount calculator. Enter original price and discount rate to calculate final price and savings instantly.</p>
+        </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="discount"><span class="heart">?</span> <span class="count">0</span></button></div>
+
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">���λ - ������</div>
+
+        <div class="tool-form">
+            <div class="form-group"><label>Original Price ($)</label><input type="number" id="originalPrice" value="100" min="0" step="0.01"></div><div class="form-group"><label>Discount Rate (%)</label><input type="number" id="discountRate" value="20" min="0" max="100" step="1"></div><div class="form-actions"><button type="button" class="btn btn-primary" onclick="doCalculate()">Calculate</button><button type="reset" class="btn btn-secondary" onclick="resetForm()">Reset</button></div>
+        </div>
+
+        <div class="result-card" id="resultArea" style="display:none;">
+            <div style="text-align:center;padding:1rem;"><p style="font-size:0.9rem;color:#6b7280;">Final Price</p><p style="font-size:2rem;font-weight:bold;color:#22c55e;">$<span id="finalPrice"></span></p><hr style="margin:1rem 0;"><p>Discount: <span id="discountPercent"></span></p><p>You Save: $<span id="savedAmount"></span></p></div>
+        </div>
+
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">���λ - ������</div>
+
+        <div class="tool-content"><h2>Discount Calculator Guide</h2><p>Calculate sale prices and savings instantly. Perfect for shopping comparisons, promotional offers, and budget planning.</p><h3>Quick Reference</h3><p>10% off = pay 90%, 20% off = pay 80%, 50% off = pay 50%.</p></div>
+
+        <div class="related-tools"><h3>Related Tools</h3><ul><li><a href="/en/electricity.html">Electricity Calculator</a></li><li><a href="/en/fuel-cost.html">Fuel Cost Calculator</a></li></ul></div>
+    </main>
+
+    <footer>
+        <p data-i18n="copyright">? 2026 Online Calculators | Free Online Calculators</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll("[data-i18n]").forEach(function(el) {
+                const key = el.getAttribute("data-i18n");
+                el.textContent = t(key);
+            });
+        });
+    </script>
+
+<script>
+(function(){var k="toolbox_likes";function g(){try{return JSON.parse(localStorage.getItem(k))||{}}catch(e){return {}}}
+function s(l){localStorage.setItem(k,JSON.stringify(l))}
+var b=document.querySelector(".detail-like");if(!b)return;
+var id=b.dataset.likeId,ls=g(),c=ls[id]||0,ce=b.querySelector(".count");
+if(ce)ce.textContent=c;if(c>0)b.classList.add("liked");
+b.onclick=function(e){e.preventDefault();e.stopPropagation();
+var ls=g(),cur=ls[id]||0;ls[id]=cur>0?0:1;s(ls);
+var nc=ls[id];if(ce)ce.textContent=nc;
+if(nc>0)b.classList.add("liked");else b.classList.remove("liked")};})();
+</script>
+    <script src="../js/cookie-consent.js" defer></script>
+</body>
+</html>
+

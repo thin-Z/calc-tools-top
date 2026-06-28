@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Picker from Image - Free Online Tool</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online color picker from image. Browser-local processing. Extract HEX, RGB, HSL values from images.">
+    <link rel="canonical" href="https://calc-tools.top/en/image/color-picker.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/image/color-picker.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/image/color-picker.html">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/site.css">
+    <link rel="stylesheet" href="../css/cookie-consent.css">
+    <script src="../../js/i18n.js" defer></script>
+    <script src="../../js/tools/color-picker.js" defer></script>
+</head>
+<body>
+    <header>
+        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
+        <nav><a href="/en/">Home</a><select class="lang-switch" onchange="switchLang(this.value)"><option value="zh">🇨🇳 中文</option><option value="en" selected>🇬🇧 English</option></select></nav>
+    </header>
+    <main>
+        <div class="tool-page">
+            <div class="tool-header">
+                <span class="tool-privacy-badge">🔒 Processed in your browser · No uploads</span><h1>Color Picker</h1>
+                <p>Click anywhere on an image to extract exact colors. Click values to copy.</p>
+            </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="color-picker"><span class="heart">❤</span> <span class="count">0</span></button></div>
+            <div class="upload-zone" id="dropZone">
+                <div class="upload-icon">📁</div>
+                <h3>Drag & drop image here, or click to select</h3><div class="upload-btn">📁 Select File</div>
+                <div class="upload-formats"><span class="format-badge">JPG</span><span class="format-badge">PNG</span><span class="format-badge">WebP</span><span class="format-badge">BMP</span><span class="format-badge">GIF</span></div><p style="margin-top:10px;margin-bottom:0;font-size:0.8rem;color:#94a3b8;">Max 50MB · Browser local processing</p>
+                <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/bmp,image/gif">
+            </div>
+            <div id="pickerContainer" style="display:none;">
+                <div class="preview-card">
+                    <h3>Click on image to pick color <span class="picker-hint">(hover to preview)</span></h3>
+                    <div class="picker-center"><div class="color-picker-canvas-wrapper"><canvas id="imageCanvas"></canvas></div></div>
+                    <div class="file-info" id="fileInfo"></div>
+                </div>
+                <div class="tool-controls" >
+                    <h3>Hover Preview</h3>
+                    <div class="hover-preview">
+                        <div id="hoverPreview" class="hover-swatch"></div>
+                        <span class="hover-hex" id="hoverHex">-</span>
+                        <span class="hover-coords">Coords: <span id="hoverCoords">-</span></span>
+                    </div>
+                </div>
+                <div id="colorInfo" style="display:none;">
+                    <div class="tool-controls">
+                        <h3>Selected Color</h3>
+                        <div class="color-info">
+                            <div class="color-swatch" id="colorSwatch"></div>
+                            <div class="color-values">
+                                <span class="color-value" id="hexValue" title="Click to copy">#000000</span>
+                                <span class="color-value" id="rgbValue" title="Click to copy">rgb(0,0,0)</span>
+                                <span class="color-value" id="hslValue" title="Click to copy">hsl(0,0%,0%)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-group picker-reset"><button class="btn btn-secondary" id="resetBtn">Choose Another</button></div>
+            </div>
+            <div class="tool-content"><h2>Online Color Picker</h2><p>Extract colors from images locally in your browser. No uploads.</p></div>
+            <div class="related-tools"><h3>Related</h3><ul><li><a href="compress.html">🗜️ Image Compress</a></li><li><a href="convert.html">🔄 Format Convert</a></li><li><a href="base64.html">🔣 Image to Base64</a></li><li><a href="../..">🏠 Home</a></li></ul></div>
+        </div>
+        <div class="ad-placeholder">Ad Space - Available</div>
+    </main>
+    <footer>
+        <div class="footer-links">
+            <a href="/en/">Home</a>
+            <a href="/en/about.html">About</a>
+            <a href="/en/privacy.html">Privacy</a>
+            <a href="/en/contact.html">Contact</a>
+            <a href="/blog/en/">Blog</a>
+        </div>
+        <p>© 2026 ToolBox Inside | Free Online Tools</p>
+    </footer>
+
+<script>
+(function(){var k="toolbox_likes";function g(){try{return JSON.parse(localStorage.getItem(k))||{}}catch(e){return {}}}
+function s(l){localStorage.setItem(k,JSON.stringify(l))}
+var b=document.querySelector(".detail-like");if(!b)return;
+var id=b.dataset.likeId,ls=g(),c=ls[id]||0,ce=b.querySelector(".count");
+if(ce)ce.textContent=c;if(c>0)b.classList.add("liked");
+b.onclick=function(e){e.preventDefault();e.stopPropagation();
+var ls=g(),cur=ls[id]||0;ls[id]=cur>0?0:1;s(ls);
+var nc=ls[id];if(ce)ce.textContent=nc;
+if(nc>0)b.classList.add("liked");else b.classList.remove("liked")};})();
+</script>
+    <script src="../js/cookie-consent.js" defer></script>
+</body>
+</html>
+
+

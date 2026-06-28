@@ -1,0 +1,38 @@
+﻿{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+      ]
+    }
+  ],
+  "redirects": [
+    { "source": "/zh", "destination": "/zh/", "permanent": true },
+    { "source": "/en", "destination": "/en/", "permanent": true },
+    { "source": "/zh/compress", "destination": "/zh/image/compress", "permanent": true },
+    { "source": "/zh/convert", "destination": "/zh/image/convert", "permanent": true },
+    { "source": "/zh/resize", "destination": "/zh/image/resize", "permanent": true },
+    { "source": "/zh/base64", "destination": "/zh/image/base64", "permanent": true },
+    { "source": "/zh/color-picker", "destination": "/zh/image/color-picker", "permanent": true },
+    { "source": "/zh/compress.html", "destination": "/zh/image/compress", "permanent": true },
+    { "source": "/zh/convert.html", "destination": "/zh/image/convert", "permanent": true },
+    { "source": "/zh/resize.html", "destination": "/zh/image/resize", "permanent": true },
+    { "source": "/zh/base64.html", "destination": "/zh/image/base64", "permanent": true },
+    { "source": "/zh/color-picker.html", "destination": "/zh/image/color-picker", "permanent": true },
+    { "source": "/en/compress", "destination": "/en/image/compress", "permanent": true },
+    { "source": "/en/convert", "destination": "/en/image/convert", "permanent": true },
+    { "source": "/en/resize", "destination": "/en/image/resize", "permanent": true },
+    { "source": "/en/base64", "destination": "/en/image/base64", "permanent": true },
+    { "source": "/en/color-picker", "destination": "/en/image/color-picker", "permanent": true },
+    { "source": "/en/compress.html", "destination": "/en/image/compress", "permanent": true },
+    { "source": "/en/convert.html", "destination": "/en/image/convert", "permanent": true },
+    { "source": "/en/resize.html", "destination": "/en/image/resize", "permanent": true },
+    { "source": "/en/base64.html", "destination": "/en/image/base64", "permanent": true },
+    { "source": "/en/color-picker.html", "destination": "/en/image/color-picker", "permanent": true }
+  ]
+}

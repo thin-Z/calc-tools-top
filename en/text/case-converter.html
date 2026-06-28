@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Converter - Free Online Text Case Converter Tool</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online case converter tool. Supports 8 modes: UPPERCASE, lowercase, Title Case, Sentence case, camelCase, snake_case, kebab-case, and AlTeRnAtInG. All processing in browser, no data uploaded.">
+    <link rel="canonical" href="https://calc-tools.top/en/text/case-converter.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/text/case-converter.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/text/case-converter.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/en/text/case-converter.html">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/site.css">
+    <link rel="stylesheet" href="../../css/text-tools.css">
+    <link rel="stylesheet" href="../css/cookie-consent.css">
+    <script src="../../js/i18n.js" defer></script>
+    <script src="../../js/text-tools/case-converter.js" defer></script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Online Calculators", "item": "https://calc-tools.top/" },
+        { "@type": "ListItem", "position": 2, "name": "Case Converter", "item": "https://calc-tools.top/en/text/case-converter" }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What case conversion modes are available?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "This tool provides 8 conversion modes: UPPERCASE, lowercase, Title Case, Sentence case, camelCase, snake_case, kebab-case, and AlTeRnAtInG case. Each mode serves different use cases from programming to content writing."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What are camelCase and snake_case used for?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "camelCase and snake_case are common naming conventions in programming. camelCase is frequently used for JavaScript variables and function names, while snake_case is popular in Python variables and database field names."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is my text uploaded to any server?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. All text conversion happens locally in your browser. Your content never leaves your device, ensuring complete privacy and security."
+            }
+        }
+    ]
+}
+</script>
+</head>
+<body>
+    <header>
+        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+        <nav>
+            <a href="/en/">Home</a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="en" selected>🇬🇧 English</option>
+                <option value="zh">🇨🇳 中文</option>
+            </select>
+        </nav>
+    </header>
+    <main>
+        <div class="tool-page">
+            <div class="tool-header">
+                <h1>🔤 Online Case Converter</h1>
+                <p>Convert text between 8 different case styles: UPPERCASE, lowercase, Title Case, Sentence case, camelCase, snake_case, kebab-case, and AlTeRnAtInG. All processing happens locally in your browser.</p>
+            </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="case-converter"><span class="heart">❤</span> <span class="count">0</span></button></div>
+
+            <!-- Ad Slot -->
+            <div class="ad-slot ad-placeholder">Ad Space - Available</div>
+
+            <div class="tool-controls">
+                <textarea class="text-input" id="textInput" placeholder="Paste or type your text here to convert...">hello world, welcome to Case Converter! this tool supports 8 different case conversion modes.</textarea>
+
+                <!-- Mode Chips -->
+                <div class="mode-chips">
+                    <span class="mode-chip active" data-mode="upper" onclick="switchMode('upper')">🔠 UPPERCASE</span>
+                    <span class="mode-chip" data-mode="lower" onclick="switchMode('lower')">🔡 lowercase</span>
+                    <span class="mode-chip" data-mode="title" onclick="switchMode('title')">📗 Title Case</span>
+                    <span class="mode-chip" data-mode="sentence" onclick="switchMode('sentence')">📕 Sentence case</span>
+                    <span class="mode-chip" data-mode="camel" onclick="switchMode('camel')">🐪 camelCase</span>
+                    <span class="mode-chip" data-mode="snake" onclick="switchMode('snake')">🐍 snake_case</span>
+                    <span class="mode-chip" data-mode="kebab" onclick="switchMode('kebab')">🥟 kebab-case</span>
+                    <span class="mode-chip" data-mode="alternating" onclick="switchMode('alternating')">🎭 Alternating</span>
+                </div>
+
+                <div class="action-bar">
+                    <button class="btn btn-primary" onclick="doConvert()">Convert</button>
+                    <button class="btn btn-secondary" onclick="resetTool()">Reset</button>
+                </div>
+
+                <!-- Result Section -->
+                <div class="result-section">
+                    <h3>Result</h3>
+                    <textarea class="result-area" id="resultArea" readonly placeholder="Converted text will appear here..."></textarea>
+                    <div class="result-meta">
+                        <span>Characters: <strong id="charCount">0</strong></span>
+                        <span>Words: <strong id="wordCount">0</strong></span>
+                    </div>
+                    <button class="btn btn-copy" id="copyResultBtn" onclick="copyResult()">📋 Copy Result</button>
+                </div>
+            </div>
+
+            <!-- SEO Content -->
+            <div class="seo-content">
+                <h2>What is Case Conversion?</h2>
+                <p>Case conversion is the process of changing letters between uppercase and lowercase formats. Different scenarios require different case styles: programming naming conventions (camelCase, snake_case), article titles (Title Case), and everyday text processing (UPPERCASE/lowercase).</p>
+                <p>This tool provides 8 common case conversion modes to meet the needs of writing, programming, data processing, and more. All operations happen locally in your browser, keeping your text data safe and private.</p>
+
+                <h3>8 Conversion Modes Explained</h3>
+                <ul>
+                    <li><strong>UPPERCASE</strong> — Converts all letters to uppercase. Useful for headings, emphasis, or warning text.</li>
+                    <li><strong>lowercase</strong> — Converts all letters to lowercase. Useful for normalizing text format.</li>
+                    <li><strong>Title Case</strong> — Capitalizes the first letter of each word. Ideal for titles, headings, and book names.</li>
+                    <li><strong>Sentence case</strong> — Capitalizes the first letter of each sentence. Standard for article body text.</li>
+                    <li><strong>camelCase</strong> — First word lowercase, subsequent words capitalized. Common in JavaScript variable names.</li>
+                    <li><strong>snake_case</strong> — All lowercase with underscores between words. Popular in Python variable names.</li>
+                    <li><strong>kebab-case</strong> — All lowercase with hyphens between words. Used in CSS classes and URLs.</li>
+                    <li><strong>AlTeRnAtInG</strong> — Alternating uppercase and lowercase letters (odd positions uppercase). For creative text effects.</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2026 calc-tools.top | <a href="/en/">Online Toolbox</a> | <a href="/en/text/word-counter.html">Word Counter</a> | <a href="/en/text/case-converter.html">Case Converter</a></p>
+    </footer>
+    <script src="../../js/like.js" defer></script>
+    <script src="../js/cookie-consent.js" defer></script>
+</body>
+</html>
