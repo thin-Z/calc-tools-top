@@ -1,12 +1,8 @@
 # calc-tools.top — 工具箱里
-
 > 中英双语在线工具站，纯静态 HTML/CSS/JS，零依赖，隐私优先
 > 线上地址：https://calc-tools.top | 风格：Apple 设计语言
-
 ---
-
 ## 工具清单
-
 ### 📐 计算工具（16个）
 | 工具 | 说明 |
 |------|------|
@@ -26,7 +22,6 @@
 | 🏟 贷款对比计算器 | 多贷款方案对比 |
 | 📈 复利计算器 | 复利投资计算 |
 | 🚗 车贷计算器 | 购车贷款计算 |
-
 ### 🖼️ 图片工具（5个）
 | 工具 | 说明 |
 |------|------|
@@ -35,7 +30,6 @@
 | ✂️ 裁剪缩放 | 图片裁剪与尺寸调整 |
 | 🔤 图片转 Base64 | 图片编码为 Base64 |
 | 🎨 取色器 | 屏幕取色与调色板 |
-
 ### ✏️ 文字工具（11个）
 | 工具 | 说明 |
 |------|------|
@@ -50,23 +44,18 @@
 | 🔑 UUID 生成器 | 批量 UUID 生成 |
 | ⏱ 阅读时间 | 文章阅读时间估算 |
 | 🔍 关键词密度 | 关键词密度分析 |
-
 ---
-
 ## 技术架构
-
 | 项目 | 选型 |
 |------|------|
 | 前端 | 纯 HTML + CSS + JS，零依赖 |
 | 字体 | Inter (Google Fonts) |
 | 图表 | Chart.js CDN |
 | 图片处理 | Canvas API（本地处理，不上传）|
-| 部署 | GitHub → Cloudflare Pages |
+| 部署 | GitHub → Vercel |
 | 域名 | calc-tools.top |
 | 国际化 | URL 路径 /zh/ /en/ 分离 |
-
 ## 项目结构
-
 ```
 ├── index.html              # 首页（中文）
 ├── /en/index.html          # 首页（英文）
@@ -79,7 +68,8 @@
 ├── /css/
 │   ├── style.css           # 全局基础样式
 │   ├── site.css            # 站点组件样式
-│   └── text-tools.css      # 文字工具样式
+│   ├── text-tools.css      # 文字工具样式
+│   └── cookie-consent.css  # Cookie 同意弹窗
 ├── /js/
 │   ├── site.js             # 首页交互
 │   ├── like.js             # 详情页点赞
@@ -87,49 +77,68 @@
 │   ├── calculators/        # 16 计算器
 │   ├── tools/              # 5 图片工具
 │   └── text-tools/         # 11 文字工具
-└── docs/                   # 项目文档
+├── 404.html / about.html / contact.html / privacy.html
 ```
-
 ## 核心功能
-
 - **搜索**：实时模糊匹配 + 分类过滤
-- **点赞**：localStorage 持久化，heartPop 动画
+- **点赞**：Cloudflare KV 全局共享 + localStorage 本地缓存
 - **热门工具**：综合评分 + 排名 badge
 - **暗色模式**：跟随系统 / 手动切换，localStorage 持久化
 - **趋势标识**：今日热门 / 上升中统计
 - **搜索热词**：记录并展示热门搜索词
 - **博客**：26 篇工具指南，分页加载
-
 ## 状态
-
 | 项目 | 值 |
 |------|-----|
 | 工具总数 | **32**（16 计算器 + 5 图片 + 11 文字）|
 | 页面总数 | ~70（32 工具 × 2 语言 + 首页 + 26 博客）|
 | 博客文章 | 26（13 zh + 13 en）|
-| 最新部署 | 8e2743d - CSS 视觉规范对齐修复 |
-
-## 部署记录
-
+| 最新部署 | 09d1998 - 知识库清理 + 编码修复 |
+| 全局点赞 | Cloudflare Pages Functions + KV |
 | commit | 说明 |
 |--------|------|
-| 8e2743d | fix: CSS 视觉规范对齐（色彩/动效/暗色模式/去重）|
-| a842d3d | style: Inter 字体/色彩体系/毛玻璃/动效 |
-| 58b8b8e | optimize: 热门工具综合评分/多样性 |
-| 9c856ea | feat: 暗色模式 |
-| c72d2b0 | feat: 点击统计优化 |
-| b10a27e | fix: 文字工具 + 点赞系统 |
-
+| 09d1998 | chore: 知识库结构优化，移除 docs 追踪 |
+| d0d2c82 | fix: U+FFFD 编码修复 + 编码保护体系 |
+| 6ef6719 | docs: 使用说明书 Vercel 迁移更新 |
+| e673cda | fix: 热门工具点击数 + script 标签 + CSS 重叠 + 暗色模式去重 |
+| 69cfec3 | fix: 热门工具样式 - 描述/标签/图标颜色/布局 |
+| d9a27e7 | feat: 隐私政策/关于/联系 + Cookie 同意 |
 ---
-
 ## 本地开发
-
 ```bash
 # 无需构建，直接在浏览器打开
 start index.html
-
 # 或用 Python 启动本地服务器
 python -m http.server 8080
 ```
+Deploy trigger: 2026-06-29 02:00:00
 
-Deploy trigger: 2026-06-28 14:11:01
+## 全局点赞部署指南
+
+### 前提
+- Cloudflare 账号（已有）
+- 安装 [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/)
+
+### 步骤
+
+1. **创建 KV Namespace**
+
+   ```bash
+   npx wrangler kv:namespace create LIKES
+   ```
+
+   记录返回的 `id`。
+
+2. **在 Pages Dashboard 绑定 KV**
+
+   - Cloudflare Dashboard -> Workers & Pages -> calc-tools-top
+   - Settings -> Functions -> KV Namespace Bindings
+   - Variable name = `LIKES`，选择刚创建的 Namespace
+
+3. **推送代码**
+
+   ```bash
+   git push
+   ```
+
+   Cloudflare Pages 会自动部署 `functions/` 目录下的 Pages Functions。

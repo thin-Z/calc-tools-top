@@ -93,9 +93,21 @@ function toggleLike(toolId) {
     });
     const likes = getLikes();
     const current = likes[toolId] || 0;
-    likes[toolId] = current > 0 ? 0 : 1;
+    const was = current > 0;
+    likes[toolId] = was ? 0 : 1;
     saveLikes(likes);
     updateLikeUI(toolId);
+    
+    // Async sync global like to server
+    var action = was ? 'unlike' : 'like';
+    if (typeof window.ApiClient !== 'undefined') {
+        window.ApiClient.toggleLike(toolId, action).then(function(data) {
+            if (data && typeof data.count === 'number') {
+                updateLikeUI(toolId, data.count);
+            }
+        });
+    }
+
     return likes[toolId];
 }
 
@@ -122,6 +134,15 @@ function initLikes() {
                 e.stopPropagation();
                 toggleLike(toolId);
             });
+
+            // Fetch global count from server
+            if (typeof window.ApiClient !== 'undefined') {
+                window.ApiClient.fetchCount(toolId).then(function(data) {
+                    if (data && typeof data.count === 'number') {
+                        updateLikeUI(toolId, data.count);
+                    }
+                });
+            }
         }
     });
 }
@@ -390,15 +411,35 @@ function initArticleLikes() {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            likes = getLikes();
-            var cur = likes[blogId] || 0;
-            likes[blogId] = cur > 0 ? 0 : 1;
+            var likes = getLikes();
+            var was = (likes[blogId] || 0) > 0;
+            likes[blogId] = was ? 0 : 1;
             saveLikes(likes);
-            var c = likes[blogId];
-            var ce = this.querySelector('.like-count');
-            if (ce) ce.textContent = c;
-            if (c > 0) { this.classList.add('liked'); } else { this.classList.remove('liked'); }
+            var countEl2 = btn.querySelector('.like-count');
+            if (countEl2) countEl2.textContent = likes[blogId];
+            if (likes[blogId] > 0) { btn.classList.add('liked'); } else { btn.classList.remove('liked'); }
+
+            // Async sync to server
+            var action = was ? 'unlike' : 'like';
+            if (typeof window.ApiClient !== 'undefined') {
+                window.ApiClient.toggleLike(blogId, action).then(function(data) {
+                    if (data && typeof data.count === 'number') {
+                        var ce3 = btn.querySelector('.like-count');
+                        if (ce3) ce3.textContent = data.count;
+                    }
+                });
+            }
         });
+
+        // Fetch global count from server
+        if (typeof window.ApiClient !== 'undefined') {
+            window.ApiClient.fetchCount(blogId).then(function(data) {
+                if (data && typeof data.count === 'number') {
+                    var ce4 = btn.querySelector('.like-count');
+                    if (ce4) ce4.textContent = data.count;
+                }
+            });
+        }
     });
 }
 
@@ -794,4 +835,3 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem(STORAGE_KEY, next);
   });
 })();
-
