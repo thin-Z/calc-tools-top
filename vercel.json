@@ -131,10 +131,5 @@
       "destination": "/en/image/color-picker",
       "permanent": true
     }
-  ],
-  "functions": {
-    "api/*.js": {
-      "runtime": "@vercel/node@3"
-    }
-  }
+  ]
 }
