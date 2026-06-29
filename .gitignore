@@ -10,3 +10,17 @@ Thumbs.db
 .DS_Store
 
 .git_backup
+# 知识库文档（存于 Obsidian 知识库躺平计划/projects/2_AI建站项目/docs/）
+AGENTS.md
+_project_memory.md
+使用说明书.md
+docs/
+
+# 设计预览文件
+logo-font-preview.html
+logo-preview.html
+tag-preview.html
+
+# 无意义文件
+项目档案.md
+项目进度-*.md
