@@ -1,4 +1,4 @@
-/* ===== Independent Like System (for detail pages) ===== */
+﻿/* ===== Independent Like System (for detail pages) ===== */
 (function() {
     'use strict';
 
@@ -36,7 +36,7 @@
     }
 
     function toggleServerLike(toolId, action) {
-        return apiFetch(API_BASE + '/toggle', {
+        return apiFetch(API_BASE, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ toolId: toolId, action: action })

@@ -1,4 +1,4 @@
-// js/api-client.js
+﻿// js/api-client.js
 // Cloudflare Worker API 客户端 + 降级策略
 // 在 like.js 和 site.js 之前加载
 
@@ -39,12 +39,12 @@
 
   // 查询所有工具点赞数
   function fetchAllCounts() {
-    return apiFetch(API_BASE + '/all');
+    return apiFetch(API_BASE);
   }
 
   // 点赞/取消点赞
   function toggleLike(toolId, action) {
-    return apiFetch(API_BASE + '/toggle', {
+    return apiFetch(API_BASE, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ toolId: toolId, action: action || 'like' })
