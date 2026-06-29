@@ -3,6 +3,8 @@
 // GET  /api/likes              → 返回所有点赞数
 // GET  /api/likes?toolId=xxx   → 返回单个工具点赞数
 // POST /api/likes              → 点赞 (+1) 或取消点赞 (-1)
+//
+// Prerequisite: Vercel KV (Upstash Redis) with KV_URL env var
 
 import { kv } from '@vercel/kv';
 
@@ -32,7 +34,10 @@ export default async function handler(req, res) {
         if (count === null) {
           count = await kv.get('like:blog:' + cleanId);
         }
-        return res.status(200).json({ toolId: cleanId, count: parseInt(count || '0', 10) });
+        return res.status(200).json({
+          toolId: cleanId,
+          count: parseInt(count || '0', 10),
+        });
       }
 
       const keys = await kv.keys('like:*');
@@ -47,6 +52,23 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'POST') {
+      // Parse body (Vercel provides raw body as string)
+      let body;
+      if (typeof req.body === 'string') {
+        body = JSON.parse(req.body);
+      } else if (typeof req.body === 'object' && req.body !== null) {
+        body = req.body;
+      } else {
+        // Try reading from req
+        body = {};
+      }
+
+      const { toolId, action } = body || {};
+      if (!toolId) {
+        return res.status(400).json({ error: 'missing toolId' });
+      }
+
+      // Rate limit
       const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim()
         || req.headers['x-real-ip']
         || 'unknown';
@@ -57,11 +79,6 @@ export default async function handler(req, res) {
       }
       await kv.set(rateKey, String((parseInt(rateCount || '0', 10) + 1)), { ex: RATE_WINDOW });
 
-      const { toolId, action } = req.body;
-      if (!toolId) {
-        return res.status(400).json({ error: 'missing toolId' });
-      }
-
       const cleanId = toolId.replace(/[^a-zA-Z0-9_-]/g, '');
       const prefix = cleanId.startsWith('blog_') ? 'like:blog:' : 'like:tool:';
       const key = prefix + cleanId;
@@ -71,12 +88,15 @@ export default async function handler(req, res) {
       count = action === 'unlike' ? Math.max(0, count - 1) : count + 1;
       await kv.set(key, String(count));
 
-      return res.status(200).json({ toolId: cleanId, count, liked: action !== 'unlike' });
+      return res.status(200).json({
+        toolId: cleanId,
+        count,
+        liked: action !== 'unlike',
+      });
     }
 
     return res.status(405).json({ error: 'method not allowed' });
   } catch (e) {
-    // Return 200 with fallback flag so client-side localStorage takes over
     return res.status(200).json({ error: e.message, fallback: true });
   }
 }
