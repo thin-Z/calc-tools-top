@@ -24,3 +24,5 @@ tag-preview.html
 # 无意义文件
 项目档案.md
 项目进度-*.md
+
+node_modules/
