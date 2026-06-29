@@ -1,4 +1,4 @@
-User-agent: *
+﻿User-agent: *
 Allow: /
 
-Sitemap: https://calc-tools.top/sitemap.xml
+Sitemap: https://www.calc-tools.top/sitemap.xml
