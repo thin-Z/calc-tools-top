@@ -1,14 +1,35 @@
+const https = require('https');
+
 const REST_URL = process.env.KV_REST_API_URL || '';
 const REST_TOKEN = process.env.KV_REST_API_TOKEN || '';
 
-async function rest(path) {
-  if (!REST_URL) return null;
-  const resp = await fetch(REST_URL + path, {
-    headers: { Authorization: 'Bearer ' + REST_TOKEN },
+function rest(path) {
+  return new Promise((resolve) => {
+    if (!REST_URL) return resolve(null);
+    const url = new URL(REST_URL + path);
+    const options = {
+      hostname: url.hostname,
+      port: 443,
+      path: url.pathname + url.search,
+      method: 'GET',
+      headers: { 'Authorization': 'Bearer ' + REST_TOKEN },
+    };
+    const req = https.request(options, (res) => {
+      let data = '';
+      res.on('data', (chunk) => { data += chunk; });
+      res.on('end', () => {
+        try {
+          const parsed = JSON.parse(data);
+          resolve(parsed && parsed.result !== undefined ? parsed.result : null);
+        } catch (e) {
+          resolve(null);
+        }
+      });
+    });
+    req.on('error', () => resolve(null));
+    req.setTimeout(5000, () => { req.destroy(); resolve(null); });
+    req.end();
   });
-  if (!resp.ok) return null;
-  const data = await resp.json();
-  return data && data.result;
 }
 
 module.exports = async function handler(req, res) {
