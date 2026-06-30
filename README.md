@@ -56,29 +56,50 @@
 | 域名 | calc-tools.top |
 | 国际化 | URL 路径 /zh/ /en/ 分离 |
 ## 项目结构
-```
-├── index.html              # 首页（中文）
-├── /en/index.html          # 首页（英文）
-├── /zh/                    # 中文工具（32页）
-│   ├── 17 计算器
-│   ├── /image/ (5 图片)
-│   └── /text/ (11 文字)
-├── /en/                    # 英文工具（31页）
-├── /blog/                  # 博客（26篇）
-├── /css/
-│   ├── style.css           # 全局基础样式
-│   ├── site.css            # 站点组件样式
-│   ├── text-tools.css      # 文字工具样式
-│   └── cookie-consent.css  # Cookie 同意弹窗
-├── /js/
-│   ├── site.js             # 首页交互
-│   ├── like.js             # 详情页点赞
-│   ├── i18n.js             # 国际化
-│   ├── calculators/        # 16 计算器
-│   ├── tools/              # 5 图片工具
-│   └── text-tools/         # 11 文字工具
-├── 404.html / about.html / contact.html / privacy.html
-```
+\`\`\`
+└─── index.html              # 首页（中文）
+└─── /zh/                    # 中文工具（35页）
+│   └─── index.html
+│   └─── about.html          # 关于我们
+│   └─── contact.html        # 联系我们
+│   └─── privacy.html        # 隐私政策
+│   └─── /calculators/        # 16 计算器
+│   └─── /image/             # 5 图片工具
+│   └─── /text/              # 11 文字工具
+└─── /en/                    # 英文工具（22页）
+│   └─── index.html / about.html / contact.html / privacy.html
+│   └─── /calculators/        # 16 计算器
+│   └─── /image/             # 5 图片工具
+│   └─── /text/              # 11 文字工具
+└─── /en/                    # 英文工具（22页）
+│   └─── index.html / about.html / contact.html / privacy.html
+│   └─── 16 计算器
+│   └─── /image/ (5 图片)
+│   └─── /text/ (11 文字)
+└─── /blog/zh/               # 13 篇中文博客
+└─── /blog/en/               # 13 篇英文博客
+└─── /css/
+│   └─── style.css           # 全局基础样式
+│   └─── site.css            # 站点组件样式
+│   └─── text-tools.css      # 文字工具样式
+│   └─── cookie-consent.css  # Cookie 同意弹窗
+└─── /js/
+│   └─── site.js             # 首页交互
+│   └─── like.js             # 点赞功能
+│   └─── i18n.js             # 国际化
+│   └─── api-client.js        # API 客户端
+│   └─── cookie-consent.js   # Cookie 同意
+│   └─── calculators/        # 16 计算器
+│   └─── image-tools/        # 5 图片工具
+│   └─── text-tools/         # 11 文字工具
+└─── /api/likes.js         # Vercel Serverless Function
+└─── /assets/               # 图标、Logo
+└─── /scripts/              # 部署脚本
+└─── /docs/                 # 设计文档
+└─── vercel.json / _headers / _redirects / robots.txt / sitemap.xml
+└─── 404.html
+\`\`\`
+
 ## 核心功能
 - **搜索**：实时模糊匹配 + 分类过滤
 - **点赞**：Cloudflare KV 全局共享 + localStorage 本地缓存
@@ -90,7 +111,7 @@
 ## 状态
 | 项目 | 值 |
 |------|-----|
-| 工具总数 | **32**（16 计算器 + 5 图片 + 11 文字）|
+| 工具总数 | **35**（16 计算器 + 5 图片 + 11 文字）|
 | 页面总数 | ~70（32 工具 × 2 语言 + 首页 + 26 博客）|
 | 博客文章 | 26（13 zh + 13 en）|
 | 最新部署 | 09d1998 - 知识库清理 + 编码修复 |
@@ -112,6 +133,7 @@ start index.html
 python -m http.server 8080
 ```
 Deploy trigger: 2026-06-29 02:00:00
+KV Namespace: LIKES (id: 55e06df5367a4715baf8b79d3eb36d92)
 
 ## 全局点赞部署指南
 

@@ -130,6 +130,326 @@
       "source": "/en/color-picker.html",
       "destination": "/en/image/color-picker",
       "permanent": true
+    },
+    {
+      "source": "/zh/age-calc.html",
+      "destination": "/zh/calculators/age-calc",
+      "permanent": true
+    },
+    {
+      "source": "/zh/age-calc",
+      "destination": "/zh/calculators/age-calc",
+      "permanent": true
+    },
+    {
+      "source": "/zh/bmi.html",
+      "destination": "/zh/calculators/bmi",
+      "permanent": true
+    },
+    {
+      "source": "/zh/bmi",
+      "destination": "/zh/calculators/bmi",
+      "permanent": true
+    },
+    {
+      "source": "/zh/car-loan.html",
+      "destination": "/zh/calculators/car-loan",
+      "permanent": true
+    },
+    {
+      "source": "/zh/car-loan",
+      "destination": "/zh/calculators/car-loan",
+      "permanent": true
+    },
+    {
+      "source": "/zh/compound-interest.html",
+      "destination": "/zh/calculators/compound-interest",
+      "permanent": true
+    },
+    {
+      "source": "/zh/compound-interest",
+      "destination": "/zh/calculators/compound-interest",
+      "permanent": true
+    },
+    {
+      "source": "/zh/date-calc.html",
+      "destination": "/zh/calculators/date-calc",
+      "permanent": true
+    },
+    {
+      "source": "/zh/date-calc",
+      "destination": "/zh/calculators/date-calc",
+      "permanent": true
+    },
+    {
+      "source": "/zh/discount.html",
+      "destination": "/zh/calculators/discount",
+      "permanent": true
+    },
+    {
+      "source": "/zh/discount",
+      "destination": "/zh/calculators/discount",
+      "permanent": true
+    },
+    {
+      "source": "/zh/electricity.html",
+      "destination": "/zh/calculators/electricity",
+      "permanent": true
+    },
+    {
+      "source": "/zh/electricity",
+      "destination": "/zh/calculators/electricity",
+      "permanent": true
+    },
+    {
+      "source": "/zh/fuel-cost.html",
+      "destination": "/zh/calculators/fuel-cost",
+      "permanent": true
+    },
+    {
+      "source": "/zh/fuel-cost",
+      "destination": "/zh/calculators/fuel-cost",
+      "permanent": true
+    },
+    {
+      "source": "/zh/housing-fund.html",
+      "destination": "/zh/calculators/housing-fund",
+      "permanent": true
+    },
+    {
+      "source": "/zh/housing-fund",
+      "destination": "/zh/calculators/housing-fund",
+      "permanent": true
+    },
+    {
+      "source": "/zh/ideal-weight.html",
+      "destination": "/zh/calculators/ideal-weight",
+      "permanent": true
+    },
+    {
+      "source": "/zh/ideal-weight",
+      "destination": "/zh/calculators/ideal-weight",
+      "permanent": true
+    },
+    {
+      "source": "/zh/loan-compare.html",
+      "destination": "/zh/calculators/loan-compare",
+      "permanent": true
+    },
+    {
+      "source": "/zh/loan-compare",
+      "destination": "/zh/calculators/loan-compare",
+      "permanent": true
+    },
+    {
+      "source": "/zh/mortgage.html",
+      "destination": "/zh/calculators/mortgage",
+      "permanent": true
+    },
+    {
+      "source": "/zh/mortgage",
+      "destination": "/zh/calculators/mortgage",
+      "permanent": true
+    },
+    {
+      "source": "/zh/overtime.html",
+      "destination": "/zh/calculators/overtime",
+      "permanent": true
+    },
+    {
+      "source": "/zh/overtime",
+      "destination": "/zh/calculators/overtime",
+      "permanent": true
+    },
+    {
+      "source": "/zh/ovulation.html",
+      "destination": "/zh/calculators/ovulation",
+      "permanent": true
+    },
+    {
+      "source": "/zh/ovulation",
+      "destination": "/zh/calculators/ovulation",
+      "permanent": true
+    },
+    {
+      "source": "/zh/tax2026.html",
+      "destination": "/zh/calculators/tax2026",
+      "permanent": true
+    },
+    {
+      "source": "/zh/tax2026",
+      "destination": "/zh/calculators/tax2026",
+      "permanent": true
+    },
+    {
+      "source": "/zh/unit-converter.html",
+      "destination": "/zh/calculators/unit-converter",
+      "permanent": true
+    },
+    {
+      "source": "/zh/unit-converter",
+      "destination": "/zh/calculators/unit-converter",
+      "permanent": true
+    },
+    {
+      "source": "/en/age-calc.html",
+      "destination": "/en/calculators/age-calc",
+      "permanent": true
+    },
+    {
+      "source": "/en/age-calc",
+      "destination": "/en/calculators/age-calc",
+      "permanent": true
+    },
+    {
+      "source": "/en/bmi.html",
+      "destination": "/en/calculators/bmi",
+      "permanent": true
+    },
+    {
+      "source": "/en/bmi",
+      "destination": "/en/calculators/bmi",
+      "permanent": true
+    },
+    {
+      "source": "/en/car-loan.html",
+      "destination": "/en/calculators/car-loan",
+      "permanent": true
+    },
+    {
+      "source": "/en/car-loan",
+      "destination": "/en/calculators/car-loan",
+      "permanent": true
+    },
+    {
+      "source": "/en/compound-interest.html",
+      "destination": "/en/calculators/compound-interest",
+      "permanent": true
+    },
+    {
+      "source": "/en/compound-interest",
+      "destination": "/en/calculators/compound-interest",
+      "permanent": true
+    },
+    {
+      "source": "/en/date-calc.html",
+      "destination": "/en/calculators/date-calc",
+      "permanent": true
+    },
+    {
+      "source": "/en/date-calc",
+      "destination": "/en/calculators/date-calc",
+      "permanent": true
+    },
+    {
+      "source": "/en/discount.html",
+      "destination": "/en/calculators/discount",
+      "permanent": true
+    },
+    {
+      "source": "/en/discount",
+      "destination": "/en/calculators/discount",
+      "permanent": true
+    },
+    {
+      "source": "/en/electricity.html",
+      "destination": "/en/calculators/electricity",
+      "permanent": true
+    },
+    {
+      "source": "/en/electricity",
+      "destination": "/en/calculators/electricity",
+      "permanent": true
+    },
+    {
+      "source": "/en/fuel-cost.html",
+      "destination": "/en/calculators/fuel-cost",
+      "permanent": true
+    },
+    {
+      "source": "/en/fuel-cost",
+      "destination": "/en/calculators/fuel-cost",
+      "permanent": true
+    },
+    {
+      "source": "/en/housing-fund.html",
+      "destination": "/en/calculators/housing-fund",
+      "permanent": true
+    },
+    {
+      "source": "/en/housing-fund",
+      "destination": "/en/calculators/housing-fund",
+      "permanent": true
+    },
+    {
+      "source": "/en/ideal-weight.html",
+      "destination": "/en/calculators/ideal-weight",
+      "permanent": true
+    },
+    {
+      "source": "/en/ideal-weight",
+      "destination": "/en/calculators/ideal-weight",
+      "permanent": true
+    },
+    {
+      "source": "/en/loan-compare.html",
+      "destination": "/en/calculators/loan-compare",
+      "permanent": true
+    },
+    {
+      "source": "/en/loan-compare",
+      "destination": "/en/calculators/loan-compare",
+      "permanent": true
+    },
+    {
+      "source": "/en/mortgage.html",
+      "destination": "/en/calculators/mortgage",
+      "permanent": true
+    },
+    {
+      "source": "/en/mortgage",
+      "destination": "/en/calculators/mortgage",
+      "permanent": true
+    },
+    {
+      "source": "/en/overtime.html",
+      "destination": "/en/calculators/overtime",
+      "permanent": true
+    },
+    {
+      "source": "/en/overtime",
+      "destination": "/en/calculators/overtime",
+      "permanent": true
+    },
+    {
+      "source": "/en/ovulation.html",
+      "destination": "/en/calculators/ovulation",
+      "permanent": true
+    },
+    {
+      "source": "/en/ovulation",
+      "destination": "/en/calculators/ovulation",
+      "permanent": true
+    },
+    {
+      "source": "/en/tax2026.html",
+      "destination": "/en/calculators/tax2026",
+      "permanent": true
+    },
+    {
+      "source": "/en/tax2026",
+      "destination": "/en/calculators/tax2026",
+      "permanent": true
+    },
+    {
+      "source": "/en/unit-converter.html",
+      "destination": "/en/calculators/unit-converter",
+      "permanent": true
+    },
+    {
+      "source": "/en/unit-converter",
+      "destination": "/en/calculators/unit-converter",
+      "permanent": true
     }
   ]
 }

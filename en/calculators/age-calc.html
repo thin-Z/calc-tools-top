@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator - Calculate Exact Age Online</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online age calculator. Calculate exact age in years, months, days, total days lived, and Chinese zodiac sign based on birth date.">
+    <link rel="canonical" href="https://calc-tools.top/en/calculators/age-calc.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/calculators/age-calc.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/calculators/age-calc.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/calculators/age-calc.html">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/site.css">
+    <link rel="stylesheet" href="../../css/cookie-consent.css">
+    <script src="../../js/i18n.js" defer></script>
+    <script src="../../js/like.js" defer></script>
+    <script src="../../js/calculators/age-calc.js" defer></script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": <
+        {
+            "@type": "BreadcrumbList",
+            "itemListElement": <
+                { "@type": "ListItem", "position": 1, "name": "Online Calculators", "item": "https://calc-tools.top//en/" },
+                { "@type": "ListItem", "position": 2, "name": "Age Calculator - Calculate Exact Age Online", "item": "https://calc-tools.top/en/calculators/age-calc.html" }
+            >
+        },
+        {
+    "@type": "FAQPage",
+    "mainEntity": <
+        {
+            "@type": "Question",
+            "name": "How is exact age calculated?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Exact age is calculated by subtracting the birth date from today's date, accounting for leap years and different month lengths to give precise years, months, and days."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What is the Chinese zodiac?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The Chinese zodiac follows a 12-year cycle, each year represented by an animal: Rat, Ox, Tiger, Rabbit, Dragon, Snake, Horse, Goat, Monkey, Rooster, Dog, and Pig."
+            }
+        }
+    >
+}
+    >
+}
+</script>
+</head>
+<body>
+    <header>
+        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
+        <nav>
+            <a href="/en/"><span data-i18n="siteName">$$ҳ</span></a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="en" selected>???? English</option>
+                <option value="zh">🇨🇳 中文</option>
+            </select>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h1>Age Calculator - Calculate Exact Age Online</h1>
+            <p>Free online age calculator. Calculate exact age in years, months, days, total days lived, and Chinese zodiac sign based on birth date.</p>
+        </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="age-calc"><span class="heart">❤</span> <span class="count">0</span></button></div>
+
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">$$$λ - $$$$$$</div>
+
+        <div class="tool-form">
+            <div class="form-group">
+                <label>Date of Birth</label>
+                <input type="date" id="birthDate" value="1990-01-01">
+            </div>
+            <div class="form-group">
+                <label>Name (optional)</label>
+                <input type="text" id="name" placeholder="Enter your name">
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-primary" onclick="doCalculate()">Calculate</button>
+                <button type="reset" class="btn btn-secondary" onclick="resetForm()">Reset</button>
+            </div>
+        </div>
+
+        <div class="result-card" id="resultArea" style="display:none;">
+            <div class="result-value" id="ageDisplay" style="font-size:2rem;font-weight:bold;text-align:center;">--</div>
+            <div class="result-details" style="margin-top:1rem;">
+                <p>$$$$$$$$$$<span id="totalDays"></span> $$</p>
+                <p>$$Ф$$<span id="zodiac"></span></p>
+                <p>$$$$$´$$$$գ$<span id="nextBirthday"></span> $$</p>
+            </div>
+        </div>
+
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">$$$λ - $$$$$$</div>
+
+<div class="tool-content">
+    <h2>Age Calculator Guide</h2>
+    <p>Calculate your exact age in years, months, and days, total days since birth, Chinese zodiac sign, and days until your next birthday.</p>
+    <h3>Use Cases</h3>
+    <p>Perfect for ID verification, school enrollment age checks, social insurance age queries, and zodiac sign lookups.</p>
+</div>
+
+<div class="related-tools">
+    <h3>Related Tools</h3>
+    <ul>
+        <li><a href="/en/calculators/date-calc.html">Date Calculator</a></li>
+        <li><a href="/en/calculators/bmi.html">BMI Calculator</a></li>
+    </ul>
+</div>
+    </main>
+
+    <footer>
+        <p data-i18n="copyright">© 2026 Online Calculators | Free Online Calculators</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll("<data-i18n>").forEach(function(el) {
+                const key = el.getAttribute("data-i18n");
+                el.textContent = t(key);
+            });
+        });
+    </script>
+
+<script>
+(function(){var k="toolbox_likes";function g(){try{return JSON.parse(localStorage.getItem(k))||{}}catch(e){return {}}}
+function s(l){localStorage.setItem(k,JSON.stringify(l))}
+var b=document.querySelector(".detail-like");if(!b)return;
+var id=b.dataset.likeId,ls=g(),c=ls[id]||0,ce=b.querySelector(".count");
+if(ce)ce.textContent=c;if(c>0)b.classList.add("liked");
+b.onclick=function(e){e.preventDefault();e.stopPropagation();
+var ls=g(),cur=ls[id]||0;ls[id]=cur>0?0:1;s(ls);
+var nc=ls[id];if(ce)ce.textContent=nc;
+if(nc>0)b.classList.add("liked");else b.classList.remove("liked")};})();
+</script>
+    <script src="../../js/cookie-consent.js" defer></script>
+</body>
+</html>
+
+
+
