@@ -141,18 +141,9 @@ function updateClickUI(toolId, total) {
             el.insertAdjacentElement('afterend', newUc);
         }
     });
-    // Update hot-likes spans for hot tool cards
-    document.querySelectorAll('.hot-tool-card').forEach(function(card) {
-        var hotLikes = card.querySelector('.hot-likes');
-        if (hotLikes) {
-            var link = card.querySelector('[data-like-id]');
-            if (link && link.getAttribute('data-like-id') === toolId) {
-                hotLikes.textContent = '✨ ' + total;
-            }
-        }
-        // Remove any leaked usage-count inside hot-tool-card
-        var leaked = card.querySelector('.usage-count');
-        if (leaked) leaked.remove();
+    // Clean up any leaked usage-count inside hot-tool-card
+    document.querySelectorAll('.hot-tool-card .usage-count').forEach(function(el) {
+        el.remove();
     });
 }
 
@@ -380,7 +371,8 @@ function updateClickDisplay() {
 
 function initClickTracking() {
     updateClickDisplay();
-    document.querySelectorAll('.tool-card').forEach(function(card) {
+    document.querySelectorAll('.tool-card:not([data-click-bound])').forEach(function(card) {
+        card.setAttribute('data-click-bound', 'true');
         card.addEventListener('click', function() {
             var wrap = this.closest('.tool-card-wrap, .hot-tool-card');
             if (wrap) {
@@ -577,6 +569,24 @@ const TOOL_KEYWORDS_ZH = {
 // Default hot tools for new visitors
 const DEFAULT_HOT_TOOLS = ['mortgage', 'bmi', 'tax2026', 'color-picker', 'discount', 'unit-converter', 'word-counter', 'json-formatter'];
 
+var _globalClickTotals = {};
+
+function fetchAndMergeGlobalClicks(callback) {
+    if (typeof window.ApiClient === 'undefined') {
+        if (callback) callback();
+        return;
+    }
+    window.ApiClient.get('/api/clicks').then(function(data) {
+        if (data) {
+            Object.keys(data).forEach(function(key) {
+                var toolId = key.replace('click:tool:', '');
+                _globalClickTotals[toolId] = parseInt(data[key] || '0', 10);
+            });
+        }
+        if (callback) callback();
+    });
+}
+
 function initHotTools() {
     var grid = document.getElementById('hotToolsGrid');
     var container = document.getElementById('hotToolsContainer');
@@ -600,51 +610,29 @@ function initHotTools() {
         });
         scored.push({ id: id, score: score });
     });
-    scored.sort(function(a, b) { return b.score - a.score; });
-    
-    // If no user data, use defaults
+    // Use global click count (if available) for scoring
     var hasUserData = Object.keys(likes).length > 0 || Object.keys(clicks).length > 0;
-    var selected = [];
-    var added = {};
-    
-    if (!hasUserData) {
-        DEFAULT_HOT_TOOLS.forEach(function(id) {
-            if (TOOLS_DATA[id] && !added[id]) {
-                selected.push({ id: id, score: 999, isDefault: true });
-                added[id] = true;
-            }
+    if (!hasUserData && Object.keys(_globalClickTotals).length === 0) {
+        // New user with no data: use defaults
+        var selected = DEFAULT_HOT_TOOLS.slice(0, 8).map(function(id) {
+            return TOOLS_DATA[id] ? { id: id, score: 0 } : null;
+        }).filter(Boolean);
+    } else {
+        // Re-score with global click data merged
+        var rescored = [];
+        allToolIds.forEach(function(id) {
+            var s = (likes[id] || 0) * 3;
+            var localC = clicks[id] ? (clicks[id].total || 0) : 0;
+            var globalC = _globalClickTotals[id] || 0;
+            s += Math.max(localC, globalC);
+            var toolName = TOOLS_DATA[id].name['zh'].toLowerCase();
+            Object.keys(searchTerms).forEach(function(term) {
+                if (toolName.includes(term)) s += (searchTerms[term] || 0) * 2;
+            });
+            rescored.push({ id: id, score: s });
         });
-    }
-    
-    // Ensure category diversity: at least 1 per category
-    var categories = ['finance', 'health', 'life', 'shopping', 'travel', 'utility', 'image', 'text'];
-    categories.forEach(function(cat) {
-        for (var i = 0; i < scored.length && selected.length < 12; i++) {
-            var tc = SITE_CONFIG.tools.find(function(t) { return t.id === scored[i].id; });
-            if (tc && tc.categories.indexOf(cat) !== -1 && !added[scored[i].id]) {
-                selected.push(scored[i]);
-                added[scored[i].id] = true;
-                break;
-            }
-        }
-    });
-    
-    // Fill remaining slots with highest-scored tools
-    for (var i = 0; i < scored.length && selected.length < 8; i++) {
-        if (!added[scored[i].id]) {
-            selected.push(scored[i]);
-            added[scored[i].id] = true;
-        }
-    }
-    
-    // Ultimate fallback
-    if (selected.length === 0) {
-        DEFAULT_HOT_TOOLS.forEach(function(id) {
-            if (TOOLS_DATA[id] && !added[id]) {
-                selected.push({ id: id, score: 0, isDefault: true });
-                added[id] = true;
-            }
-        });
+        rescored.sort(function(a, b) { return b.score - a.score; });
+        var selected = rescored.slice(0, 8);
     }
     
     if (selected.length === 0) { container.style.display = 'none'; return; }
@@ -677,7 +665,7 @@ function initHotTools() {
         
         html += '<div class="hot-tool-card">'
             + '<div class="hot-badge">#' + (idx + 1) + '</div>'
-            + (true ? '<span class="hot-likes">✨ ' + getTotalClicks(entry.id) + '</span>' : '')
+            + '<span class="hot-score">🔥 ' + entry.score + '</span>'
             + '<a href="' + prefix + entry.id + '.html" class="tool-card" data-like-id="' + entry.id + '" data-category="' + cats.join(',') + '" data-keywords-zh="' + (TOOL_KEYWORDS_ZH[entry.id] || '') + '" style="text-decoration:none;color:inherit;">'
             + '<div class="icon icon-' + firstCat + '">' + tool.icon + '</div>'
             + '<h3>' + name + ' ' + trendBadge + '</h3>'
@@ -865,22 +853,20 @@ document.addEventListener('DOMContentLoaded', () => {
     initHotTools();
     initArticleClicks();
     initClickTracking();
+    // Fetch global click counts and refresh hot tools
+    fetchAndMergeGlobalClicks(function() {
+        initHotTools();
+        initClickTracking();
+    });
 });
 
 // Reload click display when page restored from bfcache (browser back/forward)
 window.addEventListener('pageshow', function(e) {
     if (e.persisted) {
         updateClickDisplay();
-        // Update hot tool counts without re-generating HTML (preserves click handlers)
-        document.querySelectorAll('.hot-likes').forEach(function(hl) {
-            var link = hl.parentElement.querySelector('[data-like-id]');
-            if (link) {
-                var toolId = link.getAttribute('data-like-id');
-                hl.textContent = '✨ ' + getTotalClicks(toolId);
-                // Clean up any leaked usage-count inside hot-tool-card
-                var leaked = hl.parentElement.querySelector('.usage-count');
-                if (leaked) leaked.remove();
-            }
+        fetchAndMergeGlobalClicks(function() {
+            initHotTools();
+            initClickTracking();
         });
     }
 });
