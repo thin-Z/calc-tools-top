@@ -97,71 +97,80 @@
 └─── 404.html
 \`\`\`
 
-## 核心功能
-- **搜索**：实时模糊匹配 + 分类过滤
-- **点赞**：Upstash Redis 全局共享 + localStorage 本地缓存降级
-- **热门工具**：综合评分 + 排名 badge
-- **暗色模式**：跟随系统 / 手动切换，localStorage 持久化
-- **趋势标识**：今日热门 / 上升中统计
-- **搜索热词**：记录并展示热门搜索词
-- **博客**：26 篇工具指南，分页加载
+## SEO 配置
+
+### 结构化数据
+
+| 类型 | 覆盖范围 | 说明 |
+|------|---------|------|
+| Open Graph | 全站 102 页 | og:title/og:description/og:type/og:url/og:image/og:locale |
+| Twitter Card | 全站 102 页 | summary_large_image + twitter:title/twitter:description |
+| SoftwareApplication | 64 个工具页 | applicationCategory+operatingSystem 标注 |
+| Article | 26 篇博客 | headline+url+description+inLanguage |
+| BreadcrumbList | 工具页 | 面包屑导航路径 |
+| FAQPage | 部分工具页 | 常见问题 FAQ 结构化 |
+| WebSite | 首页 | 站点名称、描述 |
+| CollectionPage | 首页 | 工具集列表 + SoftwareApplication 项目 |
+
+### Sitemap
+
+- 文件：`/sitemap.xml`（自动生成，102 条 URL）
+- 覆盖：中英文首页、64 个工具页、26 篇博客、9 个关于/联系/隐私页
+- 双语：每页均有 xhtml:link hreflang 标注 zh-CN / en / x-default
+- 生成脚本：`scripts/generate-sitemap.ps1`（扫描实际文件结构自动生成）
+
+### 站内链接
+
+- 22 个工具页底部增加「相关阅读」区域，链回对应博客文章
+- 26 篇博客文章底部有 CTA 按钮链向对应工具
+- 注入脚本：`scripts/inject-internal-links.ps1`
+
+### 搜索引擎提交
+
+**Google Search Console**
+
+1. 打开 https://search.google.com/search-console
+2. 添加站点 https://www.calc-tools.top（网址前缀方式）
+3. 验证域名所有权（DNS TXT 记录 或 HTML 文件验证）
+4. 提交 sitemap：`sitemap.xml`
+
+**Baidu 站长平台**
+
+- 已有验证标签（baidu-site-verification: codeva-BFCPLYBA5D）
+- 登录 https://ziyuan.baidu.com 添加站点
+- 提交 sitemap：`https://www.calc-tools.top/sitemap.xml`
+
+### SEO 标签批量注入脚本
+
+| 脚本 | 用途 |
+|------|------|
+| `scripts/generate-sitemap.ps1` | 扫描文件结构生成完整 sitemap.xml |
+| `scripts/inject-seo-tags.ps1` | 批量注入 OG/Twitter/Schema 标签到所有页面 |
+| `scripts/inject-internal-links.ps1` | 批量注入工具↔博客站内链接 |
+
 ## 状态
+
 | 项目 | 值 |
 |------|-----|
-| 工具总数 | **35**（16 计算器 + 5 图片 + 11 文字）|
-| 页面总数 | ~70（32 工具 × 2 语言 + 首页 + 26 博客）|
-| 博客文章 | 26（13 zh + 13 en）|
-| 最新部署 | 064bb08 - 热门工具排序重构 + 点击量全局持久化 |
+| 工具总数 | **35**（16 计算器 + 5 图片 + 11 文字） |
+| 页面总数 | ~70（64 工具 2 语言 + 首页 + 26 博客） |
+| 博客文章 | 26（13 zh + 13 en） |
+| 最新部署 | 46801e6 - SEO: sitemap重构 + OG标签 + Schema + 站内链接 |
+| Sitemap | 102 条 URL，路径全部匹配实际文件 |
 | 点赞/点击量 | Vercel Serverless Functions + Upstash Redis |
-| 热门排序 | 全工具综合打分（无类目配额），取前 8 |
+| 热门排序 | 全工具综合评分（无类别配额），取前 8 |
+
+### Commit 记录
+
 | commit | 说明 |
 |--------|------|
+| 46801e6 | SEO: sitemap重构 + OG标签 + Schema结构化数据 + 站内链接 |
 | 064bb08 | feat: 热门工具全工具排序、全局点击量、热度值展示 |
-| 0cdf279 | fix: 热门工具双计数修复 — updateClickUI 限定范围 |
+| 0cdf279 | fix: 热门工具双计数修复 -- updateClickUI 限定范围 |
 | cd87b8f | fix: 恢复 Vercel Serverless Function，新增点击量 API |
 | 09d1998 | chore: 知识库结构优化，移除 docs 追踪 |
 | d0d2c82 | fix: U+FFFD 编码修复 + 编码保护体系 |
 | e673cda | fix: 热门工具点击数 + script + CSS + 暗色模式 |
-| 69cfec3 | fix: 热门工具样式 — 描述/标签/图标颜色 |
+| 69cfec3 | fix: 热门工具样式 -- 描述/标签/图标颜色 |
 | d9a27e7 | feat: 隐私政策/关于/联系 + Cookie 同意 |
-## 本地开发
-```bash
-# 无需构建，直接在浏览器打开
-start index.html
-# 或用 Python 启动本地服务器
-python -m http.server 8080
-```
-Deploy trigger: 2026-06-29 02:00:00
-存储后端: Upstash Redis (Vercel Serverless Functions)
-
-## 全局数据部署指南（Vercel + Upstash Redis）
-
-### 前提
-- Vercel 账号（已有），已关联 GitHub 仓库
-- Upstash Redis 实例（[upstash.com](https://upstash.com) 免费套餐即可）
-
-### 步骤
-
-1. **创建 Upstash Redis 数据库**
-
-   - 登录 [Upstash Dashboard](https://console.upstash.com)
-   - 创建 Redis 数据库（免费套餐）
-   - 记下 REST API URL 和 Token
-
-2. **在 Vercel 配置环境变量**
-
-   - Vercel Dashboard -> calc-tools-top -> Settings -> Environment Variables
-   - 添加以下两个变量：
-
-     | 变量名 | 值 |
-     |--------|-----|
-     | KV_REST_API_URL | https://xxxx.upstash.io |
-     | KV_REST_API_TOKEN | xxxxxxxxxxxxxxxx |
-
-3. **推送代码**
-
-   `ash
-   git push
-   `
-
-   Vercel 自动检测 pi/ 目录下的 .js 文件作为 Serverless Function 部署。
+| 50d253b | docs: update README for Vercel + Upstash Redis, click tracking, hot score |
