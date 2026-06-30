@@ -666,7 +666,7 @@ function initHotTools() {
             trendBadge = '<span class="trend-badge trend-up">⬆ 今日使用</span>';
         }
         
-        html += '<div class="hot-tool-card" data-like-id="' + entry.id + '">'
+        html += '<div class="hot-tool-card">'
             + '<div class="hot-badge">#' + (idx + 1) + '</div>'
             + (true ? '<span class="hot-likes">✨ ' + getTotalClicks(entry.id) + '</span>' : '')
             + '<a href="' + prefix + entry.id + '.html" class="tool-card" data-like-id="' + entry.id + '" data-category="' + cats.join(',') + '" data-keywords-zh="' + (TOOL_KEYWORDS_ZH[entry.id] || '') + '" style="text-decoration:none;color:inherit;">'
@@ -864,10 +864,13 @@ window.addEventListener('pageshow', function(e) {
         updateClickDisplay();
         // Update hot tool counts without re-generating HTML (preserves click handlers)
         document.querySelectorAll('.hot-likes').forEach(function(hl) {
-            var card = hl.closest('[data-like-id]');
-            if (card) {
-                var toolId = card.getAttribute('data-like-id');
+            var link = hl.parentElement.querySelector('[data-like-id]');
+            if (link) {
+                var toolId = link.getAttribute('data-like-id');
                 hl.textContent = '✨ ' + getTotalClicks(toolId);
+                // Clean up any leaked usage-count inside hot-tool-card
+                var leaked = hl.parentElement.querySelector('.usage-count');
+                if (leaked) leaked.remove();
             }
         });
     }
