@@ -126,24 +126,33 @@ function updateLikeUI(toolId) {
 
 
 function updateClickUI(toolId, total) {
-    // Update usage-count spans
-    document.querySelectorAll('[data-like-id="' + toolId + '"]').forEach(function(el) {
-        var uc = el.parentElement.querySelector('.usage-count');
+    // Update usage-count in regular tool cards only
+    document.querySelectorAll('.tool-card-wrap [data-like-id="' + toolId + '"]').forEach(function(el) {
+        var wrap = el.closest('.tool-card-wrap');
+        if (!wrap) return;
+        var uc = wrap.querySelector('.usage-count');
         if (uc) {
-            uc.textContent = '\u2728 ' + total;
+            uc.textContent = '✨ ' + total;
         }
         if (total > 0 && !uc) {
             var newUc = document.createElement('span');
             newUc.className = 'usage-count';
-            newUc.textContent = '\u2728 ' + total;
+            newUc.textContent = '✨ ' + total;
             el.insertAdjacentElement('afterend', newUc);
         }
     });
     // Update hot-likes spans for hot tool cards
-    var hotCards = document.querySelectorAll('.hot-tool-card[data-like-id="' + toolId + '"]');
-    hotCards.forEach(function(card) {
+    document.querySelectorAll('.hot-tool-card').forEach(function(card) {
         var hotLikes = card.querySelector('.hot-likes');
-        if (hotLikes) hotLikes.textContent = '\u2728 ' + total;
+        if (hotLikes) {
+            var link = card.querySelector('[data-like-id]');
+            if (link && link.getAttribute('data-like-id') === toolId) {
+                hotLikes.textContent = '✨ ' + total;
+            }
+        }
+        // Remove any leaked usage-count inside hot-tool-card
+        var leaked = card.querySelector('.usage-count');
+        if (leaked) leaked.remove();
     });
 }
 
