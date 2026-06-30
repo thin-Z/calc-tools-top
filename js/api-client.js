@@ -51,11 +51,27 @@
     });
   }
 
+  // ?? GET
+  function apiGet(path) {
+    return apiFetch(path);
+  }
+
+  // ?? POST
+  function apiPost(path, data) {
+    return apiFetch(path, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+  }
+
   window.ApiClient = {
     fetchCount: fetchCount,
     fetchAllCounts: fetchAllCounts,
     toggleLike: toggleLike,
     getLocalLikes: getLocalLikes,
     setLocalLikes: setLocalLikes,
+    get: apiGet,
+    post: apiPost,
   };
 })();

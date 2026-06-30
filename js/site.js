@@ -124,10 +124,34 @@ function updateLikeUI(toolId) {
     });
 }
 
+
+function updateClickUI(toolId, total) {
+    // Update usage-count spans
+    document.querySelectorAll('[data-like-id="' + toolId + '"]').forEach(function(el) {
+        var uc = el.parentElement.querySelector('.usage-count');
+        if (uc) {
+            uc.textContent = '\u2728 ' + total;
+        }
+        if (total > 0 && !uc) {
+            var newUc = document.createElement('span');
+            newUc.className = 'usage-count';
+            newUc.textContent = '\u2728 ' + total;
+            el.insertAdjacentElement('afterend', newUc);
+        }
+    });
+    // Update hot-likes spans for hot tool cards
+    var hotCards = document.querySelectorAll('.hot-tool-card[data-like-id="' + toolId + '"]');
+    hotCards.forEach(function(card) {
+        var hotLikes = card.querySelector('.hot-likes');
+        if (hotLikes) hotLikes.textContent = '\u2728 ' + total;
+    });
+}
+
 function initLikes() {
-    document.querySelectorAll('.like-btn').forEach(btn => {
+    document.querySelectorAll('.like-btn:not([data-initialized])').forEach(btn => {
         const toolId = btn.dataset.likeId;
         if (toolId) {
+            btn.setAttribute('data-initialized', 'true');
             updateLikeUI(toolId);
             btn.addEventListener('click', (e) => {
                 e.preventDefault(); e.stopPropagation();
@@ -190,6 +214,14 @@ function incrementClick(toolId) {
     if (!clicks[toolId].daily) clicks[toolId].daily = {};
     clicks[toolId].daily[today] = (clicks[toolId].daily[today] || 0) + 1;
     saveClicks(clicks);
+    // Async sync to server (fire-and-forget)
+    if (typeof window.ApiClient !== 'undefined') {
+        window.ApiClient.post('/api/clicks', { toolId: toolId }).then(function(data) {
+            if (data && typeof data.total === 'number') {
+                updateClickUI(toolId, data.total);
+            }
+        });
+    }
 }
 
 function getDailyClicks(toolId) {
@@ -318,9 +350,27 @@ function renderUsageCounts() {
         }
     });
 }
-function initClickTracking() {
+function fetchServerClickCounts() {
+    if (typeof window.ApiClient === 'undefined') return;
+    document.querySelectorAll('[data-like-id]').forEach(function(el) {
+        var toolId = el.getAttribute('data-like-id');
+        if (!toolId) return;
+        window.ApiClient.get('/api/clicks?toolId=' + encodeURIComponent(toolId)).then(function(data) {
+            if (data && typeof data.total === 'number') {
+                updateClickUI(toolId, data.total);
+            }
+        });
+    });
+}
+
+function updateClickDisplay() {
     renderTrendBadges();
     renderUsageCounts();
+    fetchServerClickCounts();
+}
+
+function initClickTracking() {
+    updateClickDisplay();
     document.querySelectorAll('.tool-card').forEach(function(card) {
         card.addEventListener('click', function() {
             var wrap = this.closest('.tool-card-wrap, .hot-tool-card');
@@ -616,10 +666,10 @@ function initHotTools() {
             trendBadge = '<span class="trend-badge trend-up">⬆ 今日使用</span>';
         }
         
-        html += '<div class="hot-tool-card">'
+        html += '<div class="hot-tool-card" data-like-id="' + entry.id + '">'
             + '<div class="hot-badge">#' + (idx + 1) + '</div>'
             + (true ? '<span class="hot-likes">✨ ' + getTotalClicks(entry.id) + '</span>' : '')
-            + '<a href="' + prefix + entry.id + '.html" class="tool-card" data-category="' + cats.join(',') + '" data-keywords-zh="' + (TOOL_KEYWORDS_ZH[entry.id] || '') + '" style="text-decoration:none;color:inherit;">'
+            + '<a href="' + prefix + entry.id + '.html" class="tool-card" data-like-id="' + entry.id + '" data-category="' + cats.join(',') + '" data-keywords-zh="' + (TOOL_KEYWORDS_ZH[entry.id] || '') + '" style="text-decoration:none;color:inherit;">'
             + '<div class="icon icon-' + firstCat + '">' + tool.icon + '</div>'
             + '<h3>' + name + ' ' + trendBadge + '</h3>'
             + '<p>' + (tool.desc ? (tool.desc[lang] || tool.desc['zh']) : '') + '</p>'
@@ -806,6 +856,21 @@ document.addEventListener('DOMContentLoaded', () => {
     initHotTools();
     initArticleClicks();
     initClickTracking();
+});
+
+// Reload click display when page restored from bfcache (browser back/forward)
+window.addEventListener('pageshow', function(e) {
+    if (e.persisted) {
+        updateClickDisplay();
+        // Update hot tool counts without re-generating HTML (preserves click handlers)
+        document.querySelectorAll('.hot-likes').forEach(function(hl) {
+            var card = hl.closest('[data-like-id]');
+            if (card) {
+                var toolId = card.getAttribute('data-like-id');
+                hl.textContent = '✨ ' + getTotalClicks(toolId);
+            }
+        });
+    }
 });
 
 // ===== Dark Mode Toggle =====

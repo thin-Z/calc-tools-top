@@ -76,9 +76,12 @@
 
     // ---- Init ----
     function initLikes() {
-        document.querySelectorAll('.like-btn').forEach(function(btn) {
+        document.querySelectorAll('.like-btn:not([data-initialized])').forEach(function(btn) {
             var toolId = btn.getAttribute('data-like-id');
             if (!toolId) return;
+
+            // Mark as initialized to prevent double-binding on pageshow
+            btn.setAttribute('data-initialized', 'true');
 
             // Show local count immediately
             updateLikeUI(toolId);
