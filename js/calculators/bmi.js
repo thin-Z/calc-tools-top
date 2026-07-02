@@ -1,4 +1,4 @@
-﻿function calculateBMI(height, weight) {
+function calculateBMI(height, weight) {
     const h = height / 100;
     const bmi = weight / (h * h);
     let category, color;

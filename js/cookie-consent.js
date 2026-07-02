@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Cookie Consent Banner for calc-tools.top
  * GDPR/CCPA compliant consent management
  */

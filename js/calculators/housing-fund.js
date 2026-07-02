@@ -1,4 +1,4 @@
-﻿/**
+/**
  * 公积金贷款计算器（等额本息）
  * Housing Fund Loan Calculator (Equal Installment)
  */

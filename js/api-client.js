@@ -1,4 +1,4 @@
-﻿// js/api-client.js
+// js/api-client.js
 // Cloudflare Worker API 客户端 + 降级策略
 // 在 like.js 和 site.js 之前加载
 

@@ -1,4 +1,4 @@
-﻿function doCalculate() {
+function doCalculate() {
     const price = parseFloat(document.getElementById("carPrice").value);
     const downPct = parseFloat(document.getElementById("downPayment").value);
     const rate = parseFloat(document.getElementById("carRate").value);

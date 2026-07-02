@@ -1,4 +1,4 @@
-﻿/**
+/**
  * 房贷计算器
  * Mortgage Calculator
  */

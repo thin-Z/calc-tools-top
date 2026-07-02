@@ -1,4 +1,4 @@
-﻿/* ===== Image Compression Tool ===== */
+/* ===== Image Compression Tool ===== */
 (function() {
     'use strict';
 

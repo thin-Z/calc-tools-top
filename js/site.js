@@ -1,6 +1,6 @@
-﻿/* ===== Site-wide features: Config ===== */
+/* ===== Site-wide features: Config ===== */
 
-const PAGE_SIZE = 10;
+const PAGE_SIZE = 8;
 const BLOG_PAGINATION_KEY = "blog_page";
 
 const SITE_CONFIG = {
@@ -430,24 +430,112 @@ function filterTools(category) {
     // Filter tool cards
     const cards = document.querySelectorAll('.tool-card');
     cards.forEach(function(card) {
-        const cats = (card.dataset.category || '').split(',');
-        const match = category === 'all' || cats.includes(category);
-        card.parentElement.classList.toggle('filtered-out', !match);
+        const cats = (card.dataset.category || "").split(",");
+        const match = category === "all" || cats.includes(category);
+        card.parentElement.classList.toggle("filtered-out", !match);
     });
 
-    // Filter article items on home page or blog listing page
-    const articles = document.querySelectorAll('.article-item');
+    // Filter article items
+    const articles = document.querySelectorAll(".article-item");
     articles.forEach(function(article) {
-        const cats = (article.dataset.category || '').split(',');
-        const match = category === 'all' || cats.includes(category);
-        article.classList.toggle('filtered-out', !match);
+        const cats = (article.dataset.category || "").split(",");
+        const match = category === "all" || cats.includes(category);
+        // Clear all inline display first (removes pagination artifacts)
+        article.style.display = "";
+        // Apply filtered-out class (CSS handles the visual hide via display:none)
+        article.classList.toggle("filtered-out", !match);
     });
 
-    const noResults = document.querySelector('.no-results');
+    // Re-apply pagination for filtered items
+    applyFilteredPagination(category, articles);
+
+    const noResults = document.querySelector(".no-results");
     if (noResults) {
-        const allFiltered = document.querySelectorAll('.tool-card-wrap:not(.filtered-out)').length === 0;
-        noResults.classList.toggle('visible', allFiltered);
+        const visibleCards = document.querySelectorAll(".tool-card-wrap:not(.filtered-out)");
+        noResults.classList.toggle("visible", visibleCards.length === 0);
     }
+}
+
+function applyFilteredPagination(category, articles) {
+    // Count visible (non-filtered) items
+    var visibleItems = [];
+    articles.forEach(function(article) {
+        var cats = (article.dataset.category || "").split(",");
+        var match = category === "all" || cats.includes(category);
+        if (match) {
+            visibleItems.push(article);
+        }
+    });
+
+    // Get or create load-more wrapper
+    var section = document.querySelector(".homepage-article-list, .article-list");
+    if (!section) return;
+    var wrap = section.parentNode.querySelector(".load-more-wrap");
+    var btn = wrap ? wrap.querySelector(".load-more-btn") : null;
+
+    if (visibleItems.length <= PAGE_SIZE) {
+        // All visible items fit on one page - hide load-more if exists
+        if (wrap) wrap.style.display = "none";
+        return;
+    }
+
+    // Build or reuse load-more button
+    if (!wrap) {
+        wrap = document.createElement("div");
+        wrap.className = "load-more-wrap";
+        wrap.style.cssText = "text-align:center;margin-top:1.5rem;";
+        btn = document.createElement("button");
+        btn.className = "load-more-btn";
+        section.parentNode.insertBefore(wrap, section.nextSibling);
+        wrap.appendChild(btn);
+    }
+    wrap.style.display = "";
+
+    // Hide items beyond PAGE_SIZE
+    var currentVisible = Math.min(PAGE_SIZE, visibleItems.length);
+    visibleItems.forEach(function(item, i) {
+        if (i >= PAGE_SIZE) {
+            item.style.display = "none";
+        } else {
+            item.style.display = "";
+        }
+    });
+
+    var remaining = visibleItems.length - PAGE_SIZE;
+    btn.textContent = "加载更多 (" + remaining + " 篇)";
+    btn.disabled = false;
+    btn.style.opacity = "1";
+    btn.style.cursor = "pointer";
+
+    // Replace click handler (remove old, add new)
+    var newBtn = btn.cloneNode(true);
+    btn.parentNode.replaceChild(newBtn, btn);
+
+    newBtn.addEventListener("click", function() {
+        // Count how many are currently visible
+        var shown = 0;
+        var remainingCount = 0;
+        visibleItems.forEach(function(item, i) {
+            if (i < visibleItems.length && item.style.display !== "none") {
+                shown++;
+            }
+        });
+        var toShow = Math.min(PAGE_SIZE, visibleItems.length - shown);
+        var shownSoFar = shown;
+        for (var i = shownSoFar; i < shownSoFar + toShow && i < visibleItems.length; i++) {
+            visibleItems[i].style.display = "";
+        }
+        shown += toShow;
+        remainingCount = visibleItems.length - shown;
+        if (remainingCount > 0) {
+            newBtn.textContent = "加载更多 (" + remainingCount + " 篇)";
+        } else {
+            newBtn.textContent = "已显示全部文章";
+            newBtn.disabled = true;
+            newBtn.style.opacity = "0.65";
+            newBtn.style.cursor = "default";
+        }
+    });
 }
 
 /* ===== Make article cards clickable ===== */
@@ -709,32 +797,11 @@ function initBlogPagination() {
     if (!section) return;
     var items = section.querySelectorAll('.article-item');
     if (items.length <= PAGE_SIZE) return;
-    
-    // Always start collapsed on page load
-    items.forEach(function(item, i) {
-        if (i >= PAGE_SIZE) {
-            item.style.display = 'none';
-        }
-    });
-    
-    // Remove existing load-more if any
-    var oldBtn = section.parentNode.querySelector('.load-more-wrap');
-    if (oldBtn) oldBtn.remove();
-    
-    var wrap = document.createElement('div');
-    wrap.className = 'load-more-wrap';
-    wrap.style.cssText = 'text-align:center;margin-top:1rem;';
-    var btn = document.createElement('button');
-    btn.className = 'btn btn-secondary load-more-btn';
-    btn.textContent = '加载更多 (' + (items.length - PAGE_SIZE) + ' 篇)';
-    btn.addEventListener('click', function() {
-        items.forEach(function(item) { item.style.display = ''; });
-        this.textContent = '已显示全部文章';
-        this.disabled = true;
-        this.style.opacity = '0.6';
-    });
-    wrap.appendChild(btn);
-    section.parentNode.insertBefore(wrap, section.nextSibling);
+    // Remove any existing load-more button first
+    var oldWrap = section.parentNode.querySelector('.load-more-wrap');
+    if (oldWrap) oldWrap.remove();
+    // Use the shared pagination function with "all" category
+    applyFilteredPagination("all", items);
 }function initArticleClicks() {
     var items = document.querySelectorAll('.article-item');
     for (var i = 0; i < items.length; i++) {
@@ -853,6 +920,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initHotTools();
     initArticleClicks();
     initClickTracking();
+    initReadingProgress();
+    initBackToTop();
     // Fetch global click counts and refresh hot tools
     fetchAndMergeGlobalClicks(function() {
         initHotTools();
@@ -870,6 +939,55 @@ window.addEventListener('pageshow', function(e) {
         });
     }
 });
+
+// ===== Reading Progress Bar =====
+function initReadingProgress() {
+    // Only show on blog post pages (has article.blog-post)
+    var article = document.querySelector('article.blog-post');
+    if (!article) return;
+
+    var bar = document.createElement('div');
+    bar.className = 'reading-progress';
+    bar.innerHTML = '<div class="progress-fill"></div>';
+    document.body.appendChild(bar);
+
+    var fill = bar.querySelector('.progress-fill');
+
+    window.addEventListener('scroll', function() {
+        var scrollTop = window.scrollY;
+        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        if (docHeight <= 0) return;
+        var progress = Math.min(scrollTop / docHeight * 100, 100);
+        fill.style.width = progress + '%';
+    }, { passive: true });
+}
+
+// ===== Back to Top =====
+function initBackToTop() {
+    var btn = document.createElement('button');
+    btn.className = 'back-to-top';
+    btn.setAttribute('aria-label', 'Back to top');
+    btn.innerHTML = '\u2B06';
+    btn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    document.body.appendChild(btn);
+
+    var ticking = false;
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                if (window.scrollY > 400) {
+                    btn.classList.add('visible');
+                } else {
+                    btn.classList.remove('visible');
+                }
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
+}
 
 // ===== Dark Mode Toggle =====
 (function() {

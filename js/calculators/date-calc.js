@@ -1,4 +1,4 @@
-﻿function addDays(dateStr, days) {
+function addDays(dateStr, days) {
     const date = new Date(dateStr);
     date.setDate(date.getDate() + days);
     const y = date.getFullYear();

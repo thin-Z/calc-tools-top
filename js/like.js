@@ -1,4 +1,4 @@
-﻿/* ===== Independent Like System (for detail pages) ===== */
+/* ===== Independent Like System (for detail pages) ===== */
 (function() {
     'use strict';
 
