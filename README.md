@@ -52,7 +52,7 @@
 | 字体 | Inter (Google Fonts) |
 | 图表 | Chart.js CDN |
 | 图片处理 | Canvas API（本地处理，不上传）|
-| 部署 | GitHub → Vercel |
+| 部署 | GitHub → Cloudflare Pages |
 | 域名 | calc-tools.top |
 | 国际化 | URL 路径 /zh/ /en/ 分离 |
 ## 项目结构
@@ -72,8 +72,8 @@
 │   └─── /image/             # 5 图片工具
 │   └─── /text/              # 11 文字工具
 
-└─── /blog/zh/               # 13 篇中文博客
-└─── /blog/en/               # 13 篇英文博客
+└─── /blog/zh/               # 33 篇中文博客（含 index.html）
+└─── /blog/en/               # 33 篇英文博客（含 index.html）
 └─── /css/
 │   └─── style.css           # 全局基础样式
 │   └─── site.css            # 站点组件样式
@@ -106,7 +106,7 @@
 | Open Graph | 全站 102 页 | og:title/og:description/og:type/og:url/og:image/og:locale |
 | Twitter Card | 全站 102 页 | summary_large_image + twitter:title/twitter:description |
 | SoftwareApplication | 64 个工具页 | applicationCategory+operatingSystem 标注 |
-| Article | 26 篇博客 | headline+url+description+inLanguage |
+| Article | 66 篇博客 | headline+url+description+inLanguage |
 | BreadcrumbList | 工具页 | 面包屑导航路径 |
 | FAQPage | 部分工具页 | 常见问题 FAQ 结构化 |
 | WebSite | 首页 | 站点名称、描述 |
@@ -114,15 +114,15 @@
 
 ### Sitemap
 
-- 文件：`/sitemap.xml`（自动生成，102 条 URL）
-- 覆盖：中英文首页、64 个工具页、26 篇博客、9 个关于/联系/隐私页
+- 文件：`/sitemap.xml`（自动生成，144 条 URL）
+- 覆盖：中英文首页、64 个工具页、66 篇博客、9 个关于/联系/隐私页
 - 双语：每页均有 xhtml:link hreflang 标注 zh-CN / en / x-default
 - 生成脚本：`scripts/generate-sitemap.ps1`（扫描实际文件结构自动生成）
 
 ### 站内链接
 
-- 22 个工具页底部增加「相关阅读」区域，链回对应博客文章
-- 26 篇博客文章底部有 CTA 按钮链向对应工具
+- 38 个工具页底部增加「相关阅读」区域，链回对应博客文章
+- 66 篇博客文章底部有 CTA 按钮链向对应工具
 - 注入脚本：`scripts/inject-internal-links.ps1`
 
 ### 搜索引擎提交
@@ -152,17 +152,21 @@
 
 | 项目 | 值 |
 |------|-----|
-| 工具总数 | **35**（16 计算器 + 5 图片 + 11 文字） |
-| 页面总数 | ~70（64 工具 2 语言 + 首页 + 26 博客） |
-| 博客文章 | 26（13 zh + 13 en） |
-| 最新部署 | 46801e6 - SEO: sitemap重构 + OG标签 + Schema + 站内链接 |
-| Sitemap | 102 条 URL，路径全部匹配实际文件 |
+| 工具总数 | **32**（16 计算器 + 5 图片 + 11 文字） |
+| 页面总数 | ~138（64 工具 + 4 通用 × 2 语言 + 66 博客 + 首页） |
+| 博客文章 | 66（33 zh + 33 en） |
+| 最新部署 | 0b4499c - feat: auto-update homepage when generating blog posts |
+| Sitemap | 144 条 URL，路径全部匹配实际文件 |
 | 点赞/点击量 | Vercel Serverless Functions + Upstash Redis |
 | 热门排序 | 全工具综合评分（无类别配额），取前 8 |
 
 ### Commit 记录
 
 | commit | 说明 |
+| 0b4499c | feat: auto-update homepage when generating blog posts |
+| d85021c | fix: add 21 missing blog entries to homepage tool guide section |
+| 1889f7f | feat: optimize tool guide module with cross-linking, CTA, breadcrumbs & related posts |
+| 4bbca1d | content: add 21 blog posts × 2 languages = 42 pages covering all tool gaps |
 |--------|------|
 | 46801e6 | SEO: sitemap重构 + OG标签 + Schema结构化数据 + 站内链接 |
 | 064bb08 | feat: 热门工具全工具排序、全局点击量、热度值展示 |
