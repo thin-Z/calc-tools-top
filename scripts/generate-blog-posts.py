@@ -302,7 +302,22 @@ CATEGORY_EN_MAP = {
     "tools": ("🔧 Dev Tools", "tag-tools"),
 }
 
-def generate_zh_blog(slug, cat, zh_title, zh_desc, zh_body, zh_cta_text, tool_path, tool_name):
+
+def build_related_posts_zh(current_slug, cat, all_entries, max_items=4):
+    related = [e for e in all_entries if e[0] != current_slug and e[1] == cat][:max_items]
+    if not related:
+        return ''
+    items = ''.join(f'<li><a href="/blog/zh/{slug}.html">{title}</a></li>' for slug, cat, title, desc in related)
+    return f'<div class="related-posts"><h3>📌 相关文章</h3><ul>{items}</ul></div>'
+
+def build_related_posts_en(current_slug, cat, all_entries, max_items=4):
+    related = [e for e in all_entries if e[0] != current_slug and e[1] == cat][:max_items]
+    if not related:
+        return ''
+    items = ''.join(f'<li><a href="/blog/en/{slug}.html">{title}</a></li>' for slug, cat, title, desc in related)
+    return f'<div class="related-posts"><h3>📌 Related Articles</h3><ul>{items}</ul></div>'
+
+def generate_zh_blog(slug, cat, zh_title, zh_desc, zh_body, zh_cta_text, tool_path, tool_name, related_posts_zh=""):
     cat_zh, tag_class = CATEGORY_ZH_MAP.get(cat, ("🔧 技术工具", "tag-tools"))
     canonical = f"https://calc-tools.top/blog/zh/{slug}.html"
     en_canonical = f"https://calc-tools.top/blog/en/{slug}.html"
@@ -366,13 +381,21 @@ def generate_zh_blog(slug, cat, zh_title, zh_desc, zh_body, zh_cta_text, tool_pa
     </header>
     <main>
         <article class="blog-post">
+            <nav class="breadcrumb">
+                <a href="/">首页</a> &gt;
+                <a href="/blog/zh/">文章</a> &gt;
+                <a href="/blog/zh/?cat={cat}">{cat_zh}</a> &gt;
+                <span>{zh_title}</span>
+            </nav>
             <div class="article-tags"><a href="/blog/zh/?cat={cat}" class="tag {tag_class}" data-tag="{cat}">{cat_zh}</a></div>
             <p class="blog-meta">📰 {DATE} · Calc-Tools 编辑</p>
             <h1>{zh_title}</h1>{zh_body}
             <div class="blog-cta">
-                <p>{zh_cta_text}</p>
-                <p><a href="{tool_path}">👉 {tool_name}</a></p>
+                <p><strong>在线使用 {tool_name}</strong></p>
+                <p>无需下载，打开即用</p>
+                <p><a href="{tool_path}">👉 立即使用 {tool_name}</a></p>
             </div>
+            {related_posts_zh}
             <div class="article-bottom-tags"><a href="/blog/zh/?cat={cat}" class="tag {tag_class}" data-tag="{cat}">{cat_zh}</a></div>
         </article>
     </main>
@@ -384,7 +407,7 @@ def generate_zh_blog(slug, cat, zh_title, zh_desc, zh_body, zh_cta_text, tool_pa
 </html>'''
     return html
 
-def generate_en_blog(slug, cat, en_title, en_desc, en_body, en_cta_text, tool_path, tool_name):
+def generate_en_blog(slug, cat, en_title, en_desc, en_body, en_cta_text, tool_path, tool_name, related_posts_en=""):
     cat_en, tag_class = CATEGORY_EN_MAP.get(cat, ("🔧 Dev Tools", "tag-tools"))
     canonical = f"https://calc-tools.top/blog/en/{slug}.html"
     zh_canonical = f"https://calc-tools.top/blog/zh/{slug}.html"
@@ -417,10 +440,21 @@ def generate_en_blog(slug, cat, en_title, en_desc, en_body, en_cta_text, tool_pa
 <header><a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
 <nav><a href="/en/">Home</a><select class="lang-switch" onchange="switchLang(this.value)"><option value="zh">Chinese</option><option value="en" selected>English</option></select></nav></header>
 <main><article class="blog-post">
+            <nav class="breadcrumb">
+                <a href="/en/">Home</a> &gt;
+                <a href="/blog/en/">Blog</a> &gt;
+                <a href="/blog/en/?cat={cat}">{cat_en}</a> &gt;
+                <span>{en_title}</span>
+            </nav>
 <div class="article-tags"><a href="/blog/en/?cat={cat}" class="tag {tag_class}" data-tag="{cat}">{cat_en}</a></div>
 <p class="blog-meta">📰 {DATE} · Calc-Tools Editor</p>
 <h1>{en_title}</h1>{en_body}
-<div class="blog-cta"><p>{en_cta_text}</p><p><a href="{tool_path}">👉 {tool_name}</a></p></div>
+            <div class="blog-cta">
+                <p><strong>Online {tool_name}</strong></p>
+                <p>Free to use, no download required</p>
+                <p><a href="{tool_path}">👉 Use {tool_name} Now</a></p>
+            </div>
+            {related_posts_en}
 <div class="article-bottom-tags"><a href="/blog/en/?cat={cat}" class="tag {tag_class}" data-tag="{cat}">{cat_en}</a></div>
 </article></main>
 <footer>
@@ -448,23 +482,30 @@ def main():
     zh_entries = []
     en_entries = []
 
+    # First pass: collect all entries
+    for blog in BLOGS:
+        slug, cat_zh, cat_en, zh_title, zh_desc, zh_body, zh_cta, en_title, en_desc, en_body, en_cta, tool_zh, tool_en, name_zh, name_en = blog
+        zh_entries.append((slug, cat_zh, zh_title, zh_desc))
+        en_entries.append((slug, cat_en, en_title, en_desc))
+
+    # Second pass: generate pages with full entry lists for related posts
     for blog in BLOGS:
         slug, cat_zh, cat_en, zh_title, zh_desc, zh_body, zh_cta, en_title, en_desc, en_body, en_cta, tool_zh, tool_en, name_zh, name_en = blog
 
         # Generate zh
-        zh_html = generate_zh_blog(slug, cat_zh, zh_title, zh_desc, zh_body, zh_cta, tool_zh, name_zh)
+        related_zh = build_related_posts_zh(slug, cat_zh, zh_entries)
+        zh_html = generate_zh_blog(slug, cat_zh, zh_title, zh_desc, zh_body, zh_cta, tool_zh, name_zh, related_zh)
         zh_path = os.path.join(BLOG_ZH, f"{slug}.html")
         with open(zh_path, 'w', encoding='utf-8') as f:
             f.write(zh_html)
-        zh_entries.append((slug, cat_zh, zh_title, zh_desc))
         print(f"✅ zh: {slug}.html")
 
         # Generate en
-        en_html = generate_en_blog(slug, cat_en, en_title, en_desc, en_body, en_cta, tool_en, name_en)
+        related_en = build_related_posts_en(slug, cat_en, en_entries)
+        en_html = generate_en_blog(slug, cat_en, en_title, en_desc, en_body, en_cta, tool_en, name_en, related_en)
         en_path = os.path.join(BLOG_EN, f"{slug}.html")
         with open(en_path, 'w', encoding='utf-8') as f:
             f.write(en_html)
-        en_entries.append((slug, cat_en, en_title, en_desc))
         print(f"✅ en: {slug}.html")
 
     print(f"\nTotal: {len(BLOGS)} × 2 = {len(BLOGS)*2} blog posts generated")

@@ -1174,3 +1174,23 @@
 .blog-cta a:hover {
     background: #f0f0ff;
 }
+/* ===== Breadcrumb ===== */
+.breadcrumb {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    padding: 0 1.5rem;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.breadcrumb a {
+    color: var(--text-link, #2563eb);
+    text-decoration: none;
+}
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+.breadcrumb span {
+    color: var(--text-secondary);
+}
