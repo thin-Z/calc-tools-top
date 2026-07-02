@@ -1,4 +1,4 @@
-# calc-tools.top — 工具箱里
+﻿# calc-tools.top — 工具箱里
 > 中英双语在线工具站，纯静态 HTML/CSS/JS，零依赖，隐私优先
 > 线上地址：https://calc-tools.top | 风格：Apple 设计语言
 ---
@@ -56,7 +56,7 @@
 | 域名 | calc-tools.top |
 | 国际化 | URL 路径 /zh/ /en/ 分离 |
 ## 项目结构
-\`\`\`
+```
 └─── index.html              # 首页（中文）
 └─── /zh/                    # 中文工具（35页）
 │   └─── index.html
@@ -80,7 +80,7 @@
 │   └─── text-tools.css      # 文字工具样式
 │   └─── cookie-consent.css  # Cookie 同意弹窗
 └─── /js/
-│   └─── site.js             # 首页交互
+│   └─── site.js             # 首页交互 + 博客分页/筛选/阅读进度条
 │   └─── like.js             # 点赞功能
 │   └─── i18n.js             # 国际化
 │   └─── api-client.js        # API 客户端
@@ -92,10 +92,10 @@
 └─── /api/clicks.js          # Vercel Serverless Function — 点击量 API (Upstash Redis)
 └─── /assets/               # 图标、Logo
 └─── /scripts/              # 部署脚本
-└─── /docs/                 # 设计文档
+└─── /docs/                 # 存档文档（含 README 说明）
 └─── vercel.json / _headers / _redirects / robots.txt / sitemap.xml
 └─── 404.html
-\`\`\`
+```
 
 ## SEO 配置
 
@@ -153,21 +153,37 @@
 | 项目 | 值 |
 |------|-----|
 | 工具总数 | **32**（16 计算器 + 5 图片 + 11 文字） |
-| 页面总数 | ~138（64 工具 + 4 通用 × 2 语言 + 66 博客 + 首页） |
+| 页面总数 | ~140（64 工具 + 4 通用 × 2 语言 + 2 博客首页 + 66 博客详情 + 首页） |
 | 博客文章 | 66（33 zh + 33 en） |
-| 最新部署 | 0b4499c - feat: auto-update homepage when generating blog posts |
+| 最新提交 | 318ad22 — blog card layout, pagination, dark mode, tag unification |
 | Sitemap | 144 条 URL，路径全部匹配实际文件 |
 | 点赞/点击量 | Vercel Serverless Functions + Upstash Redis |
 | 热门排序 | 全工具综合评分（无类别配额），取前 8 |
 
+## 博客功能
+
+| 功能 | 说明 |
+|------|------|
+| 卡片网格布局 | 文章以 2 列卡片展示，带悬停动画效果 |
+| 分页加载 | 首页/列表页每页 8 篇文章，"加载更多"按钮增量加载 |
+| 分类筛选 | 按标签筛选文章，筛选时不限分页（展示全部匹配结果） |
+| 阅读进度条 | 文章详情页顶部显示阅读进度指示条 |
+| 回到顶部 | 文章详情页右下角回到顶部按钮 |
+| 标签样式统一 | 首页热门工具标签 + 博客标签共用 `tag-tools` 样式，适配亮/暗色模式 |
+| 编码修复 | 已修复 blog/zh 和 blog/en 的 GBK 编码问题 |
+| 暗色模式适配 | 博客页全文区域使用 CSS 变量，与全局深色模式切换联动 |
+
 ### Commit 记录
 
 | commit | 说明 |
+|--------|------|
+| **318ad22** | feat: blog card layout, pagination, dark mode, tag unification & hot-tool icons |
+| f068bc0 | docs: fix deployment platform (Vercel, not Cloudflare Pages) |
+| 529bd2c | docs: update README with latest stats (66 blogs, 32 tools, Cloudflare Pages) |
 | 0b4499c | feat: auto-update homepage when generating blog posts |
 | d85021c | fix: add 21 missing blog entries to homepage tool guide section |
 | 1889f7f | feat: optimize tool guide module with cross-linking, CTA, breadcrumbs & related posts |
 | 4bbca1d | content: add 21 blog posts × 2 languages = 42 pages covering all tool gaps |
-|--------|------|
 | 46801e6 | SEO: sitemap重构 + OG标签 + Schema结构化数据 + 站内链接 |
 | 064bb08 | feat: 热门工具全工具排序、全局点击量、热度值展示 |
 | 0cdf279 | fix: 热门工具双计数修复 -- updateClickUI 限定范围 |
