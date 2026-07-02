@@ -583,5 +583,53 @@ def main():
     print("\n✅ All done!")
 
 
+
+    # ── Update homepage index.html ──
+    homepage_path = os.path.join(ROOT, "index.html")
+    with open(homepage_path, 'r', encoding='utf-8') as f:
+        homepage = f.read()
+
+    homepage_entries = [
+        ("equal-installment-vs-equal-principal", "finance", "等额本息 vs 等额本金怎么选？真实案例对比", "买房贷款选等额本息还是等额本金？通过真实案例对比两种还款方式的利息差异和适用人群。", "2026-06-25", "💰 财务", "finance"),
+        ("mortgage-rate-trend-2026", "finance", "2026 房贷利率最新趋势解读", "2026 年房贷利率最新政策解读，分析 LPR 走势和未来趋势，帮您把握购房时机。", "2026-06-25", "💰 财务", "finance"),
+        ("tax-deduction-guide-2026", "finance", "2026 个税抵扣全攻略，这样申报最省钱", "2026 年个税专项附加扣除全攻略，子女教育、房贷利息、赡养老人等抵扣项目详解。", "2026-06-25", "💰 财务", "finance"),
+        ("bmi-normal-range-guide", "health", "BMI 多少算正常？标准范围全面解读", "BMI 正常范围是多少？了解 BMI 指数标准和计算方法，附健康管理建议。", "2026-06-25", "🏥 健康", "health"),
+        ("housing-fund-loan-guide", "finance", "公积金贷款额度怎么算？2026 最新政策", "公积金贷款额度计算方法详解，缴存年限、账户余额、月缴存额对额度的影响。", "2026-06-25", "💰 财务", "finance"),
+        ("date-calculation-tips", "life", "日期计算实用技巧，工作生活都用得上", "日期计算在日常工作中非常实用，合同管理、项目排期、旅行规划等场景的日期计算方法。", "2026-06-25", "🏠 生活", "life"),
+        ("standard-weight-guide", "health", "标准体重对照表：男女身高体重标准范围", "标准体重是多少？男性和女性的标准体重对照表，体重标准计算公式参考。", "2026-06-26", "🏥 健康", "health"),
+        ("overtime-pay-guide", "finance", "加班工资怎么算？劳动法加班费计算标准", "加班工资计算标准详解，工作日1.5倍、休息日2倍、法定节假日3倍，附加班费计算方法。", "2026-06-26", "💰 财务", "finance"),
+        ("image-compression-guide", "image", "图片太大怎么压缩？在线图片压缩完全指南", "免费在线图片压缩指南，浏览器本地处理不上传，支持 JPG/PNG/WebP 压缩。", "2026-06-26", "🖼️ 图片", "image"),
+        ("discount-calculation-tips", "shopping", "打折怎么算？折扣计算公式与省钱技巧", "折扣计算公式、打折计算方法、满减和折扣的区别，帮你快速计算折后价格。", "2026-06-26", "🛒 购物", "shopping"),
+        ("compound-interest-guide", "finance", "复利是什么意思？复利计算公式与投资指南", "复利是什么意思？复利计算公式详解，如何利用复利进行长期投资理财。", "2026-06-26", "💰 财务", "finance"),
+        ("car-loan-calculator-guide", "finance", "买车贷款怎么算？车贷月供和利息全解析", "车贷月供计算、利息计算、首付比例选择，汽车贷款计算器帮你了解月供和总利息。", "2026-06-26", "💰 财务", "finance"),
+    ]
+
+    cat_map = {"finance": ("💰 财务", "finance"), "health": ("🏥 健康", "health"), "life": ("🏠 生活", "life"), "tools": ("🔧 工具", "tools")}
+    for blog in BLOGS:
+        slug, cat_zh, cat_en, zh_title, zh_desc, zh_body, zh_cta, en_title, en_desc, en_body, en_cta, tool_zh, tool_en, name_zh, name_en = blog
+        tag_text, tag_cat = cat_map.get(cat_zh, ("🔧 工具", "tools"))
+        homepage_entries.append((slug, cat_zh, zh_title, zh_desc, DATE, tag_text, tag_cat))
+
+    new_articles = ""
+    for slug, cat, title, desc, date, tag_text, tag_cat in homepage_entries:
+        article_id = "blog_" + slug.replace("-", "_")
+        new_articles += f'''
+            <article class="article-item" data-category="{cat}">
+                <h4><a href="/blog/zh/{slug}.html">{title}</a></h4>
+                <p class="article-meta">📅 {date}</p><button class="article-like" data-blog-id="{article_id}"><span class="heart">❤</span> <span class="like-count">0</span></button>
+                <p class="article-summary">{desc}</p>
+                <div class="article-tags"><a href="/blog/zh/" class="tag tag-{cat}" data-tag="{tag_cat}">{tag_text}</a></div>
+            </article>'''
+
+    blog_start = homepage.find('<div class="blog-section">')
+    main_end = homepage.find('</main>', blog_start)
+    before = homepage[:blog_start]
+    after = homepage[main_end:]
+    new_homepage = before + '<div class="blog-section">\n            <h2>📖 工具指南</h2>\n            <div class="article-list">\n' + new_articles + '\n            </div>\n        </div>\n    ' + after
+    with open(homepage_path, 'w', encoding='utf-8') as f:
+        f.write(new_homepage)
+    print("✅ Updated homepage index.html")
+
+
 if __name__ == "__main__":
     main()
