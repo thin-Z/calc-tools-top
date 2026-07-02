@@ -52,7 +52,7 @@
 | 字体 | Inter (Google Fonts) |
 | 图表 | Chart.js CDN |
 | 图片处理 | Canvas API（本地处理，不上传）|
-| 部署 | GitHub → Cloudflare Pages |
+| 部署 | GitHub → Vercel |
 | 域名 | calc-tools.top |
 | 国际化 | URL 路径 /zh/ /en/ 分离 |
 ## 项目结构
