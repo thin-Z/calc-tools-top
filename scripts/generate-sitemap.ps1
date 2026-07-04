@@ -1,6 +1,6 @@
-# Generate correct sitemap.xml based on actual file structure
+﻿# Generate correct sitemap.xml based on actual file structure
 param(
-    [string]$Root = "D:\_Careate.Program\calculator-site",
+    [string]$Root = (Get-Location).Path,
     [string]$BaseUrl = "https://www.calc-tools.top"
 )
 
@@ -28,7 +28,7 @@ foreach ($f in $files) {
         $lang = "root"
     }
 
-    # Priority
+    # Priority & changefreq
     $priority = "0.5"
     $changefreq = "monthly"
     if ($name -eq "index.html") {
@@ -43,19 +43,20 @@ foreach ($f in $files) {
     } elseif ($name -match "^(en|zh)/calculators/" -or $name -match "^(en|zh)/image/" -or $name -match "^(en|zh)/text/") {
         $priority = "0.8"
         $changefreq = "monthly"
-    } elseif ($name -match "^(about|contact|privacy)\.html") {
-        $priority = "0.3"
-        $changefreq = "yearly"
-    } elseif ($name -match "^(en|zh)/(about|contact|privacy)\.html") {
+    } elseif ($name -match "^(about|contact|privacy)\.html" -or $name -match "^(en|zh)/(about|contact|privacy)\.html") {
         $priority = "0.3"
         $changefreq = "yearly"
     }
+
+    # File last modified date → W3C Datetime (YYYY-MM-DD)
+    $lastmod = $f.LastWriteTime.ToString("yyyy-MM-dd")
 
     $pages += @{
         Path = $name
         Lang = $lang
         Priority = $priority
         ChangeFreq = $changefreq
+        LastMod = $lastmod
     }
 }
 
@@ -93,6 +94,7 @@ foreach ($p in $pages) {
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='x-default' href='$BaseUrl/$($p.Path)'/>")
     }
 
+    [void]$xml.AppendLine("    <lastmod>$($p.LastMod)</lastmod>")
     [void]$xml.AppendLine("    <changefreq>$($p.ChangeFreq)</changefreq>")
     [void]$xml.AppendLine("    <priority>$($p.Priority)</priority>")
     [void]$xml.AppendLine('  </url>')

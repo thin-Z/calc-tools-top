@@ -23,12 +23,12 @@
   "redirects": [
     {
       "source": "/zh",
-      "destination": "/zh/",
+      "destination": "/",
       "permanent": true
     },
     {
       "source": "/en",
-      "destination": "/en/",
+      "destination": "/",
       "permanent": true
     },
     {
