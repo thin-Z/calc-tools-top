@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Image Tools - Free Image Processing Tools</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online image tools. Compress images, convert formats, crop & resize, convert image to Base64, pick colors from images. All processing done locally in your browser.">
+    <meta property="og:title" content="Online Image Tools - Free Image Processing Tools"/>
+    <meta property="og:description" content="Free online image tools. Image compression, format conversion, crop & resize, and more."/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://calc-tools.top/en/image/"/>
+    <meta property="og:image" content="https://www.calc-tools.top/assets/logo.svg"/>
+    <meta property="og:locale" content="en_US"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="Online Image Tools - Free Image Processing Tools"/>
+    <meta name="twitter:description" content="Free online image tools. 5 useful image processing tools."/>
+    <link rel="canonical" href="https://calc-tools.top/en/image/">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/image/">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/image/">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/en/image/">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/cookie-consent.css">
+    <link rel="stylesheet" href="../../css/site.css">
+    <style>
+        .category-header { text-align: center; padding: 2rem 1rem; }
+        .category-header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        .category-header p { color: var(--text-secondary); font-size: 1.05rem; }
+        .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; padding: 1rem 0; }
+        .tool-card { display: flex; flex-direction: column; padding: 1.25rem; border-radius: 10px; background: var(--card-bg); border: 1px solid var(--border-color); transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; color: inherit; height: 100%; }
+        .tool-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+        .tool-card .icon { font-size: 2rem; margin-bottom: 0.5rem; }
+        .tool-card h3 { font-size: 1.1rem; margin: 0.25rem 0; }
+        .tool-card p { font-size: 0.9rem; color: var(--text-secondary); margin: 0.25rem 0 0; line-height: 1.4; }
+        .breadcrumb { padding: 0.75rem 0; font-size: 0.9rem; color: var(--text-secondary); }
+        .breadcrumb a { color: var(--link-color); text-decoration: none; }
+        .breadcrumb a:hover { text-decoration: underline; }
+        .tool-count { text-align: center; color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="Inside the Toolbox" class="site-logo"></a>
+        <nav>
+            <a href="/en/">Home</a>
+            <a href="/blog/en/">Blog</a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="en" selected>🇬🇧 English</option>
+                <option value="zh">🇨🇳 中文</option>
+            </select>
+        </nav>
+    </header>
+
+    <main>
+        <div class="breadcrumb">
+            <a href="/en/">Home</a> &gt; Online Image Tools
+        </div>
+
+        <div class="category-header">
+            <h1>Online Image Tools</h1>
+            <p>Free image processing tools — all processing is done locally in your browser</p>
+        </div>
+
+        <div class="tool-count">5 image tools</div>
+
+        <div class="ad-slot ad-placeholder">Ad Space - Available</div>
+
+        <div class="tool-grid">
+            <a href="/en/image/compress.html" class="tool-card">
+                <div class="icon">🗜️</div>
+                <h3>Image Compress</h3>
+                <p>Compress PNG, JPEG, WebP images online while preserving quality</p>
+            </a>
+            <a href="/en/image/convert.html" class="tool-card">
+                <div class="icon">🔄</div>
+                <h3>Format Convert</h3>
+                <p>Convert images between PNG, JPEG, WebP, GIF formats</p>
+            </a>
+            <a href="/en/image/resize.html" class="tool-card">
+                <div class="icon">✂️</div>
+                <h3>Crop & Resize</h3>
+                <p>Crop and resize images online with custom dimensions</p>
+            </a>
+            <a href="/en/image/base64.html" class="tool-card">
+                <div class="icon">🔐</div>
+                <h3>Image to Base64</h3>
+                <p>Convert images to Base64 encoded strings for HTML/CSS embedding</p>
+            </a>
+            <a href="/en/image/color-picker.html" class="tool-card">
+                <div class="icon">🎨</div>
+                <h3>Color Picker</h3>
+                <p>Extract HEX, RGB, HSL colors from images</p>
+            </a>
+        </div>
+
+        <div class="ad-slot ad-placeholder">Ad Space - Available</div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="/en/">Home</a>
+            <a href="/about.html">About</a>
+            <a href="/privacy.html">Privacy</a>
+            <a href="/contact.html">Contact</a>
+            <a href="/blog/en/">Blog</a>
+        </div>
+        <p>© 2026 Online Calculators | Free Online Calculators</p>
+    </footer>
+
+    <script>
+        function switchLang(value) {
+            if (value === "zh") window.location.href = "/zh/image/";
+        }
+    </script>
+</body>
+</html>
