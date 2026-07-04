@@ -47,7 +47,11 @@ const SITE_CONFIG = {
         { id: 'text-diff', categories: ['text'] },
         { id: 'uuid-generator', categories: ['text'] },
         { id: 'reading-time', categories: ['text'] },
-        { id: 'keyword-density', categories: ['text'] }
+        { id: 'keyword-density', categories: ['text'] },
+        { id: 'qr-generator', categories: ['utility'] },
+        { id: 'password-gen', categories: ['utility'] },
+        { id: 'percentage-calc', categories: ['shopping', 'finance'] },
+        { id: 'random-gen', categories: ['utility'] }
     ]
 };
 
@@ -615,7 +619,11 @@ const TOOLS_DATA = {
     'text-diff': { icon: '📊', name: { zh: '文本对比', en: 'Text Diff' }, desc: { zh: '对比两段文本差异', en: 'Compare two texts for differences' } },
     'uuid-generator': { icon: '🆔', name: { zh: 'UUID 生成', en: 'UUID Generator' }, desc: { zh: '生成UUID唯一标识符', en: 'Generate UUID identifiers' } },
     'reading-time': { icon: '📖', name: { zh: '阅读时间', en: 'Reading Time' }, desc: { zh: '估算文章阅读时长', en: 'Estimate text reading time' } },
-    'keyword-density': { icon: '🎯', name: { zh: '关键词密度', en: 'Keyword Density' }, desc: { zh: '分析文章关键词密度', en: 'Analyze keyword density in text' } }
+    'keyword-density': { icon: '🎯', name: { zh: '关键词密度', en: 'Keyword Density' }, desc: { zh: '分析文章关键词密度', en: 'Analyze keyword density in text' } },
+    'qr-generator': { icon: '📱', name: { zh: '二维码生成器', en: 'QR Code Generator' }, desc: { zh: '文字或链接快速生成二维码，下载PNG', en: 'Generate QR codes from text/URL, download as PNG' } },
+    'password-gen': { icon: '🔑', name: { zh: '密码生成器', en: 'Password Generator' }, desc: { zh: '自定义字符类型生成高强度密码', en: 'Generate strong passwords with custom options' } },
+    'percentage-calc': { icon: '📊', name: { zh: '百分比计算器', en: 'Percentage Calculator' }, desc: { zh: '百分比计算/增减/变化多种模式', en: 'Percentage calc, increase, decrease, change' } },
+    'random-gen': { icon: '🎲', name: { zh: '随机数生成器', en: 'Random Number Generator' }, desc: { zh: '自定义范围生成随机整数', en: 'Generate random integers in custom range' } }
 };
 const TOOL_KEYWORDS_ZH = {
     mortgage: '房贷,贷款,按揭,买房,月供,利息,商业贷款,公积金贷款',
@@ -649,7 +657,11 @@ const TOOL_KEYWORDS_ZH = {
     'text-diff': '文本对比,文本差异,比较文本',
     'uuid-generator': 'uuid生成,唯一标识符,随机id',
     'reading-time': '阅读时间,文章阅读,阅读速度',
-    'keyword-density': '关键词密度,关键词频率,seo分析'
+    'keyword-density': '关键词密度,关键词频率,seo分析',
+    'qr-generator': '二维码,二维码生成器,qrcode,二维码制作,二维码在线',
+    'password-gen': '密码生成器,随机密码,强密码,密码生成,密码工具',
+    'percentage-calc': '百分比,百分数,百分比计算,百分率,百分号计算',
+    'random-gen': '随机数,随机数生成,随机数字,抽奖随机,摇号'
 };
 
 

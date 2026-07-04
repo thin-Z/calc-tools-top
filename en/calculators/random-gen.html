@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Number Generator - Free Online Random Number Picker</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online random number generator. Customize range and quantity, support unique mode and sorted output. Generate random integers for lotteries, passwords, testing and more.">
+    <meta property='og:title' content='Random Number Generator - Free Online Random Number Picker'/>
+    <meta property='og:description' content='Free online random number generator. Customize range and quantity, support unique mode and sorted output. Generate random integers for lotteries, passwords, testing and more.'/>
+    <meta property='og:type' content='website'/>
+    <meta property='og:url' content='https://calc-tools.top/en/calculators/random-gen.html'/>
+    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:locale' content='en_US'/>
+    <meta name='twitter:card' content='summary_large_image'/>
+    <meta name='twitter:title' content='Random Number Generator - Free Online Random Number Picker'/>
+    <meta name='twitter:description' content='Free online random number generator. Customize range and quantity, support unique mode and sorted output. Generate random integers for lotteries, passwords, testing and more.'/>
+
+    <link rel="canonical" href="https://calc-tools.top/en/calculators/random-gen.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/calculators/random-gen.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/calculators/random-gen.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/en/calculators/random-gen.html">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/site.css">
+    <link rel="stylesheet" href="../../css/cookie-consent.css">
+    <script src="../../js/i18n.js" defer></script>
+    <script src="../../js/like.js" defer></script>
+    <script src="../../js/calculators/random-gen.js" defer></script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Online Calculators", "item": "https://calc-tools.top/" },
+        { "@type": "ListItem", "position": 2, "name": "Random Number Generator", "item": "https://calc-tools.top/en/calculators/random-gen" }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Is the random number generator truly random?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "This tool uses JavaScript's built-in Math.random() function, which is a pseudo-random number generator (PRNG). It produces approximately random sequences based on seed values for most everyday uses (lotteries, testing, passwords). For cryptographically secure random numbers, consider using the secure random feature in our Password Generator."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How to generate unique random numbers?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Check the 'Unique' option to generate non-repeating random numbers. The system uses the Fisher-Yates shuffle algorithm to draw the specified count of unique integers from the given range. Note: the count cannot exceed the range size (e.g., you can only generate up to 10 unique numbers from 1-10)."
+            }
+        }
+    ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Random Number Generator - Free Online Random Number Picker",
+    "url": "https://calc-tools.top/en/calculators/random-gen.html",
+    "description": "Free online random number generator. Customize range and quantity, support unique mode and sorted output. Generate random integers for lotteries, passwords, testing and more.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web",
+    "inLanguage": "en"
+}
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1794930797650076" crossorigin="anonymous"></script>
+    <style>
+        .random-numbers { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
+        .random-number-badge { background: var(--bg-card,#f3f4f6); border: 1px solid var(--border-color,#e5e7eb); border-radius: 8px; padding: 0.5rem 1rem; font-size: 1.2rem; font-weight: 700; font-family: 'Courier New', monospace; min-width: 2.5rem; text-align: center; }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
+        <nav>
+            <a href="/en/">Home</a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="en" selected>🇬🇧 English</option>
+                <option value="zh">🇨🇳 中文</option>
+            </select>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h1 data-i18n="randomGenTitle">Random Number Generator</h1>
+            <p data-i18n="randomGenDescFull">Customize range and quantity, generate random integers instantly</p>
+        </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="random-gen"><span class="heart">❤</span> <span class="count">0</span></button></div>
+
+        <!-- Ad Slot A -->
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">Ad Space - Available</div>
+
+        <div class="calculator-form">
+            <h2 data-i18n="randomGenTitle">Random Number Generator</h2>
+            <form id="randomGenForm" onsubmit="return false;">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="randMin" data-i18n="randMin">Minimum</label>
+                        <input type="number" id="randMin" value="1" min="-999999" max="999999">
+                    </div>
+                    <div class="form-group">
+                        <label for="randMax" data-i18n="randMax">Maximum</label>
+                        <input type="number" id="randMax" value="100" min="-999999" max="999999">
+                    </div>
+                    <div class="form-group">
+                        <label for="randCount" data-i18n="randCount">Count</label>
+                        <input type="number" id="randCount" value="1" min="1" max="1000">
+                    </div>
+                </div>
+                <div class="form-row" style="margin-top:0.5rem;">
+                    <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;">
+                        <input type="checkbox" id="randUnique">
+                        <span data-i18n="randUnique">Unique (no duplicates)</span>
+                    </label>
+                    <label style="display:flex;align-items:center;gap:0.4rem;cursor:pointer;">
+                        <input type="checkbox" id="randSort">
+                        <span data-i18n="randSort">Sort ascending</span>
+                    </label>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" onclick="doCalculate()" data-i18n="generate">Generate</button>
+                    <button type="reset" class="btn btn-secondary" onclick="resetForm()" data-i18n="reset">Reset</button>
+                </div>
+            </form>
+
+            <!-- Result Area -->
+            <div id="resultArea" class="result-card" style="display:none;">
+                <h3 data-i18n="result">Result</h3>
+                <div id="randomResult"></div>
+            </div>
+        </div>
+
+        <!-- Ad Slot B -->
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">Ad Space - Available</div>
+    
+<div class="tool-content">
+    <h2>Random Number Generator Guide</h2>
+    <p>The Random Number Generator is a free online tool that quickly generates random integers within a specified range. You can customize the minimum, maximum, and quantity, with support for unique mode and sorted output.</p>
+    <h3>Key Features</h3>
+    <ul>
+        <li><strong>Custom Range</strong>: Set minimum and maximum values freely, supports negative numbers</li>
+        <li><strong>Batch Generation</strong>: Generate up to 1000 random numbers at once</li>
+        <li><strong>Unique Mode</strong>: Ensures every generated number is distinct</li>
+        <li><strong>Sorted Output</strong>: Display results in ascending order</li>
+        <li><strong>One-Click Copy</strong>: Copy results to clipboard</li>
+    </ul>
+    <h3>Use Cases</h3>
+    <p>Online lotteries and giveaways, password generation, data sampling and testing, random grouping, game design, statistical simulations, and more.</p>
+</div>
+<div class="related-tools">
+    <h3>Related Tools</h3>
+    <ul>
+        <li><a href="/en/text/uuid-generator.html">UUID Generator</a></li>
+        <li><a href="/en/calculators/password-gen.html">Password Generator</a></li>
+    </ul>
+</div>
+</main>
+
+    <footer>
+        <p data-i18n="copyright">© 2026 Online Calculators | Free Online Calculators</p>
+    </footer>
+
+    <script src="../../js/cookie-consent.js" defer></script>
+    <section class="related-posts">
+        <h3>Related Reading</h3>
+        <ul>
+            <li><a href="/blog/en/random-number-guide.html">Random Number Generation: Principles & FAQ</a></li>
+        </ul>
+    </section>
+    <div class="ad-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1794930797650076" data-ad-slot="6250142758" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+</body>
+</html>

@@ -1339,4 +1339,112 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://calc-tools.top/zh/calculators/qr-generator.html</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/calculators/qr-generator.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://calc-tools.top/en/calculators/qr-generator.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/calculators/qr-generator.html" />
+  </url>
+  <url>
+    <loc>https://calc-tools.top/en/calculators/qr-generator.html</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/zh/calculators/password-gen.html</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/calculators/password-gen.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://calc-tools.top/en/calculators/password-gen.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/calculators/password-gen.html" />
+  </url>
+  <url>
+    <loc>https://calc-tools.top/en/calculators/password-gen.html</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/zh/calculators/percentage-calc.html</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/calculators/percentage-calc.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://calc-tools.top/en/calculators/percentage-calc.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/calculators/percentage-calc.html" />
+  </url>
+  <url>
+    <loc>https://calc-tools.top/en/calculators/percentage-calc.html</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/zh/calculators/random-gen.html</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/calculators/random-gen.html" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://calc-tools.top/en/calculators/random-gen.html" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/calculators/random-gen.html" />
+  </url>
+  <url>
+    <loc>https://calc-tools.top/en/calculators/random-gen.html</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/blog/zh/qr-generator-guide.html</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/blog/en/qr-generator-guide.html</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/blog/zh/password-security-guide.html</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/blog/en/password-security-guide.html</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/blog/zh/percentage-calculation-tips.html</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/blog/en/percentage-calculation-tips.html</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/blog/zh/random-number-guide.html</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/blog/en/random-number-guide.html</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>
