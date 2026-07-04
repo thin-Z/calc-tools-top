@@ -222,8 +222,14 @@ function incrementClick(toolId) {
         window.ApiClient.post('/api/clicks', { toolId: toolId }).then(function(data) {
             if (data && typeof data.total === 'number') {
                 updateClickUI(toolId, data.total);
+                _globalClickTotals[toolId] = data.total;
             }
+            // Re-sort tool grids after click data updates
+            initToolSort();
         });
+    } else {
+        // No server available, still re-sort based on local data
+        setTimeout(function() { initToolSort(); }, 50);
     }
 }
 
@@ -789,14 +795,19 @@ function initHotTools() {
 }
 
 function initToolSort() {
+    // Compute composite score: likes × 3 + max(local clicks, global clicks)
     document.querySelectorAll('.tool-grid').forEach(function(grid) {
         var wraps = Array.from(grid.querySelectorAll('.tool-card-wrap'));
         if (wraps.length === 0) return;
         wraps.sort(function(a, b) {
             var idA = (a.querySelector('[data-like-id]') || {}).dataset?.likeId || '';
             var idB = (b.querySelector('[data-like-id]') || {}).dataset?.likeId || '';
-            var scoreA = getTotalLikes(idA) * 3 + getTotalClicks(idA);
-            var scoreB = getTotalLikes(idB) * 3 + getTotalClicks(idB);
+            var localA = getTotalClicks(idA);
+            var localB = getTotalClicks(idB);
+            var globalA = _globalClickTotals[idA] || 0;
+            var globalB = _globalClickTotals[idB] || 0;
+            var scoreA = getTotalLikes(idA) * 3 + Math.max(localA, globalA);
+            var scoreB = getTotalLikes(idB) * 3 + Math.max(localB, globalB);
             return scoreB - scoreA;
         })
         wraps.forEach(function(w) { grid.appendChild(w); });
@@ -933,9 +944,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initClickTracking();
     initReadingProgress();
     initBackToTop();
-    // Fetch global click counts and refresh hot tools
+    // Fetch global click counts and refresh hot tools + tool grid sort
     fetchAndMergeGlobalClicks(function() {
         initHotTools();
+        initToolSort();
         initClickTracking();
     });
 });
@@ -946,6 +958,7 @@ window.addEventListener('pageshow', function(e) {
         updateClickDisplay();
         fetchAndMergeGlobalClicks(function() {
             initHotTools();
+            initToolSort();
             initClickTracking();
         });
     }
