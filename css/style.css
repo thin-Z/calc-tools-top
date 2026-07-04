@@ -1,4 +1,4 @@
-:root {
+﻿:root {
     /* Brand Colors */
     --brand-blue: #007AFF;
     --brand-purple: #5856D6;
@@ -762,3 +762,6 @@ body, body * {
 button:active, .btn:active {
     transform: scale(0.95);
 }
+
+/* AdSense ad container */
+.ad-container { width: 100%; max-width: 728px; margin: 2rem auto; text-align: center; min-height: 90px; overflow: hidden; }
