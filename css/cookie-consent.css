@@ -98,8 +98,7 @@ footer {
 .footer-links a:hover {
     color: var(--primary, #007aff);
 }
-@ -0,0 +0,0 @@
-:root {
+/* End of cookie consent styles */
     /* Brand Colors */
     --brand-blue: #007AFF;
     --brand-purple: #5856D6;

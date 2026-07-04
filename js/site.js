@@ -159,7 +159,6 @@ function initLikes() {
             updateLikeUI(toolId);
             btn.addEventListener('click', (e) => {
                 e.preventDefault(); e.stopPropagation();
-                e.stopPropagation();
                 toggleLike(toolId);
             });
 
