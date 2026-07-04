@@ -1268,12 +1268,7 @@
 [data-theme="dark"] .blog-cta a:hover {
     background: var(--bg-elevated);
 }
-[data-theme="dark"] .related-posts {
-    background: var(--bg-elevated);
-    border-color: var(--border);
-}
-[data-theme="dark"] .related-posts h3 { color: var(--text-primary); }
-[data-theme="dark"] .related-posts a { color: var(--brand-blue); }
+/* Dark mode for .related-posts handled inline above */
 [data-theme="dark"] .article-like {
     background: rgba(255,255,255,0.06);
     border-color: var(--border);
@@ -1355,17 +1350,30 @@
 
 /* Related posts / internal links */
 .related-posts {
-    margin-top: 3rem;
-    padding: 1.5rem;
+    margin-top: 2.5rem;
+    padding: 1.5rem 1.5rem 1.2rem;
     background: var(--bg-card);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border);
     box-shadow: var(--shadow-sm);
+    border-left: 4px solid var(--brand-blue);
+}
+[data-theme="dark"] .related-posts {
+    background: var(--bg-elevated);
+    border-color: var(--border);
+    border-left-color: var(--brand-blue);
 }
 .related-posts h3 {
     margin: 0 0 1rem;
     font-size: 1.1rem;
     color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.related-posts h3::before {
+    content: "📖";
+    font-size: 1.2rem;
 }
 .related-posts ul {
     list-style: none;
@@ -1373,20 +1381,32 @@
     margin: 0;
 }
 .related-posts li {
-    padding: 0.4rem 0;
+    padding: 0.5rem 0;
     border-bottom: 1px solid var(--border);
+    transition: padding-left 0.2s;
 }
 .related-posts li:last-child {
     border-bottom: none;
 }
+.related-posts li:hover {
+    padding-left: 0.5rem;
+}
 .related-posts a {
-    color: var(--brand-blue);
+    color: var(--text-primary);
     text-decoration: none;
     transition: color 0.2s;
+    display: block;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+.related-posts a::before {
+    content: "→ ";
+    color: var(--brand-blue);
+    font-weight: 600;
 }
 .related-posts a:hover {
-    color: var(--primary-hover);
-    text-decoration: underline;
+    color: var(--brand-blue);
+    text-decoration: none;
 }
 
 .blog-cta {
