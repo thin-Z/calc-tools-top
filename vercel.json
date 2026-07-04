@@ -450,6 +450,46 @@
       "source": "/en/unit-converter",
       "destination": "/en/calculators/unit-converter",
       "permanent": true
+    },
+    {
+      "source": "/zh/qr-generator",
+      "destination": "/zh/calculators/qr-generator",
+      "permanent": true
+    },
+    {
+      "source": "/zh/password-gen",
+      "destination": "/zh/calculators/password-gen",
+      "permanent": true
+    },
+    {
+      "source": "/zh/percentage-calc",
+      "destination": "/zh/calculators/percentage-calc",
+      "permanent": true
+    },
+    {
+      "source": "/zh/random-gen",
+      "destination": "/zh/calculators/random-gen",
+      "permanent": true
+    },
+    {
+      "source": "/en/qr-generator",
+      "destination": "/en/calculators/qr-generator",
+      "permanent": true
+    },
+    {
+      "source": "/en/password-gen",
+      "destination": "/en/calculators/password-gen",
+      "permanent": true
+    },
+    {
+      "source": "/en/percentage-calc",
+      "destination": "/en/calculators/percentage-calc",
+      "permanent": true
+    },
+    {
+      "source": "/en/random-gen",
+      "destination": "/en/calculators/random-gen",
+      "permanent": true
     }
   ]
 }
