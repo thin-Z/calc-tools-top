@@ -56,16 +56,28 @@ foreach ($f in $files) {
         $canonical = "$BaseUrl/$($name -replace '\.html$', '')"
     }
 
+    # ---- 0. Clean broken <link rel='/> fragments from previous corrupt runs ----
+    $before = $content
+    # Remove any line containing empty-rel link fragments
+    $content = $content -replace '(?m)^[ \t]*<link[ \t]+rel=''[ \t]*/?[ \t]*>[ \t]*\r?\n?', ''
+    $content = $content -replace '(?m)^[ \t]*<link[ \t]+rel="[ \t]*/?[ \t]*>[ \t]*\r?\n?', ''
+    if ($content -ne $before) { $modified = $true }
+
     # ---- 1. Remove any existing OG/Twitter tags to avoid duplicate injection ----
-    $content = $content -replace "<meta property='og:[^']*'[^>]*/>\s*", ''
-    $content = $content -replace '<meta property="og:[^"]*"[^>]*/>\s*', ''
-    $content = $content -replace "<meta name='twitter:[^']*'[^>]*/>\s*", ''
-    $content = $content -replace '<meta name="twitter:[^"]*"[^>]*/>\s*', ''
+    # Match both self-closing (/>) and non-self-closing (>) meta tags
+    $before = $content
+    $content = $content -replace "(?s)<meta\s+property='og:[^']*'[^>]*/?>\s*", ''
+    $content = $content -replace '(?s)<meta\s+property="og:[^"]*"[^>]*/?>\s*', ''
+    $content = $content -replace "(?s)<meta\s+name='twitter:[^']*'[^>]*/?>\s*", ''
+    $content = $content -replace '(?s)<meta\s+name="twitter:[^"]*"[^>]*/?>\s*', ''
+    if ($content -ne $before) { $modified = $true }
 
     # ---- 1b. Remove old SoftwareApplication JSON-LD blocks so step 3 re-injects with clean URL ----
-    $content = $content -replace '(?s)<script type="application/ld\+json">.*?"@type":\s*"SoftwareApplication".*?</script>\s*', ''
+    $before = $content
+    $content = $content -replace '(?s)<script type="application/ld\+json">[^<]*?\{[^}]*?"@type":\s*"SoftwareApplication"[^}]*?\}[\s\S]*?</script>\s*', ''
     # Remove .html from JSON-LD url fields (catch any missed/embedded ld+json)
     $content = $content -replace '("url"\s*:\s*")([^"]+)\.html(")', '$1$2$3'
+    if ($content -ne $before) { $modified = $true }
 
     # ---- 2. Inject Open Graph + Twitter tags after meta description ----
     $descPattern = '<meta name="description" content="[^"]*"(\s*/?>)?'
