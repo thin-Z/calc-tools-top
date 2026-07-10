@@ -2,1449 +2,1476 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://calc-tools.top/about.html</loc>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/about</loc>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/contact.html</loc>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/contact</loc>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/index.html</loc>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/index</loc>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/privacy.html</loc>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/privacy</loc>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/age-calc-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/age-calc-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/age-calc-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/age-calc-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/age-calc-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/age-calc-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/age-calc-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/age-calc-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/base64-encode-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/base64-encode-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/base64-encode-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/base64-encode-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/base64-encode-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/base64-encode-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/base64-encode-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/base64-encode-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/bmi-normal-range-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/bmi-normal-range-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/bmi-normal-range-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/bmi-normal-range-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/bmi-normal-range-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/bmi-normal-range-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/bmi-normal-range-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/bmi-normal-range-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/car-loan-calculator-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/car-loan-calculator-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/car-loan-calculator-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/car-loan-calculator-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/car-loan-calculator-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/car-loan-calculator-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/car-loan-calculator-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/car-loan-calculator-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/case-converter-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/case-converter-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/case-converter-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/case-converter-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/case-converter-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/case-converter-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/case-converter-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/case-converter-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/color-picker-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/color-picker-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/color-picker-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/color-picker-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/color-picker-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/color-picker-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/color-picker-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/color-picker-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/compound-interest-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/compound-interest-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/compound-interest-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/compound-interest-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/compound-interest-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/compound-interest-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/compound-interest-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/compound-interest-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/date-calculation-tips.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/date-calculation-tips.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/date-calculation-tips.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/date-calculation-tips.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/date-calculation-tips</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/date-calculation-tips'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/date-calculation-tips'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/date-calculation-tips'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/discount-calculation-tips.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/discount-calculation-tips.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/discount-calculation-tips.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/discount-calculation-tips.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/discount-calculation-tips</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/discount-calculation-tips'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/discount-calculation-tips'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/discount-calculation-tips'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/electricity-cost-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/electricity-cost-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/electricity-cost-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/electricity-cost-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/electricity-cost-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/electricity-cost-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/electricity-cost-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/electricity-cost-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/equal-installment-vs-equal-principal.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/equal-installment-vs-equal-principal.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/equal-installment-vs-equal-principal.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/equal-installment-vs-equal-principal.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/equal-installment-vs-equal-principal</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/equal-installment-vs-equal-principal'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/equal-installment-vs-equal-principal'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/equal-installment-vs-equal-principal'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/fuel-cost-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/fuel-cost-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/fuel-cost-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/fuel-cost-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/fuel-cost-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/fuel-cost-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/fuel-cost-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/fuel-cost-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/housing-fund-loan-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/housing-fund-loan-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/housing-fund-loan-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/housing-fund-loan-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/housing-fund-loan-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/housing-fund-loan-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/housing-fund-loan-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/housing-fund-loan-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/html-stripper-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/html-stripper-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/html-stripper-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/html-stripper-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/html-stripper-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/html-stripper-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/html-stripper-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/html-stripper-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/image-compression-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/image-compression-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/image-compression-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/image-compression-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/image-compression-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/image-compression-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/image-compression-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/image-compression-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/image-format-converter-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/image-format-converter-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/image-format-converter-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/image-format-converter-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/image-format-converter-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/image-format-converter-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/image-format-converter-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/image-format-converter-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/image-resize-crop-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/image-resize-crop-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/image-resize-crop-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/image-resize-crop-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/image-resize-crop-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/image-resize-crop-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/image-resize-crop-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/image-resize-crop-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/image-to-base64-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/image-to-base64-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/image-to-base64-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/image-to-base64-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/image-to-base64-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/image-to-base64-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/image-to-base64-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/image-to-base64-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/index.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/index.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/index.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/index.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/index</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/index'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/index'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/index'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/json-formatter-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/json-formatter-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/json-formatter-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/json-formatter-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/json-formatter-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/json-formatter-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/json-formatter-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/json-formatter-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/keyword-density-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/keyword-density-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/keyword-density-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/keyword-density-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/keyword-density-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/keyword-density-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/keyword-density-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/keyword-density-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/loan-comparison-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/loan-comparison-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/loan-comparison-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/loan-comparison-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/loan-comparison-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/loan-comparison-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/loan-comparison-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/loan-comparison-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/mortgage-rate-trend-2026.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/mortgage-rate-trend-2026.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/mortgage-rate-trend-2026.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/mortgage-rate-trend-2026.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/mortgage-rate-trend-2026</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/mortgage-rate-trend-2026'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/mortgage-rate-trend-2026'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/mortgage-rate-trend-2026'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/overtime-pay-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/overtime-pay-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/overtime-pay-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/overtime-pay-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/overtime-pay-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/overtime-pay-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/overtime-pay-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/overtime-pay-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/ovulation-calculator-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/ovulation-calculator-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/ovulation-calculator-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/ovulation-calculator-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/ovulation-calculator-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/ovulation-calculator-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/ovulation-calculator-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/ovulation-calculator-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/reading-time-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/reading-time-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/reading-time-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/reading-time-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/password-security-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/password-security-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/password-security-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/password-security-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/standard-weight-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/standard-weight-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/standard-weight-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/standard-weight-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/percentage-calculation-tips</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/percentage-calculation-tips'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/percentage-calculation-tips'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/percentage-calculation-tips'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/tax-deduction-guide-2026.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/tax-deduction-guide-2026.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/tax-deduction-guide-2026.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/tax-deduction-guide-2026.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/qr-generator-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/qr-generator-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/qr-generator-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/qr-generator-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/text-cleaner-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/text-cleaner-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/text-cleaner-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/text-cleaner-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/random-number-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/random-number-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/random-number-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/random-number-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/text-diff-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/text-diff-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/text-diff-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/text-diff-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/reading-time-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/reading-time-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/reading-time-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/reading-time-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/unit-converter-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/unit-converter-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/unit-converter-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/unit-converter-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/standard-weight-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/standard-weight-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/standard-weight-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/standard-weight-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/url-encode-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/url-encode-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/url-encode-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/url-encode-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/tax-deduction-guide-2026</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/tax-deduction-guide-2026'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/tax-deduction-guide-2026'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/tax-deduction-guide-2026'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/uuid-generator-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/uuid-generator-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/uuid-generator-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/uuid-generator-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/text-cleaner-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/text-cleaner-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/text-cleaner-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/text-cleaner-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/en/word-counter-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/word-counter-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/word-counter-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/word-counter-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/text-diff-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/text-diff-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/text-diff-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/text-diff-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/age-calc-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/age-calc-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/age-calc-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/age-calc-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/unit-converter-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/unit-converter-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/unit-converter-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/unit-converter-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/base64-encode-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/base64-encode-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/base64-encode-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/base64-encode-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/url-encode-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/url-encode-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/url-encode-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/url-encode-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/bmi-normal-range-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/bmi-normal-range-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/bmi-normal-range-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/bmi-normal-range-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/uuid-generator-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/uuid-generator-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/uuid-generator-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/uuid-generator-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/car-loan-calculator-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/car-loan-calculator-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/car-loan-calculator-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/car-loan-calculator-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/en/word-counter-guide</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/en/word-counter-guide'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/en/word-counter-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/en/word-counter-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/case-converter-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/case-converter-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/case-converter-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/case-converter-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/age-calc-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/age-calc-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/age-calc-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/age-calc-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/color-picker-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/color-picker-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/color-picker-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/color-picker-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/base64-encode-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/base64-encode-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/base64-encode-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/base64-encode-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/compound-interest-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/compound-interest-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/compound-interest-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/compound-interest-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/bmi-normal-range-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/bmi-normal-range-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/bmi-normal-range-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/bmi-normal-range-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/date-calculation-tips.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/date-calculation-tips.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/date-calculation-tips.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/date-calculation-tips.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/car-loan-calculator-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/car-loan-calculator-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/car-loan-calculator-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/car-loan-calculator-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/discount-calculation-tips.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/discount-calculation-tips.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/discount-calculation-tips.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/discount-calculation-tips.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/case-converter-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/case-converter-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/case-converter-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/case-converter-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/electricity-cost-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/electricity-cost-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/electricity-cost-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/electricity-cost-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/color-picker-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/color-picker-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/color-picker-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/color-picker-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/equal-installment-vs-equal-principal.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/equal-installment-vs-equal-principal.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/equal-installment-vs-equal-principal.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/equal-installment-vs-equal-principal.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/compound-interest-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/compound-interest-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/compound-interest-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/compound-interest-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/fuel-cost-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/fuel-cost-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/fuel-cost-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/fuel-cost-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/date-calculation-tips</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/date-calculation-tips'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/date-calculation-tips'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/date-calculation-tips'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/housing-fund-loan-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/housing-fund-loan-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/housing-fund-loan-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/housing-fund-loan-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/discount-calculation-tips</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/discount-calculation-tips'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/discount-calculation-tips'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/discount-calculation-tips'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/html-stripper-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/html-stripper-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/html-stripper-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/html-stripper-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/electricity-cost-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/electricity-cost-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/electricity-cost-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/electricity-cost-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/image-compression-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/image-compression-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/image-compression-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/image-compression-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/equal-installment-vs-equal-principal</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/equal-installment-vs-equal-principal'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/equal-installment-vs-equal-principal'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/equal-installment-vs-equal-principal'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/image-format-converter-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/image-format-converter-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/image-format-converter-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/image-format-converter-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/fuel-cost-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/fuel-cost-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/fuel-cost-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/fuel-cost-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/image-resize-crop-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/image-resize-crop-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/image-resize-crop-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/image-resize-crop-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/housing-fund-loan-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/housing-fund-loan-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/housing-fund-loan-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/housing-fund-loan-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/image-to-base64-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/image-to-base64-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/image-to-base64-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/image-to-base64-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/html-stripper-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/html-stripper-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/html-stripper-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/html-stripper-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/index.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/index.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/index.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/index.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/image-compression-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/image-compression-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/image-compression-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/image-compression-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/json-formatter-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/json-formatter-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/json-formatter-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/json-formatter-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/image-format-converter-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/image-format-converter-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/image-format-converter-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/image-format-converter-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/keyword-density-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/keyword-density-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/keyword-density-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/keyword-density-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/image-resize-crop-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/image-resize-crop-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/image-resize-crop-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/image-resize-crop-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/loan-comparison-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/loan-comparison-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/loan-comparison-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/loan-comparison-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/image-to-base64-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/image-to-base64-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/image-to-base64-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/image-to-base64-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/mortgage-rate-trend-2026.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/mortgage-rate-trend-2026.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/mortgage-rate-trend-2026.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/mortgage-rate-trend-2026.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/index</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/index'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/index'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/index'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/overtime-pay-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/overtime-pay-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/overtime-pay-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/overtime-pay-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/json-formatter-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/json-formatter-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/json-formatter-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/json-formatter-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/ovulation-calculator-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/ovulation-calculator-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/ovulation-calculator-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/ovulation-calculator-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/keyword-density-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/keyword-density-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/keyword-density-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/keyword-density-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/reading-time-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/reading-time-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/reading-time-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/reading-time-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/loan-comparison-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/loan-comparison-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/loan-comparison-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/loan-comparison-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/standard-weight-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/standard-weight-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/standard-weight-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/standard-weight-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/mortgage-rate-trend-2026</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/mortgage-rate-trend-2026'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/mortgage-rate-trend-2026'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/mortgage-rate-trend-2026'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/tax-deduction-guide-2026.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/tax-deduction-guide-2026.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/tax-deduction-guide-2026.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/tax-deduction-guide-2026.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/overtime-pay-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/overtime-pay-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/overtime-pay-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/overtime-pay-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/text-cleaner-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/text-cleaner-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/text-cleaner-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/text-cleaner-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/ovulation-calculator-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/ovulation-calculator-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/ovulation-calculator-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/ovulation-calculator-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/text-diff-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/text-diff-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/text-diff-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/text-diff-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/password-security-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/password-security-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/password-security-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/password-security-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/unit-converter-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/unit-converter-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/unit-converter-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/unit-converter-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/percentage-calculation-tips</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/percentage-calculation-tips'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/percentage-calculation-tips'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/percentage-calculation-tips'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/url-encode-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/url-encode-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/url-encode-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/url-encode-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/qr-generator-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/qr-generator-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/qr-generator-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/qr-generator-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/uuid-generator-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/uuid-generator-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/uuid-generator-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/uuid-generator-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/random-number-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/random-number-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/random-number-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/random-number-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/blog/zh/word-counter-guide.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/word-counter-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/word-counter-guide.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/word-counter-guide.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/reading-time-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/reading-time-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/reading-time-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/reading-time-guide'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/about.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/about.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/about.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/about.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/blog/zh/standard-weight-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/standard-weight-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/standard-weight-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/standard-weight-guide'/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/blog/zh/tax-deduction-guide-2026</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/tax-deduction-guide-2026'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/tax-deduction-guide-2026'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/tax-deduction-guide-2026'/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/blog/zh/text-cleaner-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/text-cleaner-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/text-cleaner-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/text-cleaner-guide'/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/blog/zh/text-diff-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/text-diff-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/text-diff-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/text-diff-guide'/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/blog/zh/unit-converter-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/unit-converter-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/unit-converter-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/unit-converter-guide'/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/blog/zh/url-encode-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/url-encode-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/url-encode-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/url-encode-guide'/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/blog/zh/uuid-generator-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/uuid-generator-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/uuid-generator-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/uuid-generator-guide'/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/blog/zh/word-counter-guide</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/blog/zh/word-counter-guide'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/blog/zh/word-counter-guide'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/blog/zh/word-counter-guide'/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/en/about</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/about'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/about'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/about'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/contact.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/contact.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/contact.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/contact.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/contact</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/contact'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/contact'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/contact'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/index.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/index.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/index.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/index.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/index</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/index'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/index'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/index'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/privacy.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/privacy.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/privacy.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/privacy.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/privacy</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/privacy'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/privacy'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/privacy'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/calculators/age-calc.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/age-calc.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/age-calc.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/age-calc.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/calculators/age-calc</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/age-calc'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/age-calc'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/age-calc'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/calculators/bmi.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/bmi.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/bmi.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/bmi.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/calculators/bmi</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/bmi'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/bmi'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/bmi'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/calculators/car-loan.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/car-loan.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/car-loan.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/car-loan.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/calculators/car-loan</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/car-loan'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/car-loan'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/car-loan'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/calculators/compound-interest.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/compound-interest.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/compound-interest.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/compound-interest.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/calculators/compound-interest</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/compound-interest'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/compound-interest'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/compound-interest'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/calculators/date-calc.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/date-calc.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/date-calc.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/date-calc.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/calculators/date-calc</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/date-calc'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/date-calc'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/date-calc'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/calculators/discount.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/discount.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/discount.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/discount.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/calculators/discount</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/discount'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/discount'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/discount'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/calculators/electricity.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/electricity.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/electricity.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/electricity.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/calculators/electricity</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/electricity'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/electricity'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/electricity'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/calculators/fuel-cost.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/fuel-cost.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/fuel-cost.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/fuel-cost.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/calculators/fuel-cost</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/fuel-cost'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/fuel-cost'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/fuel-cost'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/calculators/housing-fund.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/housing-fund.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/housing-fund.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/housing-fund.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/calculators/housing-fund</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/housing-fund'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/housing-fund'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/housing-fund'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/calculators/ideal-weight.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/ideal-weight.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/ideal-weight.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/ideal-weight.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/calculators/ideal-weight</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/ideal-weight'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/ideal-weight'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/ideal-weight'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/calculators/index.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/index.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/index.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/index.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/calculators/index</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/index'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/index'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/index'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/calculators/loan-compare.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/loan-compare.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/loan-compare.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/loan-compare.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/calculators/loan-compare</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/loan-compare'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/loan-compare'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/loan-compare'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/calculators/mortgage.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/mortgage.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/mortgage.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/mortgage.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/calculators/mortgage</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/mortgage'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/mortgage'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/mortgage'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/calculators/overtime.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/overtime.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/overtime.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/overtime.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/calculators/overtime</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/overtime'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/overtime'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/overtime'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/calculators/ovulation.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/ovulation.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/ovulation.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/ovulation.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/calculators/ovulation</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/ovulation'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/ovulation'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/ovulation'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/calculators/tax2026.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/tax2026.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/tax2026.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/tax2026.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/calculators/password-gen</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/password-gen'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/password-gen'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/password-gen'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/calculators/unit-converter.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/unit-converter.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/unit-converter.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/unit-converter.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/calculators/percentage-calc</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/percentage-calc'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/percentage-calc'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/percentage-calc'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/image/base64.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/base64.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/base64.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/image/base64.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/calculators/qr-generator</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/qr-generator'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/qr-generator'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/qr-generator'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/image/color-picker.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/color-picker.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/color-picker.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/image/color-picker.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/calculators/random-gen</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/random-gen'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/random-gen'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/random-gen'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/image/compress.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/compress.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/compress.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/image/compress.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/calculators/tax2026</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/tax2026'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/tax2026'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/tax2026'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/image/convert.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/convert.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/convert.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/image/convert.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/calculators/unit-converter</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/unit-converter'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/unit-converter'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/unit-converter'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/image/index.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/index.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/index.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/image/index.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/image/base64</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/base64'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/base64'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/image/base64'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/image/resize.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/resize.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/resize.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/image/resize.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/image/color-picker</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/color-picker'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/color-picker'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/image/color-picker'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/text/base64-encode.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/base64-encode.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/base64-encode.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/base64-encode.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/image/compress</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/compress'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/compress'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/image/compress'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/text/case-converter.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/case-converter.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/case-converter.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/case-converter.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/image/convert</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/convert'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/convert'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/image/convert'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/text/html-stripper.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/html-stripper.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/html-stripper.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/html-stripper.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/image/index</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/index'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/index'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/image/index'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/text/index.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/index.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/index.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/index.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/image/resize</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/resize'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/resize'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/image/resize'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/text/json-formatter.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/json-formatter.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/json-formatter.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/json-formatter.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/text/base64-encode</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/base64-encode'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/base64-encode'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/base64-encode'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/text/keyword-density.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/keyword-density.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/keyword-density.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/keyword-density.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/text/case-converter</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/case-converter'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/case-converter'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/case-converter'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/text/reading-time.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/reading-time.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/reading-time.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/reading-time.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/text/html-stripper</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/html-stripper'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/html-stripper'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/html-stripper'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/text/text-cleaner.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/text-cleaner.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/text-cleaner.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/text-cleaner.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/text/index</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/index'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/index'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/index'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/text/text-diff.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/text-diff.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/text-diff.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/text-diff.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/text/json-formatter</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/json-formatter'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/json-formatter'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/json-formatter'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/text/url-encode.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/url-encode.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/url-encode.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/url-encode.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/text/keyword-density</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/keyword-density'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/keyword-density'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/keyword-density'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/text/uuid-generator.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/uuid-generator.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/uuid-generator.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/uuid-generator.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/text/reading-time</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/reading-time'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/reading-time'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/reading-time'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/text/word-counter.html</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/word-counter.html'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/word-counter.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/word-counter.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/text/text-cleaner</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/text-cleaner'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/text-cleaner'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/text-cleaner'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/about.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/about.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/about.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/about.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/en/text/text-diff</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/text-diff'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/text-diff'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/text-diff'/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/en/text/url-encode</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/url-encode'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/url-encode'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/url-encode'/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/en/text/uuid-generator</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/uuid-generator'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/uuid-generator'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/uuid-generator'/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/en/text/word-counter</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/word-counter'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/word-counter'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/word-counter'/>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://calc-tools.top/zh/about</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/about'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/about'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/about'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/contact.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/contact.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/contact.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/contact.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/contact</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/contact'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/contact'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/contact'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/index.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/index.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/index.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/index.html'/>
-    <lastmod>2026-07-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://calc-tools.top/zh/privacy.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/privacy.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/privacy.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/privacy.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/privacy</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/privacy'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/privacy'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/privacy'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/calculators/age-calc.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/age-calc.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/age-calc.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/age-calc.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/calculators/age-calc</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/age-calc'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/age-calc'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/age-calc'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/calculators/bmi.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/bmi.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/bmi.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/bmi.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/calculators/bmi</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/bmi'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/bmi'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/bmi'/>
+    <lastmod>2026-07-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/calculators/car-loan.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/car-loan.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/car-loan.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/car-loan.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/calculators/car-loan</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/car-loan'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/car-loan'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/car-loan'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/calculators/compound-interest.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/compound-interest.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/compound-interest.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/compound-interest.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/calculators/compound-interest</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/compound-interest'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/compound-interest'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/compound-interest'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/calculators/date-calc.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/date-calc.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/date-calc.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/date-calc.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/calculators/date-calc</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/date-calc'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/date-calc'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/date-calc'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/calculators/discount.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/discount.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/discount.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/discount.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/calculators/discount</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/discount'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/discount'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/discount'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/calculators/electricity.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/electricity.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/electricity.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/electricity.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/calculators/electricity</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/electricity'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/electricity'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/electricity'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/calculators/fuel-cost.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/fuel-cost.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/fuel-cost.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/fuel-cost.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/calculators/fuel-cost</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/fuel-cost'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/fuel-cost'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/fuel-cost'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/calculators/housing-fund.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/housing-fund.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/housing-fund.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/housing-fund.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/calculators/housing-fund</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/housing-fund'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/housing-fund'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/housing-fund'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/calculators/ideal-weight.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/ideal-weight.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/ideal-weight.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/ideal-weight.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/calculators/ideal-weight</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/ideal-weight'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/ideal-weight'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/ideal-weight'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/calculators/index.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/index.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/index.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/index.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/calculators/index</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/index'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/index'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/index'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/calculators/loan-compare.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/loan-compare.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/loan-compare.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/loan-compare.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/calculators/loan-compare</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/loan-compare'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/loan-compare'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/loan-compare'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/calculators/mortgage.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/mortgage.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/mortgage.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/mortgage.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/calculators/mortgage</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/mortgage'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/mortgage'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/mortgage'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/calculators/overtime.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/overtime.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/overtime.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/overtime.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/calculators/overtime</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/overtime'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/overtime'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/overtime'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/calculators/ovulation.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/ovulation.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/ovulation.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/ovulation.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/calculators/ovulation</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/ovulation'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/ovulation'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/ovulation'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/calculators/tax2026.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/tax2026.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/tax2026.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/tax2026.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/calculators/password-gen</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/password-gen'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/password-gen'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/password-gen'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/calculators/unit-converter.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/unit-converter.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/unit-converter.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/calculators/unit-converter.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/calculators/percentage-calc</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/percentage-calc'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/percentage-calc'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/percentage-calc'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/image/base64.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/base64.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/base64.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/image/base64.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/calculators/qr-generator</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/qr-generator'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/qr-generator'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/qr-generator'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/image/color-picker.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/color-picker.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/color-picker.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/image/color-picker.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/calculators/random-gen</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/random-gen'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/random-gen'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/random-gen'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/image/compress.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/compress.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/compress.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/image/compress.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/calculators/tax2026</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/tax2026'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/tax2026'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/tax2026'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/image/convert.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/convert.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/convert.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/image/convert.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/calculators/unit-converter</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/calculators/unit-converter'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/calculators/unit-converter'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/calculators/unit-converter'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/image/index.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/index.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/index.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/image/index.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/image/base64</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/base64'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/base64'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/image/base64'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/image/resize.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/resize.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/resize.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/image/resize.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/image/color-picker</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/color-picker'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/color-picker'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/image/color-picker'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/text/base64-encode.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/base64-encode.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/base64-encode.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/base64-encode.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/image/compress</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/compress'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/compress'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/image/compress'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/text/case-converter.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/case-converter.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/case-converter.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/case-converter.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/image/convert</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/convert'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/convert'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/image/convert'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/text/html-stripper.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/html-stripper.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/html-stripper.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/html-stripper.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/image/index</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/index'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/index'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/image/index'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/text/index.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/index.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/index.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/index.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/image/resize</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/image/resize'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/image/resize'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/image/resize'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/text/json-formatter.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/json-formatter.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/json-formatter.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/json-formatter.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/text/base64-encode</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/base64-encode'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/base64-encode'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/base64-encode'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/text/keyword-density.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/keyword-density.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/keyword-density.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/keyword-density.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/text/case-converter</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/case-converter'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/case-converter'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/case-converter'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/text/reading-time.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/reading-time.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/reading-time.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/reading-time.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/text/html-stripper</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/html-stripper'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/html-stripper'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/html-stripper'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/text/text-cleaner.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/text-cleaner.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/text-cleaner.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/text-cleaner.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/text/index</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/index'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/index'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/index'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/text/text-diff.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/text-diff.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/text-diff.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/text-diff.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/text/json-formatter</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/json-formatter'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/json-formatter'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/json-formatter'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/text/url-encode.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/url-encode.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/url-encode.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/url-encode.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/text/keyword-density</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/keyword-density'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/keyword-density'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/keyword-density'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/text/uuid-generator.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/uuid-generator.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/uuid-generator.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/uuid-generator.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/text/reading-time</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/reading-time'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/reading-time'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/reading-time'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/text/word-counter.html</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/word-counter.html'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/word-counter.html'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/zh/text/word-counter.html'/>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/text/text-cleaner</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/text-cleaner'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/text-cleaner'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/text-cleaner'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/calculators/qr-generator.html</loc>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/text/text-diff</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/text-diff'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/text-diff'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/text-diff'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/calculators/qr-generator.html" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://calc-tools.top/en/calculators/qr-generator.html" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/calculators/qr-generator.html" />
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/calculators/qr-generator.html</loc>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/text/url-encode</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/url-encode'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/url-encode'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/url-encode'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/zh/calculators/password-gen.html</loc>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/text/uuid-generator</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/uuid-generator'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/uuid-generator'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/uuid-generator'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/calculators/password-gen.html" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://calc-tools.top/en/calculators/password-gen.html" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/calculators/password-gen.html" />
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://calc-tools.top/en/calculators/password-gen.html</loc>
-    <lastmod>2026-07-04</lastmod>
+    <loc>https://calc-tools.top/zh/text/word-counter</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://calc-tools.top/zh/text/word-counter'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://calc-tools.top/en/text/word-counter'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://calc-tools.top/en/text/word-counter'/>
+    <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://calc-tools.top/zh/calculators/percentage-calc.html</loc>
-    <lastmod>2026-07-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/calculators/percentage-calc.html" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://calc-tools.top/en/calculators/percentage-calc.html" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/calculators/percentage-calc.html" />
-  </url>
-  <url>
-    <loc>https://calc-tools.top/en/calculators/percentage-calc.html</loc>
-    <lastmod>2026-07-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://calc-tools.top/zh/calculators/random-gen.html</loc>
-    <lastmod>2026-07-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/calculators/random-gen.html" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://calc-tools.top/en/calculators/random-gen.html" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/calculators/random-gen.html" />
-  </url>
-  <url>
-    <loc>https://calc-tools.top/en/calculators/random-gen.html</loc>
-    <lastmod>2026-07-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://calc-tools.top/blog/zh/qr-generator-guide.html</loc>
-    <lastmod>2026-07-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://calc-tools.top/blog/en/qr-generator-guide.html</loc>
-    <lastmod>2026-07-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://calc-tools.top/blog/zh/password-security-guide.html</loc>
-    <lastmod>2026-07-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://calc-tools.top/blog/en/password-security-guide.html</loc>
-    <lastmod>2026-07-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://calc-tools.top/blog/zh/percentage-calculation-tips.html</loc>
-    <lastmod>2026-07-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://calc-tools.top/blog/en/percentage-calculation-tips.html</loc>
-    <lastmod>2026-07-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://calc-tools.top/blog/zh/random-number-guide.html</loc>
-    <lastmod>2026-07-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://calc-tools.top/blog/en/random-number-guide.html</loc>
-    <lastmod>2026-07-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
 </urlset>

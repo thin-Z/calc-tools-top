@@ -1,7 +1,7 @@
 # Inject Open Graph tags + Twitter Card tags + SoftwareApplication Schema
 param(
     [string]$Root = "D:\_Careate.Program\calculator-site",
-    [string]$BaseUrl = "https://www.calc-tools.top",
+    [string]$BaseUrl = "https://calc-tools.top",
     [string]$OgImage = "/assets/logo.svg"
 )
 
@@ -48,15 +48,26 @@ foreach ($f in $files) {
         $description = $Matches[1]
     }
 
-    # Canonical URL
+    # Canonical URL (strip .html early so downstream OG/JSON-LD use clean URL)
     $canonical = ""
     if ($content -match '<link rel="canonical" href="([^"]+)"') {
-        $canonical = $Matches[1]
+        $canonical = $Matches[1] -replace '\.html$', ''
     } else {
-        $canonical = "$BaseUrl/$name"
+        $canonical = "$BaseUrl/$($name -replace '\.html$', '')"
     }
 
-    # ---- 1. Inject Open Graph + Twitter tags after meta description ----
+    # ---- 1. Remove any existing OG/Twitter tags to avoid duplicate injection ----
+    $content = $content -replace "<meta property='og:[^']*'[^>]*/>\s*", ''
+    $content = $content -replace '<meta property="og:[^"]*"[^>]*/>\s*', ''
+    $content = $content -replace "<meta name='twitter:[^']*'[^>]*/>\s*", ''
+    $content = $content -replace '<meta name="twitter:[^"]*"[^>]*/>\s*', ''
+
+    # ---- 1b. Remove old SoftwareApplication JSON-LD blocks so step 3 re-injects with clean URL ----
+    $content = $content -replace '(?s)<script type="application/ld\+json">.*?"@type":\s*"SoftwareApplication".*?</script>\s*', ''
+    # Remove .html from JSON-LD url fields (catch any missed/embedded ld+json)
+    $content = $content -replace '("url"\s*:\s*")([^"]+)\.html(")', '$1$2$3'
+
+    # ---- 2. Inject Open Graph + Twitter tags after meta description ----
     $descPattern = '<meta name="description" content="[^"]*"(\s*/?>)?'
     if ($content -match $descPattern) {
         $match = $Matches[0]
@@ -76,7 +87,7 @@ foreach ($f in $files) {
         $modified = $true
     }
 
-    # ---- 2. Inject SoftwareApplication Schema on tool pages ----
+    # ---- 3. Inject SoftwareApplication Schema on tool pages ----
     if ($name -match "^(en|zh)/(calculators|image|text)/([^/]+)\.html$") {
         $toolLang = $Matches[1]
         $langValue = $toolLang
@@ -105,7 +116,7 @@ foreach ($f in $files) {
         }
     }
 
-    # ---- 3. Inject Article Schema on blog pages if missing ----
+    # ---- 4. Inject Article Schema on blog pages if missing ----
     if ($name -match "^blog/(en|zh)/([^/]+)\.html$" -and $name -notmatch '/index\.html$') {
         $blogLang = $Matches[1]
         if ($blogLang -eq "en") { $blogLang = "en" } else { $blogLang = "zh-CN" }
@@ -124,6 +135,38 @@ foreach ($f in $files) {
 </script>
 "@
             $content = $content -replace '(</head>)', "`n$blogSchema`n`$1"
+            $modified = $true
+        }
+    }
+
+    # ---- 5. Clean canonical URL: remove .html ----
+    if ($content -match '<link rel="canonical" href="([^"]+)\.html"') {
+        $oldUrl = $Matches[0]
+        $newUrl = $oldUrl -replace '\.html"', '"'
+        $content = $content.Replace($oldUrl, $newUrl)
+        $modified = $true
+    }
+
+    # ---- 6. Clean hreflang alternate URLs: remove .html ----
+    $hreflangPattern = '(href="[^"]*)\.html"'
+    $content = $content -replace $hreflangPattern, '$1"'
+    $modified = $true
+
+    # ---- 7. Fix duplicate hreflang="zh-CN" on EN blog pages ----
+    if ($name -match "^blog/en/") {
+        $zhCnMatches = [regex]::Matches($content, 'hreflang="zh-CN"')
+        if ($zhCnMatches.Count -gt 1) {
+            $lines = $content -split "`n"
+            $found = 0
+            for($i = 0; $i -lt $lines.Count; $i++) {
+                if ($lines[$i] -match 'hreflang="zh-CN"') {
+                    $found++
+                    if ($found -eq 2) {
+                        $lines[$i] = ""  # blank out the duplicate line
+                    }
+                }
+            }
+            $content = $lines -join "`n"
             $modified = $true
         }
     }
