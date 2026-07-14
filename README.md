@@ -3,7 +3,7 @@
 > 线上地址：https://calc-tools.top | 风格：Apple 设计语言
 ---
 ## 工具清单
-### 📐 计算工具（16个）
+### 📐 计算工具（20个）
 | 工具 | 说明 |
 |------|------|
 | 🏔 房贷计算器 | 等额本息/等额本金，含图表对比 |
@@ -22,6 +22,10 @@
 | 🏟 贷款对比计算器 | 多贷款方案对比 |
 | 📈 复利计算器 | 复利投资计算 |
 | 🚗 车贷计算器 | 购车贷款计算 |
+| 🔐 密码生成器 | 自定义强度随机密码生成 |
+| 📊 百分比计算器 | 百分比/增减/占比计算 |
+| 🔳 二维码生成器 | 文本网址转二维码 |
+| 🎲 随机数生成器 | 自定义范围随机数生成 |
 ### 🖼️ 图片工具（5个）
 | 工具 | 说明 |
 |------|------|
@@ -58,7 +62,7 @@
 ## 项目结构
 ```
 └─── index.html              # 首页（中文）
-└─── /zh/                    # 中文工具（35页）
+└─── /zh/                    # 中文页面（43 页）
 │   └─── index.html
 │   └─── about.html          # 关于我们
 │   └─── contact.html        # 联系我们
@@ -66,14 +70,14 @@
 │   └─── /calculators/        # 16 计算器
 │   └─── /image/             # 5 图片工具
 │   └─── /text/              # 11 文字工具
-└─── /en/                    # 英文工具（22页）
+└─── /en/                    # 英文页面（43 页）
 │   └─── index.html / about.html / contact.html / privacy.html
 │   └─── /calculators/        # 16 计算器
 │   └─── /image/             # 5 图片工具
 │   └─── /text/              # 11 文字工具
 
-└─── /blog/zh/               # 33 篇中文博客（含 index.html）
-└─── /blog/en/               # 33 篇英文博客（含 index.html）
+└─── /blog/zh/               # 38 篇中文博客（含 index.html）
+└─── /blog/en/               # 38 篇英文博客（含 index.html）
 └─── /css/
 │   └─── style.css           # 全局基础样式
 │   └─── site.css            # 站点组件样式
@@ -152,10 +156,10 @@
 
 | 项目 | 值 |
 |------|-----|
-| 工具总数 | **39**（21 计算器 + 12 文字 + 6 图片）/ 语言 × 2 = 78 工具页 |
-| 页面总数 | 167（sitemap 166 条 URL） |
+| 工具总数 | **36**（20 计算器 + 5 图片 + 11 文字）/ 中英各 36 工具页 ×2 = 72，含分类首页共 78 页 |
+| 页面总数 | 约 167（sitemap 166 条 URL） |
 | 博客文章 | 76（38 zh + 38 en） |
-| 最新提交 | b4777db — 工具排序规则修复（远程改版） |
+| 最新提交 | 66feddd — 修复 OG 标签残留 .html + 清理破碎标签碎片 |
 | Sitemap | 166 条 URL，路径全部匹配实际文件 |
 | 点赞/点击量 | Vercel Serverless Functions + Upstash Redis |
 | 热门排序 | 全工具综合评分（无类别配额），取前 8 |
@@ -177,7 +181,12 @@
 
 | commit | 说明 |
 |--------|------|
-| **318ad22** | feat: blog card layout, pagination, dark mode, tag unification & hot-tool icons |
+| **a96fa8b** | fix: 修复暗色模式视觉回归（.btn-secondary 对比度 + 清理重复定义 + 收窄全局过渡） |
+| 1436598 | chore: 移除 07-08 临时自检脚本 |
+| b29895d | fix(en): 还原英文首页丢失的 emoji 占位符（109 处，对齐中文版映射） |
+| 382aaf1 | fix: 全站自检修复 + README 数字对齐（en 首页 CSS 污染 / 10 死链 / 404 博客路径 / BOM） |
+| b4777db | fix: 工具排序规则修复 — 合并全局点击量 + 每次点击后重排 |
+| 318ad22 | feat: blog card layout, pagination, dark mode, tag unification & hot-tool icons |
 | f068bc0 | docs: fix deployment platform (Vercel, not Cloudflare Pages) |
 | 529bd2c | docs: update README with latest stats (66 blogs, 32 tools, Cloudflare Pages) |
 | 0b4499c | feat: auto-update homepage when generating blog posts |
