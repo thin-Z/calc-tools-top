@@ -1,7 +1,7 @@
 ﻿# Generate correct sitemap.xml based on actual file structure
 param(
     [string]$Root = (Get-Location).Path,
-    [string]$BaseUrl = "https://calc-tools.top"
+    [string]$BaseUrl = "https://www.calc-tools.top"
 )
 
 $exclude = @("404.html", "zh/index.html")

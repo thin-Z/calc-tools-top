@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,17 +9,17 @@
     <meta property='og:title' content='Word Counter - Free Online Character & Keyword Density Analyzer'/>
     <meta property='og:description' content='Free online word counter with keyword density analysis. Supports English and Chinese text. Count characters, words, paragraphs, sentences, lines, and analyze keyword frequency. Privacy-first, all processing in browser.'/>
     <meta property='og:type' content='website'/>
-    <meta property='og:url' content='https://calc-tools.top/en/text/word-counter'/>
-    <meta property='og:image' content='https://calc-tools.top/assets/logo.svg'/>
+    <meta property='og:url' content='https://www.calc-tools.top/en/text/word-counter'/>
+    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
     <meta property='og:locale' content='en_US'/>
     <meta name='twitter:card' content='summary_large_image'/>
     <meta name='twitter:title' content='Word Counter - Free Online Character & Keyword Density Analyzer'/>
     <meta name='twitter:description' content='Free online word counter with keyword density analysis. Supports English and Chinese text. Count characters, words, paragraphs, sentences, lines, and analyze keyword frequency. Privacy-first, all processing in browser.'/>
 
-    <link rel="canonical" href="https://calc-tools.top/en/text/word-counter">
-    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/text/word-counter">
-    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/text/word-counter">
-    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/en/text/word-counter">
+    <link rel="canonical" href="https://www.calc-tools.top/en/text/word-counter">
+    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/text/word-counter">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/text/word-counter">
+    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/en/text/word-counter">
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/site.css">
     <link rel="stylesheet" href="../../css/text-tools.css">
@@ -40,7 +40,7 @@
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "Word Counter - Free Online Character & Keyword Density Analyzer",
-    "url": "https://calc-tools.top/en/text/word-counter",
+    "url": "https://www.calc-tools.top/en/text/word-counter",
     "description": "Free online word counter with keyword density analysis. Supports English and Chinese text. Count characters, words, paragraphs, sentences, lines, and analyze keyword frequency. Privacy-first, all processing in browser.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Web",
@@ -50,22 +50,22 @@
 </head>
 <body>
     <header>
-        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="宸ュ叿绠遍噷" class="site-logo"></a>
+        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="瀹搞儱鍙跨粻閬嶅櫡" class="site-logo"></a>
         <nav>
             <a href="/en/">Home</a>
             <select class="lang-switch" onchange="switchLang(this.value)">
-                <option value="en" selected>馃嚞馃嚙 English</option>
-                <option value="zh">馃嚚馃嚦 涓枃</option>
+                <option value="en" selected>棣冨殲棣冨殭 English</option>
+                <option value="zh">棣冨殮棣冨殾 娑擃厽鏋?/option>
             </select>
         </nav>
     </header>
     <main>
         <div class="tool-page">
             <div class="tool-header">
-                <h1>馃摑 Online Word Counter</h1>
+                <h1>棣冩憫 Online Word Counter</h1>
                 <p>Count characters, words, paragraphs, sentences, and analyze keyword frequency. All processing happens locally in your browser.</p>
             </div>
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="word-counter"><span class="heart">鉂?/span> <span class="count">0</span></button></div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="word-counter"><span class="heart">閴?/span> <span class="count">0</span></button></div>
 
             <!-- Ad Slot -->
             <div class="ad-slot ad-placeholder">Ad Space - Available</div>
@@ -75,20 +75,20 @@
 
                 <!-- Mode Toggle -->
                 <div class="mode-chips">
-                    <span class="mode-chip active" data-mode="stats" onclick="switchMode('stats')">馃搳 Word Count</span>
-                    <span class="mode-chip" data-mode="keywords" onclick="switchMode('keywords')">馃攽 Keyword Density</span>
+                    <span class="mode-chip active" data-mode="stats" onclick="switchMode('stats')">棣冩惓 Word Count</span>
+                    <span class="mode-chip" data-mode="keywords" onclick="switchMode('keywords')">棣冩斀 Keyword Density</span>
                 </div>
 
                 <div class="action-bar">
                     <button class="btn btn-primary" onclick="doAnalyze()">Analyze</button>
                     <button class="btn btn-secondary" onclick="resetTool()">Clear</button>
-                    <button class="copy-btn" id="copyResultBtn" onclick="copyResult()">馃搵 Copy Results</button>
+                    <button class="copy-btn" id="copyResultBtn" onclick="copyResult()">棣冩惖 Copy Results</button>
                 </div>
             </div>
 
             <!-- Stats Mode -->
             <div class="result-area" id="statsArea">
-                <div class="result-label">馃搳 Statistics</div>
+                <div class="result-label">棣冩惓 Statistics</div>
                 <div class="stats-grid">
                     <div class="stat-card"><div class="stat-value" id="statTotalChars">0</div><div class="stat-label">Total Characters</div></div>
                     <div class="stat-card"><div class="stat-value" id="statChineseChars">0</div><div class="stat-label">Chinese Chars</div></div>
@@ -104,7 +104,7 @@
 
             <!-- Keyword Mode -->
             <div class="result-area" id="keywordsArea" style="display:none;">
-                <div class="result-label">馃攽 Top 20 Keywords by Frequency</div>
+                <div class="result-label">棣冩斀 Top 20 Keywords by Frequency</div>
                 <ul class="keyword-list" id="keywordList">
                     <li style="text-align:center;color:var(--text-secondary);padding:20px;">Enter text and click "Analyze" to see keywords</li>
                 </ul>
@@ -125,17 +125,17 @@
             <div class="related-tools">
                 <h3>Related Tools</h3>
                 <ul>
-                    <li><a href="/en/image/base64">馃敜 Base64 Encode/Decode</a></li>
-                    <li><a href="/en/">馃彔 Back to Home</a></li>
+                    <li><a href="/en/image/base64">棣冩暅 Base64 Encode/Decode</a></li>
+                    <li><a href="/en/">棣冨綌 Back to Home</a></li>
                 
-        <li><a href="/blog/en/word-counter-guide">📖 User Guide</a></li>
+        <li><a href="/blog/en/word-counter-guide">馃摉 User Guide</a></li>
     </ul>
             </div>
         </div>
         <div class="ad-placeholder">Ad Space - Available</div>
     </main>
     <footer>
-        <p>漏 2026 ToolBox Inside | Free Online Tools</p>
+        <p>婕?2026 ToolBox Inside | Free Online Tools</p>
         <p><a href="/en/">Back to Home</a></p>
     </footer>
 
