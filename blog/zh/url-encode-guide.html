@@ -1,24 +1,24 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL缂栬В鐮佸伐鍏凤細浠€涔堟槸URL缂栫爜锛熶负浠€涔堣缂栫爜锛?/title>
+    <title>URL编解码工具：什么是URL编码？为什么要编码？</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="URL缂栫爜鐨勫師鐞嗐€佺壒娈婂瓧绗︾殑澶勭悊銆佸墠绔紑鍙戜腑鐨刄RL缂栬В鐮佸満鏅€?>
-    <meta property='og:title' content='URL缂栬В鐮佸伐鍏凤細浠€涔堟槸URL缂栫爜锛熶负浠€涔堣缂栫爜锛?/>
-    <meta property='og:description' content='URL缂栫爜鐨勫師鐞嗐€佺壒娈婂瓧绗︾殑澶勭悊銆佸墠绔紑鍙戜腑鐨刄RL缂栬В鐮佸満鏅€?/>
+    <meta name="description" content="URL编码的原理、特殊字符的处理、前端开发中的URL编解码场景。">
+    <meta property='og:title' content='URL编解码工具：什么是URL编码？为什么要编码？'/>
+    <meta property='og:description' content='URL编码的原理、特殊字符的处理、前端开发中的URL编解码场景。'/>
     <meta property='og:type' content='article'/>
-    <meta property='og:url' content='https://www.calc-tools.top/blog/zh/url-encode-guide.html'/>
+    <meta property='og:url' content='https://calc-tools.top/blog/zh/url-encode-guide.html'/>
     <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
     <meta property='og:locale' content='zh_CN'/>
     <meta name='twitter:card' content='summary_large_image'/>
-    <meta name='twitter:title' content='URL缂栬В鐮佸伐鍏凤細浠€涔堟槸URL缂栫爜锛熶负浠€涔堣缂栫爜锛?/>
-    <meta name='twitter:description' content='URL缂栫爜鐨勫師鐞嗐€佺壒娈婂瓧绗︾殑澶勭悊銆佸墠绔紑鍙戜腑鐨刄RL缂栬В鐮佸満鏅€?/>
-    <link rel="canonical" href="https://www.calc-tools.top/blog/zh/url-encode-guide.html">
-    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/blog/zh/url-encode-guide.html">
-    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/blog/en/url-encode-guide.html">
-    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/blog/zh/url-encode-guide.html">
+    <meta name='twitter:title' content='URL编解码工具：什么是URL编码？为什么要编码？'/>
+    <meta name='twitter:description' content='URL编码的原理、特殊字符的处理、前端开发中的URL编解码场景。'/>
+    <link rel="canonical" href="https://calc-tools.top/blog/zh/url-encode-guide.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/blog/zh/url-encode-guide.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/blog/en/url-encode-guide.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/blog/zh/url-encode-guide.html">
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/site.css">
     <link rel="stylesheet" href="../../css/cookie-consent.css">
@@ -26,17 +26,17 @@
     {
         "@context": "https://schema.org",
         "@type": "Article",
-        "headline": "URL缂栬В鐮佸伐鍏凤細浠€涔堟槸URL缂栫爜锛熶负浠€涔堣缂栫爜锛?,
-        "description": "URL缂栫爜鐨勫師鐞嗐€佺壒娈婂瓧绗︾殑澶勭悊銆佸墠绔紑鍙戜腑鐨刄RL缂栬В鐮佸満鏅€?,
-        "author": { "@type": "Person", "name": "Calc-Tools 缂栬緫" },
+        "headline": "URL编解码工具：什么是URL编码？为什么要编码？",
+        "description": "URL编码的原理、特殊字符的处理、前端开发中的URL编解码场景。",
+        "author": { "@type": "Person", "name": "Calc-Tools 编辑" },
         "datePublished": "2026-07-02",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https://www.calc-tools.top/blog/zh/url-encode-guide.html"
+            "@id": "https://calc-tools.top/blog/zh/url-encode-guide.html"
         },
         "publisher": {
             "@type": "Organization",
-            "name": "鍦ㄧ嚎宸ュ叿"
+            "name": "在线工具"
         }
     }
     </script>
@@ -45,46 +45,46 @@
 </head>
 <body>
     <header>
-        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="宸ュ叿绠遍噷" class="site-logo"></a>
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
         <nav>
-            <a href="/">棣栭〉</a>
+            <a href="/">首页</a>
             <select class="lang-switch" onchange="switchLang(this.value)">
-                <option value="zh" selected>馃嚚馃嚦 涓枃</option>
-                <option value="en">馃嚭馃嚫 English</option>
+                <option value="zh" selected>🇨🇳 中文</option>
+                <option value="en">🇺🇸 English</option>
             </select>
         </nav>
     </header>
     <main>
         <article class="blog-post">
             <nav class="breadcrumb">
-                <a href="/">棣栭〉</a> &gt;
-                <a href="/blog/zh/">鏂囩珷</a> &gt;
-                <a href="/blog/zh/?cat=tools">馃敡 鎶€鏈伐鍏?/a> &gt;
-                <span>URL缂栬В鐮佸伐鍏凤細浠€涔堟槸URL缂栫爜锛熶负浠€涔堣缂栫爜锛?/span>
+                <a href="/">首页</a> &gt;
+                <a href="/blog/zh/">文章</a> &gt;
+                <a href="/blog/zh/?cat=tools">🔧 技术工具</a> &gt;
+                <span>URL编解码工具：什么是URL编码？为什么要编码？</span>
             </nav>
-            <div class="article-tags"><a href="/blog/zh/?cat=tools" class="tag tag-tools" data-tag="tools">馃敡 鎶€鏈伐鍏?/a></div>
-            <p class="blog-meta">馃摪 2026-07-02 路 Calc-Tools 缂栬緫</p>
-            <h1>URL缂栬В鐮佸伐鍏凤細浠€涔堟槸URL缂栫爜锛熶负浠€涔堣缂栫爜锛?/h1><p>URL缂栫爜锛堝張绉扮櫨鍒嗗彿缂栫爜锛夋槸Web寮€鍙戜腑鐨勫熀纭€姒傚康銆傚畠纭繚URL涓殑鐗规畩瀛楃鑳借姝ｇ‘浼犺緭鍜岃В鏋愩€?/p>
-<h2>浠€涔堟槸URL缂栫爜锛?/h2>
-<p>URL涓彧鍏佽浣跨敤ASCII瀛楃闆嗕腑鐨勫瓧姣嶃€佹暟瀛楀拰閮ㄥ垎鐗规畩绗﹀彿銆傚叾浠栧瓧绗︼紙濡備腑鏂囥€佺┖鏍笺€?绛夛級闇€瑕佺紪鐮佷负%鍚庤窡涓や綅鍗佸叚杩涘埗鏁扮殑鏍煎紡銆?/p>
-<p>渚嬪锛氱┖鏍肩紪鐮佷负%20锛屼腑鏂?浣犲ソ'缂栫爜涓?E4%BD%A0%E5%A5%BD</p>
-<h2>浠€涔堟椂鍊欓渶瑕乁RL缂栬В鐮?/h2>
-<p><strong>GET璇锋眰鍙傛暟</strong>锛歎RL涓殑鏌ヨ鍙傛暟鍖呭惈鐗规畩瀛楃鏃堕渶瑕佽繘琛岀紪鐮併€?/p>
-<p><strong>URL璺緞</strong>锛氳矾寰勪腑鍖呭惈涓枃鎴栫壒娈婂瓧绗︾殑鏂囦欢鍚嶃€?/p>
-<p><strong>琛ㄥ崟鎻愪氦</strong>锛歛pplication/x-www-form-urlencoded鏍煎紡鎻愪氦鐨勬暟鎹細鑷姩缂栫爜銆?/p>
-<h2>甯歌闇€瑕佺紪鐮佺殑瀛楃</h2>
-<p>绌烘牸 鈫?%20銆? 鈫?%26銆? 鈫?%3F銆? 鈫?%3D銆? 鈫?%23銆佷腑鏂?鈫?澶氬瓧鑺傜紪鐮?/p>
+            <div class="article-tags"><a href="/blog/zh/?cat=tools" class="tag tag-tools" data-tag="tools">🔧 技术工具</a></div>
+            <p class="blog-meta">📰 2026-07-02 · Calc-Tools 编辑</p>
+            <h1>URL编解码工具：什么是URL编码？为什么要编码？</h1><p>URL编码（又称百分号编码）是Web开发中的基础概念。它确保URL中的特殊字符能被正确传输和解析。</p>
+<h2>什么是URL编码？</h2>
+<p>URL中只允许使用ASCII字符集中的字母、数字和部分特殊符号。其他字符（如中文、空格、&等）需要编码为%后跟两位十六进制数的格式。</p>
+<p>例如：空格编码为%20，中文'你好'编码为%E4%BD%A0%E5%A5%BD</p>
+<h2>什么时候需要URL编解码</h2>
+<p><strong>GET请求参数</strong>：URL中的查询参数包含特殊字符时需要进行编码。</p>
+<p><strong>URL路径</strong>：路径中包含中文或特殊字符的文件名。</p>
+<p><strong>表单提交</strong>：application/x-www-form-urlencoded格式提交的数据会自动编码。</p>
+<h2>常见需要编码的字符</h2>
+<p>空格 → %20、& → %26、? → %3F、= → %3D、# → %23、中文 → 多字节编码</p>
             <div class="blog-cta">
-                <p><strong>鍦ㄧ嚎浣跨敤 馃敚 URL缂栬В鐮?/strong></p>
-                <p>鏃犻渶涓嬭浇锛屾墦寮€鍗崇敤</p>
-                <p><a href="/zh/text/url-encode.html">馃憠 绔嬪嵆浣跨敤 馃敚 URL缂栬В鐮?/a></p>
+                <p><strong>在线使用 🔣 URL编解码</strong></p>
+                <p>无需下载，打开即用</p>
+                <p><a href="/zh/text/url-encode.html">👉 立即使用 🔣 URL编解码</a></p>
             </div>
-            <div class="related-posts"><h3>馃搶 鐩稿叧鏂囩珷</h3><ul><li><a href="/blog/zh/image-format-converter-guide.html">鍥剧墖鏍煎紡杞崲锛欽PG銆丳NG銆乄ebP銆丟IF鎬庝箞閫夛紵</a></li><li><a href="/blog/zh/image-resize-crop-guide.html">鍥剧墖瑁佸壀缂╂斁锛氳皟鏁村浘鐗囧昂瀵哥殑鏈€浣冲疄璺?/a></li><li><a href="/blog/zh/image-to-base64-guide.html">鍥剧墖杞珺ase64锛欻TML鍜孋SS涓祵鍏ュ浘鐗囩殑鏈€浣虫柟寮?/a></li><li><a href="/blog/zh/color-picker-guide.html">鍦ㄧ嚎鍙栬壊鍣ㄤ娇鐢ㄦ寚鍗楋細灞忓箷鍙栬壊涓庨厤鑹叉妧宸?/a></li></ul></div>
-            <div class="article-bottom-tags"><a href="/blog/zh/?cat=tools" class="tag tag-tools" data-tag="tools">馃敡 鎶€鏈伐鍏?/a></div>
+            <div class="related-posts"><h3>📌 相关文章</h3><ul><li><a href="/blog/zh/image-format-converter-guide.html">图片格式转换：JPG、PNG、WebP、GIF怎么选？</a></li><li><a href="/blog/zh/image-resize-crop-guide.html">图片裁剪缩放：调整图片尺寸的最佳实践</a></li><li><a href="/blog/zh/image-to-base64-guide.html">图片转Base64：HTML和CSS中嵌入图片的最佳方式</a></li><li><a href="/blog/zh/color-picker-guide.html">在线取色器使用指南：屏幕取色与配色技巧</a></li></ul></div>
+            <div class="article-bottom-tags"><a href="/blog/zh/?cat=tools" class="tag tag-tools" data-tag="tools">🔧 技术工具</a></div>
         </article>
     </main>
     <footer>
-        <p>漏 2026 宸ュ叿绠遍噷</p>
+        <p>© 2026 工具箱里</p>
     </footer>
     <script src="../../js/cookie-consent.js" defer></script>
 </body>

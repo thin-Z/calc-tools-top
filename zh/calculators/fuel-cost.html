@@ -1,113 +1,153 @@
-﻿<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>油��计算器 - 在线计算油费</title>
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="鍏嶈垂鍦ㄧ嚎娌硅€楄绠楀櫒锛岃緭鍏ヨ椹惰窛绂汇€佺櫨鍏噷娌硅€楀拰娌逛环锛屽揩閫熻绠楁补璐规敮鍑哄拰姣忓叕閲屾垚鏈€?>
-    <meta property='og:title' content='娌硅€楄绠楀櫒 - 鍦ㄧ嚎璁＄畻娌硅垂'/>
-    <meta property='og:description' content='鍏嶈垂鍦ㄧ嚎娌硅€楄绠楀櫒锛岃緭鍏ヨ椹惰窛绂汇€佺櫨鍏噷娌硅€楀拰娌逛环锛屽揩閫熻绠楁补璐规敮鍑哄拰姣忓叕閲屾垚鏈€?/>
+﻿<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>油费计算器 - 工具箱里</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="计算油费支出和每公里成本">
+    <meta property='og:title' content='油费计算器 - 工具箱里'/>
+    <meta property='og:description' content='计算油费支出和每公里成本'/>
     <meta property='og:type' content='website'/>
-    <meta property='og:url' content='https://www.calc-tools.top/zh/calculators/fuel-cost'/>
+    <meta property='og:url' content='https://calc-tools.top/zh/calculators/fuel-cost'/>
     <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
     <meta property='og:locale' content='zh_CN'/>
     <meta name='twitter:card' content='summary_large_image'/>
-    <meta name='twitter:title' content='娌硅€楄绠楀櫒 - 鍦ㄧ嚎璁＄畻娌硅垂'/>
-    <meta name='twitter:description' content='鍏嶈垂鍦ㄧ嚎娌硅€楄绠楀櫒锛岃緭鍏ヨ椹惰窛绂汇€佺櫨鍏噷娌硅€楀拰娌逛环锛屽揩閫熻绠楁补璐规敮鍑哄拰姣忓叕閲屾垚鏈€?/>
+    <meta name='twitter:title' content='油费计算器 - 工具箱里'/>
+    <meta name='twitter:description' content='计算油费支出和每公里成本'/>
+    <link rel="canonical" href="https://calc-tools.top/zh/calculators/fuel-cost">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/calculators/fuel-cost">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/calculators/fuel-cost">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/calculators/fuel-cost">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/cookie-consent.css">
+    <link rel="stylesheet" href="../../css/site.css?v=9">
+    <script src="../../js/i18n.js" defer></script>
+    <script src="../../js/site.js" defer></script>
+</head></head>
 
-    <link rel="canonical" href="https://www.calc-tools.top/zh/calculators/fuel-cost">
-    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/calculators/fuel-cost">
-    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/calculators/fuel-cost">
-    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/zh/calculators/fuel-cost">
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/cookie-consent.css">
-    <link rel="stylesheet" href="../../css/site.css?v=9">
-    <script src="../../js/i18n.js" defer></script>
-    <script src="../../js/like.js" defer></script>
-    <script src="../../js/calculators/fuel-cost.js" defer></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1794930797650076" crossorigin="anonymous"></script>
+<body>
+
+    <header>
+
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+
+        <nav>
+
+            <a href="/"><span data-i18n="siteName">在线工具</span></a>
+
+            <select class="lang-switch" onchange="switchLang(this.value)">
+
+                <option value="zh" selected>馃嚚馃嚦 涓枃</option>
+
+                <option value="en">馃嚞馃嚙 English</option>
+
+            </select>
+
+        </nav>
+
+    </header>
 
 
 
+    <main>
+
+        <div class="page-header">
+
+            <h1>娌硅€楄绠楀櫒 - 鍦ㄧ嚎璁＄畻娌硅垂</h1>
+
+            <p>鍏嶈垂鍦ㄧ嚎娌硅€楄绠楀櫒锛岃緭鍏ヨ椹惰窛绂汇€佺櫨鍏噷娌硅€楀拰娌逛环锛屽揩閫熻绠楁补璐规敮鍑哄拰姣忓叕閲屾垚鏈€?/p>
+
+        </div>
+
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="fuel-cost"><span class="heart">鉂?/span> <span class="count">0</span></button></div>
 
 
 
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中<div class="tool-form">
+
+            <div class="form-group"><label>琛岄┒璺濈锛堝叕閲岋級</label><input type="number" id="distance" value="100" min="1" step="1"></div><div class="form-group"><label>鐧惧叕閲屾补鑰楋紙鍗囷級</label><input type="number" id="fuelPer100" value="8" min="0.1" step="0.1"></div><div class="form-group"><label>娌逛环锛堝厓/鍗囷紝閫夊～锛?/label><input type="number" id="pricePerLiter" value="7.5" min="0" step="0.01"></div><div class="form-actions"><button type="button" class="btn btn-primary" onclick="doCalculate()">璁＄畻</button><button type="reset" class="btn btn-secondary" onclick="resetForm()">閲嶇疆</button></div>
+
+        </div>
 
 
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "油��计算器 - 在线计算油费",
-    "url": "https://www.calc-tools.top/zh/calculators/fuel-cost",
-    "description": "免费在线油��计算器，输入行驶距离��百公里油��和油价，快速计算油费支出和每公里成本��?,
-    "applicationCategory": "UtilitiesApplication",
-    "operatingSystem": "Web",
-    "inLanguage": "zh-CN"
-}
-</script>
-</head>
-<body>
-    <header>
-        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="宸ュ叿绠遍噷" class="site-logo"></a>
-        <nav>
-            <a href="/"><span data-i18n="siteName">棣栭〉</span></a>
-            <select class="lang-switch" onchange="switchLang(this.value)">
-                <option value="zh" selected>馃嚚馃嚦 涓枃</option>
-                <option value="en">馃嚞馃嚙 English</option>
-            </select>
-        </nav>
-    </header>
-
-    <main>
-        <div class="page-header">
-            <h1>娌硅€楄绠楀櫒 - 鍦ㄧ嚎璁＄畻娌硅垂</h1>
-            <p>鍏嶈垂鍦ㄧ嚎娌硅€楄绠楀櫒锛岃緭鍏ヨ椹惰窛绂汇€佺櫨鍏噷娌硅€楀拰娌逛环锛屽揩閫熻绠楁补璐规敮鍑哄拰姣忓叕閲屾垚鏈€?/p>
-        </div>
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="fuel-cost"><span class="heart">鉂?/span> <span class="count">0</span></button></div>
-
-        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">骞垮憡浣?- 鎷涘晢涓?/div>
-
-        <div class="tool-form">
-            <div class="form-group"><label>琛岄┒璺濈锛堝叕閲岋級</label><input type="number" id="distance" value="100" min="1" step="1"></div><div class="form-group"><label>鐧惧叕閲屾补鑰楋紙鍗囷級</label><input type="number" id="fuelPer100" value="8" min="0.1" step="0.1"></div><div class="form-group"><label>娌逛环锛堝厓/鍗囷紝閫夊～锛?/label><input type="number" id="pricePerLiter" value="7.5" min="0" step="0.01"></div><div class="form-actions"><button type="button" class="btn btn-primary" onclick="doCalculate()">璁＄畻</button><button type="reset" class="btn btn-secondary" onclick="resetForm()">閲嶇疆</button></div>
-        </div>
-
-        <div class="result-card" id="resultArea" style="display:none;">
-            <div style="text-align:center;padding:1rem;"><p style="font-size:0.9rem;color:#6b7280;">鎬诲姞娌归噺</p><p style="font-size:2rem;font-weight:bold;color:#3b82f6;"><span id="fuelUsed"></span> 鍗?/p><hr style="margin:1rem 0;"><p>娌硅垂鎬昏锛?span id="totalCost"></span> 鍏?/p><p>姣忓叕閲屾垚鏈細<span id="costPerKm"></span> 鍏?km</p></div>
-        </div>
-
-        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">骞垮憡浣?- 鎷涘晢涓?/div>
-
-        <div class="tool-content"><h2>娌硅€楄绠楀櫒浣跨敤璇存槑</h2><p>杈撳叆琛岄┒璺濈銆佺櫨鍏噷娌硅€楀拰褰撳墠娌逛环锛屽嵆鍙揩閫熺畻鍑烘湰娆¤绋嬬殑娌硅垂鏀嚭鍜屾瘡鍏噷鎴愭湰銆?/p><h3>鐪佹补寤鸿</h3><p>淇濇寔鍖€閫熻椹躲€侀伩鍏嶆€ュ姞閫熸€ュ埞杞︺€佸畾鏈熶繚鍏昏溅杈嗐€佷繚鎸佸悎鐞嗚儙鍘嬶紝鍙湁鏁堥檷浣庢补鑰椼€?/p></div>
-
-        <div class="related-tools"><h3>鐩稿叧宸ュ叿</h3><ul><li><a href="/zh/calculators/electricity">鐢佃垂璁＄畻鍣?/a></li><li><a href="/zh/calculators/discount">鎶樻墸璁＄畻鍣?/a></li>
-        <li><a href="/blog/zh/fuel-cost-guide">馃摉 浣跨敤鎸囧崡</a></li>
-    </ul></div>
-            <section class="related-posts">
-        <h3>鐩稿叧闃呰</h3>
-        <ul>
-            <li><a href="/blog/zh/fuel-cost-guide">娌硅€楄绠楀櫒锛氭苯杞︽补鑰楁€庝箞绠楋紵</a></li>
-        </ul>
-    </section>
-</main>
-
-    <footer>
-        <p data-i18n="copyright">漏 2026 鍦ㄧ嚎宸ュ叿 | 鍏嶈垂宸ュ叿</p>
-    </footer>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            document.querySelectorAll("[data-i18n]").forEach(function(el) {
-                const key = el.getAttribute("data-i18n");
-                el.textContent = t(key);
-            });
-        });
-    </script>
-
-    <script src="../../js/cookie-consent.js" defer></script>
-    
-<div class="ad-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1794930797650076" data-ad-slot="6250142758" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-</body>
-</html>
-
+
+        <div class="result-card" id="resultArea" style="display:none;">
+
+            <div style="text-align:center;padding:1rem;"><p style="font-size:0.9rem;color:#6b7280;">鎬诲姞娌归噺</p><p style="font-size:2rem;font-weight:bold;color:#3b82f6;"><span id="fuelUsed"></span> 鍗?/p><hr style="margin:1rem 0;"><p>娌硅垂鎬昏锛?span id="totalCost"></span> 鍏?/p><p>姣忓叕閲屾垚鏈細<span id="costPerKm"></span> 鍏?km</p></div>
+
+        </div>
+
+
+
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中<div class="tool-content"><h2>娌硅€楄绠楀櫒浣跨敤璇存槑</h2><p>杈撳叆琛岄┒璺濈銆佺櫨鍏噷娌硅€楀拰褰撳墠娌逛环锛屽嵆鍙揩閫熺畻鍑烘湰娆¤绋嬬殑娌硅垂鏀嚭鍜屾瘡鍏噷鎴愭湰銆?/p><h3>鐪佹补寤鸿</h3><p>淇濇寔鍖€閫熻椹躲€侀伩鍏嶆€ュ姞閫熸€ュ埞杞︺€佸畾鏈熶繚鍏昏溅杈嗐€佷繚鎸佸悎鐞嗚儙鍘嬶紝鍙湁鏁堥檷浣庢补鑰椼€?/p></div>
+
+
+
+        <div class="related-tools"><h3>鐩稿叧宸ュ叿</h3><ul><li><a href="/zh/calculators/electricity">鐢佃垂璁＄畻鍣?/a></li><li><a href="/zh/calculators/discount">鎶樻墸璁＄畻鍣?/a></li>
+
+        <li><a href="/blog/zh/fuel-cost-guide">馃摉 浣跨敤鎸囧崡</a></li>
+
+    </ul></div>
+
+            <section class="related-posts">
+
+        <h3>鐩稿叧闃呰</h3>
+
+        <ul>
+
+            <li><a href="/blog/zh/fuel-cost-guide">娌硅€楄绠楀櫒锛氭苯杞︽补鑰楁€庝箞绠楋紵</a></li>
+
+        </ul>
+
+    </section>
+
+</main>
+
+
+
+            <footer>
+        <div class="footer-links">
+            <a href="/">首页</a>
+            <a href="/about">关于</a>
+            <a href="/privacy">隐私政策</a>
+            <a href="/contact">联系</a>
+            <a href="/blog/zh/">博客</a>
+        </div>
+        <p>© 2026 工具箱里 | 免费在线工具</p>
+    </footer>
+
+
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function() {
+
+            document.querySelectorAll("[data-i18n]").forEach(function(el) {
+
+                const key = el.getAttribute("data-i18n");
+
+                el.textContent = t(key);
+
+            });
+
+        });
+
+    </script>
+
+
+
+    <script src="../../js/cookie-consent.js" defer></script>
+
+    
+
+<div class="ad-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1794930797650076" data-ad-slot="6250142758" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+</body>
+
+</html>
+
+
+

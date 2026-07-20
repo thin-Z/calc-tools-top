@@ -1,137 +1,209 @@
-﻿<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Base64 编码解码工具 - 在线 Base64 加密解密</title>
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="鍏嶈垂鍦ㄧ嚎 Base64 缂栬В鐮佸伐鍏枫€傛敮鎸佹枃鏈拰 Base64 浜掕浆锛孶TF-8 瀹夊叏缂栫爜锛屼腑鏂囨棤涔辩爜銆傛祻瑙堝櫒鏈湴澶勭悊锛屾暟鎹笉涓婁紶鏈嶅姟鍣紝淇濇姢闅愮瀹夊叏銆?>
-    <meta property='og:title' content='Base64 缂栫爜瑙ｇ爜宸ュ叿 - 鍦ㄧ嚎 Base64 鍔犲瘑瑙ｅ瘑'/>
-    <meta property='og:description' content='鍏嶈垂鍦ㄧ嚎 Base64 缂栬В鐮佸伐鍏枫€傛敮鎸佹枃鏈拰 Base64 浜掕浆锛孶TF-8 瀹夊叏缂栫爜锛屼腑鏂囨棤涔辩爜銆傛祻瑙堝櫒鏈湴澶勭悊锛屾暟鎹笉涓婁紶鏈嶅姟鍣紝淇濇姢闅愮瀹夊叏銆?/>
-    <meta property='og:type' content='website'/>
-    <meta property='og:url' content='https://www.calc-tools.top/zh/text/base64-encode'/>
-    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
-    <meta property='og:locale' content='zh_CN'/>
-    <meta name='twitter:card' content='summary_large_image'/>
-    <meta name='twitter:title' content='Base64 缂栫爜瑙ｇ爜宸ュ叿 - 鍦ㄧ嚎 Base64 鍔犲瘑瑙ｅ瘑'/>
-    <meta name='twitter:description' content='鍏嶈垂鍦ㄧ嚎 Base64 缂栬В鐮佸伐鍏枫€傛敮鎸佹枃鏈拰 Base64 浜掕浆锛孶TF-8 瀹夊叏缂栫爜锛屼腑鏂囨棤涔辩爜銆傛祻瑙堝櫒鏈湴澶勭悊锛屾暟鎹笉涓婁紶鏈嶅姟鍣紝淇濇姢闅愮瀹夊叏銆?/>
-
-    <link rel="canonical" href="https://www.calc-tools.top/zh/text/base64-encode">
-    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/text/base64-encode">
-    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/text/base64-encode">
-    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/zh/text/base64-encode">
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/site.css">
-    <link rel="stylesheet" href="../../css/text-tools.css">
-    <link rel="stylesheet" href="../../css/cookie-consent.css">
-    <script src="../../js/i18n.js" defer></script>
-    <script src="../../js/text-tools/base64.js" defer></script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1794930797650076" crossorigin="anonymous"></script>
-
-
-
-
-
-
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Base64 编码解码工具 - 在线 Base64 加密解密",
-    "url": "https://www.calc-tools.top/zh/text/base64-encode",
-    "description": "免费在线 Base64 编�В码工具��支持文本和 Base64 互转，UTF-8 安全编码，中文无乱码。浏览器本地处理，数据不上传服务器，保护隐私安全�?,
-    "applicationCategory": "UtilitiesApplication",
-    "operatingSystem": "Web",
-    "inLanguage": "zh-CN"
-}
-</script>
-</head>
-<body>
-    <header>
-        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="宸ュ叿绠遍噷" class="site-logo"></a>
-        <nav>
-            <a href="/">棣栭〉</a>
-            <select class="lang-switch" onchange="switchLang(this.value)">
-                <option value="zh" selected>馃嚚馃嚦 涓枃</option>
-                <option value="en">馃嚞馃嚙 English</option>
-            </select>
-        </nav>
-    </header>
-    <main>
-        <div class="tool-page">
-            <div class="tool-header">
-                <h1>馃攼 Base64 缂栫爜瑙ｇ爜宸ュ叿</h1>
-                <p>鍦ㄧ嚎 Base64 鍔犲瘑瑙ｅ瘑宸ュ叿锛屾敮鎸佹枃鏈笌 Base64 浜掕浆銆傚熀浜庢爣鍑?Web API 瀹炵幇 UTF-8 瀹夊叏缂栬В鐮侊紝涓枃鏃犱贡鐮併€傛祻瑙堝櫒鏈湴澶勭悊锛屾暟鎹笉涓婁紶鏈嶅姟鍣ㄣ€?/p>
-            </div>
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="base64-encode"><span class="heart">鉂?/span> <span class="count">0</span></button></div>
-
-            <!-- 骞垮憡浣?-->
-            <div class="ad-slot ad-placeholder">骞垮憡浣?- 鎷涘晢涓?/div>
-
-            <div class="tool-controls">
-                <textarea class="text-input" id="textInput" placeholder="璇疯緭鍏ヨ缂栫爜鎴栬В鐮佺殑鏂囨湰..." oninput="doConvert()">浣犲ソ锛屾杩庝娇鐢?Base64 缂栫爜瑙ｇ爜宸ュ叿锛?/textarea>
-
-                <!-- 妯″紡鍒囨崲 -->
-                <div class="mode-chips">
-                    <span class="mode-chip active" data-mode="encode" onclick="switchBase64Mode('encode')">馃敀 缂栫爜</span>
-                    <span class="mode-chip" data-mode="decode" onclick="switchBase64Mode('decode')">馃敁 瑙ｇ爜</span>
-                </div>
-
-                <div class="action-bar">
-                    <button class="btn btn-primary" onclick="doConvert()">杞崲</button>
-                    <button class="btn btn-secondary" onclick="clearTool()">娓呯┖</button>
-                </div>
-
-                <!-- 閿欒鎻愮ず -->
-                <div class="result-area error-section" id="errorSection" style="display:none;border-color:#ef4444;background:#fef2f2;">
-                    <div class="result-label" style="color:#ef4444;">鉂?瑙ｇ爜閿欒</div>
-                    <div class="result-content" style="color:#dc2626;">
-                        <p><strong>鎻忚堪锛?/strong><span id="errorMsg"></span></p>
-                    </div>
-                </div>
-
-                <!-- 缁撴灉鍖哄煙 -->
-                <div id="resultSection" class="result-section" style="display:none;">
-                    <h3>杈撳嚭缁撴灉</h3>
-                    <pre class="result-area" id="resultArea" style="font-family: 'SF Mono', 'Fira Code', 'Consolas', 'Courier New', monospace; font-size: 0.9rem; line-height: 1.5; padding: 16px; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"></pre>
-                    <button class="btn btn-copy" id="copyBtn" onclick="copyBase64Result()">馃搵 澶嶅埗缁撴灉</button>
-                </div>
-            </div>
-
-            <!-- SEO 鍐呭鍖?-->
-            <div class="seo-content">
-                <h2>浠€涔堟槸 Base64 缂栫爜锛?/h2>
-                <p>Base64 鏄竴绉嶅熀浜?64 涓彲鎵撳嵃瀛楃鏉ヨ〃绀轰簩杩涘埗鏁版嵁鐨勭紪鐮佹柟寮忋€傚畠骞挎硾鐢ㄤ簬鐢靛瓙閭欢闄勪欢锛圡IME锛夈€佺綉椤典腑宓屽叆鍥剧墖锛圖ata URI锛夈€丄PI 鏁版嵁浼犺緭銆丣SON Web Token (JWT) 绛夊満鏅€侭ase64 灏嗘瘡 3 涓瓧鑺傜紪鐮佷负 4 涓瓧绗︼紝缂栫爜鍚庢暟鎹ぇ灏忕害涓哄師濮嬫暟鎹殑 133%銆?/p>
-                <p>鏈伐鍏蜂娇鐢ㄦ祻瑙堝櫒鍐呯疆鐨?<code>TextEncoder</code> 鍜?<code>TextDecoder</code> API 瀹炵幇 UTF-8 瀹夊叏缂栬В鐮侊紝纭繚涓枃銆佹棩鏂囥€侀煩鏂囩瓑闈?ASCII 瀛楃鍦ㄧ紪鐮佸拰瑙ｇ爜杩囩▼涓笉浼氬嚭鐜颁贡鐮侀棶棰樸€?/p>
-
-                <h3>Base64 缂栬В鐮佺殑甯歌鍦烘櫙</h3>
-                <ul>
-                    <li><strong>鏁版嵁 URI 宓屽叆鍥剧墖</strong> 鈥?灏嗗浘鐗囪浆鎹负 Base64 宓屽叆 HTML/CSS锛屽噺灏?HTTP 璇锋眰</li>
-                    <li><strong>API 鏁版嵁浼犺緭</strong> 鈥?鍦?JSON 涓畨鍏ㄤ紶杈撲簩杩涘埗鏁版嵁</li>
-                    <li><strong>JWT Token 瑙ｆ瀽</strong> 鈥?瑙ｇ爜 JWT 鐨?Payload 閮ㄥ垎鏌ョ湅鍐呭</li>
-                    <li><strong>閰嶇疆鏂囦欢鍔犲瘑</strong> 鈥?绠€鍗曟贩娣嗛厤缃腑鐨勬晱鎰熶俊鎭紙娉ㄦ剰锛氫笉鏄湡姝ｇ殑鍔犲瘑锛?/li>
-                    <li><strong>閭欢闄勪欢</strong> 鈥?MIME 鍗忚浣跨敤 Base64 缂栫爜閭欢闄勪欢</li>
-                </ul>
-
-                <h3>娉ㄦ剰浜嬮」</h3>
-                <p>Base64 缂栫爜涓嶆槸鍔犲瘑绠楁硶锛屽畠鍙槸涓€绉嶆暟鎹〃绀烘柟寮忋€備换浣曚汉閮藉彲浠ヨ交鏉捐В鐮?Base64 鏁版嵁锛屽洜姝や笉瑕佹妸 Base64 褰撲綔瀵嗙爜淇濇姢鎵嬫銆傚鏋滀綘闇€瑕佷繚鎶ゆ暟鎹畨鍏紝璇蜂娇鐢?AES銆丷SA 绛夋爣鍑嗗姞瀵嗙畻娉曘€?/p>
-            </div>
-        </div>
-    
-        <div class="related-tools">
-            <h3>鐩稿叧宸ュ叿</h3>
-            <ul>
-                <li><a href="/blog/zh/base64-encode-guide">馃摉 浣跨敤鎸囧崡</a></li>
-            </ul>
-        </div>
-    </main>
-    <footer>
-        <p>&copy; 2026 calc-tools.top | <a href="/">鍦ㄧ嚎宸ュ叿绠?/a> | <a href="/zh/text/word-counter">瀛楁暟缁熻</a> | <a href="/zh/text/case-converter">澶у皬鍐欒浆鎹?/a> | <a href="/zh/text/json-formatter">JSON 鏍煎紡鍖?/a> | <a href="/zh/text/base64-encode">Base64 缂栬В鐮?/a></p>
-    </footer>
-    <script src="../../js/like.js" defer></script>
-    <script src="../../js/cookie-consent.js" defer></script>
-    <div class="ad-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1794930797650076" data-ad-slot="6250142758" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-</body>
-</html>
+﻿<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64 编解码 - 工具箱里</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="文本与 Base64 互转">
+    <meta property='og:title' content='Base64 编解码 - 工具箱里'/>
+    <meta property='og:description' content='文本与 Base64 互转'/>
+    <meta property='og:type' content='website'/>
+    <meta property='og:url' content='https://calc-tools.top/zh/text/base64-encode'/>
+    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:locale' content='zh_CN'/>
+    <meta name='twitter:card' content='summary_large_image'/>
+    <meta name='twitter:title' content='Base64 编解码 - 工具箱里'/>
+    <meta name='twitter:description' content='文本与 Base64 互转'/>
+    <link rel="canonical" href="https://calc-tools.top/zh/text/base64-encode">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/text/base64-encode">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/text/base64-encode">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/text/base64-encode">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/cookie-consent.css">
+    <link rel="stylesheet" href="../../css/site.css?v=9">
+    <script src="../../js/i18n.js" defer></script>
+    <script src="../../js/site.js" defer></script>
+</head></head>
+
+<body>
+
+    <header>
+
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+
+        <nav>
+
+            <a href="/">棣栭〉</a>
+
+            <select class="lang-switch" onchange="switchLang(this.value)">
+
+                <option value="zh" selected>馃嚚馃嚦 涓枃</option>
+
+                <option value="en">馃嚞馃嚙 English</option>
+
+            </select>
+
+        </nav>
+
+    </header>
+
+    <main>
+
+        <div class="tool-page">
+
+            <div class="tool-header">
+
+                <h1>馃攼 Base64 缂栫爜瑙ｇ爜宸ュ叿</h1>
+
+                <p>鍦ㄧ嚎 Base64 鍔犲瘑瑙ｅ瘑宸ュ叿锛屾敮鎸佹枃鏈笌 Base64 浜掕浆銆傚熀浜庢爣鍑?Web API 瀹炵幇 UTF-8 瀹夊叏缂栬В鐮侊紝涓枃鏃犱贡鐮併€傛祻瑙堝櫒鏈湴澶勭悊锛屾暟鎹笉涓婁紶鏈嶅姟鍣ㄣ€?/p>
+
+            </div>
+
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="base64-encode"><span class="heart">鉂?/span> <span class="count">0</span></button></div>
+
+
+
+            <!-- 骞垮憡浣?-->
+
+            <div class="ad-slot ad-placeholder">骞垮憡浣?- 鎷涘晢涓?/div>
+
+
+
+            <div class="tool-controls">
+
+                <textarea class="text-input" id="textInput" placeholder="璇疯緭鍏ヨ缂栫爜鎴栬В鐮佺殑鏂囨湰..." oninput="doConvert()">浣犲ソ锛屾杩庝娇鐢?Base64 缂栫爜瑙ｇ爜宸ュ叿锛?/textarea>
+
+
+
+                <!-- 妯″紡鍒囨崲 -->
+
+                <div class="mode-chips">
+
+                    <span class="mode-chip active" data-mode="encode" onclick="switchBase64Mode('encode')">馃敀 缂栫爜</span>
+
+                    <span class="mode-chip" data-mode="decode" onclick="switchBase64Mode('decode')">馃敁 瑙ｇ爜</span>
+
+                </div>
+
+
+
+                <div class="action-bar">
+
+                    <button class="btn btn-primary" onclick="doConvert()">杞崲</button>
+
+                    <button class="btn btn-secondary" onclick="clearTool()">娓呯┖</button>
+
+                </div>
+
+
+
+                <!-- 閿欒鎻愮ず -->
+
+                <div class="result-area error-section" id="errorSection" style="display:none;border-color:#ef4444;background:#fef2f2;">
+
+                    <div class="result-label" style="color:#ef4444;">鉂?瑙ｇ爜閿欒</div>
+
+                    <div class="result-content" style="color:#dc2626;">
+
+                        <p><strong>鎻忚堪锛?/strong><span id="errorMsg"></span></p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- 缁撴灉鍖哄煙 -->
+
+                <div id="resultSection" class="result-section" style="display:none;">
+
+                    <h3>杈撳嚭缁撴灉</h3>
+
+                    <pre class="result-area" id="resultArea" style="font-family: 'SF Mono', 'Fira Code', 'Consolas', 'Courier New', monospace; font-size: 0.9rem; line-height: 1.5; padding: 16px; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"></pre>
+
+                    <button class="btn btn-copy" id="copyBtn" onclick="copyBase64Result()">馃搵 澶嶅埗缁撴灉</button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- SEO 鍐呭鍖?-->
+
+            <div class="seo-content">
+
+                <h2>浠€涔堟槸 Base64 缂栫爜锛?/h2>
+
+                <p>Base64 鏄竴绉嶅熀浜?64 涓彲鎵撳嵃瀛楃鏉ヨ〃绀轰簩杩涘埗鏁版嵁鐨勭紪鐮佹柟寮忋€傚畠骞挎硾鐢ㄤ簬鐢靛瓙閭欢闄勪欢锛圡IME锛夈€佺綉椤典腑宓屽叆鍥剧墖锛圖ata URI锛夈€丄PI 鏁版嵁浼犺緭銆丣SON Web Token (JWT) 绛夊満鏅€侭ase64 灏嗘瘡 3 涓瓧鑺傜紪鐮佷负 4 涓瓧绗︼紝缂栫爜鍚庢暟鎹ぇ灏忕害涓哄師濮嬫暟鎹殑 133%銆?/p>
+
+                <p>鏈伐鍏蜂娇鐢ㄦ祻瑙堝櫒鍐呯疆鐨?<code>TextEncoder</code> 鍜?<code>TextDecoder</code> API 瀹炵幇 UTF-8 瀹夊叏缂栬В鐮侊紝纭繚涓枃銆佹棩鏂囥€侀煩鏂囩瓑闈?ASCII 瀛楃鍦ㄧ紪鐮佸拰瑙ｇ爜杩囩▼涓笉浼氬嚭鐜颁贡鐮侀棶棰樸€?/p>
+
+
+
+                <h3>Base64 缂栬В鐮佺殑甯歌鍦烘櫙</h3>
+
+                <ul>
+
+                    <li><strong>鏁版嵁 URI 宓屽叆鍥剧墖</strong> 鈥?灏嗗浘鐗囪浆鎹负 Base64 宓屽叆 HTML/CSS锛屽噺灏?HTTP 璇锋眰</li>
+
+                    <li><strong>API 鏁版嵁浼犺緭</strong> 鈥?鍦?JSON 涓畨鍏ㄤ紶杈撲簩杩涘埗鏁版嵁</li>
+
+                    <li><strong>JWT Token 瑙ｆ瀽</strong> 鈥?瑙ｇ爜 JWT 鐨?Payload 閮ㄥ垎鏌ョ湅鍐呭</li>
+
+                    <li><strong>閰嶇疆鏂囦欢鍔犲瘑</strong> 鈥?绠€鍗曟贩娣嗛厤缃腑鐨勬晱鎰熶俊鎭紙娉ㄦ剰锛氫笉鏄湡姝ｇ殑鍔犲瘑锛?/li>
+
+                    <li><strong>閭欢闄勪欢</strong> 鈥?MIME 鍗忚浣跨敤 Base64 缂栫爜閭欢闄勪欢</li>
+
+                </ul>
+
+
+
+                <h3>娉ㄦ剰浜嬮」</h3>
+
+                <p>Base64 缂栫爜涓嶆槸鍔犲瘑绠楁硶锛屽畠鍙槸涓€绉嶆暟鎹〃绀烘柟寮忋€備换浣曚汉閮藉彲浠ヨ交鏉捐В鐮?Base64 鏁版嵁锛屽洜姝や笉瑕佹妸 Base64 褰撲綔瀵嗙爜淇濇姢鎵嬫銆傚鏋滀綘闇€瑕佷繚鎶ゆ暟鎹畨鍏紝璇蜂娇鐢?AES銆丷SA 绛夋爣鍑嗗姞瀵嗙畻娉曘€?/p>
+
+            </div>
+
+        </div>
+
+    
+
+        <div class="related-tools">
+
+            <h3>鐩稿叧宸ュ叿</h3>
+
+            <ul>
+
+                <li><a href="/blog/zh/base64-encode-guide">馃摉 浣跨敤鎸囧崡</a></li>
+
+            </ul>
+
+        </div>
+
+    </main>
+
+            <footer>
+        <div class="footer-links">
+            <a href="/">首页</a>
+            <a href="/about">关于</a>
+            <a href="/privacy">隐私政策</a>
+            <a href="/contact">联系</a>
+            <a href="/blog/zh/">博客</a>
+        </div>
+        <p>© 2026 工具箱里 | 免费在线工具</p>
+    </footer>
+
+    <script src="../../js/like.js" defer></script>
+
+    <script src="../../js/cookie-consent.js" defer></script>
+
+    <div class="ad-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1794930797650076" data-ad-slot="6250142758" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+</body>
+
+</html>
+

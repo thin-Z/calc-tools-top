@@ -1,135 +1,205 @@
-﻿<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>在线图片裁剪缩放 - 免费调整图片尺寸</title>
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="鍏嶈垂鍦ㄧ嚎鍥剧墖瑁佸壀缂╂斁宸ュ叿锛屾祻瑙堝櫒鏈湴澶勭悊銆傝嚜瀹氫箟灏哄锛屼繚鎸佸楂樻瘮銆?>
-    <meta property='og:title' content='鍦ㄧ嚎鍥剧墖瑁佸壀缂╂斁 - 鍏嶈垂璋冩暣鍥剧墖灏哄'/>
-    <meta property='og:description' content='鍏嶈垂鍦ㄧ嚎鍥剧墖瑁佸壀缂╂斁宸ュ叿锛屾祻瑙堝櫒鏈湴澶勭悊銆傝嚜瀹氫箟灏哄锛屼繚鎸佸楂樻瘮銆?/>
+﻿<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>裁剪缩放 - 工具箱里</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="调整尺寸，保持宽高比">
+    <meta property='og:title' content='裁剪缩放 - 工具箱里'/>
+    <meta property='og:description' content='调整尺寸，保持宽高比'/>
     <meta property='og:type' content='website'/>
-    <meta property='og:url' content='https://www.calc-tools.top/zh/image/resize'/>
+    <meta property='og:url' content='https://calc-tools.top/zh/image/resize'/>
     <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
     <meta property='og:locale' content='zh_CN'/>
     <meta name='twitter:card' content='summary_large_image'/>
-    <meta name='twitter:title' content='鍦ㄧ嚎鍥剧墖瑁佸壀缂╂斁 - 鍏嶈垂璋冩暣鍥剧墖灏哄'/>
-    <meta name='twitter:description' content='鍏嶈垂鍦ㄧ嚎鍥剧墖瑁佸壀缂╂斁宸ュ叿锛屾祻瑙堝櫒鏈湴澶勭悊銆傝嚜瀹氫箟灏哄锛屼繚鎸佸楂樻瘮銆?/>
+    <meta name='twitter:title' content='裁剪缩放 - 工具箱里'/>
+    <meta name='twitter:description' content='调整尺寸，保持宽高比'/>
+    <link rel="canonical" href="https://calc-tools.top/zh/image/resize">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/image/resize">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/image/resize">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/image/resize">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/cookie-consent.css">
+    <link rel="stylesheet" href="../../css/site.css?v=9">
+    <script src="../../js/i18n.js" defer></script>
+    <script src="../../js/site.js" defer></script>
+</head></head>
 
-    <link rel="canonical" href="https://www.calc-tools.top/zh/image/resize">
-    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/image/resize">
-    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/image/resize">
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/site.css">
-    <link rel="stylesheet" href="../../css/cookie-consent.css">
-    <script src="../../js/i18n.js" defer></script>
-    <script src="../../js/image-tools/resize.js" defer></script>
-
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1794930797650076" crossorigin="anonymous"></script>
+<body>
+
+    <header>
+
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+
+        <nav>
+
+            <a href="/">棣栭〉</a>
+
+            <select class="lang-switch" onchange="switchLang(this.value)">
+
+                <option value="zh" selected>馃嚚馃嚦 涓枃</option>
+
+                <option value="en">馃嚞馃嚙 English</option>
+
+            </select>
+
+        </nav>
+
+    </header>
+
+    <main>
+
+        <div class="tool-page">
+
+            <div class="tool-header">
+
+                <span class="tool-privacy-badge">馃敀 娴忚鍣ㄦ湰鍦板鐞?路 涓嶄笂浼犳湇鍔″櫒</span><h1>鍥剧墖瑁佸壀缂╂斁鏉惧伐鍏?/h1>
+
+                <p>璋冩暣鍥剧墖灏哄锛岃嚜瀹氫箟瀹介珮鎴栦繚鎸佹瘮渚嬬缉鏀俱€?/p>
+
+            </div>
+
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="resize"><span class="heart">鉂?/span> <span class="count">0</span></button></div>
+
+            <div class="upload-zone" id="dropZone">
+
+                <div class="upload-icon">馃搧</div>
+
+                <h3>鎷栨嫿鍥剧墖鍒版澶勶紝鎴栫偣鍑婚€夋嫨鏂囦欢</h3><div class="upload-btn">馃搧 閫夋嫨鏂囦欢</div>
+
+                <div class="upload-formats"><span class="format-badge">JPG</span><span class="format-badge">PNG</span><span class="format-badge">WebP</span><span class="format-badge">BMP</span><span class="format-badge">GIF</span></div><p style="margin-top:10px;margin-bottom:0;font-size:0.8rem;color:#94a3b8;">鏈€澶?50MB 路 娴忚鍣ㄦ湰鍦板鐞?/p>
+
+                <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/bmp,image/gif">
+
+            </div>
+
+            <div class="preview-container" id="previewContainer">
+
+                <div class="preview-card">
+
+                    <h3>鍘熷鍥剧墖</h3>
+
+                    <div class="preview-area"><div class="preview-box"><img id="originalPreview" src="" alt="鍘熷鍥剧墖"><div class="file-info" id="originalInfo"></div></div></div>
+
+                </div>
+
+            </div>
+
+            <div class="tool-controls">
+
+                <h3>缂╂斁璁剧疆</h3>
+
+                <div class="control-row">
+
+                    <div class="control-group"><label>瀹藉害 (px)</label><input type="number" id="widthInput" min="1" max="10000" value="800"></div>
+
+                    <div class="control-group"><label>楂樺害 (px)</label><input type="number" id="heightInput" min="1" max="10000" value="600"></div>
+
+                </div>
+
+                <div class="control-group"><label><input type="checkbox" id="keepRatio" checked> 淇濇寔瀹介珮姣?/label></div>
+
+                <div class="btn-group">
+
+                    <button class="btn btn-primary" id="resizeBtn" disabled>寮€濮嬬缉鏀?/button>
+
+                    <button class="btn btn-secondary" id="resetBtn">閲嶇疆</button>
+
+                </div>
+
+            </div>
+
+            <div class="result-summary" id="resultSummary">
+
+                <div class="result-stats">
+
+                    <div class="stat-item"><div class="stat-label">鍘熷灏哄</div><div class="stat-value" id="origDims">-</div></div>
+
+                    <div class="stat-item"><div class="stat-label">鏂板昂瀵?/div><div class="stat-value" id="newDims">-</div></div>
+
+                    <div class="stat-item"><div class="stat-label">鍘熷澶у皬</div><div class="stat-value" id="origSize2">-</div></div>
+
+                    <div class="stat-item"><div class="stat-label">鏂板ぇ灏?/div><div class="stat-value" id="newSize">-</div></div>
+
+                </div>
+
+                <div class="preview-card" ><h3>缂╂斁缁撴灉</h3>
+
+                    <div class="preview-area"><div class="preview-box"><img id="resizedPreview" src="" alt="缂╂斁鍚庡浘鐗?><div class="file-info" id="resizedInfo"></div></div></div>
+
+                </div>
+
+                <div class="download-area"><button class="btn btn-success" id="downloadBtn">涓嬭浇缂╂斁鍥剧墖</button></div>
+
+            </div>
+
+            <div class="tool-content">
+
+                <h2>鍦ㄧ嚎鍥剧墖瑁佸壀缂╂斁</h2>
+
+                <p>鏃犻渶涓婁紶鍥剧墖鍒颁换浣曟湇鍔″櫒銆傛墍鏈夊鐞嗛€氳繃 Canvas API 鍦ㄦ祻瑙堝櫒鏈湴瀹屾垚銆?/p>
+
+                <h3>閫傜敤鍦烘櫙</h3>
+
+                <p>缃戠珯鍥剧墖浼樺寲銆佺ぞ浜ゅ獟浣撳ご鍍忚鍓€佹墦鍗扮収鐗囧昂瀵歌皟鏁淬€?/p>
+
+                <h3>浣跨敤鎻愮ず</h3>
+
+                <p>鍕鹃€?淇濇寔瀹介珮姣?鍚庯紝淇敼瀹藉害鎴栭珮搴︽椂浼氳嚜鍔ㄨ皟鏁村彟涓€缁村害銆?/p>
+
+            </div>
+
+            <div class="related-tools">
+
+                <h3>鐩稿叧宸ュ叿</h3>
+
+                <ul>
+
+                    <li><a href="compress">馃棞锔?鍥剧墖鍘嬬缉</a></li>
+
+                    <li><a href="convert">馃攧 鍥剧墖鏍煎紡杞崲</a></li>
+
+                    <li><a href="../..">馃彔 杩斿洖棣栭〉</a></li>
+
+                
+
+        <li><a href="/blog/zh/image-resize-crop-guide">馃摉 浣跨敤鎸囧崡</a></li>
+
+    </ul>
+
+            </div>
+
+        </div>
+
+        <div class="ad-placeholder">骞垮憡浣?- 鎷涘晢涓?/div>
+
+    </main>
+
+            <footer>
+        <div class="footer-links">
+            <a href="/">首页</a>
+            <a href="/about">关于</a>
+            <a href="/privacy">隐私政策</a>
+            <a href="/contact">联系</a>
+            <a href="/blog/zh/">博客</a>
+        </div>
+        <p>© 2026 工具箱里 | 免费在线工具</p>
+    </footer>
 
 
 
+    <script src="../../js/like.js" defer></script>
+
+    <script src="../../js/cookie-consent.js" defer></script>
+
+    <div class="ad-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1794930797650076" data-ad-slot="6250142758" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+</body>
+
+</html>
 
 
 
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "在线图片裁剪缩放 - 免费调整图片尺寸",
-    "url": "https://www.calc-tools.top/zh/image/resize",
-    "description": "免费在线图片裁剪缩放工具，浏览器本地处理。自定义尺寸，保持宽高比�?,
-    "applicationCategory": "UtilitiesApplication",
-    "operatingSystem": "Web",
-    "inLanguage": "zh-CN"
-}
-</script>
-</head>
-<body>
-    <header>
-        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="宸ュ叿绠遍噷" class="site-logo"></a>
-        <nav>
-            <a href="/">棣栭〉</a>
-            <select class="lang-switch" onchange="switchLang(this.value)">
-                <option value="zh" selected>馃嚚馃嚦 涓枃</option>
-                <option value="en">馃嚞馃嚙 English</option>
-            </select>
-        </nav>
-    </header>
-    <main>
-        <div class="tool-page">
-            <div class="tool-header">
-                <span class="tool-privacy-badge">馃敀 娴忚鍣ㄦ湰鍦板鐞?路 涓嶄笂浼犳湇鍔″櫒</span><h1>鍥剧墖瑁佸壀缂╂斁鏉惧伐鍏?/h1>
-                <p>璋冩暣鍥剧墖灏哄锛岃嚜瀹氫箟瀹介珮鎴栦繚鎸佹瘮渚嬬缉鏀俱€?/p>
-            </div>
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="resize"><span class="heart">鉂?/span> <span class="count">0</span></button></div>
-            <div class="upload-zone" id="dropZone">
-                <div class="upload-icon">馃搧</div>
-                <h3>鎷栨嫿鍥剧墖鍒版澶勶紝鎴栫偣鍑婚€夋嫨鏂囦欢</h3><div class="upload-btn">馃搧 閫夋嫨鏂囦欢</div>
-                <div class="upload-formats"><span class="format-badge">JPG</span><span class="format-badge">PNG</span><span class="format-badge">WebP</span><span class="format-badge">BMP</span><span class="format-badge">GIF</span></div><p style="margin-top:10px;margin-bottom:0;font-size:0.8rem;color:#94a3b8;">鏈€澶?50MB 路 娴忚鍣ㄦ湰鍦板鐞?/p>
-                <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/bmp,image/gif">
-            </div>
-            <div class="preview-container" id="previewContainer">
-                <div class="preview-card">
-                    <h3>鍘熷鍥剧墖</h3>
-                    <div class="preview-area"><div class="preview-box"><img id="originalPreview" src="" alt="鍘熷鍥剧墖"><div class="file-info" id="originalInfo"></div></div></div>
-                </div>
-            </div>
-            <div class="tool-controls">
-                <h3>缂╂斁璁剧疆</h3>
-                <div class="control-row">
-                    <div class="control-group"><label>瀹藉害 (px)</label><input type="number" id="widthInput" min="1" max="10000" value="800"></div>
-                    <div class="control-group"><label>楂樺害 (px)</label><input type="number" id="heightInput" min="1" max="10000" value="600"></div>
-                </div>
-                <div class="control-group"><label><input type="checkbox" id="keepRatio" checked> 淇濇寔瀹介珮姣?/label></div>
-                <div class="btn-group">
-                    <button class="btn btn-primary" id="resizeBtn" disabled>寮€濮嬬缉鏀?/button>
-                    <button class="btn btn-secondary" id="resetBtn">閲嶇疆</button>
-                </div>
-            </div>
-            <div class="result-summary" id="resultSummary">
-                <div class="result-stats">
-                    <div class="stat-item"><div class="stat-label">鍘熷灏哄</div><div class="stat-value" id="origDims">-</div></div>
-                    <div class="stat-item"><div class="stat-label">鏂板昂瀵?/div><div class="stat-value" id="newDims">-</div></div>
-                    <div class="stat-item"><div class="stat-label">鍘熷澶у皬</div><div class="stat-value" id="origSize2">-</div></div>
-                    <div class="stat-item"><div class="stat-label">鏂板ぇ灏?/div><div class="stat-value" id="newSize">-</div></div>
-                </div>
-                <div class="preview-card" ><h3>缂╂斁缁撴灉</h3>
-                    <div class="preview-area"><div class="preview-box"><img id="resizedPreview" src="" alt="缂╂斁鍚庡浘鐗?><div class="file-info" id="resizedInfo"></div></div></div>
-                </div>
-                <div class="download-area"><button class="btn btn-success" id="downloadBtn">涓嬭浇缂╂斁鍥剧墖</button></div>
-            </div>
-            <div class="tool-content">
-                <h2>鍦ㄧ嚎鍥剧墖瑁佸壀缂╂斁</h2>
-                <p>鏃犻渶涓婁紶鍥剧墖鍒颁换浣曟湇鍔″櫒銆傛墍鏈夊鐞嗛€氳繃 Canvas API 鍦ㄦ祻瑙堝櫒鏈湴瀹屾垚銆?/p>
-                <h3>閫傜敤鍦烘櫙</h3>
-                <p>缃戠珯鍥剧墖浼樺寲銆佺ぞ浜ゅ獟浣撳ご鍍忚鍓€佹墦鍗扮収鐗囧昂瀵歌皟鏁淬€?/p>
-                <h3>浣跨敤鎻愮ず</h3>
-                <p>鍕鹃€?淇濇寔瀹介珮姣?鍚庯紝淇敼瀹藉害鎴栭珮搴︽椂浼氳嚜鍔ㄨ皟鏁村彟涓€缁村害銆?/p>
-            </div>
-            <div class="related-tools">
-                <h3>鐩稿叧宸ュ叿</h3>
-                <ul>
-                    <li><a href="compress">馃棞锔?鍥剧墖鍘嬬缉</a></li>
-                    <li><a href="convert">馃攧 鍥剧墖鏍煎紡杞崲</a></li>
-                    <li><a href="../..">馃彔 杩斿洖棣栭〉</a></li>
-                
-        <li><a href="/blog/zh/image-resize-crop-guide">馃摉 浣跨敤鎸囧崡</a></li>
-    </ul>
-            </div>
-        </div>
-        <div class="ad-placeholder">骞垮憡浣?- 鎷涘晢涓?/div>
-    </main>
-    <footer>
-        <p>漏 2026 宸ュ叿绠遍噷 | 鍏嶈垂鍦ㄧ嚎宸ュ叿</p>
-        <p><a href="/">杩斿洖棣栭〉</a></p>
-    </footer>
-
-    <script src="../../js/like.js" defer></script>
-    <script src="../../js/cookie-consent.js" defer></script>
-    <div class="ad-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1794930797650076" data-ad-slot="6250142758" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-</body>
-</html>
-

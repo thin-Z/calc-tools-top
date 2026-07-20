@@ -1,24 +1,24 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>鏂囨湰瀵规瘮宸ュ叿锛氬揩閫熸壘鍑轰袱娈垫枃鏈殑宸紓</title>
+    <title>文本对比工具：快速找出两段文本的差异</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="鏂囨湰瀵规瘮鐨勫簲鐢ㄥ満鏅€佸樊寮傚姣旀柟娉曘€佺増鏈鐞嗕腑甯哥敤鐨勬枃鏈瘮杈冩妧宸с€?>
-    <meta property='og:title' content='鏂囨湰瀵规瘮宸ュ叿锛氬揩閫熸壘鍑轰袱娈垫枃鏈殑宸紓'/>
-    <meta property='og:description' content='鏂囨湰瀵规瘮鐨勫簲鐢ㄥ満鏅€佸樊寮傚姣旀柟娉曘€佺増鏈鐞嗕腑甯哥敤鐨勬枃鏈瘮杈冩妧宸с€?/>
+    <meta name="description" content="文本对比的应用场景、差异对比方法、版本管理中常用的文本比较技巧。">
+    <meta property='og:title' content='文本对比工具：快速找出两段文本的差异'/>
+    <meta property='og:description' content='文本对比的应用场景、差异对比方法、版本管理中常用的文本比较技巧。'/>
     <meta property='og:type' content='article'/>
-    <meta property='og:url' content='https://www.calc-tools.top/blog/zh/text-diff-guide.html'/>
+    <meta property='og:url' content='https://calc-tools.top/blog/zh/text-diff-guide.html'/>
     <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
     <meta property='og:locale' content='zh_CN'/>
     <meta name='twitter:card' content='summary_large_image'/>
-    <meta name='twitter:title' content='鏂囨湰瀵规瘮宸ュ叿锛氬揩閫熸壘鍑轰袱娈垫枃鏈殑宸紓'/>
-    <meta name='twitter:description' content='鏂囨湰瀵规瘮鐨勫簲鐢ㄥ満鏅€佸樊寮傚姣旀柟娉曘€佺増鏈鐞嗕腑甯哥敤鐨勬枃鏈瘮杈冩妧宸с€?/>
-    <link rel="canonical" href="https://www.calc-tools.top/blog/zh/text-diff-guide.html">
-    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/blog/zh/text-diff-guide.html">
-    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/blog/en/text-diff-guide.html">
-    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/blog/zh/text-diff-guide.html">
+    <meta name='twitter:title' content='文本对比工具：快速找出两段文本的差异'/>
+    <meta name='twitter:description' content='文本对比的应用场景、差异对比方法、版本管理中常用的文本比较技巧。'/>
+    <link rel="canonical" href="https://calc-tools.top/blog/zh/text-diff-guide.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/blog/zh/text-diff-guide.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/blog/en/text-diff-guide.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/blog/zh/text-diff-guide.html">
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/site.css">
     <link rel="stylesheet" href="../../css/cookie-consent.css">
@@ -26,17 +26,17 @@
     {
         "@context": "https://schema.org",
         "@type": "Article",
-        "headline": "鏂囨湰瀵规瘮宸ュ叿锛氬揩閫熸壘鍑轰袱娈垫枃鏈殑宸紓",
-        "description": "鏂囨湰瀵规瘮鐨勫簲鐢ㄥ満鏅€佸樊寮傚姣旀柟娉曘€佺増鏈鐞嗕腑甯哥敤鐨勬枃鏈瘮杈冩妧宸с€?,
-        "author": { "@type": "Person", "name": "Calc-Tools 缂栬緫" },
+        "headline": "文本对比工具：快速找出两段文本的差异",
+        "description": "文本对比的应用场景、差异对比方法、版本管理中常用的文本比较技巧。",
+        "author": { "@type": "Person", "name": "Calc-Tools 编辑" },
         "datePublished": "2026-07-02",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https://www.calc-tools.top/blog/zh/text-diff-guide.html"
+            "@id": "https://calc-tools.top/blog/zh/text-diff-guide.html"
         },
         "publisher": {
             "@type": "Organization",
-            "name": "鍦ㄧ嚎宸ュ叿"
+            "name": "在线工具"
         }
     }
     </script>
@@ -45,46 +45,46 @@
 </head>
 <body>
     <header>
-        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="宸ュ叿绠遍噷" class="site-logo"></a>
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
         <nav>
-            <a href="/">棣栭〉</a>
+            <a href="/">首页</a>
             <select class="lang-switch" onchange="switchLang(this.value)">
-                <option value="zh" selected>馃嚚馃嚦 涓枃</option>
-                <option value="en">馃嚭馃嚫 English</option>
+                <option value="zh" selected>🇨🇳 中文</option>
+                <option value="en">🇺🇸 English</option>
             </select>
         </nav>
     </header>
     <main>
         <article class="blog-post">
             <nav class="breadcrumb">
-                <a href="/">棣栭〉</a> &gt;
-                <a href="/blog/zh/">鏂囩珷</a> &gt;
-                <a href="/blog/zh/?cat=tools">馃敡 鎶€鏈伐鍏?/a> &gt;
-                <span>鏂囨湰瀵规瘮宸ュ叿锛氬揩閫熸壘鍑轰袱娈垫枃鏈殑宸紓</span>
+                <a href="/">首页</a> &gt;
+                <a href="/blog/zh/">文章</a> &gt;
+                <a href="/blog/zh/?cat=tools">🔧 技术工具</a> &gt;
+                <span>文本对比工具：快速找出两段文本的差异</span>
             </nav>
-            <div class="article-tags"><a href="/blog/zh/?cat=tools" class="tag tag-tools" data-tag="tools">馃敡 鎶€鏈伐鍏?/a></div>
-            <p class="blog-meta">馃摪 2026-07-02 路 Calc-Tools 缂栬緫</p>
-            <h1>鏂囨湰瀵规瘮宸ュ叿锛氬揩閫熸壘鍑轰袱娈垫枃鏈殑宸紓</h1><p>鏂囨湰瀵规瘮鏄啓浣溿€佺紪绋嬪拰鏂囨。绠＄悊涓父鐢ㄧ殑鍔熻兘銆傛瘮杈冧袱娈垫枃鏈殑宸紓锛屽彲浠ュ府鍔╀綘蹇€熷畾浣嶄慨鏀瑰唴瀹广€?/p>
-<h2>鏂囨湰瀵规瘮鐨勫簲鐢ㄥ満鏅?/h2>
-<p><strong>鏂囩珷淇敼</strong>锛氬姣斾慨鏀瑰墠鍚庣殑鏂囩珷锛岀‘璁ゆ敼鍔ㄦ槸鍚︾鍚堥鏈熴€?/p>
-<p><strong>浠ｇ爜瀹℃煡</strong>锛氭瘮杈冧袱娈典唬鐮佺殑宸紓锛屽揩閫熷畾浣嶆柊澧炲拰鍒犻櫎鐨勯儴鍒嗐€?/p>
-<p><strong>鍚堝悓鏍稿</strong>锛氬姣斾笉鍚岀増鏈殑鍚堝悓鏉℃锛岄伩鍏嶉仐婕忓叧閿彉鏇淬€?/p>
-<p><strong>缈昏瘧鏍″</strong>锛氬姣斿師鏂囧拰璇戞枃锛屾鏌ユ槸鍚︽湁閬楁紡娈佃惤銆?/p>
-<h2>瀵规瘮缁撴灉瑙ｈ</h2>
-<p>閫氬父鏍囪涓虹孩鑹诧紙鍒犻櫎閮ㄥ垎锛夊拰缁胯壊锛堟柊澧為儴鍒嗭級锛屾柟渚夸竴鐩簡鐒跺湴鐪嬪嚭宸紓銆?/p>
-<h2>浣跨敤寤鸿</h2>
-<p>瀵规瘮鍓嶅厛浣跨敤鏂囨湰娓呯悊宸ュ叿鏁寸悊鏍煎紡锛岄伩鍏嶅洜绌烘牸銆佹崲琛岀瓑鏍煎紡宸紓瀵艰嚧璇姤銆傚ぇ娈垫枃鏈姣旀椂锛屽缓璁€愭杩涜锛屾彁楂樺噯纭害銆?/p>
+            <div class="article-tags"><a href="/blog/zh/?cat=tools" class="tag tag-tools" data-tag="tools">🔧 技术工具</a></div>
+            <p class="blog-meta">📰 2026-07-02 · Calc-Tools 编辑</p>
+            <h1>文本对比工具：快速找出两段文本的差异</h1><p>文本对比是写作、编程和文档管理中常用的功能。比较两段文本的差异，可以帮助你快速定位修改内容。</p>
+<h2>文本对比的应用场景</h2>
+<p><strong>文章修改</strong>：对比修改前后的文章，确认改动是否符合预期。</p>
+<p><strong>代码审查</strong>：比较两段代码的差异，快速定位新增和删除的部分。</p>
+<p><strong>合同核对</strong>：对比不同版本的合同条款，避免遗漏关键变更。</p>
+<p><strong>翻译校对</strong>：对比原文和译文，检查是否有遗漏段落。</p>
+<h2>对比结果解读</h2>
+<p>通常标记为红色（删除部分）和绿色（新增部分），方便一目了然地看出差异。</p>
+<h2>使用建议</h2>
+<p>对比前先使用文本清理工具整理格式，避免因空格、换行等格式差异导致误报。大段文本对比时，建议逐段进行，提高准确度。</p>
             <div class="blog-cta">
-                <p><strong>鍦ㄧ嚎浣跨敤 馃敚 鏂囨湰瀵规瘮</strong></p>
-                <p>鏃犻渶涓嬭浇锛屾墦寮€鍗崇敤</p>
-                <p><a href="/zh/text/text-diff.html">馃憠 绔嬪嵆浣跨敤 馃敚 鏂囨湰瀵规瘮</a></p>
+                <p><strong>在线使用 🔣 文本对比</strong></p>
+                <p>无需下载，打开即用</p>
+                <p><a href="/zh/text/text-diff.html">👉 立即使用 🔣 文本对比</a></p>
             </div>
-            <div class="related-posts"><h3>馃搶 鐩稿叧鏂囩珷</h3><ul><li><a href="/blog/zh/image-format-converter-guide.html">鍥剧墖鏍煎紡杞崲锛欽PG銆丳NG銆乄ebP銆丟IF鎬庝箞閫夛紵</a></li><li><a href="/blog/zh/image-resize-crop-guide.html">鍥剧墖瑁佸壀缂╂斁锛氳皟鏁村浘鐗囧昂瀵哥殑鏈€浣冲疄璺?/a></li><li><a href="/blog/zh/image-to-base64-guide.html">鍥剧墖杞珺ase64锛欻TML鍜孋SS涓祵鍏ュ浘鐗囩殑鏈€浣虫柟寮?/a></li><li><a href="/blog/zh/color-picker-guide.html">鍦ㄧ嚎鍙栬壊鍣ㄤ娇鐢ㄦ寚鍗楋細灞忓箷鍙栬壊涓庨厤鑹叉妧宸?/a></li></ul></div>
-            <div class="article-bottom-tags"><a href="/blog/zh/?cat=tools" class="tag tag-tools" data-tag="tools">馃敡 鎶€鏈伐鍏?/a></div>
+            <div class="related-posts"><h3>📌 相关文章</h3><ul><li><a href="/blog/zh/image-format-converter-guide.html">图片格式转换：JPG、PNG、WebP、GIF怎么选？</a></li><li><a href="/blog/zh/image-resize-crop-guide.html">图片裁剪缩放：调整图片尺寸的最佳实践</a></li><li><a href="/blog/zh/image-to-base64-guide.html">图片转Base64：HTML和CSS中嵌入图片的最佳方式</a></li><li><a href="/blog/zh/color-picker-guide.html">在线取色器使用指南：屏幕取色与配色技巧</a></li></ul></div>
+            <div class="article-bottom-tags"><a href="/blog/zh/?cat=tools" class="tag tag-tools" data-tag="tools">🔧 技术工具</a></div>
         </article>
     </main>
     <footer>
-        <p>漏 2026 宸ュ叿绠遍噷</p>
+        <p>© 2026 工具箱里</p>
     </footer>
     <script src="../../js/cookie-consent.js" defer></script>
 </body>

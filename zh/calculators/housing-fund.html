@@ -1,236 +1,390 @@
-﻿<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>公�Н金贷款计算器 - 在线计算公�Н金贷款月供和利息</title>
-    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="鍏嶈垂鍦ㄧ嚎鍏Н閲戣捶娆捐绠楀櫒锛屾敮鎸佺瓑棰濇湰鎭繕娆炬柟寮忥紝蹇€熻绠楁湀渚涖€佽繕娆炬€婚鍜屽埄鎭€婚锛岄檮甯︽湰閲戝埄鎭姣斿浘琛ㄣ€?>
-    <meta property='og:title' content='鍏Н閲戣捶娆捐绠楀櫒 - 鍦ㄧ嚎璁＄畻鍏Н閲戣捶娆炬湀渚涘拰鍒╂伅'/>
-    <meta property='og:description' content='鍏嶈垂鍦ㄧ嚎鍏Н閲戣捶娆捐绠楀櫒锛屾敮鎸佺瓑棰濇湰鎭繕娆炬柟寮忥紝蹇€熻绠楁湀渚涖€佽繕娆炬€婚鍜屽埄鎭€婚锛岄檮甯︽湰閲戝埄鎭姣斿浘琛ㄣ€?/>
+﻿<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>公积金计算器 - 工具箱里</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="公积金贷款额度与利率计算，支持最新政策">
+    <meta property='og:title' content='公积金计算器 - 工具箱里'/>
+    <meta property='og:description' content='公积金贷款额度与利率计算，支持最新政策'/>
     <meta property='og:type' content='website'/>
-    <meta property='og:url' content='https://www.calc-tools.top/zh/calculators/housing-fund'/>
+    <meta property='og:url' content='https://calc-tools.top/zh/calculators/housing-fund'/>
     <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
     <meta property='og:locale' content='zh_CN'/>
     <meta name='twitter:card' content='summary_large_image'/>
-    <meta name='twitter:title' content='鍏Н閲戣捶娆捐绠楀櫒 - 鍦ㄧ嚎璁＄畻鍏Н閲戣捶娆炬湀渚涘拰鍒╂伅'/>
-    <meta name='twitter:description' content='鍏嶈垂鍦ㄧ嚎鍏Н閲戣捶娆捐绠楀櫒锛屾敮鎸佺瓑棰濇湰鎭繕娆炬柟寮忥紝蹇€熻绠楁湀渚涖€佽繕娆炬€婚鍜屽埄鎭€婚锛岄檮甯︽湰閲戝埄鎭姣斿浘琛ㄣ€?/>
+    <meta name='twitter:title' content='公积金计算器 - 工具箱里'/>
+    <meta name='twitter:description' content='公积金贷款额度与利率计算，支持最新政策'/>
+    <link rel="canonical" href="https://calc-tools.top/zh/calculators/housing-fund">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/calculators/housing-fund">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/calculators/housing-fund">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/calculators/housing-fund">
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/cookie-consent.css">
+    <link rel="stylesheet" href="../../css/site.css?v=9">
+    <script src="../../js/i18n.js" defer></script>
+    <script src="../../js/site.js" defer></script>
+</head></head>
 
-    <link rel="canonical" href="https://www.calc-tools.top/zh/calculators/housing-fund">
-    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/calculators/housing-fund">
-    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/calculators/housing-fund">
-    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/zh/calculators/housing-fund">
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/cookie-consent.css">
-    <link rel="stylesheet" href="../../css/site.css?v=9">
-    <script src="../../js/i18n.js" defer></script>
-    <script src="../../js/like.js" defer></script>
-    <script src="../../js/calculators/housing-fund.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1794930797650076" crossorigin="anonymous"></script>
+<body>
+
+    <header>
+
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+
+        <nav>
+
+            <a href="/"><span data-i18n="siteName">在线工具</span></a>
+
+            <select class="lang-switch" onchange="switchLang(this.value)">
+
+                <option value="zh" selected>馃嚚馃嚦 涓枃</option>
+
+                <option value="en">馃嚞馃嚙 English</option>
+
+            </select>
+
+        </nav>
+
+    </header>
 
 
 
+    <main>
+
+        <div class="page-header">
+
+            <h1 data-i18n="housingFundTitle">公积金计算器</h1>
+
+            <p data-i18n="housingFundDescFull">公积金贷款额度与利率计算，支持最新政策</div>
+
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="housing-fund"><span class="heart">鉂?/span> <span class="count">0</span></button></div>
 
 
 
+        <!-- 骞垮憡浣?A -->
+
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中<div class="calculator-form">
+
+            <h2 data-i18n="housingFundTitle">公积金计算器</h2>
+
+            <form id="housingFundForm" onsubmit="return false;">
+
+                <div class="form-group">
+
+                    <label for="fundAmount" data-i18n="fundAmount">公积金贷款额度（元）</label>
+
+                    <input type="number" id="fundAmount" value="800000" min="1" step="10000">
+
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="fundRate" data-i18n="fundRate">公积金年利率（%）<input type="number" id="fundRate" value="2.85" min="0.1" step="0.01">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="fundYears" data-i18n="loanYears">贷款年限</label>
+
+                        <input type="number" id="fundYears" value="30" min="1" max="30" step="1">
+
+                    </div>
+
+                </div>
+
+                <div class="btn-group">
+
+                    <button type="button" class="btn btn-primary" onclick="doCalculate()" data-i18n="calculate">开始计算<button type="reset" class="btn btn-secondary" onclick="resetForm()" data-i18n="reset">重置</button>
+
+                </div>
+
+            </form>
 
 
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "公�Н金贷款计算器 - 在线计算公�Н金贷款月供和利息",
-    "url": "https://www.calc-tools.top/zh/calculators/housing-fund",
-    "description": "免费在线公�Н金贷款计算器，支持等额本息还款方式，快��计算月供��还款��额和利息��额，附带本金利息对比图表��?,
-    "applicationCategory": "UtilitiesApplication",
-    "operatingSystem": "Web",
-    "inLanguage": "zh-CN"
-}
-</script>
-</head>
-<body>
-    <header>
-        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="宸ュ叿绠遍噷" class="site-logo"></a>
-        <nav>
-            <a href="/"><span data-i18n="siteName">棣栭〉</span></a>
-            <select class="lang-switch" onchange="switchLang(this.value)">
-                <option value="zh" selected>馃嚚馃嚦 涓枃</option>
-                <option value="en">馃嚞馃嚙 English</option>
-            </select>
-        </nav>
-    </header>
-
-    <main>
-        <div class="page-header">
-            <h1 data-i18n="housingFundTitle">鍏Н閲戣绠楀櫒</h1>
-            <p data-i18n="housingFundDescFull">鍏Н閲戣捶娆鹃搴︿笌鍒╃巼璁＄畻锛屾敮鎸佹渶鏂版斂绛?/p>
-        </div>
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="housing-fund"><span class="heart">鉂?/span> <span class="count">0</span></button></div>
-
-        <!-- 骞垮憡浣?A -->
-        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">骞垮憡浣?- 鎷涘晢涓?/div>
-
-        <div class="calculator-form">
-            <h2 data-i18n="housingFundTitle">鍏Н閲戣绠楀櫒</h2>
-            <form id="housingFundForm" onsubmit="return false;">
-                <div class="form-group">
-                    <label for="fundAmount" data-i18n="fundAmount">鍏Н閲戣捶娆鹃搴︼紙鍏冿級</label>
-                    <input type="number" id="fundAmount" value="800000" min="1" step="10000">
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="fundRate" data-i18n="fundRate">鍏Н閲戝勾鍒╃巼锛?锛?/label>
-                        <input type="number" id="fundRate" value="2.85" min="0.1" step="0.01">
-                    </div>
-                    <div class="form-group">
-                        <label for="fundYears" data-i18n="loanYears">璐锋骞撮檺</label>
-                        <input type="number" id="fundYears" value="30" min="1" max="30" step="1">
-                    </div>
-                </div>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary" onclick="doCalculate()" data-i18n="calculate">寮€濮嬭绠?/button>
-                    <button type="reset" class="btn btn-secondary" onclick="resetForm()" data-i18n="reset">閲嶇疆</button>
-                </div>
-            </form>
-
-            <!-- 缁撴灉鍖哄煙 -->
-            <div id="resultArea" class="result-card" style="display:none;">
-                <h3 data-i18n="result">璁＄畻缁撴灉</h3>
-                <div id="monthlyPaymentArea" style="margin-bottom:12px;">
-                    <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="monthlyPayment">鏈堜緵</div>
-                    <div class="result-value" id="monthlyValue"></div>
-                </div>
-                <div class="form-row" style="margin-top:16px;grid-template-columns:1fr 1fr;">
-                    <div>
-                        <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="totalPayment">杩樻鎬婚</div>
-                        <div style="font-size:1.3rem;font-weight:700;color:var(--text);" id="totalPaymentValue"></div>
-                    </div>
-                    <div>
-                        <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="totalInterest">鍒╂伅鎬婚</div>
-                        <div style="font-size:1.3rem;font-weight:700;color:#dc2626;" id="totalInterestValue"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 鍥捐〃瀹瑰櫒 -->
-            <div class="chart-container" id="chartContainer" style="display:none;">
-                <canvas id="fundChart"></canvas>
-            </div>
-        </div>
-
-        <!-- 骞垮憡浣?B -->
-        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">骞垮憡浣?- 鎷涘晢涓?/div>
-    
-<div class="tool-content">
-    <h2>鍏Н閲戣捶娆捐绠楀櫒浣跨敤璇存槑</h2>
-    <p>鍏Н閲戣捶娆惧洜鍏朵綆鍒╃巼浼樺娍锛屾槸璐埧鑰呯殑棣栭€夎捶娆炬柟寮忋€傛湰璁＄畻鍣ㄥ府鍔╂偍蹇€熸祴绠楀叕绉噾璐锋鐨勬湀渚涢噾棰濆拰鎬诲埄鎭敮鍑恒€?/p>
-    <h3>绛夐鏈伅 vs 绛夐鏈噾</h3>
-    <p>绛夐鏈伅锛氭瘡鏈堣繕娆鹃噾棰濆浐瀹氾紝閫傚悎鏀跺叆绋冲畾鐨勫伐钖棌銆傜瓑棰濇湰閲戯細姣忔湀杩樻閫愭湀閫掑噺锛屾€诲埄鎭洿灏戯紝閫傚悎鍓嶆湡杩樻鑳藉姏杈冨己鐨勫€熸浜恒€?/p>
-</div>
-<div class="related-tools">
-    <h3>鐩稿叧宸ュ叿</h3>
-    <ul>
-        <li><a href="/zh/calculators/mortgage">鎴胯捶璁＄畻鍣?/a></li>
-        <li><a href="/zh/calculators/tax2026">涓◣璁＄畻鍣?/a></li>
-    </ul>
-</div>
-        <section class="related-posts">
-        <h3>鐩稿叧闃呰</h3>
-        <ul>
-            <li><a href="/blog/zh/housing-fund-loan-guide">鍏Н閲戣捶娆鹃搴︽€庝箞绠楋紵</a></li>
-        </ul>
-    </section>
-</main>
-
-    <footer>
-        <p data-i18n="copyright">漏 2026 鍦ㄧ嚎宸ュ叿 | 鍏嶈垂宸ュ叿</p>
-    </footer>
-
-    <script>
-        let chartInstance = null;
-
-        function formatNumber(num) {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        }
-
-        function doCalculate() {
-            const amount = parseFloat(document.getElementById('fundAmount').value);
-            const rate = parseFloat(document.getElementById('fundRate').value);
-            const years = parseInt(document.getElementById('fundYears').value);
-
-            if (!amount || !rate || !years) return;
-
-            const result = calculateHousingFund(amount, rate, years);
-            const lang = getLang();
-            const labels = i18n[lang];
-
-            document.getElementById('resultArea').style.display = 'block';
-            document.getElementById('monthlyValue').textContent = '楼' + formatNumber(result.monthlyPayment);
-            document.getElementById('totalPaymentValue').textContent = '楼' + formatNumber(result.totalPayment);
-            document.getElementById('totalInterestValue').textContent = '楼' + formatNumber(result.totalInterest);
-
-            // 楗煎浘
-            const chartContainer = document.getElementById('chartContainer');
-            chartContainer.style.display = 'block';
-
-            if (chartInstance) {
-                chartInstance.destroy();
-            }
-
-            const ctx = document.getElementById('fundChart').getContext('2d');
-            chartInstance = new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: [labels.principal, labels.interest],
-                    datasets: [{
-                        data: [amount, result.totalInterest],
-                        backgroundColor: ['#2563eb', '#dc2626'],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                padding: 16,
-                                font: { size: 14 }
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-        function resetForm() {
-            document.getElementById('fundAmount').value = 800000;
-            document.getElementById('fundRate').value = 2.85;
-            document.getElementById('fundYears').value = 30;
-            document.getElementById('resultArea').style.display = 'none';
-            document.getElementById('chartContainer').style.display = 'none';
-            if (chartInstance) {
-                chartInstance.destroy();
-                chartInstance = null;
-            }
-        }
-
+
+            <!-- 缁撴灉鍖哄煙 -->
+
+            <div id="resultArea" class="result-card" style="display:none;">
+
+                <h3 data-i18n="result">计算结果</h3>
+
+                <div id="monthlyPaymentArea" style="margin-bottom:12px;">
+
+                    <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="monthlyPayment">月供</div>
+
+                    <div class="result-value" id="monthlyValue"></div>
+
+                </div>
+
+                <div class="form-row" style="margin-top:16px;grid-template-columns:1fr 1fr;">
+
+                    <div>
+
+                        <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="totalPayment">还款总额</div>
+
+                        <div style="font-size:1.3rem;font-weight:700;color:var(--text);" id="totalPaymentValue"></div>
+
+                    </div>
+
+                    <div>
+
+                        <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="totalInterest">利息总额</div>
+
+                        <div style="font-size:1.3rem;font-weight:700;color:#dc2626;" id="totalInterestValue"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- 鍥捐〃瀹瑰櫒 -->
+
+            <div class="chart-container" id="chartContainer" style="display:none;">
+
+                <canvas id="fundChart"></canvas>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- 骞垮憡浣?B -->
+
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中<div class="tool-content">
+
+    <h2>鍏Н閲戣捶娆捐绠楀櫒浣跨敤璇存槑</h2>
+
+    <p>鍏Н閲戣捶娆惧洜鍏朵綆鍒╃巼浼樺娍锛屾槸璐埧鑰呯殑棣栭€夎捶娆炬柟寮忋€傛湰璁＄畻鍣ㄥ府鍔╂偍蹇€熸祴绠楀叕绉噾璐锋鐨勬湀渚涢噾棰濆拰鎬诲埄鎭敮鍑恒€?/p>
+
+    <h3>绛夐鏈伅 vs 绛夐鏈噾</h3>
+
+    <p>绛夐鏈伅锛氭瘡鏈堣繕娆鹃噾棰濆浐瀹氾紝閫傚悎鏀跺叆绋冲畾鐨勫伐钖棌銆傜瓑棰濇湰閲戯細姣忔湀杩樻閫愭湀閫掑噺锛屾€诲埄鎭洿灏戯紝閫傚悎鍓嶆湡杩樻鑳藉姏杈冨己鐨勫€熸浜恒€?/p>
+
+</div>
+
+<div class="related-tools">
+
+    <h3>鐩稿叧宸ュ叿</h3>
+
+    <ul>
+
+        <li><a href="/zh/calculators/mortgage">鎴胯捶璁＄畻鍣?/a></li>
+
+        <li><a href="/zh/calculators/tax2026">涓◣璁＄畻鍣?/a></li>
+
+    </ul>
+
+</div>
+
+        <section class="related-posts">
+
+        <h3>鐩稿叧闃呰</h3>
+
+        <ul>
+
+            <li><a href="/blog/zh/housing-fund-loan-guide">鍏Н閲戣捶娆鹃搴︽€庝箞绠楋紵</a></li>
+
+        </ul>
+
+    </section>
+
+</main>
+
+
+
+            <footer>
+        <div class="footer-links">
+            <a href="/">首页</a>
+            <a href="/about">关于</a>
+            <a href="/privacy">隐私政策</a>
+            <a href="/contact">联系</a>
+            <a href="/blog/zh/">博客</a>
+        </div>
+        <p>© 2026 工具箱里 | 免费在线工具</p>
+    </footer>
+
+
+
+    <script>
+
+        let chartInstance = null;
+
+
+
+        function formatNumber(num) {
+
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+        }
+
+
+
+        function doCalculate() {
+
+            const amount = parseFloat(document.getElementById('fundAmount').value);
+
+            const rate = parseFloat(document.getElementById('fundRate').value);
+
+            const years = parseInt(document.getElementById('fundYears').value);
+
+
+
+            if (!amount || !rate || !years) return;
+
+
+
+            const result = calculateHousingFund(amount, rate, years);
+
+            const lang = getLang();
+
+            const labels = i18n[lang];
+
+
+
+            document.getElementById('resultArea').style.display = 'block';
+
+            document.getElementById('monthlyValue').textContent = '楼' + formatNumber(result.monthlyPayment);
+
+            document.getElementById('totalPaymentValue').textContent = '楼' + formatNumber(result.totalPayment);
+
+            document.getElementById('totalInterestValue').textContent = '楼' + formatNumber(result.totalInterest);
+
+
+
+            // 楗煎浘
+
+            const chartContainer = document.getElementById('chartContainer');
+
+            chartContainer.style.display = 'block';
+
+
+
+            if (chartInstance) {
+
+                chartInstance.destroy();
+
+            }
+
+
+
+            const ctx = document.getElementById('fundChart').getContext('2d');
+
+            chartInstance = new Chart(ctx, {
+
+                type: 'pie',
+
+                data: {
+
+                    labels: [labels.principal, labels.interest],
+
+                    datasets: [{
+
+                        data: [amount, result.totalInterest],
+
+                        backgroundColor: ['#2563eb', '#dc2626'],
+
+                        borderWidth: 0
+
+                    }]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    plugins: {
+
+                        legend: {
+
+                            position: 'bottom',
+
+                            labels: {
+
+                                padding: 16,
+
+                                font: { size: 14 }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            });
+
+        }
+
+
+
+        function resetForm() {
+
+            document.getElementById('fundAmount').value = 800000;
+
+            document.getElementById('fundRate').value = 2.85;
+
+            document.getElementById('fundYears').value = 30;
+
+            document.getElementById('resultArea').style.display = 'none';
+
+            document.getElementById('chartContainer').style.display = 'none';
+
+            if (chartInstance) {
+
+                chartInstance.destroy();
+
+                chartInstance = null;
+
+            }
+
+        }
+
+
+
         // 椤甸潰鍔犺浇鍚庤嚜鍔ㄨ绠?
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll("[data-i18n]").forEach(function(el) {
-                const key = el.getAttribute("data-i18n");
-                el.textContent = t(key);
-            });
-            setTimeout(doCalculate, 100);
-        });
-    </script>
-
-    <script src="../../js/cookie-consent.js" defer></script>
-    
-<div class="ad-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1794930797650076" data-ad-slot="6250142758" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-</body>
-</html>
-
-
-
+        document.addEventListener('DOMContentLoaded', function() {
+
+            document.querySelectorAll("[data-i18n]").forEach(function(el) {
+
+                const key = el.getAttribute("data-i18n");
+
+                el.textContent = t(key);
+
+            });
+
+            setTimeout(doCalculate, 100);
+
+        });
+
+    </script>
+
+
+
+    <script src="../../js/cookie-consent.js" defer></script>
+
+    
+
+<div class="ad-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1794930797650076" data-ad-slot="6250142758" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
