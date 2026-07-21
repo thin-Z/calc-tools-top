@@ -31,9 +31,9 @@
 
 被乱码的典型标题：
 ```
-BIM 计算�? - 工具箱里         ← zh/calculators/bmi.html（U+FFFD）
+BMI 计算器 - 工具箱里         ← zh/calculators/bmi.html（U+FFFD）
 Base64缂栬В鐮佸伐鍏凤細浠€涔堟槸Base64锛熸€庝箞鐢紵
-养老金计算器+养老金计算公��?
+养老金计算器+养老金计算公式
 ```
 
 ### EMOJI_ONLY（71 文件）—— 仅装饰 emoji 乱码
