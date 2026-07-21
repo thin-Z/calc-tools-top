@@ -27,11 +27,6 @@
       "permanent": true
     },
     {
-      "source": "/en",
-      "destination": "/",
-      "permanent": true
-    },
-    {
       "source": "/zh/compress",
       "destination": "/zh/image/compress",
       "permanent": true
@@ -489,6 +484,11 @@
     {
       "source": "/en/random-gen",
       "destination": "/en/calculators/random-gen",
+      "permanent": true
+    },
+    {
+      "source": "/(.*).html",
+      "destination": "/$1",
       "permanent": true
     }
   ]
