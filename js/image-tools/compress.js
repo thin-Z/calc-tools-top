@@ -102,11 +102,17 @@
         const originalInfo = document.getElementById('originalInfo');
 
         originalPreview.src = img.src;
-        originalInfo.innerHTML = `
-            <span>${formatFileSize(file.size)}</span>
-            <span>${img.width} × ${img.height}px</span>
-            <span>${file.name}</span>
-        `;
+        // 使用 textContent 赋值，避免文件名包含 HTML 导致的 DOM XSS
+        originalInfo.innerHTML = '';
+        const spanSize = document.createElement('span');
+        spanSize.textContent = formatFileSize(file.size);
+        const spanDim = document.createElement('span');
+        spanDim.textContent = img.width + ' × ' + img.height + 'px';
+        const spanName = document.createElement('span');
+        spanName.textContent = file.name;
+        originalInfo.appendChild(spanSize);
+        originalInfo.appendChild(spanDim);
+        originalInfo.appendChild(spanName);
 
         previewContainer.classList.add('visible');
             var dz = document.getElementById('dropZone');

@@ -90,7 +90,7 @@
         <nav>
             <a href="/en/">Home</a>
             <select class="lang-switch" onchange="switchLang(this.value)">
-                <option value="en" selected>???? English</option>
+                <option value="en" selected>🇬🇧 English</option>
                 <option value="zh">🇨🇳 中文</option>
             </select>
         </nav>
@@ -209,10 +209,10 @@
             const resultArea = document.getElementById("resultArea");
             resultArea.style.display = "block";
 
-            document.getElementById("taxableIncomeValue").textContent = "$$" + formatNumber(result.taxableIncome);
+            document.getElementById("taxableIncomeValue").textContent = '¥' + formatNumber(result.taxableIncome);
             document.getElementById("taxRateValue").textContent = formatRate(result.taxRate);
-            document.getElementById("taxPayableValue").textContent = "$$" + formatNumber(result.taxPayable);
-            document.getElementById("afterTaxValue").textContent = "$$" + formatNumber(result.afterTax);
+            document.getElementById("taxPayableValue").textContent = '¥' + formatNumber(result.taxPayable);
+            document.getElementById("afterTaxValue").textContent = '¥' + formatNumber(result.afterTax);
 
             // Bar chart
             const chartContainer = document.getElementById("chartContainer");
@@ -244,7 +244,7 @@
                         y: {
                             beginAtZero: true,
                             ticks: {
-                                callback: function(value) { return "$$" + formatNumber(value); }
+                                callback: function(value) { return '¥' + formatNumber(value); }
                             }
                         }
                     }

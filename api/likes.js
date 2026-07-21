@@ -32,13 +32,51 @@ function rest(path) {
   });
 }
 
+const RATE_LIMIT_WINDOW_MS = 60 * 1000;
+const RATE_LIMIT_MAX = 20;
+const _rateHits = new Map();
+
+const ALLOWED_ORIGINS = [
+  'https://www.calc-tools.top',
+  'https://calc-tools.top',
+  'http://localhost:3000',
+  'http://localhost:5173'
+];
+
+function getClientIp(req) {
+  const xff = req.headers && req.headers['x-forwarded-for'];
+  if (xff) {
+    const first = String(xff).split(',')[0].trim();
+    if (first) return first;
+  }
+  if (req.connection && req.connection.remoteAddress) return req.connection.remoteAddress;
+  if (req.socket && req.socket.remoteAddress) return req.socket.remoteAddress;
+  return 'unknown';
+}
+
+function isRateLimited(ip) {
+  const now = Date.now();
+  const hits = (_rateHits.get(ip) || []).filter(function (t) { return now - t < RATE_LIMIT_WINDOW_MS; });
+  hits.push(now);
+  _rateHits.set(ip, hits);
+  return hits.length > RATE_LIMIT_MAX;
+}
+
 module.exports = async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  const origin = req.headers && req.headers.origin;
+  res.setHeader('Access-Control-Allow-Origin', ALLOWED_ORIGINS.indexOf(origin) !== -1 ? origin : 'https://www.calc-tools.top');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Vary', 'Origin');
   res.setHeader('Content-Type', 'application/json');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
+
+  // 简单内存滑动窗口限速（基于来源 IP）
+  if (isRateLimited(getClientIp(req))) {
+    return res.status(429).json({ error: 'too many requests' });
+  }
+
 
   try {
     if (req.method === 'GET') {
@@ -89,6 +127,6 @@ module.exports = async function handler(req, res) {
 
     return res.status(405).json({ error: 'method not allowed' });
   } catch (e) {
-    return res.status(200).json({ error: e.message, fallback: true });
+    return res.status(500).json({ error: 'internal error' });
   }
 };

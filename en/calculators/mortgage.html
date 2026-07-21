@@ -90,7 +90,7 @@
         <nav>
             <a href="/en/">Home</a>
             <select class="lang-switch" onchange="switchLang(this.value)">
-                <option value="en" selected>???? English</option>
+                <option value="en" selected>🇬🇧 English</option>
                 <option value="zh">🇨🇳 中文</option>
             </select>
         </nav>
@@ -217,14 +217,14 @@
 
             if (result.method === 'equal-payment') {
                 monthlyLabel.textContent = labels.monthlyPayment + ' (' + labels.equalInstallment + ')';
-                monthlyValue.textContent = '$$' + formatNumber(result.monthlyPayment);
+                monthlyValue.textContent = '¥' + formatNumber(result.monthlyPayment);
             } else {
                 monthlyLabel.textContent = labels.firstPayment + ' ~ ' + labels.lastPayment + ' (' + labels.equalPrincipal + ')';
-                monthlyValue.textContent = '$$' + formatNumber(result.firstPayment) + ' ~ $$' + formatNumber(result.lastPayment);
+                monthlyValue.textContent = '¥' + formatNumber(result.firstPayment) + ' ~ $$' + formatNumber(result.lastPayment);
             }
 
-            document.getElementById('totalPaymentValue').textContent = '$$' + formatNumber(result.totalPayment);
-            document.getElementById('totalInterestValue').textContent = '$$' + formatNumber(result.totalInterest);
+            document.getElementById('totalPaymentValue').textContent = '¥' + formatNumber(result.totalPayment);
+            document.getElementById('totalInterestValue').textContent = '¥' + formatNumber(result.totalInterest);
 
             // Pie chart
             const chartContainer = document.getElementById('chartContainer');

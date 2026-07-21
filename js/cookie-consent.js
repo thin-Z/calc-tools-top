@@ -8,6 +8,9 @@
     const COOKIE_CONSENT_KEY = "calc_tools_cookie_consent";
     const COOKIE_CONSENT_VERSION = 1;
 
+    // AdSense 客户端 ID（与各页 head 中的静态标签一致）
+    const ADSENSE_SRC = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1794930797650076";
+
     function getConsent() {
         try {
             const stored = localStorage.getItem(COOKIE_CONSENT_KEY);
@@ -73,12 +76,32 @@
     window.__acceptCookies = function() {
         setConsent(true);
         removeBanner();
+        loadAdSense();
     };
 
     window.__declineCookies = function() {
         setConsent(false);
         removeBanner();
+        // 拒绝时不加载 AdSense（保持隐私合规）
     };
+
+    // 仅在用户已同意时动态注入 AdSense 脚本。
+    // 幂等：同一页面只会注入一次。
+    function loadAdSense() {
+        try {
+            if (window.__adsenseLoaded) return;
+            var existing = document.querySelector('script[src*="adsbygoogle.js"]');
+            if (existing) { window.__adsenseLoaded = true; return; }
+            var s = document.createElement("script");
+            s.async = true;
+            s.src = ADSENSE_SRC;
+            s.crossOrigin = "anonymous";
+            s.onload = function() { window.__adsenseLoaded = true; };
+            s.onerror = function() { window.__adsenseLoaded = false; };
+            document.head.appendChild(s);
+            window.__adsenseLoaded = true;
+        } catch (e) {}
+    }
 
     // Initialize on DOM ready
     function init() {
@@ -86,6 +109,9 @@
         if (!consent) {
             // Small delay so it doesn't block rendering
             setTimeout(createBanner, 500);
+        } else if (consent.accepted) {
+            // 已有同意记录：动态加载 AdSense
+            loadAdSense();
         }
     }
 

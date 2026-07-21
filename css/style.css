@@ -42,7 +42,9 @@
     /* Font */
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-    /* Legacy compat */
+    /* Legacy compat (alias tokens so var(--radius)/var(--text) resolve everywhere) */
+    --radius: var(--radius-md);
+    --text: var(--text-primary);
     --tag-bg: #f0f0f0;
     --tag-text: #555;
     --tooltip-bg: #1d1d1f;

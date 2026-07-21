@@ -90,7 +90,7 @@
         <nav>
             <a href="/en/">Home</a>
             <select class="lang-switch" onchange="switchLang(this.value)">
-                <option value="en" selected>???? English</option>
+                <option value="en" selected>🇬🇧 English</option>
                 <option value="zh">🇨🇳 中文</option>
             </select>
         </nav>
@@ -201,9 +201,9 @@
             const labels = i18n[lang];
 
             document.getElementById('resultArea').style.display = 'block';
-            document.getElementById('monthlyValue').textContent = '$$' + formatNumber(result.monthlyPayment);
-            document.getElementById('totalPaymentValue').textContent = '$$' + formatNumber(result.totalPayment);
-            document.getElementById('totalInterestValue').textContent = '$$' + formatNumber(result.totalInterest);
+            document.getElementById('monthlyValue').textContent = '¥' + formatNumber(result.monthlyPayment);
+            document.getElementById('totalPaymentValue').textContent = '¥' + formatNumber(result.totalPayment);
+            document.getElementById('totalInterestValue').textContent = '¥' + formatNumber(result.totalInterest);
 
             // Pie chart
             const chartContainer = document.getElementById('chartContainer');

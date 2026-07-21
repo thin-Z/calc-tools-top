@@ -122,3 +122,136 @@ function keywordDensity(text, topN) {
     // Return top N
     return result.slice(0, topN);
 }
+
+/* ===== 页面交互接线（按钮 / 模式切换 / 复制 / 重置） ===== */
+
+function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+}
+
+function __setStat(id, val) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = val;
+}
+
+function doAnalyze() {
+    var input = document.getElementById('textInput');
+    if (!input) return;
+    var text = input.value || '';
+    var stats = countStats(text);
+
+    __setStat('statTotalChars', stats.totalChars);
+    __setStat('statChineseChars', stats.chineseChars);
+    __setStat('statEnglishWords', stats.englishWords);
+    __setStat('statParagraphs', stats.paragraphs);
+    __setStat('statSentences', stats.sentences);
+    __setStat('statLines', stats.lines);
+    __setStat('statVisibleChars', stats.visibleChars);
+    __setStat('statDigits', stats.digits);
+    __setStat('statPunctuation', stats.punctuation);
+
+    var density = keywordDensity(text, 20);
+    var list = document.getElementById('keywordList');
+    if (list) {
+        if (!density || density.length === 0) {
+            list.innerHTML = '<li style="text-align:center;color:var(--text-secondary);padding:20px;">' +
+                (window.__kwEmptyText || 'No keyword data') + '</li>';
+        } else {
+            var html = '';
+            for (var i = 0; i < density.length; i++) {
+                var item = density[i];
+                html += '<li><span class="kw-word">' + escapeHtml(item.word) + '</span>' +
+                    '<span class="kw-count">' + item.count + '</span>' +
+                    '<span class="kw-density">' + item.density + '%</span></li>';
+            }
+            list.innerHTML = html;
+        }
+    }
+}
+
+function switchMode(mode) {
+    var statsArea = document.getElementById('statsArea');
+    var keywordsArea = document.getElementById('keywordsArea');
+    if (mode === 'keywords') {
+        if (statsArea) statsArea.style.display = 'none';
+        if (keywordsArea) keywordsArea.style.display = 'block';
+    } else {
+        if (statsArea) statsArea.style.display = 'block';
+        if (keywordsArea) keywordsArea.style.display = 'none';
+    }
+    var chips = document.querySelectorAll('.mode-chip');
+    for (var i = 0; i < chips.length; i++) {
+        if (chips[i].getAttribute('data-mode') === mode) {
+            chips[i].classList.add('active');
+        } else {
+            chips[i].classList.remove('active');
+        }
+    }
+}
+
+function resetTool() {
+    var input = document.getElementById('textInput');
+    if (input) input.value = '';
+    __setStat('statTotalChars', 0);
+    __setStat('statChineseChars', 0);
+    __setStat('statEnglishWords', 0);
+    __setStat('statParagraphs', 0);
+    __setStat('statSentences', 0);
+    __setStat('statLines', 0);
+    __setStat('statVisibleChars', 0);
+    __setStat('statDigits', 0);
+    __setStat('statPunctuation', 0);
+    var list = document.getElementById('keywordList');
+    if (list && window.__kwDefaultHtml) list.innerHTML = window.__kwDefaultHtml;
+    switchMode('stats');
+}
+
+function copyResult() {
+    var btn = document.getElementById('copyResultBtn');
+    var originalText = btn ? btn.textContent : '';
+    var grid = document.querySelector('.stats-grid');
+    var text = '';
+    if (grid) {
+        var cards = grid.querySelectorAll('.stat-card');
+        for (var i = 0; i < cards.length; i++) {
+            var val = cards[i].querySelector('.stat-value');
+            var label = cards[i].querySelector('.stat-label');
+            if (val && label) {
+                text += label.textContent.trim() + ': ' + val.textContent.trim() + '\n';
+            }
+        }
+    }
+    if (!text) {
+        if (btn) btn.textContent = '...';
+        setTimeout(function () { if (btn) btn.textContent = originalText; }, 1200);
+        return;
+    }
+    function done() {
+        if (btn) btn.textContent = '✓';
+        setTimeout(function () { if (btn) btn.textContent = originalText; }, 1500);
+    }
+    function fallback(t) {
+        var ta = document.createElement('textarea');
+        ta.value = t;
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); done(); } catch (e) { if (btn) btn.textContent = '✗'; }
+        document.body.removeChild(ta);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { fallback(text); });
+    } else {
+        fallback(text);
+    }
+}
+
+// 页面加载后：捕获关键词列表默认占位文本，并自动分析初始文本
+document.addEventListener('DOMContentLoaded', function () {
+    var list = document.getElementById('keywordList');
+    if (list) window.__kwDefaultHtml = list.innerHTML;
+    if (document.getElementById('textInput')) doAnalyze();
+});
