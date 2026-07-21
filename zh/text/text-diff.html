@@ -1,192 +1,113 @@
-﻿<!DOCTYPE html>
-
+<!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>文本对比 - 工具箱里</title>
+    <title>文本对比 - 免费在线文本差异比较工具</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="比较两段文本的差异">
-    <meta property='og:title' content='文本对比 - 工具箱里'/>
-    <meta property='og:description' content='比较两段文本的差异'/>
+    <meta name="description" content="免费在线文本对比工具。基于 LCS 算法逐行比较，支持并排视图，高亮显示新增、删除与未变更内容。隐私优先，所有处理均在浏览器本地完成。">
+    <meta property='og:title' content='文本对比 - 免费在线文本差异比较工具'/>
+    <meta property='og:description' content='免费在线文本对比工具。基于 LCS 算法逐行比较，支持并排视图，高亮显示新增、删除与未变更内容。隐私优先，所有处理均在浏览器本地完成。'/>
     <meta property='og:type' content='website'/>
     <meta property='og:url' content='https://www.calc-tools.top/zh/text/text-diff'/>
     <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
     <meta property='og:locale' content='zh_CN'/>
     <meta name='twitter:card' content='summary_large_image'/>
-    <meta name='twitter:title' content='文本对比 - 工具箱里'/>
-    <meta name='twitter:description' content='比较两段文本的差异'/>
+    <meta name='twitter:title' content='文本对比 - 免费在线文本差异比较工具'/>
+    <meta name='twitter:description' content='免费在线文本对比工具。基于 LCS 算法逐行比较，支持并排视图，高亮显示新增、删除与未变更内容。隐私优先，所有处理均在浏览器本地完成。'/>
     <link rel="canonical" href="https://www.calc-tools.top/zh/text/text-diff">
     <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/text/text-diff">
     <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/text/text-diff">
     <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/zh/text/text-diff">
     <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/text-tools.css">
     <link rel="stylesheet" href="../../css/cookie-consent.css">
-    <link rel="stylesheet" href="../../css/site.css?v=9">
     <script src="../../js/i18n.js" defer></script>
     <script src="../../js/site.js" defer></script>
-</head></head>
-
+    <script src="../../js/text-tools/text-diff.js" defer></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1794930797650076" crossorigin="anonymous"></script>
+</head>
 <body>
-
     <header>
-
         <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
-
         <nav>
-
-            <a href="/">妫ｆ牠銆?/a>
-
+            <a href="/">首页</a>
             <select class="lang-switch" onchange="switchLang(this.value)">
-
-                <option value="zh" selected>🇨🇳 娑擃厽鏋?/option>
-
+                <option value="zh" selected>🇨🇳 中文</option>
                 <option value="en">🇬🇧 English</option>
-
             </select>
-
         </nav>
-
     </header>
-
     <main>
-
         <div class="tool-page">
-
             <div class="tool-header">
-
-                <h1>🔍 在线文本对比工具</h1>
-
-                <p>瀹革箑褰搁獮鑸靛笓鐎佃鐦稉銈嗩唽閺傚洦婀伴敍宀勭彯娴滎喗妯夌粈鐑樻煀婢х偑鈧礁鍨归梽銈呮嫲閺堫亜褰夐崘鍛啇閵?/p>
-
+                <h1>🔍 文本对比工具</h1>
+                <p>并排比较两个文本，高亮显示新增、删除与未变更的内容。</p>
             </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="text-diff"><span class="heart">❤</span> <span class="count">0</span></button></div>
 
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="text-diff"><span class="heart">閴?/span> <span class="count">0</span></button></div>
-
-
-
-            <div class="ad-slot ad-placeholder">骞垮憡浣?- 鎷涘晢涓?/div>
-
-
+            <div class="ad-slot ad-placeholder">广告位 - 招商中</div>
 
             <div class="diff-container">
-
                 <div class="diff-pane">
-
-                    <label style="font-size:0.9rem;font-weight:600;margin-bottom:4px;display:block;">閸樼喐鏋?/label>
-
-                    <textarea class="text-input" id="textInput1" placeholder="鐠囩柉绶崗銉ь儑娑撯偓濞堝灚鏋冮張?.." oninput="scheduleDiff()">娴ｇ姴銈介敍灞绢偨鏉╁簼濞囬悽銊︽瀮閺堫剙顕В鏂夸紣閸忓嚖绱?
-鏉╂瑦妲哥粭顑跨鐞涘苯鍞寸€瑰箍鈧?
-
-缁楊兛绗佺悰灞肩箽閹镐椒绗夐崣妯糕偓?/textarea>
-
+                    <label style="font-size:0.9rem;font-weight:600;margin-bottom:4px;display:block;">原始文本</label>
+                    <textarea class="text-input" id="textInput1" placeholder="输入第一段文本..." oninput="scheduleDiff()">你好，欢迎使用文本对比工具！
+这是第一行。
+第三行未改变。</textarea>
                 </div>
-
                 <div class="diff-pane">
-
-                    <label style="font-size:0.9rem;font-weight:600;margin-bottom:4px;display:block;">鏂版枃鏈?/label>
-
-                    <textarea class="text-input" id="textInput2" placeholder="鐠囩柉绶崗銉ь儑娴滃本顔岄弬鍥ㄦ拱..." oninput="scheduleDiff()">娴ｇ姴銈介敍灞绢偨鏉╁簼濞囬悽銊︽瀮閺堫剙顕В鏂夸紣閸忓嚖绱?
-鏉╂瑦妲告穱顔芥暭閸氬海娈戠粭顑跨癌鐞涘苯鍞寸€瑰箍鈧?
-
-缁楊兛绗佺悰灞肩箽閹镐椒绗夐崣妯糕偓?
-
-缁楊剙娲撶悰灞炬Ц閺傛澘顤冮崘鍛啇閵?/textarea>
-
+                    <label style="font-size:0.9rem;font-weight:600;margin-bottom:4px;display:block;">新文本</label>
+                    <textarea class="text-input" id="textInput2" placeholder="输入第二段文本..." oninput="scheduleDiff()">你好，欢迎使用文本对比工具！
+这是修改后的第二行。
+第三行未改变。
+第四行是新内容。</textarea>
                 </div>
-
             </div>
-
-
 
             <div class="action-bar">
-
-                <button class="btn btn-primary" onclick="doDiff()">🔄 鐎佃鐦?/button>
-
-                <button class="btn btn-secondary" onclick="clearDiff()">棣冩閿?濞撳懐鈹?/button>
-
+                <button class="btn btn-primary" onclick="doDiff()">🔄 对比</button>
+                <button class="btn btn-secondary" onclick="clearDiff()">清空</button>
             </div>
-
-
 
             <div id="diffStats" class="diff-stats"></div>
 
-
-
             <div class="diff-output">
-
                 <div class="diff-pane-result">
-
-                    <div class="diff-header">閸樼喐鏋?/div>
-
+                    <div class="diff-header">原始</div>
                     <div class="diff-content" id="diffLeft"></div>
-
                 </div>
-
                 <div class="diff-pane-result">
-
-                    <div class="diff-header">鏂版枃鏈?/div>
-
+                    <div class="diff-header">新</div>
                     <div class="diff-content" id="diffRight"></div>
-
                 </div>
-
             </div>
-
-
 
             <div class="seo-content">
-
-                <h2>閺傚洦婀扮€佃鐦銉ュ徔鐠囧瓨妲?/h2>
-
-                <p>閺傚洦婀扮€佃鐦敍鍦眅xt Diff閿涘妲告稉鈧粔宥囨暏娴滃孩鐦潏鍐ц⒈濞堝灚鏋冮張顒€妯婂鍌滄畱閹垛偓閺堫垬鈧倹婀板銉ュ徔閸╄桨绨琇CS閿涘牊娓堕梹鍨彆閸忓崬鐡欐惔蹇撳灙閿涘鐣诲▔鏇礉娴犮儴顢戞稉鍝勫礋娴ｅ秷绻樼悰灞芥▕瀵倹鐦潏鍐︹偓?/p>
-
+                <h2>关于文本对比</h2>
+                <p>文本对比是一种比较两个文本块差异的技术。本工具使用 LCS（最长公共子序列）算法进行逐行比较。</p>
                 <ul>
-
-                    <li><strong style="color:#16a34a;">绿色背景</strong> 閳?閺傛澘顤冮崘鍛啇</li>
-
-                    <li><strong style="color:#dc2626;">红色背景+鍒犻櫎绾?/strong> 閳?閸掔娀娅庨崘鍛啇</li>
-
-                    <li><strong>閻у€熷閼冲本娅?/strong> 閳?閺堫亜褰夐崘鍛啇</li>
-
+                    <li><strong style="color:#16a34a;">绿色背景</strong>：新增内容</li>
+                    <li><strong style="color:#dc2626;">红色背景 + 删除线</strong>：删除内容</li>
+                    <li><strong>白色背景</strong>：未变更内容</li>
                 </ul>
-
                 <h3>使用场景</h3>
-
                 <ul>
-
-                    <li>娴狅絿鐖滈悧鍫熸拱鐎佃鐦?/li>
-
-                    <li>閺傚洨鐝锋穱顔芥暭閸撳秴鎮楃€佃鐦?/li>
-
-                    <li>閺傚洦銆傞弽鈥愁嚠娑撳骸顓搁梼?/li>
-
-                    <li>閺佺増宓佸顔肩磽閸掑棙鐎?/li>
-
+                    <li>代码版本对比</li>
+                    <li>文章修改前后对比</li>
+                    <li>文档校对</li>
+                    <li>数据差异分析</li>
                 </ul>
-
             </div>
-
         </div>
-
-    
 
         <div class="related-tools">
-
-            <h3>閻╃鍙у銉ュ徔</h3>
-
+            <h3>相关工具</h3>
             <ul>
-
                 <li><a href="/blog/zh/text-diff-guide">📖 使用指南</a></li>
-
             </ul>
-
         </div>
-
     </main>
-
-            <footer>
+    <footer>
         <div class="footer-links">
             <a href="/">首页</a>
             <a href="/about">关于</a>
@@ -196,15 +117,9 @@
         </div>
         <p>© 2026 工具箱里 | 免费在线工具</p>
     </footer>
-
     <script src="../../js/like.js" defer></script>
-
     <script src="../../js/cookie-consent.js" defer></script>
-
     <div class="ad-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1794930797650076" data-ad-slot="6250142758" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-
 <button id="gw-theme" aria-label="切换暗黑模式" style="position:fixed;bottom:16px;right:16px;z-index:9999;width:44px;height:44px;border-radius:50%;border:1px solid rgba(128,128,128,.4);background:var(--bg,#fff);color:var(--text,#222);font-size:20px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15)" onclick="(function(){var d=document.documentElement;var n=d.getAttribute('data-theme')==='dark'?'light':'dark';d.setAttribute('data-theme',n);try{localStorage.setItem('theme',n)}catch(e){}})()">🌙</button>
 </body>
-
 </html>
-
