@@ -1,6 +1,6 @@
 ﻿# calc-tools.top — 工具箱里
 > 中英双语在线工具站，纯静态 HTML/CSS/JS，零依赖，隐私优先
-> 线上地址：https://calc-tools.top | 风格：Apple 设计语言
+> 线上地址：https://www.calc-tools.top | 风格：Apple 设计语言
 ---
 ## 工具清单
 ### 📐 计算工具（20个）
