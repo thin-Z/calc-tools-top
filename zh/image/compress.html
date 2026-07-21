@@ -1,225 +1,137 @@
-﻿<!DOCTYPE html>
-
+<!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>图片压缩 - 工具箱里</title>
+    <title>在线图片压缩 - 免费压缩 JPG/PNG/WebP</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="压缩图片大小，保持清晰度">
-    <meta property='og:title' content='图片压缩 - 工具箱里'/>
-    <meta property='og:description' content='压缩图片大小，保持清晰度'/>
+    <meta name="description" content="免费在线图片压缩工具，浏览器本地处理，不上传服务器。支持 JPG、PNG、WebP 格式压缩。">
+    <meta property='og:title' content='在线图片压缩 - 免费压缩 JPG/PNG/WebP'/>
+    <meta property='og:description' content='免费在线图片压缩工具，浏览器本地处理，不上传服务器。支持 JPG、PNG、WebP 格式压缩。'/>
     <meta property='og:type' content='website'/>
-    <meta property='og:url' content='https://calc-tools.top/zh/image/compress'/>
-    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:url' content='https://calc-tools.top/zh/image/compress.html'/>
+    <meta property='og:image' content='https://calc-tools.top/assets/logo.svg'/>
     <meta property='og:locale' content='zh_CN'/>
     <meta name='twitter:card' content='summary_large_image'/>
-    <meta name='twitter:title' content='图片压缩 - 工具箱里'/>
-    <meta name='twitter:description' content='压缩图片大小，保持清晰度'/>
-    <link rel="canonical" href="https://calc-tools.top/zh/image/compress">
-    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/image/compress">
-    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/image/compress">
-    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/image/compress">
+    <meta name='twitter:title' content='在线图片压缩 - 免费压缩 JPG/PNG/WebP'/>
+    <meta name='twitter:description' content='免费在线图片压缩工具，浏览器本地处理，不上传服务器。支持 JPG、PNG、WebP 格式压缩。'/>
+
+    <link rel="canonical" href="https://calc-tools.top/zh/image/compress.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/image/compress.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/image/compress.html">
     <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/site.css">
     <link rel="stylesheet" href="../../css/cookie-consent.css">
-    <link rel="stylesheet" href="../../css/site.css?v=9">
     <script src="../../js/i18n.js" defer></script>
-    <script src="../../js/site.js" defer></script>
-</head></head>
+    <script src="../../js/image-tools/compress.js" defer></script>
 
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "在线图片压缩 - 免费压缩 JPG/PNG/WebP",
+    "url": "https://calc-tools.top/zh/image/compress.html",
+    "description": "免费在线图片压缩工具，浏览器本地处理，不上传服务器。支持 JPG、PNG、WebP 格式压缩。",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web",
+    "inLanguage": "zh-CN"
+}
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1794930797650076" crossorigin="anonymous"></script>
+</head>
 <body>
-
     <header>
-
         <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
-
         <nav>
-
-            <a href="/">棣栭〉</a>
-
-            <select class="lang-switch" onchange="switchLang(this.value)">
-
-                <option value="zh" selected>馃嚚馃嚦 涓枃</option>
-
-                <option value="en">馃嚞馃嚙 English</option>
-
-            </select>
-
-        </nav>
-
-    </header>
-
-    <main>
-
-        <div class="tool-page">
-
-            <div class="tool-header">
-
-                <span class="tool-privacy-badge">馃敀 娴忚鍣ㄦ湰鍦板鐞?路 涓嶄笂浼犳湇鍔″櫒</span><h1>鍥剧墖鍘嬬缉工具</h1>
-
-                <p>鍘嬬缉 JPG銆丳NG銆乄ebP 鍥剧墖澶у皬锛屼繚鎸佹竻鏅板害銆傛墍鏈夊鐞嗗湪娴忚鍣ㄦ湰鍦板畬鎴愩€?/p>
-
-            </div>
-
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="compress"><span class="heart">鉂?/span> <span class="count">0</span></button></div>
-
-            <div class="upload-zone" id="dropZone">
-
-                <div class="upload-icon">馃搧</div>
-
-                <h3>鎷栨嫿鍥剧墖鍒版澶勶紝鎴栫偣鍑婚€夋嫨鏂囦欢</h3><div class="upload-btn">馃搧 閫夋嫨鏂囦欢</div>
-
-                <div class="upload-formats"><span class="format-badge">JPG</span><span class="format-badge">PNG</span><span class="format-badge">WebP</span><span class="format-badge">BMP</span><span class="format-badge">GIF</span></div><p style="margin-top:10px;margin-bottom:0;font-size:0.8rem;color:#94a3b8;">鏈€澶?50MB 路 娴忚鍣ㄦ湰鍦板鐞?/p>
-
-                <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/bmp,image/gif">
-
-            </div>
-
-            <div class="preview-container" id="previewContainer">
-
-                <div class="preview-card">
-
-                    <h3>鍘熷鍥剧墖</h3>
-
-                    <div class="preview-area">
-
-                        <div class="preview-box">
-
-                            <img id="originalPreview" src="" alt="鍘熷鍥剧墖">
-
-                            <div class="file-info" id="originalInfo"></div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="tool-controls">
-
-                <h3>鍘嬬缉璁剧疆</h3>
-
-                <div class="control-group">
-
-                    <label>鍘嬬缉璐ㄩ噺</label>
-
-                    <input type="range" id="qualitySlider" min="1" max="100" value="80">
-
-                    <div class="range-value"><span id="qualityValue">80%</span></div>
-
-                </div>
-
-                <div class="btn-group">
-
-                    <button class="btn btn-primary" id="compressBtn" disabled>寮€濮嬪帇缂?/button>
-
-                    <button class="btn btn-secondary" id="resetBtn">閲嶇疆</button>
-
-                </div>
-
-            </div>
-
-            <div class="result-summary" id="resultSummary">
-
-                <div class="result-stats">
-
-                    <div class="stat-item"><div class="stat-label">鍘熷澶у皬</div><div class="stat-value" id="originalSize">-</div></div>
-
-                    <div class="stat-item"><div class="stat-label">鍘嬬缉鍚?/div><div class="stat-value" id="compressedSize">-</div></div>
-
-                    <div class="stat-item"><div class="stat-label">鍘嬬缉鐜?/div><div class="stat-value saved" id="reductionRate">-</div></div>
-
-                </div>
-
-                <div class="preview-card" ><h3>鍘嬬缉缁撴灉</h3>
-
-                    <div class="preview-area"><div class="preview-box"><img id="compressedPreview" src="" alt="鍘嬬缉鍚庡浘鐗?><div class="file-info" id="compressedInfo"></div></div></div>
-
-                </div>
-
-                <div class="download-area"><button class="btn btn-success" id="downloadBtn">涓嬭浇鍘嬬缉鍥剧墖</button></div>
-
-            </div>
-
-            <div class="tool-content">
-
-                <h2>在线图片压缩 - 闅愮浼樺厛</h2>
-
-                <p>浣跨敤鎴戜滑鐨勫湪绾垮浘鐗囧帇缂╁伐鍏凤紝鏃犻渶涓婁紶鏂囦欢鍒颁换浣曟湇鍔″櫒銆傛墍鏈夊浘鐗囧帇缂╂搷浣滈€氳繃娴忚鍣ㄥ唴缃殑 Canvas API 鍦ㄦ湰鍦板畬鎴愶紝纭繚浣犵殑闅愮瀹夊叏銆?/p>
-
-                <h3>鏀寔鏍煎紡</h3>
-
-                <p>鏀寔鍘嬬缉 JPG銆丳NG銆乄ebP銆丅MP 鏍煎紡鍥剧墖銆侾NG 鍥剧墖鍦ㄤ綆璐ㄩ噺鏃朵細鑷姩杞负 JPEG 浠ヨ幏寰楁洿浣冲帇缂╂晥鏋溿€?/p>
-
-                <h3>閫傜敤鍦烘櫙</h3>
-
-                <p>缃戠珯鍥剧墖浼樺寲锛氬帇缂╁浘鐗囧彲澶у箙鎻愬崌缃戦〉鍔犺浇閫熷害锛屾敼鍠勭敤鎴蜂綋楠屽拰 SEO 鎺掑悕銆傜ぞ浜ゅ獟浣撳垎浜細鍘嬬缉鍚庣殑鍥剧墖涓婁紶鏇村揩銆?/p>
-
-            </div>
-
-            <div class="related-tools">
-
-                <h3>鐩稿叧工具</h3>
-
-                <ul>
-
-                    <li><a href="convert">馃攧 鍥剧墖鏍煎紡杞崲</a></li>
-
-                    <li><a href="resize">馃搻 鍥剧墖瑁佸壀缂╂斁</a></li>
-
-                    <li><a href="../..">馃彔 杩斿洖棣栭〉</a></li>
-
-                
-
-        <li><a href="/blog/zh/image-compression-guide">馃摉 浣跨敤鎸囧崡</a></li>
-
-    </ul>
-
-            </div>
-
-        </div>
-
-        <div class="ad-placeholder">骞垮憡浣?- 鎷涘晢涓?/div>
-
-    </main>
-
-            <footer>
-        <div class="footer-links">
             <a href="/">首页</a>
-            <a href="/about">关于</a>
-            <a href="/privacy">隐私政策</a>
-            <a href="/contact">联系</a>
-            <a href="/blog/zh/">博客</a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="zh" selected>🇨🇳 中文</option>
+                <option value="en">🇬🇧 English</option>
+            </select>
+        </nav>
+    </header>
+    <main>
+        <div class="tool-page">
+            <div class="tool-header">
+                <span class="tool-privacy-badge">🔒 浏览器本地处理 · 不上传服务器</span><h1>图片压缩工具</h1>
+                <p>压缩 JPG、PNG、WebP 图片大小，保持清晰度。所有处理在浏览器本地完成。</p>
+            </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="compress"><span class="heart">❤</span> <span class="count">0</span></button></div>
+            <div class="upload-zone" id="dropZone">
+                <div class="upload-icon">📁</div>
+                <h3>拖拽图片到此处，或点击选择文件</h3><div class="upload-btn">📁 选择文件</div>
+                <div class="upload-formats"><span class="format-badge">JPG</span><span class="format-badge">PNG</span><span class="format-badge">WebP</span><span class="format-badge">BMP</span><span class="format-badge">GIF</span></div><p style="margin-top:10px;margin-bottom:0;font-size:0.8rem;color:#94a3b8;">最大 50MB · 浏览器本地处理</p>
+                <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/bmp,image/gif">
+            </div>
+            <div class="preview-container" id="previewContainer">
+                <div class="preview-card">
+                    <h3>原始图片</h3>
+                    <div class="preview-area">
+                        <div class="preview-box">
+                            <img id="originalPreview" src="" alt="原始图片">
+                            <div class="file-info" id="originalInfo"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tool-controls">
+                <h3>压缩设置</h3>
+                <div class="control-group">
+                    <label>压缩质量</label>
+                    <input type="range" id="qualitySlider" min="1" max="100" value="80">
+                    <div class="range-value"><span id="qualityValue">80%</span></div>
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="compressBtn" disabled>开始压缩</button>
+                    <button class="btn btn-secondary" id="resetBtn">重置</button>
+                </div>
+            </div>
+            <div class="result-summary" id="resultSummary">
+                <div class="result-stats">
+                    <div class="stat-item"><div class="stat-label">原始大小</div><div class="stat-value" id="originalSize">-</div></div>
+                    <div class="stat-item"><div class="stat-label">压缩后</div><div class="stat-value" id="compressedSize">-</div></div>
+                    <div class="stat-item"><div class="stat-label">压缩率</div><div class="stat-value saved" id="reductionRate">-</div></div>
+                </div>
+                <div class="preview-card" ><h3>压缩结果</h3>
+                    <div class="preview-area"><div class="preview-box"><img id="compressedPreview" src="" alt="压缩后图片"><div class="file-info" id="compressedInfo"></div></div></div>
+                </div>
+                <div class="download-area"><button class="btn btn-success" id="downloadBtn">下载压缩图片</button></div>
+            </div>
+            <div class="tool-content">
+                <h2>在线图片压缩 - 隐私优先</h2>
+                <p>使用我们的在线图片压缩工具，无需上传文件到任何服务器。所有图片压缩操作通过浏览器内置的 Canvas API 在本地完成，确保你的隐私安全。</p>
+                <h3>支持格式</h3>
+                <p>支持压缩 JPG、PNG、WebP、BMP 格式图片。PNG 图片在低质量时会自动转为 JPEG 以获得更佳压缩效果。</p>
+                <h3>适用场景</h3>
+                <p>网站图片优化：压缩图片可大幅提升网页加载速度，改善用户体验和 SEO 排名。社交媒体分享：压缩后的图片上传更快。</p>
+            </div>
+            <div class="related-tools">
+                <h3>相关工具</h3>
+                <ul>
+                    <li><a href="convert.html">🔄 图片格式转换</a></li>
+                    <li><a href="resize.html">📐 图片裁剪缩放</a></li>
+                    <li><a href="../..">🏠 返回首页</a></li>
+                
+        <li><a href="/blog/zh/image-compression-guide.html">📖 使用指南</a></li>
+    </ul>
+            </div>
         </div>
+        <div class="ad-placeholder">广告位 - 招商中</div>
+    </main>
+    <footer>
         <p>© 2026 工具箱里 | 免费在线工具</p>
+        <p><a href="/">返回首页</a></p>
     </footer>
 
-
-
     <script src="../../js/like.js" defer></script>
-
     <script src="../../js/cookie-consent.js" defer></script>
-
     <section class="related-posts">
-
-        <h3>鐩稿叧闃呰</h3>
-
+        <h3>相关阅读</h3>
         <ul>
-
-            <li><a href="/blog/zh/image-compression-guide">鍥剧墖澶ぇ鎬庝箞鍘嬬缉锛熷湪绾垮浘鐗囧帇缂╁伐鍏锋帹鑽?/a></li>
-
+            <li><a href="/blog/zh/image-compression-guide.html">图片太大怎么压缩？在线图片压缩工具推荐</a></li>
         </ul>
-
     </section>
-
     <div class="ad-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1794930797650076" data-ad-slot="6250142758" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-
 </body>
-
 </html>
-
-
 

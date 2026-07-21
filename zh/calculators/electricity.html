@@ -1,149 +1,140 @@
-﻿<!DOCTYPE html>
-
+<!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>电费计算器 - 工具箱里</title>
+    <title>电费计算器 - 在线计算电器耗电量</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="计算电器耗电量和电费">
-    <meta property='og:title' content='电费计算器 - 工具箱里'/>
-    <meta property='og:description' content='计算电器耗电量和电费'/>
+    <meta name="description" content="免费在线电费计算器，输入电器功率、使用时间和电价，快速计算每日、每月耗电量和电费。">
+    <meta property='og:title' content='电费计算器 - 在线计算电器耗电量'/>
+    <meta property='og:description' content='免费在线电费计算器，输入电器功率、使用时间和电价，快速计算每日、每月耗电量和电费。'/>
     <meta property='og:type' content='website'/>
-    <meta property='og:url' content='https://calc-tools.top/zh/calculators/electricity'/>
-    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:url' content='https://calc-tools.top/zh/calculators/electricity.html'/>
+    <meta property='og:image' content='https://calc-tools.top/assets/logo.svg'/>
     <meta property='og:locale' content='zh_CN'/>
     <meta name='twitter:card' content='summary_large_image'/>
-    <meta name='twitter:title' content='电费计算器 - 工具箱里'/>
-    <meta name='twitter:description' content='计算电器耗电量和电费'/>
-    <link rel="canonical" href="https://calc-tools.top/zh/calculators/electricity">
-    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/calculators/electricity">
-    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/calculators/electricity">
-    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/calculators/electricity">
+    <meta name='twitter:title' content='电费计算器 - 在线计算电器耗电量'/>
+    <meta name='twitter:description' content='免费在线电费计算器，输入电器功率、使用时间和电价，快速计算每日、每月耗电量和电费。'/>
+
+    <link rel="canonical" href="https://calc-tools.top/zh/calculators/electricity.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/calculators/electricity.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/calculators/electricity.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/calculators/electricity.html">
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/cookie-consent.css">
     <link rel="stylesheet" href="../../css/site.css?v=9">
     <script src="../../js/i18n.js" defer></script>
-    <script src="../../js/site.js" defer></script>
-</head></head>
-
-<body>
-
-    <header>
-
-        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
-
-        <nav>
-
-            <a href="/"><span data-i18n="siteName">在线工具</span></a>
-
-            <select class="lang-switch" onchange="switchLang(this.value)">
-
-                <option value="zh" selected>馃嚚馃嚦 涓枃</option>
-
-                <option value="en">馃嚞馃嚙 English</option>
-
-            </select>
-
-        </nav>
-
-    </header>
-
-
-
-    <main>
-
-        <div class="page-header">
-
+    <script src="../../js/like.js" defer></script>
+    <script src="../../js/calculators/electricity.js" defer></script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "在线工具", "item": "https://calc-tools.top//" },
+                { "@type": "ListItem", "position": 2, "name": "电费计算器 - 在线计算电器耗电量", "item": "https://calc-tools.top/zh/calculators/electricity.html" }
+            ]
+        },
+        {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "1 度电是多少？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "1 度电 = 1 千瓦时（kWh），即 1000 瓦的电器工作 1 小时的用电量。"
             }
-
+        },
+        {
+            "@type": "Question",
+            "name": "常见电器功率参考？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "空调 1000-3000W、冰箱 100-200W、洗衣机 300-500W、电饭煲 500-1000W、电脑 200-400W、电视 100-300W。"
+            }
+        }
     ]
-
-        </div>
-
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="electricity"><span class="heart">鉂?/span> <span class="count">0</span></button></div>
-
-
-
-        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中<div class="tool-form">
-
-            <div class="form-group"><label>鐢靛櫒鍔熺巼锛堢摝 W锛?/label><input type="number" id="power" value="1000" min="1" step="1"></div><div class="form-group"><label>姣忔棩浣跨敤锛堝皬鏃讹級</label><input type="number" id="hours" value="4" min="0.1" step="0.5"></div><div class="form-group"><label>鏈堜娇鐢ㄥぉ鏁?/label><input type="number" id="days" value="30" min="1" max="31" step="1"></div><div class="form-group"><label>鐢典环锛堝厓/搴︼級</label><input type="number" id="rate" value="0.6" min="0" step="0.01"></div><div class="form-actions"><button type="button" class="btn btn-primary" onclick="doCalculate()">计算</button><button type="reset" class="btn btn-secondary" onclick="resetForm()">閲嶇疆</button></div>
-
-        </div>
-
-
-
-        <div class="result-card" id="resultArea" style="display:none;">
-
-            <div style="text-align:center;padding:1rem;"><p style="font-size:0.9rem;color:#6b7280;">姣忔棩鑰楃數閲?/p><p style="font-size:1.5rem;font-weight:bold;color:#f59e0b;"><span id="dailyKwh"></span> 搴?/p><hr style="margin:1rem 0;"><p>鏈堣€楃數閲忥細<span id="monthlyKwh"></span> 搴?/p><p>鏈堢數璐癸細<span id="monthlyCost"></span> 鍏?/p></div>
-
-        </div>
-
-
-
-        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中<div class="tool-content"><h2>鐢佃垂璁＄畻鍣ㄤ娇鐢ㄨ鏄?/h2><p>杈撳叆鐢靛櫒鍔熺巼銆佹瘡澶╀娇鐢ㄦ椂闂村拰鐢典环锛屽嵆鍙绠楁瘡鏃ュ拰姣忔湀鐨勮楃數閲忓強鐢佃垂銆傚府鍔╂偍浜嗚В瀹朵腑鍚勭數鍣ㄧ殑鐢ㄧ數鎴愭湰銆?/p><h3>鐪佺數寤鸿</h3><p>閫夎喘楂樿兘鏁堢數鍣ㄣ佸強鏃跺叧闂緟鏈虹數婧愩佸悎鐞嗚缃┖璋冩俯搴︺佸畾鏈熸竻娲楁护缃戠瓑鍧囧彲鏈夋晥闄嶄綆鐢佃垂銆?/p></div>
-
-
-
-        <div class="related-tools"><h3>鐩稿叧工具</h3><ul><li><a href="/zh/calculators/fuel-cost">娌硅楄绠楀櫒</a></li><li><a href="/zh/calculators/discount">鎶樻墸璁＄畻鍣?/a></li></ul></div>
-
-            <section class="related-posts">
-
-        <h3>鐩稿叧闃呰</h3>
-
-        <ul>
-
-            <li><a href="/blog/zh/electricity-cost-guide">鐢佃垂璁＄畻鍣細瀹剁數鑰楃數閲忎笌鐢佃垂璁＄畻鏂规硶</a></li>
-
-        </ul>
-
-    </section>
-
-</main>
-
-
-
-            <footer>
-        <div class="footer-links">
-            <a href="/">首页</a>
-            <a href="/about">关于</a>
-            <a href="/privacy">隐私政策</a>
-            <a href="/contact">联系</a>
-            <a href="/blog/zh/">博客</a>
-        </div>
-        <p>© 2026 工具箱里 | 免费在线工具</p>
-    </footer>
-
-
-
-    <script>
-
-        document.addEventListener("DOMContentLoaded", function() {
-
-            document.querySelectorAll("[data-i18n]").forEach(function(el) {
-
-                const key = el.getAttribute("data-i18n");
-
-                el.textContent = t(key);
-
-            });
-
-        });
-
+}
+    ]
+}
     </script>
 
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "电费计算器 - 在线计算电器耗电量",
+    "url": "https://calc-tools.top/zh/calculators/electricity.html",
+    "description": "免费在线电费计算器，输入电器功率、使用时间和电价，快速计算每日、每月耗电量和电费。",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web",
+    "inLanguage": "zh-CN"
+}
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1794930797650076" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+        <nav>
+            <a href="/"><span data-i18n="siteName">首页</span></a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="zh" selected>🇨🇳 中文</option>
+                <option value="en">🇬🇧 English</option>
+            </select>
+        </nav>
+    </header>
 
+    <main>
+        <div class="page-header">
+            <h1>电费计算器 - 在线计算电器耗电量</h1>
+            <p>免费在线电费计算器，输入电器功率、使用时间和电价，快速计算每日、每月耗电量和电费。</p>
+        </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="electricity"><span class="heart">❤</span> <span class="count">0</span></button></div>
+
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中</div>
+
+        <div class="tool-form">
+            <div class="form-group"><label>电器功率（瓦 W）</label><input type="number" id="power" value="1000" min="1" step="1"></div><div class="form-group"><label>每日使用（小时）</label><input type="number" id="hours" value="4" min="0.1" step="0.5"></div><div class="form-group"><label>月使用天数</label><input type="number" id="days" value="30" min="1" max="31" step="1"></div><div class="form-group"><label>电价（元/度）</label><input type="number" id="rate" value="0.6" min="0" step="0.01"></div><div class="form-actions"><button type="button" class="btn btn-primary" onclick="doCalculate()">计算</button><button type="reset" class="btn btn-secondary" onclick="resetForm()">重置</button></div>
+        </div>
+
+        <div class="result-card" id="resultArea" style="display:none;">
+            <div style="text-align:center;padding:1rem;"><p style="font-size:0.9rem;color:#6b7280;">每日耗电量</p><p style="font-size:1.5rem;font-weight:bold;color:#f59e0b;"><span id="dailyKwh"></span> 度</p><hr style="margin:1rem 0;"><p>月耗电量：<span id="monthlyKwh"></span> 度</p><p>月电费：<span id="monthlyCost"></span> 元</p></div>
+        </div>
+
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中</div>
+
+        <div class="tool-content"><h2>电费计算器使用说明</h2><p>输入电器功率、每天使用时间和电价，即可计算每日和每月的耗电量及电费。帮助您了解家中各电器的用电成本。</p><h3>省电建议</h3><p>选购高能效电器、及时关闭待机电源、合理设置空调温度、定期清洗滤网等均可有效降低电费。</p></div>
+
+        <div class="related-tools"><h3>相关工具</h3><ul><li><a href="/zh/calculators/fuel-cost.html">油耗计算器</a></li><li><a href="/zh/calculators/discount.html">折扣计算器</a></li></ul></div>
+            <section class="related-posts">
+        <h3>相关阅读</h3>
+        <ul>
+            <li><a href="/blog/zh/electricity-cost-guide.html">电费计算器：家电耗电量与电费计算方法</a></li>
+        </ul>
+    </section>
+</main>
+
+    <footer>
+        <p data-i18n="copyright">© 2026 在线工具 | 免费工具</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll("[data-i18n]").forEach(function(el) {
+                const key = el.getAttribute("data-i18n");
+                el.textContent = t(key);
+            });
+        });
+    </script>
 
     <script src="../../js/cookie-consent.js" defer></script>
-
     
-
 <div class="ad-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1794930797650076" data-ad-slot="6250142758" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-
 </body>
-
 </html>
-
-
 

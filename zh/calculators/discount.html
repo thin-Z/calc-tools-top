@@ -1,149 +1,140 @@
-﻿<!DOCTYPE html>
-
+<!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>折扣计算器 - 工具箱里</title>
+    <title>折扣计算器 - 在线计算打折价格</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="快速计算打折价格和节省金额">
-    <meta property='og:title' content='折扣计算器 - 工具箱里'/>
-    <meta property='og:description' content='快速计算打折价格和节省金额'/>
+    <meta name="description" content="免费在线折扣计算器，输入原价和折扣率，快速计算折后价格和节省金额，支持百分比折扣和满减计算。">
+    <meta property='og:title' content='折扣计算器 - 在线计算打折价格'/>
+    <meta property='og:description' content='免费在线折扣计算器，输入原价和折扣率，快速计算折后价格和节省金额，支持百分比折扣和满减计算。'/>
     <meta property='og:type' content='website'/>
-    <meta property='og:url' content='https://calc-tools.top/zh/calculators/discount'/>
-    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:url' content='https://calc-tools.top/zh/calculators/discount.html'/>
+    <meta property='og:image' content='https://calc-tools.top/assets/logo.svg'/>
     <meta property='og:locale' content='zh_CN'/>
     <meta name='twitter:card' content='summary_large_image'/>
-    <meta name='twitter:title' content='折扣计算器 - 工具箱里'/>
-    <meta name='twitter:description' content='快速计算打折价格和节省金额'/>
-    <link rel="canonical" href="https://calc-tools.top/zh/calculators/discount">
-    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/calculators/discount">
-    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/calculators/discount">
-    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/calculators/discount">
+    <meta name='twitter:title' content='折扣计算器 - 在线计算打折价格'/>
+    <meta name='twitter:description' content='免费在线折扣计算器，输入原价和折扣率，快速计算折后价格和节省金额，支持百分比折扣和满减计算。'/>
+
+    <link rel="canonical" href="https://calc-tools.top/zh/calculators/discount.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/calculators/discount.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/calculators/discount.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/calculators/discount.html">
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/cookie-consent.css">
     <link rel="stylesheet" href="../../css/site.css?v=9">
     <script src="../../js/i18n.js" defer></script>
-    <script src="../../js/site.js" defer></script>
-</head></head>
-
-<body>
-
-    <header>
-
-        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
-
-        <nav>
-
-            <a href="/"><span data-i18n="siteName">在线工具</span></a>
-
-            <select class="lang-switch" onchange="switchLang(this.value)">
-
-                <option value="zh" selected>馃嚚馃嚦 涓枃</option>
-
-                <option value="en">馃嚞馃嚙 English</option>
-
-            </select>
-
-        </nav>
-
-    </header>
-
-
-
-    <main>
-
-        <div class="page-header">
-
+    <script src="../../js/like.js" defer></script>
+    <script src="../../js/calculators/discount.js" defer></script>
+    <script type="application/ld+json">
+    {
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "在线工具", "item": "https://calc-tools.top//" },
+                { "@type": "ListItem", "position": 2, "name": "折扣计算器 - 在线计算打折价格", "item": "https://calc-tools.top/zh/calculators/discount.html" }
+            ]
+        },
+        {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "打 8 折是什么意思？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "打 8 折就是按原价的 80% 出售，即价格乘以 0.8。折扣率 20% = 打 8 折。"
             }
-
+        },
+        {
+            "@type": "Question",
+            "name": "满减和打折哪个划算？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "满减和打折哪个更划算取决于消费金额。大额消费通常打折更优惠，小额消费满减可能更合适。建议用计算器对比。"
+            }
+        }
     ]
-
-        </div>
-
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="discount"><span class="heart">鉂?/span> <span class="count">0</span></button></div>
-
-
-
-        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中<div class="tool-form">
-
-            <div class="form-group"><label>鍘熶环锛堝厓锛?/label><input type="number" id="originalPrice" value="100" min="0" step="0.01"></div><div class="form-group"><label>鎶樻墸鐜囷紙%锛?/label><input type="number" id="discountRate" value="20" min="0" max="100" step="1"></div><div class="form-actions"><button type="button" class="btn btn-primary" onclick="doCalculate()">计算</button><button type="reset" class="btn btn-secondary" onclick="resetForm()">閲嶇疆</button></div>
-
-        </div>
-
-
-
-        <div class="result-card" id="resultArea" style="display:none;">
-
-            <div style="text-align:center;padding:1rem;"><p style="font-size:0.9rem;color:#6b7280;">鎶樺悗浠锋牸</p><p style="font-size:2rem;font-weight:bold;color:#22c55e;"><span id="finalPrice"></span> 鍏?/p><hr style="margin:1rem 0;"><p>鍘熶环鎶樻墸锛?span id="discountPercent"></span></p><p>鑺傜渷閲戦锛?span id="savedAmount"></span> 鍏?/p></div>
-
-        </div>
-
-
-
-        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中<div class="tool-content"><h2>鎶樻墸璁＄畻鍣ㄤ娇鐢ㄨ鏄?/h2><p>杈撳叆鍟嗗搧鍘熶环鍜屾姌鎵ｇ巼锛屽揩閫熻绠楁姌鍚庝环鏍煎拰鑺傜渷閲戦銆傞傜敤浜庣綉璐瘮浠枫佸晢鍦轰績閿璁＄畻銆佸洟璐紭鎯犺绠楃瓑鍦烘櫙銆?/p><h3>鎶樻墸鎹㈢畻鎶宸?/h3><p>鎶樻墸鐜?10% = 鎵?9 鎶橈紝鎶樻墸鐜?20% = 鎵?8 鎶橈紝鎶樻墸鐜?50% = 鎵?5 鎶樸傛姌鎵ｇ巼瓒婂ぇ锛屾姌鍚庝环瓒婁綆銆?/p></div>
-
-
-
-        <div class="related-tools"><h3>鐩稿叧工具</h3><ul><li><a href="/zh/calculators/electricity">鐢佃垂璁＄畻鍣?/a></li><li><a href="/zh/calculators/fuel-cost">娌硅楄绠楀櫒</a></li></ul></div>
-
-            <section class="related-posts">
-
-        <h3>鐩稿叧闃呰</h3>
-
-        <ul>
-
-            <li><a href="/blog/zh/discount-calculation-tips">鎵撴姌鎬庝箞绠楋紵鎶樻墸璁＄畻鍏紡涓庣渷閽辨妧宸?/a></li>
-
-        </ul>
-
-    </section>
-
-</main>
-
-
-
-            <footer>
-        <div class="footer-links">
-            <a href="/">首页</a>
-            <a href="/about">关于</a>
-            <a href="/privacy">隐私政策</a>
-            <a href="/contact">联系</a>
-            <a href="/blog/zh/">博客</a>
-        </div>
-        <p>© 2026 工具箱里 | 免费在线工具</p>
-    </footer>
-
-
-
-    <script>
-
-        document.addEventListener("DOMContentLoaded", function() {
-
-            document.querySelectorAll("[data-i18n]").forEach(function(el) {
-
-                const key = el.getAttribute("data-i18n");
-
-                el.textContent = t(key);
-
-            });
-
-        });
-
+}
+    ]
+}
     </script>
 
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "折扣计算器 - 在线计算打折价格",
+    "url": "https://calc-tools.top/zh/calculators/discount.html",
+    "description": "免费在线折扣计算器，输入原价和折扣率，快速计算折后价格和节省金额，支持百分比折扣和满减计算。",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web",
+    "inLanguage": "zh-CN"
+}
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1794930797650076" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+        <nav>
+            <a href="/"><span data-i18n="siteName">首页</span></a>
+            <select class="lang-switch" onchange="switchLang(this.value)">
+                <option value="zh" selected>🇨🇳 中文</option>
+                <option value="en">🇬🇧 English</option>
+            </select>
+        </nav>
+    </header>
 
+    <main>
+        <div class="page-header">
+            <h1>折扣计算器 - 在线计算打折价格</h1>
+            <p>免费在线折扣计算器，输入原价和折扣率，快速计算折后价格和节省金额，支持百分比折扣和满减计算。</p>
+        </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="discount"><span class="heart">❤</span> <span class="count">0</span></button></div>
+
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中</div>
+
+        <div class="tool-form">
+            <div class="form-group"><label>原价（元）</label><input type="number" id="originalPrice" value="100" min="0" step="0.01"></div><div class="form-group"><label>折扣率（%）</label><input type="number" id="discountRate" value="20" min="0" max="100" step="1"></div><div class="form-actions"><button type="button" class="btn btn-primary" onclick="doCalculate()">计算</button><button type="reset" class="btn btn-secondary" onclick="resetForm()">重置</button></div>
+        </div>
+
+        <div class="result-card" id="resultArea" style="display:none;">
+            <div style="text-align:center;padding:1rem;"><p style="font-size:0.9rem;color:#6b7280;">折后价格</p><p style="font-size:2rem;font-weight:bold;color:#22c55e;"><span id="finalPrice"></span> 元</p><hr style="margin:1rem 0;"><p>原价折扣：<span id="discountPercent"></span></p><p>节省金额：<span id="savedAmount"></span> 元</p></div>
+        </div>
+
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中</div>
+
+        <div class="tool-content"><h2>折扣计算器使用说明</h2><p>输入商品原价和折扣率，快速计算折后价格和节省金额。适用于网购比价、商场促销计算、团购优惠计算等场景。</p><h3>折扣换算技巧</h3><p>折扣率 10% = 打 9 折，折扣率 20% = 打 8 折，折扣率 50% = 打 5 折。折扣率越大，折后价越低。</p></div>
+
+        <div class="related-tools"><h3>相关工具</h3><ul><li><a href="/zh/calculators/electricity.html">电费计算器</a></li><li><a href="/zh/calculators/fuel-cost.html">油耗计算器</a></li></ul></div>
+            <section class="related-posts">
+        <h3>相关阅读</h3>
+        <ul>
+            <li><a href="/blog/zh/discount-calculation-tips.html">打折怎么算？折扣计算公式与省钱技巧</a></li>
+        </ul>
+    </section>
+</main>
+
+    <footer>
+        <p data-i18n="copyright">© 2026 在线工具 | 免费工具</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll("[data-i18n]").forEach(function(el) {
+                const key = el.getAttribute("data-i18n");
+                el.textContent = t(key);
+            });
+        });
+    </script>
 
     <script src="../../js/cookie-consent.js" defer></script>
-
     
-
 <div class="ad-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1794930797650076" data-ad-slot="6250142758" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-
 </body>
-
 </html>
-
-
 

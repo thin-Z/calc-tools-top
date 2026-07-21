@@ -1,276 +1,116 @@
-﻿<!DOCTYPE html>
-
+<!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>在线图片工具 - 免费图片处理工具箱</title>
-
+    <title>在线图片工具 - 免费图片处理工具大全</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-
+    <meta name="description" content="免费在线图片处理工具，涵盖图片压缩、格式转换、裁剪缩放、图片转Base64、图片取色器等5种实用工具，无需上传到服务器。">
     <meta property="og:title" content="在线图片工具 - 免费图片处理工具大全"/>
-
+    <meta property="og:description" content="免费在线图片处理工具，涵盖图片压缩、格式转换、裁剪缩放、图片转Base64、图片取色器等5种实用工具。"/>
     <meta property="og:type" content="website"/>
-
+    <meta property="og:url" content="https://calc-tools.top/zh/image/"/>
     <meta property="og:image" content="https://calc-tools.top/assets/logo.svg"/>
-
-    <meta property='og:type' content='website'/>
-
-    <meta property='og:url' content='https://www.calc-tools.top/zh/image/'/>
-
-    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
-
-    <meta property='og:locale' content='zh_CN'/>
-
-    <meta name='twitter:card' content='summary_large_image'/>
-
-    <meta name='twitter:title' content='在线图片工具 - 鍏嶈垂鍥剧墖澶勭悊宸ュ叿澶у叏'/>
-
-    <meta name='twitter:description' content='鍏嶈垂鍦ㄧ嚎鍥剧墖澶勭悊宸ュ叿锛屾兜鐩栧浘鐗囧帇缂┿佹牸寮忚浆鎹佽鍓缉鏀俱佸浘鐗囪浆Base64銆佸浘鐗囧彇鑹插櫒绛?绉嶅疄鐢ㄥ伐鍏凤紝鏃犻渶涓婁紶鍒版湇鍔″櫒銆?/>
-
-
-
-    <link rel="canonical" href="https://www.calc-tools.top/zh/image/">
-
-    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/image/">
-
-    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/image/">
-
-    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/zh/image/">
-
+    <meta property="og:locale" content="zh_CN"/>
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:title" content="在线图片工具 - 免费图片处理工具大全"/>
+    <meta name="twitter:description" content="免费在线图片处理工具，涵盖图片压缩、格式转换、裁剪缩放等5种实用工具。"/>
+    <link rel="canonical" href="https://calc-tools.top/zh/image/">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/image/">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/image/">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/image/">
     <link rel="stylesheet" href="../../css/style.css">
-
     <link rel="stylesheet" href="../../css/cookie-consent.css">
-
     <link rel="stylesheet" href="../../css/site.css?v=9">
-
     <style>
-
         .category-header { text-align: center; padding: 2rem 1rem; }
-
         .category-header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
-
         .category-header p { color: var(--text-secondary); font-size: 1.05rem; }
-
         .tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; padding: 1rem 0; }
-
         .tool-card { display: flex; flex-direction: column; padding: 1.25rem; border-radius: 10px; background: var(--card-bg); border: 1px solid var(--border-color); transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; color: inherit; height: 100%; }
-
         .tool-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
-
         .tool-card .icon { font-size: 2rem; margin-bottom: 0.5rem; }
-
         .tool-card h3 { font-size: 1.1rem; margin: 0.25rem 0; }
-
         .tool-card p { font-size: 0.9rem; color: var(--text-secondary); margin: 0.25rem 0 0; line-height: 1.4; }
-
         .breadcrumb { padding: 0.75rem 0; font-size: 0.9rem; color: var(--text-secondary); }
-
         .breadcrumb a { color: var(--link-color); text-decoration: none; }
-
         .breadcrumb a:hover { text-decoration: underline; }
-
         .tool-count { text-align: center; color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem; }
-
     </style>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script type="application/ld+json">
-
-{
-
-    "@context": "https://schema.org",
-
-    "@type": "SoftwareApplication",
-
-    "name": "在线图片工具 - 免费图片处理工具箱",
-
-    "url": "https://www.calc-tools.top/zh/image/",
-
-    "description": "免费在线图片处理工具，涵盖图片压缩、格式转换、裁剪缩放、图片转Base64、图片取色器等5种实用工具，无需上传到服务器。",
-
-    "applicationCategory": "UtilitiesApplication",
-
-    "operatingSystem": "Web",
-
-    "inLanguage": "zh-CN"
-
-}
-
-</script>
-
 </head>
-
 <body>
-
     <header>
-
         <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
-
         <nav>
-
-            <a href="/"><span>棣栭〉</span></a>
-
-            <a href="/blog/zh/">鍗氬</a>
-
+            <a href="/"><span>首页</span></a>
+            <a href="/blog/zh/">博客</a>
             <select class="lang-switch" onchange="switchLang(this.value)">
-
-                <option value="zh" selected>馃嚚馃嚦 涓枃</option>
-
-                <option value="en">馃嚞馃嚙 English</option>
-
+                <option value="zh" selected>🇨🇳 中文</option>
+                <option value="en">🇬🇧 English</option>
             </select>
-
         </nav>
-
     </header>
 
-
-
     <main>
-
         <div class="breadcrumb">
-
-            <a href="/">棣栭〉</a> &gt; 在线图片工具
-
+            <a href="/">首页</a> &gt; 在线图片工具
         </div>
-
-
 
         <div class="category-header">
-
             <h1>在线图片工具</h1>
-
-            <p>鍏嶈垂鍥剧墖澶勭悊工具 鈥?鎵€鏈夊鐞嗗潎鍦ㄦ祻瑙堝櫒鏈湴瀹屾垚</p>
-
+            <p>免费图片处理工具 — 所有处理均在浏览器本地完成</p>
         </div>
 
-
-
-        <div class="tool-count">鍏?5 娆惧浘鐗囧伐鍏?/div>
-
-
-
-        <div class="ad-slot ad-placeholder">骞垮憡浣?- 鎷涘晢涓?/div>
-
-
-
-        <div class="tool-grid">
-
-            <a href="/zh/image/compress" class="tool-card">
-
-                <div class="icon">馃棞锔?/div>
-
-                <h3>鍥剧墖鍘嬬缉</h3>
-
-                <p>在线压缩 PNG銆丣PEG銆乄ebP 鍥剧墖锛屼繚鎸佺敾璐ㄧ殑鍚屾椂鍑忓皬鏂囦欢浣撶Н</p>
-
-            </a>
-
-            <a href="/zh/image/convert" class="tool-card">
-
-                <div class="icon">馃攧</div>
-
-                <h3>鏍煎紡杞崲</h3>
-
-                <h3>图片转 Base64</h3>
-
-            </a>
-
-            <a href="/zh/image/resize" class="tool-card">
-
-                <div class="icon">鉁傦笍</div>
-
-                <h3>瑁佸壀缂╂斁</h3>
+        <div class="tool-count">共 5 款图片工具</div>
 
         <div class="ad-slot ad-placeholder">广告位 - 招商中</div>
 
+        <div class="tool-grid">
+            <a href="/zh/image/compress.html" class="tool-card">
+                <div class="icon">🗜️</div>
+                <h3>图片压缩</h3>
+                <p>在线压缩 PNG、JPEG、WebP 图片，保持画质的同时减小文件体积</p>
             </a>
-
-            <a href="/zh/image/base64" class="tool-card">
-
-                <div class="icon">馃攼</div>
-
-                <h3>鍥剧墖杞?Base64</h3>
-
-                <p>灏嗗浘鐗囪浆鎹负 Base64 缂栫爜瀛楃涓诧紝鏂逛究宓屽叆 HTML/CSS</p>
-
+            <a href="/zh/image/convert.html" class="tool-card">
+                <div class="icon">🔄</div>
+                <h3>格式转换</h3>
+                <p>图片格式在线互转，支持 PNG、JPEG、WebP、GIF 等格式</p>
             </a>
-
-            <a href="/zh/image/color-picker" class="tool-card">
-
-                <div class="icon">馃帹</div>
-
-                <h3>鍥剧墖鍙栬壊鍣?/h3>
-
-                <p>浠庡浘鐗囦腑鎻愬彇棰滆壊鍊硷紝鑾峰彇 HEX/RGB/HSL 鑹茬爜</p>
-
+            <a href="/zh/image/resize.html" class="tool-card">
+                <div class="icon">✂️</div>
+                <h3>裁剪缩放</h3>
+                <p>在线裁剪和缩放图片，自定义尺寸和比例</p>
             </a>
-
+            <a href="/zh/image/base64.html" class="tool-card">
+                <div class="icon">🔐</div>
+                <h3>图片转 Base64</h3>
+                <p>将图片转换为 Base64 编码字符串，方便嵌入 HTML/CSS</p>
+            </a>
+            <a href="/zh/image/color-picker.html" class="tool-card">
+                <div class="icon">🎨</div>
+                <h3>图片取色器</h3>
+                <p>从图片中提取颜色值，获取 HEX/RGB/HSL 色码</p>
+            </a>
         </div>
 
-
-
-        <div class="ad-slot ad-placeholder">骞垮憡浣?- 鎷涘晢涓?/div>
-
+        <div class="ad-slot ad-placeholder">广告位 - 招商中</div>
     </main>
 
-
-
     <footer>
-
         <div class="footer-links">
-
-            <a href="/">棣栭〉</a>
-
-            <a href="/about">关于</a>
-
-            <a href="/privacy">闅愮鏀跨瓥</a>
-
-            <a href="/contact">鑱旂郴</a>
-
-            <a href="/blog/zh/">鍗氬</a>
-
+            <a href="/">首页</a>
+            <a href="/about.html">关于</a>
+            <a href="/privacy.html">隐私政策</a>
+            <a href="/contact.html">联系</a>
+            <a href="/blog/zh/">博客</a>
         </div>
-
-        <p>漏 2026 在线工具 | 鍏嶈垂工具</p>
-
+        <p>© 2026 在线工具 | 免费工具</p>
     </footer>
 
-
-
     <script>
-
         function switchLang(value) {
-
             if (value === "en") window.location.href = "/en/image/";
-
         }
-
     </script>
-
 </body>
-
 </html>
-

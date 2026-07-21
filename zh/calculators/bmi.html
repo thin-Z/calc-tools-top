@@ -1,638 +1,398 @@
-﻿<!DOCTYPE html>
-
+<!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BMI 计算器 - 工具箱里</title>
+    <title>BMI 计算器 - 在线计算身体质量指数</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="根据身高体重计算身体质量指数，了解体重健康状况">
-    <meta property='og:title' content='BMI 计算器 - 工具箱里'/>
-    <meta property='og:description' content='根据身高体重计算身体质量指数，了解体重健康状况'/>
+    <meta name="description" content="免费在线 BMI 计算器，根据身高体重快速计算身体质量指数，判断体型偏瘦、正常、超重或肥胖，附带健康建议。">
+    <meta property='og:title' content='BMI 计算器 - 在线计算身体质量指数'/>
+    <meta property='og:description' content='免费在线 BMI 计算器，根据身高体重快速计算身体质量指数，判断体型偏瘦、正常、超重或肥胖，附带健康建议。'/>
     <meta property='og:type' content='website'/>
-    <meta property='og:url' content='https://calc-tools.top/zh/calculators/bmi'/>
-    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:url' content='https://calc-tools.top/zh/calculators/bmi.html'/>
+    <meta property='og:image' content='https://calc-tools.top/assets/logo.svg'/>
     <meta property='og:locale' content='zh_CN'/>
     <meta name='twitter:card' content='summary_large_image'/>
-    <meta name='twitter:title' content='BMI 计算器 - 工具箱里'/>
-    <meta name='twitter:description' content='根据身高体重计算身体质量指数，了解体重健康状况'/>
-    <link rel="canonical" href="https://calc-tools.top/zh/calculators/bmi">
-    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/calculators/bmi">
-    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/calculators/bmi">
-    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/calculators/bmi">
+    <meta name='twitter:title' content='BMI 计算器 - 在线计算身体质量指数'/>
+    <meta name='twitter:description' content='免费在线 BMI 计算器，根据身高体重快速计算身体质量指数，判断体型偏瘦、正常、超重或肥胖，附带健康建议。'/>
+
+    <link rel="canonical" href="https://calc-tools.top/zh/calculators/bmi.html">
+    <link rel="alternate" hreflang="zh-CN" href="https://calc-tools.top/zh/calculators/bmi.html">
+    <link rel="alternate" hreflang="en" href="https://calc-tools.top/en/calculators/bmi.html">
+    <link rel="alternate" hreflang="x-default" href="https://calc-tools.top/zh/calculators/bmi.html">
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/cookie-consent.css">
     <link rel="stylesheet" href="../../css/site.css?v=9">
     <script src="../../js/i18n.js" defer></script>
-    <script src="../../js/site.js" defer></script>
-</head></head>
+    <script src="../../js/like.js" defer></script>
+    <script src="../../js/calculators/bmi.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "在线工具", "item": "https://calc-tools.top/" },
+        { "@type": "ListItem", "position": 2, "name": "BMI 计算器", "item": "https://calc-tools.top/zh/calculators/bmi" }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "BMI 多少算正常？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "BMI 在 18.5-24.9 之间为正常范围，25-29.9 为超重，30 以上为肥胖。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "BMI 怎么计算？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "BMI = 体重(kg) ÷ 身高(m)²。例如体重 60kg、身高 1.7m，则 BMI = 60 ÷ (1.7 × 1.7) = 20.76。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "BMI 不准确的情况有哪些？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "运动员、孕妇、老年人和肌肉发达的人群，BMI 可能无法准确反映体脂率，建议结合体脂率等其他指标综合评估。"
+            }
+        }
+    ]
+}
+</script>
 
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "BMI 计算器 - 在线计算身体质量指数",
+    "url": "https://calc-tools.top/zh/calculators/bmi.html",
+    "description": "免费在线 BMI 计算器，根据身高体重快速计算身体质量指数，判断体型偏瘦、正常、超重或肥胖，附带健康建议。",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web",
+    "inLanguage": "zh-CN"
+}
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1794930797650076" crossorigin="anonymous"></script>
+</head>
 <body>
-
     <header>
-
         <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
-
         <nav>
-
-            <a href="/"><span data-i18n="siteName">在线工具</span></a>
-
+            <a href="/"><span data-i18n="siteName">首页</span></a>
             <select class="lang-switch" onchange="switchLang(this.value)">
-
-                <option value="zh" selected>馃嚚馃嚦 涓枃</option>
-
-                <option value="en">馃嚞馃嚙 English</option>
-
+                <option value="zh" selected>🇨🇳 中文</option>
+                <option value="en">🇬🇧 English</option>
             </select>
-
         </nav>
-
     </header>
 
-
-
     <main>
-
         <div class="page-header">
+            <h1 data-i18n="bmiTitle">BMI 计算器</h1>
+            <p data-i18n="bmiDescFull">根据身高体重计算身体质量指数，了解体重健康状况</p>
+        </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="bmi"><span class="heart">❤</span> <span class="count">0</span></button></div>
 
-            <h1 data-i18n="bmiTitle">BMI 计算器<p data-i18n="bmiDescFull">根据身高体重计算身体质量指数，了解体重健康状况</div>
+        <!-- 广告位 A -->
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中</div>
 
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="bmi"><span class="heart">鉂?/span> <span class="count">0</span></button></div>
-
-
-
-        <!-- 骞垮憡浣?A -->
-
-        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中<div class="calculator-form">
-
-            <h2 data-i18n="bmiTitle">BMI 计算器<form id="bmiForm" onsubmit="return false;">
-
+        <div class="calculator-form">
+            <h2 data-i18n="bmiTitle">BMI 计算器</h2>
+            <form id="bmiForm" onsubmit="return false;">
                 <div class="form-row">
-
                     <div class="form-group">
-
-                        <label for="height" data-i18n="height">身高（cm）<input type="number" id="height" value="170" min="50" max="250" step="0.1">
-
+                        <label for="height" data-i18n="height">身高（cm）</label>
+                        <input type="number" id="height" value="170" min="50" max="250" step="0.1">
                     </div>
-
                     <div class="form-group">
-
-                        <label for="weight" data-i18n="weight">体重（kg）<input type="number" id="weight" value="70" min="10" max="300" step="0.1">
-
+                        <label for="weight" data-i18n="weight">体重（kg）</label>
+                        <input type="number" id="weight" value="70" min="10" max="300" step="0.1">
                     </div>
-
                 </div>
-
                 <div class="btn-group">
-
-                    <button type="button" class="btn btn-primary" onclick="doCalculate()" data-i18n="calculate">开始计算<button type="reset" class="btn btn-secondary" onclick="resetForm()" data-i18n="reset">重置</button>
-
+                    <button type="button" class="btn btn-primary" onclick="doCalculate()" data-i18n="calculate">开始计算</button>
+                    <button type="reset" class="btn btn-secondary" onclick="resetForm()" data-i18n="reset">重置</button>
                 </div>
-
             </form>
 
-
-
-            <!-- 缁撴灉鍖哄煙 -->
-
+            <!-- 结果区域 -->
             <div id="resultArea" class="result-card" style="display:none;">
-
                 <h3 data-i18n="result">计算结果</h3>
-
                 <div style="margin-bottom:8px;">
-
                     <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="bmiValue">BMI 指数</div>
-
                     <div class="result-value" id="bmiValue"></div>
-
                 </div>
-
                 <div>
-
                     <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="bmiCategory">体型分类</div>
-
                     <div style="font-size:1.4rem;font-weight:700;margin-top:4px;" id="bmiCategory"></div>
-
                 </div>
-
                 <div id="adviceArea" style="margin-top:12px;padding-top:12px;border-top:1px solid #bfdbfe;">
-
                     <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="healthAdvice">健康建议</div>
-
                     <div style="font-size:0.95rem;margin-top:4px;" id="healthAdvice"></div>
-
                 </div>
-
             </div>
 
-
-
-            <!-- 鍥捐〃瀹瑰櫒 -->
-
+            <!-- 图表容器 -->
             <div class="chart-container" id="chartContainer" style="display:none;">
-
                 <canvas id="bmiChart"></canvas>
-
             </div>
-
         </div>
 
-
-
-        <!-- 骞垮憡浣?B -->
-
-        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中<div class="tool-content">
-
-<h2>BMI 计算器使用说明</h2>
-
-    <p>BMI锛圔ody Mass Index锛岃韩浣撹川閲忔寚鏁帮級鏄浗闄呬笂甯哥敤鐨勮　閲忎汉浣撹儢鐦︾▼搴︾殑鏍囧噯銆傞€氳繃韬珮鍜屼綋閲嶄袱涓寚鏍囪绠楀緱鍑猴紝閫傜敤浜?18-65 宀佺殑澶у鏁版垚骞翠汉銆?/p>
-
-    <h3>BMI 鎸囨暟瀵圭収琛?/h3>
-
-    <p>鍋忕槮锛? 18.5 | 姝ｅ父锛?8.5-24.9 | 瓒呴噸锛?5-29.9 | 鑲ヨ儢锛氣墺 30</p>
-
-    <p>娉ㄦ剰锛欱MI 浠呬綔涓哄弬鑰冩寚鏍囷紝涓嶈兘瀹屽叏鍙嶆槧韬綋鍋ュ悍鐘跺喌銆傚缓璁粨鍚堜綋鑴傜巼銆佽叞鍥寸瓑鎸囨爣缁煎悎璇勪及銆?/p>
-
+        <!-- 广告位 B -->
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中</div>
+    
+<div class="tool-content">
+    <h2>BMI 计算器使用说明</h2>
+    <p>BMI（Body Mass Index，身体质量指数）是国际上常用的衡量人体胖瘦程度的标准。通过身高和体重两个指标计算得出，适用于 18-65 岁的大多数成年人。</p>
+    <h3>BMI 指数对照表</h3>
+    <p>偏瘦：< 18.5 | 正常：18.5-24.9 | 超重：25-29.9 | 肥胖：≥ 30</p>
+    <p>注意：BMI 仅作为参考指标，不能完全反映身体健康状况。建议结合体脂率、腰围等指标综合评估。</p>
 </div>
-
 <div class="related-tools">
-
-    <h3>鐩稿叧工具</h3>
-
+    <h3>相关工具</h3>
     <ul>
-
-        <li><a href="/zh/calculators/date-calc">鏃ユ湡璁＄畻鍣?/a></li>
-
-        <li><a href="/zh/calculators/housing-fund">鍏Н閲戣绠楀櫒</a></li>
-
+        <li><a href="/zh/calculators/date-calc.html">日期计算器</a></li>
+        <li><a href="/zh/calculators/housing-fund.html">公积金计算器</a></li>
     </ul>
-
 </div>
-
         <section class="related-posts">
-
-        <h3>鐩稿叧闃呰</h3>
-
+        <h3>相关阅读</h3>
         <ul>
-
-            <li><a href="/blog/zh/bmi-normal-range-guide">BMI 澶氬皯绠楁甯革紵鏍囧噯鑼冨洿鍏ㄩ潰瑙ｈ</a></li>
-
+            <li><a href="/blog/zh/bmi-normal-range-guide.html">BMI 多少算正常？标准范围全面解读</a></li>
         </ul>
-
     </section>
-
 </main>
 
-
-
-            <footer>
-        <div class="footer-links">
-            <a href="/">首页</a>
-            <a href="/about">关于</a>
-            <a href="/privacy">隐私政策</a>
-            <a href="/contact">联系</a>
-            <a href="/blog/zh/">博客</a>
-        </div>
-        <p>© 2026 工具箱里 | 免费在线工具</p>
+    <footer>
+        <p data-i18n="copyright">© 2026 在线工具 | 免费工具</p>
     </footer>
 
-
-
     <script>
-
         let chartInstance = null;
 
-
-
         function getCategoryLabel(categoryZh) {
-
             const lang = getLang();
-
             const map = {
-
-                "鍋忕槮": lang === "en" ? "Underweight" : "鍋忕槮",
-
-                "姝ｅ父": lang === "en" ? "Normal" : "姝ｅ父",
-
-                "瓒呴噸": lang === "en" ? "Overweight" : "瓒呴噸",
-
-                "鑲ヨ儢": lang === "en" ? "Obese" : "鑲ヨ儢"
-
+                "偏瘦": lang === "en" ? "Underweight" : "偏瘦",
+                "正常": lang === "en" ? "Normal" : "正常",
+                "超重": lang === "en" ? "Overweight" : "超重",
+                "肥胖": lang === "en" ? "Obese" : "肥胖"
             };
-
             return map[categoryZh] || categoryZh;
-
         }
-
-
 
         function getAdviceKey(categoryZh) {
-
             const map = {
-
-                "鍋忕槮": "adviceUnderweight",
-
-                "姝ｅ父": "adviceNormal",
-
-                "瓒呴噸": "adviceOverweight",
-
-                "鑲ヨ儢": "adviceObese"
-
+                "偏瘦": "adviceUnderweight",
+                "正常": "adviceNormal",
+                "超重": "adviceOverweight",
+                "肥胖": "adviceObese"
             };
-
             return map[categoryZh] || "";
-
         }
 
-
-
         function doCalculate() {
-
             const height = parseFloat(document.getElementById("height").value);
-
             const weight = parseFloat(document.getElementById("weight").value);
-
-
 
             if (!height || !weight || height <= 0 || weight <= 0) return;
 
-
-
             const result = calculateBMI(height, weight);
-
             const lang = getLang();
-
             const labels = i18n[lang];
 
-
-
             // Show result area
-
             const resultArea = document.getElementById("resultArea");
-
             resultArea.style.display = "block";
 
-
-
             // BMI value
-
             document.getElementById("bmiValue").textContent = result.bmi;
 
-
-
             // Category with color
-
             const catEl = document.getElementById("bmiCategory");
-
             catEl.textContent = getCategoryLabel(result.category);
-
             catEl.style.color = result.color;
 
-
-
             // Health advice
-
             const adviceKey = getAdviceKey(result.category);
-
             document.getElementById("healthAdvice").textContent = labels[adviceKey] || "";
 
-
-
             // BMI scale chart
-
             const chartContainer = document.getElementById("chartContainer");
-
             chartContainer.style.display = "block";
 
-
-
             if (chartInstance) {
-
                 chartInstance.destroy();
-
             }
-
-
 
             const ctx = document.getElementById("bmiChart").getContext("2d");
 
-
-
             // Segments: underweight (0-18.5), normal (18.5-24), overweight (24-28), obese (28-40)
-
             const segments = [
-
-                { label: labels.underweight || "鍋忕槮", from: 0, to: 18.5, color: "#f59e0b" },
-
-                { label: labels.normal || "姝ｅ父", from: 18.5, to: 24, color: "#22c55e" },
-
-                { label: labels.overweight || "瓒呴噸", from: 24, to: 28, color: "#f97316" },
-
-                { label: labels.obese || "鑲ヨ儢", from: 28, to: 40, color: "#ef4444" }
-
+                { label: labels.underweight || "偏瘦", from: 0, to: 18.5, color: "#f59e0b" },
+                { label: labels.normal || "正常", from: 18.5, to: 24, color: "#22c55e" },
+                { label: labels.overweight || "超重", from: 24, to: 28, color: "#f97316" },
+                { label: labels.obese || "肥胖", from: 28, to: 40, color: "#ef4444" }
             ];
 
-
-
             const bmiVal = parseFloat(result.bmi);
-
             const clampedBMI = Math.min(Math.max(bmiVal, 0), 40);
-
             const barMax = 40;
 
-
-
             // Build segment data for stacked horizontal bar
-
             const segValues = segments.map(s => s.to - s.from);
-
             const segColors = segments.map(s => s.color);
 
-
-
             // Position of the marker as percentage
-
             const markerPct = (clampedBMI / barMax) * 100;
 
-
-
             chartInstance = new Chart(ctx, {
-
                 type: "bar",
-
                 data: {
-
                     labels: [""],
-
                     datasets: segments.map((s, i) => ({
-
                         label: s.label,
-
                         data: [segValues[i]],
-
                         backgroundColor: s.color,
-
                         borderColor: s.color,
-
                         borderWidth: 1,
-
                         barPercentage: 0.6,
-
                         categoryPercentage: 1
-
                     }))
-
                 },
-
                 options: {
-
                     indexAxis: "y",
-
                     responsive: true,
-
                     maintainAspectRatio: false,
-
                     scales: {
-
                         x: {
-
                             stacked: true,
-
                             min: 0,
-
                             max: barMax,
-
                             ticks: {
-
                                 stepSize: 5,
-
                                 callback: function(v) { return v; }
-
                             },
-
                             title: {
-
                                 display: true,
-
                                 text: "BMI"
-
                             }
-
                         },
-
                         y: {
-
                             stacked: true,
-
                             display: false
-
                         }
-
                     },
-
                     plugins: {
-
                         legend: {
-
                             position: "bottom",
-
                             labels: {
-
                                 padding: 12,
-
                                 font: { size: 12 },
-
                                 generateLabels: function(chart) {
-
                                     // Use segment labels with color boxes
-
                                     return segments.map((s, i) => ({
-
                                         text: s.label,
-
                                         fillStyle: s.color,
-
                                         strokeStyle: s.color,
-
                                         lineWidth: 1,
-
                                         index: i
-
                                     }));
-
                                 }
-
                             }
-
                         },
-
                         tooltip: {
-
                             callbacks: {
-
                                 label: function(context) {
-
                                     const seg = segments[context.datasetIndex];
-
                                     return seg.label + ": " + seg.from + " - " + seg.to;
-
                                 }
-
                             }
-
                         }
-
                     }
-
                 },
-
                 plugins: [{
-
                     id: "bmiMarker",
-
                     afterDraw: function(chart) {
-
                         const ctx2 = chart.ctx;
-
                         const chartArea = chart.chartArea;
-
                         const xScale = chart.scales.x;
-
                         const yScale = chart.scales.y;
 
-
-
                         const xPos = xScale.getPixelForValue(clampedBMI);
-
                         const yTop = yScale.getPixelForValue(0) - 10;
-
                         const yBottom = yScale.getPixelForValue(0) + 10;
 
-
-
                         // Draw marker triangle
-
                         ctx2.save();
-
                         ctx2.beginPath();
-
                         ctx2.moveTo(xPos, yTop - 8);
-
                         ctx2.lineTo(xPos - 8, yTop + 4);
-
                         ctx2.lineTo(xPos + 8, yTop + 4);
-
                         ctx2.closePath();
-
                         ctx2.fillStyle = "#1e293b";
-
                         ctx2.fill();
-
-
 
                         // Draw value label above marker
-
                         ctx2.font = "bold 13px -apple-system, sans-serif";
-
                         ctx2.textAlign = "center";
-
                         ctx2.fillStyle = "#1e293b";
-
                         const labelText = result.bmi;
-
                         const textWidth = ctx2.measureText(labelText).width;
-
                         const labelX = xPos;
-
                         const labelY = yTop - 14;
 
-
-
                         // Background
-
                         ctx2.fillStyle = "rgba(255,255,255,0.9)";
-
                         const pad = 4;
-
                         ctx2.roundRect ? ctx2.roundRect(labelX - textWidth/2 - pad, labelY - 14, textWidth + pad*2, 20, 4) : null;
-
                         ctx2.fill();
 
-
-
                         ctx2.fillStyle = "#1e293b";
-
                         ctx2.textAlign = "center";
-
                         ctx2.fillText(labelText, labelX, labelY);
-
                         ctx2.restore();
-
                     }
-
                 }]
-
             });
-
         }
-
-
 
         function resetForm() {
-
             document.getElementById("height").value = 170;
-
             document.getElementById("weight").value = 70;
-
             document.getElementById("resultArea").style.display = "none";
-
             document.getElementById("chartContainer").style.display = "none";
-
             if (chartInstance) {
-
                 chartInstance.destroy();
-
                 chartInstance = null;
-
             }
-
         }
 
-
-
-        // 椤甸潰鍔犺浇鍚庤嚜鍔ㄨ绠?
+        // 页面加载后自动计算
         document.addEventListener("DOMContentLoaded", function() {
-
             document.querySelectorAll("[data-i18n]").forEach(function(el) {
-
                 const key = el.getAttribute("data-i18n");
-
                 el.textContent = t(key);
-
             });
-
             setTimeout(doCalculate, 100);
-
         });
-
     </script>
 
-
-
     <script src="../../js/cookie-consent.js" defer></script>
-
     
-
 <div class="ad-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1794930797650076" data-ad-slot="6250142758" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-
 </body>
-
 </html>
-
-
-
-
 
 
 
