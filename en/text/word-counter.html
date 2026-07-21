@@ -50,19 +50,19 @@
 </head>
 <body>
     <header>
-        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="宸ュ叿绠遍噷" class="site-logo"></a>
+        <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
         <nav>
             <a href="/en/">Home</a>
             <select class="lang-switch" onchange="switchLang(this.value)">
                 <option value="en" selected>🇬🇧 English</option>
-                <option value="zh">馃嚚馃嚦 娑擃厽鏋?/option>
+                <option value="zh">🇨🇳 娑擃厽鏋?/option>
             </select>
         </nav>
     </header>
     <main>
         <div class="tool-page">
             <div class="tool-header">
-                <h1>馃摑 Online Word Counter</h1>
+                <h1>📝 Online Word Counter</h1>
                 <p>Count characters, words, paragraphs, sentences, and analyze keyword frequency. All processing happens locally in your browser.</p>
             </div>
             <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="word-counter"><span class="heart">閴?/span> <span class="count">0</span></button></div>
@@ -75,20 +75,20 @@
 
                 <!-- Mode Toggle -->
                 <div class="mode-chips">
-                    <span class="mode-chip active" data-mode="stats" onclick="switchMode('stats')">馃搳 Word Count</span>
-                    <span class="mode-chip" data-mode="keywords" onclick="switchMode('keywords')">馃攽 Keyword Density</span>
+                    <span class="mode-chip active" data-mode="stats" onclick="switchMode('stats')">📊 Word Count</span>
+                    <span class="mode-chip" data-mode="keywords" onclick="switchMode('keywords')">🔑 Keyword Density</span>
                 </div>
 
                 <div class="action-bar">
                     <button class="btn btn-primary" onclick="doAnalyze()">Analyze</button>
                     <button class="btn btn-secondary" onclick="resetTool()">Clear</button>
-                    <button class="copy-btn" id="copyResultBtn" onclick="copyResult()">馃搵 Copy Results</button>
+                    <button class="copy-btn" id="copyResultBtn" onclick="copyResult()">📋 Copy Results</button>
                 </div>
             </div>
 
             <!-- Stats Mode -->
             <div class="result-area" id="statsArea">
-                <div class="result-label">馃搳 Statistics</div>
+                <div class="result-label">📊 Statistics</div>
                 <div class="stats-grid">
                     <div class="stat-card"><div class="stat-value" id="statTotalChars">0</div><div class="stat-label">Total Characters</div></div>
                     <div class="stat-card"><div class="stat-value" id="statChineseChars">0</div><div class="stat-label">Chinese Chars</div></div>
@@ -104,7 +104,7 @@
 
             <!-- Keyword Mode -->
             <div class="result-area" id="keywordsArea" style="display:none;">
-                <div class="result-label">馃攽 Top 20 Keywords by Frequency</div>
+                <div class="result-label">🔑 Top 20 Keywords by Frequency</div>
                 <ul class="keyword-list" id="keywordList">
                     <li style="text-align:center;color:var(--text-secondary);padding:20px;">Enter text and click "Analyze" to see keywords</li>
                 </ul>
@@ -125,8 +125,8 @@
             <div class="related-tools">
                 <h3>Related Tools</h3>
                 <ul>
-                    <li><a href="/en/image/base64">馃敜 Base64 Encode/Decode</a></li>
-                    <li><a href="/en/">馃彔 Back to Home</a></li>
+                    <li><a href="/en/image/base64">🔤 Base64 Encode/Decode</a></li>
+                    <li><a href="/en/">🏠 Back to Home</a></li>
                 
         <li><a href="/blog/en/word-counter-guide">📖 User Guide</a></li>
     </ul>
@@ -143,5 +143,6 @@
     <script src="../../js/like.js" defer></script>
     <script src="../../js/cookie-consent.js" defer></script>
     <div class="ad-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1794930797650076" data-ad-slot="6250142758" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+<button id="gw-theme" aria-label="切换暗黑模式" style="position:fixed;bottom:16px;right:16px;z-index:9999;width:44px;height:44px;border-radius:50%;border:1px solid rgba(128,128,128,.4);background:var(--bg,#fff);color:var(--text,#222);font-size:20px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15)" onclick="(function(){var d=document.documentElement;var n=d.getAttribute('data-theme')==='dark'?'light':'dark';d.setAttribute('data-theme',n);try{localStorage.setItem('theme',n)}catch(e){}})()">🌙</button>
 </body>
 </html>

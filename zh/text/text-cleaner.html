@@ -40,7 +40,7 @@
 
             <select class="lang-switch" onchange="switchLang(this.value)">
 
-                <option value="zh" selected>馃嚚馃嚦 娑擃厽鏋?/option>
+                <option value="zh" selected>🇨🇳 娑擃厽鏋?/option>
 
                 <option value="en">🇬🇧 English</option>
 
@@ -114,23 +114,23 @@
 
 
 
-                <!-- 缁撴灉鍖哄煙 -->
+                <!-- 结果区域 -->
 
                 <div id="resultSection" class="result-section" style="display:none;">
 
-                    <h3>娓呯悊缁撴灉</h3>
+                    <h3>清理结果</h3>
 
                     <div class="stats-row">
 
-                        <span class="stat-badge">娓呯悊鍓嶏細<strong id="charBefore">0</strong> 鐎涙顑?/span>
+                        <span class="stat-badge">清理前：<strong id="charBefore">0</strong> 鐎涙顑?/span>
 
-                        <span class="stat-badge">娓呯悊鍚庯細<strong id="charAfter">0</strong> 鐎涙顑?/span>
+                        <span class="stat-badge">清理后：<strong id="charAfter">0</strong> 鐎涙顑?/span>
 
                     </div>
 
                     <pre class="result-area" id="resultArea" style="font-family: 'SF Mono', 'Fira Code', 'Consolas', 'Courier New', monospace; font-size: 0.9rem; line-height: 1.5; padding: 16px; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"></pre>
 
-                    <button class="btn btn-copy" id="copyBtn" onclick="copyTextCleanerResult()">馃搵 澶嶅埗缁撴灉</button>
+                    <button class="btn btn-copy" id="copyBtn" onclick="copyTextCleanerResult()">📋 复制结果</button>
 
                 </div>
 
@@ -168,13 +168,13 @@
 
 
 
-                <h3>浣跨敤鍦烘櫙</h3>
+                <h3>使用场景</h3>
 
                 <ul>
 
                     <li><strong>缂冩垿銆夐崘鍛啇閹绘劕褰?/strong> 閳?娴犲海缍夋い闈涱槻閸掕埖鏋冮張顒€鎮楀〒鍛倞婢舵矮缍戦弽鐓庣础</li>
 
-                    <li><strong>鏁版嵁澶勭悊</strong> 閳?濞撳懏绀?CSV 鎴栨棩蹇楁枃浠朵腑鐨勬潅涔辨枃鏈?/li>
+                    <li><strong>数据处理</strong> 閳?濞撳懏绀?CSV 鎴栨棩蹇楁枃浠朵腑鐨勬潅涔辨枃鏈?/li>
 
                     <li><strong>閸愬懎顔愰崣鎴濈</strong> 閳?閺佸鎮婇懡澶岊焾閺傚洦婀伴敍灞藉箵闂勩倓绗夎箛鍛邦洣閻ㄥ嫭鐗稿?/li>
 
@@ -194,7 +194,7 @@
 
             <ul>
 
-                <li><a href="/blog/zh/text-cleaner-guide">馃摉 浣跨敤鎸囧崡</a></li>
+                <li><a href="/blog/zh/text-cleaner-guide">📖 使用指南</a></li>
 
             </ul>
 
@@ -219,6 +219,7 @@
 
     <div class="ad-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1794930797650076" data-ad-slot="6250142758" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
 
+<button id="gw-theme" aria-label="切换暗黑模式" style="position:fixed;bottom:16px;right:16px;z-index:9999;width:44px;height:44px;border-radius:50%;border:1px solid rgba(128,128,128,.4);background:var(--bg,#fff);color:var(--text,#222);font-size:20px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.15)" onclick="(function(){var d=document.documentElement;var n=d.getAttribute('data-theme')==='dark'?'light':'dark';d.setAttribute('data-theme',n);try{localStorage.setItem('theme',n)}catch(e){}})()">🌙</button>
 </body>
 
 </html>
