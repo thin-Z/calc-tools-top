@@ -30,6 +30,11 @@
   ],
   "redirects": [
     {
+      "source": "https://calc-tools.top/(.*)",
+      "destination": "https://www.calc-tools.top/$1",
+      "permanent": true
+    },
+    {
       "source": "/zh",
       "destination": "/",
       "permanent": true
