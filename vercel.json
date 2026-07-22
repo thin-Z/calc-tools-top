@@ -30,8 +30,14 @@
   ],
   "redirects": [
     {
-      "source": "https://calc-tools.top/(.*)",
-      "destination": "https://www.calc-tools.top/$1",
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "calc-tools.top"
+        }
+      ],
+      "destination": "https://www.calc-tools.top/:path*",
       "permanent": true
     },
     {
