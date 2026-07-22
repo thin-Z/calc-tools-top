@@ -67,32 +67,35 @@ $xml = New-Object System.Text.StringBuilder
 [void]$xml.AppendLine('        xmlns:xhtml="http://www.w3.org/1999/xhtml">')
 
 foreach ($p in $pages) {
-    $cleanPath = $p.Path -replace '\.html$', ''
-    $url = "$BaseUrl/$cleanPath"
+    $cleanPath = "/" + ($p.Path -replace '\.html$', '')
+    if ($cleanPath -match '/index$') {
+        $cleanPath = $cleanPath -replace '/index$', '/'
+    }
+    $url = "$BaseUrl$cleanPath"
     [void]$xml.AppendLine('  <url>')
     [void]$xml.AppendLine("    <loc>$url</loc>")
 
-    # hreflang alternates
-    if ($p.Lang -eq "zh-CN") {
-        $enClean = ($p.Path -replace "^zh/", "en/") -replace '\.html$', ''
-        [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='zh-CN' href='$BaseUrl/$cleanPath'/>")
+    # hreflang alternates (blog paths handled first)
+    if ($p.Path -match '^blog/zh/') {
+        $enClean = ($p.Path -replace '^blog/zh/', 'blog/en/') -replace '\.html$', '' -replace '/index$', '/'
+        [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='zh-CN' href='$BaseUrl$cleanPath'/>")
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='en' href='$BaseUrl/$enClean'/>")
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='x-default' href='$BaseUrl/$enClean'/>")
-    } elseif ($p.Lang -eq "en") {
-        $zhClean = ($p.Path -replace "^en/", "zh/") -replace '\.html$', ''
-        [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='en' href='$BaseUrl/$cleanPath'/>")
+    } elseif ($p.Path -match '^blog/en/') {
+        $zhClean = ($p.Path -replace '^blog/en/', 'blog/zh/') -replace '\.html$', '' -replace '/index$', '/'
+        [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='en' href='$BaseUrl$cleanPath'/>")
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='zh-CN' href='$BaseUrl/$zhClean'/>")
-        [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='x-default' href='$BaseUrl/$cleanPath'/>")
-    } elseif ($p.Path -match "^blog/en/") {
-        $zhClean = ($p.Path -replace "^blog/en/", "blog/zh/") -replace '\.html$', ''
-        [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='en' href='$BaseUrl/$cleanPath'/>")
-        [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='zh-CN' href='$BaseUrl/$zhClean'/>")
-        [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='x-default' href='$BaseUrl/$cleanPath'/>")
-    } elseif ($p.Path -match "^blog/zh/") {
-        $enClean = ($p.Path -replace "^blog/zh/", "blog/en/") -replace '\.html$', ''
-        [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='zh-CN' href='$BaseUrl/$cleanPath'/>")
+        [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='x-default' href='$BaseUrl$cleanPath'/>")
+    } elseif ($p.Lang -eq 'zh-CN') {
+        $enClean = ($p.Path -replace '^zh/', 'en/') -replace '\.html$', '' -replace '/index$', '/'
+        [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='zh-CN' href='$BaseUrl$cleanPath'/>")
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='en' href='$BaseUrl/$enClean'/>")
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='x-default' href='$BaseUrl/$enClean'/>")
+    } elseif ($p.Lang -eq 'en') {
+        $zhClean = ($p.Path -replace '^en/', 'zh/') -replace '\.html$', '' -replace '/index$', '/'
+        [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='en' href='$BaseUrl$cleanPath'/>")
+        [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='zh-CN' href='$BaseUrl/$zhClean'/>")
+        [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='x-default' href='$BaseUrl$cleanPath'/>")
     }
 
     [void]$xml.AppendLine("    <lastmod>$($p.LastMod)</lastmod>")
