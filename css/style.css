@@ -490,8 +490,25 @@ footer {
 
 footer a { color: var(--brand-blue); }
 footer a:hover { color: var(--primary-hover); }
-footer .footer-links { display: flex; justify-content: center; gap: 20px; margin-top: 12px; }
-footer .footer-links a { font-size: 0.85rem; }
+footer .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 12px;
+    margin-bottom: 0.75rem;
+}
+footer .footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+footer .footer-links a:hover {
+    color: var(--primary);
+}
+
 
 /* ===== 响应式 ===== */
 @media (max-width: 768px) {
@@ -562,7 +579,7 @@ footer .footer-links a { font-size: 0.85rem; }
     padding: 1.5rem;
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
     line-height: 1.8;
 }
 .tool-content h2 {
@@ -584,7 +601,7 @@ footer .footer-links a { font-size: 0.85rem; }
     padding: 1.5rem;
     background: linear-gradient(135deg, var(--cat-finance-bg) 0%, var(--cat-utility-bg) 100%);
     border: 1px solid var(--cat-finance-bg);
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
 }
 .related-tools h3 {
     font-size: 1rem;

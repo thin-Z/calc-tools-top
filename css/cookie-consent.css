@@ -74,28 +74,4 @@
     background: var(--bg-surface, #f8f8fa);
 }
 
-/* Footer with Links */
-footer {
-    padding: 2rem 1.5rem 1.5rem;
-    text-align: center;
-    background: var(--bg-surface, #f8f8fa);
-    border-top: 1px solid var(--border, #e8e8ed);
-}
-.footer-links {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 0.75rem;
-}
-.footer-links a {
-    color: var(--text-secondary, #86868b);
-    text-decoration: none;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    transition: color 0.2s ease;
-}
-.footer-links a:hover {
-    color: var(--primary, #007aff);
-}
 /* End of cookie consent styles */
