@@ -22,7 +22,7 @@
     box-shadow: 0 0 0 3px var(--primary-light);
 }
 .text-input::placeholder {
-    color: #94a3b8;
+    color: var(--text-tertiary);
 }
 
 /* Mode Toggle Chips */
@@ -96,9 +96,9 @@
     background: var(--primary-light);
 }
 .copy-btn.copied {
-    border-color: #16a34a;
-    color: #16a34a;
-    background: #f0fdf4;
+    border-color: var(--success);
+    color: var(--success);
+    background: var(--success-bg);
 }
 
 /* Text Diff: Side-by-Side Layout */
@@ -183,7 +183,7 @@
 .keyword-bar {
     width: 80px;
     height: 8px;
-    background: #e2e8f0;
+    background: var(--border);
     border-radius: 4px;
     overflow: hidden;
 }
@@ -204,23 +204,23 @@
     flex: 1;
     height: 8px;
     border-radius: 4px;
-    background: #e2e8f0;
+    background: var(--border);
     transition: background 0.3s;
 }
-.strength-segment.weak { background: #ef4444; }
-.strength-segment.fair { background: #f59e0b; }
-.strength-segment.strong { background: #eab308; }
-.strength-segment.very-strong { background: #16a34a; }
+.strength-segment.weak { background: var(--danger); }
+.strength-segment.fair { background: var(--strength-fair); }
+.strength-segment.strong { background: var(--strength-strong); }
+.strength-segment.very-strong { background: var(--success); }
 .strength-label {
     font-size: 0.85rem;
     font-weight: 600;
     text-align: center;
     margin-top: 4px;
 }
-.strength-label.weak { color: #ef4444; }
-.strength-label.fair { color: #f59e0b; }
-.strength-label.strong { color: #eab308; }
-.strength-label.very-strong { color: #16a34a; }
+.strength-label.weak { color: var(--danger); }
+.strength-label.fair { color: var(--strength-fair); }
+.strength-label.strong { color: var(--strength-strong); }
+.strength-label.very-strong { color: var(--success); }
 
 /* Action Bar */
 .action-bar {
@@ -243,7 +243,7 @@
     font-size: 0.8rem;
     color: var(--text-secondary);
     padding: 4px 10px;
-    background: #f1f5f9;
+    background: var(--bg-muted);
     border-radius: 999px;
 }
 

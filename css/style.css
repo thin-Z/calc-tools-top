@@ -51,6 +51,28 @@
     --tooltip-text: #fff;
     --footer-bg: #e8e8ed;
     --hot-tool-border: #fef3c7;
+    /* Phase A: semantic component tokens (single source of truth) */
+    --like: #f43f5e;
+    --like-bg: #fff1f2;
+    --danger: #ef4444;
+    --danger-strong: #dc2626;
+    --success: #16a34a;
+    --success-bg: #f0fdf4;
+    --hot-badge-from: #f59e0b;
+    --hot-badge-to: #ef4444;
+    --hot-likes: #d97706;
+    --trend-hot-bg: #fef2f2;
+    --trend-hot-text: #dc2626;
+    --trend-up-bg: #fff7ed;
+    --trend-up-text: #ea580c;
+    --strength-fair: #f59e0b;
+    --strength-strong: #eab308;
+    --cat-finance: #4f46e5;       --cat-finance-bg: var(--cat-finance-bg);
+    --cat-life: #ca8a04;          --cat-life-bg: #fefce8;
+    --cat-shopping: #db2777;      --cat-shopping-bg: #fdf2f8;
+    --cat-travel: #0284c7;        --cat-travel-bg: #f0f9ff;
+    --cat-utility: #7c3aed;       --cat-utility-bg: var(--cat-utility-bg);
+    --cat-image: #059669;         --cat-image-bg: #ecfdf5;
 }
 
 
@@ -58,6 +80,20 @@
 
 
 [data-theme="dark"] {
+    --like: #f43f5e;
+    --like-bg: rgba(244,63,94,0.15);
+    --danger: #f87171;
+    --danger-strong: #fca5a5;
+    --success: #34d399;
+    --success-bg: rgba(22,163,74,0.2);
+    --trend-hot-text: #fca5a5;
+    --trend-up-text: #fdba74;
+    --cat-finance: #a5b4fc;       --cat-finance-bg: rgba(79,70,229,0.2);
+    --cat-life: #fde68a;          --cat-life-bg: rgba(202,138,4,0.2);
+    --cat-shopping: #f9a8d4;      --cat-shopping-bg: rgba(219,39,119,0.2);
+    --cat-travel: #7dd3fc;        --cat-travel-bg: rgba(2,132,199,0.2);
+    --cat-utility: #c4b5fd;       --cat-utility-bg: rgba(124,58,237,0.2);
+    --cat-image: #6ee7b7;         --cat-image-bg: rgba(5,150,105,0.2);
     --bg: #000000;
     --bg-card: #1c1c1e;
     --bg-elevated: #2c2c2e;
@@ -546,8 +582,8 @@ footer .footer-links a { font-size: 0.85rem; }
 .related-tools {
     margin-top: 2rem;
     padding: 1.5rem;
-    background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%);
-    border: 1px solid #e0e7ff;
+    background: linear-gradient(135deg, var(--cat-finance-bg) 0%, var(--cat-utility-bg) 100%);
+    border: 1px solid var(--cat-finance-bg);
     border-radius: 12px;
 }
 .related-tools h3 {
@@ -580,9 +616,9 @@ footer .footer-links a { font-size: 0.85rem; }
     gap: 8px;
     padding: 10px 14px;
     background: #fff;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border);
     border-radius: 10px;
-    color: #374151;
+    color: var(--text-primary);
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 500;

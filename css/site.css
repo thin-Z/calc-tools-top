@@ -35,14 +35,14 @@
     line-height: 1;
 }
 .tool-card-wrap .like-btn:hover {
-    border-color: #f43f5e;
-    color: #f43f5e;
-    background: #fff1f2;
+    border-color: var(--like);
+    color: var(--like);
+    background: var(--like-bg);
 }
 .tool-card-wrap .like-btn.liked {
-    border-color: #f43f5e;
-    color: #f43f5e;
-    background: #fff1f2;
+    border-color: var(--like);
+    color: var(--like);
+    background: var(--like-bg);
 }
 /* Show like buttons on touch devices (no hover) */
 
@@ -75,14 +75,14 @@
 }
 
 .search-bar input::placeholder {
-    color: #94a3b8;
+    color: var(--text-tertiary);
 }
 .search-icon {
     position: absolute;
     left: 0.8rem;
     top: 50%;
     transform: translateY(-50%);
-    color: #94a3b8;
+    color: var(--text-tertiary);
     font-size: 1rem;
     pointer-events: none;
 }
@@ -93,7 +93,7 @@
     transform: translateY(-50%);
     background: none;
     border: none;
-    color: #94a3b8;
+    color: var(--text-tertiary);
     cursor: pointer;
     font-size: 1.1rem;
     padding: 0.2rem;
@@ -102,8 +102,8 @@
 
 .category-chip:hover {
     transform: scale(1.05);
-    background: #E5E5EA;
-    color: #555555;
+    background: var(--border);
+    color: var(--text-secondary);
 }
 .search-clear.visible {
     display: block;
@@ -124,8 +124,8 @@
     font-family: var(--font-sans);
     font-size: 13px;
     font-weight: 500;
-    background: #F0F0F0;
-    color: #555555;
+    background: var(--bg-muted);
+    color: var(--text-secondary);
     cursor: pointer;
     transition: all 0.2s ease;
 }
@@ -142,23 +142,23 @@
     align-items: center;
     gap: 0.3rem;
     background: none;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border);
     border-radius: 20px;
     padding: 0.3rem 0.7rem;
     font-size: 0.8rem;
-    color: #94a3b8;
+    color: var(--text-tertiary);
     cursor: pointer;
     transition: all 0.2s;
     line-height: 1;
 }
 .like-btn:hover {
-    border-color: #f43f5e;
-    color: #f43f5e;
+    border-color: var(--like);
+    color: var(--like);
 }
 .like-btn.liked {
-    border-color: #f43f5e;
-    color: #f43f5e;
-    background: #fff1f2;
+    border-color: var(--like);
+    color: var(--like);
+    background: var(--like-bg);
 }
 .like-btn .heart {
     font-size: 0.85rem;
@@ -173,7 +173,7 @@
 .no-results {
     text-align: center;
     padding: 3rem 1rem;
-    color: #94a3b8;
+    color: var(--text-tertiary);
     font-size: 0.95rem;
     display: none;
 }
@@ -271,14 +271,14 @@
     transform: translateY(-1px);
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-.tag-finance { background: #eef2ff; color: #4f46e5; }
-.tag-health { background: #f0fdf4; color: #16a34a; }
-.tag-life { background: #fefce8; color: #ca8a04; }
-.tag-shopping { background: #fdf2f8; color: #db2777; }
-.tag-travel { background: #f0f9ff; color: #0284c7; }
-.tag-utility { background: #f5f3ff; color: #7c3aed; }
-.tag-image { background: #ecfdf5; color: #059669; }
-.tag-text { background: #FFF7ED; color: #EA580C; }
+.tag-finance { background: var(--cat-finance-bg); color: var(--cat-finance); }
+.tag-health { background: var(--success-bg); color: var(--success); }
+.tag-life { background: var(--cat-life-bg); color: var(--cat-life); }
+.tag-shopping { background: var(--cat-shopping-bg); color: var(--cat-shopping); }
+.tag-travel { background: var(--cat-travel-bg); color: var(--cat-travel); }
+.tag-utility { background: var(--cat-utility-bg); color: var(--cat-utility); }
+.tag-image { background: var(--cat-image-bg); color: var(--cat-image); }
+.tag-text { background: var(--trend-up-bg); color: var(--trend-up-text); }
 .tag-tools { background: #ecfeff; color: #0891b2; }
 
 /* ===== Section Divider ===== */
@@ -290,7 +290,7 @@
 .section-divider h2 {
     font-size: 1.2rem;
     font-weight: 700;
-    color: #1f2937;
+    color: var(--text-primary);
     display: flex;
     align-items: center;
     gap: 8px;
@@ -301,9 +301,9 @@
     align-items: center;
     font-size: 0.75rem;
     font-weight: 600;
-    color: #16a34a;
-    background: #f0fdf4;
-    border: 1px solid #bbf7d0;
+    color: var(--success);
+    background: var(--success-bg);
+    border: 1px solid var(--success-bg);
     padding: 2px 8px;
     border-radius: 12px;
     margin-left: 8px;
@@ -431,9 +431,9 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: #f0fdf4;
-    border: 1px solid #bbf7d0;
-    color: #16a34a;
+    background: var(--success-bg);
+    border: 1px solid var(--success-bg);
+    color: var(--success);
     padding: 6px 14px;
     border-radius: 20px;
     font-size: 0.8rem;
@@ -443,7 +443,7 @@
 
 /* Upload Zone */
 .upload-zone {
-    border: 2px dashed #d1d5db;
+    border: 2px dashed var(--border);
     border-radius: 12px;
     padding: 48px 24px;
     text-align: center;
@@ -466,7 +466,7 @@
 .upload-zone h3 {
     font-size: 1.1rem;
     margin-bottom: 8px;
-    color: #1f2937;
+    color: var(--text-primary);
 }
 
 .upload-zone p {
@@ -496,7 +496,7 @@
 
 .preview-card {
     background: #fff;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 20px;
 }
@@ -504,7 +504,7 @@
 .preview-card h3 {
     font-size: 1rem;
     margin-bottom: 16px;
-    color: #1f2937;
+    color: var(--text-primary);
 }
 
 .preview-area {
@@ -529,7 +529,7 @@
     max-width: 100%;
     max-height: 300px;
     border-radius: 8px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border);
 }
 
 .file-info {
@@ -546,7 +546,7 @@
 /* Controls Panel */
 .tool-controls {
     background: #fff;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border);
     border-radius: 12px;
     padding: 20px;
     margin-bottom: 24px;
@@ -555,7 +555,7 @@
 .tool-controls h3 {
     font-size: 1rem;
     margin-bottom: 16px;
-    color: #1f2937;
+    color: var(--text-primary);
 }
 
 .control-group {
@@ -567,7 +567,7 @@
     font-size: 0.9rem;
     font-weight: 500;
     margin-bottom: 6px;
-    color: #1f2937;
+    color: var(--text-primary);
 }
 
 .control-group input[type="range"] {
@@ -575,7 +575,7 @@
     -webkit-appearance: none;
     appearance: none;
     height: 6px;
-    background: #e2e8f0;
+    background: var(--border);
     border-radius: 3px;
     outline: none;
     cursor: pointer;
@@ -603,11 +603,11 @@
 .control-group select {
     width: 100%;
     padding: 10px 12px;
-    border: 1.5px solid #e2e8f0;
+    border: 1.5px solid var(--border);
     border-radius: 8px;
     font-size: 1rem;
     background: #fff;
-    color: #1f2937;
+    color: var(--text-primary);
     cursor: pointer;
     transition: border-color 0.2s;
 }
@@ -621,11 +621,11 @@
 .control-group input[type="number"] {
     width: 100%;
     padding: 10px 12px;
-    border: 1.5px solid #e2e8f0;
+    border: 1.5px solid var(--border);
     border-radius: 8px;
     font-size: 1rem;
     background: #fff;
-    color: #1f2937;
+    color: var(--text-primary);
     transition: border-color 0.2s;
 }
 
@@ -649,7 +649,7 @@
 /* Result Summary (blue panel) */
 .result-summary {
     background: var(--primary-light);
-    border: 1px solid #bfdbfe;
+    border: 1px solid var(--primary-light);
     border-radius: 12px;
     padding: 20px;
     margin-bottom: 24px;
@@ -663,7 +663,7 @@
 .result-summary h3 {
     font-size: 1rem;
     margin-bottom: 16px;
-    color: #1f2937;
+    color: var(--text-primary);
 }
 
 .result-stats {
@@ -690,7 +690,7 @@
 }
 
 .stat-item .stat-value.saved {
-    color: #16a34a;
+    color: var(--success);
 }
 
 /* Download */
@@ -702,7 +702,7 @@
 /* Base64 Output */
 .code-output {
     background: #1e293b;
-    color: #e2e8f0;
+    color: var(--border);
     padding: 16px;
     border-radius: 8px;
     font-family: "Fira Code", "Cascadia Code", "Consolas", monospace;
@@ -730,7 +730,7 @@
 .color-picker-canvas-wrapper canvas {
     max-width: 100%;
     border-radius: 8px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border);
 }
 
 .color-info {
@@ -741,7 +741,7 @@
     margin-top: 16px;
     padding: 16px;
     background: #fff;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border);
     border-radius: 8px;
 }
 
@@ -749,7 +749,7 @@
     width: 48px;
     height: 48px;
     border-radius: 8px;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--border);
     flex-shrink: 0;
 }
 
@@ -761,7 +761,7 @@
 
 .color-value {
     padding: 4px 10px;
-    background: #f1f5f9;
+    background: var(--bg-muted);
     border-radius: 4px;
     font-family: "Fira Code", "Consolas", monospace;
     font-size: 0.85rem;
@@ -775,8 +775,8 @@
 }
 
 .color-value.copied {
-    background: #f0fdf4;
-    color: #16a34a;
+    background: var(--success-bg);
+    color: var(--success);
 }
 
 /* Hover preview in color picker */
@@ -791,7 +791,7 @@
     width: 48px;
     height: 48px;
     border-radius: 8px;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--border);
     background: #eee;
 }
 
@@ -834,23 +834,23 @@
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 3px 10px;
     font-size: 0.8rem;
-    color: #94a3b8;
+    color: var(--text-tertiary);
     cursor: pointer;
     transition: all 0.2s;
     line-height: 1.3;
 }
 .article-like:hover {
-    border-color: #f43f5e;
-    color: #f43f5e;
+    border-color: var(--like);
+    color: var(--like);
 }
 .article-like.liked {
-    border-color: #f43f5e;
-    color: #f43f5e;
-    background: #fff1f2;
+    border-color: var(--like);
+    color: var(--like);
+    background: var(--like-bg);
 }
 .article-like .heart { font-size: 0.8rem; }
 .article-like .like-count { font-weight: 600; min-width: 1rem; text-align: center; }
@@ -890,7 +890,7 @@
     position: absolute;
     top: -1px;
     left: -1px;
-    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    background: linear-gradient(135deg, var(--strength-fair), var(--danger));
     color: #fff;
     font-size: 0.7rem;
     font-weight: 700;
@@ -937,7 +937,7 @@
     top: 8px;
     right: 8px;
     font-size: 0.75rem;
-    color: #d97706;
+    color: var(--hot-likes);
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -953,7 +953,7 @@
     top: 8px;
     right: 8px;
     font-size: 0.75rem;
-    color: #dc2626;
+    color: var(--danger-strong);
     font-weight: 700;
     display: flex;
     align-items: center;
@@ -991,11 +991,11 @@
     align-items: center;
     gap: 6px;
     background: #fff;
-    border: 1.5px solid #e2e8f0;
+    border: 1.5px solid var(--border);
     border-radius: 20px;
     padding: 6px 16px;
     font-size: 0.9rem;
-    color: #94a3b8;
+    color: var(--text-tertiary);
     cursor: pointer;
     transition: all 0.2s;
     position: relative !important;
@@ -1004,14 +1004,14 @@
     opacity: 1 !important;
 }
 .detail-like:hover {
-    border-color: #f43f5e;
-    color: #f43f5e;
-    background: #fff1f2;
+    border-color: var(--like);
+    color: var(--like);
+    background: var(--like-bg);
 }
 .detail-like.liked {
-    border-color: #f43f5e;
-    color: #f43f5e;
-    background: #fff1f2;
+    border-color: var(--like);
+    color: var(--like);
+    background: var(--like-bg);
 }
 .detail-like .heart { font-size: 0.95rem; }
 .detail-like .count { font-weight: 700; min-width: 1.2rem; text-align: center; }
@@ -1037,14 +1037,14 @@
     white-space: nowrap;
 }
 .trend-hot {
-    background: #fef2f2;
-    color: #dc2626;
+    background: var(--trend-hot-bg);
+    color: var(--danger-strong);
     border: 1px solid #fecaca;
     animation: pulse-hot 2s ease-in-out infinite;
 }
 .trend-up {
-    background: #fff7ed;
-    color: #ea580c;
+    background: var(--trend-up-bg);
+    color: var(--trend-up-text);
     border: 1px solid #fed7aa;
 }
 @keyframes pulse-hot {
@@ -1062,12 +1062,12 @@
     align-items: center;
     gap: 0.3rem;
     background: #fff;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border);
     border-radius: 20px;
     padding: 0.3rem 0.7rem;
     font-size: 0.8rem;
     font-weight: 500;
-    color: #94a3b8;
+    color: var(--text-tertiary);
     cursor: pointer;
     transition: all 0.2s;
     line-height: 1;
@@ -1078,7 +1078,7 @@
 .hot-search {
     margin: 0.5rem 0 0.75rem 0;
     font-size: 0.8rem;
-    color: #64748b;
+    color: var(--text-secondary);
     display: flex;
     align-items: center;
     flex-wrap: wrap;
@@ -1086,7 +1086,7 @@
 }
 .hot-search-label {
     font-weight: 600;
-    color: #475569;
+    color: var(--text-secondary);
     white-space: nowrap;
 }
 .hot-search-terms {
@@ -1097,15 +1097,15 @@
 .hot-search-term {
     display: inline-block;
     padding: 0.15rem 0.5rem;
-    background: #f1f5f9;
+    background: var(--bg-muted);
     border-radius: 999px;
-    color: #475569;
+    color: var(--text-secondary);
     cursor: pointer;
     transition: background 0.15s;
     font-size: 0.8rem;
 }
 .hot-search-term:hover {
-    background: #e2e8f0;
+    background: var(--border);
     color: #1e293b;
 }
 
@@ -1128,8 +1128,8 @@
 }
 [data-theme="dark"] .detail-like.liked {
     background: rgba(244,63,94,0.15);
-    border-color: #f43f5e;
-    color: #f43f5e;
+    border-color: var(--like);
+    color: var(--like);
 }
 
 [data-theme="dark"] .hot-tool-card {
@@ -1183,8 +1183,8 @@
 }
 [data-theme="dark"] .like-btn.liked {
     background: #3A1A1A;
-    border-color: #EF4444;
-    color: #EF4444;
+    border-color: var(--danger);
+    color: var(--danger);
 }
 [data-theme="dark"] .search-bar input {
     background: rgba(28,28,30,0.8);
@@ -1276,8 +1276,8 @@
 }
 [data-theme="dark"] .article-like.liked {
     background: #3A1A1A;
-    border-color: #EF4444;
-    color: #EF4444;
+    border-color: var(--danger);
+    color: var(--danger);
 }
 
 
