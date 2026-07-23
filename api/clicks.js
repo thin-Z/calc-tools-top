@@ -39,7 +39,11 @@ function rest(path) {
 
 const RATE_LIMIT_WINDOW_MS = 60 * 1000;
 const RATE_LIMIT_MAX = 20;
+// 单实例内存回退：仅在未配置 KV_REST_API_URL 时启用；多实例部署下不保证全局限速。
 const _rateHits = new Map();
+
+const BODY_MAX_BYTES = 1024;        // POST 请求体上限 1KB
+const BODY_READ_TIMEOUT_MS = 2000;  // 流式读取超时 2s
 
 const ALLOWED_ORIGINS = [
   'https://www.calc-tools.top',
@@ -48,23 +52,55 @@ const ALLOWED_ORIGINS = [
   'http://localhost:5173'
 ];
 
+// 取可信客户端 IP：X-Forwarded-For 最右一段由受信代理（Vercel）追加，
+// 客户端可伪造左侧任意段，因此只信任最右段；缺失时回退 socket 地址。
 function getClientIp(req) {
   const xff = req.headers && req.headers['x-forwarded-for'];
   if (xff) {
-    const first = String(xff).split(',')[0].trim();
-    if (first) return first;
+    const segs = String(xff).split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+    if (segs.length) return segs[segs.length - 1];
   }
-  if (req.connection && req.connection.remoteAddress) return req.connection.remoteAddress;
   if (req.socket && req.socket.remoteAddress) return req.socket.remoteAddress;
+  if (req.connection && req.connection.remoteAddress) return req.connection.remoteAddress;
   return 'unknown';
 }
 
-function isRateLimited(ip) {
+// 限速检查：优先使用 KV（跨实例共享），未配置 KV 时回退内存单实例窗口。
+async function isRateLimited(ip) {
+  if (REST_URL) {
+    const key = 'ratelimit:clicks:' + ip;
+    const cur = parseInt((await rest('/get/' + key)) || '0', 10);
+    const next = cur + 1;
+    await rest('/set/' + key + '/' + next + '/EX/' + Math.ceil(RATE_LIMIT_WINDOW_MS / 1000));
+    return next > RATE_LIMIT_MAX;
+  }
   const now = Date.now();
   const hits = (_rateHits.get(ip) || []).filter(function (t) { return now - t < RATE_LIMIT_WINDOW_MS; });
   hits.push(now);
   _rateHits.set(ip, hits);
   return hits.length > RATE_LIMIT_MAX;
+}
+
+function readBody(req) {
+  return new Promise((resolve, reject) => {
+    const len = parseInt((req.headers && req.headers['content-length']) || '0', 10);
+    if (len > BODY_MAX_BYTES) { reject(new Error('payload too large')); return; }
+    let raw = '';
+    let done = false;
+    const timer = setTimeout(function () {
+      if (done) return;
+      done = true;
+      reject(new Error('read timeout'));
+    }, BODY_READ_TIMEOUT_MS);
+    req.on('data', (chunk) => {
+      raw += chunk;
+      if (Buffer.byteLength(raw) > BODY_MAX_BYTES && !done) {
+        done = true; clearTimeout(timer); reject(new Error('payload too large'));
+      }
+    });
+    req.on('end', () => { if (done) return; done = true; clearTimeout(timer); resolve(raw); });
+    req.on('error', () => { if (done) return; done = true; clearTimeout(timer); reject(new Error('read error')); });
+  });
 }
 
 module.exports = async function handler(req, res) {
@@ -77,43 +113,39 @@ module.exports = async function handler(req, res) {
 
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  // 简单内存滑动窗口限速（基于来源 IP）
-  if (isRateLimited(getClientIp(req))) {
+  const clientIp = getClientIp(req);
+
+  // 限速（基于来源 IP）
+  if (await isRateLimited(clientIp)) {
     return res.status(429).json({ error: 'too many requests' });
   }
-
 
   try {
     if (req.method === 'GET') {
       const searchParams = new URL(req.url, 'http://localhost').searchParams;
       const toolId = searchParams.get('toolId');
 
-      if (toolId) {
-        const cleanId = toolId.replace(/[^a-zA-Z0-9_-]/g, '');
-        const total = await rest('/get/click:tool:' + cleanId);
-        return res.status(200).json({
-          toolId: cleanId,
-          total: parseInt(total || '0', 10),
-        });
+      // 缺少 toolId 时禁止全量枚举（避免无分页的数据泄露）
+      if (!toolId) {
+        return res.status(403).json({ error: 'toolId is required' });
       }
 
-      const keys = await rest('/keys/click:*');
-      const result = {};
-      if (keys && keys.length > 0) {
-        for (const key of keys) {
-          result[key] = parseInt((await rest('/get/' + key)) || '0', 10);
-        }
-      }
-      return res.status(200).json(result);
+      const cleanId = toolId.replace(/[^a-zA-Z0-9_-]/g, '');
+      const total = await rest('/get/click:tool:' + cleanId);
+      return res.status(200).json({
+        toolId: cleanId,
+        total: parseInt(total || '0', 10),
+      });
     }
 
     if (req.method === 'POST') {
-      let raw = '';
-      await new Promise((resolve) => {
-        req.on('data', (chunk) => { raw += chunk; });
-        req.on('end', resolve);
-      });
-      const body = (function() { try { return JSON.parse(raw); } catch(e) { return {}; } })();
+      let raw;
+      try {
+        raw = await readBody(req);
+      } catch (e) {
+        return res.status(413).json({ error: 'payload too large or read timeout' });
+      }
+      const body = (function () { try { return JSON.parse(raw); } catch (e) { return {}; } })();
       const toolId = body && body.toolId;
 
       if (!toolId) return res.status(400).json({ error: 'missing toolId' });
