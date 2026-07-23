@@ -846,8 +846,9 @@ button:active, .btn:active {
 
 
 /* ============================================================
-   Phase B consolidation: content below merged from css/site.css
-   (original css/site.css removed; cascade order preserved)
+   Phase B consolidation: component rules below were merged in from the
+   retired dedicated component stylesheet. Cascade order preserved:
+   tokens/base -> components.
    ============================================================ */
 
 @keyframes heartPop {
@@ -2324,8 +2325,8 @@ button:active, .btn:active {
 
 
 /* ============================================================
-   Phase B consolidation: content below merged from css/text-tools.css
-   (original css/text-tools.css removed)
+   Phase B consolidation: text-tool-specific rules below were merged in
+   from the retired dedicated text-tools stylesheet.
    ============================================================ */
 
 /* ===== Text Tools Styles ===== */

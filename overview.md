@@ -61,7 +61,7 @@ Base64缂栬В鐮佸伐鍏凤細浠€涔堟槸Base64锛熸€庝箞鐢紵
 
 | 类型 | 文件数 | 乱码 | 备注 |
 |------|--------|------|------|
-| CSS | 4 | ❌ 无 | site.css(32KB), style.css(19KB), cookie-consent.css, text-tools.css |
+| CSS | 3 | ❌ 无 | style.css（已合并组件/文字工具样式）, cookie-consent.css |
 | JS | 40 | ❌ 无 | 含 js/calculators/ 子目录 |
 | API | 2 | ❌ 无 | contact.js, newsletter.js |
 | 脚本 | 10 | ❌ 无 | 含 fix_toolcards.py, generate-sitemap.ps1 等 |

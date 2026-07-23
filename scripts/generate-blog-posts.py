@@ -345,7 +345,6 @@ def generate_zh_blog(slug, cat, zh_title, zh_desc, zh_body, zh_cta_text, tool_pa
     <link rel="alternate" hreflang="en" href="{en_canonical}">
     <link rel="alternate" hreflang="x-default" href="{canonical}">
     <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/site.css">
     <link rel="stylesheet" href="../../css/cookie-consent.css">
     <script type="application/ld+json">
     {{
@@ -431,7 +430,7 @@ def generate_en_blog(slug, cat, en_title, en_desc, en_body, en_cta_text, tool_pa
 <link rel="alternate" hreflang="en" href="{canonical}">
 <link rel="alternate" hreflang="zh-CN" href="{zh_canonical}">
 <link rel="alternate" hreflang="x-default" href="{canonical}">
-<link rel="stylesheet" href="../../css/style.css"><link rel="stylesheet" href="../../css/site.css">
+<link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/cookie-consent.css">
 <script type="application/ld+json">{{"@context":"https://schema.org","@type":"Article","headline":"{en_title}","description":"{en_desc}","author":{{"@type":"Person","name":"Calc-Tools Editor"}},"datePublished":"{DATE}","mainEntityOfPage":{{"@type":"WebPage","@id":"{canonical}"}},"publisher":{{"@type":"Organization","name":"ToolBox Inside"}}}}</script>
 <script src="../../js/i18n.js" defer></script><script src="../../js/site.js" defer></script>

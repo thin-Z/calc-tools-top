@@ -203,7 +203,7 @@ foreach ($blog in $enBlogs) {
 }
 
 # 5. Add CSS
-$cssFile = "$Root\css\site.css"
+$cssFile = "$Root\css\style.css"
 $cssContent = [System.IO.File]::ReadAllText($cssFile, [System.Text.Encoding]::UTF8)
 if ($cssContent -notmatch '\.related-posts') {
     $rcss = @"
@@ -265,9 +265,9 @@ if ($cssContent -notmatch '\.related-posts') {
 "@
     $cssContent += $rcss
     [System.IO.File]::WriteAllText($cssFile, $cssContent, $utf8NoBom)
-    Write-Host "+ Added related-posts CSS to site.css"
+    Write-Host "+ Added related-posts CSS to style.css"
 } else {
-    Write-Host "- site.css already has related-posts CSS"
+    Write-Host "- style.css already has related-posts CSS"
 }
 
 Write-Host "Done! Modified $totalModified files."

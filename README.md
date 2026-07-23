@@ -79,9 +79,7 @@
 └─── /blog/zh/               # 38 篇中文博客（含 index.html）
 └─── /blog/en/               # 38 篇英文博客（含 index.html）
 └─── /css/
-│   └─── style.css           # 全局基础样式
-│   └─── site.css            # 站点组件样式
-│   └─── text-tools.css      # 文字工具样式
+│   └─── style.css           # 全局+组件+文字工具样式（单一合并文件）
 │   └─── cookie-consent.css  # Cookie 同意弹窗
 └─── /js/
 │   └─── site.js             # 首页交互 + 博客分页/筛选/阅读进度条

@@ -148,7 +148,6 @@ HEAD_TEMPLATE = '''<head>
     <link rel="alternate" hreflang="x-default" href="{url}">
     <link rel="stylesheet" href="../../css/style.css">
     <link rel="stylesheet" href="../../css/cookie-consent.css">
-    <link rel="stylesheet" href="../../css/site.css?v=9">
     <script src="../../js/i18n.js" defer></script>
     <script src="../../js/site.js" defer></script>
 </head>'''
