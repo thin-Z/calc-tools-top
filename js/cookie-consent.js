@@ -95,7 +95,6 @@
             var s = document.createElement("script");
             s.async = true;
             s.src = ADSENSE_SRC;
-            s.crossOrigin = "anonymous";
             s.onload = function() { window.__adsenseLoaded = true; };
             s.onerror = function() { window.__adsenseLoaded = false; };
             document.head.appendChild(s);
