@@ -8,18 +8,22 @@ const https = require('https');
 const REST_URL = process.env.KV_REST_API_URL || '';
 const REST_TOKEN = process.env.KV_REST_API_TOKEN || '';
 
+// 兼容本地 KV 模拟服务器（node:test 零依赖测试）：按 URL 协议选择 http/https，
+// 端口取自 URL，未指定时使用默认端口。生产环境 KV_REST_API_URL 为 https，行为不变。
 function rest(path) {
   return new Promise((resolve) => {
     if (!REST_URL) return resolve(null);
     const url = new URL(REST_URL + path);
+    const isHttps = url.protocol === 'https:';
+    const mod = isHttps ? https : require('http');
     const options = {
       hostname: url.hostname,
-      port: 443,
+      port: url.port || (isHttps ? 443 : 80),
       path: url.pathname + url.search,
       method: 'GET',
       headers: { 'Authorization': 'Bearer ' + REST_TOKEN },
     };
-    const req = https.request(options, (res) => {
+    const req = mod.request(options, (res) => {
       let data = '';
       res.on('data', (chunk) => { data += chunk; });
       res.on('end', () => {
@@ -38,7 +42,8 @@ function rest(path) {
 }
 
 const RATE_LIMIT_WINDOW_MS = 60 * 1000;
-const RATE_LIMIT_MAX = 20;
+const RATE_LIMIT_MAX = 20;          // 写（POST）限速：20/min
+const RATE_LIMIT_READ_MAX = 120;    // 读（GET）限速：120/min，首页批量拉取计数不触发写限速
 // 单实例内存回退：仅在未配置 KV_REST_API_URL 时启用；多实例部署下不保证全局限速。
 const _rateHits = new Map();
 
@@ -66,15 +71,18 @@ function getClientIp(req) {
   return 'unknown';
 }
 
-async function isRateLimited(ip) {
+// 限速检查：读（GET）与写（POST）使用独立窗口与配额，
+// 首页 26-34 个 GET /api/likes 批量拉取不再触发 20/min 写限速。
+async function isRateLimited(ip, isRead) {
+  const max = isRead ? RATE_LIMIT_READ_MAX : RATE_LIMIT_MAX;
   if (REST_URL) {
-    const key = 'ratelimit:likes:' + ip;
+    const key = 'ratelimit:likes:' + (isRead ? 'r:' : 'w:') + ip;
     // INCR 原子递增，杜绝并发读改写（TOCTOU）绕过限速；首增时设 TTL
     const next = parseInt((await rest('/incr/' + key + '/1')) || '0', 10);
     if (next === 1) {
       await rest('/expire/' + key + '/' + Math.ceil(RATE_LIMIT_WINDOW_MS / 1000));
     }
-    return next > RATE_LIMIT_MAX;
+    return next > max;
   }
   const now = Date.now();
   // 内存回退：惰性清理过期条目 + 限制 Map 无界增长
@@ -84,10 +92,11 @@ async function isRateLimited(ip) {
       if (alive.length === 0) _rateHits.delete(k);
     }
   }
-  const hits = (_rateHits.get(ip) || []).filter(function (t) { return now - t < RATE_LIMIT_WINDOW_MS; });
+  const hitsKey = (isRead ? 'r:' : 'w:') + ip;
+  const hits = (_rateHits.get(hitsKey) || []).filter(function (t) { return now - t < RATE_LIMIT_WINDOW_MS; });
   hits.push(now);
-  _rateHits.set(ip, hits);
-  return hits.length > RATE_LIMIT_MAX;
+  _rateHits.set(hitsKey, hits);
+  return hits.length > max;
 }
 
 // 点赞防刷：每 IP 每工具每日上限 LIKE_DAILY_MAX 次（含 +1/-1 动作）
@@ -131,8 +140,9 @@ module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
 
   const clientIp = getClientIp(req);
+  const isRead = req.method === 'GET';
 
-  if (await isRateLimited(clientIp)) {
+  if (await isRateLimited(clientIp, isRead)) {
     return res.status(429).json({ error: 'too many requests' });
   }
 
@@ -176,11 +186,11 @@ module.exports = async function handler(req, res) {
       }
 
       const key = (cleanId.startsWith('blog_') ? 'like:blog:' : 'like:tool:') + cleanId;
-
-      let count = parseInt((await rest('/get/' + key)) || '0', 10);
-      count = action === 'unlike' ? Math.max(0, count - 1) : count + 1;
-      // 计数 key 加 365 天 TTL，防止无界存储放大
-      await rest('/set/' + key + '/' + count + '/EX/31536000');
+      const delta = action === 'unlike' ? -1 : 1;
+      // INCRBY 原子增减，杜绝并发读改写（TOCTOU）丢计数
+      let count = Math.max(0, parseInt((await rest('/incr/' + key + '/' + delta)) || '0', 10));
+      // INCR 不设 TTL，写入后刷新 365 天 TTL，防止无界存储放大
+      await rest('/expire/' + key + '/31536000');
 
       return res.status(200).json({ toolId: cleanId, count, liked: action !== 'unlike' });
     }

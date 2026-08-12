@@ -113,23 +113,13 @@
         <p>© 2026 ToolBox Inside | Free Online Tools</p>
     </footer>
 
-<script>
-(function(){var k="toolbox_likes";function g(){try{return JSON.parse(localStorage.getItem(k))||{}}catch(e){return {}}}
-function s(l){localStorage.setItem(k,JSON.stringify(l))}
-var b=document.querySelector(".detail-like");if(!b)return;
-var id=b.dataset.likeId,ls=g(),c=ls[id]||0,ce=b.querySelector(".count");
-if(ce)ce.textContent=c;if(c>0)b.classList.add("liked");
-b.onclick=function(e){e.preventDefault();e.stopPropagation();
-var ls=g(),cur=ls[id]||0;ls[id]=cur>0?0:1;s(ls);
-var nc=ls[id];if(ce)ce.textContent=nc;
-if(nc>0)b.classList.add("liked");else b.classList.remove("liked")};})();
-</script>
     <script src="../../js/cookie-consent.js" defer></script>
     <section class="related-posts">
         <h3>Related Reading</h3>
         <ul>
             <li><a href="/blog/en/image-compression-guide">How to Compress Images Online: Complete Guide</a></li>
         </ul>
+    </section>
     
 
 <button id="gw-theme" aria-label="切换暗黑模式" class="gw-float-btn" onclick="(function(){var d=document.documentElement;var n=d.getAttribute('data-theme')==='dark'?'light':'dark';d.setAttribute('data-theme',n);try{localStorage.setItem('theme',n)}catch(e){}})()">🌙</button>
