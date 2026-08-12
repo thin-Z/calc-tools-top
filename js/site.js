@@ -1013,30 +1013,3 @@ function initBackToTop() {
     }, { passive: true });
 }
 
-// ===== Dark Mode Toggle =====
-(function() {
-  var STORAGE_KEY = 'theme-preference';
-  function setTheme(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
-    var btn = document.getElementById('theme-toggle');
-    if (btn) {
-      var icon = btn.querySelector('.theme-icon');
-      if (icon) icon.textContent = theme === 'dark' ? '\U0001F319' : '\u2600\uFE0F';
-    }
-  }
-  var saved = localStorage.getItem(STORAGE_KEY);
-  if (saved) {
-    setTheme(saved);
-  } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    setTheme('dark');
-    localStorage.setItem(STORAGE_KEY, 'dark');
-  }
-  document.addEventListener('click', function(e) {
-    var toggle = e.target.closest('#theme-toggle');
-    if (!toggle) return;
-    var current = document.documentElement.getAttribute('data-theme') || 'light';
-    var next = current === 'dark' ? 'light' : 'dark';
-    setTheme(next);
-    localStorage.setItem(STORAGE_KEY, next);
-  });
-})();
