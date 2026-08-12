@@ -112,33 +112,6 @@ function clearTool() {
     document.getElementById('errorSection').style.display = 'none';
 }
 
-// Like button
-(function(){
-    var k = "toolbox_likes";
-    function g() { try { return JSON.parse(localStorage.getItem(k)) || {}; } catch(e) { return {}; } }
-    function s(l) { localStorage.setItem(k, JSON.stringify(l)); }
-    var b = document.querySelector('.detail-like');
-    if (!b) return;
-    var id = b.dataset.likeId;
-    var ls = g();
-    var c = ls[id] || 0;
-    var ce = b.querySelector('.count');
-    if (ce) ce.textContent = c;
-    if (c > 0) b.classList.add('liked');
-    b.onclick = function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        var ls = g();
-        var cur = ls[id] || 0;
-        ls[id] = cur > 0 ? 0 : 1;
-        s(ls);
-        var nc = ls[id];
-        if (ce) ce.textContent = nc;
-        if (nc > 0) b.classList.add('liked');
-        else b.classList.remove('liked');
-    };
-})();
-
 document.addEventListener('DOMContentLoaded', function() {
     doConvert();
 });

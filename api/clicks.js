@@ -69,12 +69,21 @@ function getClientIp(req) {
 async function isRateLimited(ip) {
   if (REST_URL) {
     const key = 'ratelimit:clicks:' + ip;
-    const cur = parseInt((await rest('/get/' + key)) || '0', 10);
-    const next = cur + 1;
-    await rest('/set/' + key + '/' + next + '/EX/' + Math.ceil(RATE_LIMIT_WINDOW_MS / 1000));
+    // INCR 原子递增，杜绝并发读改写（TOCTOU）绕过限速；首增时设 TTL
+    const next = parseInt((await rest('/incr/' + key + '/1')) || '0', 10);
+    if (next === 1) {
+      await rest('/expire/' + key + '/' + Math.ceil(RATE_LIMIT_WINDOW_MS / 1000));
+    }
     return next > RATE_LIMIT_MAX;
   }
   const now = Date.now();
+  // 内存回退：惰性清理过期条目 + 限制 Map 无界增长
+  if (_rateHits.size > 10000) {
+    for (const k of Array.from(_rateHits.keys())) {
+      const alive = (_rateHits.get(k) || []).filter(function (t) { return now - t < RATE_LIMIT_WINDOW_MS; });
+      if (alive.length === 0) _rateHits.delete(k);
+    }
+  }
   const hits = (_rateHits.get(ip) || []).filter(function (t) { return now - t < RATE_LIMIT_WINDOW_MS; });
   hits.push(now);
   _rateHits.set(ip, hits);
@@ -96,6 +105,7 @@ function readBody(req) {
       raw += chunk;
       if (Buffer.byteLength(raw) > BODY_MAX_BYTES && !done) {
         done = true; clearTimeout(timer); reject(new Error('payload too large'));
+        req.destroy(); // 停止继续累积内存
       }
     });
     req.on('end', () => { if (done) return; done = true; clearTimeout(timer); resolve(raw); });
@@ -110,6 +120,7 @@ module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.setHeader('Vary', 'Origin');
   res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Cache-Control', 'no-store');
 
   if (req.method === 'OPTIONS') return res.status(200).end();
 
@@ -131,6 +142,7 @@ module.exports = async function handler(req, res) {
       }
 
       const cleanId = toolId.replace(/[^a-zA-Z0-9_-]/g, '');
+      if (!cleanId) return res.status(400).json({ error: 'invalid toolId' });
       const total = await rest('/get/click:tool:' + cleanId);
       return res.status(200).json({
         toolId: cleanId,
@@ -151,11 +163,13 @@ module.exports = async function handler(req, res) {
       if (!toolId) return res.status(400).json({ error: 'missing toolId' });
 
       const cleanId = toolId.replace(/[^a-zA-Z0-9_-]/g, '');
+      if (!cleanId) return res.status(400).json({ error: 'invalid toolId' });
       const key = 'click:tool:' + cleanId;
 
       let total = parseInt((await rest('/get/' + key)) || '0', 10);
       total += 1;
-      await rest('/set/' + key + '/' + total);
+      // 计数 key 加 365 天 TTL，防止无界存储放大
+      await rest('/set/' + key + '/' + total + '/EX/31536000');
 
       return res.status(200).json({ toolId: cleanId, total });
     }

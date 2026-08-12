@@ -5,6 +5,11 @@ var LOWER = 'abcdefghijklmnopqrstuvwxyz';
 var DIGITS = '0123456789';
 var SYMBOLS = '!@#$%^&*()_+-=[]{}|;:,.<>?';
 
+// HTML 转义：防止生成的密码（SYMBOLS 含 <>&"）注入 DOM
+function escapeHtml(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
 function doCalculate() {
     var length = parseInt(document.getElementById('pwdLength').value) || 12;
     var includeUpper = document.getElementById('pwdUpper').checked;
@@ -30,7 +35,7 @@ function doCalculate() {
         for (var i = 0; i < length; i++) {
             pwd += pool.charAt(Math.floor(Math.random() * pool.length));
         }
-        result += '<div class="password-result-line"><code>' + pwd + '</code><button class="btn btn-sm" onclick="copyPassword(this)">复制</button></div>';
+        result += '<div class="password-result-line"><code>' + escapeHtml(pwd) + '</code><button class="btn btn-sm" onclick="copyPassword(this)">复制</button></div>';
     }
     
     document.getElementById('passwordResult').innerHTML = result;
