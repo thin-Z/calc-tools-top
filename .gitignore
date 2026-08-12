@@ -26,3 +26,9 @@ tag-preview.html
 项目进度-*.md
 
 node_modules/
+
+# Python
+__pycache__/
+*.pyc
+.env*
+!.env.example
