@@ -26,7 +26,16 @@
     --glass-bg: rgba(255,255,255,0.72);
     --glass-blur: 20px;
     --glass-border: rgba(0,0,0,0.06);
-    --space-3: 24px;
+
+    /* Spacing Scale (4px base) */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 48px;
+    --space-8: 64px;
 
 
     /* Component */
@@ -41,6 +50,31 @@
 
     /* Font */
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+    /* Font Sizes */
+    --fs-xs: 0.75rem;
+    --fs-sm: 0.875rem;
+    --fs-md: 1rem;
+    --fs-lg: 1.125rem;
+    --fs-xl: 1.25rem;
+    --fs-2xl: 1.5rem;
+    --fs-3xl: 2rem;
+    --fs-4xl: 3rem;
+
+    /* Breakpoints (reference only; media queries use literal px for compatibility) */
+    --bp-sm: 480px;
+    --bp-md: 768px;
+    --bp-lg: 1000px;
+    --bp-xl: 1200px;
+
+    /* Z-index Scale */
+    --z-base: 1;
+    --z-raised: 2;
+    --z-sticky: 90;
+    --z-header: 100;
+    --z-overlay: 200;
+    --z-modal: 300;
+    --z-toast: 400;
 
     /* Legacy compat (alias tokens so var(--radius)/var(--text) resolve everywhere) */
     --radius: var(--radius-md);
@@ -67,11 +101,11 @@
     --trend-up-text: #ea580c;
     --strength-fair: #f59e0b;
     --strength-strong: #eab308;
-    --cat-finance: #4f46e5;       --cat-finance-bg: var(--cat-finance-bg);
+    --cat-finance: #4f46e5;        --cat-finance-bg: #eef2ff;
     --cat-life: #ca8a04;          --cat-life-bg: #fefce8;
     --cat-shopping: #db2777;      --cat-shopping-bg: #fdf2f8;
     --cat-travel: #0284c7;        --cat-travel-bg: #f0f9ff;
-    --cat-utility: #7c3aed;       --cat-utility-bg: var(--cat-utility-bg);
+    --cat-utility: #7c3aed;        --cat-utility-bg: #f5f3ff;
     --cat-image: #059669;         --cat-image-bg: #ecfdf5;
 }
 
@@ -632,7 +666,7 @@ footer .footer-links a:hover {
     align-items: center;
     gap: 8px;
     padding: 10px 14px;
-    background: #fff;
+    background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 10px;
     color: var(--text-primary);
@@ -646,7 +680,7 @@ footer .footer-links a:hover {
     border-color: var(--primary);
     color: var(--primary);
     text-decoration: none;
-    box-shadow: 0 2px 8px rgba(79,70,229,0.12);
+    box-shadow: 0 2px 8px var(--primary-glow);
     transform: translateY(-1px);
 }
 .related-tools li a .rt-icon {
@@ -1302,7 +1336,7 @@ button:active, .btn:active {
     text-align: center;
     cursor: pointer;
     transition: border-color 0.2s, background 0.2s;
-    background: #fff;
+    background: var(--bg-card);
     margin-bottom: 24px;
 }
 
@@ -1348,7 +1382,7 @@ button:active, .btn:active {
 }
 
 .preview-card {
-    background: #fff;
+    background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 20px;
@@ -1398,7 +1432,7 @@ button:active, .btn:active {
 
 /* Controls Panel */
 .tool-controls {
-    background: #fff;
+    background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 20px;
@@ -1459,7 +1493,7 @@ button:active, .btn:active {
     border: 1.5px solid var(--border);
     border-radius: 8px;
     font-size: 1rem;
-    background: #fff;
+    background: var(--bg-card);
     color: var(--text-primary);
     cursor: pointer;
     transition: border-color 0.2s;
@@ -1468,7 +1502,7 @@ button:active, .btn:active {
 .control-group select:focus {
     outline: none;
     border-color: var(--brand-blue);
-    box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
+    box-shadow: 0 0 0 3px var(--primary-light);
 }
 
 .control-group input[type="number"] {
@@ -1477,7 +1511,7 @@ button:active, .btn:active {
     border: 1.5px solid var(--border);
     border-radius: 8px;
     font-size: 1rem;
-    background: #fff;
+    background: var(--bg-card);
     color: var(--text-primary);
     transition: border-color 0.2s;
 }
@@ -1485,7 +1519,7 @@ button:active, .btn:active {
 .control-group input[type="number"]:focus {
     outline: none;
     border-color: var(--brand-blue);
-    box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
+    box-shadow: 0 0 0 3px var(--primary-light);
 }
 
 .control-group input[type="checkbox"] {
@@ -1593,7 +1627,7 @@ button:active, .btn:active {
     flex-wrap: wrap;
     margin-top: 16px;
     padding: 16px;
-    background: #fff;
+    background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 8px;
 }
@@ -1843,7 +1877,7 @@ button:active, .btn:active {
     display: inline-flex !important;
     align-items: center;
     gap: 6px;
-    background: #fff;
+    background: var(--bg-card);
     border: 1.5px solid var(--border);
     border-radius: 20px;
     padding: 6px 16px;
@@ -1914,7 +1948,7 @@ button:active, .btn:active {
     display: inline-flex;
     align-items: center;
     gap: 0.3rem;
-    background: #fff;
+    background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 20px;
     padding: 0.3rem 0.7rem;
@@ -1959,7 +1993,7 @@ button:active, .btn:active {
 }
 .hot-search-term:hover {
     background: var(--border);
-    color: #1e293b;
+    color: var(--text-primary);
 }
 
 
