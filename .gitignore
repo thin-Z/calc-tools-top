@@ -32,3 +32,6 @@ __pycache__/
 *.pyc
 .env*
 !.env.example
+
+# 一次性脚本生成报告
+scripts/*_report.txt
