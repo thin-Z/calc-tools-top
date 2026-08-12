@@ -150,6 +150,8 @@
 | 分类索引 | `.category-header` + `.tool-grid` + `.tool-count` | 复用 style.css 公共 .tool-grid |
 | 图片工具 | `.upload-zone`/`.tool-controls`/`.control-group`/`.preview-card`/`.result-summary`/`.color-info` | 背景 `--bg-card`（暗色自动） |
 | 文字工具 | `.text-input`/`.mode-chip`/`.result-area`/`.stat-card`/`.copy-btn`/`.strength-meter` | 等宽 `SF Mono/Fira Code`；chip 激活 `--primary` |
+| UUID / 密码生成器 | `.gen-tabs`/`.gen-tab(.active)`/`.gen-panel(.active)`/`.uuid-row`/`.uuid-text`/`.pw-options`/`.pw-length-wrap`/`.pw-length-val` | 激活态 `--primary`；等宽 UUID 列表 |
+| 随机数生成器 | `.random-numbers`/`.random-number-badge` | `--bg-card`/`--border`/8px radius；Courier 等宽 |
 
 广告位：`.ad-container`（max-width 728px、min-height 90px）与 `.ad-slot`/`.ad-placeholder` 结构**必须保留**，勿删勿改。
 
