@@ -166,7 +166,9 @@ module.exports = async function handler(req, res) {
       if (count === null) count = await rest('/get/like:blog:' + cleanId);
       return res.status(200).json({
         toolId: cleanId,
-        count: parseInt(count || '0', 10),
+        // 负数钳制：本地"已赞"状态可能与全局计数不同步（如计数被清零），
+        // 用户再点取消会 INCRBY -1 把 KV 存为负值；读侧一律回退到 0。
+        count: Math.max(0, parseInt(count || '0', 10)),
       });
     }
 

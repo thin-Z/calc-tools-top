@@ -162,6 +162,13 @@ test('GET 返回当前计数', async () => {
   assert.strictEqual(r.body.toolId, 'get-tool');
 });
 
+test('GET 负数计数 → 钳制为 0', async () => {
+  mock.store.set('like:tool:neg-tool', -3);
+  const r = await httpCall(handlerPort, 'GET', '/api/likes?toolId=neg-tool');
+  assert.strictEqual(r.status, 200);
+  assert.strictEqual(r.body.count, 0);
+});
+
 test('POST 正常点赞 → 200 且计数 +1', async () => {
   const r = await httpCall(handlerPort, 'POST', '/api/likes', JSON_HEADERS, { toolId: 'test-tool', action: 'like' });
   assert.strictEqual(r.status, 200);
