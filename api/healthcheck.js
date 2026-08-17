@@ -21,7 +21,7 @@ function call(path, method, body) {
     const u = new URL(SITE + path);
     const options = {
       hostname: u.hostname,
-      path: u.pathname,
+      path: u.pathname + u.search, // 保留 query string（如 ?toolId=__health__）
       method: method || 'GET',
       headers: { 'Content-Type': 'application/json' },
     };
