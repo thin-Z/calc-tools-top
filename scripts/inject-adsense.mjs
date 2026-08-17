@@ -28,33 +28,6 @@ if (!snippet.includes('adsbygoogle.js')) {
   process.exit(1);
 }
 
-// 1.5) 从唯一来源解析 client ID，幂等同步 js/cookie-consent.js 的 ADSENSE_SRC
-//      使 client ID 在「HTML head 静态标签」与「JS 动态加载器」两处永远一致，
-//      且只有 includes/adsense-head.html 一处需要维护。
-const clientMatch = snippet.match(/ca-pub-\d+/);
-if (!clientMatch) {
-  console.error('[adsense] FATAL: 无法从 include 解析 ca-pub-* client ID');
-  process.exit(1);
-}
-const adsenseUrl = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${clientMatch[0]}`;
-const jsPath = join(root, 'js', 'cookie-consent.js');
-let jsUpdated = 0;
-if (existsSync(jsPath)) {
-  let js = readFileSync(jsPath, 'utf8');
-  const adsRe = /(const\s+ADSENSE_SRC\s*=\s*["'])([^"']*)(["'])/;
-  if (adsRe.test(js)) {
-    const next = js.replace(adsRe, `$1${adsenseUrl}$3`);
-    if (next !== js) {
-      writeFileSync(jsPath, next, 'utf8');
-      jsUpdated++;
-    }
-  } else {
-    console.warn('[adsense] 警告: js/cookie-consent.js 未匹配到 ADSENSE_SRC，跳过同步');
-  }
-} else {
-  console.warn('[adsense] 警告: 找不到 js/cookie-consent.js，跳过同步');
-}
-
 // 2) 收集站点 HTML（排除非站点目录）
 const EXCLUDE = new Set(['node_modules', '.git', 'docs', 'snapshots', 'deliverables', 'api', 'includes', 'scripts']);
 const files = [];
@@ -109,5 +82,5 @@ for (const f of files) {
   updated++;
 }
 
-console.log(`[adsense] 完成 | 扫描 ${files.length} 个 HTML | 更新 ${updated} | 跳过 ${skipped}` + (noHead ? ` | 无head ${noHead}` : '') + ` | JS(cookie-consent) 更新 ${jsUpdated}`);
+console.log(`[adsense] 完成 | 扫描 ${files.length} 个 HTML | 更新 ${updated} | 跳过 ${skipped}` + (noHead ? ` | 无head ${noHead}` : ''));
 process.exit(0);

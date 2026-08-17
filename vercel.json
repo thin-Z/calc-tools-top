@@ -1,7 +1,7 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "buildCommand": "node scripts/inject-adsense.mjs",
+  "buildCommand": "node scripts/cleanup-deprecated.mjs && node scripts/inject-adsense.mjs",
   "outputDirectory": ".",
   "headers": [
     {
