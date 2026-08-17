@@ -70,63 +70,24 @@ function initTagClicks() {
     }
 }
 
-/* ===== Like System ===== */
-const LIKE_STORAGE_KEY = 'toolbox_likes';
-
+/* ===== Like System (delegates to js/like.js -> window.LikeSystem) =====
+ * The actual like state/logic lives in js/like.js (single source of truth, T9).
+ * These are thin read/write accessors so the rest of site.js (hot-tool scoring,
+ * tool-grid sort) keeps working without call-site changes. Falls back to direct
+ * localStorage access if like.js failed to load. */
 function getLikes() {
-    try {
-        return JSON.parse(localStorage.getItem(LIKE_STORAGE_KEY)) || {};
-    } catch { return {}; }
+    if (window.LikeSystem && window.LikeSystem.getLikes) return window.LikeSystem.getLikes();
+    try { return JSON.parse(localStorage.getItem('toolbox_likes')) || {}; } catch (e) { return {}; }
 }
-
 function saveLikes(likes) {
-    localStorage.setItem(LIKE_STORAGE_KEY, JSON.stringify(likes));
+    if (window.LikeSystem && window.LikeSystem.saveLikes) { window.LikeSystem.saveLikes(likes); return; }
+    try { localStorage.setItem('toolbox_likes', JSON.stringify(likes)); } catch (e) {}
 }
-
 function getTotalLikes(toolId) {
     return getLikes()[toolId] || 0;
 }
 
-function toggleLike(toolId) {
-    // Heart pop animation
-    var hearts = document.querySelectorAll('[data-like-id="' + toolId + '"] .heart');
-    hearts.forEach(function(el) {
-        el.style.animation = 'none';
-        void el.offsetWidth;
-        el.style.animation = 'heartPop 0.4s ease';
-    });
-    const likes = getLikes();
-    const current = likes[toolId] || 0;
-    const was = current > 0;
-    likes[toolId] = was ? 0 : 1;
-    saveLikes(likes);
-    updateLikeUI(toolId);
-    
-    // Async sync global like to server
-    var action = was ? 'unlike' : 'like';
-    if (typeof window.ApiClient !== 'undefined') {
-        window.ApiClient.toggleLike(toolId, action).then(function(data) {
-            if (data && typeof data.count === 'number') {
-                updateLikeUI(toolId, data.count);
-            }
-        });
-    }
-
-    return likes[toolId];
-}
-
-function updateLikeUI(toolId) {
-    const count = getTotalLikes(toolId);
-    document.querySelectorAll(`[data-like-id="${toolId}"]`).forEach(el => {
-        const countEl = el.querySelector('.count');
-        if (countEl) countEl.textContent = count;
-        if (count > 0) {
-            el.classList.add('liked');
-        } else {
-            el.classList.remove('liked');
-        }
-    });
-}
+/* toggleLike / updateLikeUI live in js/like.js (window.LikeSystem) now. */
 
 
 function updateClickUI(toolId, total) {
@@ -151,28 +112,8 @@ function updateClickUI(toolId, total) {
     });
 }
 
-function initLikes() {
-    document.querySelectorAll('.like-btn:not([data-initialized])').forEach(btn => {
-        const toolId = btn.dataset.likeId;
-        if (toolId) {
-            btn.setAttribute('data-initialized', 'true');
-            updateLikeUI(toolId);
-            btn.addEventListener('click', (e) => {
-                e.preventDefault(); e.stopPropagation();
-                toggleLike(toolId);
-            });
-
-            // Fetch global count from server
-            if (typeof window.ApiClient !== 'undefined') {
-                window.ApiClient.fetchCount(toolId).then(function(data) {
-                    if (data && typeof data.count === 'number') {
-                        updateLikeUI(toolId, data.count);
-                    }
-                });
-            }
-        }
-    });
-}
+/* Tool/blog like buttons are initialized by js/like.js (window.LikeSystem.initLikes /
+ * initArticleLikes), which auto-boots on DOMContentLoaded + pageshow. Do NOT re-init here. */
 
 /* ===== Click Tracking ===== */
 const CLICK_STORAGE_KEY = 'toolbox_clicks';
@@ -548,48 +489,7 @@ function applyFilteredPagination(category, articles) {
 }
 
 /* ===== Make article cards clickable ===== */
-function initArticleLikes() {
-    document.querySelectorAll('.article-like').forEach(function(btn) {
-        var blogId = btn.dataset.blogId;
-        if (!blogId) return;
-        var count = getTotalLikes(blogId);
-        var countEl = btn.querySelector('.like-count');
-        if (countEl) countEl.textContent = count;
-        if (count > 0) btn.classList.add('liked');
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            var likes = getLikes();
-            var was = (likes[blogId] || 0) > 0;
-            likes[blogId] = was ? 0 : 1;
-            saveLikes(likes);
-            var countEl2 = btn.querySelector('.like-count');
-            if (countEl2) countEl2.textContent = likes[blogId];
-            if (likes[blogId] > 0) { btn.classList.add('liked'); } else { btn.classList.remove('liked'); }
-
-            // Async sync to server
-            var action = was ? 'unlike' : 'like';
-            if (typeof window.ApiClient !== 'undefined') {
-                window.ApiClient.toggleLike(blogId, action).then(function(data) {
-                    if (data && typeof data.count === 'number') {
-                        var ce3 = btn.querySelector('.like-count');
-                        if (ce3) ce3.textContent = data.count;
-                    }
-                });
-            }
-        });
-
-        // Fetch global count from server
-        if (typeof window.ApiClient !== 'undefined') {
-            window.ApiClient.fetchCount(blogId).then(function(data) {
-                if (data && typeof data.count === 'number') {
-                    var ce4 = btn.querySelector('.like-count');
-                    if (ce4) ce4.textContent = data.count;
-                }
-            });
-        }
-    });
-}
+/* Blog like buttons are initialized by js/like.js (window.LikeSystem.initArticleLikes). */
 
 
 const TOOLS_DATA = {
@@ -932,11 +832,10 @@ function renderHotSearch(searchInput) {
 
 /* ===== Initialization ===== */
 document.addEventListener('DOMContentLoaded', () => {
-    initLikes();
+    /* Like buttons (tool + blog) are initialized by js/like.js (window.LikeSystem). */
     initCategoryFilters();
     initSearch();
     initTagClicks();
-    initArticleLikes();
     initToolSort();
     initBlogPagination();
     initHotTools();
