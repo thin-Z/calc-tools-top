@@ -39,14 +39,21 @@
             </nav>
 <div class="article-tags"><a href="/blog/en/?cat=tools" class="tag tag-tools" data-tag="tools">🔧 Dev Tools</a></div>
 <p class="blog-meta">📰 2026-07-02 · Calc-Tools Editor</p>
-<h1>Base64 Encoder Decoder: What is Base64 and How to Use It</h1><p>Base64 converts binary data into ASCII text, widely used in data transmission and storage.</p>
-<h2>What is Base64?</h2>
-<p>Base64 uses 64 printable characters (A-Z, a-z, 0-9, +, /) to represent binary data. Encoded data is about 33% larger than the original.</p>
+<h1>Base64 Encoder Decoder: What is Base64 and How to Use It</h1>
+<p>Base64 is a binary-to-text encoding scheme that turns any sequence of bytes — images, files, certificates, or arbitrary data — into a string made only of letters, digits, and two symbols. Because the output is plain ASCII, it can travel safely through systems that were never designed to handle raw binary, such as email, JSON, or URLs.</p>
+<h2>What Is Base64?</h2>
+<p>Base64 takes three input bytes (24 bits) at a time and splits them into four groups of six bits. Each six-bit group maps to one character in a 64-character alphabet: the uppercase and lowercase Latin letters, the digits 0–9, plus <code>+</code> and <code>/</code> (with <code>=</code> used as padding). The result is about 33% larger than the original data — three bytes become four characters — which is the price paid for guaranteed transportability.</p>
+<h2>Why 33% Bigger?</h2>
+<p>The overhead comes from the encoding itself. Six bits can only address 64 values, so representing 8-bit bytes with 6-bit symbols wastes roughly two bits per byte. For most use cases this cost is negligible, but it means Base64 is a poor choice for storing large files where space matters; there, compressed binary is better.</p>
 <h2>Common Use Cases</h2>
-<p><strong>Email Attachments</strong>: SMTP only supports 7-bit ASCII, Base64 enables binary attachment transmission.</p>
-<p><strong>HTTP Basic Auth</strong>: Username:password encoded in Base64 for Authorization headers.</p>
-<p><strong>Data URIs</strong>: Embed small files directly in HTML/CSS.</p>
-<p><strong>JWT Tokens</strong>: JSON Web Tokens use Base64 encoding for payload transmission.</p>
+<p><strong>Email attachments:</strong> SMTP was built around 7-bit ASCII, so Base64 lets binary files ride along as text.</p>
+<p><strong>HTTP Basic Auth:</strong> a <code>username:password</code> pair is Base64-encoded into the <code>Authorization</code> header. (Note: this is encoding, not encryption — it is trivially reversible and must always ride on HTTPS.)</p>
+<p><strong>Data URIs:</strong> small images or fonts can be embedded directly inside HTML or CSS with <code>data:image/png;base64,…</code>, removing extra HTTP requests.</p>
+<p><strong>JSON Web Tokens:</strong> JWTs carry their payload as Base64url-encoded JSON, readable by anyone who decodes them.</p>
+<h2>Base64 vs URL Encoding</h2>
+<p>Base64 is for packaging binary data as text; URL encoding (percent-encoding) is for making text safe inside a URL. They solve different problems, and mixing them up — for example a Base64 string inside a query parameter — usually requires an extra URL-encoding step because <code>+</code> and <code>/</code> are special in URLs. For that scenario, the "Base64url" variant (using <code>-</code> and <code>_</code>) exists precisely to avoid the clash.</p>
+<h2>When Not to Use Base64</h2>
+<p>Avoid Base64 for secrets — it offers no confidentiality — and avoid it for large assets on the web, where it bloats page weight and hurts load performance. Use it only when a system genuinely requires text-shaped data.</p>
             <div class="blog-cta">
                 <p><strong>Online 🔣 Base64 Encode/Decode</strong></p>
                 <p>Free to use, no download required</p>

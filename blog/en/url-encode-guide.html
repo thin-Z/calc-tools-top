@@ -39,14 +39,27 @@
             </nav>
 <div class="article-tags"><a href="/blog/en/?cat=tools" class="tag tag-tools" data-tag="tools">🔧 Dev Tools</a></div>
 <p class="blog-meta">📰 2026-07-02 · Calc-Tools Editor</p>
-<h1>URL Encoder Decoder: What is URL Encoding and Why It Matters</h1><p>URL encoding (percent-encoding) is a fundamental concept in web development, ensuring special characters in URLs are transmitted correctly.</p>
-<h2>What is URL Encoding?</h2>
-<p>URLs only allow letters, numbers, and a few special characters from the ASCII set. Other characters (Chinese text, spaces, &) must be encoded as % followed by two hex digits.</p>
-<p>Example: space → %20, ampersand → %26</p>
+<h1>URL Encoder Decoder: What is URL Encoding and Why It Matters</h1>
+<p>URL encoding — also called percent-encoding — is one of the quiet workhorses of the web. Every time you click a search result, submit a form, or share a link that contains a space, an emoji, or a Chinese character, that data has to be translated into a format that survives the trip through the network. URL encoding is the rulebook that makes this possible, and a URL encoder/decoder is the tool that applies and reverses it for you.</p>
+<h2>What Is URL Encoding?</h2>
+<p>A URL is not allowed to contain arbitrary bytes. The URI specification reserves a small set of "safe" characters — basic Latin letters, digits, and a few symbols such as - _ . ~ — and treats everything else as unsafe. Unsafe characters must be represented using a percent sign followed by two hexadecimal digits that describe the underlying byte.</p>
+<p>For example, a single space becomes <code>%20</code>, an ampersand becomes <code>%26</code>, and a slash inside a path segment becomes <code>%2F</code>. The receiving server decodes these sequences back into the original characters before processing the request.</p>
+<h2>How Percent-Encoding Actually Works</h2>
+<p>The detail most people miss is that encoding operates on bytes, not on characters. Non-ASCII text such as "中文" or "café" is first converted to UTF-8, and then each resulting byte is percent-encoded. That is why the same word can produce a long, seemingly random string of %XX pairs — each pair is one UTF-8 byte. A correct URL encoder always uses UTF-8 as the source encoding; older systems that used a different charset are a common source of mojibake (garbled text).</p>
+<h2>Characters You Almost Always Need to Encode</h2>
+<ul>
+  <li><strong>Spaces</strong> — sent as <code>%20</code> (or sometimes <code>+</code> inside form data).</li>
+  <li><strong>&amp; = ? # %</strong> — reserved characters that would otherwise change how the URL is parsed.</li>
+  <li><strong>Non-ASCII text</strong> — accented letters, Chinese, Japanese, Arabic, and emoji all require encoding.</li>
+  <li><strong>Control characters</strong> — never legal in a URL and must always be encoded or removed.</li>
+</ul>
 <h2>When to Use URL Encoding</h2>
-<p><strong>GET Parameters</strong>: Query parameters with special characters.</p>
-<p><strong>URL Paths</strong>: File names containing Chinese characters or spaces.</p>
-<p><strong>Form Submission</strong>: application/x-www-form-urlencoded data.</p>
+<p><strong>GET parameters:</strong> any query value that may contain spaces, &amp;, or non-Latin text must be encoded so the parameter boundary is preserved.</p>
+<p><strong>URL paths:</strong> file or page names with spaces or Chinese characters should be encoded before being placed in a link.</p>
+<p><strong>Form submission:</strong> the <code>application/x-www-form-urlencoded</code> format encodes field names and values the same way before they are sent.</p>
+<h2>Common Mistakes to Avoid</h2>
+<p>The most frequent bug is <em>double encoding</em>: encoding a string that was already encoded turns <code>%20</code> into <code>%2520</code>, which decodes to the literal text "%20" instead of a space. Only encode a value once, at the point where it enters the URL. The second trap is encoding the entire URL — including its <code>? &amp; = /</code> structure — which breaks the address; encode the values, never the syntax.</p>
+<p>When you need to embed binary or large data inside a URL or a data attribute, Base64 is usually a better fit than percent-encoding. See our <a href="/blog/en/base64-encode-guide">Base64 encode guide</a> for that use case.</p>
             <div class="blog-cta">
                 <p><strong>Online 🔣 URL Encode/Decode</strong></p>
                 <p>Free to use, no download required</p>
