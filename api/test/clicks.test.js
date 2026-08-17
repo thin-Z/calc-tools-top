@@ -111,6 +111,7 @@ before(async () => {
   mock = await startKvMock();
   process.env.KV_REST_API_URL = mock.url;
   process.env.KV_REST_API_TOKEN = 'test-token';
+  process.env.ID_WHITELIST_OFF = '1'; // 现有用例使用非白名单 id，测试期间放行
   const handler = require('../clicks.js');
   handlerServer = http.createServer((req, res) => {
     Promise.resolve(handler(req, wrapRes(res))).catch(() => {
@@ -184,4 +185,12 @@ test('点击计数 key 写入后刷新 365 天 TTL', async () => {
   await httpCall(handlerPort, 'POST', '/api/clicks', JSON_HEADERS, { toolId });
   const found = mock.expires.find((e) => e.key === 'click:tool:' + toolId && e.seconds === 31536000);
   assert.ok(found, '应记录 expire click:tool:' + toolId + ' 31536000，实际记录: ' + JSON.stringify(mock.expires));
+});
+
+test('POST 白名单外 id → 403', async () => {
+  const prev = process.env.ID_WHITELIST_OFF;
+  delete process.env.ID_WHITELIST_OFF;
+  const r = await httpCall(handlerPort, 'POST', '/api/clicks', JSON_HEADERS, { toolId: 'not-registered-id-xyz' });
+  if (prev !== undefined) process.env.ID_WHITELIST_OFF = prev;
+  assert.strictEqual(r.status, 403);
 });

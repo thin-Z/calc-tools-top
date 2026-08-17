@@ -180,6 +180,12 @@ module.exports = async function handler(req, res) {
       const cleanId = toolId.replace(/[^a-zA-Z0-9_-]/g, '');
       if (!cleanId) return res.status(400).json({ error: 'invalid toolId' });
 
+      // 工具 ID 白名单：仅允许已注册的工具/博客 id 写入，防止对任意 id 污染 KV
+      const ALLOWED = require('./allowed-ids');
+      if (process.env.ID_WHITELIST_OFF !== '1' && !ALLOWED.TOOL_IDS.has(cleanId) && !ALLOWED.BLOG_IDS.has(cleanId)) {
+        return res.status(403).json({ error: 'unknown toolId' });
+      }
+
       // 点赞防刷：超出每日上限拒绝
       if (await isLikeAbuse(clientIp, cleanId)) {
         return res.status(429).json({ error: 'like limit exceeded for this tool today' });
