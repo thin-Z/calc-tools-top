@@ -12,7 +12,10 @@ const { test, before, after } = require('node:test');
 const assert = require('node:assert');
 const http = require('http');
 
-// ---- 本地 KV REST 模拟服务器：支持 /get /incr /expire 三类命令 ----
+// ---- 本地 KV REST 模拟服务器：支持 /get /incrby /expire 三类命令 ----
+// ⚠️ 严格对齐 Upstash REST 真实规范（勿按调用方代码照抄）：
+//    INCRBY = POST /incrby/{key}，body 为裸数字；未知路径一律 400 报错。
+//    2026-08-17 教训：mock 曾复刻错误格式 /incr/{key}/{delta} 导致测试全绿、生产必挂。
 function startKvMock() {
   const store = new Map();   // key -> number
   const ttl = new Map();     // key -> expiry timestamp (ms)
@@ -36,15 +39,7 @@ function startKvMock() {
       });
       return;
     }
-    if (pathname.startsWith('/incr/')) {
-      const restPath = pathname.slice('/incr/'.length);
-      const idx = restPath.lastIndexOf('/');
-      const key = restPath.slice(0, idx);
-      const delta = parseInt(restPath.slice(idx + 1), 10) || 0;
-      const next = (store.get(key) || 0) + delta;
-      store.set(key, next);
-      result = next;
-    } else if (pathname.startsWith('/get/')) {
+    if (pathname.startsWith('/get/')) {
       const key = pathname.slice('/get/'.length);
       result = store.has(key) ? store.get(key) : null;
     } else if (pathname.startsWith('/expire/')) {
@@ -59,6 +54,12 @@ function startKvMock() {
       } else {
         result = 0;
       }
+    } else {
+      // 刻意拒绝未知命令路径（如旧格式 /incr/{key}/{delta}）：与真实 Upstash 一致。
+      // 若调用方写错格式，测试必须失败而非"假装成功"。
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: "ERR wrong number of arguments for 'incr' command" }));
+      return;
     }
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ result }));

@@ -3,6 +3,12 @@
   "trailingSlash": false,
   "buildCommand": "node scripts/build.mjs",
   "outputDirectory": "dist",
+  "crons": [
+    {
+      "path": "/api/healthcheck",
+      "schedule": "0 9 * * *"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

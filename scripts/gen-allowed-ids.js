@@ -19,10 +19,13 @@ function sh(cmd) {
 const likeRaw = sh('grep -rhoE \'data-like-id="[^"]+"\' --include=*.html .');
 const blogRaw = sh('grep -rhoE \'data-blog-id="[^"]+"\' --include=*.html .');
 
+// 非页面 id（不来自 HTML）：探活专用 id，供 api/healthcheck.js 使用
+const EXTRA_TOOL_IDS = ['__health__'];
+
 const toolIds = [...new Set(
   (likeRaw.match(/data-like-id="([^"]+)"/g) || [])
     .map((s) => s.replace(/data-like-id="|"/g, ''))
-)];
+)].concat(EXTRA_TOOL_IDS);
 const blogIds = [...new Set(
   (blogRaw.match(/data-blog-id="([^"]+)"/g) || [])
     .map((s) => s.replace(/data-blog-id="|"/g, ''))
