@@ -22,6 +22,20 @@ function startKvMock() {
     const pathname = new URL(req.url, 'http://127.0.0.1').pathname;
     calls.push(pathname);
     let result = null;
+    if (pathname.startsWith('/incrby/')) {
+      // Upstash REST INCRBY：POST /incrby/{key}，body 为裸数字增量
+      const key = pathname.slice('/incrby/'.length);
+      let raw = '';
+      req.on('data', (c) => { raw += c; });
+      req.on('end', () => {
+        const delta = parseInt((raw || '').trim(), 10) || 0;
+        const next = (store.get(key) || 0) + delta;
+        store.set(key, next);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ result: next }));
+      });
+      return;
+    }
     if (pathname.startsWith('/incr/')) {
       const restPath = pathname.slice('/incr/'.length);
       const idx = restPath.lastIndexOf('/');

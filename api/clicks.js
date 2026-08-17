@@ -10,7 +10,7 @@ const REST_TOKEN = process.env.KV_REST_API_TOKEN || '';
 
 // 兼容本地 KV 模拟服务器（node:test 零依赖测试）：按 URL 协议选择 http/https，
 // 端口取自 URL，未指定时使用默认端口。生产环境 KV_REST_API_URL 为 https，行为不变。
-function rest(path) {
+function rest(path, method, body) {
   return new Promise((resolve) => {
     if (!REST_URL) return resolve(null);
     const url = new URL(REST_URL + path);
@@ -20,9 +20,13 @@ function rest(path) {
       hostname: url.hostname,
       port: url.port || (isHttps ? 443 : 80),
       path: url.pathname + url.search,
-      method: 'GET',
+      method: method || 'GET',
       headers: { 'Authorization': 'Bearer ' + REST_TOKEN },
     };
+    if (body !== undefined) {
+      options.headers['Content-Type'] = 'application/json';
+      options.headers['Content-Length'] = Buffer.byteLength(String(body));
+    }
     const req = mod.request(options, (res) => {
       let data = '';
       res.on('data', (chunk) => { data += chunk; });
@@ -37,6 +41,7 @@ function rest(path) {
     });
     req.on('error', () => resolve(null));
     req.setTimeout(5000, () => { req.destroy(); resolve(null); });
+    if (body !== undefined) req.write(String(body));
     req.end();
   });
 }
@@ -77,7 +82,7 @@ async function isRateLimited(ip, isRead) {
   if (REST_URL) {
     const key = 'ratelimit:clicks:' + (isRead ? 'r:' : 'w:') + ip;
     // INCR 原子递增，杜绝并发读改写（TOCTOU）绕过限速；首增时设 TTL
-    const next = parseInt((await rest('/incr/' + key + '/1')) || '0', 10);
+    const next = parseInt((await rest('/incrby/' + key, 'POST', '1')) || '0', 10);
     if (next === 1) {
       await rest('/expire/' + key + '/' + Math.ceil(RATE_LIMIT_WINDOW_MS / 1000));
     }
@@ -182,7 +187,7 @@ module.exports = async function handler(req, res) {
       const key = 'click:tool:' + cleanId;
 
       // INCR 原子递增，杜绝并发读改写（TOCTOU）丢计数
-      const total = parseInt((await rest('/incr/' + key + '/1')) || '0', 10);
+      const total = parseInt((await rest('/incrby/' + key, 'POST', '1')) || '0', 10);
       // INCR 不设 TTL，写入后刷新 365 天 TTL，防止无界存储放大
       await rest('/expire/' + key + '/31536000');
 
