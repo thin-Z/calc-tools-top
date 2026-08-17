@@ -1,6 +1,8 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "buildCommand": "node scripts/build.mjs",
+  "outputDirectory": "dist",
   "headers": [
     {
       "source": "/(.*)",

@@ -27,6 +27,9 @@ tag-preview.html
 
 node_modules/
 
+# Vercel build output
+dist/
+
 # Python
 __pycache__/
 *.pyc
