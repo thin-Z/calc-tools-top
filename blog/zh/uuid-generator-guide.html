@@ -83,7 +83,30 @@
 <p><strong>会话标识</strong>：用户会话的唯一标识。</p>
 <p><strong>资源标识</strong>：API中资源的唯一ID。</p>
 <p><strong>文件名</strong>：防止文件重名。</p>
-            <div class="blog-cta">
+            <h2>如何使用UUID生成器</h2>
+<p>需要为系统或文件生成唯一标识时，用生成器比手写更可靠：</p>
+<ul>
+<li><strong>第一步</strong>：选择 UUID 版本，多数场景用 v4（随机），需要可复现则用 v5。</li>
+<li><strong>第二步</strong>：设置生成数量，例如一次生成 100 个用于批量导入。</li>
+<li><strong>第三步</strong>：点击生成并复制结果，可整段粘贴到代码、数据库或配置文件。</li>
+</ul>
+<h2>常见问题（FAQ）</h2>
+<dl>
+<dt>UUID v4 会重复吗？</dt>
+<dd>理论上可能，但 2^122 的随机空间使重复概率低到可忽略，实际项目中无需担心碰撞。</dd>
+<dt>v1 和 v4 该选哪个？</dt>
+<dd>不关心生成时间、只要唯一就选 v4；若需从 ID 反推生成时间或设备，则用 v1。注意 v1 会暴露 MAC 地址。</dd>
+<dt>UUID 能当数据库主键吗？</dt>
+<dd>可以，尤其适合分布式系统。不过 UUID 无序，作为聚簇索引时插入性能不如自增整数，可改用 UUID v7 这类带时间有序的版本。</dd>
+<dt>UUID 里的横线能去掉吗？</dt>
+<dd>可以。部分系统要求 32 位无分隔符，生成后删除连字符即可，值本身不变。</dd>
+</dl>
+<h2>小贴士</h2>
+<ul>
+<li><strong>别用 UUID 做用户可见 ID</strong>：过长且不友好，对外展示建议用短码或自增号。</li>
+<li><strong>前端不要生成安全令牌</strong>：UUID v4 不是密码学安全的随机源替代品，密钥请用专门库。</li>
+</ul>
+<div class="blog-cta">
                 <p><strong>在线使用 🔣 UUID生成器</strong></p>
                 <p>无需下载，打开即用</p>
                 <p><a href="/zh/text/uuid-generator">👉 立即使用 🔣 UUID生成器</a></p>

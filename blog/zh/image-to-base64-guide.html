@@ -79,7 +79,30 @@
 <p><strong>邮件HTML</strong>：邮件客户端不支持外部资源引用，Base64嵌入是常用方案。</p>
 <h2>局限性</h2>
 <p>Base64编码会使图片体积增加约33%。大图不适合用Base64，因为会增加HTML/CSS文件大小，反而拖慢加载速度。一般建议10KB以下的小图标才考虑使用。</p>
-            <div class="blog-cta">
+            <h2>如何使用图片转Base64工具</h2>
+<p>想减少小图请求时，按以下步骤生成嵌入代码：</p>
+<ul>
+<li><strong>第一步</strong>：上传或拖入图片，工具会读取其二进制内容。</li>
+<li><strong>第二步</strong>：选择输出格式，如直接可用的 data URI 或纯编码文本。</li>
+<li><strong>第三步</strong>：复制结果，粘贴到 HTML 的 src 或 CSS 的 url() 中。</li>
+</ul>
+<h2>常见问题（FAQ）</h2>
+<dl>
+<dt>Base64 图片能在所有浏览器用吗？</dt>
+<dd>能。所有现代浏览器都支持 data URI，IE8 及以上也支持，放心用于主流项目。</dd>
+<dt>为什么文件反而变大了？</dt>
+<dd>Base64 编码体积约为原图的 1.33 倍，所以只适合小图标；大图请继续用普通文件引用。</dd>
+<dt>可以直接嵌在 CSS 里吗？</dt>
+<dd>可以。写法为 background-image: url("data:image/png;base64,...")，适合做背景小图或占位。</dd>
+<dt>转换后图片模糊了吗？</dt>
+<dd>不会。Base64 只是编码，不改变像素，解码后与原图完全一致。</dd>
+</dl>
+<h2>小贴士</h2>
+<ul>
+<li><strong>控制体积上限</strong>：建议 10KB 以内的图标才转 Base64，超过会让 HTML/CSS 文件臃肿、拖慢首屏。</li>
+<li><strong>配合构建工具</strong>：项目里可用 webpack、Vite 等自动把小图转成 Base64，不必手贴长串编码。</li>
+</ul>
+<div class="blog-cta">
                 <p><strong>在线使用 🖼️ 图片转Base64</strong></p>
                 <p>无需下载，打开即用</p>
                 <p><a href="/zh/image/base64">👉 立即使用 🖼️ 图片转Base64</a></p>

@@ -80,7 +80,30 @@
 <p><strong>表单提交</strong>：application/x-www-form-urlencoded格式提交的数据会自动编码。</p>
 <h2>常见需要编码的字符</h2>
 <p>空格 → %20、& → %26、? → %3F、= → %3D、# → %23、中文 → 多字节编码</p>
-            <div class="blog-cta">
+            <h2>如何使用URL编解码工具</h2>
+<p>调试接口或处理链接时，按三步完成转换：</p>
+<ul>
+<li><strong>第一步</strong>：粘贴需要处理的网址或参数文本。</li>
+<li><strong>第二步</strong>：选择"编码"或"解码"方向。</li>
+<li><strong>第三步</strong>：复制结果，直接用于请求或填入地址栏。</li>
+</ul>
+<h2>常见问题（FAQ）</h2>
+<dl>
+<dt>编码和解码是一一对应的吗？</dt>
+<dd>是的。只要用同一套标准百分号编码规则，先编码再解码就能还原原值。</dd>
+<dt>为什么中文地址复制后变乱码？</dt>
+<dd>含中文的 URL 若未编码就会出问题。把中文部分编码为 %XX 形式，浏览器和服务端才能正确解析。</dd>
+<dt>+ 号在解码后变成空格？</dt>
+<dd>在 form-urlencoded 规范里 + 代表空格，但严格 URL 编码中空格是 %20。两者混用会错位，建议统一用 %20。</dd>
+<dt>前端该用哪个函数？</dt>
+<dd>JavaScript 编码参数用 encodeURIComponent，整段网址用 encodeURI；解码对应 decodeURIComponent 与 decodeURI。</dd>
+</dl>
+<h2>小贴士</h2>
+<ul>
+<li><strong>只对参数值编码</strong>：不要把整个 URL 连同 ?、&、= 一起编码，否则分隔符失效，应只编码每个值。</li>
+<li><strong>服务端也要解码</strong>：前端编码后，后端需用对应函数解码，前后规则一致才能拿到正确参数。</li>
+</ul>
+<div class="blog-cta">
                 <p><strong>在线使用 🔣 URL编解码</strong></p>
                 <p>无需下载，打开即用</p>
                 <p><a href="/zh/text/url-encode">👉 立即使用 🔣 URL编解码</a></p>
