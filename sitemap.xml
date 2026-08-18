@@ -937,7 +937,7 @@
   <url>
     <loc>https://www.calc-tools.top/en/calculators/workday-calculator</loc>
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/workday-calculator'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh-CN'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/workday-calculator'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/workday-calculator'/>
     <lastmod>2026-08-18</lastmod>
     <changefreq>monthly</changefreq>
@@ -946,7 +946,7 @@
   <url>
     <loc>https://www.calc-tools.top/en/calculators/calorie-calculator</loc>
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/calorie-calculator'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh-CN'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/calorie-calculator'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/calorie-calculator'/>
     <lastmod>2026-08-18</lastmod>
     <changefreq>monthly</changefreq>
@@ -1009,7 +1009,7 @@
   <url>
     <loc>https://www.calc-tools.top/en/image/image-crop</loc>
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/image/image-crop'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh-CN'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/image/image-crop'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/image/image-crop'/>
     <lastmod>2026-08-18</lastmod>
     <changefreq>monthly</changefreq>
@@ -1342,7 +1342,7 @@
   <url>
     <loc>https://www.calc-tools.top/zh/calculators/workday-calculator</loc>
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/workday-calculator'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/workday-calculator'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/workday-calculator'/>
     <lastmod>2026-08-18</lastmod>
     <changefreq>monthly</changefreq>
@@ -1351,7 +1351,7 @@
   <url>
     <loc>https://www.calc-tools.top/zh/calculators/calorie-calculator</loc>
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/calorie-calculator'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/calorie-calculator'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/calorie-calculator'/>
     <lastmod>2026-08-18</lastmod>
     <changefreq>monthly</changefreq>
@@ -1414,7 +1414,7 @@
   <url>
     <loc>https://www.calc-tools.top/zh/image/image-crop</loc>
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/image/image-crop'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/image/image-crop'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/image/image-crop'/>
     <lastmod>2026-08-18</lastmod>
     <changefreq>monthly</changefreq>
