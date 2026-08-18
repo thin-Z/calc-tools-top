@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="/js/theme-init.js"></script>
+<script src="/js/theme-toggle.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卡路里计算器 - 在线计算每日所需热量（BMR/TDEE）</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="免费在线卡路里计算器，根据性别、年龄、身高、体重和活动水平，使用 Mifflin-St Jeor 公式计算基础代谢率 BMR 与每日维持热量，并给出减重、增肌建议区间。">
+    <meta property='og:title' content='卡路里计算器 - 在线计算每日所需热量（BMR/TDEE）'/>
+    <meta property='og:description' content='免费在线卡路里计算器，根据性别、年龄、身高、体重和活动水平计算 BMR 与每日维持热量，并给出减重、增肌建议区间。'/>
+    <meta property='og:type' content='website'/>
+    <meta property='og:url' content='https://www.calc-tools.top/zh/calculators/calorie-calculator'/>
+    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:locale' content='zh_CN'/>
+    <meta name='twitter:card' content='summary_large_image'/>
+    <meta name='twitter:title' content='卡路里计算器 - 在线计算每日所需热量（BMR/TDEE）'/>
+    <meta name='twitter:description' content='免费在线卡路里计算器，根据性别、年龄、身高、体重和活动水平计算 BMR 与每日维持热量，并给出减重、增肌建议区间。'/>
+
+    <link rel="canonical" href="https://www.calc-tools.top/zh/calculators/calorie-calculator">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/calculators/calorie-calculator">
+    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/calculators/calorie-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/zh/calculators/calorie-calculator">
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="/js/i18n.js" defer></script>
+    <script src="/js/like.js" defer></script>
+    <script src="/js/calculators/calorie-calculator.js" defer></script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "在线工具", "item": "https://www.calc-tools.top/" },
+        { "@type": "ListItem", "position": 2, "name": "卡路里计算器", "item": "https://www.calc-tools.top/zh/calculators/calorie-calculator" }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "什么是 BMR 基础代谢率？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "BMR（Basal Metabolic Rate）是身体在静止状态下维持生命所需的最低热量，约占每日总消耗的 60%-70%。本工具使用 Mifflin-St Jeor 公式计算 BMR。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "哪个公式更准确？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Mifflin-St Jeor 公式（1990）是目前被广泛推荐使用的估算公式，对现代人群误差较小；Harris-Benedict 修订版（1984）作为对照参考。两者结果相近，具体热量需求还与体成分、代谢水平有关。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "每天摄入多少热量能减肥？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "在每日维持热量（TDEE）基础上减少约 300-500 千卡，通常每周可减重约 0.25-0.5 公斤。建议循序渐进，避免低于 BMR 的极端节食。"
+            }
+        }
+    ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "卡路里计算器 - 在线计算每日所需热量（BMR/TDEE）",
+    "url": "https://www.calc-tools.top/zh/calculators/calorie-calculator",
+    "description": "免费在线卡路里计算器，根据性别、年龄、身高、体重和活动水平计算 BMR 与每日维持热量，并给出减重、增肌建议区间。",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web",
+    "inLanguage": "zh-CN"
+}
+</script>
+</head>
+<body>
+    <header>
+    <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+    <nav>
+        <a href="/"><span>首页</span></a>
+        <select class="lang-switch" onchange="switchLang(this.value)" aria-label="语言切换">
+            <option value="zh" selected>🇨🇳 中文</option>
+            <option value="en">🇬🇧 English</option>
+        </select>
+        <button id="theme-toggle" class="theme-toggle" aria-label="切换暗黑模式"><span class="theme-icon">☀️</span></button>
+    </nav>
+</header>
+
+    <main>
+        <div class="page-header">
+            <h1>卡路里计算器 - 在线计算每日所需热量</h1>
+            <p>根据身高、体重、年龄、性别与活动水平，计算 BMR 和每日维持热量</p>
+        </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="calorie-calculator"><span class="heart">❤</span> <span class="count">0</span></button></div>
+
+        <!-- 广告位 A -->
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中</div>
+
+        <div class="calculator-form">
+            <h2>卡路里计算器</h2>
+            <form id="calorieForm" onsubmit="return false;">
+                <div class="form-group">
+                    <label>性别</label>
+                    <div style="display:flex;gap:1rem;margin-top:0.3rem;">
+                        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="radio" name="gender" value="male" id="genderMale" checked> 男</label>
+                        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="radio" name="gender" value="female"> 女</label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="age">年龄（岁）</label>
+                        <input type="number" id="age" value="30" min="1" max="120" step="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="height">身高（cm）</label>
+                        <input type="number" id="height" value="170" min="50" max="250" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="weight">体重（kg）</label>
+                        <input type="number" id="weight" value="70" min="10" max="300" step="0.1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="activity">活动水平</label>
+                    <select id="activity">
+                        <option value="sedentary">久坐（几乎不运动）</option>
+                        <option value="light">轻度活动（每周运动 1-3 天）</option>
+                        <option value="moderate" selected>中度活动（每周运动 3-5 天）</option>
+                        <option value="active">高度活动（每周运动 6-7 天）</option>
+                        <option value="veryActive">极高强度（体力劳动 / 每天两次训练）</option>
+                    </select>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" id="calcBtn" data-i18n="calculate">开始计算</button>
+                    <button type="reset" class="btn btn-secondary" id="resetBtn" data-i18n="reset">重置</button>
+                </div>
+            </form>
+
+            <!-- 结果区域 -->
+            <div id="resultArea" class="result-card" style="display:none;">
+                <h3 data-i18n="result">计算结果</h3>
+                <div style="margin-bottom:12px;">
+                    <div style="font-size:0.85rem;color:var(--text-secondary);">每日维持热量（TDEE）</div>
+                    <div class="result-value" id="tdeeValue"></div>
+                    <div style="font-size:0.85rem;color:var(--text-secondary);" id="activityName"></div>
+                </div>
+                <div class="form-row" style="margin-bottom:8px;">
+                    <div class="form-group">
+                        <div style="font-size:0.85rem;color:var(--text-secondary);">BMR（Mifflin-St Jeor）</div>
+                        <div style="font-size:1.3rem;font-weight:700;margin-top:4px;"><span id="bmrMifflin"></span> 千卡</div>
+                    </div>
+                    <div class="form-group">
+                        <div style="font-size:0.85rem;color:var(--text-secondary);">BMR（Harris-Benedict）</div>
+                        <div style="font-size:1.3rem;font-weight:700;margin-top:4px;"><span id="bmrHarris"></span> 千卡</div>
+                    </div>
+                </div>
+                <div style="margin-top:12px;padding-top:12px;border-top:1px solid #bfdbfe;">
+                    <div style="font-size:0.85rem;color:var(--text-secondary);">减重建议区间（每日摄入）</div>
+                    <div style="font-size:1.2rem;font-weight:700;margin-top:4px;color:var(--success);" id="loseRange"></div>
+                    <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:2px;">约每周减重 0.25-0.5 公斤，建议不低于 BMR</div>
+                </div>
+                <div style="margin-top:12px;padding-top:12px;border-top:1px solid #bfdbfe;">
+                    <div style="font-size:0.85rem;color:var(--text-secondary);">增肌建议区间（每日摄入）</div>
+                    <div style="font-size:1.2rem;font-weight:700;margin-top:4px;color:var(--primary);" id="gainRange"></div>
+                    <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:2px;">配合力量训练，约每周增重 0.25-0.5 公斤</div>
+                </div>
+                <div style="margin-top:12px;padding-top:12px;border-top:1px solid #bfdbfe;font-size:0.8rem;color:var(--text-secondary);">
+                    公式来源：Mifflin MD, St Jeor ST, et al. A new predictive equation for resting energy expenditure in healthy individuals. Am J Clin Nutr. 1990. 结果仅供健康参考，不构成医疗建议。
+                </div>
+            </div>
+        </div>
+
+        <!-- 广告位 B -->
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">广告位 - 招商中</div>
+
+<div class="tool-content">
+    <h2>卡路里计算器使用说明</h2>
+    <p>卡路里计算器是一款完全免费的在线工具，根据性别、年龄、身高、体重和活动水平，使用 Mifflin-St Jeor 公式计算基础代谢率（BMR），再乘以活动系数得到每日维持热量（TDEE），并给出减重与增肌的参考摄入区间。</p>
+    <h3>什么是 BMR 与 TDEE</h3>
+    <p>BMR 是身体静止时维持生命所需的最低热量；TDEE 是考虑日常活动与运动后的每日总消耗。想保持体重，摄入量约等于 TDEE；想减重，在 TDEE 基础上适当减少；想增肌，在 TDEE 基础上适当增加。</p>
+    <h3>活动水平怎么选</h3>
+    <p>久坐（办公室工作、几乎不运动）选 ×1.2；每周运动 1-3 天选 ×1.375；每周运动 3-5 天选 ×1.55；每周运动 6-7 天选 ×1.725；体力劳动或每天两次训练选 ×1.9。</p>
+</div>
+<div class="related-tools">
+    <h3>相关工具</h3>
+    <ul>
+        <li><a href="/zh/calculators/bmi">BMI 计算器</a></li>
+        <li><a href="/zh/calculators/ideal-weight">标准体重计算器</a></li>
+        <li><a href="/zh/calculators/ovulation">排卵期计算器</a></li>
+    </ul>
+</div>
+        <section class="related-posts">
+        <h3>相关阅读</h3>
+        <ul>
+            <li><a href="/blog/zh/bmi-normal-range-guide">BMI 多少算正常？标准范围全面解读</a></li>
+        </ul>
+    </section>
+<section class="tool-content">
+<h2>关于卡路里计算器</h2>
+<p>卡路里计算器是一款完全免费的在线工具，帮助用户根据个人数据估算每日所需热量。无论你是健身爱好者、减脂人群、增肌人群，还是只是关心健康饮食的普通用户，都可以在不安装任何软件的情况下快速获得参考结果。</p>
+<p>它与 BMI 计算器、标准体重计算器共同构成健康矩阵：先了解自己的体重状况，再计算每日热量需求，从而制定更科学的饮食与运动计划。</p>
+<h2>如何使用卡路里计算器</h2>
+<ol>
+<li>选择性别，输入年龄、身高和体重。</li>
+<li>选择最符合你日常状态的活动水平。</li>
+<li>点击"开始计算"，立即得到 BMR、TDEE 与建议区间。</li>
+<li>修改任意输入后，结果会自动刷新。</li>
+</ol>
+<h2>卡路里计算器常见问题</h2>
+<h3>卡路里计算器完全免费吗？</h3><p>是的，卡路里计算器完全免费，无需注册账号，也无需下载任何软件。</p>
+<h3>计算结果准确吗？</h3><p>工具采用国际通用的 Mifflin-St Jeor 与 Harris-Benedict 公式，在浏览器本地完成计算，结果稳定可靠。个体热量需求还受体成分、代谢率等因素影响，建议作为参考。</p>
+<h3>我的数据安全吗？</h3><p>你的隐私优先。所有输入内容都在你的设备上处理，不会上传到任何服务器。</p>
+<h3>手机可以使用吗？</h3><p>可以。页面完全适配手机、平板和电脑浏览器，随时随地都能使用。</p>
+</section>
+    </main>
+
+    <footer>
+    <div class="footer-links">
+        <a href="/">首页</a>
+        <a href="/about">关于</a>
+        <a href="/privacy">隐私政策</a>
+        <a href="/contact">联系</a>
+        <a href="/blog/zh/">博客</a>
+    </div>
+    <p>© 2026 工具箱里 | 免费在线工具</p>
+</footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll("[data-i18n]").forEach(function(el) {
+                const key = el.getAttribute("data-i18n");
+                el.textContent = t(key);
+            });
+        });
+    </script>
+
+    </body>
+</html>

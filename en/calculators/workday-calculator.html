@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="/js/theme-init.js"></script>
+<script src="/js/theme-toggle.js"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workday Calculator - Count Working Days Between Two Dates Online</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online workday calculator. Count business days between two dates, excluding weekends by default with optional public holiday exclusion. Perfect for project scheduling, leave approval, and contract deadlines.">
+    <meta property='og:title' content='Workday Calculator - Count Working Days Between Two Dates Online'/>
+    <meta property='og:description' content='Free online workday calculator. Count business days between two dates, excluding weekends by default with optional public holiday exclusion.'/>
+    <meta property='og:type' content='website'/>
+    <meta property='og:url' content='https://www.calc-tools.top/en/calculators/workday-calculator'/>
+    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:locale' content='en_US'/>
+    <meta name='twitter:card' content='summary_large_image'/>
+    <meta name='twitter:title' content='Workday Calculator - Count Working Days Between Two Dates Online'/>
+    <meta name='twitter:description' content='Free online workday calculator. Count business days between two dates, excluding weekends by default with optional public holiday exclusion.'/>
+
+    <link rel="canonical" href="https://www.calc-tools.top/en/calculators/workday-calculator">
+    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/calculators/workday-calculator">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/calculators/workday-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/en/calculators/workday-calculator">
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="/js/i18n.js" defer></script>
+    <script src="/js/like.js" defer></script>
+    <script src="/js/calculators/workday-calculator.js" defer></script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Online Calculators", "item": "https://www.calc-tools.top/" },
+        { "@type": "ListItem", "position": 2, "name": "Workday Calculator", "item": "https://www.calc-tools.top/en/calculators/workday-calculator" }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "How many working days are there between two dates?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Enter a start date and an end date. The tool counts Monday to Friday in the range by default. For example, from 2026-08-03 (Monday) to 2026-08-07 (Friday) there are 5 working days."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Are the start and end dates included in the count?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. The range includes both the start date and the end date. Any weekday inside the range is counted."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do I exclude public holidays?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Tick \"Exclude 2026 public holidays\" and preset dates for New Year, Spring Festival, Qingming, Labour Day, Dragon Boat, Mid-Autumn and National Day are filled into the text box. You can edit them freely, one date per line in YYYY-MM-DD format."
+            }
+        }
+    ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Workday Calculator - Count Working Days Between Two Dates Online",
+    "url": "https://www.calc-tools.top/en/calculators/workday-calculator",
+    "description": "Free online workday calculator. Count business days between two dates, excluding weekends by default with optional public holiday exclusion.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web",
+    "inLanguage": "en"
+}
+</script>
+</head>
+<body>
+    <header>
+    <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
+    <nav>
+        <a href="/en/"><span>Home</span></a>
+        <select class="lang-switch" onchange="switchLang(this.value)" aria-label="Switch language">
+            <option value="zh">🇨🇳 中文</option>
+            <option value="en" selected>🇬🇧 English</option>
+        </select>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon">☀️</span></button>
+    </nav>
+</header>
+
+    <main>
+        <div class="page-header">
+            <h1>Workday Calculator - Count Working Days</h1>
+            <p>Count working days between two dates, excluding weekends and optionally public holidays</p>
+        </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="workday-calculator"><span class="heart">❤</span> <span class="count">0</span></button></div>
+
+        <!-- Ad Slot A -->
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">Ad Space - Available</div>
+
+        <div class="calculator-form">
+            <h2>Workday Calculator</h2>
+            <form id="workdayForm" onsubmit="return false;">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="startDate">Start Date</label>
+                        <input type="date" id="startDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">End Date</label>
+                        <input type="date" id="endDate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" id="excludeWeekends" checked> Exclude weekends (default)</label>
+                </div>
+                <div class="form-group">
+                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" id="excludeHoliday"> Exclude 2026 public holidays (editable)</label>
+                </div>
+                <div class="form-group">
+                    <label for="holidayList">Custom holidays (one date per line, YYYY-MM-DD)</label>
+                    <textarea id="holidayList" rows="4" placeholder="e.g.&#10;2026-10-01&#10;2026-10-02" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:0.95rem;background:var(--bg-card);color:var(--text-primary);resize:vertical;"></textarea>
+                    <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">Holiday schedules follow official announcements; edit the list manually if they change.</div>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" id="calcBtn" data-i18n="calculate">Calculate</button>
+                    <button type="reset" class="btn btn-secondary" id="resetBtn" data-i18n="reset">Reset</button>
+                </div>
+            </form>
+
+            <!-- Result Area -->
+            <div id="resultArea" class="result-card" style="display:none;">
+                <h3 data-i18n="result">Result</h3>
+                <div style="margin-bottom:12px;">
+                    <div style="font-size:0.85rem;color:var(--text-secondary);">Working Days</div>
+                    <div class="result-value" id="workdayCount"></div>
+                </div>
+                <div class="form-row" style="margin-bottom:8px;">
+                    <div class="form-group">
+                        <div style="font-size:0.85rem;color:var(--text-secondary);">Calendar Days</div>
+                        <div style="font-size:1.3rem;font-weight:700;margin-top:4px;" id="totalDays"></div>
+                    </div>
+                    <div class="form-group">
+                        <div style="font-size:0.85rem;color:var(--text-secondary);">Weekend Days</div>
+                        <div style="font-size:1.3rem;font-weight:700;margin-top:4px;" id="weekendDays"></div>
+                    </div>
+                    <div class="form-group">
+                        <div style="font-size:0.85rem;color:var(--text-secondary);">Holidays Excluded</div>
+                        <div style="font-size:1.3rem;font-weight:700;margin-top:4px;" id="holidayCount"></div>
+                    </div>
+                </div>
+                <div id="holidayDetail" style="display:none;margin-bottom:10px;padding:10px 12px;background:var(--primary-light);border-radius:var(--radius);font-size:0.9rem;">
+                    <span style="color:var(--text-secondary);">Holidays excluded: </span><span id="holidayDetailList"></span>
+                </div>
+                <div style="padding-top:10px;border-top:1px solid #bfdbfe;font-size:0.85rem;color:var(--text-secondary);" id="resultNote"></div>
+            </div>
+        </div>
+
+        <!-- Ad Slot B -->
+        <div class="ad-slot ad-placeholder" data-i18n="adPlaceholder">Ad Space - Available</div>
+
+<div class="tool-content">
+    <h2>Workday Calculator Guide</h2>
+    <p>The Workday Calculator is a completely free, instant online tool that counts working days between two dates. It excludes Saturday and Sunday by default and only counts Monday to Friday. For more precise results, you can exclude 2026 public holidays in one click or manually add custom holiday dates.</p>
+    <h3>Use Cases</h3>
+    <p>Project scheduling and deadline estimation, leave and annual leave approval, contract delivery dates, payroll and attendance checks, event countdown planning — anywhere you need to count by business days.</p>
+    <h3>Counting Rules</h3>
+    <p>The range includes both the start date and the end date. Saturdays and Sundays are not counted. When holiday exclusion is enabled, public holidays that fall on weekdays are also removed. Statutory make-up workdays are not adjusted automatically, so verify against the official holiday schedule.</p>
+</div>
+<div class="related-tools">
+    <h3>Related Tools</h3>
+    <ul>
+        <li><a href="/en/calculators/date-calc">Date Calculator</a></li>
+        <li><a href="/en/calculators/overtime">Overtime Pay Calculator</a></li>
+        <li><a href="/en/calculators/unit-converter">Unit Converter</a></li>
+    </ul>
+</div>
+        <section class="related-posts">
+        <h3>Related Reading</h3>
+        <ul>
+            <li><a href="/blog/en/date-calculation-tips">Date Calculation Tips</a></li>
+        </ul>
+    </section>
+<section class="tool-content">
+<h2>About Workday Calculator</h2>
+<p>The Workday Calculator is a completely free online tool that helps you quickly count working days between two dates. Whether you are an HR manager, a project manager, a finance professional or an ordinary employee, you can use it instantly in your browser without installing any software.</p>
+<p>Unlike a general date calculator, the Workday Calculator focuses on the days people actually work. It excludes weekends by default and supports year-based public holiday exclusion, making scheduling, approval and attendance checks closer to reality.</p>
+<h2>How to Use Workday Calculator</h2>
+<ol>
+<li>Pick a start date and an end date. Today and one week later are pre-filled.</li>
+<li>Optionally tick "Exclude 2026 public holidays" or edit the date list manually.</li>
+<li>Click Calculate to get the working day count and a full breakdown.</li>
+<li>Change any input and the result refreshes automatically.</li>
+</ol>
+<h2>Workday Calculator FAQ</h2>
+<h3>Is Workday Calculator free to use?</h3><p>Yes, Workday Calculator is completely free. There are no hidden fees, no account registration and no download required.</p>
+<h3>How accurate are the results?</h3><p>All calculations are performed locally in your browser using straightforward logic, so the results are accurate and consistent.</p>
+<h3>Is my data private?</h3><p>Your privacy is a priority. Everything you enter is processed directly on your device and is never uploaded to any server.</p>
+<h3>Does Workday Calculator work on mobile?</h3><p>Yes. The page is fully responsive and works smoothly on phones, tablets and desktop browsers.</p>
+</section>
+    </main>
+
+    <footer>
+    <div class="footer-links">
+        <a href="/en/">Home</a>
+        <a href="/about">About</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/contact">Contact</a>
+        <a href="/blog/en/">Blog</a>
+    </div>
+    <p>© 2026 Online Calculators | Free Online Calculators</p>
+</footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll("[data-i18n]").forEach(function(el) {
+                const key = el.getAttribute("data-i18n");
+                el.textContent = t(key);
+            });
+        });
+    </script>
+
+    </body>
+</html>
