@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 // scripts/measure-content.mjs — 全站正文词数审计（2026-08-17 固化，源自当日排障口径）
-// 用法: node scripts/measure-content.mjs [阈值] [仓库根目录]
+// 用法: node scripts/measure-content.mjs [阈值] [仓库根目录] [--json] [--summary]
 //       默认阈值 300，默认目录当前目录。
+//       --json    输出机器可读 JSON 到 stdout（审计脚本可消费）
+//       --summary 只输出计数/聚合，不输出明细（供审计摘要）
 //
 // 口径说明（重要，勿改）：
 //   "正文词数" = <h1> 到 <div class="blog-cta"> 之间的可见文本（CJK 单字计 + 英文单词计），
@@ -12,9 +14,19 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const threshold = parseInt(process.argv[2] || '300', 10);
-const root = path.resolve(process.argv[3] || '.');
-const EXCLUDE_DIRS = new Set(['.git', 'node_modules', 'docs', 'snapshots', 'deliverables', 'api', 'assets', 'includes', 'scripts', 'css', 'js']);
+// ---- 参数解析（flags 与位置参数混排） ----
+const args = process.argv.slice(2);
+let jsonMode = false;
+let summaryMode = false;
+const positional = [];
+for (const a of args) {
+  if (a === '--json') jsonMode = true;
+  else if (a === '--summary') summaryMode = true;
+  else positional.push(a);
+}
+const threshold = parseInt(positional[0] || '300', 10);
+const root = path.resolve(positional[1] || '.');
+const EXCLUDE_DIRS = new Set(['.git', 'node_modules', 'dist', 'docs', 'snapshots', 'deliverables', 'api', 'assets', 'includes', 'scripts', 'css', 'js']);
 
 function stripTags(s) {
   return s
@@ -60,10 +72,34 @@ for (const r of thin) {
   const d = r.file.split('/')[0];
   byDir[d] = (byDir[d] || 0) + 1;
 }
+const lo = results[0], hi = results[results.length - 1];
+
+if (jsonMode) {
+  const out = {
+    scanned: results.length,
+    threshold,
+    thin: thin.map((r) => ({ file: r.file, total: r.total, cjk: r.cjk, en: r.en })),
+    byDir,
+    min: lo ? { file: lo.file, total: lo.total } : null,
+    max: hi ? { file: hi.file, total: hi.total } : null,
+  };
+  process.stdout.write(JSON.stringify(out, null, 2) + '\n');
+  process.exit(0);
+}
 
 console.log(`扫描目录: ${root}`);
 console.log(`HTML 页数: ${results.length}   阈值: <${threshold} 词（正文口径）`);
 console.log(`薄页数: ${thin.length}`);
+if (summaryMode) {
+  console.log('--- 薄页按目录 ---');
+  if (thin.length) {
+    for (const [d, n] of Object.entries(byDir).sort((a, b) => b[1] - a[1])) console.log(`  ${d}: ${n}`);
+  } else {
+    console.log('  (无)');
+  }
+  console.log(`--- 全文范围: 最薄 ${lo.total} (${lo.file}) / 最厚 ${hi.total} (${hi.file}) ---`);
+  process.exit(0);
+}
 if (thin.length) {
   console.log('--- 薄页列表（升序）---');
   for (const r of thin) console.log(`${String(r.total).padStart(5)}  ${r.file}`);
@@ -72,5 +108,4 @@ if (thin.length) {
 } else {
   console.log('✅ 无薄页');
 }
-const lo = results[0], hi = results[results.length - 1];
 console.log(`--- 全文范围: 最薄 ${lo.total} (${lo.file}) / 最厚 ${hi.total} (${hi.file}) ---`);
