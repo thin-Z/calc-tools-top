@@ -66,6 +66,32 @@ KV_URL / KV_REDIS_URL
 
 内容审计操作手册见 `docs/content-audit-sop.md`；构建/校验与回滚见 `docs/rollback.md`。
 
+## 构建 + 验证
+
+本地全量验证（与 Vercel 构建一致，零第三方依赖）：
+
+```bash
+# 1) 本地构建：复制到 dist/ → 注入 AdSense（单一来源 includes/adsense-head.html）
+#    → 注入缓存版本号 ?v=YYYYMMDDHHmm（仅 dist，源码不含 ?v）
+node scripts/build.mjs
+
+# 2) 集成校验：header/footer 字节一致 + JSON-LD + 静态 AdSense 唯一性
+#    + 链接检查 + 浮动控件清零（全绿退出码 0）
+node scripts/verify-site.mjs
+
+# 3) 断链回归（单独跑亦可）
+node scripts/check-links.js
+```
+
+期望结果：
+- `build.mjs`：`AdSense 注入: 更新 167 | 跳过 0` + `版本号注入: <STAMP> | 167 个文件`；
+- dist 内每页**恰好 1 个** adsbygoogle 标签（与 `includes/adsense-head.html` 字节一致）且含 `?v=`；
+- 源码内 **0 个**静态 adsbygoogle 标签、**0 个** `#gw-theme`/`.gw-lang`/内联 `switchLang`；
+- `verify-site.mjs` 输出 `✅ verify-site 全绿`。
+
+> 模板统一说明：全站 header/footer 以 `includes/header-{zh,en}.html`、`includes/footer-{zh,en}.html` 为字节基准；
+> 改导航/页脚只需改这 4 个文件，然后跑 `node scripts/normalize-template.mjs` 重新落盘全站 HTML。
+
 ## 相关文档
 
 - AGENTS.md — 仓库约定
