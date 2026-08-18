@@ -140,4 +140,25 @@ walkHtml(dist, (f) => {
   adsenseUpdated++;
 });
 console.log(`[build] AdSense 注入: 更新 ${adsenseUpdated} | 跳过 ${adsenseSkipped}`);
+
+// 4) 在 dist/ 内注入缓存版本号（构建时间戳 YYYYMMDDHHmm，仅 dist，源码不含 ?v）
+//    site.js / like.js / i18n.js / css/style.css → ?v=STAMP（幂等：已带 ?v 会统一覆盖为当前 STAMP）
+const now = new Date();
+const pad2 = (n) => String(n).padStart(2, '0');
+const STAMP = `${now.getFullYear()}${pad2(now.getMonth() + 1)}${pad2(now.getDate())}${pad2(now.getHours())}${pad2(now.getMinutes())}`;
+const ASSET_RE = /(["'])([^"']*?)((?:site|like|i18n)\.js|css\/style\.css)(\?v=[^"']*)?\1/g;
+let versioned = 0;
+walkHtml(dist, (f) => {
+  const raw = readFileSync(f);
+  const hadBom = raw[0] === 0xef && raw[1] === 0xbb && raw[2] === 0xbf;
+  let text = raw.toString('utf8');
+  if (hadBom) text = text.slice(1);
+
+  const newText = text.replace(ASSET_RE, (m, q, prefix, name) => `${q}${prefix}${name}?v=${STAMP}${q}`);
+  if (newText !== text) {
+    writeFileSync(f, (hadBom ? '\uFEFF' : '') + newText, 'utf8');
+    versioned++;
+  }
+});
+console.log(`[build] 版本号注入: ${STAMP} | ${versioned} 个文件`);
 process.exit(0);

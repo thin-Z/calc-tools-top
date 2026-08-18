@@ -7,7 +7,7 @@
  * no custom consent gating is required.
  *
  * This file is intentionally kept as a no-op so any lingering
- * <script src="js/cookie-consent.js"> references do not 404.
+ * script reference to js/cookie-consent.js does not 404.
  */
 (function () {
   // Google-certified CMP manages consent for applicable users.
