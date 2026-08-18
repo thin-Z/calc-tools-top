@@ -198,14 +198,56 @@ function t(key) {
     return i18n[lang][key] || key;
 }
 
-/* ===== 切换语言 ===== */
+/* ===== 切换语言（精确跳转版，2026-08-18 P2 T01 增强） =====
+ * 依据当前 pathname 精确映射到目标语言页（而非简单跳首页）：
+ *   /zh/*          ↔ /en/*
+ *   /blog/zh/*     ↔ /blog/en/*
+ *   /about|/privacy|/contact|/404（根，zh 态） ↔ /en/{same}；反向 /en/{same} → /{same}
+ *   其余（首页 / 或 /en/）→ / 或 /en/
+ * 支持 clean URL 与 .html 扩展名两种形态；已在目标语言时不跳转。
+ */
+// 根级结构页白名单：zh 侧无 /zh/ 前缀文件，直接映射 根 ↔ /en/
+const ZH_ROOT_PAGES = new Set(['/about', '/privacy', '/contact', '/404']);
+
 function switchLang(lang) {
-      localStorage.setItem("lang", lang);
-      if (lang === "zh") {
-          window.location.href = "/";
-      } else {
-          window.location.href = "/en/";
-      }
+    try { localStorage.setItem("lang", lang); } catch (e) {}
+
+    let path = window.location.pathname;
+    // 统一为 clean URL（去掉 .html 扩展名），便于映射
+    if (path.endsWith('.html')) path = path.slice(0, -'.html'.length);
+    if (!path) path = '/';
+    // 跳转页语义：/zh/index、/zh 等同首页
+    if (path === '/zh/index' || path === '/zh') path = '/';
+    if (path === '/en') path = '/en/';
+
+    const isZh = path === '/' || path.startsWith('/zh/') || path.startsWith('/blog/zh/') || ZH_ROOT_PAGES.has(path);
+    const isEn = path === '/en/' || path.startsWith('/en/') || path.startsWith('/blog/en/');
+    // 已在目标语言 → 不跳转
+    if (lang === 'zh' && isZh) return;
+    if (lang === 'en' && isEn) return;
+
+    let target = null;
+    if (lang === 'en') {
+        if (path.startsWith('/blog/zh/')) {
+            target = '/blog/en/' + path.slice('/blog/zh/'.length);
+        } else if (path.startsWith('/zh/')) {
+            target = '/en/' + path.slice('/zh/'.length);
+        } else if (ZH_ROOT_PAGES.has(path)) {
+            target = '/en' + path;
+        } else {
+            target = '/en/';
+        }
+    } else { // lang === 'zh'
+        if (path.startsWith('/blog/en/')) {
+            target = '/blog/zh/' + path.slice('/blog/en/'.length);
+        } else if (path.startsWith('/en/')) {
+            const rest = '/' + path.slice('/en/'.length);
+            target = ZH_ROOT_PAGES.has(rest) ? rest : (rest === '/' ? '/' : '/zh' + rest);
+        } else {
+            target = '/';
+        }
+    }
+    if (target && target !== path) window.location.href = target;
 }
 
 /* ===== 页面加载后更新所有 data-i18n 元素 ===== */

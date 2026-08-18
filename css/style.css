@@ -276,7 +276,11 @@ header nav a:hover {
     box-shadow: 0 0 0 3px var(--primary-light);
 }
 
-/* ===== Floating theme button (consolidated from per-page inline styles) ===== */
+/* ===== Floating theme button (consolidated from per-page inline styles) =====
+ * ⚠️ LEGACY（2026-08-18 P2 T01）：统一模板后全站 #gw-theme / #gw-lang 浮动控件已移除，
+ * 主题切换由 header 内原生 #theme-toggle 承担。以下 .gw-* 样式保留仅为兼容历史页面，
+ * 待 verify-site.mjs 确认全站 0 命中后可整体删除。
+ */
 .gw-float-btn {
     position: fixed;
     bottom: 16px;
