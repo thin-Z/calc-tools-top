@@ -357,7 +357,13 @@ function initCategoryFilters() {
     if (preselect) {
         sessionStorage.removeItem("preselectCategory");
         setTimeout(function() {
-            var chip = document.querySelector(".category-chip[data-category=" + preselect + "]");
+            // 白名单校验：仅当 preselect 是页面已有分类时才触发，防选择器注入/非法值
+            var validCategories = Array.prototype.map.call(
+                document.querySelectorAll('.category-chip'),
+                function (ch) { return ch.getAttribute('data-category'); }
+            );
+            if (validCategories.indexOf(preselect) === -1) return;
+            var chip = document.querySelector(".category-chip[data-category=\"" + preselect + "\"]");
             if (chip) chip.click();
         }, 100);
     }

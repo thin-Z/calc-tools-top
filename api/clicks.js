@@ -49,6 +49,7 @@ function rest(path, method, body) {
 const RATE_LIMIT_WINDOW_MS = 60 * 1000;
 const RATE_LIMIT_MAX = 20;          // 写（POST）限速：20/min
 const RATE_LIMIT_READ_MAX = 120;    // 读（GET）限速：120/min，首页批量拉取计数不触发写限速
+const CLICK_DAILY_MAX = 20;         // 每 IP 每工具每日点击上限（防刷展示计数）
 // 单实例内存回退：仅在未配置 KV_REST_API_URL 时启用；多实例部署下不保证全局限速。
 const _rateHits = new Map();
 
@@ -101,6 +102,16 @@ async function isRateLimited(ip, isRead) {
   hits.push(now);
   _rateHits.set(hitsKey, hits);
   return hits.length > max;
+}
+
+// 点击防刷：每 IP 每工具每日上限 CLICK_DAILY_MAX 次（与点赞同款机制）
+async function isClickAbuse(ip, toolId) {
+  if (!REST_URL) return false; // 无 KV 时不强制每日上限
+  const day = new Date().toISOString().slice(0, 10);
+  const key = 'clickcap:' + ip + ':' + toolId + ':' + day;
+  const next = parseInt((await rest('/incrby/' + key, 'POST', '1')) || '0', 10);
+  if (next === 1) await rest('/expire/' + key + '/86400');
+  return next > CLICK_DAILY_MAX;
 }
 
 function readBody(req) {
@@ -185,6 +196,11 @@ module.exports = async function handler(req, res) {
         return res.status(403).json({ error: 'unknown toolId' });
       }
       const key = 'click:tool:' + cleanId;
+
+      // 点击防刷：超出每日上限拒绝（低风险展示计数，但防止脚本轮询刷高）
+      if (await isClickAbuse(clientIp, cleanId)) {
+        return res.status(429).json({ error: 'click limit exceeded for this tool today' });
+      }
 
       // INCR 原子递增，杜绝并发读改写（TOCTOU）丢计数
       const total = parseInt((await rest('/incrby/' + key, 'POST', '1')) || '0', 10);

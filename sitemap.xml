@@ -188,10 +188,10 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.calc-tools.top/blog/en/</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/blog/en/'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/blog/zh/'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/blog/en/'/>
+    <loc>https://www.calc-tools.top/blog/en</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/blog/en'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/blog/zh'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/blog/en'/>
     <lastmod>2026-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -530,10 +530,10 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.calc-tools.top/blog/zh/</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/blog/zh/'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/blog/en/'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/blog/en/'/>
+    <loc>https://www.calc-tools.top/blog/zh</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/blog/zh'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/blog/en'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/blog/en'/>
     <lastmod>2026-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -728,10 +728,10 @@
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://www.calc-tools.top/en/</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/'/>
+    <loc>https://www.calc-tools.top/en</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en'/>
     <lastmod>2026-08-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -836,10 +836,10 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.calc-tools.top/en/calculators/</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/'/>
+    <loc>https://www.calc-tools.top/en/calculators</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators'/>
     <lastmod>2026-08-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -989,10 +989,10 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.calc-tools.top/en/image/</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/image/'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/image/'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/image/'/>
+    <loc>https://www.calc-tools.top/en/image</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/image'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/image'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/image'/>
     <lastmod>2026-08-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -1043,10 +1043,10 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.calc-tools.top/en/text/</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/text/'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/text/'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/text/'/>
+    <loc>https://www.calc-tools.top/en/text</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/text'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/text'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/text'/>
     <lastmod>2026-08-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -1241,10 +1241,10 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.calc-tools.top/zh/calculators/</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/'/>
+    <loc>https://www.calc-tools.top/zh/calculators</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators'/>
     <lastmod>2026-08-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -1394,10 +1394,10 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.calc-tools.top/zh/image/</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/image/'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/image/'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/image/'/>
+    <loc>https://www.calc-tools.top/zh/image</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/image'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/image'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/image'/>
     <lastmod>2026-08-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -1448,10 +1448,10 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.calc-tools.top/zh/text/</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/text/'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/text/'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/text/'/>
+    <loc>https://www.calc-tools.top/zh/text</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/text'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/text'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/text'/>
     <lastmod>2026-08-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

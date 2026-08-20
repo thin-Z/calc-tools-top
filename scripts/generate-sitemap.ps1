@@ -7,7 +7,7 @@ param(
 $exclude = @("404.html", "zh/index.html")
 
 # Collect all HTML files
-$files = Get-ChildItem -Recurse -Filter "*.html" $Root | Where-Object { $_.FullName -notmatch '\\node_modules\\' }
+$files = Get-ChildItem -Recurse -Filter "*.html" $Root | Where-Object { $_.FullName -notmatch '\\node_modules\\' -and $_.FullName -notmatch '\\(dist|docs|deliverables)\\' }
 
 $pages = @()
 foreach ($f in $files) {
