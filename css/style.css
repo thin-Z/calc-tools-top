@@ -363,6 +363,7 @@ main {
 }
 .tool-card-wrap {
     animation: fadeInUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    animation-iteration-count: 1;
 }
 .tool-grid .tool-card-wrap:nth-child(1) { animation-delay: 0.05s; }
 .tool-grid .tool-card-wrap:nth-child(2) { animation-delay: 0.10s; }
@@ -372,6 +373,18 @@ main {
 .tool-grid .tool-card-wrap:nth-child(6) { animation-delay: 0.30s; }
 .tool-grid .tool-card-wrap:nth-child(7) { animation-delay: 0.35s; }
 .tool-grid .tool-card-wrap:nth-child(8) { animation-delay: 0.40s; }
+.tool-grid .tool-card-wrap:nth-child(9) { animation-delay: 0.45s; }
+.tool-grid .tool-card-wrap:nth-child(10) { animation-delay: 0.50s; }
+.tool-grid .tool-card-wrap:nth-child(11) { animation-delay: 0.55s; }
+.tool-grid .tool-card-wrap:nth-child(12) { animation-delay: 0.60s; }
+.tool-grid .tool-card-wrap:nth-child(13) { animation-delay: 0.65s; }
+.tool-grid .tool-card-wrap:nth-child(14) { animation-delay: 0.70s; }
+.tool-grid .tool-card-wrap:nth-child(15) { animation-delay: 0.75s; }
+.tool-grid .tool-card-wrap:nth-child(16) { animation-delay: 0.80s; }
+.tool-grid .tool-card-wrap:nth-child(17) { animation-delay: 0.85s; }
+.tool-grid .tool-card-wrap:nth-child(18) { animation-delay: 0.90s; }
+.tool-grid .tool-card-wrap:nth-child(19) { animation-delay: 0.95s; }
+.tool-grid .tool-card-wrap:nth-child(20) { animation-delay: 1.00s; }
 
 @media (max-width: 1000px) {
     .tool-grid { grid-template-columns: repeat(3, 1fr); }
