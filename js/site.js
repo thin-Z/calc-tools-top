@@ -657,7 +657,8 @@ function initHotTools() {
         var selected = rescored.slice(0, 8);
     }
     
-    if (selected.length === 0) { container.style.display = 'none'; return; }
+    if (selected.length === 0) { container.classList.add('hidden'); return; }
+    container.classList.remove('hidden');
     container.style.display = '';
     
     var lang = getLang ? getLang() : 'zh';
@@ -831,9 +832,10 @@ function renderHotSearch(searchInput) {
     var termsContainer = container.querySelector('.hot-search-terms');
     if (!termsContainer) return;
     if (terms.length === 0) {
-        container.style.display = 'none';
+        container.classList.add('hidden');
         return;
     }
+    container.classList.remove('hidden');
     container.style.display = '';
     termsContainer.innerHTML = '';
     for (var i = 0; i < terms.length; i++) {
