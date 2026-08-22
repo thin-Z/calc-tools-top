@@ -3,10 +3,15 @@
 <head>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<script src="/js/theme-init.js"></script>
-<script src="/js/theme-toggle.js"></script>
+
+
 
     <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<script src="/js/theme-init.js"></script>
+<script src="/js/theme-toggle.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Format Convert - Free Online Image Converter</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
@@ -70,7 +75,7 @@
                 <div class="upload-formats"><span class="format-badge">JPG</span><span class="format-badge">PNG</span><span class="format-badge">WebP</span><span class="format-badge">BMP</span><span class="format-badge">GIF</span></div><p style="margin-top:10px;margin-bottom:0;font-size:0.8rem;color:var(--text-tertiary);">Max 50MB · Browser local processing</p>
                 <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/bmp,image/gif">
             </div>
-            <div class="preview-container" id="previewContainer"><div class="preview-card"><h3>Original</h3><div class="preview-area"><div class="preview-box"><img id="originalPreview" src="" alt="Original"><div class="file-info" id="originalInfo"></div></div></div></div></div>
+            <div class="preview-container" id="previewContainer"><div class="preview-card"><h3>Original</h3><div class="preview-area"><div class="preview-box"><img id="originalPreview" alt="Original"><div class="file-info" id="originalInfo"></div></div></div></div></div>
             <div class="tool-controls">
                 <h3>Settings</h3>
                 <div class="control-group"><label>Target Format</label><select id="formatSelect"><option value="image/jpeg">JPEG (.jpg)</option><option value="image/png">PNG (.png)</option><option value="image/webp">WebP (.webp)</option><option value="image/bmp">BMP (.bmp)</option></select></div>
@@ -78,7 +83,7 @@
             </div>
             <div class="result-summary" id="resultSummary">
                 <div class="result-stats"><div class="stat-item"><div class="stat-label">Original</div><div class="stat-value" id="originalSize2">-</div></div><div class="stat-item"><div class="stat-label">Converted</div><div class="stat-value" id="convertedSize2">-</div></div></div>
-                <div class="preview-card" ><h3>Result</h3><div class="preview-area"><div class="preview-box"><img id="convertedPreview" src="" alt="Converted"><div class="file-info" id="convertedInfo"></div></div></div></div>
+                <div class="preview-card" ><h3>Result</h3><div class="preview-area"><div class="preview-box"><img id="convertedPreview" alt="Converted"><div class="file-info" id="convertedInfo"></div></div></div></div>
                 <div class="download-area"><button class="btn btn-success" id="downloadBtn">Download</button></div>
             </div>
             <div class="tool-content"><h2>Online Format Conversion</h2><p>All conversion happens locally in your browser using Canvas API. No uploads needed.</p></div>

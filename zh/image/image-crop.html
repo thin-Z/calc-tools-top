@@ -3,10 +3,15 @@
 <head>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<script src="/js/theme-init.js"></script>
-<script src="/js/theme-toggle.js"></script>
+
+
 
     <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<script src="/js/theme-init.js"></script>
+<script src="/js/theme-toggle.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>在线图片裁剪 - 免费拖拽裁剪图片工具</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
@@ -144,7 +149,7 @@
                 <div class="result-stats">
                     <div class="stat-item"><div class="stat-label">裁剪尺寸</div><div class="stat-value" id="cropDims">-</div></div>
                 </div>
-                <div class="preview-card"><h3>预览</h3><div class="preview-area"><div class="preview-box"><img id="cropPreview" src="" alt="裁剪预览"></div></div></div>
+                <div class="preview-card"><h3>预览</h3><div class="preview-area"><div class="preview-box"><img id="cropPreview" alt="裁剪预览"></div></div></div>
                 <div class="download-area">
                     <button class="btn btn-success" id="downloadPng">下载 PNG</button>
                     <button class="btn btn-primary" id="downloadJpeg">下载 JPEG</button>

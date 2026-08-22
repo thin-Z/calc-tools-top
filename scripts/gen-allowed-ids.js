@@ -2,22 +2,33 @@
 // 从全站 HTML 提取所有合法点赞/点击 id，生成 api/allowed-ids.js 白名单。
 // 用法: node scripts/gen-allowed-ids.js [repo-root]
 // 新增/重命名工具或博客后重跑本脚本即可刷新白名单。
-const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
 const root = process.argv[2] || '.';
 
-function sh(cmd) {
-  try {
-    return execSync(cmd, { cwd: root, encoding: 'utf8' });
-  } catch (e) {
-    return '';
+// 跨平台提取（不依赖 Unix grep）：遍历 html 收集 data-like-id / data-blog-id
+function walkHtml(dir, cb) {
+  let entries;
+  try { entries = fs.readdirSync(dir, { withFileTypes: true }); } catch (e) { return; }
+  for (const e of entries) {
+    if (e.name === '.git' || e.name === 'node_modules' || e.name === 'dist') continue;
+    const full = path.join(dir, e.name);
+    if (e.isDirectory()) walkHtml(full, cb);
+    else if (e.name.endsWith('.html')) cb(full);
   }
 }
 
-const likeRaw = sh('grep -rhoE \'data-like-id="[^"]+"\' --include=*.html .');
-const blogRaw = sh('grep -rhoE \'data-blog-id="[^"]+"\' --include=*.html .');
+let likeRaw = '';
+let blogRaw = '';
+walkHtml(root, (f) => {
+  let t;
+  try { t = fs.readFileSync(f, 'utf8'); } catch (e) { return; }
+  const likes = t.match(/data-like-id="[^"]+"/g);
+  if (likes) likeRaw += likes.join(' ') + ' ';
+  const blogs = t.match(/data-blog-id="[^"]+"/g);
+  if (blogs) blogRaw += blogs.join(' ') + ' ';
+});
 
 // 非页面 id（不来自 HTML）：探活专用 id，供 api/healthcheck.js 使用
 const EXTRA_TOOL_IDS = ['__health__'];

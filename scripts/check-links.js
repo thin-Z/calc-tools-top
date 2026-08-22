@@ -13,6 +13,36 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 
+// 重定向感知：命中 vercel.json 重定向（非条件 has）的链接视为可达，
+// 避免把 legacy .html 等合法重定向误报为断链（P2-4）。
+let REDIRECT_RES = [];
+try {
+  const vj = JSON.parse(fs.readFileSync(path.join(ROOT, 'vercel.json'), 'utf8'));
+  REDIRECT_RES = (vj.redirects || [])
+    .filter((r) => !r.has)
+    .map((r) => sourceToRegex(r.source));
+} catch (e) {
+  REDIRECT_RES = [];
+}
+
+function sourceToRegex(src) {
+  const groups = [];
+  let s = src.replace(/:[a-zA-Z]+(\*)?/g, function (_, star) {
+    groups.push(star ? '(.*)' : '([^/]+)');
+    return '@@' + (groups.length - 1) + '@@';
+  });
+  s = s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  s = s.replace(/@@(\d+)@@/g, function (_, i) { return groups[+i]; });
+  return new RegExp('^' + s + '$');
+}
+
+function matchesRedirect(href) {
+  for (const re of REDIRECT_RES) {
+    if (re.test(href)) return true;
+  }
+  return false;
+}
+
 // ---------- 收集待扫描文件 ----------
 function walk(dir, cb) {
   if (!fs.existsSync(dir)) return;
@@ -114,6 +144,8 @@ function main() {
 
       const href = stripSuffix(raw);
       if (!href) continue;
+      // 命中 vercel.json 重定向 → 视为可达，跳过存在性检查（P2-4）
+      if (matchesRedirect(href)) continue;
       total++;
 
       // 解析目标（相对 → 页面目录；绝对 → 仓库根）

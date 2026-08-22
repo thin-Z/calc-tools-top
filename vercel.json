@@ -53,7 +53,7 @@
       "permanent": true
     },
     {
-      "source": "/zh",
+      "source": "/zh(/)?",
       "destination": "/",
       "permanent": true
     },
@@ -520,6 +520,186 @@
     {
       "source": "/(.*).html",
       "destination": "/$1",
+      "permanent": true
+    },
+    {
+      "source": "/en/calorie-calculator.html",
+      "destination": "/en/calculators/calorie-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/en/password-gen.html",
+      "destination": "/en/calculators/password-gen",
+      "permanent": true
+    },
+    {
+      "source": "/en/percentage-calc.html",
+      "destination": "/en/calculators/percentage-calc",
+      "permanent": true
+    },
+    {
+      "source": "/en/qr-generator.html",
+      "destination": "/en/calculators/qr-generator",
+      "permanent": true
+    },
+    {
+      "source": "/en/random-gen.html",
+      "destination": "/en/calculators/random-gen",
+      "permanent": true
+    },
+    {
+      "source": "/en/workday-calculator.html",
+      "destination": "/en/calculators/workday-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/en/base64-encode.html",
+      "destination": "/en/text/base64-encode",
+      "permanent": true
+    },
+    {
+      "source": "/en/case-converter.html",
+      "destination": "/en/text/case-converter",
+      "permanent": true
+    },
+    {
+      "source": "/en/html-stripper.html",
+      "destination": "/en/text/html-stripper",
+      "permanent": true
+    },
+    {
+      "source": "/en/json-formatter.html",
+      "destination": "/en/text/json-formatter",
+      "permanent": true
+    },
+    {
+      "source": "/en/keyword-density.html",
+      "destination": "/en/text/keyword-density",
+      "permanent": true
+    },
+    {
+      "source": "/en/reading-time.html",
+      "destination": "/en/text/reading-time",
+      "permanent": true
+    },
+    {
+      "source": "/en/text-cleaner.html",
+      "destination": "/en/text/text-cleaner",
+      "permanent": true
+    },
+    {
+      "source": "/en/text-diff.html",
+      "destination": "/en/text/text-diff",
+      "permanent": true
+    },
+    {
+      "source": "/en/url-encode.html",
+      "destination": "/en/text/url-encode",
+      "permanent": true
+    },
+    {
+      "source": "/en/uuid-generator.html",
+      "destination": "/en/text/uuid-generator",
+      "permanent": true
+    },
+    {
+      "source": "/en/word-counter.html",
+      "destination": "/en/text/word-counter",
+      "permanent": true
+    },
+    {
+      "source": "/en/image-crop.html",
+      "destination": "/en/image/image-crop",
+      "permanent": true
+    },
+    {
+      "source": "/zh/calorie-calculator.html",
+      "destination": "/zh/calculators/calorie-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/zh/password-gen.html",
+      "destination": "/zh/calculators/password-gen",
+      "permanent": true
+    },
+    {
+      "source": "/zh/percentage-calc.html",
+      "destination": "/zh/calculators/percentage-calc",
+      "permanent": true
+    },
+    {
+      "source": "/zh/qr-generator.html",
+      "destination": "/zh/calculators/qr-generator",
+      "permanent": true
+    },
+    {
+      "source": "/zh/random-gen.html",
+      "destination": "/zh/calculators/random-gen",
+      "permanent": true
+    },
+    {
+      "source": "/zh/workday-calculator.html",
+      "destination": "/zh/calculators/workday-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/zh/base64-encode.html",
+      "destination": "/zh/text/base64-encode",
+      "permanent": true
+    },
+    {
+      "source": "/zh/case-converter.html",
+      "destination": "/zh/text/case-converter",
+      "permanent": true
+    },
+    {
+      "source": "/zh/html-stripper.html",
+      "destination": "/zh/text/html-stripper",
+      "permanent": true
+    },
+    {
+      "source": "/zh/json-formatter.html",
+      "destination": "/zh/text/json-formatter",
+      "permanent": true
+    },
+    {
+      "source": "/zh/keyword-density.html",
+      "destination": "/zh/text/keyword-density",
+      "permanent": true
+    },
+    {
+      "source": "/zh/reading-time.html",
+      "destination": "/zh/text/reading-time",
+      "permanent": true
+    },
+    {
+      "source": "/zh/text-cleaner.html",
+      "destination": "/zh/text/text-cleaner",
+      "permanent": true
+    },
+    {
+      "source": "/zh/text-diff.html",
+      "destination": "/zh/text/text-diff",
+      "permanent": true
+    },
+    {
+      "source": "/zh/url-encode.html",
+      "destination": "/zh/text/url-encode",
+      "permanent": true
+    },
+    {
+      "source": "/zh/uuid-generator.html",
+      "destination": "/zh/text/uuid-generator",
+      "permanent": true
+    },
+    {
+      "source": "/zh/word-counter.html",
+      "destination": "/zh/text/word-counter",
+      "permanent": true
+    },
+    {
+      "source": "/zh/image-crop.html",
+      "destination": "/zh/image/image-crop",
       "permanent": true
     }
   ]

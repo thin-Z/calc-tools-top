@@ -3,10 +3,15 @@
 <head>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<script src="/js/theme-init.js"></script>
-<script src="/js/theme-toggle.js"></script>
+
+
 
     <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<script src="/js/theme-init.js"></script>
+<script src="/js/theme-toggle.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>在线图片压缩 - 免费压缩 JPG/PNG/WebP</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
@@ -74,7 +79,7 @@
                     <h3>原始图片</h3>
                     <div class="preview-area">
                         <div class="preview-box">
-                            <img id="originalPreview" src="" alt="原始图片">
+                            <img id="originalPreview" alt="原始图片">
                             <div class="file-info" id="originalInfo"></div>
                         </div>
                     </div>
@@ -99,7 +104,7 @@
                     <div class="stat-item"><div class="stat-label">压缩率</div><div class="stat-value saved" id="reductionRate">-</div></div>
                 </div>
                 <div class="preview-card" ><h3>压缩结果</h3>
-                    <div class="preview-area"><div class="preview-box"><img id="compressedPreview" src="" alt="压缩后图片"><div class="file-info" id="compressedInfo"></div></div></div>
+                    <div class="preview-area"><div class="preview-box"><img id="compressedPreview" alt="压缩后图片"><div class="file-info" id="compressedInfo"></div></div></div>
                 </div>
                 <div class="download-area"><button class="btn btn-success" id="downloadBtn">下载压缩图片</button></div>
             </div>

@@ -1,5 +1,5 @@
 // js/api-client.js
-// Cloudflare Worker API 客户端 + 降级策略
+// Vercel Serverless API 客户端 + 降级策略
 // 在 like.js 和 site.js 之前加载
 
 (function() {
@@ -51,12 +51,12 @@
     });
   }
 
-  // ?? GET
+  // 通用 GET 请求
   function apiGet(path) {
     return apiFetch(path);
   }
 
-  // ?? POST
+  // 通用 POST 请求
   function apiPost(path, data) {
     return apiFetch(path, {
       method: 'POST',

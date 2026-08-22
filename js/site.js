@@ -587,14 +587,23 @@ function fetchAndMergeGlobalClicks(callback) {
         if (callback) callback();
         return;
     }
-    window.ApiClient.get('/api/clicks').then(function(data) {
-        if (data) {
-            Object.keys(data).forEach(function(key) {
-                var toolId = key.replace('click:tool:', '');
-                _globalClickTotals[toolId] = parseInt(data[key] || '0', 10);
-            });
-        }
-        if (callback) callback();
+    // 逐工具拉取全局点击量（复用 /api/clicks?toolId= 端点，服务端不再要求全量枚举 403）
+    var ids = Object.keys(TOOLS_DATA);
+    var pending = ids.length;
+    if (!pending) { if (callback) callback(); return; }
+    var finish = function () {
+        pending--;
+        if (pending <= 0 && callback) callback();
+    };
+    ids.forEach(function (id) {
+        window.ApiClient.get('/api/clicks?toolId=' + encodeURIComponent(id))
+            .then(function (data) {
+                if (data && typeof data.total === 'number') {
+                    _globalClickTotals[id] = data.total;
+                }
+            })
+            .catch(function () {})
+            .then(finish);
     });
 }
 
