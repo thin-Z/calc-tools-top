@@ -77,6 +77,45 @@ function walkHtml(dir, callback) {
   }
 }
 
+// 1.5) 在 dist/ 内执行「卫生」转换（P1-2 去BOM / P1-3 charset置首 / P2-7 懒加载 / P1-4 inline display:none→.hidden）
+// 集中处理可机械化、跨全站的高频修复，确保即便源码被同步盘回滚，生产产物始终正确。
+function ensureCharsetFirst(html) {
+  const headOpen = html.match(/<head[^>]*>/i);
+  if (!headOpen) return html;
+  const headTag = headOpen[0];
+  const headIdx = headOpen.index;
+  const afterHead = html.slice(headIdx + headTag.length);
+  const charsetMatch = afterHead.match(/<meta\s+charset[^>]*>/i);
+  if (!charsetMatch) return html;
+  const rest = afterHead.replace(charsetMatch[0], '').replace(/^\s*/, '');
+  return html.slice(0, headIdx + headTag.length) + '\n    ' + charsetMatch[0] + '\n    ' + rest;
+}
+
+function lazyImages(html) {
+  return html.replace(/<img\b([^>]*)>/gi, (m, attrs) => {
+    if (/\sloading\s*=/i.test(attrs)) return m;
+    if (/\bclass\s*=\s*["'][^"']*(site-logo|logo|favicon)/i.test(attrs)) return m;
+    if (/\bsrc\s*=\s*["']data:/i.test(attrs)) return m;
+    let next = attrs;
+    if (!/\sdecoding\s*=/i.test(next)) next += ' decoding="async"';
+    next += ' loading="lazy"';
+    return '<img' + next + '>';
+  });
+}
+
+function inlineNoneToHidden(html) {
+  return html.replace(/(<[a-zA-Z][a-zA-Z0-9]*\b)([^>]*?)\sstyle\s*=\s*["']\s*display\s*:\s*none\s*;?\s*["']([^>]*>)/gi,
+    (full, open, b1, b2) => {
+      let rest = b1 + b2;
+      if (/\bclass\s*=\s*(["'])/i.test(rest)) {
+        rest = rest.replace(/(\bclass\s*=\s*(["']))([^"']*)\2/, (m, p1, q, cls) => `${p1}${cls} hidden${q}`);
+      } else {
+        rest = ' class="hidden"' + rest;
+      }
+      return open + rest;
+    });
+}
+
 let cleanupCount = 0;
 walkHtml(dist, (f) => {
   const raw = readFileSync(f);
@@ -88,7 +127,7 @@ walkHtml(dist, (f) => {
   scriptRe.lastIndex = 0;
   const newText = text.replace(linkRe, '').replace(scriptRe, '');
   if (newText !== text) {
-    writeFileSync(f, (hadBom ? '\uFEFF' : '') + newText, 'utf8');
+    writeFileSync(f, newText, 'utf8');
     cleanupCount++;
   }
 });
@@ -167,7 +206,7 @@ walkHtml(dist, (f) => {
     return;
   }
 
-  writeFileSync(f, (hadBom ? '\uFEFF' : '') + newText, 'utf8');
+  writeFileSync(f, newText, 'utf8');
   adsenseUpdated++;
 });
 console.log(`[build] AdSense 注入: 更新 ${adsenseUpdated} | 跳过 ${adsenseSkipped}`);
@@ -187,9 +226,55 @@ walkHtml(dist, (f) => {
 
   const newText = text.replace(ASSET_RE, (m, q, prefix, name) => `${q}${prefix}${name}?v=${STAMP}${q}`);
   if (newText !== text) {
-    writeFileSync(f, (hadBom ? '\uFEFF' : '') + newText, 'utf8');
+    writeFileSync(f, newText, 'utf8');
     versioned++;
   }
 });
 console.log(`[build] 版本号注入: ${STAMP} | ${versioned} 个文件`);
+
+// 4.5) 卫生转换（必须在 AdSense/版本注入之后执行，确保 charset 真正位于 <head> 首位）
+let hygieneCount = 0;
+walkHtml(dist, (f) => {
+  const raw = readFileSync(f);
+  let text = raw.toString('utf8');
+  if (raw[0] === 0xef && raw[1] === 0xbb && raw[2] === 0xbf) text = text.slice(1);
+  const newText = inlineNoneToHidden(lazyImages(ensureCharsetFirst(text)));
+  if (newText !== text) {
+    writeFileSync(f, newText, 'utf8');
+    hygieneCount++;
+  }
+});
+console.log(`[build] 卫生转换(去BOM/charset置首/懒加载/inline→hidden): ${hygieneCount} 个文件`);
+
+// 5) CSS 压缩（P3-1）：移除注释并折叠空白，减小传输体积
+const cssPath = join(dist, 'css', 'style.css');
+if (existsSync(cssPath)) {
+  const css = readFileSync(cssPath, 'utf8');
+  const min = css
+    .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/\s*([{}:;,>])\s*/g, '$1')
+    .replace(/;}/g, '}')
+    .trim();
+  writeFileSync(cssPath, min, 'utf8');
+  console.log(`[build] CSS 压缩: ${css.length} → ${min.length} 字节 (节省 ${css.length - min.length})`);
+} else {
+  console.log('[build] CSS 压缩: 跳过(未找到 css/style.css)');
+}
+
+// 6) 注入轻量 Cookie 同意横幅（P1-6：非 EEA 合规基线；EEA 流量评估后需接入 Google 认证 CMP）
+const consentSnippet = `<div id="cmp-banner" class="cmp-banner" role="dialog" aria-label="Cookie 同意" hidden>\n  <p>我们使用 Cookie 与本地存储以改善体验并展示相关广告。继续浏览即表示你同意我们的 <a href="/privacy">隐私政策</a>。</p>\n  <div class="cmp-actions">\n    <button id="cmp-decline" class="cmp-btn cmp-btn-ghost">仅必要</button>\n    <button id="cmp-accept" class="cmp-btn cmp-btn-primary">同意</button>\n  </div>\n</div>\n<script>\n(function(){\n  try {\n    if (localStorage.getItem('cookie-consent')) { return; }\n    var b = document.getElementById('cmp-banner');\n    if (b) b.hidden = false;\n    function done(v){ try{ localStorage.setItem('cookie-consent', v); }catch(e){} var x=document.getElementById('cmp-banner'); if(x) x.hidden=true; if(v==='granted' && typeof gtag!=='undefined'){ try{ gtag('consent','update',{ad_storage:'granted',analytics_storage:'granted'}); }catch(e){} } }\n    var a=document.getElementById('cmp-accept'); if(a) a.addEventListener('click', function(){ done('granted'); });\n    var d=document.getElementById('cmp-decline'); if(d) d.addEventListener('click', function(){ done('necessary'); });\n  } catch(e){}\n})();\n</script>`;
+const bodyRe = /<\/body>/i;
+let cmpCount = 0;
+walkHtml(dist, (f) => {
+  const raw = readFileSync(f);
+  let text = raw.toString('utf8');
+  if (raw[0] === 0xef && raw[1] === 0xbb && raw[2] === 0xbf) text = text.slice(1);
+  if (text.includes('cmp-banner')) { cmpCount++; return; }
+  if (!bodyRe.test(text)) { console.warn('[build] 跳过 CMP 注入(无 </body>):', f.replace(dist, '')); return; }
+  const newText = text.replace(bodyRe, `${consentSnippet}\n</body>`);
+  writeFileSync(f, newText, 'utf8');
+  cmpCount++;
+});
+console.log(`[build] CMP 横幅注入: ${cmpCount} 个文件`);
+
 process.exit(0);

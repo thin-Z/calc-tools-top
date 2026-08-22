@@ -73,5 +73,11 @@
     setLocalLikes: setLocalLikes,
     get: apiGet,
     post: apiPost,
+    // P1-1：单一数据源，like.js / site.js 从此处读取，避免三处硬编码
+    config: {
+      LIKE_KEY: LIKE_KEY,
+      API_BASE: API_BASE,
+      TIMEOUT_MS: TIMEOUT_MS,
+    },
   };
 })();

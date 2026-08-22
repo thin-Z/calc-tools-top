@@ -77,11 +77,13 @@ function initTagClicks() {
  * localStorage access if like.js failed to load. */
 function getLikes() {
     if (window.LikeSystem && window.LikeSystem.getLikes) return window.LikeSystem.getLikes();
-    try { return JSON.parse(localStorage.getItem('toolbox_likes')) || {}; } catch (e) { return {}; }
+    var key = (window.ApiClient && window.ApiClient.config && window.ApiClient.config.STORAGE_KEY) || 'toolbox_likes';
+    try { return JSON.parse(localStorage.getItem(key)) || {}; } catch (e) { return {}; }
 }
 function saveLikes(likes) {
     if (window.LikeSystem && window.LikeSystem.saveLikes) { window.LikeSystem.saveLikes(likes); return; }
-    try { localStorage.setItem('toolbox_likes', JSON.stringify(likes)); } catch (e) {}
+    var key = (window.ApiClient && window.ApiClient.config && window.ApiClient.config.STORAGE_KEY) || 'toolbox_likes';
+    try { localStorage.setItem(key, JSON.stringify(likes)); } catch (e) {}
 }
 function getTotalLikes(toolId) {
     return getLikes()[toolId] || 0;

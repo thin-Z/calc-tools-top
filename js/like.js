@@ -10,9 +10,11 @@
 (function () {
     'use strict';
 
-    var LIKE_KEY = 'toolbox_likes';
-    var API_BASE = '/api/likes';
-    var API_TIMEOUT = 3000;
+    // P1-1：优先复用 ApiClient 的单一数据源；缺失时回退到本地常量（离线/独立运行）
+    var _conf = (typeof window.ApiClient !== 'undefined' && window.ApiClient.config) || {};
+    var LIKE_KEY = _conf.LIKE_KEY || 'toolbox_likes';
+    var API_BASE = _conf.API_BASE || '/api/likes';
+    var API_TIMEOUT = _conf.TIMEOUT_MS || 3000;
 
     /* ---------- localStorage (shared shape with site.js) ---------- */
     function getLikes() {

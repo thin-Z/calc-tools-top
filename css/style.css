@@ -158,14 +158,25 @@
     box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.2);
 }
 
-[data-theme="dark"] .tool-card .icon.icon-finance { background: linear-gradient(135deg, #312E81, #6366F1); }
-[data-theme="dark"] .tool-card .icon.icon-health { background: linear-gradient(135deg, #14532D, #22C55E); }
-[data-theme="dark"] .tool-card .icon.icon-life { background: linear-gradient(135deg, #713F12, #EAB308); }
-[data-theme="dark"] .tool-card .icon.icon-shopping { background: linear-gradient(135deg, #831843, #EC4899); }
-[data-theme="dark"] .tool-card .icon.icon-travel { background: linear-gradient(135deg, #0C4A6E, #38BDF8); }
-[data-theme="dark"] .tool-card .icon.icon-utility { background: linear-gradient(135deg, #4C1D95, #8B5CF6); }
-[data-theme="dark"] .tool-card .icon.icon-image { background: linear-gradient(135deg, #064E3B, #10B981); }
-[data-theme="dark"] .tool-card .icon.icon-text { background: linear-gradient(135deg, #7C2D12, #F97316); }
+/* 暗色图标渐变（P2-3：提取为 CSS 变量，便于统一维护主题色） */
+[data-theme="dark"] {
+  --icon-finance-1: #312E81;  --icon-finance-2: #6366F1;
+  --icon-health-1: #14532D;   --icon-health-2: #22C55E;
+  --icon-life-1: #713F12;     --icon-life-2: #EAB308;
+  --icon-shopping-1: #831843; --icon-shopping-2: #EC4899;
+  --icon-travel-1: #0C4A6E;   --icon-travel-2: #38BDF8;
+  --icon-utility-1: #4C1D95;  --icon-utility-2: #8B5CF6;
+  --icon-image-1: #064E3B;    --icon-image-2: #10B981;
+  --icon-text-1: #7C2D12;     --icon-text-2: #F97316;
+}
+[data-theme="dark"] .tool-card .icon.icon-finance { background: linear-gradient(135deg, var(--icon-finance-1), var(--icon-finance-2)); }
+[data-theme="dark"] .tool-card .icon.icon-health { background: linear-gradient(135deg, var(--icon-health-1), var(--icon-health-2)); }
+[data-theme="dark"] .tool-card .icon.icon-life { background: linear-gradient(135deg, var(--icon-life-1), var(--icon-life-2)); }
+[data-theme="dark"] .tool-card .icon.icon-shopping { background: linear-gradient(135deg, var(--icon-shopping-1), var(--icon-shopping-2)); }
+[data-theme="dark"] .tool-card .icon.icon-travel { background: linear-gradient(135deg, var(--icon-travel-1), var(--icon-travel-2)); }
+[data-theme="dark"] .tool-card .icon.icon-utility { background: linear-gradient(135deg, var(--icon-utility-1), var(--icon-utility-2)); }
+[data-theme="dark"] .tool-card .icon.icon-image { background: linear-gradient(135deg, var(--icon-image-1), var(--icon-image-2)); }
+[data-theme="dark"] .tool-card .icon.icon-text { background: linear-gradient(135deg, var(--icon-text-1), var(--icon-text-2)); }
 
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -2795,3 +2806,46 @@ button:active, .btn:active {
 /* Random number generator */
 .random-numbers { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
 .random-number-badge { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 0.5rem 1rem; font-size: 1.2rem; font-weight: 700; font-family: 'Courier New', monospace; min-width: 2.5rem; text-align: center; }
+
+/* ===== 通用工具类 ===== */
+.hidden { display: none !important; }
+
+/* ===== Cookie 同意横幅 (P1-6) ===== */
+.cmp-banner {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  max-width: 640px;
+  width: calc(100% - 32px);
+  z-index: 9999;
+  background: var(--bg-card);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+  padding: 16px 18px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+.cmp-banner[hidden] { display: none; }
+.cmp-banner p { margin: 0; flex: 1 1 320px; }
+.cmp-banner a { color: var(--primary); }
+.cmp-actions { display: flex; gap: 10px; flex-shrink: 0; }
+.cmp-btn {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.2s ease;
+}
+.cmp-btn:hover { transform: translateY(-1px); }
+.cmp-btn-primary { background: var(--primary); border-color: var(--primary); color: #fff; }
