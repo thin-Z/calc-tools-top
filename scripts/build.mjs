@@ -100,10 +100,41 @@ if (!existsSync(includePath)) {
   console.error('[build] FATAL: 找不到 includes/adsense-head.html');
   process.exit(1);
 }
-const snippet = readFileSync(includePath, 'utf8').trim();
+let snippet = readFileSync(includePath, 'utf8').trim();
 if (!snippet.includes('adsbygoogle.js')) {
   console.error('[build] FATAL: includes/adsense-head.html 内容不含 adsbygoogle.js');
   process.exit(1);
+}
+
+// GA4 占位符守卫：未替换占位符时剥离 GA4 代码，仅保留 AdSense，避免线上无效请求
+const GA4_PLACEHOLDER = 'G-XXXXXXXXXX';
+const htmlCommentRe = /<!--(?:(?!-->)[\s\S])*?-->/g;
+const ga4LoaderRe = /<script\b[^>]*\bgoogletagmanager\.com\/gtag\/js\b[^>]*>\s*<\/script>/gi;
+const ga4InlineRe = /<script\b[^>]*>(?:(?!<\/script>)[\s\S])*?gtag\s*\(\s*['"]config['"][\s\S]*?<\/script>/gi;
+const collapse = (s) => s.replace(/(?:\r?\n){2,}/g, '\n').trim();
+
+// 注释仅供维护者阅读，不应进入线上 HTML；同时消除「注释内占位符字面量」误触发守卫
+snippet = collapse(snippet.replace(htmlCommentRe, ''));
+
+function stripGa4(raw) {
+  return collapse(raw.replace(ga4LoaderRe, '').replace(ga4InlineRe, ''));
+}
+
+if (snippet.includes(GA4_PLACEHOLDER)) {
+  const stripped = stripGa4(snippet);
+  if (!stripped.includes('adsbygoogle.js')) {
+    console.error('[build] FATAL: 剥离 GA4 后 AdSense loader 丢失，请检查 includes/adsense-head.html');
+    process.exit(1);
+  }
+  if (stripped.includes('googletagmanager.com') || stripped.includes(GA4_PLACEHOLDER)) {
+    console.error('[build] FATAL: 剥离 GA4 不彻底（仍含 googletagmanager.com 或占位符），请检查 includes/adsense-head.html');
+    process.exit(1);
+  }
+  snippet = stripped;
+  console.warn('[build] WARN: GA4 仍为占位符（G-XXXXXXXXXX），本次构建不注入 GA4 代码以避免线上无效请求。填入真实 Measurement ID 后将自动启用。');
+} else {
+  const idMatch = snippet.match(/G-[A-Z0-9]+/);
+  console.log(`[build] GA4 已启用: ${idMatch ? idMatch[0] : '(ID 未识别)'}`);
 }
 
 const adsenseScriptRe = /<script\b[^>]*\badsbygoogle\.js\b[^>]*>\s*<\/script>/gi;
