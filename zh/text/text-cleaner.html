@@ -41,7 +41,7 @@
     <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
     <nav>
         <a href="/"><span>首页</span></a>
-        <select class="lang-switch" onchange="switchLang(this.value)" aria-label="语言切换">
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="语言切换">
             <option value="zh" selected>🇨🇳 中文</option>
             <option value="en">🇬🇧 English</option>
         </select>
@@ -60,7 +60,7 @@
             
 
             <div class="tool-controls">
-                <textarea class="text-input" id="textInput" placeholder="输入需要清理的文本..." oninput="executeClean()">欢迎使用文本清理器工具！
+                <textarea class="text-input" id="textInput" placeholder="输入需要清理的文本..." data-csp-input="executeClean">欢迎使用文本清理器工具！
 
     这段文本包含    多余空格，
 
@@ -68,16 +68,16 @@
 
                 <!-- Cleaning Options -->
                 <div class="cleaner-options">
-                    <label class="cleaner-option"><input type="checkbox" id="optExtraSpaces" checked onchange="executeClean()"> 去除多余空格</label>
-                    <label class="cleaner-option"><input type="checkbox" id="optLineBreaks" checked onchange="executeClean()"> 去除换行</label>
-                    <label class="cleaner-option"><input type="checkbox" id="optEmptyLines" checked onchange="executeClean()"> 去除空行</label>
-                    <label class="cleaner-option"><input type="checkbox" id="optTrim" checked onchange="executeClean()"> 修剪首尾空白</label>
-                    <label class="cleaner-option"><input type="checkbox" id="optPunctuation" onchange="executeClean()"> 去除标点符号</label>
+                    <label class="cleaner-option"><input type="checkbox" id="optExtraSpaces" checked data-csp-change="executeClean"> 去除多余空格</label>
+                    <label class="cleaner-option"><input type="checkbox" id="optLineBreaks" checked data-csp-change="executeClean"> 去除换行</label>
+                    <label class="cleaner-option"><input type="checkbox" id="optEmptyLines" checked data-csp-change="executeClean"> 去除空行</label>
+                    <label class="cleaner-option"><input type="checkbox" id="optTrim" checked data-csp-change="executeClean"> 修剪首尾空白</label>
+                    <label class="cleaner-option"><input type="checkbox" id="optPunctuation" data-csp-change="executeClean"> 去除标点符号</label>
                 </div>
 
                 <div class="action-bar">
-                    <button class="btn btn-primary" onclick="executeClean()">清理文本</button>
-                    <button class="btn btn-secondary" onclick="resetTextCleaner()">重置</button>
+                    <button class="btn btn-primary" data-csp-click="executeClean">清理文本</button>
+                    <button class="btn btn-secondary" data-csp-click="resetTextCleaner">重置</button>
                 </div>
 
                 <!-- Result Area -->
@@ -88,7 +88,7 @@
                         <span class="stat-badge">清理后：<strong id="charAfter">0</strong> 字符</span>
                     </div>
                     <pre class="result-area" id="resultArea" style="font-family: 'SF Mono', 'Fira Code', 'Consolas', 'Courier New', monospace; font-size: 0.9rem; line-height: 1.5; padding: 16px; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"></pre>
-                    <button class="btn btn-copy" id="copyBtn" onclick="copyTextCleanerResult()">📋 复制结果</button>
+                    <button class="btn btn-copy" id="copyBtn" data-csp-click="copyTextCleanerResult">📋 复制结果</button>
                 </div>
             </div>
 

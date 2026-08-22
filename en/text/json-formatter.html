@@ -55,7 +55,7 @@
     <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
     <nav>
         <a href="/en/"><span>Home</span></a>
-        <select class="lang-switch" onchange="switchLang(this.value)" aria-label="Switch language">
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
             <option value="zh">🇨🇳 中文</option>
             <option value="en" selected>🇬🇧 English</option>
         </select>
@@ -78,13 +78,13 @@
 
                 <!-- Mode Toggle Buttons -->
                 <div class="mode-chips">
-                    <button class="mode-chip mode-btn active" data-mode="format" onclick="switchJSONMode('format')">🎨 Format</button>
-                    <button class="mode-chip mode-btn" data-mode="minify" onclick="switchJSONMode('minify')">•?Minify</button>
+                    <button class="mode-chip mode-btn active" data-mode="format" data-csp-click="switchJSONMode" data-csp-arg="format">🎨 Format</button>
+                    <button class="mode-chip mode-btn" data-mode="minify" data-csp-click="switchJSONMode" data-csp-arg="minify">•?Minify</button>
                 </div>
 
                 <div class="action-bar">
-                    <button class="btn btn-primary" onclick="doFormat()">Process</button>
-                    <button class="btn btn-secondary" onclick="clearJSON()">Clear</button>
+                    <button class="btn btn-primary" data-csp-click="doFormat">Process</button>
+                    <button class="btn btn-secondary" data-csp-click="clearJSON">Clear</button>
                 </div>
 
                 <!-- Error Display -->
@@ -104,7 +104,7 @@
                         <span class="char-badge">Original: <strong id="originalSize">0</strong> bytes</span>
                         <span class="char-badge">Processed: <strong id="formattedSize">0</strong> bytes</span>
                     </div>
-                    <button class="btn btn-copy" id="copyJSONBtn" onclick="copyJSONResult()">📋 Copy Result</button>
+                    <button class="btn btn-copy" id="copyJSONBtn" data-csp-click="copyJSONResult">📋 Copy Result</button>
                 </div>
             </div>
 

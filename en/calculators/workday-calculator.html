@@ -95,7 +95,7 @@
     <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
     <nav>
         <a href="/en/"><span>Home</span></a>
-        <select class="lang-switch" onchange="switchLang(this.value)" aria-label="Switch language">
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
             <option value="zh">🇨🇳 中文</option>
             <option value="en" selected>🇬🇧 English</option>
         </select>
@@ -115,7 +115,7 @@
 
         <div class="calculator-form">
             <h2>Workday Calculator</h2>
-            <form id="workdayForm" onsubmit="return false;">
+            <form id="workdayForm" data-csp-submit="prevent">
                 <div class="form-row">
                     <div class="form-group">
                         <label for="startDate">Start Date</label>

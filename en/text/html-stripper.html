@@ -39,7 +39,7 @@
     <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
     <nav>
         <a href="/en/"><span>Home</span></a>
-        <select class="lang-switch" onchange="switchLang(this.value)" aria-label="Switch language">
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
             <option value="zh">🇨🇳 中文</option>
             <option value="en" selected>🇬🇧 English</option>
         </select>
@@ -58,7 +58,7 @@
             
 
             <div class="tool-controls">
-                <textarea class="text-input" id="htmlInput" placeholder="Paste HTML content here..." oninput="executeStrip()"><h1>Welcome to My Website</h1>
+                <textarea class="text-input" id="htmlInput" placeholder="Paste HTML content here..." data-csp-input="executeStrip"><h1>Welcome to My Website</h1>
 <p>This is <b>bold</b> and <i>italic</i> text.</p>
 <ul>
   <li>Item 1</li>
@@ -69,16 +69,16 @@
                 <!-- Keep Tag Options -->
                 <div class="cleaner-options" style="margin-top:12px;">
                     <span style="font-weight:600;display:block;margin-bottom:6px;">Keep these tags:</span>
-                    <label class="cleaner-option"><input type="checkbox" class="keep-tag-option" value="br" onchange="executeStrip()"> &lt;br&gt;</label>
-                    <label class="cleaner-option"><input type="checkbox" class="keep-tag-option" value="p" onchange="executeStrip()"> &lt;p&gt;</label>
-                    <label class="cleaner-option"><input type="checkbox" class="keep-tag-option" value="b" onchange="executeStrip()"> &lt;b&gt;</label>
-                    <label class="cleaner-option"><input type="checkbox" class="keep-tag-option" value="i" onchange="executeStrip()"> &lt;i&gt;</label>
-                    <label class="cleaner-option"><input type="checkbox" class="keep-tag-option" value="a" onchange="executeStrip()"> &lt;a&gt;</label>
+                    <label class="cleaner-option"><input type="checkbox" class="keep-tag-option" value="br" data-csp-change="executeStrip"> &lt;br&gt;</label>
+                    <label class="cleaner-option"><input type="checkbox" class="keep-tag-option" value="p" data-csp-change="executeStrip"> &lt;p&gt;</label>
+                    <label class="cleaner-option"><input type="checkbox" class="keep-tag-option" value="b" data-csp-change="executeStrip"> &lt;b&gt;</label>
+                    <label class="cleaner-option"><input type="checkbox" class="keep-tag-option" value="i" data-csp-change="executeStrip"> &lt;i&gt;</label>
+                    <label class="cleaner-option"><input type="checkbox" class="keep-tag-option" value="a" data-csp-change="executeStrip"> &lt;a&gt;</label>
                 </div>
 
                 <div class="action-bar">
-                    <button class="btn btn-primary" onclick="executeStrip()">Strip Tags</button>
-                    <button class="btn btn-secondary" onclick="resetStripper()">Reset</button>
+                    <button class="btn btn-primary" data-csp-click="executeStrip">Strip Tags</button>
+                    <button class="btn btn-secondary" data-csp-click="resetStripper">Reset</button>
                 </div>
 
                 <!-- Result Area -->
@@ -89,7 +89,7 @@
                         <span class="stat-badge">After: <strong id="charAfter">0</strong> chars</span>
                     </div>
                     <pre class="result-area" id="resultArea" style="font-family: 'SF Mono', 'Fira Code', 'Consolas', 'Courier New', monospace; font-size: 0.9rem; line-height: 1.5; padding: 16px; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"></pre>
-                    <button class="btn btn-copy" id="copyBtn" onclick="copyStripResult()">📋 Copy Result</button>
+                    <button class="btn btn-copy" id="copyBtn" data-csp-click="copyStripResult">📋 Copy Result</button>
                 </div>
             </div>
 

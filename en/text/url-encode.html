@@ -57,7 +57,7 @@
     <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
     <nav>
         <a href="/en/"><span>Home</span></a>
-        <select class="lang-switch" onchange="switchLang(this.value)" aria-label="Switch language">
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
             <option value="zh">🇨🇳 中文</option>
             <option value="en" selected>🇬🇧 English</option>
         </select>
@@ -76,17 +76,17 @@
             
 
             <div class="tool-controls">
-                <textarea class="text-input" id="urlInput" placeholder="Enter text to encode or URL-encoded string to decode..." oninput="doURLConvert()">https://example.com/search?q=hello%20world</textarea>
+                <textarea class="text-input" id="urlInput" placeholder="Enter text to encode or URL-encoded string to decode..." data-csp-input="doURLConvert">https://example.com/search?q=hello%20world</textarea>
 
                 <!-- Mode Toggle -->
                 <div class="mode-chips">
-                    <span class="mode-chip active" data-mode="encode" onclick="switchURLMode('encode')">🔀 Encode</span>
-                    <span class="mode-chip" data-mode="decode" onclick="switchURLMode('decode')">🔁 Decode</span>
+                    <span class="mode-chip active" data-mode="encode" data-csp-click="switchURLMode" data-csp-arg="encode">🔀 Encode</span>
+                    <span class="mode-chip" data-mode="decode" data-csp-click="switchURLMode" data-csp-arg="decode">🔁 Decode</span>
                 </div>
 
                 <div class="action-bar">
-                    <button class="btn btn-primary" onclick="doURLConvert()">Convert</button>
-                    <button class="btn btn-secondary" onclick="clearURLTool()">Clear</button>
+                    <button class="btn btn-primary" data-csp-click="doURLConvert">Convert</button>
+                    <button class="btn btn-secondary" data-csp-click="clearURLTool">Clear</button>
                 </div>
 
                 <!-- Error Display -->
@@ -101,7 +101,7 @@
                 <div id="resultSection" class="result-section" style="display:none;">
                     <h3>Output</h3>
                     <pre class="result-area" id="resultArea" style="font-family: 'SF Mono', 'Fira Code', 'Consolas', 'Courier New', monospace; font-size: 0.9rem; line-height: 1.5; padding: 16px; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"></pre>
-                    <button class="btn btn-copy" id="copyBtn" onclick="copyURLResult()">📋 Copy Result</button>
+                    <button class="btn btn-copy" id="copyBtn" data-csp-click="copyURLResult">📋 Copy Result</button>
                 </div>
             </div>
 

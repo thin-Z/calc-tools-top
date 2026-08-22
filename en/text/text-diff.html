@@ -55,7 +55,7 @@
     <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
     <nav>
         <a href="/en/"><span>Home</span></a>
-        <select class="lang-switch" onchange="switchLang(this.value)" aria-label="Switch language">
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
             <option value="zh">🇨🇳 中文</option>
             <option value="en" selected>🇬🇧 English</option>
         </select>
@@ -75,13 +75,13 @@
             <div class="diff-container">
                 <div class="diff-pane">
                     <label style="font-size:0.9rem;font-weight:600;margin-bottom:4px;display:block;">Original Text</label>
-                    <textarea class="text-input" id="textInput1" placeholder="Enter the first text..." oninput="scheduleDiff()">Hello, welcome to the text diff tool!
+                    <textarea class="text-input" id="textInput1" placeholder="Enter the first text..." data-csp-input="scheduleDiff">Hello, welcome to the text diff tool!
 This is the first line.
 Third line unchanged.</textarea>
                 </div>
                 <div class="diff-pane">
                     <label style="font-size:0.9rem;font-weight:600;margin-bottom:4px;display:block;">New Text</label>
-                    <textarea class="text-input" id="textInput2" placeholder="Enter the second text..." oninput="scheduleDiff()">Hello, welcome to the text diff tool!
+                    <textarea class="text-input" id="textInput2" placeholder="Enter the second text..." data-csp-input="scheduleDiff">Hello, welcome to the text diff tool!
 This is the modified second line.
 Third line unchanged.
 Fourth line is new content.</textarea>
@@ -89,8 +89,8 @@ Fourth line is new content.</textarea>
             </div>
 
             <div class="action-bar">
-                <button class="btn btn-primary" onclick="doDiff()">🔄 Compare</button>
-                <button class="btn btn-secondary" onclick="clearDiff()">Clear</button>
+                <button class="btn btn-primary" data-csp-click="doDiff">🔄 Compare</button>
+                <button class="btn btn-secondary" data-csp-click="clearDiff">Clear</button>
             </div>
 
             <div id="diffStats" class="diff-stats"></div>

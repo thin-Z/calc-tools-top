@@ -93,7 +93,7 @@
     <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
     <nav>
         <a href="/en/"><span>Home</span></a>
-        <select class="lang-switch" onchange="switchLang(this.value)" aria-label="Switch language">
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
             <option value="zh">🇨🇳 中文</option>
             <option value="en" selected>🇬🇧 English</option>
         </select>
@@ -111,8 +111,8 @@
             
 
             <div class="gen-tabs">
-                <span class="gen-tab active" data-tab="uuid" onclick="switchGeneratorTab('uuid')">🔖 UUID</span>
-                <span class="gen-tab" data-tab="password" onclick="switchGeneratorTab('password')">🔑 Password</span>
+                <span class="gen-tab active" data-tab="uuid" data-csp-click="switchGeneratorTab" data-csp-arg="uuid">🔖 UUID</span>
+                <span class="gen-tab" data-tab="password" data-csp-click="switchGeneratorTab" data-csp-arg="password">🔑 Password</span>
             </div>
 
             <!-- UUID Panel -->
@@ -125,8 +125,8 @@
                         <option value="5">5</option>
                         <option value="10">10</option>
                     </select>
-                    <button class="btn btn-primary" onclick="doGenerateUUIDs()">🎲 Generate UUIDs</button>
-                    <button class="copy-btn" id="copyGenAllBtn" onclick="copyGeneratorAll()">📋 Copy All</button>
+                    <button class="btn btn-primary" data-csp-click="doGenerateUUIDs">🎲 Generate UUIDs</button>
+                    <button class="copy-btn" id="copyGenAllBtn" data-csp-click="copyGeneratorAll">📋 Copy All</button>
                 </div>
                 <div class="result-area">
                     <div class="result-label">Generated UUIDs:</div>
@@ -139,7 +139,7 @@
                 <div class="pw-options">
                     <div class="pw-length-wrap">
                         <label style="font-size:0.9rem;">Length:</label>
-                        <input type="range" id="pwLength" min="8" max="64" value="16" oninput="updatePwLength(this.value)">
+                        <input type="range" id="pwLength" min="8" max="64" value="16" data-csp-input="updatePwLength">
                         <span class="pw-length-val" id="pwLengthVal">16</span>
                     </div>
                     <label><input type="checkbox" id="pwUpper" checked> Uppercase (A-Z)</label>
@@ -155,8 +155,8 @@
                         <option value="5">5</option>
                         <option value="10">10</option>
                     </select>
-                    <button class="btn btn-primary" onclick="doGeneratePassword()">🔑 Generate</button>
-                    <button class="copy-btn" id="copyGenAllBtnPw" onclick="copyGeneratorAll()">📋 Copy All</button>
+                    <button class="btn btn-primary" data-csp-click="doGeneratePassword">🔑 Generate</button>
+                    <button class="copy-btn" id="copyGenAllBtnPw" data-csp-click="copyGeneratorAll">📋 Copy All</button>
                 </div>
                 <div id="pwStrength"></div>
                 <div class="result-area">

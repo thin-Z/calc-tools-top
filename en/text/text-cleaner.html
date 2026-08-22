@@ -55,7 +55,7 @@
     <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
     <nav>
         <a href="/en/"><span>Home</span></a>
-        <select class="lang-switch" onchange="switchLang(this.value)" aria-label="Switch language">
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
             <option value="zh">🇨🇳 中文</option>
             <option value="en" selected>🇬🇧 English</option>
         </select>
@@ -74,7 +74,7 @@
             
 
             <div class="tool-controls">
-                <textarea class="text-input" id="textInput" placeholder="Enter text to clean..." oninput="executeClean()">Welcome to the Text Cleaner tool!
+                <textarea class="text-input" id="textInput" placeholder="Enter text to clean..." data-csp-input="executeClean">Welcome to the Text Cleaner tool!
 
     This text has     extra spaces,
 
@@ -82,16 +82,16 @@ empty lines,   and  punctuation!!!</textarea>
 
                 <!-- Cleaning Options -->
                 <div class="cleaner-options">
-                    <label class="cleaner-option"><input type="checkbox" id="optExtraSpaces" checked onchange="executeClean()"> Remove extra spaces</label>
-                    <label class="cleaner-option"><input type="checkbox" id="optLineBreaks" checked onchange="executeClean()"> Remove line breaks</label>
-                    <label class="cleaner-option"><input type="checkbox" id="optEmptyLines" checked onchange="executeClean()"> Remove empty lines</label>
-                    <label class="cleaner-option"><input type="checkbox" id="optTrim" checked onchange="executeClean()"> Trim whitespace</label>
-                    <label class="cleaner-option"><input type="checkbox" id="optPunctuation" onchange="executeClean()"> Remove punctuation</label>
+                    <label class="cleaner-option"><input type="checkbox" id="optExtraSpaces" checked data-csp-change="executeClean"> Remove extra spaces</label>
+                    <label class="cleaner-option"><input type="checkbox" id="optLineBreaks" checked data-csp-change="executeClean"> Remove line breaks</label>
+                    <label class="cleaner-option"><input type="checkbox" id="optEmptyLines" checked data-csp-change="executeClean"> Remove empty lines</label>
+                    <label class="cleaner-option"><input type="checkbox" id="optTrim" checked data-csp-change="executeClean"> Trim whitespace</label>
+                    <label class="cleaner-option"><input type="checkbox" id="optPunctuation" data-csp-change="executeClean"> Remove punctuation</label>
                 </div>
 
                 <div class="action-bar">
-                    <button class="btn btn-primary" onclick="executeClean()">Clean Text</button>
-                    <button class="btn btn-secondary" onclick="resetTextCleaner()">Reset</button>
+                    <button class="btn btn-primary" data-csp-click="executeClean">Clean Text</button>
+                    <button class="btn btn-secondary" data-csp-click="resetTextCleaner">Reset</button>
                 </div>
 
                 <!-- Result Area -->
@@ -102,7 +102,7 @@ empty lines,   and  punctuation!!!</textarea>
                         <span class="stat-badge">After: <strong id="charAfter">0</strong> chars</span>
                     </div>
                     <pre class="result-area" id="resultArea" style="font-family: 'SF Mono', 'Fira Code', 'Consolas', 'Courier New', monospace; font-size: 0.9rem; line-height: 1.5; padding: 16px; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"></pre>
-                    <button class="btn btn-copy" id="copyBtn" onclick="copyTextCleanerResult()">📋 Copy Result</button>
+                    <button class="btn btn-copy" id="copyBtn" data-csp-click="copyTextCleanerResult">📋 Copy Result</button>
                 </div>
             </div>
 

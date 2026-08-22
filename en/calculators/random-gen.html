@@ -87,7 +87,7 @@
     <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
     <nav>
         <a href="/en/"><span>Home</span></a>
-        <select class="lang-switch" onchange="switchLang(this.value)" aria-label="Switch language">
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
             <option value="zh">🇨🇳 中文</option>
             <option value="en" selected>🇬🇧 English</option>
         </select>
@@ -107,7 +107,7 @@
 
         <div class="calculator-form">
             <h2 data-i18n="randomGenTitle">Random Number Generator</h2>
-            <form id="randomGenForm" onsubmit="return false;">
+            <form id="randomGenForm" data-csp-submit="prevent">
                 <div class="form-row">
                     <div class="form-group">
                         <label for="randMin" data-i18n="randMin">Minimum</label>
@@ -133,8 +133,8 @@
                     </label>
                 </div>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-primary" onclick="doCalculate()" data-i18n="generate">Generate</button>
-                    <button type="reset" class="btn btn-secondary" onclick="resetForm()" data-i18n="reset">Reset</button>
+                    <button type="button" class="btn btn-primary" data-csp-click="doCalculate" data-i18n="generate">Generate</button>
+                    <button type="reset" class="btn btn-secondary" data-csp-click="resetForm" data-i18n="reset">Reset</button>
                 </div>
             </form>
 

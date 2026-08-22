@@ -100,7 +100,7 @@
     <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
     <nav>
         <a href="/en/"><span>Home</span></a>
-        <select class="lang-switch" onchange="switchLang(this.value)" aria-label="Switch language">
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
             <option value="zh">🇨🇳 中文</option>
             <option value="en" selected>🇬🇧 English</option>
         </select>
@@ -124,16 +124,16 @@
             <!-- Mode Switch -->
             <div style="display:flex;gap:12px;margin-bottom:24px;justify-content:center;">
                 <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:8px 16px;border:2px solid var(--primary);border-radius:var(--radius);font-weight:600;font-size:0.95rem;background:var(--primary-light);color:var(--primary);" id="modeALabel">
-                    <input type="radio" name="calcMode" value="A" checked onchange="toggleMode()" style="accent-color:var(--primary);">
+                    <input type="radio" name="calcMode" value="A" checked data-csp-change="toggleMode" style="accent-color:var(--primary);">
                     <span data-i18n="modeA">Date Arithmetic</span>
                 </label>
                 <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:8px 16px;border:2px solid var(--border);border-radius:var(--radius);font-weight:500;font-size:0.95rem;background:var(--bg-card);color:var(--text-secondary);" id="modeBLabel">
-                    <input type="radio" name="calcMode" value="B" onchange="toggleMode()" style="accent-color:var(--primary);">
+                    <input type="radio" name="calcMode" value="B" data-csp-change="toggleMode" style="accent-color:var(--primary);">
                     <span data-i18n="modeB">Date Difference</span>
                 </label>
             </div>
 
-            <form id="dateForm" onsubmit="return false;">
+            <form id="dateForm" data-csp-submit="prevent">
                 <!-- Mode A Fields -->
                 <div id="modeAFields">
                     <div class="form-group">
@@ -146,8 +146,8 @@
                         <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">Negative numbers accepted (count backwards)</div>
                     </div>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary" onclick="calcModeA()" data-i18n="calculate">Calculate</button>
-                        <button type="reset" class="btn btn-secondary" onclick="resetForm()" data-i18n="reset">Reset</button>
+                        <button type="button" class="btn btn-primary" data-csp-click="calcModeA" data-i18n="calculate">Calculate</button>
+                        <button type="reset" class="btn btn-secondary" data-csp-click="resetForm" data-i18n="reset">Reset</button>
                     </div>
                 </div>
 
@@ -164,8 +164,8 @@
                         </div>
                     </div>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary" onclick="calcModeB()" data-i18n="calculateDiff">Calculate Difference</button>
-                        <button type="reset" class="btn btn-secondary" onclick="resetForm()" data-i18n="reset">Reset</button>
+                        <button type="button" class="btn btn-primary" data-csp-click="calcModeB" data-i18n="calculateDiff">Calculate Difference</button>
+                        <button type="reset" class="btn btn-secondary" data-csp-click="resetForm" data-i18n="reset">Reset</button>
                     </div>
                 </div>
             </form>

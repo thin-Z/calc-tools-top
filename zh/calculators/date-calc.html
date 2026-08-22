@@ -99,7 +99,7 @@
     <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
     <nav>
         <a href="/"><span>首页</span></a>
-        <select class="lang-switch" onchange="switchLang(this.value)" aria-label="语言切换">
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="语言切换">
             <option value="zh" selected>🇨🇳 中文</option>
             <option value="en">🇬🇧 English</option>
         </select>
@@ -122,16 +122,16 @@
             <!-- 模式切换 -->
             <div style="display:flex;gap:12px;margin-bottom:24px;justify-content:center;">
                 <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:8px 16px;border:2px solid var(--primary);border-radius:var(--radius);font-weight:600;font-size:0.95rem;background:var(--primary-light);color:var(--primary);" id="modeALabel">
-                    <input type="radio" name="calcMode" value="A" checked onchange="toggleMode()" style="accent-color:var(--primary);">
+                    <input type="radio" name="calcMode" value="A" checked data-csp-change="toggleMode" style="accent-color:var(--primary);">
                     <span data-i18n="modeA">日期推算</span>
                 </label>
                 <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:8px 16px;border:2px solid var(--border);border-radius:var(--radius);font-weight:500;font-size:0.95rem;background:var(--bg-card);color:var(--text-secondary);" id="modeBLabel">
-                    <input type="radio" name="calcMode" value="B" onchange="toggleMode()" style="accent-color:var(--primary);">
+                    <input type="radio" name="calcMode" value="B" data-csp-change="toggleMode" style="accent-color:var(--primary);">
                     <span data-i18n="modeB">日期差</span>
                 </label>
             </div>
 
-            <form id="dateForm" onsubmit="return false;">
+            <form id="dateForm" data-csp-submit="prevent">
                 <!-- 模式 A 字段 -->
                 <div id="modeAFields">
                     <div class="form-group">
@@ -144,8 +144,8 @@
                         <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">支持负数（往前推算）</div>
                     </div>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary" onclick="calcModeA()" data-i18n="calculate">开始计算</button>
-                        <button type="reset" class="btn btn-secondary" onclick="resetForm()" data-i18n="reset">重置</button>
+                        <button type="button" class="btn btn-primary" data-csp-click="calcModeA" data-i18n="calculate">开始计算</button>
+                        <button type="reset" class="btn btn-secondary" data-csp-click="resetForm" data-i18n="reset">重置</button>
                     </div>
                 </div>
 
@@ -162,8 +162,8 @@
                         </div>
                     </div>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary" onclick="calcModeB()" data-i18n="calculateDiff">计算日期差</button>
-                        <button type="reset" class="btn btn-secondary" onclick="resetForm()" data-i18n="reset">重置</button>
+                        <button type="button" class="btn btn-primary" data-csp-click="calcModeB" data-i18n="calculateDiff">计算日期差</button>
+                        <button type="reset" class="btn btn-secondary" data-csp-click="resetForm" data-i18n="reset">重置</button>
                     </div>
                 </div>
             </form>

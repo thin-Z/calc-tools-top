@@ -41,7 +41,7 @@
     <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
     <nav>
         <a href="/"><span>首页</span></a>
-        <select class="lang-switch" onchange="switchLang(this.value)" aria-label="语言切换">
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="语言切换">
             <option value="zh" selected>🇨🇳 中文</option>
             <option value="en">🇬🇧 English</option>
         </select>
@@ -64,14 +64,14 @@
 
                 <!-- Mode Toggle -->
                 <div class="mode-chips">
-                    <span class="mode-chip active" data-mode="stats" onclick="switchMode('stats')">📊 字数统计</span>
-                    <span class="mode-chip" data-mode="keywords" onclick="switchMode('keywords')">🔑 关键词密度</span>
+                    <span class="mode-chip active" data-mode="stats" data-csp-click="switchMode" data-csp-arg="stats">📊 字数统计</span>
+                    <span class="mode-chip" data-mode="keywords" data-csp-click="switchMode" data-csp-arg="keywords">🔑 关键词密度</span>
                 </div>
 
                 <div class="action-bar">
-                    <button class="btn btn-primary" onclick="doAnalyze()">分析</button>
-                    <button class="btn btn-secondary" onclick="resetTool()">清空</button>
-                    <button class="copy-btn" id="copyResultBtn" onclick="copyResult()">📋 复制结果</button>
+                    <button class="btn btn-primary" data-csp-click="doAnalyze">分析</button>
+                    <button class="btn btn-secondary" data-csp-click="resetTool">清空</button>
+                    <button class="copy-btn" id="copyResultBtn" data-csp-click="copyResult">📋 复制结果</button>
                 </div>
             </div>
 

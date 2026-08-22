@@ -41,7 +41,7 @@
     <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
     <nav>
         <a href="/"><span>首页</span></a>
-        <select class="lang-switch" onchange="switchLang(this.value)" aria-label="语言切换">
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="语言切换">
             <option value="zh" selected>🇨🇳 中文</option>
             <option value="en">🇬🇧 English</option>
         </select>
@@ -60,17 +60,17 @@
             
 
             <div class="tool-controls">
-                <textarea class="text-input" id="urlInput" placeholder="输入要编码的文本，或粘贴待解码的 URL 编码字符串..." oninput="doURLConvert()">https://example.com/search?q=hello%20world</textarea>
+                <textarea class="text-input" id="urlInput" placeholder="输入要编码的文本，或粘贴待解码的 URL 编码字符串..." data-csp-input="doURLConvert">https://example.com/search?q=hello%20world</textarea>
 
                 <!-- Mode Toggle -->
                 <div class="mode-chips">
-                    <span class="mode-chip active" data-mode="encode" onclick="switchURLMode('encode')">🔀 编码</span>
-                    <span class="mode-chip" data-mode="decode" onclick="switchURLMode('decode')">🔁 解码</span>
+                    <span class="mode-chip active" data-mode="encode" data-csp-click="switchURLMode" data-csp-arg="encode">🔀 编码</span>
+                    <span class="mode-chip" data-mode="decode" data-csp-click="switchURLMode" data-csp-arg="decode">🔁 解码</span>
                 </div>
 
                 <div class="action-bar">
-                    <button class="btn btn-primary" onclick="doURLConvert()">转换</button>
-                    <button class="btn btn-secondary" onclick="clearURLTool()">清空</button>
+                    <button class="btn btn-primary" data-csp-click="doURLConvert">转换</button>
+                    <button class="btn btn-secondary" data-csp-click="clearURLTool">清空</button>
                 </div>
 
                 <!-- Error Display -->
@@ -85,7 +85,7 @@
                 <div id="resultSection" class="result-section" style="display:none;">
                     <h3>输出</h3>
                     <pre class="result-area" id="resultArea" style="font-family: 'SF Mono', 'Fira Code', 'Consolas', 'Courier New', monospace; font-size: 0.9rem; line-height: 1.5; padding: 16px; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;"></pre>
-                    <button class="btn btn-copy" id="copyBtn" onclick="copyURLResult()">📋 复制结果</button>
+                    <button class="btn btn-copy" id="copyBtn" data-csp-click="copyURLResult">📋 复制结果</button>
                 </div>
             </div>
 

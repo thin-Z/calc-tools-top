@@ -70,7 +70,7 @@
     <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
     <nav>
         <a href="/en/"><span>Home</span></a>
-        <select class="lang-switch" onchange="switchLang(this.value)" aria-label="Switch language">
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
             <option value="zh">🇨🇳 中文</option>
             <option value="en" selected>🇬🇧 English</option>
         </select>
@@ -81,7 +81,7 @@
         <div class="page-header"><h1>Ovulation Calculator - Calculate Ovulation Day</h1><p>Free online ovulation calculator. Calculate your ovulation day, fertile window, and next period date.</p></div>
             <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="ovulation"><span class="heart">❤</span> <span class="count">0</span></button></div>
         
-        <div class="tool-form"><div class="form-group"><label>Last Period Date</label><input type="date" id="lastPeriod"></div><div class="form-group"><label>Cycle (days)</label><input type="number" id="cycleDays" value="28" min="20" max="45" step="1"></div><div class="form-group"><label>Period (days)</label><input type="number" id="periodDays" value="5" min="1" max="15" step="1"></div><div class="form-actions"><button type="button" class="btn btn-primary" onclick="doCalculate()">Calculate</button><button type="reset" class="btn btn-secondary" onclick="resetForm()">Reset</button></div></div>
+        <div class="tool-form"><div class="form-group"><label>Last Period Date</label><input type="date" id="lastPeriod"></div><div class="form-group"><label>Cycle (days)</label><input type="number" id="cycleDays" value="28" min="20" max="45" step="1"></div><div class="form-group"><label>Period (days)</label><input type="number" id="periodDays" value="5" min="1" max="15" step="1"></div><div class="form-actions"><button type="button" class="btn btn-primary" data-csp-click="doCalculate">Calculate</button><button type="reset" class="btn btn-secondary" data-csp-click="resetForm">Reset</button></div></div>
         <div class="result-card" id="resultArea" style="display:none;"><div style="text-align:center;padding:1rem;"><p>Cycle: <span id="cycleDisplay"></span></p><p>Ovulation: <span id="ovulationDay" style="font-weight:bold;color:var(--danger);"></span></p><p>Fertile: <span id="fertileStart"></span> ~ <span id="fertileEnd"></span></p><p>Next Period: <span id="nextPeriod"></span></p></div></div>
         
         <div class='tool-content'><h2>Ovulation Calculator - Calculate Ovulation Day Guide</h2><p>Free online ovulation calculator. Calculate your ovulation day, fertile window, and next period date.</p></div>

@@ -263,7 +263,8 @@ if (existsSync(cssPath)) {
 }
 
 // 6) 注入轻量 Cookie 同意横幅（P1-6：非 EEA 合规基线；EEA 流量评估后需接入 Google 认证 CMP）
-const consentSnippet = `<div id="cmp-banner" class="cmp-banner" role="dialog" aria-label="Cookie 同意" hidden>\n  <p>我们使用 Cookie 与本地存储以改善体验并展示相关广告。继续浏览即表示你同意我们的 <a href="/privacy">隐私政策</a>。</p>\n  <div class="cmp-actions">\n    <button id="cmp-decline" class="cmp-btn cmp-btn-ghost">仅必要</button>\n    <button id="cmp-accept" class="cmp-btn cmp-btn-primary">同意</button>\n  </div>\n</div>\n<script>\n(function(){\n  try {\n    if (localStorage.getItem('cookie-consent')) { return; }\n    var b = document.getElementById('cmp-banner');\n    if (b) b.hidden = false;\n    function done(v){ try{ localStorage.setItem('cookie-consent', v); }catch(e){} var x=document.getElementById('cmp-banner'); if(x) x.hidden=true; if(v==='granted' && typeof gtag!=='undefined'){ try{ gtag('consent','update',{ad_storage:'granted',analytics_storage:'granted'}); }catch(e){} } }\n    var a=document.getElementById('cmp-accept'); if(a) a.addEventListener('click', function(){ done('granted'); });\n    var d=document.getElementById('cmp-decline'); if(d) d.addEventListener('click', function(){ done('necessary'); });\n  } catch(e){}\n})();\n</script>`;
+// CSP T03：内联 IIFE 外链化为 /js/cmp.js（严格 CSP 不允许内联脚本）
+const consentSnippet = `<div id="cmp-banner" class="cmp-banner" role="dialog" aria-label="Cookie 同意" hidden>\n  <p>我们使用 Cookie 与本地存储以改善体验并展示相关广告。继续浏览即表示你同意我们的 <a href="/privacy">隐私政策</a>。</p>\n  <div class="cmp-actions">\n    <button id="cmp-decline" class="cmp-btn cmp-btn-ghost">仅必要</button>\n    <button id="cmp-accept" class="cmp-btn cmp-btn-primary">同意</button>\n  </div>\n</div>\n<script src="/js/cmp.js" defer></script>`;
 const bodyRe = /<\/body>/i;
 let cmpCount = 0;
 walkHtml(dist, (f) => {

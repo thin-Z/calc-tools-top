@@ -96,7 +96,7 @@
     <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
     <nav>
         <a href="/"><span>首页</span></a>
-        <select class="lang-switch" onchange="switchLang(this.value)" aria-label="语言切换">
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="语言切换">
             <option value="zh" selected>🇨🇳 中文</option>
             <option value="en">🇬🇧 English</option>
         </select>
@@ -115,7 +115,7 @@
 
         <div class="calculator-form">
             <h2 data-i18n="bmiTitle">BMI 计算器</h2>
-            <form id="bmiForm" onsubmit="return false;">
+            <form id="bmiForm" data-csp-submit="prevent">
                 <div class="form-row">
                     <div class="form-group">
                         <label for="height" data-i18n="height">身高（cm）</label>
@@ -127,8 +127,8 @@
                     </div>
                 </div>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-primary" onclick="doCalculate()" data-i18n="calculate">开始计算</button>
-                    <button type="reset" class="btn btn-secondary" onclick="resetForm()" data-i18n="reset">重置</button>
+                    <button type="button" class="btn btn-primary" data-csp-click="doCalculate" data-i18n="calculate">开始计算</button>
+                    <button type="reset" class="btn btn-secondary" data-csp-click="resetForm" data-i18n="reset">重置</button>
                 </div>
             </form>
 

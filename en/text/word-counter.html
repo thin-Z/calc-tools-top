@@ -55,7 +55,7 @@
     <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
     <nav>
         <a href="/en/"><span>Home</span></a>
-        <select class="lang-switch" onchange="switchLang(this.value)" aria-label="Switch language">
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
             <option value="zh">🇨🇳 中文</option>
             <option value="en" selected>🇬🇧 English</option>
         </select>
@@ -78,14 +78,14 @@
 
                 <!-- Mode Toggle -->
                 <div class="mode-chips">
-                    <span class="mode-chip active" data-mode="stats" onclick="switchMode('stats')">📊 Word Count</span>
-                    <span class="mode-chip" data-mode="keywords" onclick="switchMode('keywords')">🔑 Keyword Density</span>
+                    <span class="mode-chip active" data-mode="stats" data-csp-click="switchMode" data-csp-arg="stats">📊 Word Count</span>
+                    <span class="mode-chip" data-mode="keywords" data-csp-click="switchMode" data-csp-arg="keywords">🔑 Keyword Density</span>
                 </div>
 
                 <div class="action-bar">
-                    <button class="btn btn-primary" onclick="doAnalyze()">Analyze</button>
-                    <button class="btn btn-secondary" onclick="resetTool()">Clear</button>
-                    <button class="copy-btn" id="copyResultBtn" onclick="copyResult()">📋 Copy Results</button>
+                    <button class="btn btn-primary" data-csp-click="doAnalyze">Analyze</button>
+                    <button class="btn btn-secondary" data-csp-click="resetTool">Clear</button>
+                    <button class="copy-btn" id="copyResultBtn" data-csp-click="copyResult">📋 Copy Results</button>
                 </div>
             </div>
 
