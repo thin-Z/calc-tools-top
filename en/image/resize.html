@@ -123,17 +123,7 @@
     <p>© 2026 Online Calculators | Free Online Calculators</p>
 </footer>
 
-<script>
-(function(){var k="toolbox_likes";function g(){try{return JSON.parse(localStorage.getItem(k))||{}}catch(e){return {}}}
-function s(l){localStorage.setItem(k,JSON.stringify(l))}
-var b=document.querySelector(".detail-like");if(!b)return;
-var id=b.dataset.likeId,ls=g(),c=ls[id]||0,ce=b.querySelector(".count");
-if(ce)ce.textContent=c;if(c>0)b.classList.add("liked");
-b.onclick=function(e){e.preventDefault();e.stopPropagation();
-var ls=g(),cur=ls[id]||0;ls[id]=cur>0?0:1;s(ls);
-var nc=ls[id];if(ce)ce.textContent=nc;
-if(nc>0)b.classList.add("liked");else b.classList.remove("liked")};})();
-</script>
+
     </body>
 </html>
 

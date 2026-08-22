@@ -1,6 +1,6 @@
 {
  "totals": {
-  "inline_exec_scripts": 55,
+  "inline_exec_scripts": 2,
   "jsonld_blocks": 232,
   "other_script_types": 0,
   "event_handlers": 418,
@@ -774,103 +774,103 @@
    "bytes": 6075
   },
   "en/calculators/age-calc.html": {
-   "inline_exec_scripts": 2,
+   "inline_exec_scripts": 1,
    "jsonld_blocks": 2,
    "other_script_types": 0,
    "event_handlers": 3,
    "style_blocks": 0,
    "style_attrs": 3,
-   "bytes": 9849
+   "bytes": 9244
   },
   "en/calculators/bmi.html": {
-   "inline_exec_scripts": 2,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 3,
    "other_script_types": 0,
    "event_handlers": 4,
    "style_blocks": 0,
    "style_attrs": 9,
-   "bytes": 20060
+   "bytes": 11028
   },
   "en/calculators/calorie-calculator.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 3,
    "other_script_types": 0,
    "event_handlers": 2,
    "style_blocks": 0,
    "style_attrs": 21,
-   "bytes": 15093
+   "bytes": 14863
   },
   "en/calculators/car-loan.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 3,
    "other_script_types": 0,
    "event_handlers": 3,
    "style_blocks": 0,
    "style_attrs": 4,
-   "bytes": 9255
+   "bytes": 8650
   },
   "en/calculators/compound-interest.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 3,
    "other_script_types": 0,
    "event_handlers": 3,
    "style_blocks": 0,
    "style_attrs": 4,
-   "bytes": 9328
+   "bytes": 8723
   },
   "en/calculators/date-calc.html": {
-   "inline_exec_scripts": 2,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 3,
    "other_script_types": 0,
    "event_handlers": 8,
    "style_blocks": 0,
    "style_attrs": 14,
-   "bytes": 17926
+   "bytes": 12853
   },
   "en/calculators/discount.html": {
-   "inline_exec_scripts": 2,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 2,
    "other_script_types": 0,
    "event_handlers": 3,
    "style_blocks": 0,
    "style_attrs": 5,
-   "bytes": 9964
+   "bytes": 9119
   },
   "en/calculators/electricity.html": {
-   "inline_exec_scripts": 2,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 2,
    "other_script_types": 0,
    "event_handlers": 3,
    "style_blocks": 0,
    "style_attrs": 5,
-   "bytes": 9947
+   "bytes": 9105
   },
   "en/calculators/fuel-cost.html": {
-   "inline_exec_scripts": 2,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 2,
    "other_script_types": 0,
    "event_handlers": 3,
    "style_blocks": 0,
    "style_attrs": 5,
-   "bytes": 9787
+   "bytes": 8943
   },
   "en/calculators/housing-fund.html": {
-   "inline_exec_scripts": 2,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 3,
    "other_script_types": 0,
    "event_handlers": 4,
    "style_blocks": 0,
    "style_attrs": 9,
-   "bytes": 15421
+   "bytes": 11780
   },
   "en/calculators/ideal-weight.html": {
-   "inline_exec_scripts": 2,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 2,
    "other_script_types": 0,
    "event_handlers": 3,
    "style_blocks": 0,
    "style_attrs": 6,
-   "bytes": 10134
+   "bytes": 9293
   },
   "en/calculators/index.html": {
    "inline_exec_scripts": 0,
@@ -882,67 +882,67 @@
    "bytes": 16134
   },
   "en/calculators/loan-compare.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 3,
    "other_script_types": 0,
    "event_handlers": 3,
    "style_blocks": 0,
    "style_attrs": 8,
-   "bytes": 9628
+   "bytes": 9023
   },
   "en/calculators/mortgage.html": {
-   "inline_exec_scripts": 2,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 3,
    "other_script_types": 0,
    "event_handlers": 4,
    "style_blocks": 0,
    "style_attrs": 9,
-   "bytes": 16987
+   "bytes": 12543
   },
   "en/calculators/overtime.html": {
-   "inline_exec_scripts": 2,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 2,
    "other_script_types": 0,
    "event_handlers": 3,
    "style_blocks": 0,
    "style_attrs": 5,
-   "bytes": 9982
+   "bytes": 9137
   },
   "en/calculators/ovulation.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 3,
    "other_script_types": 0,
    "event_handlers": 3,
    "style_blocks": 0,
    "style_attrs": 3,
-   "bytes": 9048
+   "bytes": 8443
   },
   "en/calculators/password-gen.html": {
-   "inline_exec_scripts": 2,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 2,
    "other_script_types": 0,
    "event_handlers": 3,
    "style_blocks": 0,
    "style_attrs": 3,
-   "bytes": 10838
+   "bytes": 9997
   },
   "en/calculators/percentage-calc.html": {
-   "inline_exec_scripts": 2,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 2,
    "other_script_types": 0,
    "event_handlers": 3,
    "style_blocks": 0,
    "style_attrs": 3,
-   "bytes": 10263
+   "bytes": 9425
   },
   "en/calculators/qr-generator.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 2,
    "other_script_types": 0,
    "event_handlers": 3,
    "style_blocks": 0,
    "style_attrs": 3,
-   "bytes": 10332
+   "bytes": 10096
   },
   "en/calculators/random-gen.html": {
    "inline_exec_scripts": 0,
@@ -954,40 +954,40 @@
    "bytes": 11185
   },
   "en/calculators/tax2026.html": {
-   "inline_exec_scripts": 2,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 3,
    "other_script_types": 0,
    "event_handlers": 4,
    "style_blocks": 0,
    "style_attrs": 13,
-   "bytes": 15995
+   "bytes": 11901
   },
   "en/calculators/unit-converter.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 3,
    "other_script_types": 0,
    "event_handlers": 4,
    "style_blocks": 0,
    "style_attrs": 4,
-   "bytes": 8847
+   "bytes": 8731
   },
   "en/calculators/workday-calculator.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 3,
    "other_script_types": 0,
    "event_handlers": 2,
    "style_blocks": 0,
    "style_attrs": 17,
-   "bytes": 13567
+   "bytes": 13337
   },
   "en/image/base64.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 1,
    "other_script_types": 0,
    "event_handlers": 1,
    "style_blocks": 0,
    "style_attrs": 1,
-   "bytes": 8744
+   "bytes": 8139
   },
   "en/image/color-picker.html": {
    "inline_exec_scripts": 0,
@@ -1008,13 +1008,13 @@
    "bytes": 8913
   },
   "en/image/convert.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 1,
    "other_script_types": 0,
    "event_handlers": 1,
    "style_blocks": 0,
    "style_attrs": 1,
-   "bytes": 9187
+   "bytes": 8582
   },
   "en/image/image-crop.html": {
    "inline_exec_scripts": 0,
@@ -1035,13 +1035,13 @@
    "bytes": 6647
   },
   "en/image/resize.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 1,
    "other_script_types": 0,
    "event_handlers": 1,
    "style_blocks": 0,
    "style_attrs": 1,
-   "bytes": 9374
+   "bytes": 8769
   },
   "en/text/base64-encode.html": {
    "inline_exec_scripts": 0,
@@ -1151,15 +1151,6 @@
    "style_attrs": 2,
    "bytes": 10891
   },
-  "includes/adsense-head.html": {
-   "inline_exec_scripts": 1,
-   "jsonld_blocks": 0,
-   "other_script_types": 0,
-   "event_handlers": 0,
-   "style_blocks": 0,
-   "style_attrs": 0,
-   "bytes": 527
-  },
   "includes/header-en.html": {
    "inline_exec_scripts": 0,
    "jsonld_blocks": 0,
@@ -1224,22 +1215,22 @@
    "bytes": 9197
   },
   "zh/calculators/bmi.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 3,
    "other_script_types": 0,
    "event_handlers": 4,
    "style_blocks": 0,
    "style_attrs": 9,
-   "bytes": 19188
+   "bytes": 10558
   },
   "zh/calculators/calorie-calculator.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 3,
    "other_script_types": 0,
    "event_handlers": 2,
    "style_blocks": 0,
    "style_attrs": 21,
-   "bytes": 14748
+   "bytes": 14518
   },
   "zh/calculators/car-loan.html": {
    "inline_exec_scripts": 0,
@@ -1260,58 +1251,58 @@
    "bytes": 8334
   },
   "zh/calculators/date-calc.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 3,
    "other_script_types": 0,
    "event_handlers": 8,
    "style_blocks": 0,
    "style_attrs": 14,
-   "bytes": 17089
+   "bytes": 12584
   },
   "zh/calculators/discount.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 2,
    "other_script_types": 0,
    "event_handlers": 3,
    "style_blocks": 0,
    "style_attrs": 5,
-   "bytes": 8925
+   "bytes": 8685
   },
   "zh/calculators/electricity.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 2,
    "other_script_types": 0,
    "event_handlers": 3,
    "style_blocks": 0,
    "style_attrs": 5,
-   "bytes": 9086
+   "bytes": 8849
   },
   "zh/calculators/fuel-cost.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 2,
    "other_script_types": 0,
    "event_handlers": 3,
    "style_blocks": 0,
    "style_attrs": 5,
-   "bytes": 8960
+   "bytes": 8721
   },
   "zh/calculators/housing-fund.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 3,
    "other_script_types": 0,
    "event_handlers": 4,
    "style_blocks": 0,
    "style_attrs": 9,
-   "bytes": 14474
+   "bytes": 11441
   },
   "zh/calculators/ideal-weight.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 2,
    "other_script_types": 0,
    "event_handlers": 3,
    "style_blocks": 0,
    "style_attrs": 6,
-   "bytes": 9370
+   "bytes": 9134
   },
   "zh/calculators/index.html": {
    "inline_exec_scripts": 0,
@@ -1332,22 +1323,22 @@
    "bytes": 8739
   },
   "zh/calculators/mortgage.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 3,
    "other_script_types": 0,
    "event_handlers": 4,
    "style_blocks": 0,
    "style_attrs": 9,
-   "bytes": 15777
+   "bytes": 11868
   },
   "zh/calculators/overtime.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 2,
    "other_script_types": 0,
    "event_handlers": 3,
    "style_blocks": 0,
    "style_attrs": 5,
-   "bytes": 9487
+   "bytes": 9247
   },
   "zh/calculators/ovulation.html": {
    "inline_exec_scripts": 0,
@@ -1359,31 +1350,31 @@
    "bytes": 8151
   },
   "zh/calculators/password-gen.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 2,
    "other_script_types": 0,
    "event_handlers": 3,
    "style_blocks": 0,
    "style_attrs": 3,
-   "bytes": 10028
+   "bytes": 9792
   },
   "zh/calculators/percentage-calc.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 2,
    "other_script_types": 0,
    "event_handlers": 3,
    "style_blocks": 0,
    "style_attrs": 3,
-   "bytes": 9381
+   "bytes": 9148
   },
   "zh/calculators/qr-generator.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 2,
    "other_script_types": 0,
    "event_handlers": 3,
    "style_blocks": 0,
    "style_attrs": 3,
-   "bytes": 10232
+   "bytes": 9996
   },
   "zh/calculators/random-gen.html": {
    "inline_exec_scripts": 0,
@@ -1395,31 +1386,31 @@
    "bytes": 10855
   },
   "zh/calculators/tax2026.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 3,
    "other_script_types": 0,
    "event_handlers": 4,
    "style_blocks": 0,
    "style_attrs": 13,
-   "bytes": 15267
+   "bytes": 11800
   },
   "zh/calculators/unit-converter.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 3,
    "other_script_types": 0,
    "event_handlers": 4,
    "style_blocks": 0,
    "style_attrs": 4,
-   "bytes": 8349
+   "bytes": 8233
   },
   "zh/calculators/workday-calculator.html": {
-   "inline_exec_scripts": 1,
+   "inline_exec_scripts": 0,
    "jsonld_blocks": 3,
    "other_script_types": 0,
    "event_handlers": 2,
    "style_blocks": 0,
    "style_attrs": 17,
-   "bytes": 13341
+   "bytes": 13111
   },
   "zh/image/base64.html": {
    "inline_exec_scripts": 0,

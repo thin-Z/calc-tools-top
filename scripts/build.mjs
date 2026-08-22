@@ -43,7 +43,8 @@ function copyDir(src, dst) {
     const dstPath = join(dst, name);
     const st = statSync(srcPath);
     if (st.isDirectory()) {
-      if (!EXCLUDE_DIRS.has(name)) {
+      // 排除固定目录 + 所有 dist.bak-* 备份目录（防止备份污染构建产物，2026-08-22 CSP T02）
+      if (!EXCLUDE_DIRS.has(name) && !name.startsWith('dist.bak')) {
         copyDir(srcPath, dstPath);
       }
     } else {

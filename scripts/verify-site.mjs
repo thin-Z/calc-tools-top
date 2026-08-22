@@ -136,22 +136,24 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
 
 // ---------- 6. GA4 Measurement ID 不变量 ----------
 // 老板即将手填真实 ID。最现实风险：只改了一处、或 ID 格式打错。
-// 该断言在校验环节把这类错误钉死，避免「填了却没生效」静默上线。
+// CSP T02 后 config 外链到 js/gtag-init.js，故断言覆盖两处：loader(adsense-head.html) + config(gtag-init.js)。
 {
   const GA4_PLACEHOLDER = 'G-XXXXXXXXXX';
   const htmlCommentRe = /<!--(?:(?!-->)[\s\S])*?-->/g;
   const raw = fs.readFileSync(path.join(ROOT, 'includes', 'adsense-head.html'), 'utf8');
   const stripped = raw.replace(htmlCommentRe, '');
-  if (stripped.includes(GA4_PLACEHOLDER)) {
+  const gtagInitPath = path.join(ROOT, 'js', 'gtag-init.js');
+  const gtagInit = fs.existsSync(gtagInitPath) ? fs.readFileSync(gtagInitPath, 'utf8') : '';
+  if (stripped.includes(GA4_PLACEHOLDER) && !gtagInit) {
     console.log('[6] GA4 Measurement ID 不变量: 占位符态（未启用），合法，跳过 ✓');
   } else {
-    const ids = stripped.match(/G-[A-Z0-9]{6,}/g) || [];
+    const ids = [...(stripped.match(/G-[A-Z0-9]{6,}/g) || []), ...(gtagInit.match(/G-[A-Z0-9]{6,}/g) || [])];
     if (ids.length !== 2) {
-      fail(`[ga4] 检测到 ${ids.length} 处 ID（应为 2 处：loader 与 gtag config 各一），请检查 includes/adsense-head.html`);
+      fail(`[ga4] 检测到 ${ids.length} 处 ID（应为 2 处：loader 与 gtag-init.js config 各一），请检查 includes/adsense-head.html 与 js/gtag-init.js`);
     } else if (ids[0] !== ids[1]) {
       fail(`[ga4] 两处 ID 不一致（"${ids[0]}" vs "${ids[1]}"），应为同一个真实 Measurement ID`);
     } else {
-      console.log(`[6] GA4 Measurement ID 不变量: 已启用 (${ids[0]})，2 处一致 ✓`);
+      console.log(`[6] GA4 Measurement ID 不变量: 已启用 (${ids[0]})，loader+config 2 处一致 ✓`);
     }
   }
 }
