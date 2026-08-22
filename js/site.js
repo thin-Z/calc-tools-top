@@ -696,17 +696,20 @@ function initHotTools() {
     });
     
     grid.innerHTML = html;
-    // Stagger entrance animation for hot tools
-    var hotCards = grid.querySelectorAll('.hot-tool-card');
-    hotCards.forEach(function(card, i) {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(10px)';
-        setTimeout(function() {
-            card.style.transition = 'all 0.3s ease';
-            card.style.opacity = '1';
-            card.style.transform = '';
-        }, i * 80);
-    });
+    // Stagger entrance animation for hot tools (only on first render)
+    if (!grid.dataset.hotToolsAnimated) {
+        grid.dataset.hotToolsAnimated = '1';
+        var hotCards = grid.querySelectorAll('.hot-tool-card');
+        hotCards.forEach(function(card, i) {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(10px)';
+            setTimeout(function() {
+                card.style.transition = 'all 0.3s ease';
+                card.style.opacity = '1';
+                card.style.transform = '';
+            }, i * 80);
+        });
+    }
 }
 
 function initToolSort() {
