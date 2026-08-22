@@ -1,0 +1,43 @@
+classDiagram
+    class CspScanner {
+        +scanHtml(filePath) ScanResult
+        +classifyInlineScripts(html) ScriptClass[]
+        +countEventHandlers(html) EventHandlerCount
+        +exportJson(outputPath) void
+        +assertZero(scanResult) bool
+    }
+    class CspMigrator {
+        +removeRedundantScripts(html) html
+        +extractPageScript(pageId, html) ExtractionResult
+        +replaceEventHandlers(html) html
+        +injectExternalScript(html, scriptSrc) html
+    }
+    class EventDelegationLayer {
+        +init() void
+        -onClick(e) void
+        -onChange(e) void
+        -onInput(e) void
+        -onSubmit(e) void
+        -invoke(fnName, el, arg) void
+    }
+    class GtagInit {
+        +dataLayer : any[]
+        +gtag(cmd, ...args) void
+    }
+    class VerifyRunner {
+        +assertNoInlineScripts(distDir) bool
+        +assertNoInlineEventHandlers(distDir) bool
+        +assertCspHeader(vercelJson) bool
+        +assertLegacySix() bool
+        +runAll() Summary
+    }
+    class BuildPipeline {
+        +run() void
+        +injectAdsHead(html) html
+        +copyStatic() void
+    }
+    CspScanner --> CspMigrator : "生成基线/校验结果"
+    CspMigrator ..> EventDelegationLayer : "产出 data-csp-* 属性"
+    VerifyRunner --> CspScanner : "复用扫描能力"
+    BuildPipeline --> EventDelegationLayer : "注入 csp-events.js"
+    BuildPipeline --> GtagInit : "注入 gtag-init.js"

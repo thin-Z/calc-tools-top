@@ -1,0 +1,1596 @@
+{
+ "totals": {
+  "inline_exec_scripts": 55,
+  "jsonld_blocks": 232,
+  "other_script_types": 0,
+  "event_handlers": 418,
+  "style_blocks": 1,
+  "style_attrs": 462
+ },
+ "files": {
+  "404.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 2533
+  },
+  "about.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 5136
+  },
+  "contact.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 1,
+   "bytes": 4356
+  },
+  "index.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 2,
+   "bytes": 45588
+  },
+  "privacy.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 6795
+  },
+  "blog/en/age-calc-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 6950
+  },
+  "blog/en/base64-encode-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7762
+  },
+  "blog/en/bmi-normal-range-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7266
+  },
+  "blog/en/car-loan-calculator-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 6736
+  },
+  "blog/en/case-converter-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7243
+  },
+  "blog/en/color-picker-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7069
+  },
+  "blog/en/compound-interest-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7003
+  },
+  "blog/en/date-calculation-tips.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7376
+  },
+  "blog/en/discount-calculation-tips.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 6708
+  },
+  "blog/en/electricity-cost-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7006
+  },
+  "blog/en/equal-installment-vs-equal-principal.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 8021
+  },
+  "blog/en/fuel-cost-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 6854
+  },
+  "blog/en/housing-fund-loan-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7478
+  },
+  "blog/en/html-stripper-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 6973
+  },
+  "blog/en/image-compression-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 6837
+  },
+  "blog/en/image-format-converter-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7029
+  },
+  "blog/en/image-resize-crop-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7101
+  },
+  "blog/en/image-to-base64-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 6945
+  },
+  "blog/en/index.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 26452
+  },
+  "blog/en/json-formatter-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7092
+  },
+  "blog/en/keyword-density-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7059
+  },
+  "blog/en/loan-comparison-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 6630
+  },
+  "blog/en/mortgage-rate-trend-2026.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7379
+  },
+  "blog/en/overtime-pay-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 6809
+  },
+  "blog/en/ovulation-calculator-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 6813
+  },
+  "blog/en/password-security-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 9564
+  },
+  "blog/en/percentage-calculation-tips.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 9090
+  },
+  "blog/en/qr-generator-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 9245
+  },
+  "blog/en/random-number-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 8659
+  },
+  "blog/en/reading-time-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7205
+  },
+  "blog/en/standard-weight-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 6655
+  },
+  "blog/en/tax-deduction-guide-2026.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7562
+  },
+  "blog/en/text-cleaner-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7602
+  },
+  "blog/en/text-diff-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7200
+  },
+  "blog/en/unit-converter-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 6896
+  },
+  "blog/en/url-encode-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 8455
+  },
+  "blog/en/uuid-generator-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7112
+  },
+  "blog/en/word-counter-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7226
+  },
+  "blog/zh/age-calc-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 6389
+  },
+  "blog/zh/base64-encode-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7833
+  },
+  "blog/zh/bmi-normal-range-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7592
+  },
+  "blog/zh/car-loan-calculator-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7255
+  },
+  "blog/zh/case-converter-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7906
+  },
+  "blog/zh/color-picker-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7842
+  },
+  "blog/zh/compound-interest-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 6840
+  },
+  "blog/zh/date-calculation-tips.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 8037
+  },
+  "blog/zh/discount-calculation-tips.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7025
+  },
+  "blog/zh/electricity-cost-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7767
+  },
+  "blog/zh/equal-installment-vs-equal-principal.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7979
+  },
+  "blog/zh/fuel-cost-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7620
+  },
+  "blog/zh/housing-fund-loan-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7909
+  },
+  "blog/zh/html-stripper-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7703
+  },
+  "blog/zh/image-compression-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7163
+  },
+  "blog/zh/image-format-converter-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7803
+  },
+  "blog/zh/image-resize-crop-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7762
+  },
+  "blog/zh/image-to-base64-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7774
+  },
+  "blog/zh/index.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 27066
+  },
+  "blog/zh/json-formatter-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7789
+  },
+  "blog/zh/keyword-density-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7788
+  },
+  "blog/zh/loan-comparison-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 6131
+  },
+  "blog/zh/mortgage-rate-trend-2026.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 6744
+  },
+  "blog/zh/overtime-pay-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7143
+  },
+  "blog/zh/ovulation-calculator-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7462
+  },
+  "blog/zh/password-security-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 9380
+  },
+  "blog/zh/percentage-calculation-tips.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 9412
+  },
+  "blog/zh/qr-generator-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 9390
+  },
+  "blog/zh/random-number-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 8622
+  },
+  "blog/zh/reading-time-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7848
+  },
+  "blog/zh/standard-weight-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 22,
+   "bytes": 9137
+  },
+  "blog/zh/tax-deduction-guide-2026.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 8128
+  },
+  "blog/zh/text-cleaner-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7790
+  },
+  "blog/zh/text-diff-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7660
+  },
+  "blog/zh/unit-converter-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7841
+  },
+  "blog/zh/url-encode-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7739
+  },
+  "blog/zh/uuid-generator-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7917
+  },
+  "blog/zh/word-counter-guide.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7786
+  },
+  "en/about.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 5153
+  },
+  "en/contact.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 1,
+   "bytes": 4477
+  },
+  "en/index.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 2,
+   "bytes": 45924
+  },
+  "en/privacy.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 6075
+  },
+  "en/calculators/age-calc.html": {
+   "inline_exec_scripts": 2,
+   "jsonld_blocks": 2,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 3,
+   "bytes": 9849
+  },
+  "en/calculators/bmi.html": {
+   "inline_exec_scripts": 2,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 4,
+   "style_blocks": 0,
+   "style_attrs": 9,
+   "bytes": 20060
+  },
+  "en/calculators/calorie-calculator.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 2,
+   "style_blocks": 0,
+   "style_attrs": 21,
+   "bytes": 15093
+  },
+  "en/calculators/car-loan.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 4,
+   "bytes": 9255
+  },
+  "en/calculators/compound-interest.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 4,
+   "bytes": 9328
+  },
+  "en/calculators/date-calc.html": {
+   "inline_exec_scripts": 2,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 8,
+   "style_blocks": 0,
+   "style_attrs": 14,
+   "bytes": 17926
+  },
+  "en/calculators/discount.html": {
+   "inline_exec_scripts": 2,
+   "jsonld_blocks": 2,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 5,
+   "bytes": 9964
+  },
+  "en/calculators/electricity.html": {
+   "inline_exec_scripts": 2,
+   "jsonld_blocks": 2,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 5,
+   "bytes": 9947
+  },
+  "en/calculators/fuel-cost.html": {
+   "inline_exec_scripts": 2,
+   "jsonld_blocks": 2,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 5,
+   "bytes": 9787
+  },
+  "en/calculators/housing-fund.html": {
+   "inline_exec_scripts": 2,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 4,
+   "style_blocks": 0,
+   "style_attrs": 9,
+   "bytes": 15421
+  },
+  "en/calculators/ideal-weight.html": {
+   "inline_exec_scripts": 2,
+   "jsonld_blocks": 2,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 6,
+   "bytes": 10134
+  },
+  "en/calculators/index.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 16134
+  },
+  "en/calculators/loan-compare.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 8,
+   "bytes": 9628
+  },
+  "en/calculators/mortgage.html": {
+   "inline_exec_scripts": 2,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 4,
+   "style_blocks": 0,
+   "style_attrs": 9,
+   "bytes": 16987
+  },
+  "en/calculators/overtime.html": {
+   "inline_exec_scripts": 2,
+   "jsonld_blocks": 2,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 5,
+   "bytes": 9982
+  },
+  "en/calculators/ovulation.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 3,
+   "bytes": 9048
+  },
+  "en/calculators/password-gen.html": {
+   "inline_exec_scripts": 2,
+   "jsonld_blocks": 2,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 3,
+   "bytes": 10838
+  },
+  "en/calculators/percentage-calc.html": {
+   "inline_exec_scripts": 2,
+   "jsonld_blocks": 2,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 3,
+   "bytes": 10263
+  },
+  "en/calculators/qr-generator.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 2,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 3,
+   "bytes": 10332
+  },
+  "en/calculators/random-gen.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 4,
+   "style_blocks": 0,
+   "style_attrs": 4,
+   "bytes": 11185
+  },
+  "en/calculators/tax2026.html": {
+   "inline_exec_scripts": 2,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 4,
+   "style_blocks": 0,
+   "style_attrs": 13,
+   "bytes": 15995
+  },
+  "en/calculators/unit-converter.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 4,
+   "style_blocks": 0,
+   "style_attrs": 4,
+   "bytes": 8847
+  },
+  "en/calculators/workday-calculator.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 2,
+   "style_blocks": 0,
+   "style_attrs": 17,
+   "bytes": 13567
+  },
+  "en/image/base64.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 1,
+   "bytes": 8744
+  },
+  "en/image/color-picker.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 3,
+   "bytes": 8914
+  },
+  "en/image/compress.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 1,
+   "bytes": 8913
+  },
+  "en/image/convert.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 1,
+   "bytes": 9187
+  },
+  "en/image/image-crop.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 11,
+   "bytes": 12129
+  },
+  "en/image/index.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 6647
+  },
+  "en/image/resize.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 1,
+   "bytes": 9374
+  },
+  "en/text/base64-encode.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 7,
+   "style_blocks": 0,
+   "style_attrs": 5,
+   "bytes": 11957
+  },
+  "en/text/case-converter.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 12,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 12120
+  },
+  "en/text/html-stripper.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 10,
+   "style_blocks": 0,
+   "style_attrs": 4,
+   "bytes": 9793
+  },
+  "en/text/index.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7643
+  },
+  "en/text/json-formatter.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 6,
+   "style_blocks": 0,
+   "style_attrs": 6,
+   "bytes": 10624
+  },
+  "en/text/keyword-density.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 1,
+   "style_attrs": 0,
+   "bytes": 3663
+  },
+  "en/text/reading-time.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 8,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 10503
+  },
+  "en/text/text-cleaner.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 10,
+   "style_blocks": 0,
+   "style_attrs": 2,
+   "bytes": 10495
+  },
+  "en/text/text-diff.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 5,
+   "style_blocks": 0,
+   "style_attrs": 4,
+   "bytes": 8493
+  },
+  "en/text/url-encode.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 7,
+   "style_blocks": 0,
+   "style_attrs": 5,
+   "bytes": 10116
+  },
+  "en/text/uuid-generator.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 8,
+   "style_blocks": 0,
+   "style_attrs": 13,
+   "bytes": 12521
+  },
+  "en/text/word-counter.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 6,
+   "style_blocks": 0,
+   "style_attrs": 2,
+   "bytes": 10891
+  },
+  "includes/adsense-head.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 0,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 527
+  },
+  "includes/header-en.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 557
+  },
+  "includes/header-zh.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 557
+  },
+  "zh/about.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 5035
+  },
+  "zh/contact.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 1,
+   "bytes": 4367
+  },
+  "zh/index.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 0,
+   "style_blocks": 0,
+   "style_attrs": 1,
+   "bytes": 1138
+  },
+  "zh/privacy.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 6186
+  },
+  "zh/calculators/age-calc.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 2,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 3,
+   "bytes": 9197
+  },
+  "zh/calculators/bmi.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 4,
+   "style_blocks": 0,
+   "style_attrs": 9,
+   "bytes": 19188
+  },
+  "zh/calculators/calorie-calculator.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 2,
+   "style_blocks": 0,
+   "style_attrs": 21,
+   "bytes": 14748
+  },
+  "zh/calculators/car-loan.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 4,
+   "bytes": 8309
+  },
+  "zh/calculators/compound-interest.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 4,
+   "bytes": 8334
+  },
+  "zh/calculators/date-calc.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 8,
+   "style_blocks": 0,
+   "style_attrs": 14,
+   "bytes": 17089
+  },
+  "zh/calculators/discount.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 2,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 5,
+   "bytes": 8925
+  },
+  "zh/calculators/electricity.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 2,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 5,
+   "bytes": 9086
+  },
+  "zh/calculators/fuel-cost.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 2,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 5,
+   "bytes": 8960
+  },
+  "zh/calculators/housing-fund.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 4,
+   "style_blocks": 0,
+   "style_attrs": 9,
+   "bytes": 14474
+  },
+  "zh/calculators/ideal-weight.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 2,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 6,
+   "bytes": 9370
+  },
+  "zh/calculators/index.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 14632
+  },
+  "zh/calculators/loan-compare.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 8,
+   "bytes": 8739
+  },
+  "zh/calculators/mortgage.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 4,
+   "style_blocks": 0,
+   "style_attrs": 9,
+   "bytes": 15777
+  },
+  "zh/calculators/overtime.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 2,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 5,
+   "bytes": 9487
+  },
+  "zh/calculators/ovulation.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 3,
+   "bytes": 8151
+  },
+  "zh/calculators/password-gen.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 2,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 3,
+   "bytes": 10028
+  },
+  "zh/calculators/percentage-calc.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 2,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 3,
+   "bytes": 9381
+  },
+  "zh/calculators/qr-generator.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 2,
+   "other_script_types": 0,
+   "event_handlers": 3,
+   "style_blocks": 0,
+   "style_attrs": 3,
+   "bytes": 10232
+  },
+  "zh/calculators/random-gen.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 4,
+   "style_blocks": 0,
+   "style_attrs": 4,
+   "bytes": 10855
+  },
+  "zh/calculators/tax2026.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 4,
+   "style_blocks": 0,
+   "style_attrs": 13,
+   "bytes": 15267
+  },
+  "zh/calculators/unit-converter.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 4,
+   "style_blocks": 0,
+   "style_attrs": 4,
+   "bytes": 8349
+  },
+  "zh/calculators/workday-calculator.html": {
+   "inline_exec_scripts": 1,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 2,
+   "style_blocks": 0,
+   "style_attrs": 17,
+   "bytes": 13341
+  },
+  "zh/image/base64.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 1,
+   "bytes": 8537
+  },
+  "zh/image/color-picker.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 3,
+   "bytes": 8971
+  },
+  "zh/image/compress.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 1,
+   "bytes": 9677
+  },
+  "zh/image/convert.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 1,
+   "bytes": 9087
+  },
+  "zh/image/image-crop.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 11,
+   "bytes": 12050
+  },
+  "zh/image/index.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 6127
+  },
+  "zh/image/resize.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 1,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 1,
+   "bytes": 9298
+  },
+  "zh/text/base64-encode.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 7,
+   "style_blocks": 0,
+   "style_attrs": 5,
+   "bytes": 11567
+  },
+  "zh/text/case-converter.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 12,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 12212
+  },
+  "zh/text/html-stripper.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 10,
+   "style_blocks": 0,
+   "style_attrs": 4,
+   "bytes": 9833
+  },
+  "zh/text/index.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 7101
+  },
+  "zh/text/json-formatter.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 6,
+   "style_blocks": 0,
+   "style_attrs": 6,
+   "bytes": 12325
+  },
+  "zh/text/keyword-density.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 1,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 3138
+  },
+  "zh/text/reading-time.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 8,
+   "style_blocks": 0,
+   "style_attrs": 0,
+   "bytes": 9579
+  },
+  "zh/text/text-cleaner.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 10,
+   "style_blocks": 0,
+   "style_attrs": 2,
+   "bytes": 9752
+  },
+  "zh/text/text-diff.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 5,
+   "style_blocks": 0,
+   "style_attrs": 4,
+   "bytes": 7922
+  },
+  "zh/text/url-encode.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 7,
+   "style_blocks": 0,
+   "style_attrs": 5,
+   "bytes": 9305
+  },
+  "zh/text/uuid-generator.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 3,
+   "other_script_types": 0,
+   "event_handlers": 8,
+   "style_blocks": 0,
+   "style_attrs": 13,
+   "bytes": 12273
+  },
+  "zh/text/word-counter.html": {
+   "inline_exec_scripts": 0,
+   "jsonld_blocks": 0,
+   "other_script_types": 0,
+   "event_handlers": 6,
+   "style_blocks": 0,
+   "style_attrs": 2,
+   "bytes": 10046
+  }
+ }
+}
