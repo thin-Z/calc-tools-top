@@ -88,19 +88,19 @@
                 </div>
 
                 <!-- Error Display -->
-                <div class="result-area error-section" id="errorSection" style="display:none;border-color:var(--danger);background:var(--trend-hot-bg);">
-                    <div class="result-label" style="color:var(--danger);">♥?JSON Syntax Error</div>
-                    <div class="result-content" style="color:var(--danger-strong);">
+                <div class="result-area error-section st-16" id="errorSection">
+                    <div class="result-label st-10">♥?JSON Syntax Error</div>
+                    <div class="result-content st-11">
                         <p><strong>Location:</strong> Line <span id="errorLine">0</span>, Column <span id="errorCol">0</span></p>
                         <p><strong>Message:</strong> <span id="errorMsg"></span></p>
                     </div>
                 </div>
 
                 <!-- Result Section -->
-                <div id="resultSection" class="result-section" style="display:none;">
+                <div id="resultSection" class="result-section hidden">
                     <h3>Output</h3>
-                    <pre class="result-area" id="resultArea" style="font-family: 'SF Mono', 'Fira Code', 'Consolas', 'Courier New', monospace; font-size: 0.9rem; line-height: 1.5; padding: 16px; overflow-x: auto; white-space: pre; word-wrap: normal;"></pre>
-                    <div class="result-meta" id="statsSection" style="display:none;margin-top:8px;">
+                    <pre class="result-area st-75" id="resultArea"></pre>
+                    <div class="result-meta st-76" id="statsSection">
                         <span class="char-badge">Original: <strong id="originalSize">0</strong> bytes</span>
                         <span class="char-badge">Processed: <strong id="formattedSize">0</strong> bytes</span>
                     </div>

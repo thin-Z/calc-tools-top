@@ -146,26 +146,26 @@
             </form>
 
             <!-- Result Area -->
-            <div id="resultArea" class="result-card" style="display:none;">
+            <div id="resultArea" class="result-card hidden">
                 <h3 data-i18n="result">Result</h3>
-                <div id="monthlyPaymentArea" style="margin-bottom:12px;">
-                    <div style="font-size:0.85rem;color:var(--text-secondary);" id="monthlyLabel"></div>
+                <div id="monthlyPaymentArea" class="st-8">
+                    <div id="monthlyLabel" class="st-1"></div>
                     <div class="result-value" id="monthlyValue"></div>
                 </div>
-                <div class="form-row" style="margin-top:16px;grid-template-columns:1fr 1fr;">
+                <div class="form-row st-26">
                     <div>
-                        <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="totalPayment">Total Payment</div>
-                        <div style="font-size:1.3rem;font-weight:700;color:var(--text);" id="totalPaymentValue"></div>
+                        <div data-i18n="totalPayment" class="st-1">Total Payment</div>
+                        <div id="totalPaymentValue" class="st-27"></div>
                     </div>
                     <div>
-                        <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="totalInterest">Total Interest</div>
-                        <div style="font-size:1.3rem;font-weight:700;color:var(--danger-strong);" id="totalInterestValue"></div>
+                        <div data-i18n="totalInterest" class="st-1">Total Interest</div>
+                        <div id="totalInterestValue" class="st-15"></div>
                     </div>
                 </div>
             </div>
 
             <!-- Chart Container -->
-            <div class="chart-container" id="chartContainer" style="display:none;">
+            <div class="chart-container hidden" id="chartContainer">
                 <canvas id="mortgageChart"></canvas>
             </div>
         </div>

@@ -120,13 +120,13 @@
             <h2 data-i18n="dateCalcTitle">日期计算器</h2>
 
             <!-- 模式切换 -->
-            <div style="display:flex;gap:12px;margin-bottom:24px;justify-content:center;">
-                <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:8px 16px;border:2px solid var(--primary);border-radius:var(--radius);font-weight:600;font-size:0.95rem;background:var(--primary-light);color:var(--primary);" id="modeALabel">
-                    <input type="radio" name="calcMode" value="A" checked data-csp-change="toggleMode" style="accent-color:var(--primary);">
+            <div class="st-46">
+                <label id="modeALabel" class="st-47">
+                    <input type="radio" name="calcMode" value="A" checked data-csp-change="toggleMode" class="st-24">
                     <span data-i18n="modeA">日期推算</span>
                 </label>
-                <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:8px 16px;border:2px solid var(--border);border-radius:var(--radius);font-weight:500;font-size:0.95rem;background:var(--bg-card);color:var(--text-secondary);" id="modeBLabel">
-                    <input type="radio" name="calcMode" value="B" data-csp-change="toggleMode" style="accent-color:var(--primary);">
+                <label id="modeBLabel" class="st-48">
+                    <input type="radio" name="calcMode" value="B" data-csp-change="toggleMode" class="st-24">
                     <span data-i18n="modeB">日期差</span>
                 </label>
             </div>
@@ -141,7 +141,7 @@
                     <div class="form-group">
                         <label for="daysInput" data-i18n="daysToAdd">添加天数</label>
                         <input type="number" id="daysInput" value="0" step="1">
-                        <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">支持负数（往前推算）</div>
+                        <div class="st-25">支持负数（往前推算）</div>
                     </div>
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary" data-csp-click="calcModeA" data-i18n="calculate">开始计算</button>
@@ -150,7 +150,7 @@
                 </div>
 
                 <!-- 模式 B 字段 -->
-                <div id="modeBFields" style="display:none;">
+                <div id="modeBFields" class="hidden">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="startDateB" data-i18n="startDate">开始日期</label>
@@ -169,23 +169,23 @@
             </form>
 
             <!-- 结果区域 -->
-            <div id="resultArea" class="result-card" style="display:none;">
+            <div id="resultArea" class="result-card hidden">
                 <h3 data-i18n="result">计算结果</h3>
                 <!-- 模式 A 结果 -->
                 <div id="resultA">
                     <div>
-                        <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="dateResult">目标日期</div>
+                        <div data-i18n="dateResult" class="st-1">目标日期</div>
                         <div class="result-value" id="resultDate"></div>
                     </div>
-                    <div style="margin-top:8px;">
-                        <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="dayOfWeek">星期</div>
-                        <div style="font-size:1.4rem;font-weight:700;margin-top:4px;" id="resultDayOfWeek"></div>
+                    <div class="st-49">
+                        <div data-i18n="dayOfWeek" class="st-1">星期</div>
+                        <div id="resultDayOfWeek" class="st-18"></div>
                     </div>
                 </div>
                 <!-- 模式 B 结果 -->
-                <div id="resultB" style="display:none;">
+                <div id="resultB" class="hidden">
                     <div>
-                        <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="daysDiff">间隔天数</div>
+                        <div data-i18n="daysDiff" class="st-1">间隔天数</div>
                         <div class="result-value" id="resultDaysDiff"></div>
                     </div>
                 </div>

@@ -133,24 +133,24 @@
             </form>
 
             <!-- 结果区域 -->
-            <div id="resultArea" class="result-card" style="display:none;">
+            <div id="resultArea" class="result-card hidden">
                 <h3 data-i18n="result">计算结果</h3>
-                <div style="margin-bottom:8px;">
-                    <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="bmiValue">BMI 指数</div>
+                <div class="st-13">
+                    <div data-i18n="bmiValue" class="st-1">BMI 指数</div>
                     <div class="result-value" id="bmiValue"></div>
                 </div>
                 <div>
-                    <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="bmiCategory">体型分类</div>
-                    <div style="font-size:1.4rem;font-weight:700;margin-top:4px;" id="bmiCategory"></div>
+                    <div data-i18n="bmiCategory" class="st-1">体型分类</div>
+                    <div id="bmiCategory" class="st-18"></div>
                 </div>
-                <div id="adviceArea" style="margin-top:12px;padding-top:12px;border-top:1px solid #bfdbfe;">
-                    <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="healthAdvice">健康建议</div>
-                    <div style="font-size:0.95rem;margin-top:4px;" id="healthAdvice"></div>
+                <div id="adviceArea" class="st-14">
+                    <div data-i18n="healthAdvice" class="st-1">健康建议</div>
+                    <div id="healthAdvice" class="st-42"></div>
                 </div>
             </div>
 
             <!-- 图表容器 -->
-            <div class="chart-container" id="chartContainer" style="display:none;">
+            <div class="chart-container hidden" id="chartContainer">
                 <canvas id="bmiChart"></canvas>
             </div>
         </div>

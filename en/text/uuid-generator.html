@@ -116,10 +116,10 @@
             </div>
 
             <!-- UUID Panel -->
-            <div id="uuidPanel" class="gen-panel" style="display:block;">
-                <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem;flex-wrap:wrap;">
-                    <label style="font-size:0.9rem;">Count:</label>
-                    <select id="uuidCount" style="padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:0.9rem;">
+            <div id="uuidPanel" class="gen-panel st-77">
+                <div class="st-36">
+                    <label class="st-17">Count:</label>
+                    <select id="uuidCount" class="st-37">
                         <option value="1">1</option>
                         <option value="3" selected>3</option>
                         <option value="5">5</option>
@@ -135,10 +135,10 @@
             </div>
 
             <!-- Password Panel -->
-            <div id="passwordPanel" class="gen-panel" style="display:none;">
+            <div id="passwordPanel" class="gen-panel hidden">
                 <div class="pw-options">
                     <div class="pw-length-wrap">
-                        <label style="font-size:0.9rem;">Length:</label>
+                        <label class="st-17">Length:</label>
                         <input type="range" id="pwLength" min="8" max="64" value="16" data-csp-input="updatePwLength">
                         <span class="pw-length-val" id="pwLengthVal">16</span>
                     </div>
@@ -147,9 +147,9 @@
                     <label><input type="checkbox" id="pwDigits" checked> Digits (0-9)</label>
                     <label><input type="checkbox" id="pwSymbols" checked> Symbols (!@#$%^&*)</label>
                 </div>
-                <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem;flex-wrap:wrap;">
-                    <label style="font-size:0.9rem;">Count:</label>
-                    <select id="pwCount" style="padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:0.9rem;">
+                <div class="st-36">
+                    <label class="st-17">Count:</label>
+                    <select id="pwCount" class="st-37">
                         <option value="1" selected>1</option>
                         <option value="3">3</option>
                         <option value="5">5</option>
@@ -170,10 +170,10 @@
                 <p>This tool offers two functions: UUID v4 batch generation and customizable password generation. UUIDs are ideal for database primary keys, session IDs, and distributed system identifiers. The password uuid-generator lets you configure character types and length, and evaluates password strength.</p>
                 <h3>Password Strength Levels</h3>
                 <ul>
-                    <li><strong style="color:var(--success);">Very Strong</strong> — 16+ characters with all 4 character types</li>
-                    <li><strong style="color:var(--strength-strong);">Strong</strong> — 12-15 characters with at least 3 types</li>
-                    <li><strong style="color:var(--strength-fair);">Fair</strong> — 8-11 characters with at least 2 types</li>
-                    <li><strong style="color:var(--danger);">Weak</strong> — Less than 8 characters or only 1 type</li>
+                    <li><strong class="st-35">Very Strong</strong> — 16+ characters with all 4 character types</li>
+                    <li><strong class="st-78">Strong</strong> — 12-15 characters with at least 3 types</li>
+                    <li><strong class="st-79">Fair</strong> — 8-11 characters with at least 2 types</li>
+                    <li><strong class="st-10">Weak</strong> — Less than 8 characters or only 1 type</li>
                 </ul>
             </div>
         </div>

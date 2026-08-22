@@ -126,15 +126,15 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" id="excludeWeekends" checked> 排除周六日（默认）</label>
+                    <label class="st-33"><input type="checkbox" id="excludeWeekends" checked> 排除周六日（默认）</label>
                 </div>
                 <div class="form-group">
-                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" id="excludeHoliday"> 排除 2026 年法定节假日（可编辑）</label>
+                    <label class="st-33"><input type="checkbox" id="excludeHoliday"> 排除 2026 年法定节假日（可编辑）</label>
                 </div>
                 <div class="form-group">
                     <label for="holidayList">自定义节假日（每行一个日期，格式 YYYY-MM-DD）</label>
-                    <textarea id="holidayList" rows="4" placeholder="例如：&#10;2026-10-01&#10;2026-10-02" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:0.95rem;background:var(--bg-card);color:var(--text-primary);resize:vertical;"></textarea>
-                    <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">节假日安排以国务院办公厅公布为准，如有调整请在下方手动增删。</div>
+                    <textarea id="holidayList" rows="4" placeholder="例如：&#10;2026-10-01&#10;2026-10-02" class="st-65"></textarea>
+                    <div class="st-25">节假日安排以国务院办公厅公布为准，如有调整请在下方手动增删。</div>
                 </div>
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary" id="calcBtn" data-i18n="calculate">开始计算</button>
@@ -143,30 +143,30 @@
             </form>
 
             <!-- 结果区域 -->
-            <div id="resultArea" class="result-card" style="display:none;">
+            <div id="resultArea" class="result-card hidden">
                 <h3 data-i18n="result">计算结果</h3>
-                <div style="margin-bottom:12px;">
-                    <div style="font-size:0.85rem;color:var(--text-secondary);">工作日天数</div>
+                <div class="st-8">
+                    <div class="st-1">工作日天数</div>
                     <div class="result-value" id="workdayCount"></div>
                 </div>
-                <div class="form-row" style="margin-bottom:8px;">
+                <div class="form-row st-13">
                     <div class="form-group">
-                        <div style="font-size:0.85rem;color:var(--text-secondary);">总日历天数</div>
-                        <div style="font-size:1.3rem;font-weight:700;margin-top:4px;" id="totalDays"></div>
+                        <div class="st-1">总日历天数</div>
+                        <div id="totalDays" class="st-6"></div>
                     </div>
                     <div class="form-group">
-                        <div style="font-size:0.85rem;color:var(--text-secondary);">周末天数</div>
-                        <div style="font-size:1.3rem;font-weight:700;margin-top:4px;" id="weekendDays"></div>
+                        <div class="st-1">周末天数</div>
+                        <div id="weekendDays" class="st-6"></div>
                     </div>
                     <div class="form-group">
-                        <div style="font-size:0.85rem;color:var(--text-secondary);">排除节假日数</div>
-                        <div style="font-size:1.3rem;font-weight:700;margin-top:4px;" id="holidayCount"></div>
+                        <div class="st-1">排除节假日数</div>
+                        <div id="holidayCount" class="st-6"></div>
                     </div>
                 </div>
-                <div id="holidayDetail" style="display:none;margin-bottom:10px;padding:10px 12px;background:var(--primary-light);border-radius:var(--radius);font-size:0.9rem;">
-                    <span style="color:var(--text-secondary);">排除的节假日：</span><span id="holidayDetailList"></span>
+                <div id="holidayDetail" class="st-66">
+                    <span class="st-67">排除的节假日：</span><span id="holidayDetailList"></span>
                 </div>
-                <div style="padding-top:10px;border-top:1px solid #bfdbfe;font-size:0.85rem;color:var(--text-secondary);" id="resultNote"></div>
+                <div id="resultNote" class="st-68"></div>
             </div>
         </div>
 

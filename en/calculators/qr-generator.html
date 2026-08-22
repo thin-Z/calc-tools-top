@@ -117,14 +117,14 @@
         
 
         <div class="tool-form">
-            <div class="form-group"><label>Content</label><input type="text" id="qrText" placeholder="Enter text or URL" style="width:100%;"></div>
+            <div class="form-group"><label>Content</label><input type="text" id="qrText" placeholder="Enter text or URL" class="st-57"></div>
             <div class="form-group"><label>Size</label><select id="qrSize"><option value="small">Small (200×200)</option><option value="medium" selected>Medium (300×300)</option><option value="large">Large (400×400)</option></select></div>
             <div class="form-group"><label>Error Correction</label><select id="qrECLevel"><option value="L">L - Low (7%)</option><option value="M" selected>M - Medium (15%)</option><option value="Q">Q - Quartile (25%)</option><option value="H">H - High (30%)</option></select></div>
             <div class="form-actions"><button type="button" class="btn btn-primary" data-csp-click="doCalculate">Generate</button><button type="reset" class="btn btn-secondary" data-csp-click="resetForm">Reset</button></div>
         </div>
 
-        <div class="result-card" id="resultArea" style="display:none;">
-            <div style="text-align:center;padding:1rem;">
+        <div class="result-card hidden" id="resultArea">
+            <div class="st-2">
                 <div id="qrcode"></div>
                 <br>
                 <button type="button" class="btn btn-primary" id="downloadQR">Download PNG</button>

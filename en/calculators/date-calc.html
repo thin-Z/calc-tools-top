@@ -122,13 +122,13 @@
             <h2 data-i18n="dateCalcTitle">Date Calculator</h2>
 
             <!-- Mode Switch -->
-            <div style="display:flex;gap:12px;margin-bottom:24px;justify-content:center;">
-                <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:8px 16px;border:2px solid var(--primary);border-radius:var(--radius);font-weight:600;font-size:0.95rem;background:var(--primary-light);color:var(--primary);" id="modeALabel">
-                    <input type="radio" name="calcMode" value="A" checked data-csp-change="toggleMode" style="accent-color:var(--primary);">
+            <div class="st-46">
+                <label id="modeALabel" class="st-47">
+                    <input type="radio" name="calcMode" value="A" checked data-csp-change="toggleMode" class="st-24">
                     <span data-i18n="modeA">Date Arithmetic</span>
                 </label>
-                <label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:8px 16px;border:2px solid var(--border);border-radius:var(--radius);font-weight:500;font-size:0.95rem;background:var(--bg-card);color:var(--text-secondary);" id="modeBLabel">
-                    <input type="radio" name="calcMode" value="B" data-csp-change="toggleMode" style="accent-color:var(--primary);">
+                <label id="modeBLabel" class="st-48">
+                    <input type="radio" name="calcMode" value="B" data-csp-change="toggleMode" class="st-24">
                     <span data-i18n="modeB">Date Difference</span>
                 </label>
             </div>
@@ -143,7 +143,7 @@
                     <div class="form-group">
                         <label for="daysInput" data-i18n="daysToAdd">Days to Add</label>
                         <input type="number" id="daysInput" value="0" step="1">
-                        <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">Negative numbers accepted (count backwards)</div>
+                        <div class="st-25">Negative numbers accepted (count backwards)</div>
                     </div>
                     <div class="btn-group">
                         <button type="button" class="btn btn-primary" data-csp-click="calcModeA" data-i18n="calculate">Calculate</button>
@@ -152,7 +152,7 @@
                 </div>
 
                 <!-- Mode B Fields -->
-                <div id="modeBFields" style="display:none;">
+                <div id="modeBFields" class="hidden">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="startDateB" data-i18n="startDate">Start Date</label>
@@ -171,23 +171,23 @@
             </form>
 
             <!-- Result Area -->
-            <div id="resultArea" class="result-card" style="display:none;">
+            <div id="resultArea" class="result-card hidden">
                 <h3 data-i18n="result">Result</h3>
                 <!-- Mode A Result -->
                 <div id="resultA">
                     <div>
-                        <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="dateResult">Result Date</div>
+                        <div data-i18n="dateResult" class="st-1">Result Date</div>
                         <div class="result-value" id="resultDate"></div>
                     </div>
-                    <div style="margin-top:8px;">
-                        <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="dayOfWeek">Day of Week</div>
-                        <div style="font-size:1.4rem;font-weight:700;margin-top:4px;" id="resultDayOfWeek"></div>
+                    <div class="st-49">
+                        <div data-i18n="dayOfWeek" class="st-1">Day of Week</div>
+                        <div id="resultDayOfWeek" class="st-18"></div>
                     </div>
                 </div>
                 <!-- Mode B Result -->
-                <div id="resultB" style="display:none;">
+                <div id="resultB" class="hidden">
                     <div>
-                        <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="daysDiff">Days Difference</div>
+                        <div data-i18n="daysDiff" class="st-1">Days Difference</div>
                         <div class="result-value" id="resultDaysDiff"></div>
                     </div>
                 </div>

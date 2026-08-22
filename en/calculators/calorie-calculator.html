@@ -118,9 +118,9 @@
             <form id="calorieForm" data-csp-submit="prevent">
                 <div class="form-group">
                     <label>Gender</label>
-                    <div style="display:flex;gap:1rem;margin-top:0.3rem;">
-                        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="radio" name="gender" value="male" id="genderMale" checked> Male</label>
-                        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="radio" name="gender" value="female"> Female</label>
+                    <div class="st-19">
+                        <label class="st-20"><input type="radio" name="gender" value="male" id="genderMale" checked> Male</label>
+                        <label class="st-20"><input type="radio" name="gender" value="female"> Female</label>
                     </div>
                 </div>
                 <div class="form-row">
@@ -154,34 +154,34 @@
             </form>
 
             <!-- Result Area -->
-            <div id="resultArea" class="result-card" style="display:none;">
+            <div id="resultArea" class="result-card hidden">
                 <h3 data-i18n="result">Result</h3>
-                <div style="margin-bottom:12px;">
-                    <div style="font-size:0.85rem;color:var(--text-secondary);">Daily Maintenance Calories (TDEE)</div>
+                <div class="st-8">
+                    <div class="st-1">Daily Maintenance Calories (TDEE)</div>
                     <div class="result-value" id="tdeeValue"></div>
-                    <div style="font-size:0.85rem;color:var(--text-secondary);" id="activityName"></div>
+                    <div id="activityName" class="st-1"></div>
                 </div>
-                <div class="form-row" style="margin-bottom:8px;">
+                <div class="form-row st-13">
                     <div class="form-group">
-                        <div style="font-size:0.85rem;color:var(--text-secondary);">BMR (Mifflin-St Jeor)</div>
-                        <div style="font-size:1.3rem;font-weight:700;margin-top:4px;"><span id="bmrMifflin"></span> kcal</div>
+                        <div class="st-1">BMR (Mifflin-St Jeor)</div>
+                        <div class="st-6"><span id="bmrMifflin"></span> kcal</div>
                     </div>
                     <div class="form-group">
-                        <div style="font-size:0.85rem;color:var(--text-secondary);">BMR (Harris-Benedict)</div>
-                        <div style="font-size:1.3rem;font-weight:700;margin-top:4px;"><span id="bmrHarris"></span> kcal</div>
+                        <div class="st-1">BMR (Harris-Benedict)</div>
+                        <div class="st-6"><span id="bmrHarris"></span> kcal</div>
                     </div>
                 </div>
-                <div style="margin-top:12px;padding-top:12px;border-top:1px solid #bfdbfe;">
-                    <div style="font-size:0.85rem;color:var(--text-secondary);">Weight Loss Range (daily intake)</div>
-                    <div style="font-size:1.2rem;font-weight:700;margin-top:4px;color:var(--success);" id="loseRange"></div>
-                    <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:2px;">About 0.25-0.5 kg per week; avoid going below BMR</div>
+                <div class="st-14">
+                    <div class="st-1">Weight Loss Range (daily intake)</div>
+                    <div id="loseRange" class="st-43"></div>
+                    <div class="st-21">About 0.25-0.5 kg per week; avoid going below BMR</div>
                 </div>
-                <div style="margin-top:12px;padding-top:12px;border-top:1px solid #bfdbfe;">
-                    <div style="font-size:0.85rem;color:var(--text-secondary);">Muscle Gain Range (daily intake)</div>
-                    <div style="font-size:1.2rem;font-weight:700;margin-top:4px;color:var(--primary);" id="gainRange"></div>
-                    <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:2px;">Combine with resistance training for about 0.25-0.5 kg gain per week</div>
+                <div class="st-14">
+                    <div class="st-1">Muscle Gain Range (daily intake)</div>
+                    <div id="gainRange" class="st-44"></div>
+                    <div class="st-21">Combine with resistance training for about 0.25-0.5 kg gain per week</div>
                 </div>
-                <div style="margin-top:12px;padding-top:12px;border-top:1px solid #bfdbfe;font-size:0.8rem;color:var(--text-secondary);">
+                <div class="st-45">
                     Formula source: Mifflin MD, St Jeor ST, et al. A new predictive equation for resting energy expenditure in healthy individuals. Am J Clin Nutr. 1990. Results are for reference only and are not medical advice.
                 </div>
             </div>

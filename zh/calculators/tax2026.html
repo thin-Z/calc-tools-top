@@ -135,30 +135,30 @@
             </form>
 
             <!-- 结果区域 -->
-            <div id="resultArea" class="result-card" style="display:none;">
+            <div id="resultArea" class="result-card hidden">
                 <h3 data-i18n="result">计算结果</h3>
-                <div class="form-row" style="margin-top:12px;grid-template-columns:1fr 1fr;">
+                <div class="form-row st-59">
                     <div>
-                        <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="taxableIncome">应纳税所得额</div>
-                        <div style="font-size:1.1rem;font-weight:700;color:var(--text);" id="taxableIncomeValue"></div>
+                        <div data-i18n="taxableIncome" class="st-1">应纳税所得额</div>
+                        <div id="taxableIncomeValue" class="st-32"></div>
                     </div>
                     <div>
-                        <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="taxRate">适用税率</div>
-                        <div style="font-size:1.1rem;font-weight:700;color:var(--text);" id="taxRateValue"></div>
+                        <div data-i18n="taxRate" class="st-1">适用税率</div>
+                        <div id="taxRateValue" class="st-32"></div>
                     </div>
                 </div>
-                <div style="margin-top:16px;">
-                    <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="taxPayable">应缴个税</div>
-                    <div style="font-size:1.3rem;font-weight:700;color:var(--danger-strong);" id="taxPayableValue"></div>
+                <div class="st-60">
+                    <div data-i18n="taxPayable" class="st-1">应缴个税</div>
+                    <div id="taxPayableValue" class="st-15"></div>
                 </div>
-                <div style="margin-top:16px;padding-top:16px;border-top:1px solid #bfdbfe;">
-                    <div style="font-size:0.85rem;color:var(--text-secondary);" data-i18n="afterTax">税后月薪</div>
-                    <div style="font-size:2rem;font-weight:700;color:var(--primary);" id="afterTaxValue"></div>
+                <div class="st-61">
+                    <div data-i18n="afterTax" class="st-1">税后月薪</div>
+                    <div id="afterTaxValue" class="st-62"></div>
                 </div>
             </div>
 
             <!-- 图表容器 -->
-            <div class="chart-container" id="chartContainer" style="display:none;">
+            <div class="chart-container hidden" id="chartContainer">
                 <canvas id="taxChart"></canvas>
             </div>
         </div>

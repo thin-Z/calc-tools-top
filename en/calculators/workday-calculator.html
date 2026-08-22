@@ -127,15 +127,15 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" id="excludeWeekends" checked> Exclude weekends (default)</label>
+                    <label class="st-33"><input type="checkbox" id="excludeWeekends" checked> Exclude weekends (default)</label>
                 </div>
                 <div class="form-group">
-                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;"><input type="checkbox" id="excludeHoliday"> Exclude 2026 public holidays (editable)</label>
+                    <label class="st-33"><input type="checkbox" id="excludeHoliday"> Exclude 2026 public holidays (editable)</label>
                 </div>
                 <div class="form-group">
                     <label for="holidayList">Custom holidays (one date per line, YYYY-MM-DD)</label>
-                    <textarea id="holidayList" rows="4" placeholder="e.g.&#10;2026-10-01&#10;2026-10-02" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:0.95rem;background:var(--bg-card);color:var(--text-primary);resize:vertical;"></textarea>
-                    <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">Holiday schedules follow official announcements; edit the list manually if they change.</div>
+                    <textarea id="holidayList" rows="4" placeholder="e.g.&#10;2026-10-01&#10;2026-10-02" class="st-65"></textarea>
+                    <div class="st-25">Holiday schedules follow official announcements; edit the list manually if they change.</div>
                 </div>
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary" id="calcBtn" data-i18n="calculate">Calculate</button>
@@ -144,30 +144,30 @@
             </form>
 
             <!-- Result Area -->
-            <div id="resultArea" class="result-card" style="display:none;">
+            <div id="resultArea" class="result-card hidden">
                 <h3 data-i18n="result">Result</h3>
-                <div style="margin-bottom:12px;">
-                    <div style="font-size:0.85rem;color:var(--text-secondary);">Working Days</div>
+                <div class="st-8">
+                    <div class="st-1">Working Days</div>
                     <div class="result-value" id="workdayCount"></div>
                 </div>
-                <div class="form-row" style="margin-bottom:8px;">
+                <div class="form-row st-13">
                     <div class="form-group">
-                        <div style="font-size:0.85rem;color:var(--text-secondary);">Calendar Days</div>
-                        <div style="font-size:1.3rem;font-weight:700;margin-top:4px;" id="totalDays"></div>
+                        <div class="st-1">Calendar Days</div>
+                        <div id="totalDays" class="st-6"></div>
                     </div>
                     <div class="form-group">
-                        <div style="font-size:0.85rem;color:var(--text-secondary);">Weekend Days</div>
-                        <div style="font-size:1.3rem;font-weight:700;margin-top:4px;" id="weekendDays"></div>
+                        <div class="st-1">Weekend Days</div>
+                        <div id="weekendDays" class="st-6"></div>
                     </div>
                     <div class="form-group">
-                        <div style="font-size:0.85rem;color:var(--text-secondary);">Holidays Excluded</div>
-                        <div style="font-size:1.3rem;font-weight:700;margin-top:4px;" id="holidayCount"></div>
+                        <div class="st-1">Holidays Excluded</div>
+                        <div id="holidayCount" class="st-6"></div>
                     </div>
                 </div>
-                <div id="holidayDetail" style="display:none;margin-bottom:10px;padding:10px 12px;background:var(--primary-light);border-radius:var(--radius);font-size:0.9rem;">
-                    <span style="color:var(--text-secondary);">Holidays excluded: </span><span id="holidayDetailList"></span>
+                <div id="holidayDetail" class="st-66">
+                    <span class="st-67">Holidays excluded: </span><span id="holidayDetailList"></span>
                 </div>
-                <div style="padding-top:10px;border-top:1px solid #bfdbfe;font-size:0.85rem;color:var(--text-secondary);" id="resultNote"></div>
+                <div id="resultNote" class="st-68"></div>
             </div>
         </div>
 

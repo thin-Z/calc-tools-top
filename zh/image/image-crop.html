@@ -115,28 +115,28 @@
             <div class="upload-zone" id="dropZone">
                 <div class="upload-icon">📁</div>
                 <h3>拖拽图片到此处，或点击选择文件</h3><div class="upload-btn">📁 选择文件</div>
-                <div class="upload-formats"><span class="format-badge">JPG</span><span class="format-badge">PNG</span><span class="format-badge">WebP</span><span class="format-badge">BMP</span><span class="format-badge">GIF</span></div><p style="margin-top:10px;margin-bottom:0;font-size:0.8rem;color:var(--text-tertiary);">最大 50MB · 浏览器本地处理</p>
+                <div class="upload-formats"><span class="format-badge">JPG</span><span class="format-badge">PNG</span><span class="format-badge">WebP</span><span class="format-badge">BMP</span><span class="format-badge">GIF</span></div><p class="st-5">最大 50MB · 浏览器本地处理</p>
                 <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/bmp,image/gif">
             </div>
-            <div class="preview-container visible" id="cropStage" style="display:none;">
+            <div class="preview-container visible hidden" id="cropStage">
                 <div class="preview-card">
                     <h3>拖拽裁剪框</h3>
-                    <div class="preview-area" style="justify-content:center;">
-                        <canvas id="cropCanvas" style="max-width:100%;height:auto;cursor:crosshair;border:1px solid var(--border);border-radius:var(--radius);"></canvas>
+                    <div class="preview-area st-69">
+                        <canvas id="cropCanvas" class="st-70"></canvas>
                     </div>
                     <div class="file-info" id="fileInfo"></div>
-                    <div style="font-size:0.8rem;color:var(--text-secondary);margin-top:6px;">提示：拖动裁剪框移动位置，拖动四角/四边手柄调整大小，在框外拖拽可新建选框。</div>
+                    <div class="st-71">提示：拖动裁剪框移动位置，拖动四角/四边手柄调整大小，在框外拖拽可新建选框。</div>
                 </div>
             </div>
             <div class="tool-controls">
                 <h3>裁剪设置</h3>
                 <div class="control-group">
                     <label>比例锁定</label>
-                    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;">
-                        <label style="display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="radio" name="cropRatio" value="free" checked> 自由</label>
-                        <label style="display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="radio" name="cropRatio" value="1:1"> 1:1</label>
-                        <label style="display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="radio" name="cropRatio" value="4:3"> 4:3</label>
-                        <label style="display:flex;align-items:center;gap:4px;cursor:pointer;"><input type="radio" name="cropRatio" value="16:9"> 16:9</label>
+                    <div class="st-72">
+                        <label class="st-9"><input type="radio" name="cropRatio" value="free" checked> 自由</label>
+                        <label class="st-9"><input type="radio" name="cropRatio" value="1:1"> 1:1</label>
+                        <label class="st-9"><input type="radio" name="cropRatio" value="4:3"> 4:3</label>
+                        <label class="st-9"><input type="radio" name="cropRatio" value="16:9"> 16:9</label>
                     </div>
                 </div>
                 <div class="btn-group">
@@ -144,7 +144,7 @@
                     <button class="btn btn-secondary" id="resetBtn">重置</button>
                 </div>
             </div>
-            <div class="result-summary visible" id="resultArea" style="display:none;">
+            <div class="result-summary visible hidden" id="resultArea">
                 <h3>裁剪结果</h3>
                 <div class="result-stats">
                     <div class="stat-item"><div class="stat-label">裁剪尺寸</div><div class="stat-value" id="cropDims">-</div></div>
