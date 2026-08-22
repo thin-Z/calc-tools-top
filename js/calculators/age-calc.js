@@ -26,11 +26,11 @@ function doCalculate() {
     document.getElementById('totalDays').textContent = r.totalDays.toLocaleString();
     document.getElementById('zodiac').textContent = r.zodiac;
     document.getElementById('nextBirthday').textContent = r.daysToBirthday;
-    area.style.display = 'block';
+    area.classList.remove('hidden');
 }
 
 function resetForm() {
     document.getElementById('birthDate').value = '';
     document.getElementById('name').value = '';
-    document.getElementById('resultArea').style.display = 'none';
+    document.getElementById('resultArea').classList.add('hidden');
 }

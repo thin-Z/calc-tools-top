@@ -24,12 +24,12 @@ function doCalculate() {
     document.getElementById('fertileEnd').textContent = fmt(fertileEnd);
     document.getElementById('nextPeriod').textContent = fmt(nextPeriod);
     document.getElementById('cycleDisplay').textContent = cycle + '天';
-    document.getElementById('resultArea').style.display = 'block';
+    document.getElementById('resultArea').classList.remove('hidden');
 }
 
 function resetForm() {
     document.getElementById('lastPeriod').value = '';
     document.getElementById('cycleDays').value = '28';
     document.getElementById('periodDays').value = '5';
-    document.getElementById('resultArea').style.display = 'none';
+    document.getElementById('resultArea').classList.add('hidden');
 }

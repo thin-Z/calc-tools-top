@@ -15,7 +15,7 @@ function doCalculate() {
     document.getElementById('weekendPay').textContent = weekendPay.toFixed(2);
     document.getElementById('holidayPay').textContent = holidayPay.toFixed(2);
     document.getElementById('totalOvertimePay').textContent = total.toFixed(2);
-    document.getElementById('resultArea').style.display = 'block';
+    document.getElementById('resultArea').classList.remove('hidden');
 }
 
 function resetForm() {
@@ -23,5 +23,5 @@ function resetForm() {
     document.getElementById('weekdayOvertime').value = '0';
     document.getElementById('weekendOvertime').value = '0';
     document.getElementById('holidayOvertime').value = '0';
-    document.getElementById('resultArea').style.display = 'none';
+    document.getElementById('resultArea').classList.add('hidden');
 }

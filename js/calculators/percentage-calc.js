@@ -35,12 +35,12 @@ function doCalculate() {
     }
     
     document.getElementById('percentResult').innerHTML = result;
-    document.getElementById('resultArea').style.display = 'block';
+    document.getElementById('resultArea').classList.remove('hidden');
 }
 
 function resetForm() {
     document.getElementById('percentVal1').value = '';
     document.getElementById('percentVal2').value = '';
-    document.getElementById('resultArea').style.display = 'none';
+    document.getElementById('resultArea').classList.add('hidden');
     document.getElementById('percentResult').innerHTML = '';
 }

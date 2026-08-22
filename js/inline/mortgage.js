@@ -17,7 +17,7 @@ let chartInstance = null;
             const labels = i18n[lang];
 
             const resultArea = document.getElementById('resultArea');
-            resultArea.style.display = 'block';
+            resultArea.classList.remove('hidden');
 
             const monthlyLabel = document.getElementById('monthlyLabel');
             const monthlyValue = document.getElementById('monthlyValue');
@@ -35,7 +35,7 @@ let chartInstance = null;
 
             // Pie chart
             const chartContainer = document.getElementById('chartContainer');
-            chartContainer.style.display = 'block';
+            chartContainer.classList.remove('hidden');
 
             if (chartInstance) {
                 chartInstance.destroy();
@@ -72,8 +72,8 @@ let chartInstance = null;
             document.getElementById('annualRate').value = 3.85;
             document.getElementById('loanYears').value = 30;
             document.getElementById('repaymentMethod').value = 'equal-payment';
-            document.getElementById('resultArea').style.display = 'none';
-            document.getElementById('chartContainer').style.display = 'none';
+            document.getElementById('resultArea').classList.add('hidden');
+            document.getElementById('chartContainer').classList.add('hidden');
             if (chartInstance) {
                 chartInstance.destroy();
                 chartInstance = null;

@@ -20,7 +20,7 @@ let chartInstance = null;
             const labels = i18n[lang];
 
             const resultArea = document.getElementById("resultArea");
-            resultArea.style.display = "block";
+            resultArea.classList.remove('hidden');
 
             document.getElementById("taxableIncomeValue").textContent = '¥' + formatNumber(result.taxableIncome);
             document.getElementById("taxRateValue").textContent = formatRate(result.taxRate);
@@ -29,7 +29,7 @@ let chartInstance = null;
 
             // Bar chart
             const chartContainer = document.getElementById("chartContainer");
-            chartContainer.style.display = "block";
+            chartContainer.classList.remove('hidden');
 
             if (chartInstance) {
                 chartInstance.destroy();
@@ -69,8 +69,8 @@ let chartInstance = null;
             document.getElementById("salary").value = 15000;
             document.getElementById("insurance").value = 2000;
             document.getElementById("specialDeduction").value = 2000;
-            document.getElementById("resultArea").style.display = "none";
-            document.getElementById("chartContainer").style.display = "none";
+            document.getElementById('resultArea').classList.add('hidden');
+            document.getElementById('chartContainer').classList.add('hidden');
             if (chartInstance) {
                 chartInstance.destroy();
                 chartInstance = null;

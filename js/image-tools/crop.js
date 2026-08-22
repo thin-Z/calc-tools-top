@@ -155,9 +155,9 @@
 
         var dz = document.getElementById('dropZone');
         if (dz) dz.style.display = 'none';
-        document.getElementById('cropStage').style.display = 'block';
+        document.getElementById('cropStage').classList.remove('hidden');
         document.getElementById('fileInfo').textContent = formatFileSize(state.file.size) + ' · ' + state.naturalW + ' × ' + state.naturalH + 'px';
-        document.getElementById('resultArea').style.display = 'none';
+        document.getElementById('resultArea').classList.add('hidden');
 
         // 若有比例锁定，应用一次
         var checked = document.querySelector('input[name="cropRatio"]:checked');
@@ -425,7 +425,7 @@
         document.getElementById('cropDims').textContent = sw + ' × ' + sh + 'px';
 
         var resultArea = document.getElementById('resultArea');
-        resultArea.style.display = 'block';
+        resultArea.classList.remove('hidden');
         resultArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
@@ -472,8 +472,8 @@
 
         var dz = document.getElementById('dropZone');
         if (dz) dz.style.display = '';
-        document.getElementById('cropStage').style.display = 'none';
-        document.getElementById('resultArea').style.display = 'none';
+        document.getElementById('cropStage').classList.add('hidden');
+        document.getElementById('resultArea').classList.add('hidden');
         if (canvas) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }

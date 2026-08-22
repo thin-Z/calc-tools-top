@@ -102,7 +102,7 @@
                 if (dz) dz.style.display = 'none';
 
                 var pc = document.getElementById('pickerContainer');
-                if (pc) { pc.style.display = 'block'; }
+                if (pc) { pc.classList.remove('hidden'); }
 
                 var fi = document.getElementById('fileInfo');
                 if (fi) fi.textContent = img.width + ' x ' + img.height + 'px | ' + file.name;
@@ -111,7 +111,7 @@
                 if (rb) rb.disabled = false;
 
                 var ci = document.getElementById('colorInfo');
-                if (ci) ci.style.display = 'none';
+                if (ci) ci.classList.add('hidden');
             };
             img.src = e.target.result;
         };
@@ -138,7 +138,7 @@
         if (hslv) hslv.textContent = hsl;
 
         var ci = document.getElementById('colorInfo');
-        if (ci) ci.style.display = 'block';
+        if (ci) ci.classList.remove('hidden');
     }
 
     function rgbToHex(r, g, b) {
@@ -171,9 +171,9 @@
         var dz = document.getElementById('dropZone');
         if (dz) dz.style.display = '';
         var pc = document.getElementById('pickerContainer');
-        if (pc) pc.style.display = 'none';
+        if (pc) pc.classList.add('hidden');
         var ci = document.getElementById('colorInfo');
-        if (ci) ci.style.display = 'none';
+        if (ci) ci.classList.add('hidden');
         var rb = document.getElementById('resetBtn');
         if (rb) rb.disabled = true;
     }

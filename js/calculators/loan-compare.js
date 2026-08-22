@@ -28,7 +28,7 @@ function doCalculate() {
     document.getElementById('plan2Interest').textContent = r2.interest.toFixed(2);
     document.getElementById('diffMonthly').textContent = diffMonthly.toFixed(2);
     document.getElementById('diffInterest').textContent = diffInterest.toFixed(2);
-    document.getElementById('resultArea').style.display = 'block';
+    document.getElementById('resultArea').classList.remove('hidden');
 }
 
 function resetForm() {
@@ -36,5 +36,5 @@ function resetForm() {
     document.getElementById('rate1').value = '3.85';
     document.getElementById('rate2').value = '4.2';
     document.getElementById('loanYears').value = '30';
-    document.getElementById('resultArea').style.display = 'none';
+    document.getElementById('resultArea').classList.add('hidden');
 }

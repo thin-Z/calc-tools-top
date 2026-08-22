@@ -15,14 +15,14 @@ let chartInstance = null;
             const lang = getLang();
             const labels = i18n[lang];
 
-            document.getElementById('resultArea').style.display = 'block';
+            document.getElementById('resultArea').classList.remove('hidden');
             document.getElementById('monthlyValue').textContent = '¥' + formatNumber(result.monthlyPayment);
             document.getElementById('totalPaymentValue').textContent = '¥' + formatNumber(result.totalPayment);
             document.getElementById('totalInterestValue').textContent = '¥' + formatNumber(result.totalInterest);
 
             // Pie chart
             const chartContainer = document.getElementById('chartContainer');
-            chartContainer.style.display = 'block';
+            chartContainer.classList.remove('hidden');
 
             if (chartInstance) {
                 chartInstance.destroy();
@@ -58,8 +58,8 @@ let chartInstance = null;
             document.getElementById('fundAmount').value = 800000;
             document.getElementById('fundRate').value = 2.85;
             document.getElementById('fundYears').value = 30;
-            document.getElementById('resultArea').style.display = 'none';
-            document.getElementById('chartContainer').style.display = 'none';
+            document.getElementById('resultArea').classList.add('hidden');
+            document.getElementById('chartContainer').classList.add('hidden');
             if (chartInstance) {
                 chartInstance.destroy();
                 chartInstance = null;

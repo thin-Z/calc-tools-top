@@ -18,12 +18,12 @@ function doCalculate() {
     document.getElementById('bmiIdealWeight').textContent = bmiIdeal.toFixed(1);
     document.getElementById('devineWeight').textContent = devine.toFixed(1);
     document.getElementById('normalRange').textContent = `${minNormal.toFixed(1)} - ${maxNormal.toFixed(1)}`;
-    document.getElementById('resultArea').style.display = 'block';
+    document.getElementById('resultArea').classList.remove('hidden');
 }
 
 function resetForm() {
     document.getElementById('height').value = '';
     document.getElementById('age').value = '30';
     document.querySelector('input[name="gender"][value="male"]').checked = true;
-    document.getElementById('resultArea').style.display = 'none';
+    document.getElementById('resultArea').classList.add('hidden');
 }

@@ -37,7 +37,7 @@ function doURLConvert() {
     var resultSection = document.getElementById('resultSection');
     var errorSection = document.getElementById('errorSection');
 
-    resultSection.style.display = 'none';
+    resultSection.classList.add('hidden');
     errorSection.style.display = 'none';
 
     if (!text.trim()) {
@@ -52,7 +52,7 @@ function doURLConvert() {
             result = decodeURL(text);
         }
         resultArea.textContent = result;
-        resultSection.style.display = 'block';
+        resultSection.classList.remove('hidden');
     } catch (e) {
         document.getElementById('errorMsg').textContent = e.message || 'Decode failed: Input is not a valid URL-encoded string';
         errorSection.style.display = 'block';
@@ -97,7 +97,7 @@ function copyURLResult() {
 function clearURLTool() {
     document.getElementById('urlInput').value = '';
     document.getElementById('resultArea').textContent = '';
-    document.getElementById('resultSection').style.display = 'none';
+    document.getElementById('resultSection').classList.add('hidden');
     document.getElementById('errorSection').style.display = 'none';
 }
 

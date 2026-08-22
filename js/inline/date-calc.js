@@ -7,7 +7,7 @@ function toggleMode() {
 
             if (mode === 'A') {
                 modeAFields.style.display = 'block';
-                modeBFields.style.display = 'none';
+                modeBFields.classList.add('hidden');
                 labelA.style.borderColor = 'var(--primary)';
                 labelA.style.background = 'var(--primary-light)';
                 labelA.style.color = 'var(--primary)';
@@ -18,7 +18,7 @@ function toggleMode() {
                 labelB.style.fontWeight = '500';
             } else {
                 modeAFields.style.display = 'none';
-                modeBFields.style.display = 'block';
+                modeBFields.classList.remove('hidden');
                 labelB.style.borderColor = 'var(--primary)';
                 labelB.style.background = 'var(--primary-light)';
                 labelB.style.color = 'var(--primary)';
@@ -28,7 +28,7 @@ function toggleMode() {
                 labelA.style.color = 'var(--text-secondary)';
                 labelA.style.fontWeight = '500';
             }
-            document.getElementById('resultArea').style.display = 'none';
+            document.getElementById('resultArea').classList.add('hidden');
         }
 
         function calcModeA() {
@@ -52,8 +52,8 @@ function toggleMode() {
             document.getElementById('resultDate').textContent = result;
             document.getElementById('resultDayOfWeek').textContent = dowText;
             document.getElementById('resultA').style.display = 'block';
-            document.getElementById('resultB').style.display = 'none';
-            document.getElementById('resultArea').style.display = 'block';
+            document.getElementById('resultB').classList.add('hidden');
+            document.getElementById('resultArea').classList.remove('hidden');
         }
 
         function calcModeB() {
@@ -68,8 +68,8 @@ function toggleMode() {
             const diff = daysBetween(startDate, endDate);
             document.getElementById('resultDaysDiff').textContent = diff + ' ' + (getLang() === 'zh' ? '天' : 'days');
             document.getElementById('resultA').style.display = 'none';
-            document.getElementById('resultB').style.display = 'block';
-            document.getElementById('resultArea').style.display = 'block';
+            document.getElementById('resultB').classList.remove('hidden');
+            document.getElementById('resultArea').classList.remove('hidden');
         }
 
         function resetForm() {
@@ -78,7 +78,7 @@ function toggleMode() {
             document.getElementById('daysInput').value = 0;
             document.getElementById('startDateB').value = today;
             document.getElementById('endDate').value = today;
-            document.getElementById('resultArea').style.display = 'none';
+            document.getElementById('resultArea').classList.add('hidden');
         }
 
         // Auto-set today on page load

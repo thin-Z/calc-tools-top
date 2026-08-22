@@ -8,11 +8,11 @@ function doCalculate() {
     document.getElementById('finalPrice').textContent = finalPrice.toFixed(2);
     document.getElementById('savedAmount').textContent = saved.toFixed(2);
     document.getElementById('discountPercent').textContent = discount + '%';
-    document.getElementById('resultArea').style.display = 'block';
+    document.getElementById('resultArea').classList.remove('hidden');
 }
 
 function resetForm() {
     document.getElementById('originalPrice').value = '';
     document.getElementById('discountRate').value = '';
-    document.getElementById('resultArea').style.display = 'none';
+    document.getElementById('resultArea').classList.add('hidden');
 }

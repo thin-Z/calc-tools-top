@@ -48,7 +48,7 @@ function doConvert() {
     var resultSection = document.getElementById('resultSection');
     var errorSection = document.getElementById('errorSection');
 
-    resultSection.style.display = 'none';
+    resultSection.classList.add('hidden');
     errorSection.style.display = 'none';
 
     if (!text.trim()) {
@@ -63,7 +63,7 @@ function doConvert() {
             result = decodeBase64(text);
         }
         resultArea.textContent = result;
-        resultSection.style.display = 'block';
+        resultSection.classList.remove('hidden');
     } catch (e) {
         document.getElementById('errorMsg').textContent = e.message || '解码失败：输入不是有效的 Base64 编码';
         errorSection.style.display = 'block';
@@ -108,7 +108,7 @@ function copyBase64Result() {
 function clearTool() {
     document.getElementById('textInput').value = '';
     document.getElementById('resultArea').textContent = '';
-    document.getElementById('resultSection').style.display = 'none';
+    document.getElementById('resultSection').classList.add('hidden');
     document.getElementById('errorSection').style.display = 'none';
 }
 

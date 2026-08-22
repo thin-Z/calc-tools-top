@@ -176,10 +176,10 @@ function switchMode(mode) {
     var keywordsArea = document.getElementById('keywordsArea');
     if (mode === 'keywords') {
         if (statsArea) statsArea.style.display = 'none';
-        if (keywordsArea) keywordsArea.style.display = 'block';
+        if (keywordsArea) keywordsArea.classList.remove('hidden');
     } else {
         if (statsArea) statsArea.style.display = 'block';
-        if (keywordsArea) keywordsArea.style.display = 'none';
+        if (keywordsArea) keywordsArea.classList.add('hidden');
     }
     var chips = document.querySelectorAll('.mode-chip');
     for (var i = 0; i < chips.length; i++) {

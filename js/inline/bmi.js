@@ -33,7 +33,7 @@ let chartInstance = null;
 
             // Show result area
             const resultArea = document.getElementById("resultArea");
-            resultArea.style.display = "block";
+            resultArea.classList.remove('hidden');
 
             // BMI value
             document.getElementById("bmiValue").textContent = result.bmi;
@@ -49,7 +49,7 @@ let chartInstance = null;
 
             // BMI scale chart
             const chartContainer = document.getElementById("chartContainer");
-            chartContainer.style.display = "block";
+            chartContainer.classList.remove('hidden');
 
             if (chartInstance) {
                 chartInstance.destroy();
@@ -190,8 +190,8 @@ let chartInstance = null;
         function resetForm() {
             document.getElementById("height").value = 170;
             document.getElementById("weight").value = 70;
-            document.getElementById("resultArea").style.display = "none";
-            document.getElementById("chartContainer").style.display = "none";
+            document.getElementById('resultArea').classList.add('hidden');
+            document.getElementById('chartContainer').classList.add('hidden');
             if (chartInstance) {
                 chartInstance.destroy();
                 chartInstance = null;

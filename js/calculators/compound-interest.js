@@ -14,7 +14,7 @@ function doCalculate() {
     document.getElementById('finalAmount').textContent = final.toFixed(2);
     document.getElementById('totalInterest').textContent = interest.toFixed(2);
     document.getElementById('interestRate').textContent = (interest / principal * 100).toFixed(1);
-    document.getElementById('resultArea').style.display = 'block';
+    document.getElementById('resultArea').classList.remove('hidden');
 }
 
 function resetForm() {
@@ -22,5 +22,5 @@ function resetForm() {
     document.getElementById('annualRate').value = '5';
     document.getElementById('years').value = '10';
     document.getElementById('compoundFreq').value = '12';
-    document.getElementById('resultArea').style.display = 'none';
+    document.getElementById('resultArea').classList.add('hidden');
 }

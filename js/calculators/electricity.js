@@ -11,7 +11,7 @@ function doCalculate() {
     document.getElementById('dailyKwh').textContent = dailyKwh.toFixed(2);
     document.getElementById('monthlyKwh').textContent = monthlyKwh.toFixed(2);
     document.getElementById('monthlyCost').textContent = monthlyCost.toFixed(2);
-    document.getElementById('resultArea').style.display = 'block';
+    document.getElementById('resultArea').classList.remove('hidden');
 }
 
 function resetForm() {
@@ -19,5 +19,5 @@ function resetForm() {
     document.getElementById('hours').value = '';
     document.getElementById('days').value = '30';
     document.getElementById('rate').value = '0.6';
-    document.getElementById('resultArea').style.display = 'none';
+    document.getElementById('resultArea').classList.add('hidden');
 }

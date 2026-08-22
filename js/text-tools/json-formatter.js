@@ -38,7 +38,7 @@ function doFormat() {
     var text = document.getElementById('jsonInput').value;
     if (!text.trim()) {
         document.getElementById('resultArea').textContent = '';
-        document.getElementById('resultSection').style.display = 'none';
+        document.getElementById('resultSection').classList.add('hidden');
         return;
     }
     var mode = currentJSONMode || 'format';
@@ -48,13 +48,13 @@ function doFormat() {
     var errorSection = document.getElementById('errorSection');
     var statsSection = document.getElementById('statsSection');
 
-    resultSection.style.display = 'none';
+    resultSection.classList.add('hidden');
     errorSection.style.display = 'none';
     statsSection.style.display = 'none';
 
     if (res.success) {
         resultArea.textContent = res.result;
-        resultSection.style.display = 'block';
+        resultSection.classList.remove('hidden');
         document.getElementById('originalSize').textContent = res.originalSize;
         document.getElementById('formattedSize').textContent = res.size;
         statsSection.style.display = 'flex';
@@ -110,7 +110,7 @@ function copyJSONResult() {
 function clearJSON() {
     document.getElementById('jsonInput').value = '';
     document.getElementById('resultArea').textContent = '';
-    document.getElementById('resultSection').style.display = 'none';
+    document.getElementById('resultSection').classList.add('hidden');
     document.getElementById('errorSection').style.display = 'none';
     document.getElementById('statsSection').style.display = 'none';
 }

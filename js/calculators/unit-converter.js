@@ -29,12 +29,12 @@ function doConvert() {
     
     document.getElementById('resultValue').textContent = result.toFixed(4);
     document.getElementById('resultLabel').textContent = `${val} ${from} = ${result.toFixed(4)} ${to}`;
-    document.getElementById('resultArea').style.display = 'block';
+    document.getElementById('resultArea').classList.remove('hidden');
 }
 
 function resetForm() {
     document.getElementById('inputValue').value = '';
-    document.getElementById('resultArea').style.display = 'none';
+    document.getElementById('resultArea').classList.add('hidden');
 }
 
 function updateUnits() {

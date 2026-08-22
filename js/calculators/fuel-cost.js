@@ -10,12 +10,12 @@ function doCalculate() {
     document.getElementById('fuelUsed').textContent = fuelUsed.toFixed(1);
     document.getElementById('totalCost').textContent = totalCost.toFixed(2);
     document.getElementById('costPerKm').textContent = costPerKm.toFixed(2);
-    document.getElementById('resultArea').style.display = 'block';
+    document.getElementById('resultArea').classList.remove('hidden');
 }
 
 function resetForm() {
     document.getElementById('distance').value = '';
     document.getElementById('fuelPer100').value = '';
     document.getElementById('pricePerLiter').value = '';
-    document.getElementById('resultArea').style.display = 'none';
+    document.getElementById('resultArea').classList.add('hidden');
 }

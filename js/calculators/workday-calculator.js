@@ -145,7 +145,7 @@
             endInput.value = fmtDate(addDays(today, 7));
             excludeHolidayCb.checked = false;
             holidayTextarea.value = '';
-            document.getElementById('resultArea').style.display = 'none';
+            document.getElementById('resultArea').classList.add('hidden');
         });
 
         // 输入变化时即时刷新结果（若结果已显示）
@@ -187,7 +187,7 @@
 
         var lang = getLang();
         var area = document.getElementById('resultArea');
-        area.style.display = 'block';
+        area.classList.remove('hidden');
 
         document.getElementById('workdayCount').textContent = result.workdays;
         document.getElementById('totalDays').textContent = result.totalDays;

@@ -23,7 +23,7 @@ function executeClean() {
     var charBefore = document.getElementById('charBefore');
     var charAfter = document.getElementById('charAfter');
 
-    resultSection.style.display = 'none';
+    resultSection.classList.add('hidden');
 
     if (!text) {
         return;
@@ -41,7 +41,7 @@ function executeClean() {
     resultArea.textContent = result;
     charBefore.textContent = text.length;
     charAfter.textContent = result.length;
-    resultSection.style.display = 'block';
+    resultSection.classList.remove('hidden');
 }
 
 function copyTextCleanerResult() {
@@ -81,7 +81,7 @@ function copyTextCleanerResult() {
 function resetTextCleaner() {
     document.getElementById('textInput').value = '';
     document.getElementById('resultArea').textContent = '';
-    document.getElementById('resultSection').style.display = 'none';
+    document.getElementById('resultSection').classList.add('hidden');
     var checks = document.querySelectorAll('.cleaner-option input[type="checkbox"]');
     for (var i = 0; i < checks.length; i++) {
         checks[i].checked = true;

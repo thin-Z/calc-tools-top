@@ -26,7 +26,7 @@ function executeStrip() {
     var charBefore = document.getElementById('charBefore');
     var charAfter = document.getElementById('charAfter');
 
-    resultSection.style.display = 'none';
+    resultSection.classList.add('hidden');
 
     if (!html) {
         return;
@@ -42,7 +42,7 @@ function executeStrip() {
     resultArea.textContent = result;
     charBefore.textContent = html.length;
     charAfter.textContent = result.length;
-    resultSection.style.display = 'block';
+    resultSection.classList.remove('hidden');
 }
 
 function copyStripResult() {
@@ -82,7 +82,7 @@ function copyStripResult() {
 function resetStripper() {
     document.getElementById('htmlInput').value = '';
     document.getElementById('resultArea').textContent = '';
-    document.getElementById('resultSection').style.display = 'none';
+    document.getElementById('resultSection').classList.add('hidden');
 }
 
 document.addEventListener('DOMContentLoaded', function() {

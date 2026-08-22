@@ -45,7 +45,7 @@ function doCalculate() {
     html += '<button class="btn btn-sm" onclick="copyRandomResults()">复制结果 / Copy Results</button>';
     
     document.getElementById('randomResult').innerHTML = html;
-    document.getElementById('resultArea').style.display = 'block';
+    document.getElementById('resultArea').classList.remove('hidden');
 }
 
 function copyRandomResults() {
@@ -63,6 +63,6 @@ function resetForm() {
     document.getElementById('randCount').value = '1';
     document.getElementById('randUnique').checked = false;
     document.getElementById('randSort').checked = false;
-    document.getElementById('resultArea').style.display = 'none';
+    document.getElementById('resultArea').classList.add('hidden');
     document.getElementById('randomResult').innerHTML = '';
 }

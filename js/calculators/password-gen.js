@@ -39,7 +39,7 @@ function doCalculate() {
     }
     
     document.getElementById('passwordResult').innerHTML = result;
-    document.getElementById('resultArea').style.display = 'block';
+    document.getElementById('resultArea').classList.remove('hidden');
     
     var strength = getStrength(length, pool);
     var strengthEl = document.getElementById('passwordStrength');
@@ -73,7 +73,7 @@ function resetForm() {
     document.getElementById('pwdDigits').checked = true;
     document.getElementById('pwdSymbols').checked = false;
     document.getElementById('pwdCount').value = 1;
-    document.getElementById('resultArea').style.display = 'none';
+    document.getElementById('resultArea').classList.add('hidden');
     document.getElementById('passwordResult').innerHTML = '';
     document.getElementById('passwordStrength').textContent = '';
 }

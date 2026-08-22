@@ -31,7 +31,7 @@ function doCalculate() {
     });
     
     // Show result area
-    document.getElementById('resultArea').style.display = 'block';
+    document.getElementById('resultArea').classList.remove('hidden');
     
     // Setup download
     setupDownload(container, text, size);
@@ -52,6 +52,6 @@ function setupDownload(container, text, size) {
 
 function resetForm() {
     document.getElementById('qrText').value = '';
-    document.getElementById('resultArea').style.display = 'none';
+    document.getElementById('resultArea').classList.add('hidden');
     document.getElementById('qrcode').innerHTML = '';
 }

@@ -14,12 +14,12 @@ function doCalculate() {
     document.getElementById("carDownAmount").textContent = downAmt.toFixed(0);
     document.getElementById("carLoanAmount").textContent = loanAmt.toFixed(0);
     document.getElementById("carTotalInterest").textContent = totalInterest.toFixed(2);
-    document.getElementById("resultArea").style.display = "block";
+    document.getElementById('resultArea').classList.remove('hidden');
 }
 function resetForm() {
     document.getElementById("carPrice").value = "15";
     document.getElementById("downPayment").value = "30";
     document.getElementById("carRate").value = "4.5";
     document.getElementById("carYears").value = "3";
-    document.getElementById("resultArea").style.display = "none";
+    document.getElementById('resultArea').classList.add('hidden');
 }

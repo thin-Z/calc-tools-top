@@ -75,7 +75,7 @@
             document.getElementById('height').value = 170;
             document.getElementById('weight').value = 70;
             document.getElementById('activity').value = 'moderate';
-            document.getElementById('resultArea').style.display = 'none';
+            document.getElementById('resultArea').classList.add('hidden');
         });
 
         // 输入变化时即时刷新（结果已显示时）
@@ -122,7 +122,7 @@
         var result = calculate(gender.value, age, height, weight, activity);
         var lang = getLang();
         var area = document.getElementById('resultArea');
-        area.style.display = 'block';
+        area.classList.remove('hidden');
 
         document.getElementById('bmrMifflin').textContent = result.bmrMifflin;
         document.getElementById('bmrHarris').textContent = result.bmrHarris;
