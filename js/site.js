@@ -726,6 +726,8 @@ function initToolSort() {
             return scoreB - scoreA;
         })
         wraps.forEach(function(w) { grid.appendChild(w); });
+        // Prevent CSS animation from re-triggering after DOM reorder
+        wraps.forEach(function(w) { w.style.animation = 'none'; });
     });
 }
 
