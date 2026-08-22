@@ -321,3 +321,19 @@ graph TD
 | 乱码文件修复引入内容回归 | 逐页人工确认 + 与正常版同款页面比对 |
 | 百度同步盘回滚/CRLF | Node 最终写入保 LF + `.gitattributes` + 每阶段独立提交 |
 | 上线后异常需回退 | ① `vercel.json` 中 CSP 头整行注释/删除，重新部署即恢复无 CSP；② `git revert` 对应阶段提交；③ T05 强制头与前序代码分离提交，可独立回退 |
+
+---
+
+## 附：实施记录（2026-08-22 已完成 T01–T05）
+
+| 任务 | 提交 | 结果 |
+|------|------|------|
+| T01 基线固化 + Report-Only | `3817671` | 实测基线：可执行内联 script 55（40 冗余+15 外链）、onxxx 418、JSON-LD 232（不动）；verify 新增 3 项终点断言 |
+| T02 内联脚本外链化+冗余清理 | `82e6057` | gtag 外链 `js/gtag-init.js`；删除 40 冗余（i18n init+点赞 IIFE，外部实现已覆盖）；抽取 15 个 `js/inline/*.js`（chart/toggleMode/unit-converter）；bmi en/zh 共享双语脚本；build.mjs 排除 dist.bak-* |
+| T03 统一事件委托层 | `bca8223` | 418 onxxx → `data-csp-*`（change 198/click 186/arg 42/submit 16/input 16）；`js/csp-events.js` document 级委托；CMP 内联 → `js/cmp.js`；GA4 断言适配 |
+| T04 坏数据修复 | `449cf02` | 删 age-calc 无效 `<data-i18n>` 选择器块（en/zh）；修复 date-calc.js 4 处中文乱码；内联 script 归零、乱码清零 |
+| T05 CSP 强制启用 | `ea9304f` | vercel.json 强制头去 `unsafe-inline`；线上验证 200 + 硬化头生效；浏览器冒烟全过（语言切换/计算器/gtag/i18n/点赞） |
+
+**最终状态（2026-08-22）**：`verify-site.mjs` 9 项断言全绿；线上 `Content-Security-Policy` 的 `script-src` 已无 `'unsafe-inline'`；剩余 `style-src 'unsafe-inline'`（style= 462 个 + <style> 1 个，二期清理）。
+
+**二期补充（2026-08-22 深夜，commit `9d9dd98`）**：style-src 硬化完成——84 种唯一 style= 模式 → 83 个 `.st-N` 工具类（集中定义于 css/style.css）+ `display:none` 复用 `.hidden`；462 个内联 style= 全部 class 化（残留 0）；删除 keyword-density 跳转页残留 `<style>` 块；`vercel.json` 的 `style-src` 移除 `'unsafe-inline'`。至此 **CSP 全指令硬化**（script-src / style-src 均无 unsafe-inline），verify 9 项全绿，浏览器实测 st-N 样式生效、JS CSSOM 赋值（el.style.x=）不受限、计算功能正常。
