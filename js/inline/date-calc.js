@@ -36,11 +36,11 @@ function toggleMode() {
             const days = parseInt(document.getElementById('daysInput').value);
 
             if (!startDate) {
-                alert(getLang() === 'zh' ? '$$ѡ$$ʼ$$$$' : 'Please select a start date');
+                alert(getLang() === 'zh' ? '请选择开始日期' : 'Please select a start date');
                 return;
             }
             if (isNaN(days)) {
-                alert(getLang() === 'zh' ? '$$$$$$$$Ч$$$$' : 'Please enter a valid number of days');
+                alert(getLang() === 'zh' ? '请输入有效天数' : 'Please enter a valid number of days');
                 return;
             }
 
@@ -61,12 +61,12 @@ function toggleMode() {
             const endDate = document.getElementById('endDate').value;
 
             if (!startDate || !endDate) {
-                alert(getLang() === 'zh' ? '$$ѡ$$ʼ$$$ںͽ$$$$$$$' : 'Please select both start and end dates');
+                alert(getLang() === 'zh' ? '请选择开始和结束日期' : 'Please select both start and end dates');
                 return;
             }
 
             const diff = daysBetween(startDate, endDate);
-            document.getElementById('resultDaysDiff').textContent = diff + ' ' + (getLang() === 'zh' ? '$$' : 'days');
+            document.getElementById('resultDaysDiff').textContent = diff + ' ' + (getLang() === 'zh' ? '天' : 'days');
             document.getElementById('resultA').style.display = 'none';
             document.getElementById('resultB').style.display = 'block';
             document.getElementById('resultArea').style.display = 'block';
