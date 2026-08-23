@@ -213,11 +213,12 @@ walkHtml(dist, (f) => {
 console.log(`[build] AdSense 注入: 更新 ${adsenseUpdated} | 跳过 ${adsenseSkipped}`);
 
 // 4) 在 dist/ 内注入缓存版本号（构建时间戳 YYYYMMDDHHmm，仅 dist，源码不含 ?v）
-//    site.js / like.js / i18n.js / css/style.css → ?v=STAMP（幂等：已带 ?v 会统一覆盖为当前 STAMP）
+//    site-core.js / site-home.js / site.js / like.js / i18n.js / css/style.css → ?v=STAMP
+//    （幂等：已带 ?v 会统一覆盖为当前 STAMP；T05 起 site.js 拆分后按 site(?:-core|-home)? 匹配）
 const now = new Date();
 const pad2 = (n) => String(n).padStart(2, '0');
 const STAMP = `${now.getFullYear()}${pad2(now.getMonth() + 1)}${pad2(now.getDate())}${pad2(now.getHours())}${pad2(now.getMinutes())}`;
-const ASSET_RE = /(["'])([^"']*?)((?:site|like|i18n)\.js|css\/style\.css)(\?v=[^"']*)?\1/g;
+const ASSET_RE = /(["'])([^"']*?)((?:site(?:-core|-home)?|like|i18n)\.js|css\/style\.css)(\?v=[^"']*)?\1/g;
 let versioned = 0;
 walkHtml(dist, (f) => {
   const raw = readFileSync(f);
