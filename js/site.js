@@ -61,13 +61,13 @@ const SITE_CONFIG = {
 
 /* ===== Tag Click Handler ===== */
 function initTagClicks() {
-    var tags = document.querySelectorAll('a.tag[data-tag]');
-    for (var i = 0; i < tags.length; i++) {
+    const tags = document.querySelectorAll('a.tag[data-tag]');
+    for (let i = 0; i < tags.length; i++) {
         tags[i].addEventListener('click', function(e) {
             e.preventDefault(); e.stopPropagation();
-            var cat = this.getAttribute('data-tag');
-            var lang = document.documentElement.lang || 'zh-CN';
-            var homeUrl = lang.indexOf('zh') === 0 ? '/' : '/en/';
+            const cat = this.getAttribute('data-tag');
+            const lang = document.documentElement.lang || 'zh-CN';
+            const homeUrl = lang.indexOf('zh') === 0 ? '/' : '/en/';
             sessionStorage.setItem('preselectCategory', cat);
             window.location.href = homeUrl;
         });
@@ -81,12 +81,12 @@ function initTagClicks() {
  * localStorage access if like.js failed to load. */
 function getLikes() {
     if (window.LikeSystem && window.LikeSystem.getLikes) return window.LikeSystem.getLikes();
-    var key = (window.ApiClient && window.ApiClient.config && window.ApiClient.config.STORAGE_KEY) || 'toolbox_likes';
+    const key = (window.ApiClient && window.ApiClient.config && window.ApiClient.config.STORAGE_KEY) || 'toolbox_likes';
     try { return JSON.parse(localStorage.getItem(key)) || {}; } catch (e) { return {}; }
 }
 function saveLikes(likes) {
     if (window.LikeSystem && window.LikeSystem.saveLikes) { window.LikeSystem.saveLikes(likes); return; }
-    var key = (window.ApiClient && window.ApiClient.config && window.ApiClient.config.STORAGE_KEY) || 'toolbox_likes';
+    const key = (window.ApiClient && window.ApiClient.config && window.ApiClient.config.STORAGE_KEY) || 'toolbox_likes';
     try { localStorage.setItem(key, JSON.stringify(likes)); } catch (e) {}
 }
 function getTotalLikes(toolId) {
@@ -99,14 +99,14 @@ function getTotalLikes(toolId) {
 function updateClickUI(toolId, total) {
     // Update usage-count in regular tool cards only
     document.querySelectorAll('.tool-card-wrap [data-like-id="' + toolId + '"]').forEach(function(el) {
-        var wrap = el.closest('.tool-card-wrap');
+        const wrap = el.closest('.tool-card-wrap');
         if (!wrap) return;
-        var uc = wrap.querySelector('.usage-count');
+        const uc = wrap.querySelector('.usage-count');
         if (uc) {
             uc.textContent = '✨ ' + total;
         }
         if (total > 0 && !uc) {
-            var newUc = document.createElement('span');
+            const newUc = document.createElement('span');
             newUc.className = 'usage-count';
             newUc.textContent = '✨ ' + total;
             el.insertAdjacentElement('afterend', newUc);
@@ -127,10 +127,10 @@ const SEARCH_TERMS_KEY = 'toolbox_search_terms';
 
 function getClicks() {
     try {
-        var raw = JSON.parse(localStorage.getItem(CLICK_STORAGE_KEY)) || {};
+        const raw = JSON.parse(localStorage.getItem(CLICK_STORAGE_KEY)) || {};
         // 迁移旧格式：{toolId: number} → {toolId: {total, daily}}
-        var migrated = false;
-        for (var id in raw) {
+        let migrated = false;
+        for (const id in raw) {
             if (typeof raw[id] === 'number') {
                 raw[id] = { total: raw[id], daily: {} };
                 migrated = true;
@@ -150,17 +150,17 @@ function saveClicks(clicks) {
 }
 
 function getTodayStr() {
-    var d = new Date();
+    const d = new Date();
     return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
 }
 
 function incrementClick(toolId) {
-    var clicks = getClicks();
+    const clicks = getClicks();
     if (!clicks[toolId]) {
         clicks[toolId] = { total: 0, daily: {} };
     }
     clicks[toolId].total = (clicks[toolId].total || 0) + 1;
-    var today = getTodayStr();
+    const today = getTodayStr();
     if (!clicks[toolId].daily) clicks[toolId].daily = {};
     clicks[toolId].daily[today] = (clicks[toolId].daily[today] || 0) + 1;
     saveClicks(clicks);
@@ -181,45 +181,45 @@ function incrementClick(toolId) {
 }
 
 function getDailyClicks(toolId) {
-    var clicks = getClicks();
-    var d = clicks[toolId] ? (clicks[toolId].daily || {}) : {};
+    const clicks = getClicks();
+    const d = clicks[toolId] ? (clicks[toolId].daily || {}) : {};
     return d;
 }
 
 function getTodayClickCount(toolId) {
-    var daily = getDailyClicks(toolId);
+    const daily = getDailyClicks(toolId);
     return daily[getTodayStr()] || 0;
 }
 
 function getTotalClicks(toolId) {
-    var clicks = getClicks();
+    const clicks = getClicks();
     return clicks[toolId] ? (clicks[toolId].total || 0) : 0;
 }
 
 function getTrendLabel(toolId) {
-    var clicks = getClicks();
-    var d = clicks[toolId] ? (clicks[toolId].daily || {}) : {};
-    var today = getTodayStr();
-    var todayCount = d[today] || 0;
+    const clicks = getClicks();
+    const d = clicks[toolId] ? (clicks[toolId].daily || {}) : {};
+    const today = getTodayStr();
+    const todayCount = d[today] || 0;
 
     // 计算日均点击（过去 7 天，排除今天）
-    var dates = Object.keys(d).filter(function(k) { return k !== today; }).sort();
-    var recentDates = dates.slice(-7);
-    var sum = 0;
-    for (var i = 0; i < recentDates.length; i++) { sum += d[recentDates[i]]; }
-    var avg = recentDates.length > 0 ? sum / recentDates.length : 0;
+    const dates = Object.keys(d).filter(function(k) { return k !== today; }).sort();
+    const recentDates = dates.slice(-7);
+    let sum = 0;
+    for (let i = 0; i < recentDates.length; i++) { sum += d[recentDates[i]]; }
+    const avg = recentDates.length > 0 ? sum / recentDates.length : 0;
 
-    var trend = '';
+    let trend = '';
     if (todayCount > 0 && avg > 0 && todayCount >= avg * 2) {
         trend = 'hot';
     } else if (recentDates.length >= 3) {
-        var last3 = recentDates.slice(-3);
-        var prev3 = recentDates.slice(-6, -3);
-        var last3Sum = 0, prev3Sum = 0;
-        for (var j = 0; j < last3.length; j++) { last3Sum += d[last3[j]]; }
-        for (var k = 0; k < prev3.length; k++) { prev3Sum += d[prev3[k]]; }
-        var last3Avg = last3.length > 0 ? last3Sum / last3.length : 0;
-        var prev3Avg = prev3.length > 0 ? prev3Sum / prev3.length : 0;
+        const last3 = recentDates.slice(-3);
+        const prev3 = recentDates.slice(-6, -3);
+        let last3Sum = 0, prev3Sum = 0;
+        for (let j = 0; j < last3.length; j++) { last3Sum += d[last3[j]]; }
+        for (let k = 0; k < prev3.length; k++) { prev3Sum += d[prev3[k]]; }
+        const last3Avg = last3.length > 0 ? last3Sum / last3.length : 0;
+        const prev3Avg = prev3.length > 0 ? prev3Sum / prev3.length : 0;
         if (last3Avg > 0 && prev3Avg > 0 && last3Avg >= prev3Avg * 1.5) {
             trend = 'up';
         }
