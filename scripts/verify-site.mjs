@@ -421,11 +421,16 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
 }
 
 // ---------- 14. SEO 断言（P1P2-01，T05 启用） ----------
-// 预留断言（T05 启用，复用 scripts/seo-batch-audit.mjs --check）：
-//   - 全站 title/description 存在率 100%
-//   - 重复 title = 0
-//   - 无占位符文案
-// 启用前置：先跑 seo-batch-audit.mjs 确认现状为 0（若现存重复 title >0 需先修复）。
+// 复用 scripts/seo-batch-audit.mjs --check：全站 title/description 存在率 100%、
+// 重复 title = 0、无占位符文案。长度分布为报告指标（不阻断）。
+{
+  try {
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'seo-batch-audit.mjs'), '--check'], { stdio: 'inherit', cwd: ROOT });
+    console.log('[14] SEO: title/description 存在率 100%、重复 title=0、无占位符 ✓');
+  } catch (e) {
+    fail('[seo] scripts/seo-batch-audit.mjs --check 退出码非 0（存在缺失 title/description、重复 title 或占位符）');
+  }
+}
 
 // ---------- 15. site.js 无 var（P1P2-11，T03 启用） ----------
 // 复用 scripts/check-no-var.mjs：js/site.js 中 \bvar\s 计数 = 0。
