@@ -646,52 +646,53 @@ function initHotTools() {
     });
     // Use global click count (if available) for scoring
     const hasUserData = Object.keys(likes).length > 0 || Object.keys(clicks).length > 0;
+    let selected;
     if (!hasUserData && Object.keys(_globalClickTotals).length === 0) {
         // New user with no data: use defaults
-        var selected = DEFAULT_HOT_TOOLS.slice(0, 8).map(function(id) {
+        selected = DEFAULT_HOT_TOOLS.slice(0, 8).map(function(id) {
             return TOOLS_DATA[id] ? { id: id, score: 0 } : null;
         }).filter(Boolean);
     } else {
         // Re-score with global click data merged
-        var rescored = [];
+        const rescored = [];
         allToolIds.forEach(function(id) {
-            var s = (likes[id] || 0) * 3;
-            var localC = clicks[id] ? (clicks[id].total || 0) : 0;
-            var globalC = _globalClickTotals[id] || 0;
+            let s = (likes[id] || 0) * 3;
+            const localC = clicks[id] ? (clicks[id].total || 0) : 0;
+            const globalC = _globalClickTotals[id] || 0;
             s += Math.max(localC, globalC);
-            var toolName = TOOLS_DATA[id].name['zh'].toLowerCase();
+            const toolName = TOOLS_DATA[id].name['zh'].toLowerCase();
             Object.keys(searchTerms).forEach(function(term) {
                 if (toolName.includes(term)) s += (searchTerms[term] || 0) * 2;
             });
             rescored.push({ id: id, score: s });
         });
         rescored.sort(function(a, b) { return b.score - a.score; });
-        var selected = rescored.slice(0, 8);
+        selected = rescored.slice(0, 8);
     }
     
     if (selected.length === 0) { container.classList.add('hidden'); return; }
     container.classList.remove('hidden');
     container.style.display = '';
     
-    var lang = getLang ? getLang() : 'zh';
-    var isZh = lang === 'zh';
-    var prefix = isZh ? '/zh/' : '/en/';
+    const lang = getLang ? getLang() : 'zh';
+    const isZh = lang === 'zh';
+    const prefix = isZh ? '/zh/' : '/en/';
     
-    var catTexts = isZh
+    const catTexts = isZh
         ? { finance: '💰 财务', health: '🏥 健康', life: '🏠 生活', shopping: '🛒 购物', travel: '🚗 出行', utility: '🔧 工具', image: '🖼️ 图片', text: '✏️ 文字' }
         : { finance: '💰 Finance', health: '🏥 Health', life: '🏠 Lifestyle', shopping: '🛒 Shopping', travel: '🚗 Travel', utility: '🔧 Utility', image: '🖼️ Image', text: '✏️ Text' };
     
-    var html = '';
+    let html = '';
     selected.forEach(function(entry, idx) {
-        var tool = TOOLS_DATA[entry.id];
-        var name = tool.name[lang] || tool.name['zh'];
-        var toolConfig = SITE_CONFIG.tools.find(function(t) { return t.id === entry.id; });
-        var cats = toolConfig ? toolConfig.categories : [];
-        var firstCat = cats[0] || 'utility';
+        const tool = TOOLS_DATA[entry.id];
+        const name = tool.name[lang] || tool.name['zh'];
+        const toolConfig = SITE_CONFIG.tools.find(function(t) { return t.id === entry.id; });
+        const cats = toolConfig ? toolConfig.categories : [];
+        const firstCat = cats[0] || 'utility';
         
-        var todayClicks = getTodayClickCount(entry.id);
-        var totalClicks = getTotalClicks(entry.id);
-        var trendBadge = '';
+        const todayClicks = getTodayClickCount(entry.id);
+        const totalClicks = getTotalClicks(entry.id);
+        let trendBadge = '';
         if (todayClicks >= 3) {
             trendBadge = '<span class="trend-badge trend-hot">🔥 今日热门</span>';
         } else if (todayClicks >= 1 && totalClicks > 0) {
@@ -716,17 +717,17 @@ function initHotTools() {
 function initToolSort() {
     // Compute composite score: likes × 3 + max(local clicks, global clicks)
     document.querySelectorAll('.tool-grid').forEach(function(grid) {
-        var wraps = Array.from(grid.querySelectorAll('.tool-card-wrap'));
+        const wraps = Array.from(grid.querySelectorAll('.tool-card-wrap'));
         if (wraps.length === 0) return;
         wraps.sort(function(a, b) {
-            var idA = (a.querySelector('[data-like-id]') || {}).dataset?.likeId || '';
-            var idB = (b.querySelector('[data-like-id]') || {}).dataset?.likeId || '';
-            var localA = getTotalClicks(idA);
-            var localB = getTotalClicks(idB);
-            var globalA = _globalClickTotals[idA] || 0;
-            var globalB = _globalClickTotals[idB] || 0;
-            var scoreA = getTotalLikes(idA) * 3 + Math.max(localA, globalA);
-            var scoreB = getTotalLikes(idB) * 3 + Math.max(localB, globalB);
+            const idA = (a.querySelector('[data-like-id]') || {}).dataset?.likeId || '';
+            const idB = (b.querySelector('[data-like-id]') || {}).dataset?.likeId || '';
+            const localA = getTotalClicks(idA);
+            const localB = getTotalClicks(idB);
+            const globalA = _globalClickTotals[idA] || 0;
+            const globalB = _globalClickTotals[idB] || 0;
+            const scoreA = getTotalLikes(idA) * 3 + Math.max(localA, globalA);
+            const scoreB = getTotalLikes(idB) * 3 + Math.max(localB, globalB);
             return scoreB - scoreA;
         })
         wraps.forEach(function(w) { grid.appendChild(w); });
@@ -736,22 +737,22 @@ function initToolSort() {
 }
 
 function initBlogPagination() {
-    var section = document.querySelector('.homepage-article-list, .article-list');
+    const section = document.querySelector('.homepage-article-list, .article-list');
     if (!section) return;
-    var items = section.querySelectorAll('.article-item');
+    const items = section.querySelectorAll('.article-item');
     if (items.length <= PAGE_SIZE) return;
     // Remove any existing load-more button first
-    var oldWrap = section.parentNode.querySelector('.load-more-wrap');
+    const oldWrap = section.parentNode.querySelector('.load-more-wrap');
     if (oldWrap) oldWrap.remove();
     // Use the shared pagination function with "all" category
     applyFilteredPagination("all", items);
 }function initArticleClicks() {
-    var items = document.querySelectorAll('.article-item');
-    for (var i = 0; i < items.length; i++) {
+    const items = document.querySelectorAll('.article-item');
+    for (let i = 0; i < items.length; i++) {
         items[i].addEventListener('click', function(e) {
             // Don't intercept clicks on tag links or existing links inside the article
             if (e.target.closest('a')) return;
-            var link = this.querySelector('h2 a, h4 a');
+            const link = this.querySelector('h2 a, h4 a');
             if (link) {
                 window.location.href = link.getAttribute('href');
             }
@@ -808,11 +809,11 @@ function initSearch() {
         });
     }
     // 搜索记录：输入停顿 500ms 后记录
-    var searchTimer = null;
+    let searchTimer = null;
     searchInput.addEventListener("input", function() {
         if (searchTimer) clearTimeout(searchTimer);
         searchTimer = setTimeout(function() {
-            var val = searchInput.value.trim();
+            const val = searchInput.value.trim();
             if (val.length >= 2) {
                 recordSearchTerm(val);
             }
@@ -824,10 +825,10 @@ function initSearch() {
 }
 
 function renderHotSearch(searchInput) {
-    var container = document.querySelector('.hot-search');
+    const container = document.querySelector('.hot-search');
     if (!container) return;
-    var terms = getHotSearchTerms(6);
-    var termsContainer = container.querySelector('.hot-search-terms');
+    const terms = getHotSearchTerms(6);
+    const termsContainer = container.querySelector('.hot-search-terms');
     if (!termsContainer) return;
     if (terms.length === 0) {
         container.classList.add('hidden');
@@ -836,9 +837,9 @@ function renderHotSearch(searchInput) {
     container.classList.remove('hidden');
     container.style.display = '';
     termsContainer.innerHTML = '';
-    for (var i = 0; i < terms.length; i++) {
+    for (let i = 0; i < terms.length; i++) {
         (function(term) {
-            var el = document.createElement('span');
+            const el = document.createElement('span');
             el.className = 'hot-search-term';
             el.textContent = term;
             el.addEventListener('click', function() {
@@ -888,28 +889,28 @@ window.addEventListener('pageshow', function(e) {
 // ===== Reading Progress Bar =====
 function initReadingProgress() {
     // Only show on blog post pages (has article.blog-post)
-    var article = document.querySelector('article.blog-post');
+    const article = document.querySelector('article.blog-post');
     if (!article) return;
 
-    var bar = document.createElement('div');
+    const bar = document.createElement('div');
     bar.className = 'reading-progress';
     bar.innerHTML = '<div class="progress-fill"></div>';
     document.body.appendChild(bar);
 
-    var fill = bar.querySelector('.progress-fill');
+    const fill = bar.querySelector('.progress-fill');
 
     window.addEventListener('scroll', function() {
-        var scrollTop = window.scrollY;
-        var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
         if (docHeight <= 0) return;
-        var progress = Math.min(scrollTop / docHeight * 100, 100);
+        const progress = Math.min(scrollTop / docHeight * 100, 100);
         fill.style.width = progress + '%';
     }, { passive: true });
 }
 
 // ===== Back to Top =====
 function initBackToTop() {
-    var btn = document.createElement('button');
+    const btn = document.createElement('button');
     btn.className = 'back-to-top';
     btn.setAttribute('aria-label', 'Back to top');
     btn.innerHTML = '\u2B06';
@@ -918,7 +919,7 @@ function initBackToTop() {
     });
     document.body.appendChild(btn);
 
-    var ticking = false;
+    let ticking = false;
     window.addEventListener('scroll', function() {
         if (!ticking) {
             window.requestAnimationFrame(function() {
