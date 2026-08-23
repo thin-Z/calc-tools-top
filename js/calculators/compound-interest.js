@@ -1,4 +1,12 @@
-// 复利计算器
+/**
+ * 复利计算器
+ * 功能：根据本金、年利率、年限与计息频率计算复利终值、利息与收益率。
+ */
+
+/**
+ * 读取表单并计算复利结果（UI 入口）。
+ * @returns {void} 无返回值；本金/利率/年限缺失时弹出提示并中断。
+ */
 function doCalculate() {
     const principal = parseFloat(document.getElementById('principal').value);
     const rate = parseFloat(document.getElementById('annualRate').value);
@@ -17,6 +25,10 @@ function doCalculate() {
     document.getElementById('resultArea').classList.remove('hidden');
 }
 
+/**
+ * 重置复利表单为默认值并隐藏结果区。
+ * @returns {void} 无返回值。
+ */
 function resetForm() {
     document.getElementById('principal').value = '100000';
     document.getElementById('annualRate').value = '5';

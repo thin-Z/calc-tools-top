@@ -1,4 +1,12 @@
-// 单位换算器
+/**
+ * 单位换算器
+ * 功能：支持长度/重量/温度/面积四类单位互转；温度用公式、其余用倍率表。
+ */
+
+/**
+ * 读取表单并按当前单位执行换算（UI 入口）。
+ * @returns {void} 无返回值；数值为空时弹出提示并中断。
+ */
 function doConvert() {
     const val = parseFloat(document.getElementById('inputValue').value);
     const from = document.getElementById('fromUnit').value;
@@ -32,11 +40,19 @@ function doConvert() {
     document.getElementById('resultArea').classList.remove('hidden');
 }
 
+/**
+ * 重置单位换算表单并隐藏结果区。
+ * @returns {void} 无返回值。
+ */
 function resetForm() {
     document.getElementById('inputValue').value = '';
     document.getElementById('resultArea').classList.add('hidden');
 }
 
+/**
+ * 根据所选类别刷新「从/到」单位下拉选项并重新换算。
+ * @returns {void} 无返回值。
+ */
 function updateUnits() {
     const cat = document.getElementById('category').value;
     const units = {

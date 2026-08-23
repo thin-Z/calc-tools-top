@@ -1,4 +1,16 @@
-// 年龄计算器
+/**
+ * 年龄计算器
+ * 功能：根据出生日期计算周岁（年/月/天）、总天数、距下次生日天数与生肖。
+ */
+
+/**
+ * 根据出生日期计算年龄信息。
+ * @param {string} birthDate - 出生日期字符串（可被 Date 解析，如 '1990-01-15'）。
+ * @returns {{years: number, months: number, days: number, totalDays: number,
+ *            daysToBirthday: number, zodiac: string}} 年龄明细对象：
+ *   years/months/days 为周岁拆分；totalDays 为出生至今总天数；
+ *   daysToBirthday 为距下次生日天数；zodiac 为农历生肖。
+ */
 function calculateAge(birthDate) {
     const birth = new Date(birthDate);
     const today = new Date();
@@ -16,6 +28,10 @@ function calculateAge(birthDate) {
     return { years, months, days, totalDays, daysToBirthday, zodiac: zodiac[zodiacIndex < 0 ? zodiacIndex + 12 : zodiacIndex] };
 }
 
+/**
+ * 读取表单并展示年龄计算结果（UI 入口）。
+ * @returns {void} 无返回值；出生日期为空时弹出提示并中断。
+ */
 function doCalculate() {
     const birthDate = document.getElementById('birthDate').value;
     const name = document.getElementById('name').value || '';
@@ -29,6 +45,10 @@ function doCalculate() {
     area.classList.remove('hidden');
 }
 
+/**
+ * 重置表单并隐藏结果区。
+ * @returns {void} 无返回值。
+ */
 function resetForm() {
     document.getElementById('birthDate').value = '';
     document.getElementById('name').value = '';

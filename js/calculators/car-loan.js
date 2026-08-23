@@ -1,3 +1,12 @@
+/**
+ * 车贷计算器
+ * 功能：根据车价、首付比例、年利率与年限计算首付、贷款额、月供与总利息。
+ */
+
+/**
+ * 读取表单并计算车贷明细（UI 入口）。
+ * @returns {void} 无返回值；车价或首付缺失时弹出提示并中断。
+ */
 function doCalculate() {
     const price = parseFloat(document.getElementById("carPrice").value);
     const downPct = parseFloat(document.getElementById("downPayment").value);
@@ -16,6 +25,10 @@ function doCalculate() {
     document.getElementById("carTotalInterest").textContent = totalInterest.toFixed(2);
     document.getElementById('resultArea').classList.remove('hidden');
 }
+/**
+ * 重置车贷表单为默认值并隐藏结果区。
+ * @returns {void} 无返回值。
+ */
 function resetForm() {
     document.getElementById("carPrice").value = "15";
     document.getElementById("downPayment").value = "30";

@@ -1,5 +1,12 @@
-// random-gen.js - Random Number Generator
+/**
+ * 随机数生成器
+ * 功能：在指定范围内生成随机整数，支持不重复模式、排序与复制结果。
+ */
 
+/**
+ * 读取表单并生成随机数（UI 入口）。
+ * @returns {void} 无返回值；范围非法或数量超限时弹出提示并中断。
+ */
 function doCalculate() {
     var min = parseInt(document.getElementById('randMin').value) || 0;
     var max = parseInt(document.getElementById('randMax').value) || 100;
@@ -48,6 +55,10 @@ function doCalculate() {
     document.getElementById('resultArea').classList.remove('hidden');
 }
 
+/**
+ * 复制当前随机数结果到剪贴板。
+ * @returns {void} 无返回值。
+ */
 function copyRandomResults() {
     var badges = document.querySelectorAll('.random-number-badge');
     var text = Array.from(badges).map(function(b) { return b.textContent; }).join(', ');
@@ -57,6 +68,10 @@ function copyRandomResults() {
     });
 }
 
+/**
+ * 重置随机数表单并隐藏结果区。
+ * @returns {void} 无返回值。
+ */
 function resetForm() {
     document.getElementById('randMin').value = '1';
     document.getElementById('randMax').value = '100';

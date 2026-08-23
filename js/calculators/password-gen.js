@@ -1,15 +1,27 @@
-// password-gen.js - Password Generator
+/**
+ * 密码生成器
+ * 功能：按用户选择的字符类型与长度生成随机密码，并估算强度。
+ * 注意：字符集常量 UPPER/LOWER/DIGITS/SYMBOLS 为模块级变量。
+ */
 
 var UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 var LOWER = 'abcdefghijklmnopqrstuvwxyz';
 var DIGITS = '0123456789';
 var SYMBOLS = '!@#$%^&*()_+-=[]{}|;:,.<>?';
 
-// HTML 转义：防止生成的密码（SYMBOLS 含 <>&"）注入 DOM
+/**
+ * HTML 转义：防止生成的密码（SYMBOLS 含 <>&"）注入 DOM。
+ * @param {string} s - 原始字符串。
+ * @returns {string} 转义后的 HTML 安全字符串。
+ */
 function escapeHtml(s) {
     return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
+/**
+ * 读取表单并生成指定数量的密码（UI 入口）。
+ * @returns {void} 无返回值；未选择任何字符类型时弹出提示并中断。
+ */
 function doCalculate() {
     var length = parseInt(document.getElementById('pwdLength').value) || 12;
     var includeUpper = document.getElementById('pwdUpper').checked;
@@ -48,6 +60,12 @@ function doCalculate() {
     strengthEl.style.color = colors[strength.level];
 }
 
+/**
+ * 根据密码长度与字符集大小估算强度等级。
+ * @param {number} length - 密码长度。
+ * @param {string} pool - 使用的字符集。
+ * @returns {{level: string, label: string}} 强度等级（weak/medium/strong）与文案。
+ */
 function getStrength(length, pool) {
     var charsetSize = pool.length;
     var entropy = length * Math.log2(charsetSize);
@@ -56,6 +74,11 @@ function getStrength(length, pool) {
     return { level: 'strong', label: '强 / Strong' };
 }
 
+/**
+ * 复制指定按钮对应的密码到剪贴板。
+ * @param {HTMLElement} btn - 复制按钮元素（其前一个兄弟节点为密码 code）。
+ * @returns {void} 无返回值。
+ */
 function copyPassword(btn) {
     var code = btn.previousElementSibling;
     if (code) {
@@ -66,6 +89,10 @@ function copyPassword(btn) {
     }
 }
 
+/**
+ * 重置密码生成表单并隐藏结果区。
+ * @returns {void} 无返回值。
+ */
 function resetForm() {
     document.getElementById('pwdLength').value = 12;
     document.getElementById('pwdUpper').checked = true;

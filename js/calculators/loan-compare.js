@@ -1,4 +1,12 @@
-// 贷款对比计算器
+/**
+ * 贷款对比计算器
+ * 功能：对比两种贷款利率方案下的月供、总还款与总利息差异。
+ */
+
+/**
+ * 读取表单并对比两种贷款方案（UI 入口）。
+ * @returns {void} 无返回值；任一必填项缺失时弹出提示并中断。
+ */
 function doCalculate() {
     const amount = parseFloat(document.getElementById('loanAmount').value);
     const rate1 = parseFloat(document.getElementById('rate1').value);
@@ -31,6 +39,10 @@ function doCalculate() {
     document.getElementById('resultArea').classList.remove('hidden');
 }
 
+/**
+ * 重置贷款对比表单并隐藏结果区。
+ * @returns {void} 无返回值。
+ */
 function resetForm() {
     document.getElementById('loanAmount').value = '100';
     document.getElementById('rate1').value = '3.85';

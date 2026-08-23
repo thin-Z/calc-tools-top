@@ -1,4 +1,12 @@
-// 油耗计算器
+/**
+ * 油耗计算器
+ * 功能：根据行驶距离、百公里油耗与油价计算耗油量、总油费与每公里成本。
+ */
+
+/**
+ * 读取表单并计算油耗结果（UI 入口）。
+ * @returns {void} 无返回值；距离或油耗缺失时弹出提示并中断。
+ */
 function doCalculate() {
     const distance = parseFloat(document.getElementById('distance').value);
     const fuelPer100 = parseFloat(document.getElementById('fuelPer100').value);
@@ -13,6 +21,10 @@ function doCalculate() {
     document.getElementById('resultArea').classList.remove('hidden');
 }
 
+/**
+ * 重置油耗表单并隐藏结果区。
+ * @returns {void} 无返回值。
+ */
 function resetForm() {
     document.getElementById('distance').value = '';
     document.getElementById('fuelPer100').value = '';

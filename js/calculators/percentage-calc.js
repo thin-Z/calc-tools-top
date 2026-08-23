@@ -1,5 +1,12 @@
-// percentage-calc.js - Percentage Calculator
+/**
+ * 百分比计算器
+ * 功能：支持求百分比、百分比数值、加/减百分比与百分比变化等五种模式。
+ */
 
+/**
+ * 读取表单并按所选模式计算百分比结果（UI 入口）。
+ * @returns {void} 无返回值；除零或起始值为零等非法输入时弹出提示并中断。
+ */
 function doCalculate() {
     var mode = document.getElementById('percentMode').value;
     var val1 = parseFloat(document.getElementById('percentVal1').value) || 0;
@@ -38,6 +45,10 @@ function doCalculate() {
     document.getElementById('resultArea').classList.remove('hidden');
 }
 
+/**
+ * 重置百分比表单并隐藏结果区。
+ * @returns {void} 无返回值。
+ */
 function resetForm() {
     document.getElementById('percentVal1').value = '';
     document.getElementById('percentVal2').value = '';

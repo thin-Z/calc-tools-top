@@ -1,4 +1,12 @@
-// QR Generator - QR Code Generator
+/**
+ * 二维码生成器
+ * 功能：使用第三方库 QRCode 生成二维码，并支持按尺寸/纠错级别设置与 PNG 下载。
+ */
+
+/**
+ * 读取表单并生成二维码（UI 入口）。
+ * @returns {void} 无返回值；内容为空时弹出提示并中断。
+ */
 function doCalculate() {
     var text = document.getElementById('qrText').value.trim();
     if (!text) {
@@ -37,6 +45,13 @@ function doCalculate() {
     setupDownload(container, text, size);
 }
 
+/**
+ * 为二维码容器绑定下载按钮（导出 PNG）。
+ * @param {HTMLElement} container - 二维码容器元素。
+ * @param {string} text - 二维码内容（保留用于未来扩展）。
+ * @param {number} size - 二维码尺寸（像素）。
+ * @returns {void} 无返回值。
+ */
 function setupDownload(container, text, size) {
     var downloadBtn = document.getElementById('downloadQR');
     downloadBtn.onclick = function() {
@@ -50,6 +65,10 @@ function setupDownload(container, text, size) {
     };
 }
 
+/**
+ * 重置二维码表单并隐藏结果区。
+ * @returns {void} 无返回值。
+ */
 function resetForm() {
     document.getElementById('qrText').value = '';
     document.getElementById('resultArea').classList.add('hidden');

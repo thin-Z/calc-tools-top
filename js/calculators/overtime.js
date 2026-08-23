@@ -1,4 +1,12 @@
-// 加班费计算器
+/**
+ * 加班费计算器
+ * 功能：按劳动法标准（工作日 1.5 倍 / 休息日 2 倍 / 法定节假日 3 倍）计算加班工资。
+ */
+
+/**
+ * 读取表单并计算加班费（UI 入口）。
+ * @returns {void} 无返回值；月薪缺失时弹出提示并中断。
+ */
 function doCalculate() {
     const salary = parseFloat(document.getElementById('monthlySalary').value);
     const weekday = parseFloat(document.getElementById('weekdayOvertime').value) || 0;
@@ -18,6 +26,10 @@ function doCalculate() {
     document.getElementById('resultArea').classList.remove('hidden');
 }
 
+/**
+ * 重置加班费表单并隐藏结果区。
+ * @returns {void} 无返回值。
+ */
 function resetForm() {
     document.getElementById('monthlySalary').value = '8000';
     document.getElementById('weekdayOvertime').value = '0';

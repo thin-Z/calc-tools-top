@@ -371,8 +371,15 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
 // 启用前置：先跑 seo-batch-audit.mjs 确认现状为 0（若现存重复 title >0 需先修复）。
 
 // ---------- 15. site.js 无 var（P1P2-11，T03 启用） ----------
-// 预留断言（T03 启用，复用 scripts/check-no-var.mjs）：
-//   - js/site.js 中 \bvar\s 计数 = 0
+// 复用 scripts/check-no-var.mjs：js/site.js 中 \bvar\s 计数 = 0。
+{
+  try {
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'check-no-var.mjs')], { stdio: 'inherit', cwd: ROOT });
+    console.log('[15] site.js 无 var: ✓');
+  } catch (e) {
+    fail('[var] js/site.js 仍存在 var 声明（scripts/check-no-var.mjs 退出码非 0）');
+  }
+}
 
 // ---------- 汇总 ----------
 if (failures.length) {

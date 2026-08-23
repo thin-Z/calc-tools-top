@@ -1,4 +1,12 @@
-// 标准体重计算器
+/**
+ * 标准体重计算器
+ * 功能：根据性别、身高与年龄，用 Broca / BMI / Devine 三种公式计算标准体重与正常范围。
+ */
+
+/**
+ * 读取表单并计算标准体重结果（UI 入口）。
+ * @returns {void} 无返回值；性别或身高缺失时弹出提示并中断。
+ */
 function doCalculate() {
     const gender = document.querySelector('input[name="gender"]:checked')?.value;
     const height = parseFloat(document.getElementById('height').value);
@@ -21,6 +29,10 @@ function doCalculate() {
     document.getElementById('resultArea').classList.remove('hidden');
 }
 
+/**
+ * 重置标准体重表单并隐藏结果区。
+ * @returns {void} 无返回值。
+ */
 function resetForm() {
     document.getElementById('height').value = '';
     document.getElementById('age').value = '30';

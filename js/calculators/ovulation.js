@@ -1,4 +1,12 @@
-// 排卵期计算器
+/**
+ * 排卵期计算器
+ * 功能：根据末次月经日期、月经周期与经期天数推算排卵日、易孕期与下次月经。
+ */
+
+/**
+ * 读取表单并推算排卵期（UI 入口）。
+ * @returns {void} 无返回值；末次月经日期缺失时弹出提示并中断。
+ */
 function doCalculate() {
     const cycle = parseInt(document.getElementById('cycleDays').value, 10) || 28;
     const period = parseInt(document.getElementById('periodDays').value, 10) || 5;
@@ -27,6 +35,10 @@ function doCalculate() {
     document.getElementById('resultArea').classList.remove('hidden');
 }
 
+/**
+ * 重置排卵期表单并隐藏结果区。
+ * @returns {void} 无返回值。
+ */
 function resetForm() {
     document.getElementById('lastPeriod').value = '';
     document.getElementById('cycleDays').value = '28';
