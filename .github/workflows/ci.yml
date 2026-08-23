@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build (dist)
+        run: node scripts/build.mjs
+
+      - name: Verify site (build → verify → link/jsonld/CSP/a11y 断言)
+        run: node scripts/verify-site.mjs
+
+      - name: Unit tests (node --test)
+        run: node --test
+
+      # T05 起启用覆盖率闸门（Node 22.14+ 支持 --test-coverage）：
+      #   node --test --test-coverage --test-coverage-lines=80 --test-coverage-functions=80
+      # 若 CI Node 版本不支持该 flag，由脚本解析覆盖率输出断言 lines>=80。
+      - name: Coverage gate (T05)
+        if: false
+        run: node --test --test-coverage --test-coverage-lines=80

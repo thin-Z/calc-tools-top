@@ -39,6 +39,7 @@ function fail(msg) { failures.push(msg); }
 function walkHtml(dir, cb) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     if (entry.name.startsWith('.') || EXCLUDE_DIRS.has(entry.name)) continue;
+    if (entry.name.startsWith('dist.bak')) continue; // build.mjs 同样排除 dist.bak-* 备份目录
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) walkHtml(full, cb);
     else if (entry.name.endsWith('.html')) cb(full);
@@ -317,6 +318,61 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
     console.log('[11] 可访问性检查: 图片 alt 属性 ✓');
   }
 }
+
+// ---------- 12. SRI 子资源完整性（P1P2-04，T01 启用） ----------
+// 口径：dist 中所有 src 含 cdn.jsdelivr.net 的 <script> 必须带非空 integrity 且
+// crossorigin="anonymous"。
+// 结论记录：AdSense/GA4（pagead2.googlesyndication.com / googletagmanager.com）为
+// Google 动态脚本，哈希不稳定，不适用 SRI（加 SRI 会导致加载失败），故本断言仅覆盖
+// 固定版本 CDN 脚本（Chart.js / qrcodejs 等 jsdelivr 资源）。
+{
+  const scriptTagRe = /<script\b([^>]*)>/gi;
+  let checked = 0;
+  const bad = [];
+  if (fs.existsSync(DIST)) {
+    walkHtml(DIST, (f) => {
+      const t = fs.readFileSync(f, 'utf8').replace(/^\uFEFF/, '');
+      let m;
+      while ((m = scriptTagRe.exec(t)) !== null) {
+        const attrs = m[1];
+        if (!/cdn\.jsdelivr\.net/i.test(attrs)) continue;
+        checked++;
+        const hasIntegrity = /\bintegrity\s*=\s*["'][^"']+["']/i.test(attrs);
+        const hasCrossOrigin = /\bcrossorigin\s*=\s*["']anonymous["']/i.test(attrs);
+        if (!hasIntegrity || !hasCrossOrigin) {
+          const rel = path.relative(DIST, f).split(path.sep).join('/');
+          const bits = [];
+          if (!hasIntegrity) bits.push('缺 integrity');
+          if (!hasCrossOrigin) bits.push('crossorigin 缺失/非 anonymous');
+          bad.push(`${rel}: ${bits.join('+')}`);
+        }
+      }
+    });
+  }
+  if (bad.length) {
+    fail(`[sri] dist 中 ${bad.length} 个 jsdelivr <script> 缺少 SRI 属性（${bad.slice(0, 5).join('; ')}）`);
+  } else {
+    console.log(`[12] SRI: jsdelivr <script> ${checked} 个均带 integrity+crossorigin ✓`);
+  }
+}
+
+// ---------- 13. 可访问性 WCAG 2.1 AA（P1P2-10，T04 启用） ----------
+// 预留断言（T04 启用）：
+//   - 每页存在 <main id="main"> + <a class="skip-link" href="#main">
+//   - dist 无「无关联 label 的 input/select/textarea」
+//   - 所有 <button> 有可访问名（文本内容或 aria-label）
+// T04 实施时移除本注释并启用下方逻辑。
+
+// ---------- 14. SEO 断言（P1P2-01，T05 启用） ----------
+// 预留断言（T05 启用，复用 scripts/seo-batch-audit.mjs --check）：
+//   - 全站 title/description 存在率 100%
+//   - 重复 title = 0
+//   - 无占位符文案
+// 启用前置：先跑 seo-batch-audit.mjs 确认现状为 0（若现存重复 title >0 需先修复）。
+
+// ---------- 15. site.js 无 var（P1P2-11，T03 启用） ----------
+// 预留断言（T03 启用，复用 scripts/check-no-var.mjs）：
+//   - js/site.js 中 \bvar\s 计数 = 0
 
 // ---------- 汇总 ----------
 if (failures.length) {
