@@ -68,10 +68,15 @@ function collectFiles() {
       if (f.endsWith('.html')) files.push(f);
     });
   }
-  // js/、css/ 递归（仅解析字面量 src=/href=）
+  // js/、css/ 递归（仅解析字面量 src=/href=）；跳过 js/test（测试文件不进生产产物，
+  // 其字符串字面量（正则等）不应被当作链接引用解析，避免误报断链，P3）
   for (const sub of ['js', 'css']) {
     walk(path.join(ROOT, sub), (f) => {
-      if (f.endsWith('.js') || f.endsWith('.css')) files.push(f);
+      if (f.endsWith('.js') || f.endsWith('.css')) {
+        const rel = path.relative(ROOT, f);
+        if (rel.startsWith('js' + path.sep + 'test' + path.sep)) return;
+        files.push(f);
+      }
     });
   }
   return files;

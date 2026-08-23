@@ -62,3 +62,41 @@ test('backwards compatibility: success shape unchanged', () => {
     ['originalSize', 'result', 'size', 'success'].sort()
   );
 });
+
+// P2-2：非字符串输入不抛异常，返回 {success:false}
+test('formatJSON(null) returns error without throwing', () => {
+  let res;
+  assert.doesNotThrow(() => { res = formatJSON(null, 'format'); });
+  assert.strictEqual(res.success, false);
+  assert.ok(res.error.length > 0);
+  assert.ok(res.error.includes('null'));
+  assert.deepStrictEqual([res.line, res.col], [0, 0]);
+});
+
+test('formatJSON(undefined) returns error without throwing', () => {
+  let res;
+  assert.doesNotThrow(() => { res = formatJSON(undefined, 'format'); });
+  assert.strictEqual(res.success, false);
+  assert.ok(res.error.length > 0);
+});
+
+test('formatJSON(number) returns error without throwing', () => {
+  let res;
+  assert.doesNotThrow(() => { res = formatJSON(42, 'format'); });
+  assert.strictEqual(res.success, false);
+  assert.ok(res.error.includes('number'));
+});
+
+test('formatJSON(boolean) returns error without throwing', () => {
+  let res;
+  assert.doesNotThrow(() => { res = formatJSON(true, 'minify'); });
+  assert.strictEqual(res.success, false);
+  assert.ok(res.error.includes('boolean'));
+});
+
+test('formatJSON(array) returns error without throwing', () => {
+  let res;
+  assert.doesNotThrow(() => { res = formatJSON([1, 2], 'format'); });
+  assert.strictEqual(res.success, false);
+  assert.ok(res.error.includes('array'));
+});

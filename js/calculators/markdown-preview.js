@@ -28,13 +28,18 @@
     }
 
     /**
-     * 链接 URL 白名单：仅允许安全协议与站内路径。
-     * @param {string} url - 原始 URL。
-     * @returns {string} 安全的 URL（已转义，可直接放入 href）；不合法返回 ''。
+     * 链接 URL 协议白名单：仅允许 http/https/mailto/tel/#/站内绝对路径，
+     * 拒绝 javascript:、data:、vbscript: 等危险协议。
+     * @param {string} url - 链接 URL。
+     * @returns {string} 白名单内的 URL（原样返回，不做转义）；不合法返回 ''。
+     * 注意：本函数不转义——renderInline 会在整体 escapeHtml 之后才调用本函数，
+     * 传入的 URL 已转义一次，此处再转义会造成 `&` → `&amp;amp;` 双重转义
+     * （P2-1 修复：URL 只转义一次，XSS 防护由「先整体转义 + 白名单拒绝危险协议」
+     * 双重保障，不退化）。
      */
     function sanitizeUrl(url) {
         var u = String(url || '').trim();
-        if (/^(https?:|mailto:|tel:|#|\/)/i.test(u)) return escapeHtml(u);
+        if (/^(https?:|mailto:|tel:|#|\/)/i.test(u)) return u;
         return '';
     }
 

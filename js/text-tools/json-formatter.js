@@ -8,8 +8,21 @@
  *   success=true: { success, result, size, originalSize }
  *   success=false: { success, error, line, col, context }
  *   context 为错误位置前后 ~80 字符的片段（P1P2-03 新增可选字段）。
+ * @throws {never} 非字符串输入（null/undefined/数字/布尔等）不抛异常，
+ *   返回 {success:false} 并说明原因（P2-2 修复：JSON.parse(null) 返回 null 不报错，
+ *   随后访问 text.length 会崩，故入口先做类型校验）。
  */
 function formatJSON(text, mode) {
+    if (typeof text !== 'string') {
+        var typeName = text === null ? 'null' : Array.isArray(text) ? 'array' : typeof text;
+        return {
+            success: false,
+            error: '输入必须是 JSON 字符串（received ' + typeName + '）',
+            line: 0,
+            col: 0,
+            context: ''
+        };
+    }
     try {
         var parsed = JSON.parse(text);
         var result = mode === 'format' ? JSON.stringify(parsed, null, 2) : JSON.stringify(parsed);

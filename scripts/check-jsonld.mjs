@@ -26,6 +26,7 @@ const EXCLUDE_DIRS = new Set([
 function walkHtml(dir, cb) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     if (entry.name.startsWith('.') || EXCLUDE_DIRS.has(entry.name)) continue;
+    if (entry.name.startsWith('dist.bak')) continue; // build.mjs 同样排除 dist.bak-* 备份目录
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) walkHtml(full, cb);
     else if (entry.name.endsWith('.html')) cb(full);

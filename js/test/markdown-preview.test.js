@@ -70,6 +70,22 @@ test('parseMarkdown XSS: inline code containing markup stays escaped', () => {
   assert.ok(!/<img\b/i.test(html));
 });
 
+// P2-1：链接 URL 只转义一次（& → &amp;，绝不出现 &amp;amp;）
+test('parseMarkdown: link with & query param is escaped exactly once', () => {
+  const html = parseMarkdown('[ok](https://example.com/?a=1&b=2)');
+  assert.ok(html.includes('&amp;'), 'should contain single-escaped ampersand');
+  assert.ok(!html.includes('&amp;amp;'), 'no double-escape');
+  // 原始 & 不应以未转义形式残留在输出中（raw ampersand inside href）
+  assert.ok(!html.includes('?a=1&b=2'), 'no raw ampersand remains in href');
+});
+
+test('parseMarkdown: sanitizeUrl rejects dangerous protocols (data:/vbscript:)', () => {
+  const html = parseMarkdown('[d](data:text/html;base64,PHNjcmlwdD4=) [v](vbscript:msgbox(1))');
+  assert.ok(!/href=["'](?:javascript|data|vbscript):/i.test(html), 'dangerous protocols rejected');
+  assert.ok(html.includes('d') && html.includes('v'), 'labels remain as plain text');
+  assert.ok(!/<a\b/.test(html), 'no anchor rendered for rejected urls');
+});
+
 test('parseMarkdown: empty input returns empty string', () => {
   assert.strictEqual(parseMarkdown(''), '');
   assert.strictEqual(parseMarkdown('   \n  '), '');

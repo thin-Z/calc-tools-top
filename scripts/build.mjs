@@ -35,20 +35,25 @@ const EXCLUDE_FILES = new Set([
   'vercel.json',
   'AGENTS.md',
 ]);
+// 按相对路径排除的子目录（P3：测试文件不应进入生产产物）
+const EXCLUDE_SUBDIRS = new Set(['js/test']);
+// 按扩展名排除的临时/脚本文件（P3：工作区遗留 .tmp/.cjs 不进入生产产物）
+const EXCLUDE_FILE_RE = /\.(?:tmp|cjs)$/;
 
-function copyDir(src, dst) {
+function copyDir(src, dst, rel) {
   mkdirSync(dst, { recursive: true });
   for (const name of readdirSync(src)) {
     const srcPath = join(src, name);
     const dstPath = join(dst, name);
+    const relPath = rel ? rel + '/' + name : name;
     const st = statSync(srcPath);
     if (st.isDirectory()) {
-      // 排除固定目录 + 所有 dist.bak-* 备份目录（防止备份污染构建产物，2026-08-22 CSP T02）
-      if (!EXCLUDE_DIRS.has(name) && !name.startsWith('dist.bak')) {
-        copyDir(srcPath, dstPath);
+      // 排除固定目录 + 所有 dist.bak-* 备份目录 + 指定子目录（防止备份/测试污染构建产物）
+      if (!EXCLUDE_DIRS.has(name) && !name.startsWith('dist.bak') && !EXCLUDE_SUBDIRS.has(relPath)) {
+        copyDir(srcPath, dstPath, relPath);
       }
     } else {
-      if (!EXCLUDE_FILES.has(name)) {
+      if (!EXCLUDE_FILES.has(name) && !EXCLUDE_FILE_RE.test(name)) {
         copyFileSync(srcPath, dstPath);
       }
     }
@@ -59,7 +64,7 @@ function copyDir(src, dst) {
 if (existsSync(dist)) {
   rmSync(dist, { recursive: true, force: true });
 }
-copyDir(root, dist);
+copyDir(root, dist, '');
 console.log('[build] 站点文件已复制到 dist/');
 
 // 2) 在 dist/ 内清理旧版 cookie-consent 引用
