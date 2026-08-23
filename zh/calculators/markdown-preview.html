@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown 预览器 - 在线 Markdown 转 HTML</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="免费在线 Markdown 预览器，左侧编辑右侧实时预览，支持标题、粗体、列表、代码块、表格等常用语法，本地渲染不上传，适合写作和文档排版。">
+    <meta property='og:title' content='Markdown 预览器 - 在线 Markdown 转 HTML'/>
+    <meta property='og:description' content='免费在线 Markdown 预览器，左侧编辑右侧实时预览，支持标题、粗体、列表、代码块、表格等常用语法，本地渲染不上传。'/>
+    <meta property='og:type' content='website'/>
+    <meta property='og:url' content='https://www.calc-tools.top/zh/calculators/markdown-preview'/>
+    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:locale' content='zh_CN'/>
+    <meta name='twitter:card' content='summary_large_image'/>
+    <meta name='twitter:title' content='Markdown 预览器 - 在线 Markdown 转 HTML'/>
+    <meta name='twitter:description' content='免费在线 Markdown 预览器，实时预览常用语法，本地渲染不上传。'/>
+
+    <link rel="canonical" href="https://www.calc-tools.top/zh/calculators/markdown-preview">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/calculators/markdown-preview">
+    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/calculators/markdown-preview">
+    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/zh/calculators/markdown-preview">
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/theme-toggle.js" defer></script>
+    <script src="/js/i18n.js" defer></script>
+    <script src="/js/like.js" defer></script>
+    <script src="/js/calculators/markdown-preview.js" defer></script>
+    <script src="/js/calculators/markdown-preview-ui.js" defer></script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "在线工具", "item": "https://www.calc-tools.top/" },
+            { "@type": "ListItem", "position": 2, "name": "Markdown 预览器", "item": "https://www.calc-tools.top/zh/calculators/markdown-preview" }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Markdown 预览器 - 在线 Markdown 转 HTML",
+        "url": "https://www.calc-tools.top/zh/calculators/markdown-preview",
+        "description": "免费在线 Markdown 预览器，左侧编辑右侧实时预览，支持标题、粗体、列表、代码块、表格等常用语法，本地渲染不上传。",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "zh-CN"
+    }
+    </script>
+</head>
+<body>
+    <header>
+    <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+    <nav>
+        <a href="/"><span>首页</span></a>
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="语言切换">
+            <option value="zh" selected>🇨🇳 中文</option>
+            <option value="en">🇬🇧 English</option>
+        </select>
+        <button id="theme-toggle" class="theme-toggle" aria-label="切换暗黑模式"><span class="theme-icon">☀️</span></button>
+    </nav>
+</header>
+
+    <main id="main">
+        <div class="tool-container">
+            <h1>Markdown 预览器</h1>
+            <p class="tool-description">在左侧编辑 Markdown 源码，右侧实时预览渲染结果。支持标题、粗体斜体、行内代码、代码块、列表、链接、引用、分隔线和表格等常用语法。</p>
+
+            <div class="calculator-form">
+                <div class="md-toolbar">
+                    <button type="button" id="md-sample-btn" class="btn btn-secondary">填入示例</button>
+                    <button type="button" id="md-clear-btn" class="btn btn-secondary">清空</button>
+                    <span class="md-word-count" id="md-word-count">0 字</span>
+                </div>
+                <div class="input-group">
+                    <label for="md-editor">Markdown 源码</label>
+                    <textarea class="text-input md-editor" id="md-editor" placeholder="在此输入 Markdown 内容..." aria-label="Markdown 源码"></textarea>
+                </div>
+
+                <div class="result-area hidden" id="md-preview-section">
+                    <div class="result-label">预览</div>
+                    <div class="md-preview" id="md-preview"></div>
+                </div>
+            </div>
+
+            <div class="tool-info">
+                <h2>Markdown 是什么？</h2>
+                <p>Markdown 是一种轻量级标记语言，用简单的符号表示排版：`#` 表示标题、`**` 表示粗体、`-` 表示列表、反引号表示行内代码或代码块。Markdown 文件易读易写，是 GitHub、博客平台和技术文档的事实标准。本预览器支持常用语法子集：1-6 级标题、粗体与斜体、行内代码、围栏代码块、有序与无序列表、链接、引用、分隔线和表格，覆盖日常写作与文档排版的绝大多数场景。</p>
+                <h3>常用语法速查</h3>
+                <ul>
+                    <li><strong>标题</strong>：`# 一级标题` 到 `###### 六级标题`</li>
+                    <li><strong>粗体/斜体</strong>：`**粗体**`、`*斜体*`</li>
+                    <li><strong>行内代码</strong>：`` `代码` ``；<strong>代码块</strong>：``` ```语言 ```</li>
+                    <li><strong>列表</strong>：`- 无序` 或 `1. 有序`</li>
+                    <li><strong>表格</strong>：用 `|` 分隔列，第二行为 `|---|---|`</li>
+                </ul>
+                <h3>如何使用本工具</h3>
+                <ol>
+                    <li>在编辑区输入或粘贴 Markdown 内容</li>
+                    <li>右侧（下方）实时显示渲染结果，输入停顿 150ms 后刷新</li>
+                    <li>点击「填入示例」快速体验全部语法，点击「清空」重新开始</li>
+                    <li>编辑区下方显示当前字数（中文字符与英文单词合计）</li>
+                </ol>
+                <h3>常见问题</h3>
+                <p><strong>支持任务列表和图片语法吗？</strong>当前版本暂不支持任务列表与图片语法，其余常用语法均已覆盖。如需图片上传，请使用其他工具配合。</p>
+                <p><strong>渲染结果安全吗？</strong>安全。所有内容在渲染前都会进行 HTML 转义，脚本标签与危险链接会被过滤，不会执行任何代码。</p>
+                <p><strong>内容会保存或上传吗？</strong>不会。编辑与预览全部在浏览器本地完成，刷新页面后内容即清除。</p>
+            </div>
+        </div>
+
+        <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="markdown-preview"><span class="heart">❤</span> <span class="count">0</span></button></div>
+    </main>
+
+    <footer>
+    <div class="footer-links">
+        <a href="/">首页</a>
+        <a href="/about">关于</a>
+        <a href="/privacy">隐私政策</a>
+        <a href="/contact">联系</a>
+        <a href="/blog/zh/">博客</a>
+    </div>
+    <p>© 2026 工具箱里 | 免费在线工具</p>
+</footer>
+
+</body>
+</html>

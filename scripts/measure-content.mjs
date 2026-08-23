@@ -55,6 +55,7 @@ const results = [];
 function walk(dir) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     if (e.name.startsWith('.') || EXCLUDE_DIRS.has(e.name)) continue;
+    if (e.name.startsWith('dist.bak')) continue; // build.mjs 同样排除 dist.bak-* 备份目录
     const p = path.join(dir, e.name);
     if (e.isDirectory()) walk(p);
     else if (e.name.endsWith('.html')) {

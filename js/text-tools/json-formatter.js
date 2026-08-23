@@ -5,6 +5,9 @@
  * @param {string} text - Input JSON string.
  * @param {string} mode - 'format' or 'minify'.
  * @returns {object} Result with success/error state.
+ *   success=true: { success, result, size, originalSize }
+ *   success=false: { success, error, line, col, context }
+ *   context 为错误位置前后 ~80 字符的片段（P1P2-03 新增可选字段）。
  */
 function formatJSON(text, mode) {
     try {
@@ -18,18 +21,23 @@ function formatJSON(text, mode) {
         };
     } catch (e) {
         var match = e.message.match(/position\s+(\d+)/);
-        var line = 1, col = 1;
+        var line = 1, col = 1, pos = 0;
         if (match) {
-            var pos = parseInt(match[1]);
+            pos = parseInt(match[1], 10);
             var before = text.substring(0, pos);
             line = before.split('\n').length;
             col = pos - before.lastIndexOf('\n');
         }
+        // 错误位置上下文（±80 字符），帮助用户快速定位（P1P2-03）
+        var ctxStart = Math.max(0, pos - 80);
+        var ctxEnd = Math.min(text.length, pos + 80);
+        var context = text.substring(ctxStart, ctxEnd);
         return {
             success: false,
             error: e.message,
             line: line,
-            col: col
+            col: col,
+            context: context
         };
     }
 }
@@ -62,6 +70,11 @@ function doFormat() {
         document.getElementById('errorLine').textContent = res.line;
         document.getElementById('errorCol').textContent = res.col;
         document.getElementById('errorMsg').textContent = res.error;
+        var ctxEl = document.getElementById('errorContext');
+        if (ctxEl) {
+            ctxEl.textContent = res.context ? res.context : '';
+            ctxEl.classList.toggle('hidden', !res.context);
+        }
         errorSection.style.display = 'block';
     }
 }
@@ -114,6 +127,9 @@ function clearJSON() {
     document.getElementById('errorSection').style.display = 'none';
     document.getElementById('statsSection').style.display = 'none';
 }
+
+// 暴露纯函数供单元测试与浏览器控制台使用（P1P2-03）
+window.formatJSON = formatJSON;
 
 document.addEventListener('DOMContentLoaded', function() {
     doFormat();

@@ -50,6 +50,10 @@ const SITE_CONFIG = {
         { id: 'keyword-density', categories: ['text'] },
         { id: 'qr-generator', categories: ['utility'] },
         { id: 'password-gen', categories: ['utility'] },
+        { id: 'password-strength', categories: ['utility'] },
+        { id: 'color-contrast', categories: ['image'] },
+        { id: 'regex-tester', categories: ['text'] },
+        { id: 'markdown-preview', categories: ['text'] },
         { id: 'percentage-calc', categories: ['shopping', 'finance'] },
         { id: 'random-gen', categories: ['utility'] }
     ]
@@ -535,6 +539,10 @@ const TOOLS_DATA = {
     'keyword-density': { icon: '🎯', name: { zh: '关键词密度', en: 'Keyword Density' }, desc: { zh: '分析文章关键词密度', en: 'Analyze keyword density in text' } },
     'qr-generator': { icon: '📱', name: { zh: '二维码生成器', en: 'QR Code Generator' }, desc: { zh: '文字或链接快速生成二维码，下载PNG', en: 'Generate QR codes from text/URL, download as PNG' } },
     'password-gen': { icon: '🔑', name: { zh: '密码生成器', en: 'Password Generator' }, desc: { zh: '自定义字符类型生成高强度密码', en: 'Generate strong passwords with custom options' } },
+    'password-strength': { icon: '🛡️', name: { zh: '密码强度检测器', en: 'Password Strength Checker' }, desc: { zh: '实时检测密码安全性并给出改进建议', en: 'Test password security with improvement tips' } },
+    'color-contrast': { icon: '🎨', name: { zh: '颜色对比度检查器', en: 'Color Contrast Checker' }, desc: { zh: 'WCAG AA/AAA 对比度在线检测', en: 'Check WCAG AA/AAA contrast ratio online' } },
+    'regex-tester': { icon: '🔍', name: { zh: '正则表达式测试器', en: 'Regex Tester' }, desc: { zh: '实时匹配高亮与捕获组解析', en: 'Real-time match highlight and group parsing' } },
+    'markdown-preview': { icon: '📝', name: { zh: 'Markdown 预览器', en: 'Markdown Preview' }, desc: { zh: '实时预览 Markdown 渲染结果', en: 'Live Markdown rendering preview' } },
     'percentage-calc': { icon: '📊', name: { zh: '百分比计算器', en: 'Percentage Calculator' }, desc: { zh: '百分比计算/增减/变化多种模式', en: 'Percentage calc, increase, decrease, change' } },
     'random-gen': { icon: '🎲', name: { zh: '随机数生成器', en: 'Random Number Generator' }, desc: { zh: '自定义范围生成随机整数', en: 'Generate random integers in custom range' } }
 };
@@ -573,6 +581,10 @@ const TOOL_KEYWORDS_ZH = {
     'keyword-density': '关键词密度,关键词频率,seo分析',
     'qr-generator': '二维码,二维码生成器,qrcode,二维码制作,二维码在线',
     'password-gen': '密码生成器,随机密码,强密码,密码生成,密码工具',
+    'password-strength': '密码强度,密码安全,强密码检测,密码检测,密码评分',
+    'color-contrast': '颜色对比度,对比度检查,wcag,无障碍,aa,aaa,配色,前景色,背景色',
+    'regex-tester': '正则表达式,正则测试,正则匹配,regex,正则高亮,捕获组',
+    'markdown-preview': 'markdown,markdown预览,md转html,markdown编辑器,markdown在线',
     'percentage-calc': '百分比,百分数,百分比计算,百分率,百分号计算',
     'random-gen': '随机数,随机数生成,随机数字,抽奖随机,摇号'
 };

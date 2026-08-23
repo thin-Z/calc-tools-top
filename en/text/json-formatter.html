@@ -1,54 +1,86 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-
-
-
     <meta charset="UTF-8">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<script src="/js/theme-init.js"></script>
-<script src="/js/theme-toggle.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JSON Formatter - Free Online JSON Format, Minify & Validate Tool</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="Free online JSON formatter tool. Format, minify and validate JSON data with syntax error detection and line number localization. All processing in browser, no data uploaded.">
+    <meta name="description" content="Free online JSON formatter tool. Format, minify and validate JSON data with syntax error detection, line number localization and error context. All processing in browser, no data uploaded.">
     <meta property='og:title' content='JSON Formatter - Free Online JSON Format, Minify & Validate Tool'/>
-    <meta property='og:description' content='Free online JSON formatter tool. Format, minify and validate JSON data with syntax error detection and line number localization. All processing in browser, no data uploaded.'/>
+    <meta property='og:description' content='Free online JSON formatter tool. Format, minify and validate JSON data with syntax error detection, line number localization and error context. All processing in browser, no data uploaded.'/>
     <meta property='og:type' content='website'/>
     <meta property='og:url' content='https://www.calc-tools.top/en/text/json-formatter'/>
     <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
     <meta property='og:locale' content='en_US'/>
     <meta name='twitter:card' content='summary_large_image'/>
     <meta name='twitter:title' content='JSON Formatter - Free Online JSON Format, Minify & Validate Tool'/>
-    <meta name='twitter:description' content='Free online JSON formatter tool. Format, minify and validate JSON data with syntax error detection and line number localization. All processing in browser, no data uploaded.'/>
+    <meta name='twitter:description' content='Free online JSON formatter tool. Format, minify and validate JSON data with syntax error detection and line number localization.'/>
 
     <link rel="canonical" href="https://www.calc-tools.top/en/text/json-formatter">
     <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/text/json-formatter">
     <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/text/json-formatter">
     <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/en/text/json-formatter">
     <link rel="stylesheet" href="../../css/style.css">
-
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/theme-toggle.js" defer></script>
     <script src="/js/i18n.js" defer></script>
+    <script src="/js/like.js" defer></script>
     <script src="/js/text-tools/json-formatter.js" defer></script>
 
-
-
-
-
-<script type="application/ld+json">{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "JSON Formatter - Free Online JSON Format\", Minify & Validate Tool",
-  "url": "https://www.calc-tools.top/en/text/json-formatter",
-  "description": "Free online JSON formatter tool. Format\", minify and validate JSON data with syntax error detection and line number localization. All processing in browser, no data uploaded.",
-  "applicationCategory": "UtilitiesApplication",
-  "operatingSystem": "Web",
-  "inLanguage": "en"
-}</script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Online Tools", "item": "https://www.calc-tools.top/" },
+            { "@type": "ListItem", "position": 2, "name": "JSON Formatter", "item": "https://www.calc-tools.top/en/text/json-formatter" }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is the difference between JSON formatting and minifying?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "JSON formatting adds indentation and line breaks to make the data easier to read and debug. JSON minifying removes all whitespace characters to reduce data size, which is ideal for network transfer and storage."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can this tool help me find JSON syntax errors?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. When your JSON contains a syntax error, the tool detects it automatically and shows the error message, the exact location (line and column), and a snippet of the surrounding context to help you fix it quickly."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is my data safe? Is it uploaded to a server?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, it is safe. All JSON processing happens locally in your browser; your content never leaves your device, ensuring complete privacy."
+                }
+            }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "JSON Formatter - Free Online JSON Format, Minify & Validate Tool",
+        "url": "https://www.calc-tools.top/en/text/json-formatter",
+        "description": "Free online JSON formatter tool. Format, minify and validate JSON data with syntax error detection, line number localization and error context. All processing in browser, no data uploaded.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "en"
+    }
+    </script>
 </head>
 <body>
     <header>
@@ -62,16 +94,13 @@
         <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon">☀️</span></button>
     </nav>
 </header>
-    <main>
+    <main id="main">
         <div class="tool-page">
             <div class="tool-header">
                 <h1>📋 JSON Formatter</h1>
-                <p>Online JSON formatter, minifier and validator. Format with indentation, minify for smaller size, and validate with syntax error detection and line number localization. All processing happens locally in your browser.</p>
+                <p>Online JSON formatter, minifier and validator. Format with indentation, minify for smaller size, and validate with syntax error detection, line number localization and error context. All processing happens locally in your browser.</p>
             </div>
             <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="json-formatter"><span class="heart">❤</span> <span class="count">0</span></button></div>
-
-            <!-- Ad Slot -->
-            
 
             <div class="tool-controls">
                 <textarea class="text-input" id="jsonInput" placeholder="Paste or type JSON data here...">{"name":"Online Toolbox","version":"1.0.0","features":["JSON Format","JSON Minify","Validation"],"config":{"theme":"dark","lang":"en"},"active":true}</textarea>
@@ -79,7 +108,7 @@
                 <!-- Mode Toggle Buttons -->
                 <div class="mode-chips">
                     <button class="mode-chip mode-btn active" data-mode="format" data-csp-click="switchJSONMode" data-csp-arg="format">🎨 Format</button>
-                    <button class="mode-chip mode-btn" data-mode="minify" data-csp-click="switchJSONMode" data-csp-arg="minify">•?Minify</button>
+                    <button class="mode-chip mode-btn" data-mode="minify" data-csp-click="switchJSONMode" data-csp-arg="minify">⚡ Minify</button>
                 </div>
 
                 <div class="action-bar">
@@ -89,10 +118,11 @@
 
                 <!-- Error Display -->
                 <div class="result-area error-section st-16" id="errorSection">
-                    <div class="result-label st-10">♥?JSON Syntax Error</div>
+                    <div class="result-label st-10">❌ JSON Syntax Error</div>
                     <div class="result-content st-11">
                         <p><strong>Location:</strong> Line <span id="errorLine">0</span>, Column <span id="errorCol">0</span></p>
                         <p><strong>Message:</strong> <span id="errorMsg"></span></p>
+                        <p class="hidden" id="errorContextWrap"><strong>Context:</strong> <span id="errorContext"></span></p>
                     </div>
                 </div>
 
@@ -112,23 +142,23 @@
             <div class="seo-content">
                 <h2>What is JSON Formatting?</h2>
                 <p>JSON (JavaScript Object Notation) is a lightweight data interchange format widely used in Web APIs, configuration files, and data storage. JSON formatting adds indentation and line breaks to compressed JSON data, making its structure clear and easy to read and debug.</p>
-                <p>When JSON data contains syntax errors, this tool automatically detects them and provides error descriptions with exact locations (line and column numbers). Minify mode removes all unnecessary whitespace to reduce data size, ideal for network transfer and storage.</p>
+                <p>When JSON data contains syntax errors, this tool automatically detects them and provides error descriptions with exact locations (line and column numbers) plus a snippet of the surrounding context. Minify mode removes all unnecessary whitespace to reduce data size, ideal for network transfer and storage.</p>
 
                 <h3>JSON Tool Features</h3>
                 <ul>
-                    <li><strong>Beautify</strong> —?Adds 2-space indentation and line breaks for clear JSON structure</li>
-                    <li><strong>Minify</strong> —?Removes all whitespace to minimize data size</li>
-                    <li><strong>Validation</strong> —?Automatically detects syntax errors with precise line & column location</li>
-                    <li><strong>One-click Copy</strong> —?Easily copy formatted or minified results</li>
-                    <li><strong>Local Processing</strong> —?All operations done in your browser, no data uploaded</li>
+                    <li><strong>Beautify</strong> — Adds 2-space indentation and line breaks for clear JSON structure</li>
+                    <li><strong>Minify</strong> — Removes all whitespace to minimize data size</li>
+                    <li><strong>Validation</strong> — Automatically detects syntax errors with precise line, column and context</li>
+                    <li><strong>One-click Copy</strong> — Easily copy formatted or minified results</li>
+                    <li><strong>Local Processing</strong> — All operations done in your browser, no data uploaded</li>
                 </ul>
 
                 <h3>Common Use Cases</h3>
                 <ul>
-                    <li><strong>API Debugging</strong> —?Format API response JSON to inspect data structures</li>
-                    <li><strong>Config Editing</strong> —?Format package.json, tsconfig.json and other config files</li>
-                    <li><strong>Data Transfer</strong> —?Minify JSON to reduce network transfer size</li>
-                    <li><strong>Learning JSON</strong> —?Understand JSON hierarchy through formatted visualization</li>
+                    <li><strong>API Debugging</strong> — Format API response JSON to inspect data structures</li>
+                    <li><strong>Config Editing</strong> — Format package.json, tsconfig.json and other config files</li>
+                    <li><strong>Data Transfer</strong> — Minify JSON to reduce network transfer size</li>
+                    <li><strong>Learning JSON</strong> — Understand JSON hierarchy through formatted visualization</li>
                 </ul>
             </div>
         </div>
@@ -137,16 +167,19 @@
             <h3>Related Tools</h3>
             <ul>
                 <li><a href="/blog/en/json-formatter-guide">📖 User Guide</a></li>
+                <li><a href="/en/text/base64-encode">🔐 Base64 Encode/Decode</a></li>
+                <li><a href="/en/calculators/regex-tester">🔍 Regex Tester</a></li>
+                <li><a href="/en/calculators/markdown-preview">📝 Markdown Preview</a></li>
             </ul>
         </div>
     <section class="tool-content">
 <h2>About JSON Formatter</h2>
-<p>JSON Formatter is a completely free online tool that helps you Format, compress and validate JSON. Whether you are a casual user or a professional, you can use it instantly without installing any software.</p>
-<p>It is especially useful for writers, editors, students and web developers who work with text every day and need quick, reliable processing.</p>
+<p>JSON Formatter is a completely free online tool that helps you format, compress and validate JSON. Whether you are a casual user or a professional, you can use it instantly without installing any software.</p>
+<p>It is especially useful for writers, editors, students and web developers who work with data every day and need quick, reliable processing.</p>
 <h2>How to Use JSON Formatter</h2>
 <ol>
 <li>Paste or type your text into the input area.</li>
-<li>Configure the options to match your exact requirements.</li>
+<li>Choose the mode: Format (beautify) or Minify (compress).</li>
 <li>Click the Process button to get the result immediately.</li>
 <li>Use the copy button to save the output to your clipboard.</li>
 </ol>
@@ -167,6 +200,5 @@
     </div>
     <p>© 2026 Online Calculators | Free Online Calculators</p>
 </footer>
-    <script src="/js/like.js" defer></script>
     </body>
 </html>

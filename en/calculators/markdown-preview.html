@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Preview - Online Markdown to HTML Converter</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online Markdown previewer with a live split view. Supports headings, bold, lists, code blocks, tables and more. Renders locally in your browser, nothing is uploaded.">
+    <meta property='og:title' content='Markdown Preview - Online Markdown to HTML Converter'/>
+    <meta property='og:description' content='Free online Markdown previewer with a live split view. Supports headings, bold, lists, code blocks, tables and more. Renders locally in your browser.'/>
+    <meta property='og:type' content='website'/>
+    <meta property='og:url' content='https://www.calc-tools.top/en/calculators/markdown-preview'/>
+    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:locale' content='en_US'/>
+    <meta name='twitter:card' content='summary_large_image'/>
+    <meta name='twitter:title' content='Markdown Preview - Online Markdown to HTML Converter'/>
+    <meta name='twitter:description' content='Free online Markdown previewer with live rendering of common syntax. Runs locally, nothing is uploaded.'/>
+
+    <link rel="canonical" href="https://www.calc-tools.top/en/calculators/markdown-preview">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/calculators/markdown-preview">
+    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/calculators/markdown-preview">
+    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/zh/calculators/markdown-preview">
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/theme-toggle.js" defer></script>
+    <script src="/js/i18n.js" defer></script>
+    <script src="/js/like.js" defer></script>
+    <script src="/js/calculators/markdown-preview.js" defer></script>
+    <script src="/js/calculators/markdown-preview-ui.js" defer></script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Online Tools", "item": "https://www.calc-tools.top/" },
+            { "@type": "ListItem", "position": 2, "name": "Markdown Preview", "item": "https://www.calc-tools.top/en/calculators/markdown-preview" }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Markdown Preview - Online Markdown to HTML Converter",
+        "url": "https://www.calc-tools.top/en/calculators/markdown-preview",
+        "description": "Free online Markdown previewer with a live split view. Supports headings, bold, lists, code blocks, tables and more. Renders locally in your browser.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "en"
+    }
+    </script>
+</head>
+<body>
+    <header>
+    <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
+    <nav>
+        <a href="/en/"><span>Home</span></a>
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
+            <option value="zh">🇨🇳 中文</option>
+            <option value="en" selected>🇬🇧 English</option>
+        </select>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon">☀️</span></button>
+    </nav>
+</header>
+
+    <main id="main">
+        <div class="tool-container">
+            <h1>Markdown Preview</h1>
+            <p class="tool-description">Edit Markdown on the left and preview the rendered result on the right in real time. Supports headings, bold and italic, inline code, fenced code blocks, lists, links, blockquotes, horizontal rules and tables.</p>
+
+            <div class="calculator-form">
+                <div class="md-toolbar">
+                    <button type="button" id="md-sample-btn" class="btn btn-secondary">Load Sample</button>
+                    <button type="button" id="md-clear-btn" class="btn btn-secondary">Clear</button>
+                    <span class="md-word-count" id="md-word-count">0 words</span>
+                </div>
+                <div class="input-group">
+                    <label for="md-editor">Markdown Source</label>
+                    <textarea class="text-input md-editor" id="md-editor" placeholder="Type Markdown here..." aria-label="Markdown source"></textarea>
+                </div>
+
+                <div class="result-area hidden" id="md-preview-section">
+                    <div class="result-label">Preview</div>
+                    <div class="md-preview" id="md-preview"></div>
+                </div>
+            </div>
+
+            <div class="tool-info">
+                <h2>What is Markdown?</h2>
+                <p>Markdown is a lightweight markup language that uses simple symbols for formatting: `#` for headings, `**` for bold, `-` for lists and backticks for inline code or code blocks. Markdown files are easy to read and write, and it is the de facto standard for GitHub, blogs and technical documentation. This previewer supports a practical syntax subset: H1-H6 headings, bold and italic, inline code, fenced code blocks, ordered and unordered lists, links, blockquotes, horizontal rules and tables, covering most everyday writing and document formatting needs.</p>
+                <h3>Syntax Cheat Sheet</h3>
+                <ul>
+                    <li><strong>Headings</strong>: `# Heading 1` through `###### Heading 6`</li>
+                    <li><strong>Bold/Italic</strong>: `**bold**`, `*italic*`</li>
+                    <li><strong>Inline code</strong>: `` `code` ``; <strong>Code block</strong>: ``` ```language ```</li>
+                    <li><strong>Lists</strong>: `- unordered` or `1. ordered`</li>
+                    <li><strong>Tables</strong>: separate columns with `|`, second row as `|---|---|`</li>
+                </ul>
+                <h3>How to Use This Tool</h3>
+                <ol>
+                    <li>Type or paste Markdown content into the editor</li>
+                    <li>The preview updates in real time after a 150ms debounce</li>
+                    <li>Click "Load Sample" to try all supported syntax, or "Clear" to start over</li>
+                    <li>A word counter below the editor shows the combined CJK and English word count</li>
+                </ol>
+                <h3>Common Use Cases</h3>
+                <p>Markdown is widely used for README files, blog posts, knowledge bases, code documentation, forum posts and chat messages. With this previewer you can quickly check how your writing will look before publishing, verify that tables and code blocks render correctly, and estimate the length of your document before you commit it to a repository or a publishing system.</p>
+                <h3>Frequently Asked Questions</h3>
+                <p><strong>Do you support task lists and images?</strong> Not yet. Task lists and image syntax are not implemented in the current subset; all other common syntax is covered.</p>
+                <p><strong>Is the rendered output safe?</strong> Yes. All content is HTML-escaped before rendering; script tags and dangerous link protocols are filtered out, so no code is executed.</p>
+                <p><strong>Is my content saved or uploaded?</strong> No. Editing and previewing happen entirely in your browser; refreshing the page clears the content.</p>
+            </div>
+        </div>
+
+        <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="markdown-preview"><span class="heart">❤</span> <span class="count">0</span></button></div>
+    </main>
+
+    <footer>
+    <div class="footer-links">
+        <a href="/en/">Home</a>
+        <a href="/about">About</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/contact">Contact</a>
+        <a href="/blog/en/">Blog</a>
+    </div>
+    <p>© 2026 Online Calculators | Free Online Calculators</p>
+</footer>
+
+</body>
+</html>
