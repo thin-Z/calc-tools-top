@@ -70,6 +70,23 @@ KV_URL / KV_REDIS_URL
 | `csp-migrate-t02.mjs` / `csp-migrate-styles.mjs` | CSP 迁移历史脚本（内联脚本外链化 / 内联 style class 化），迁移已完成，保留作审计参考 | `node scripts/csp-migrate-t02.mjs --dry-run` |
 | `measure-content.mjs` | 正文词数审计（h1→CTA 口径），支持 `--json` / `--summary` | `node scripts/measure-content.mjs [阈值] [根] [--json] [--summary]` |
 | `generate-blog-posts.py` / `generate-sitemap.ps1` | 博客生成 / sitemap 生成（**ps1 须排除 dist/docs/deliverables**，见记忆） | 见脚本头注释 |
+| `fix-hidden-display.mjs` | 修复 CSP 硬化后的 `.hidden` class 与 JS `style.display` 冲突 | `node scripts/fix-hidden-display.mjs [--dry-run]` |
+| `check-doc-sync.mjs` | 检查文档与代码的同步状态 | `node scripts/check-doc-sync.mjs` |
+| `cleanup-deprecated.mjs` | 清理旧版 cookie-consent 引用 | `node scripts/cleanup-deprecated.mjs` |
+| `gen-allowed-ids.js` | 生成 API 白名单 ID | `node scripts/gen-allowed-ids.js` |
+| `csp-migrate-t02.mjs` / `csp-migrate-styles.mjs` | CSP 迁移历史脚本（内联脚本外链化 / 内联 style class 化），迁移已完成，保留作审计参考 | `node scripts/csp-migrate-t02.mjs --dry-run` |
+| `csp-migrate-t03.mjs` | CSP 迁移 T03 脚本（历史） | `node scripts/csp-migrate-t03.mjs --dry-run` |
+| `generate-blog-posts.py` / `generate-sitemap.ps1` | 博客生成 / sitemap 生成（**ps1 须排除 dist/docs/deliverables**，见记忆） | 见脚本头注释 |
+| `scan-csp-inline.py` | 扫描全站内联脚本/事件/样式 | `python scripts/scan-csp-inline.py` |
+| `analyze_sitemap.py` | 分析 sitemap 结构 | `python scripts/analyze_sitemap.py` |
+| `full_seo_audit.py` | 全维度 SEO 审计 | `python scripts/full_seo_audit.py` |
+| `security_audit.py` | 安全审计 | `python scripts/security_audit.py` |
+| `seo_audit.py` | SEO 审计 | `python scripts/seo_audit.py` |
+| `deploy-like-system.ps1` | 部署点赞系统 | `powershell scripts/deploy-like-system.ps1` |
+| `fix-blog-hreflang.ps1` | 修复博客 hreflang | `powershell scripts/fix-blog-hreflang.ps1` |
+| `inject-internal-links.ps1` | 注入内部链接 | `powershell scripts/inject-internal-links.ps1` |
+| `inject-seo-tags.ps1` | 注入 SEO 标签 | `powershell scripts/inject-seo-tags.ps1` |
+| `validate-encoding.ps1` | 验证编码 | `powershell scripts/validate-encoding.ps1` |
 
 内容审计操作手册见 `docs/content-audit-sop.md`；构建/校验与回滚见 `docs/rollback.md`。
 

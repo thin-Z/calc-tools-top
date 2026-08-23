@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Many Working Days Between Two Dates? | Practical Guide</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Learn how to calculate working days between two dates. Working day formulas, project scheduling tips, and leave approval methods. Online working day calculator.">
+    <meta property='og:title' content='How Many Working Days Between Two Dates?'/>
+    <meta property='og:description' content='Learn how to calculate working days between two dates. Working day formulas, project scheduling tips.'/>
+    <meta property='og:type' content='article'/>
+    <meta property='og:url' content='https://www.calc-tools.top/blog/en/workday-calculator-guide'/>
+    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:locale' content='en_US'/>
+    <meta name='twitter:card' content='summary_large_image'/>
+    <meta name='twitter:title' content='How Many Working Days Between Two Dates?'/>
+    <meta name='twitter:description' content='Learn how to calculate working days between two dates. Working day formulas, project scheduling tips.'/>
+
+    <link rel="canonical" href="https://www.calc-tools.top/blog/en/workday-calculator-guide">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/blog/zh/workday-calculator-guide">
+    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/blog/en/workday-calculator-guide">
+    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/blog/zh/workday-calculator-guide">
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/theme-toggle.js" defer></script>
+    <script src="/js/i18n.js" defer></script>
+    <script src="/js/like.js" defer></script>
+    <script src="/js/site.js" defer></script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "How Many Working Days Between Two Dates?",
+        "description": "Learn how to calculate working days between two dates. Working day formulas, project scheduling tips.",
+        "author": {
+            "@type": "Person",
+            "name": "Calc-Tools Editorial"
+        },
+        "datePublished": "2026-08-23",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://www.calc-tools.top/blog/en/workday-calculator-guide"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Online Calculators"
+        }
+    }
+    </script>
+</head>
+<body>
+    <header>
+    <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
+    <nav>
+        <a href="/en/"><span>Home</span></a>
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
+            <option value="zh">🇨🇳 中文</option>
+            <option value="en" selected>🇬🇧 English</option>
+        </select>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon">☀️</span></button>
+    </nav>
+</header>
+
+    <main>
+        <article class="blog-post">
+            <nav class="breadcrumb">
+                <a href="/en/">Home</a> &gt;
+                <a href="/blog/en/">Articles</a> &gt;
+                <a href="/blog/en/?cat=tools">🔧 Tools</a> &gt;
+                <span>How Many Working Days Between Two Dates?</span>
+            </nav>
+            <div class="article-tags">
+                <a href="/blog/en/?cat=tools" class="tag tag-tools" data-tag="tools">🔧 Tools</a>
+            </div>
+            <p class="blog-meta">📅 2026-08-23 · Calc-Tools Editorial</p>
+            
+            <h1>How Many Working Days Between Two Dates?</h1>
+            
+            <p>In project management, leave approval, and contract duration calculations, you often need to determine the number of working days between two dates. Manual calculation is time-consuming and error-prone. This guide explains working day calculation methods, formulas, and practical tips, along with a free online working day calculator.</p>
+
+            <h2>What is a Working Day?</h2>
+            <p>A working day typically refers to Monday through Friday, excluding Saturday and Sunday. However, in practice, you also need to consider:</p>
+            <ul>
+                <li><strong>Public Holidays</strong>: New Year, Spring Festival, Qingming, Labor Day, Dragon Boat, Mid-Autumn, National Day, etc.</li>
+                <li><strong>Holiday Swaps</strong>: Some weekends may become working days due to holiday adjustments</li>
+                <li><strong>Company Policies</strong>: Some companies may have additional holiday arrangements</li>
+            </ul>
+
+            <h2>Working Day Calculation Methods</h2>
+            
+            <h3>Method 1: Manual Calculation (Simple Scenarios)</h3>
+            <p>For simple scenarios without holidays, follow these steps:</p>
+            <ol>
+                <li>Calculate total days between the two dates</li>
+                <li>Count the number of Saturdays and Sundays</li>
+                <li>Working days = Total days - Weekend days</li>
+            </ol>
+            
+            <p><strong>Example:</strong> August 3, 2026 (Monday) to August 7, 2026 (Friday)</p>
+            <ul>
+                <li>Total days: 5</li>
+                <li>Weekend days: 0</li>
+                <li>Working days: 5</li>
+            </ul>
+
+            <h3>Method 2: Including Holidays (Complex Scenarios)</h3>
+            <p>When date ranges include public holidays, additional deductions are needed:</p>
+            <ol>
+                <li>Calculate base working days (excluding weekends)</li>
+                <li>Identify public holidays within the range</li>
+                <li>Deduct holiday days</li>
+                <li>Add back any swapped working days</li>
+            </ol>
+
+            <h2>Working Day Calculation Formula</h2>
+            <p>General working day calculation formula:</p>
+            <p><strong>Working Days = Total Days - Weekend Days - Holiday Days + Swapped Working Days</strong></p>
+            
+            <h3>JavaScript Implementation</h3>
+            <pre><code>function calculateWorkdays(startDate, endDate, holidays = []) {
+    let workdays = 0;
+    const current = new Date(startDate);
+    
+    while (current <= endDate) {
+        const dayOfWeek = current.getDay();
+        const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+        const isHoliday = holidays.some(h => 
+            h.toDateString() === current.toDateString()
+        );
+        
+        if (!isWeekend && !isHoliday) {
+            workdays++;
+        }
+        
+        current.setDate(current.getDate() + 1);
+    }
+    
+    return workdays;
+}</code></pre>
+
+            <h2>Common Use Cases</h2>
+            
+            <h3>1. Project Scheduling</h3>
+            <p>Project managers need to estimate task durations in working days to create realistic project plans. For example:</p>
+            <ul>
+                <li>Requirements analysis: 5 working days</li>
+                <li>Development phase: 15 working days</li>
+                <li>Testing phase: 5 working days</li>
+                <li>Total duration: 25 working days (approximately 5 weeks)</li>
+            </ul>
+
+            <h3>2. Leave Approval</h3>
+            <p>When employees request leave, HR needs to calculate the number of working days. For example:</p>
+            <ul>
+                <li>Leave period: August 11, 2026 (Monday) to August 15, 2026 (Friday)</li>
+                <li>Working days: 5 days</li>
+                <li>If holidays are included, actual leave days may be fewer</li>
+            </ul>
+
+            <h3>3. Contract Duration</h3>
+            <p>Contract durations are often specified in working days. For example:</p>
+            <ul>
+                <li>Contract signing date: August 1, 2026</li>
+                <li>Duration: 30 working days</li>
+                <li>Expected completion date: September 11, 2026 (approximately 6 weeks)</li>
+            </ul>
+
+            <h3>4. Financial Settlements</h3>
+            <p>Some financial settlement cycles use working days, such as:</p>
+            <ul>
+                <li>T+1 settlement: Arrives on the next working day</li>
+                <li>T+3 settlement: Arrives three working days later</li>
+            </ul>
+
+            <h2>2026 Public Holiday Schedule</h2>
+            <p>2026 public holidays are as follows (specific swap arrangements subject to official announcements):</p>
+            
+            <table class="holiday-table">
+                <thead>
+                    <tr>
+                        <th>Holiday</th>
+                        <th>Dates</th>
+                        <th>Days</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>New Year</td>
+                        <td>January 1</td>
+                        <td>1 day</td>
+                    </tr>
+                    <tr>
+                        <td>Spring Festival</td>
+                        <td>January 28 - February 3</td>
+                        <td>7 days</td>
+                    </tr>
+                    <tr>
+                        <td>Qingming Festival</td>
+                        <td>April 4 - April 6</td>
+                        <td>3 days</td>
+                    </tr>
+                    <tr>
+                        <td>Labor Day</td>
+                        <td>May 1 - May 5</td>
+                        <td>5 days</td>
+                    </tr>
+                    <tr>
+                        <td>Dragon Boat Festival</td>
+                        <td>May 31 - June 2</td>
+                        <td>3 days</td>
+                    </tr>
+                    <tr>
+                        <td>Mid-Autumn Festival</td>
+                        <td>September 25</td>
+                        <td>1 day</td>
+                    </tr>
+                    <tr>
+                        <td>National Day</td>
+                        <td>October 1 - October 7</td>
+                        <td>7 days</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>Frequently Asked Questions</h2>
+            
+            <h3>Q: Does working day calculation include the start and end dates?</h3>
+            <p>A: Yes. The calculation includes both the start and end dates, as long as they are working days.</p>
+            
+            <h3>Q: How do you handle holiday swaps?</h3>
+            <p>A: Holiday swaps refer to adjusting weekends to working days. Calculation requires: 1) Deducting public holidays; 2) Adding back swapped working days.</p>
+            
+            <h3>Q: Do working day calculations differ between countries?</h3>
+            <p>A: Yes. Different countries have different weekend arrangements (e.g., Friday-Saturday rest) and public holidays, so adjustments are needed based on specific circumstances.</p>
+
+            <div class="blog-cta">
+                <p><strong>Use Online 🧮 Working Day Calculator</strong></p>
+                <p>Quickly calculate working days between two dates, with public holiday exclusion option</p>
+                <a href="/en/calculators/workday-calculator" class="btn btn-primary">Calculate Now →</a>
+            </div>
+
+            <div class="related-tools">
+                <h3>Related Tools</h3>
+                <ul>
+                    <li><a href="/en/calculators/date-calc">Date Calculator - Date Addition & Interval Calculation</a></li>
+                    <li><a href="/en/calculators/age-calc">Age Calculator - Precise Age Calculation</a></li>
+                    <li><a href="/en/calculators/percentage-calc">Percentage Calculator - Quick Proportion Calculations</a></li>
+                </ul>
+            </div>
+        </article>
+
+        <div class="like-section">
+            <button class="like-btn" data-tool-id="workday-calculator-guide-en" data-csp-click="handleLike">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                </svg>
+                <span class="like-count">0</span>
+            </button>
+        </div>
+    </main>
+
+    <footer>
+    <div class="footer-links">
+        <a href="/en/">Home</a>
+        <a href="/about">About</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/contact">Contact</a>
+        <a href="/blog/en/">Blog</a>
+    </div>
+    <p>© 2026 Online Calculators | Free Online Calculators</p>
+</footer>
+</body>
+</html>

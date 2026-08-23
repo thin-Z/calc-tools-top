@@ -1,6 +1,7 @@
 :root {
     /* Brand Colors */
     --brand-blue: #007AFF;
+    --brand-blue-dark: #0056CC;
     --brand-purple: #5856D6;
     --brand-orange: #FF9500;
     --brand-green: #34C759;
@@ -1114,7 +1115,7 @@ button:active, .btn:active {
 }
 
 .category-chip.active {
-    background: linear-gradient(135deg, var(--brand-blue), #0056CC);
+    background: linear-gradient(135deg, var(--brand-blue), var(--brand-blue-dark));
     color: #fff;
     box-shadow: 0 2px 8px rgba(0,122,255,0.3);
 }
@@ -2155,7 +2156,7 @@ button:active, .btn:active {
     color: #98989D;
 }
 [data-theme="dark"] .category-chip.active {
-    background: linear-gradient(135deg, var(--brand-blue), #0056CC);
+    background: linear-gradient(135deg, var(--brand-blue), var(--brand-blue-dark));
     color: #fff;
     box-shadow: 0 2px 8px rgba(0,122,255,0.3);
 }
@@ -2846,6 +2847,136 @@ button:active, .btn:active {
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.12s ease, background 0.2s ease;
+}
+
+/* Password Strength Checker - New Styles */
+.password-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.password-input-wrapper input {
+    width: 100%;
+    padding-right: 44px;
+}
+.toggle-password {
+    position: absolute;
+    right: 8px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    color: var(--text-secondary);
+    transition: color 0.2s;
+}
+.toggle-password:hover {
+    color: var(--primary);
+}
+.toggle-password svg {
+    width: 20px;
+    height: 20px;
+}
+.meter-bar {
+    height: 8px;
+    border-radius: 4px;
+    background: var(--border);
+    transition: width 0.3s, background 0.3s;
+}
+.meter-bar.veryWeak { background: #ef4444; }
+.meter-bar.weak { background: #f97316; }
+.meter-bar.medium { background: #eab308; }
+.meter-bar.strong { background: #22c55e; }
+.meter-bar.veryStrong { background: #10b981; }
+.strength-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 0.9rem;
+}
+.strength-level {
+    font-weight: 600;
+}
+.strength-feedback {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+.button-group {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+.generated-password {
+    margin-top: 16px;
+    padding: 12px;
+    background: var(--bg-muted);
+    border-radius: 8px;
+}
+.generated-password label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+.password-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.password-display code {
+    flex: 1;
+    padding: 8px 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    word-break: break-all;
+}
+.btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+}
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
+.btn-secondary {
+    background: var(--bg-muted);
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+.btn-secondary:hover {
+    background: var(--bg-card);
+}
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.tool-info {
+    margin-top: 24px;
+    padding: 16px;
+    background: var(--bg-muted);
+    border-radius: 8px;
+}
+.tool-info h2 {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+}
+.tool-info ul {
+    margin: 0;
+    padding-left: 20px;
+}
+.tool-info li {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
 }
 .cmp-btn:hover { transform: translateY(-1px); }
 .cmp-btn-primary { background: var(--primary); border-color: var(--primary); color: #fff; }
