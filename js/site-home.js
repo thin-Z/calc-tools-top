@@ -278,6 +278,23 @@ function renderUsageCounts() {
 }
 function fetchServerClickCounts() {
     if (typeof window.ApiClient === 'undefined') return;
+    if (typeof window.ApiClient.fetchClicksBulk === 'function') {
+        // 批量拉取：单请求取全部卡片点击量，替代逐卡片 GET（规避 46 并发 + KV 配额消耗）
+        const ids = [];
+        document.querySelectorAll('[data-like-id]').forEach(function(el) {
+            const toolId = el.getAttribute('data-like-id');
+            if (toolId && ids.indexOf(toolId) === -1) ids.push(toolId);
+        });
+        if (!ids.length) return;
+        window.ApiClient.fetchClicksBulk(ids).then(function(data) {
+            const map = (data && data.tools) || {};
+            ids.forEach(function(toolId) {
+                if (typeof map[toolId] === 'number') updateClickUI(toolId, map[toolId]);
+            });
+        });
+        return;
+    }
+    // 回退：无批量能力时逐个拉取
     document.querySelectorAll('[data-like-id]').forEach(function(el) {
         const toolId = el.getAttribute('data-like-id');
         if (!toolId) return;
@@ -559,29 +576,53 @@ const TOOL_KEYWORDS_ZH = {
 const DEFAULT_HOT_TOOLS = ['mortgage', 'bmi', 'tax2026', 'color-picker', 'discount', 'unit-converter', 'word-counter', 'json-formatter'];
 
 const _globalClickTotals = {};
+// 全局点击量缓存：sessionStorage 10 分钟，避免每次刷新/bfcache 恢复都重新拉取
+const CLICKS_CACHE_KEY = 'toolbox_global_clicks_cache';
+const CLICKS_CACHE_TTL = 10 * 60 * 1000;
+
+function readClicksCache() {
+    try {
+        const raw = sessionStorage.getItem(CLICKS_CACHE_KEY);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        if (!parsed || !parsed.expires || Date.now() > parsed.expires) return null;
+        return parsed.data || null;
+    } catch (e) { return null; }
+}
+
+function writeClicksCache(data) {
+    try {
+        sessionStorage.setItem(CLICKS_CACHE_KEY, JSON.stringify({
+            expires: Date.now() + CLICKS_CACHE_TTL,
+            data: data,
+        }));
+    } catch (e) {}
+}
 
 function fetchAndMergeGlobalClicks(callback) {
-    if (typeof window.ApiClient === 'undefined') {
+    if (typeof window.ApiClient === 'undefined' || typeof window.ApiClient.fetchClicksBulk !== 'function') {
         if (callback) callback();
         return;
     }
-    // 逐工具拉取全局点击量（复用 /api/clicks?toolId= 端点，服务端不再要求全量枚举 403）
     const ids = Object.keys(TOOLS_DATA);
-    let pending = ids.length;
-    if (!pending) { if (callback) callback(); return; }
-    const finish = function () {
-        pending--;
-        if (pending <= 0 && callback) callback();
-    };
-    ids.forEach(function (id) {
-        window.ApiClient.get('/api/clicks?toolId=' + encodeURIComponent(id))
-            .then(function (data) {
-                if (data && typeof data.total === 'number') {
-                    _globalClickTotals[id] = data.total;
-                }
-            })
-            .catch(function () {})
-            .then(finish);
+    if (!ids.length) { if (callback) callback(); return; }
+
+    // 缓存命中：直接合并计数并回调（不发起网络请求，杜绝 46 并发拉取）
+    const cached = readClicksCache();
+    if (cached) {
+        Object.keys(cached).forEach(function (id) { _globalClickTotals[id] = cached[id]; });
+        if (callback) callback();
+        return;
+    }
+
+    // 单次批量请求替代 46 个并发 GET（KV 调用从 ~138 次降至 1 次，规避 120/min 读限速 429）
+    window.ApiClient.fetchClicksBulk(ids).then(function (data) {
+        const map = (data && data.tools) || {};
+        Object.keys(map).forEach(function (id) { _globalClickTotals[id] = map[id]; });
+        writeClicksCache(map);
+        if (callback) callback();
+    }).catch(function () {
+        if (callback) callback();
     });
 }
 

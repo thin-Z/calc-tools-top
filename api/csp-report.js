@@ -10,7 +10,6 @@
 //  - 不落盘敏感数据：仅 console.log 结构化摘要（Vercel 函数日志即观测面）。
 
 const RATE_LIMIT_WINDOW_MS = 60 * 1000;
-const RATE_LIMIT_MAX = 20;          // 写限速：20/min
 const BODY_MAX_BYTES = 16 * 1024;   // CSP 报告体上限 16KB
 const BODY_READ_TIMEOUT_MS = 2000;
 
@@ -21,7 +20,23 @@ const ALLOWED_ORIGINS = [
   'http://localhost:5173'
 ];
 
-// 单实例内存回退：仅在未配置 KV_REST_API_URL 时启用（本地测试/开发）
+// 单实例内存限速（不消耗 Upstash KV 配额）
+
+function getClientIp(req) {
+  const xff = req.headers && req.headers['x-forwarded-for'];
+  if (xff) {
+    const segs = String(xff).split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+    if (segs.length) return segs[segs.length - 1];
+  }
+  if (req.socket && req.socket.remoteAddress) return req.socket.remoteAddress;
+  if (req.connection && req.connection.remoteAddress) return req.connection.remoteAddress;
+  return 'unknown';
+}
+
+// 写限速：每 IP 60/min。**纯内存实现**——CSP 报告是浏览器自动上报的
+// 低价值诊断数据（仅 console.log 不落盘），不需要全局 KV 一致；
+// 走 KV 反而会消耗 Upstash 免费层配额（10K/天），且浏览器批量上报易误伤。
+const RATE_LIMIT_MAX = 60;          // 写限速：60/min（放宽自 20，避免多违规页面上报误伤）
 const _rateHits = new Map();
 
 function getClientIp(req) {
@@ -35,59 +50,9 @@ function getClientIp(req) {
   return 'unknown';
 }
 
-// 写限速：每 IP 20/min。优先走 KV（多实例一致）；无 KV 时内存回退。
 async function isRateLimited(ip) {
-  if (process.env.KV_REST_API_URL) {
-    const https = require('https');
-    const http = require('http');
-    const key = 'ratelimit:csp:' + ip;
-    const url = new URL(process.env.KV_REST_API_URL + '/incrby/' + key);
-    const mod = url.protocol === 'https:' ? https : http;
-    const body = '1';
-    const next = await new Promise((resolve) => {
-      const req = mod.request({
-        hostname: url.hostname,
-        port: url.port || (url.protocol === 'https:' ? 443 : 80),
-        path: url.pathname,
-        method: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + (process.env.KV_REST_API_TOKEN || ''),
-          'Content-Type': 'application/json',
-          'Content-Length': Buffer.byteLength(body)
-        }
-      }, (res) => {
-        let data = '';
-        res.on('data', (c) => { data += c; });
-        res.on('end', () => {
-          try {
-            const parsed = JSON.parse(data);
-            resolve(parsed && parsed.result !== undefined ? parseInt(parsed.result, 10) : 0);
-          } catch (e) { resolve(0); }
-        });
-      });
-      req.on('error', () => resolve(0));
-      req.setTimeout(5000, () => { req.destroy(); resolve(0); });
-      req.write(body);
-      req.end();
-    });
-    if (next === 1) {
-      // 首增时设 TTL（60s 窗口）
-      const expireUrl = new URL(process.env.KV_REST_API_URL + '/expire/' + key + '/60');
-      const emod = expireUrl.protocol === 'https:' ? https : http;
-      const ereq = emod.request({
-        hostname: expireUrl.hostname,
-        port: expireUrl.port || (expireUrl.protocol === 'https:' ? 443 : 80),
-        path: expireUrl.pathname,
-        method: 'GET',
-        headers: { 'Authorization': 'Bearer ' + (process.env.KV_REST_API_TOKEN || '') }
-      }, (res) => { res.resume(); });
-      ereq.on('error', () => {});
-      ereq.end();
-    }
-    return next > RATE_LIMIT_MAX;
-  }
   const now = Date.now();
-  if (_rateHits.size > 10000) {
+  if (_rateHits.size > 20000) {
     for (const k of Array.from(_rateHits.keys())) {
       const alive = (_rateHits.get(k) || []).filter(function (t) { return now - t < RATE_LIMIT_WINDOW_MS; });
       if (alive.length === 0) _rateHits.delete(k);

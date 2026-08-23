@@ -42,6 +42,26 @@
     return apiFetch(API_BASE);
   }
 
+  // 批量查询多个工具点赞数：GET /api/likes?tools=a,b,c → { tools: { a: 1, b: 2 } }
+  function fetchCountsBulk(toolIds) {
+    if (!Array.isArray(toolIds) || !toolIds.length) return Promise.resolve({ tools: {} });
+    var uniq = [];
+    toolIds.forEach(function (id) {
+      if (uniq.indexOf(id) === -1) uniq.push(id);
+    });
+    return apiFetch(API_BASE + '?tools=' + encodeURIComponent(uniq.join(',')));
+  }
+
+  // 批量查询多个工具点击量：GET /api/clicks?tools=a,b,c → { tools: { a: 1, b: 2 } }
+  function fetchClicksBulk(toolIds) {
+    if (!Array.isArray(toolIds) || !toolIds.length) return Promise.resolve({ tools: {} });
+    var uniq = [];
+    toolIds.forEach(function (id) {
+      if (uniq.indexOf(id) === -1) uniq.push(id);
+    });
+    return apiFetch('/api/clicks?tools=' + encodeURIComponent(uniq.join(',')));
+  }
+
   // 点赞/取消点赞
   function toggleLike(toolId, action) {
     return apiFetch(API_BASE, {
@@ -68,6 +88,8 @@
   window.ApiClient = {
     fetchCount: fetchCount,
     fetchAllCounts: fetchAllCounts,
+    fetchCountsBulk: fetchCountsBulk,
+    fetchClicksBulk: fetchClicksBulk,
     toggleLike: toggleLike,
     getLocalLikes: getLocalLikes,
     setLocalLikes: setLocalLikes,

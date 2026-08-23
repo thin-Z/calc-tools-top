@@ -123,10 +123,10 @@ test('body 超过 16KB → 413', async () => {
   assert.strictEqual(r.status, 413);
 });
 
-test('同 IP 超过写限速（20/min）→ 429', async () => {
+test('同 IP 超过写限速（60/min）→ 429', async () => {
   const rlHeaders = { 'x-forwarded-for': '203.0.113.99' };
   let last;
-  for (let i = 0; i < 21; i++) {
+  for (let i = 0; i < 61; i++) {
     last = await postCspReport(rlHeaders, validReport());
   }
   assert.strictEqual(last.status, 429);

@@ -42,6 +42,19 @@ function startKvMock() {
     if (pathname.startsWith('/get/')) {
       const key = pathname.slice('/get/'.length);
       result = store.has(key) ? store.get(key) : null;
+    } else if (pathname.startsWith('/mget')) {
+      // Upstash REST MGET：POST /mget，body 为 key 数组，返回 values 数组（缺失为 null）
+      let raw = '';
+      req.on('data', (c) => { raw += c; });
+      req.on('end', () => {
+        let keys = [];
+        try { keys = JSON.parse(raw || '[]'); } catch (e) { keys = []; }
+        if (!Array.isArray(keys)) keys = [];
+        const vals = keys.map(function (k) { return store.has(k) ? store.get(k) : null; });
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ result: vals }));
+      });
+      return;
     } else if (pathname.startsWith('/expire/')) {
       const restPath = pathname.slice('/expire/'.length);
       const idx = restPath.lastIndexOf('/');
@@ -161,6 +174,32 @@ test('GET 返回当前总数', async () => {
   assert.strictEqual(r.status, 200);
   assert.strictEqual(r.body.total, 1);
   assert.strictEqual(r.body.toolId, 'get-tool');
+});
+
+test('GET 批量 ?tools=a,b,c → 单请求返回全部计数', async () => {
+  await httpCall(handlerPort, 'POST', '/api/clicks', JSON_HEADERS, { toolId: 'bulk-a' });
+  await httpCall(handlerPort, 'POST', '/api/clicks', JSON_HEADERS, { toolId: 'bulk-b' });
+  await httpCall(handlerPort, 'POST', '/api/clicks', JSON_HEADERS, { toolId: 'bulk-a' }); // bulk-a = 2
+  const r = await httpCall(handlerPort, 'GET', '/api/clicks?tools=bulk-a,bulk-b,bulk-nonexistent');
+  assert.strictEqual(r.status, 200);
+  assert.strictEqual(r.body.tools['bulk-a'], 2);
+  assert.strictEqual(r.body.tools['bulk-b'], 1);
+  assert.strictEqual(r.body.tools['bulk-nonexistent'], 0);
+});
+
+test('GET 批量 ?tools= 空/非法 → 400/403', async () => {
+  // tools= 空串：等同未传 tools → 落入单工具分支 → 403（toolId required）
+  const r1 = await httpCall(handlerPort, 'GET', '/api/clicks?tools=');
+  assert.strictEqual(r1.status, 403);
+  // tools 全非法字符 → 400
+  const r2 = await httpCall(handlerPort, 'GET', '/api/clicks?tools=%21%21%21');
+  assert.strictEqual(r2.status, 400);
+});
+
+test('GET 批量去重：重复 id 只查一次', async () => {
+  const r = await httpCall(handlerPort, 'GET', '/api/clicks?tools=bulk-a,bulk-a,bulk-a');
+  assert.strictEqual(r.status, 200);
+  assert.strictEqual(r.body.tools['bulk-a'], 2);
 });
 
 test('POST 正常点击 → 200 且总数 +1', async () => {
