@@ -92,6 +92,7 @@
 </head>
 <body>
     <header>
+    <a class="skip-link" href="#main">Skip to main content</a>
     <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
     <nav>
         <a href="/en/"><span>Home</span></a>
@@ -102,7 +103,7 @@
         <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon">☀️</span></button>
     </nav>
 </header>
-    <main>
+    <main id="main">
         <div class="tool-page">
             <div class="tool-header">
                 <h1>🔤 Online Case Converter</h1>
@@ -114,7 +115,7 @@
             
 
             <div class="tool-controls">
-                <textarea class="text-input" id="textInput" placeholder="Paste or type your text here to convert...">hello world, welcome to Case Converter! this tool supports 8 different case conversion modes.</textarea>
+                <textarea class="text-input" id="textInput" aria-label="Text input" placeholder="Paste or type your text here to convert...">hello world, welcome to Case Converter! this tool supports 8 different case conversion modes.</textarea>
 
                 <!-- Mode Chips -->
                 <div class="mode-chips">
@@ -136,7 +137,7 @@
                 <!-- Result Section -->
                 <div class="result-section">
                     <h3>Result</h3>
-                    <textarea class="result-area" id="resultArea" readonly placeholder="Converted text will appear here..."></textarea>
+                    <textarea class="result-area" id="resultArea" aria-label="Result" readonly placeholder="Converted text will appear here..."></textarea>
                     <div class="result-meta">
                         <span>Characters: <strong id="charCount">0</strong></span>
                         <span>Words: <strong id="wordCount">0</strong></span>

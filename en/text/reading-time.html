@@ -52,6 +52,7 @@
 </head>
 <body>
     <header>
+    <a class="skip-link" href="#main">Skip to main content</a>
     <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
     <nav>
         <a href="/en/"><span>Home</span></a>
@@ -62,7 +63,7 @@
         <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon">☀️</span></button>
     </nav>
 </header>
-    <main>
+    <main id="main">
         <div class="tool-page">
             <div class="tool-header">
                 <h1>Reading Time Calculator</h1>
@@ -72,7 +73,7 @@
 
             
 
-            <textarea class="text-input" id="rtInput" placeholder="Paste or type your text here for reading time analysis..." data-csp-input="scheduleReadingTime">A reading time calculator is a practical online tool that helps authors and editors quickly estimate how long it takes to read an article. Whether you're writing a blog post, preparing a speech, or editing a news article, knowing the reading time helps you control content length and pacing. This tool supports both English and Chinese text, and provides three speed settings: slow (200 wpm), normal (300 wpm), and fast (400 wpm). It also assesses text difficulty level from elementary to professional.</textarea>
+            <textarea class="text-input" id="rtInput" aria-label="Reading text input" placeholder="Paste or type your text here for reading time analysis..." data-csp-input="scheduleReadingTime">A reading time calculator is a practical online tool that helps authors and editors quickly estimate how long it takes to read an article. Whether you're writing a blog post, preparing a speech, or editing a news article, knowing the reading time helps you control content length and pacing. This tool supports both English and Chinese text, and provides three speed settings: slow (200 wpm), normal (300 wpm), and fast (400 wpm). It also assesses text difficulty level from elementary to professional.</textarea>
 
             <div class="speed-chips">
                 <span class="speed-chip" data-speed="slow" data-csp-click="setReadingSpeed" data-csp-arg="slow">🐢 Slow</span>

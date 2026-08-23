@@ -38,6 +38,7 @@
 </head>
 <body>
     <header>
+    <a class="skip-link" href="#main">跳到主要内容</a>
     <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
     <nav>
         <a href="/"><span>首页</span></a>
@@ -48,7 +49,7 @@
         <button id="theme-toggle" class="theme-toggle" aria-label="切换暗黑模式"><span class="theme-icon">☀️</span></button>
     </nav>
 </header>
-    <main>
+    <main id="main">
         <div class="tool-page">
             <div class="tool-header">
                 <h1>🔌 URL 编码 / 解码</h1>
@@ -60,7 +61,7 @@
             
 
             <div class="tool-controls">
-                <textarea class="text-input" id="urlInput" placeholder="输入要编码的文本，或粘贴待解码的 URL 编码字符串..." data-csp-input="doURLConvert">https://example.com/search?q=hello%20world</textarea>
+                <textarea class="text-input" id="urlInput" aria-label="URL 输入" placeholder="输入要编码的文本，或粘贴待解码的 URL 编码字符串..." data-csp-input="doURLConvert">https://example.com/search?q=hello%20world</textarea>
 
                 <!-- Mode Toggle -->
                 <div class="mode-chips">

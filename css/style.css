@@ -3330,3 +3330,29 @@ button:active, .btn:active {
     color: var(--primary);
     text-decoration: underline;
 }
+
+/* ============================================================
+   P1P2-10 可访问性：skip-link 与 :focus-visible 可见焦点
+   ============================================================ */
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 9999;
+    background: var(--primary, #2563eb);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 0 0 10px 0;
+    font-weight: 600;
+    text-decoration: none;
+    transition: none;
+}
+.skip-link:focus {
+    left: 0;
+    outline: none;
+}
+:focus-visible {
+    outline: 3px solid var(--primary, #2563eb);
+    outline-offset: 2px;
+    border-radius: 4px;
+}

@@ -54,6 +54,7 @@
 </head>
 <body>
     <header>
+    <a class="skip-link" href="#main">Skip to main content</a>
     <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
     <nav>
         <a href="/en/"><span>Home</span></a>
@@ -64,7 +65,7 @@
         <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon">☀️</span></button>
     </nav>
 </header>
-    <main>
+    <main id="main">
         <div class="tool-page">
             <div class="tool-header">
                 <h1>🔌 URL Encode / Decode</h1>
@@ -76,7 +77,7 @@
             
 
             <div class="tool-controls">
-                <textarea class="text-input" id="urlInput" placeholder="Enter text to encode or URL-encoded string to decode..." data-csp-input="doURLConvert">https://example.com/search?q=hello%20world</textarea>
+                <textarea class="text-input" id="urlInput" aria-label="URL input" placeholder="Enter text to encode or URL-encoded string to decode..." data-csp-input="doURLConvert">https://example.com/search?q=hello%20world</textarea>
 
                 <!-- Mode Toggle -->
                 <div class="mode-chips">

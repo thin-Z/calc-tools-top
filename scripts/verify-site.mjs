@@ -357,11 +357,68 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
 }
 
 // ---------- 13. 可访问性 WCAG 2.1 AA（P1P2-10，T04 启用） ----------
-// 预留断言（T04 启用）：
-//   - 每页存在 <main id="main"> + <a class="skip-link" href="#main">
-//   - dist 无「无关联 label 的 input/select/textarea」
-//   - 所有 <button> 有可访问名（文本内容或 aria-label）
-// T04 实施时移除本注释并启用下方逻辑。
+// 断言：
+//   a) 每页（除跳转页）存在 <main id="main"> + <a class="skip-link" href="#main">
+//   b) dist 中带 id 的 input/select/textarea 均有关联 label（for=id / aria-label /
+//      aria-labelledby / 隐式包裹 label）
+//   c) dist 中所有 <button> 有可访问名（文本内容或 aria-label）
+{
+  // a) 源码层面 main id + skip-link
+  const noMainId = [];
+  const noSkipLink = [];
+  walkHtml(ROOT, (f) => {
+    const rel = path.relative(ROOT, f).split(path.sep).join('/');
+    if (REDIRECT_NO_TEMPLATE.has(rel)) return;
+    const t = fs.readFileSync(f, 'utf8').replace(/^\uFEFF/, '');
+    if (!/<main\b[^>]*\bid\s*=\s*["']main["']/i.test(t)) noMainId.push(rel);
+    if (!/<a\b[^>]*\bclass\s*=\s*["'][^"']*\bskip-link\b[^"']*["'][^>]*\bhref\s*=\s*["']#main["']/i.test(t)) noSkipLink.push(rel);
+  });
+
+  // b/c) dist 层面 label 关联 + button 可访问名
+  const noLabel = [];
+  const noNameBtn = [];
+  if (fs.existsSync(DIST)) {
+    walkHtml(DIST, (f) => {
+      const rel = path.relative(DIST, f).split(path.sep).join('/');
+      const t = fs.readFileSync(f, 'utf8').replace(/^\uFEFF/, '');
+      // 表单字段
+      const fieldRe = /<(?:input|select|textarea)\b[^>]*>/gi;
+      let m;
+      while ((m = fieldRe.exec(t)) !== null) {
+        const tag = m[0];
+        if (/\btype\s*=\s*["']hidden["']/i.test(tag)) continue;
+        if (/\baria-label\s*=/i.test(tag) || /\baria-labelledby\s*=/i.test(tag)) continue;
+        const idMatch = tag.match(/\bid\s*=\s*["']([^"']+)["']/i);
+        if (!idMatch) continue;
+        const id = idMatch[1];
+        const escId = id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const hasForLabel = new RegExp('<label\\b[^>]*\\bfor\\s*=\\s*["\']' + escId + '["\']', 'i').test(t);
+        const hasWrapLabel = new RegExp('<label\\b[^>]*>[\\s\\S]{0,600}?<(?:input|select|textarea)[^>]*\\bid\\s*=\\s*["\']' + escId + '["\']', 'i').test(t);
+        if (!hasForLabel && !hasWrapLabel) noLabel.push(rel + '#' + id);
+      }
+      // 按钮可访问名
+      const btnRe = /<button\b[^>]*>([\s\S]*?)<\/button>/gi;
+      let bm;
+      while ((bm = btnRe.exec(t)) !== null) {
+        const full = bm[0];
+        if (/\baria-label\s*=/i.test(full)) continue;
+        const text = bm[1].replace(/<[^>]+>/g, '').replace(/&[a-zA-Z#0-9]+;/g, ' ').replace(/\s+/g, ' ').trim();
+        if (!text) noNameBtn.push(rel);
+      }
+    });
+  }
+
+  const a11yFails = [];
+  if (noMainId.length) a11yFails.push(`[a11y-main] ${noMainId.length} 页缺 <main id="main">（${noMainId.slice(0, 3).join(', ')}…）`);
+  if (noSkipLink.length) a11yFails.push(`[a11y-skip] ${noSkipLink.length} 页缺 skip-link（${noSkipLink.slice(0, 3).join(', ')}…）`);
+  if (noLabel.length) a11yFails.push(`[a11y-label] dist 中 ${noLabel.length} 个字段无关联 label（${noLabel.slice(0, 3).join(', ')}…）`);
+  if (noNameBtn.length) a11yFails.push(`[a11y-btn] dist 中 ${noNameBtn.length} 个 button 无可访问名（${noNameBtn.slice(0, 3).join(', ')}…）`);
+  if (a11yFails.length) {
+    a11yFails.forEach((f) => fail(f));
+  } else {
+    console.log('[13] 可访问性: main id + skip-link + label 关联 + button 可访问名 ✓');
+  }
+}
 
 // ---------- 14. SEO 断言（P1P2-01，T05 启用） ----------
 // 预留断言（T05 启用，复用 scripts/seo-batch-audit.mjs --check）：

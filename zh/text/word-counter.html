@@ -38,6 +38,7 @@
 </head>
 <body>
     <header>
+    <a class="skip-link" href="#main">跳到主要内容</a>
     <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
     <nav>
         <a href="/"><span>首页</span></a>
@@ -48,7 +49,7 @@
         <button id="theme-toggle" class="theme-toggle" aria-label="切换暗黑模式"><span class="theme-icon">☀️</span></button>
     </nav>
 </header>
-    <main>
+    <main id="main">
         <div class="tool-page">
             <div class="tool-header">
                 <h1>📝 在线字数统计</h1>
@@ -60,7 +61,7 @@
             
 
             <div class="tool-controls">
-                <textarea class="text-input" id="textInput" placeholder="在此粘贴或输入文本以进行分析...">欢迎使用在线字数统计工具！这款免费工具能帮助你快速分析文本。它统计总字符数、单词数、段落数、句子数、行数等。你还可以检查关键词密度，优化内容以获得更好的搜索引擎排名。所有数据处理均在浏览器本地完成，最大限度保护隐私。</textarea>
+                <textarea class="text-input" id="textInput" aria-label="文本输入" placeholder="在此粘贴或输入文本以进行分析...">欢迎使用在线字数统计工具！这款免费工具能帮助你快速分析文本。它统计总字符数、单词数、段落数、句子数、行数等。你还可以检查关键词密度，优化内容以获得更好的搜索引擎排名。所有数据处理均在浏览器本地完成，最大限度保护隐私。</textarea>
 
                 <!-- Mode Toggle -->
                 <div class="mode-chips">

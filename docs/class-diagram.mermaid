@@ -1,43 +1,39 @@
 classDiagram
-    class CspScanner {
-        +scanHtml(filePath) ScanResult
-        +classifyInlineScripts(html) ScriptClass[]
-        +countEventHandlers(html) EventHandlerCount
-        +exportJson(outputPath) void
-        +assertZero(scanResult) bool
+    class ToolCore {
+        <<IIFE 纯函数模块, 暴露 window.*>>
+        +hexToRgb(hex) object
+        +relativeLuminance(rgb) number
+        +contrastRatio(fg, bg) number
+        +evaluateContrast(fg, bg) object
+        +buildRegex(pattern, flags) object
+        +findMatches(text, regex) array
+        +escapeRegex(str) string
+        +escapeHtml(str) string
+        +parseMarkdown(src) string
+        +formatJSON(text, mode) object
     }
-    class CspMigrator {
-        +removeRedundantScripts(html) html
-        +extractPageScript(pageId, html) ExtractionResult
-        +replaceEventHandlers(html) html
-        +injectExternalScript(html, scriptSrc) html
+    class ToolUI {
+        <<DOM 交互模块, addEventListener>>
+        +initControls()
+        +updateResult(result)
+        +bindCopy()
+        +bindToggle()
     }
-    class EventDelegationLayer {
-        +init() void
-        -onClick(e) void
-        -onChange(e) void
-        -onInput(e) void
-        -onSubmit(e) void
-        -invoke(fnName, el, arg) void
+    class ToolPage {
+        <<zh/en HTML 页面>>
+        +JSON-LD: BreadcrumbList
+        +JSON-LD: SoftwareApplication
+        +like-btn[data-like-id]
+        +body >= 300 words
     }
-    class GtagInit {
-        +dataLayer : any[]
-        +gtag(cmd, ...args) void
+    ToolPage --> ToolCore : 加载 defer
+    ToolPage --> ToolUI : 加载 defer
+    ToolUI --> ToolCore : 调用纯函数
+    class ApiEndpoints {
+        <<api/*.js Vercel Serverless>>
+        +likes.js
+        +clicks.js
+        +csp-report.js
     }
-    class VerifyRunner {
-        +assertNoInlineScripts(distDir) bool
-        +assertNoInlineEventHandlers(distDir) bool
-        +assertCspHeader(vercelJson) bool
-        +assertLegacySix() bool
-        +runAll() Summary
-    }
-    class BuildPipeline {
-        +run() void
-        +injectAdsHead(html) html
-        +copyStatic() void
-    }
-    CspScanner --> CspMigrator : "生成基线/校验结果"
-    CspMigrator ..> EventDelegationLayer : "产出 data-csp-* 属性"
-    VerifyRunner --> CspScanner : "复用扫描能力"
-    BuildPipeline --> EventDelegationLayer : "注入 csp-events.js"
-    BuildPipeline --> GtagInit : "注入 gtag-init.js"
+    ToolPage --> ApiEndpoints : like/clicks POST
+    Browser --> ApiEndpoints : CSP violation report POST

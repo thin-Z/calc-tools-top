@@ -38,6 +38,7 @@
 </head>
 <body>
     <header>
+    <a class="skip-link" href="#main">跳到主要内容</a>
     <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
     <nav>
         <a href="/"><span>首页</span></a>
@@ -48,7 +49,7 @@
         <button id="theme-toggle" class="theme-toggle" aria-label="切换暗黑模式"><span class="theme-icon">☀️</span></button>
     </nav>
 </header>
-    <main>
+    <main id="main">
         <div class="tool-page">
             <div class="tool-header">
                 <h1>HTML 标签去除器</h1>
@@ -60,7 +61,7 @@
             
 
             <div class="tool-controls">
-                <textarea class="text-input" id="htmlInput" placeholder="在此粘贴 HTML 内容..." data-csp-input="executeStrip"><h1>Welcome to My Website</h1>
+                <textarea class="text-input" id="htmlInput" aria-label="HTML 输入" placeholder="在此粘贴 HTML 内容..." data-csp-input="executeStrip"><h1>Welcome to My Website</h1>
 <p>This is <b>bold</b> and <i>italic</i> text.</p>
 <ul>
   <li>Item 1</li>

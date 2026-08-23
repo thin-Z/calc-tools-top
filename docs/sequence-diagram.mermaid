@@ -1,38 +1,20 @@
 sequenceDiagram
-    participant D as 开发者
-    participant B as build.mjs
-    participant A as includes/adsense-head.html
-    participant I as js/gtag-init.js + js/csp-events.js
-    participant O as dist/ 输出
-    D->>B: node build.mjs
-    B->>A: 读取注入模板
-    A-->>B: gtag.js(async) + gtag-init.js(defer) + csp-events.js(defer)
-    B->>I: 读取外链脚本（复制）
-    B->>O: 注入 head 首行 + 页面级 js/inline/<page>.js 引用
-    B->>O: 生成全部 HTML 到 dist/
-    B-->>D: 构建完成
-
-    Note over D,O: --- 场景B：运行时事件委托 ---
-
     participant U as 用户
-    participant P as 页面 HTML(data-csp-click="doCalculate")
-    participant E as js/csp-events.js
-    participant W as window 全局函数(js/calculators/*.js)
-    U->>P: 点击"计算"按钮
-    P->>E: click 事件冒泡至 document
-    E->>E: e.target.closest('[data-csp-click]') 命中
-    E->>W: invoke('doCalculate', el, event)
-    W-->>U: 计算结果渲染回页面
-    Note over E: window[fn] 不存在时 console.warn 兜底
+    participant P as 工具页(HTML)
+    participant C as 核心JS(window.*)
+    participant UI as UI-JS
+    participant API as /api/likes
+    participant CSP as /api/csp-report
 
-    Note over D,O: --- 场景C：CSP 验证 ---
-
-    participant V as verify-site.mjs
-    participant S as CspScanner
-    participant C as vercel.json
-    D->>V: node verify-site.mjs
-    V->>S: 扫描 dist/**/*.html
-    S-->>V: 内联 script = 0、onxxx = 0、JSON-LD 不受影响
-    V->>C: 读取 CSP 头配置
-    C-->>V: script-src 无 'unsafe-inline'、第三方白名单齐全
-    V-->>D: PASS / FAIL（含逐项明细）
+    U->>P: 输入内容
+    P->>UI: input/click 事件
+    UI->>C: 调用纯函数(contrastRatio/parseMarkdown/...)
+    C-->>UI: 返回结构化结果
+    UI-->>P: 更新 DOM(结果区/错误提示)
+    U->>P: 点击 like-btn
+    P->>API: POST {toolId, action}
+    API-->>P: {count}
+    Note over Browser,CSP: 页面违反 CSP 时
+    Browser->>CSP: POST report-uri (application/csp-report)
+    CSP-->>Browser: 204
+    CSP->>CSP: console.log 结构化摘要(不落盘)

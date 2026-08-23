@@ -36,6 +36,7 @@
 </head>
 <body>
     <header>
+    <a class="skip-link" href="#main">Skip to main content</a>
     <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
     <nav>
         <a href="/en/"><span>Home</span></a>
@@ -46,7 +47,7 @@
         <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon">☀️</span></button>
     </nav>
 </header>
-    <main>
+    <main id="main">
         <div class="tool-page">
             <div class="tool-header">
                 <h1>HTML Stripper</h1>
@@ -58,7 +59,7 @@
             
 
             <div class="tool-controls">
-                <textarea class="text-input" id="htmlInput" placeholder="Paste HTML content here..." data-csp-input="executeStrip"><h1>Welcome to My Website</h1>
+                <textarea class="text-input" id="htmlInput" aria-label="HTML input" placeholder="Paste HTML content here..." data-csp-input="executeStrip"><h1>Welcome to My Website</h1>
 <p>This is <b>bold</b> and <i>italic</i> text.</p>
 <ul>
   <li>Item 1</li>

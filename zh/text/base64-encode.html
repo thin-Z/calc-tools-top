@@ -92,6 +92,7 @@
 </head>
 <body>
     <header>
+    <a class="skip-link" href="#main">跳到主要内容</a>
     <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
     <nav>
         <a href="/"><span>首页</span></a>
@@ -102,7 +103,7 @@
         <button id="theme-toggle" class="theme-toggle" aria-label="切换暗黑模式"><span class="theme-icon">☀️</span></button>
     </nav>
 </header>
-    <main>
+    <main id="main">
         <div class="tool-page">
             <div class="tool-header">
                 <h1>🔐 Base64 编码解码工具</h1>
@@ -113,7 +114,7 @@
             
 
             <div class="tool-controls">
-                <textarea class="text-input" id="textInput" placeholder="请输入要编码或解码的文本..." data-csp-input="doConvert">你好，欢迎使用 Base64 编码解码工具！</textarea>
+                <textarea class="text-input" id="textInput" aria-label="文本输入" placeholder="请输入要编码或解码的文本..." data-csp-input="doConvert">你好，欢迎使用 Base64 编码解码工具！</textarea>
 
                 <!-- 模式切换 -->
                 <div class="mode-chips">

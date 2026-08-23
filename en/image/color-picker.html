@@ -52,6 +52,7 @@
 </head>
 <body>
     <header>
+    <a class="skip-link" href="#main">Skip to main content</a>
     <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
     <nav>
         <a href="/en/"><span>Home</span></a>
@@ -62,7 +63,7 @@
         <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon">☀️</span></button>
     </nav>
 </header>
-    <main>
+    <main id="main">
         <div class="tool-page">
             <div class="tool-header">
                 <span class="tool-privacy-badge">🔒 Processed in your browser · No uploads</span><h1>Color Picker</h1>
@@ -73,7 +74,7 @@
                 <div class="upload-icon">📁</div>
                 <h3>Drag & drop image here, or click to select</h3><div class="upload-btn">📁 Select File</div>
                 <div class="upload-formats"><span class="format-badge">JPG</span><span class="format-badge">PNG</span><span class="format-badge">WebP</span><span class="format-badge">BMP</span><span class="format-badge">GIF</span></div><p class="st-5">Max 50MB · Browser local processing</p>
-                <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,image/bmp,image/gif">
+                <input type="file" id="fileInput" aria-label="Select image file" accept="image/jpeg,image/png,image/webp,image/bmp,image/gif">
             </div>
             <div id="pickerContainer" class="hidden">
                 <div class="preview-card">
