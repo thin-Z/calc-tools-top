@@ -243,10 +243,10 @@ function getSearchTerms() {
 }
 
 function saveSearchTerms(terms) {
-    var sorted = Object.keys(terms).sort(function(a, b) { return terms[b] - terms[a]; });
+    const sorted = Object.keys(terms).sort(function(a, b) { return terms[b] - terms[a]; });
     if (sorted.length > 30) {
-        var trimmed = {};
-        for (var i = 0; i < 30; i++) {
+        const trimmed = {};
+        for (let i = 0; i < 30; i++) {
             trimmed[sorted[i]] = terms[sorted[i]];
         }
         localStorage.setItem(SEARCH_TERMS_KEY, JSON.stringify(trimmed));
@@ -258,31 +258,31 @@ function saveSearchTerms(terms) {
 function recordSearchTerm(term) {
     term = term.trim().toLowerCase();
     if (term.length < 1) return;
-    var terms = getSearchTerms();
+    const terms = getSearchTerms();
     terms[term] = (terms[term] || 0) + 1;
     saveSearchTerms(terms);
 }
 
 function getHotSearchTerms(maxCount) {
     maxCount = maxCount || 6;
-    var terms = getSearchTerms();
-    var sorted = Object.keys(terms).sort(function(a, b) { return terms[b] - terms[a]; });
+    const terms = getSearchTerms();
+    const sorted = Object.keys(terms).sort(function(a, b) { return terms[b] - terms[a]; });
     return sorted.slice(0, maxCount);
 }
 
 /* ===== Trend & Usage Rendering ===== */
 function renderTrendBadges() {
     document.querySelectorAll('.tool-card-wrap').forEach(function(wrap) {
-        var likeBtn = wrap.querySelector('[data-like-id]');
+        const likeBtn = wrap.querySelector('[data-like-id]');
         if (!likeBtn) return;
-        var toolId = likeBtn.dataset.likeId;
-        var trend = getTrendLabel(toolId);
-        var h3 = wrap.querySelector('h3');
+        const toolId = likeBtn.dataset.likeId;
+        const trend = getTrendLabel(toolId);
+        const h3 = wrap.querySelector('h3');
         if (!h3) return;
-        var oldBadge = h3.querySelector('.trend-badge');
+        const oldBadge = h3.querySelector('.trend-badge');
         if (oldBadge) oldBadge.remove();
         if (trend) {
-            var badge = document.createElement('span');
+            const badge = document.createElement('span');
             badge.className = 'trend-badge ' + (trend === 'hot' ? 'trend-hot' : 'trend-up');
             badge.textContent = trend === 'hot' ? '🔥 今日热门' : '⬆ 上升中';
             h3.appendChild(badge);
@@ -292,14 +292,14 @@ function renderTrendBadges() {
 
 function renderUsageCounts() {
     document.querySelectorAll('.tool-card-wrap').forEach(function(wrap) {
-        var likeBtn = wrap.querySelector('.like-btn');
+        const likeBtn = wrap.querySelector('.like-btn');
         if (!likeBtn) return;
-        var toolId = likeBtn.dataset.likeId;
-        var total = getTotalClicks(toolId);
-        var existing = wrap.querySelector('.usage-count');
+        const toolId = likeBtn.dataset.likeId;
+        const total = getTotalClicks(toolId);
+        const existing = wrap.querySelector('.usage-count');
         if (existing) existing.remove();
         if (total > 0) {
-            var uc = document.createElement('span');
+            const uc = document.createElement('span');
             uc.className = 'usage-count';
             uc.textContent = '✨ ' + total;
             likeBtn.insertAdjacentElement('afterend', uc);
@@ -309,7 +309,7 @@ function renderUsageCounts() {
 function fetchServerClickCounts() {
     if (typeof window.ApiClient === 'undefined') return;
     document.querySelectorAll('[data-like-id]').forEach(function(el) {
-        var toolId = el.getAttribute('data-like-id');
+        const toolId = el.getAttribute('data-like-id');
         if (!toolId) return;
         window.ApiClient.get('/api/clicks?toolId=' + encodeURIComponent(toolId)).then(function(data) {
             if (data && typeof data.total === 'number') {
@@ -330,16 +330,16 @@ function initClickTracking() {
     document.querySelectorAll('.tool-card:not([data-click-bound])').forEach(function(card) {
         card.setAttribute('data-click-bound', 'true');
         card.addEventListener('click', function() {
-            var wrap = this.closest('.tool-card-wrap, .hot-tool-card');
+            const wrap = this.closest('.tool-card-wrap, .hot-tool-card');
             if (wrap) {
-                var likeBtn = wrap.querySelector('[data-like-id]');
+                const likeBtn = wrap.querySelector('[data-like-id]');
                 if (likeBtn) {
                     incrementClick(likeBtn.dataset.likeId);
                     return;
                 }
             }
-            var href = this.getAttribute('href') || '';
-            var match = href.match(/\/([^\/]+)\.html/);
+            const href = this.getAttribute('href') || '';
+            const match = href.match(/\/([^\/]+)\.html/);
             if (match) {
                 incrementClick(match[1]);
             }
@@ -350,26 +350,26 @@ function initClickTracking() {
 /* ===== Category Filter ===== */
 function initCategoryFilters() {
     // Check URL query param first (e.g. ?cat=health from article detail pages)
-    var urlParams = new URLSearchParams(window.location.search);
-    var urlCat = urlParams.get('cat');
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlCat = urlParams.get('cat');
     if (urlCat) {
         sessionStorage.setItem('preselectCategory', urlCat);
         // Clean URL without reload
-        var cleanUrl = window.location.pathname + window.location.hash;
+        const cleanUrl = window.location.pathname + window.location.hash;
         history.replaceState(null, '', cleanUrl);
     }
 
-    var preselect = sessionStorage.getItem("preselectCategory");
+    const preselect = sessionStorage.getItem("preselectCategory");
     if (preselect) {
         sessionStorage.removeItem("preselectCategory");
         setTimeout(function() {
             // 白名单校验：仅当 preselect 是页面已有分类时才触发，防选择器注入/非法值
-            var validCategories = Array.prototype.map.call(
+            const validCategories = Array.prototype.map.call(
                 document.querySelectorAll('.category-chip'),
                 function (ch) { return ch.getAttribute('data-category'); }
             );
             if (validCategories.indexOf(preselect) === -1) return;
-            var chip = document.querySelector(".category-chip[data-category=\"" + preselect + "\"]");
+            const chip = document.querySelector(".category-chip[data-category=\"" + preselect + "\"]");
             if (chip) chip.click();
         }, 100);
     }
@@ -420,20 +420,20 @@ function filterTools(category) {
 
 function applyFilteredPagination(category, articles) {
     // Count visible (non-filtered) items
-    var visibleItems = [];
+    const visibleItems = [];
     articles.forEach(function(article) {
-        var cats = (article.dataset.category || "").split(",");
-        var match = category === "all" || cats.includes(category);
+        const cats = (article.dataset.category || "").split(",");
+        const match = category === "all" || cats.includes(category);
         if (match) {
             visibleItems.push(article);
         }
     });
 
     // Get or create load-more wrapper
-    var section = document.querySelector(".homepage-article-list, .article-list");
+    const section = document.querySelector(".homepage-article-list, .article-list");
     if (!section) return;
-    var wrap = section.parentNode.querySelector(".load-more-wrap");
-    var btn = wrap ? wrap.querySelector(".load-more-btn") : null;
+    let wrap = section.parentNode.querySelector(".load-more-wrap");
+    let btn = wrap ? wrap.querySelector(".load-more-btn") : null;
 
     if (visibleItems.length <= PAGE_SIZE) {
         // All visible items fit on one page - hide load-more if exists
@@ -454,7 +454,7 @@ function applyFilteredPagination(category, articles) {
     wrap.style.display = "";
 
     // Hide items beyond PAGE_SIZE
-    var currentVisible = Math.min(PAGE_SIZE, visibleItems.length);
+    const currentVisible = Math.min(PAGE_SIZE, visibleItems.length);
     visibleItems.forEach(function(item, i) {
         if (i >= PAGE_SIZE) {
             item.style.display = "none";
@@ -463,28 +463,28 @@ function applyFilteredPagination(category, articles) {
         }
     });
 
-    var remaining = visibleItems.length - PAGE_SIZE;
+    const remaining = visibleItems.length - PAGE_SIZE;
     btn.textContent = "加载更多 (" + remaining + " 篇)";
     btn.disabled = false;
     btn.style.opacity = "1";
     btn.style.cursor = "pointer";
 
     // Replace click handler (remove old, add new)
-    var newBtn = btn.cloneNode(true);
+    const newBtn = btn.cloneNode(true);
     btn.parentNode.replaceChild(newBtn, btn);
 
     newBtn.addEventListener("click", function() {
         // Count how many are currently visible
-        var shown = 0;
-        var remainingCount = 0;
+        let shown = 0;
+        let remainingCount = 0;
         visibleItems.forEach(function(item, i) {
             if (i < visibleItems.length && item.style.display !== "none") {
                 shown++;
             }
         });
-        var toShow = Math.min(PAGE_SIZE, visibleItems.length - shown);
-        var shownSoFar = shown;
-        for (var i = shownSoFar; i < shownSoFar + toShow && i < visibleItems.length; i++) {
+        const toShow = Math.min(PAGE_SIZE, visibleItems.length - shown);
+        const shownSoFar = shown;
+        for (let i = shownSoFar; i < shownSoFar + toShow && i < visibleItems.length; i++) {
             visibleItems[i].style.display = "";
         }
         shown += toShow;
@@ -594,7 +594,7 @@ const TOOL_KEYWORDS_ZH = {
 // Default hot tools for new visitors
 const DEFAULT_HOT_TOOLS = ['mortgage', 'bmi', 'tax2026', 'color-picker', 'discount', 'unit-converter', 'word-counter', 'json-formatter'];
 
-var _globalClickTotals = {};
+const _globalClickTotals = {};
 
 function fetchAndMergeGlobalClicks(callback) {
     if (typeof window.ApiClient === 'undefined') {
@@ -602,10 +602,10 @@ function fetchAndMergeGlobalClicks(callback) {
         return;
     }
     // 逐工具拉取全局点击量（复用 /api/clicks?toolId= 端点，服务端不再要求全量枚举 403）
-    var ids = Object.keys(TOOLS_DATA);
-    var pending = ids.length;
+    const ids = Object.keys(TOOLS_DATA);
+    let pending = ids.length;
     if (!pending) { if (callback) callback(); return; }
-    var finish = function () {
+    const finish = function () {
         pending--;
         if (pending <= 0 && callback) callback();
     };
@@ -622,30 +622,30 @@ function fetchAndMergeGlobalClicks(callback) {
 }
 
 function initHotTools() {
-    var grid = document.getElementById('hotToolsGrid');
-    var container = document.getElementById('hotToolsContainer');
+    const grid = document.getElementById('hotToolsGrid');
+    const container = document.getElementById('hotToolsContainer');
     if (!grid || !container) return;
     
-    var likes = getLikes();
-    var clicks = getClicks();
-    var searchTerms = getSearchTerms();
+    const likes = getLikes();
+    const clicks = getClicks();
+    const searchTerms = getSearchTerms();
     
     // Composite scoring: likes × 3 + clicks × 1 + search × 2
-    var allToolIds = Object.keys(TOOLS_DATA);
-    var scored = [];
+    const allToolIds = Object.keys(TOOLS_DATA);
+    const scored = [];
     allToolIds.forEach(function(id) {
-        var score = 0;
+        let score = 0;
         score += (likes[id] || 0) * 3;
-        var clickData = clicks[id];
+        const clickData = clicks[id];
         if (clickData) score += clickData.total || 0;
-        var toolName = TOOLS_DATA[id].name['zh'].toLowerCase();
+        const toolName = TOOLS_DATA[id].name['zh'].toLowerCase();
         Object.keys(searchTerms).forEach(function(term) {
             if (toolName.includes(term)) score += (searchTerms[term] || 0) * 2;
         });
         scored.push({ id: id, score: score });
     });
     // Use global click count (if available) for scoring
-    var hasUserData = Object.keys(likes).length > 0 || Object.keys(clicks).length > 0;
+    const hasUserData = Object.keys(likes).length > 0 || Object.keys(clicks).length > 0;
     if (!hasUserData && Object.keys(_globalClickTotals).length === 0) {
         // New user with no data: use defaults
         var selected = DEFAULT_HOT_TOOLS.slice(0, 8).map(function(id) {
