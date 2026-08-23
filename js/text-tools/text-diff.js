@@ -125,7 +125,7 @@ function doDiff() {
     document.getElementById('diffRight').innerHTML = rendered.right;
 
     var stats = diffStats(diff);
-    document.getElementById('diffStats').innerHTML = '相同行: ' + stats.same + ' | 新增: <span style="color:#16a34a;font-weight:600;">+' + stats.add + '</span> | 删除: <span style="color:#dc2626;font-weight:600;">-' + stats.del + '</span> | 总变更: ' + stats.changes;
+    document.getElementById('diffStats').innerHTML = '相同行: ' + stats.same + ' | 新增: <span class="diff-stat-add">+' + stats.add + '</span> | 删除: <span class="diff-stat-del">-' + stats.del + '</span> | 总变更: ' + stats.changes;
 }
 
 function clearDiff() {

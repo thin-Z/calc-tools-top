@@ -129,7 +129,7 @@ function doGeneratePassword() {
     var count = parseInt(document.getElementById('pwCount').value) || 1;
 
     if (!upper && !lower && !digits && !symbols) {
-        document.getElementById('pwResult').innerHTML = '<p style="color:#dc2626;">请至少选择一种字符类型</p>';
+        document.getElementById('pwResult').innerHTML = '<p class="error-msg">请至少选择一种字符类型</p>';
         document.getElementById('pwStrength').innerHTML = '';
         return;
     }

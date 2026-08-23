@@ -52,7 +52,9 @@ document.addEventListener('DOMContentLoaded', function() {
     generateBtn.addEventListener('click', function() {
         const password = generateStrongPassword(16);
         generatedPasswordText.textContent = password;
-        generatedPassword.style.display = 'block';
+        // 用 classList 切换而非 style.display：.hidden 是 display:none!important，
+        // 内联 style 无法覆盖 !important（CSP 也不允许内联 style）
+        generatedPassword.classList.remove('hidden');
         copyBtn.disabled = false;
 
         // 自动填入密码框并检测

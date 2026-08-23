@@ -156,7 +156,7 @@ function doAnalyze() {
     var list = document.getElementById('keywordList');
     if (list) {
         if (!density || density.length === 0) {
-            list.innerHTML = '<li style="text-align:center;color:var(--text-secondary);padding:20px;">' +
+            list.innerHTML = '<li class="kw-empty">' +
                 (window.__kwEmptyText || 'No keyword data') + '</li>';
         } else {
             var html = '';

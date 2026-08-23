@@ -3356,3 +3356,22 @@ button:active, .btn:active {
     outline-offset: 2px;
     border-radius: 4px;
 }
+
+/* ===== CSP 合规：JS 动态注入样式 class 化（无 unsafe-inline） ===== */
+.error-msg {
+    color: #dc2626;
+    margin: 0.5rem 0;
+}
+.diff-stat-add {
+    color: #16a34a;
+    font-weight: 600;
+}
+.diff-stat-del {
+    color: #dc2626;
+    font-weight: 600;
+}
+.kw-empty {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 20px;
+}

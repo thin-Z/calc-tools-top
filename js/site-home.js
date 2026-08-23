@@ -431,8 +431,7 @@ function applyFilteredPagination(category, articles) {
     // Build or reuse load-more button
     if (!wrap) {
         wrap = document.createElement("div");
-        wrap.className = "load-more-wrap";
-        wrap.style.cssText = "text-align:center;margin-top:1.5rem;";
+        wrap.className = "load-more-wrap"; // 样式由 css/style.css .load-more-wrap 提供（CSP 无内联 style）
         btn = document.createElement("button");
         btn.className = "load-more-btn";
         section.parentNode.insertBefore(wrap, section.nextSibling);
@@ -707,7 +706,7 @@ function initHotTools() {
         html += '<div class="hot-tool-card">'
             + '<div class="hot-badge">#' + (idx + 1) + '</div>'
             + '<span class="hot-score">🔥 ' + entry.score + '</span>'
-            + '<a href="' + prefix + entry.id + '.html" class="tool-card" data-like-id="' + entry.id + '" data-category="' + cats.join(',') + '" data-keywords-zh="' + (TOOL_KEYWORDS_ZH[entry.id] || '') + '" style="text-decoration:none;color:inherit;">'
+            + '<a href="' + prefix + entry.id + '.html" class="tool-card" data-like-id="' + entry.id + '" data-category="' + cats.join(',') + '" data-keywords-zh="' + (TOOL_KEYWORDS_ZH[entry.id] || '') + '">'
             + '<div class="icon icon-' + firstCat + '">' + tool.icon + '</div>'
             + '<h3>' + name + ' ' + trendBadge + '</h3>'
             + '<p>' + (tool.desc ? (tool.desc[lang] || tool.desc['zh']) : '') + '</p>'
