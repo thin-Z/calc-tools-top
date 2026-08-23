@@ -31,7 +31,7 @@
         },
         {
           "key": "Permissions-Policy",
-          "value": "geolocation=(), camera=(), microphone=(), interest-cohort=(), fullscreen=(self)"
+          "value": "geolocation=(), camera=(), microphone=(), interest-cohort=(), fullscreen=(self), unload=(self)"
         },
         {
           "key": "Strict-Transport-Security",
