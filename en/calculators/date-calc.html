@@ -132,6 +132,10 @@
                     <input type="radio" name="calcMode" value="B" data-csp-change="toggleMode" class="st-24">
                     <span data-i18n="modeB">Date Difference</span>
                 </label>
+                <label id="modeCLabel" class="st-48">
+                    <input type="radio" name="calcMode" value="C" data-csp-change="toggleMode" class="st-24">
+                    <span>Age Calculator</span>
+                </label>
             </div>
 
             <form id="dateForm" data-csp-submit="prevent">
@@ -169,6 +173,18 @@
                         <button type="reset" class="btn btn-secondary" data-csp-click="resetForm" data-i18n="reset">Reset</button>
                     </div>
                 </div>
+
+                <!-- Mode C Fields (Age Calculator) -->
+                <div id="modeCFields" class="hidden">
+                    <div class="form-group">
+                        <label for="birthDate">Date of Birth</label>
+                        <input type="date" id="birthDate">
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary" data-csp-click="calcModeC">Calculate Age</button>
+                        <button type="reset" class="btn btn-secondary" data-csp-click="resetForm" data-i18n="reset">Reset</button>
+                    </div>
+                </div>
             </form>
 
             <!-- Result Area -->
@@ -190,6 +206,25 @@
                     <div>
                         <div data-i18n="daysDiff" class="st-1">Days Difference</div>
                         <div class="result-value" id="resultDaysDiff"></div>
+                    </div>
+                </div>
+                <!-- Mode C Result (Age Calculator) -->
+                <div id="resultC" class="hidden">
+                    <div>
+                        <div class="st-1">Exact Age</div>
+                        <div class="result-value" id="ageDisplay"></div>
+                    </div>
+                    <div class="st-49">
+                        <div class="st-1">Days Since Birth</div>
+                        <div id="totalDays" class="st-18"></div>
+                    </div>
+                    <div class="st-49">
+                        <div class="st-1">Zodiac Sign</div>
+                        <div id="zodiac" class="st-18"></div>
+                    </div>
+                    <div class="st-49">
+                        <div class="st-1">Days to Next Birthday</div>
+                        <div id="nextBirthday" class="st-18"></div>
                     </div>
                 </div>
             </div>

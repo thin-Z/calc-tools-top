@@ -39,6 +39,13 @@ function doCalculate() {
             var direction = change >= 0 ? '增长' : '下降';
             result = '从 ' + val1 + ' 到 ' + val2 + '：<strong>' + direction + ' ' + Math.abs(change).toFixed(2) + '%</strong>';
             break;
+        case 'discount':
+            // 折扣计算：A=原价, B=折扣率(%) → 折后价 + 节省金额
+            if (val2 < 0 || val2 > 100) { alert('折扣率需在 0-100 之间 / Discount rate must be 0-100'); return; }
+            var finalPrice = val1 * (1 - val2 / 100);
+            var savedAmount = val1 - finalPrice;
+            result = '原价 ' + val1 + '，折扣 ' + val2 + '%：折后价 <strong>' + finalPrice.toFixed(2) + '</strong>，节省 <strong>' + savedAmount.toFixed(2) + '</strong>';
+            break;
     }
     
     document.getElementById('percentResult').innerHTML = result;

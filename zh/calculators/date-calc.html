@@ -130,6 +130,10 @@
                     <input type="radio" name="calcMode" value="B" data-csp-change="toggleMode" class="st-24">
                     <span data-i18n="modeB">日期差</span>
                 </label>
+                <label id="modeCLabel" class="st-48">
+                    <input type="radio" name="calcMode" value="C" data-csp-change="toggleMode" class="st-24">
+                    <span>年龄计算</span>
+                </label>
             </div>
 
             <form id="dateForm" data-csp-submit="prevent">
@@ -167,6 +171,18 @@
                         <button type="reset" class="btn btn-secondary" data-csp-click="resetForm" data-i18n="reset">重置</button>
                     </div>
                 </div>
+
+                <!-- 模式 C 字段（年龄计算） -->
+                <div id="modeCFields" class="hidden">
+                    <div class="form-group">
+                        <label for="birthDate">出生日期</label>
+                        <input type="date" id="birthDate">
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary" data-csp-click="calcModeC">计算年龄</button>
+                        <button type="reset" class="btn btn-secondary" data-csp-click="resetForm" data-i18n="reset">重置</button>
+                    </div>
+                </div>
             </form>
 
             <!-- 结果区域 -->
@@ -188,6 +204,25 @@
                     <div>
                         <div data-i18n="daysDiff" class="st-1">间隔天数</div>
                         <div class="result-value" id="resultDaysDiff"></div>
+                    </div>
+                </div>
+                <!-- 模式 C 结果（年龄计算） -->
+                <div id="resultC" class="hidden">
+                    <div>
+                        <div class="st-1">周岁年龄</div>
+                        <div class="result-value" id="ageDisplay"></div>
+                    </div>
+                    <div class="st-49">
+                        <div class="st-1">出生天数</div>
+                        <div id="totalDays" class="st-18"></div>
+                    </div>
+                    <div class="st-49">
+                        <div class="st-1">生肖</div>
+                        <div id="zodiac" class="st-18"></div>
+                    </div>
+                    <div class="st-49">
+                        <div class="st-1">距下次生日</div>
+                        <div id="nextBirthday" class="st-18"></div>
                     </div>
                 </div>
             </div>

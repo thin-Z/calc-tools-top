@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+
+<html lang="zh">
+
 <head>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -13,79 +15,31 @@
 <script src="/js/theme-init.js"></script>
 <script src="/js/theme-toggle.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>折扣计算器 - 在线计算打折价格</title>
+    <title>折扣计算器 - 工具箱里</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="免费在线折扣计算器，输入原价和折扣率，快速计算折后价格和节省金额，支持百分比折扣和满减计算。">
-    <meta property='og:title' content='折扣计算器 - 在线计算打折价格'/>
-    <meta property='og:description' content='免费在线折扣计算器，输入原价和折扣率，快速计算折后价格和节省金额，支持百分比折扣和满减计算。'/>
+    <meta name="description" content="折扣计算已合并到百分比计算器">
+    <meta name="robots" content="noindex">
+    <meta property='og:title' content='折扣计算器 - 工具箱里'/>
+    <meta property='og:description' content='折扣计算已合并到百分比计算器'/>
     <meta property='og:type' content='website'/>
-    <meta property='og:url' content='https://www.calc-tools.top/zh/calculators/discount'/>
+    <meta property='og:url' content='https://www.calc-tools.top/zh/calculators/percentage-calc'/>
     <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
     <meta property='og:locale' content='zh_CN'/>
     <meta name='twitter:card' content='summary_large_image'/>
-    <meta name='twitter:title' content='折扣计算器 - 在线计算打折价格'/>
-    <meta name='twitter:description' content='免费在线折扣计算器，输入原价和折扣率，快速计算折后价格和节省金额，支持百分比折扣和满减计算。'/>
-
-    <link rel="canonical" href="https://www.calc-tools.top/zh/calculators/discount">
-    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/calculators/discount">
-    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/calculators/discount">
-    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/zh/calculators/discount">
+    <meta name='twitter:title' content='折扣计算器 - 工具箱里'/>
+    <meta name='twitter:description' content='折扣计算已合并到百分比计算器'/>
+    <link rel="canonical" href="https://www.calc-tools.top/zh/calculators/percentage-calc">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/calculators/percentage-calc">
+    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/calculators/percentage-calc">
+    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/zh/calculators/percentage-calc">
     <link rel="stylesheet" href="../../css/style.css">
     <script src="/js/i18n.js" defer></script>
-    <script src="/js/like.js" defer></script>
-    <script src="/js/calculators/discount.js" defer></script>
-    <script type="application/ld+json">
-    {
-    "@context": "https://schema.org",
-    "@graph": [
-        {
-            "@type": "BreadcrumbList",
-            "itemListElement": [
-                { "@type": "ListItem", "position": 1, "name": "在线工具", "item": "https://www.calc-tools.top/" },
-                { "@type": "ListItem", "position": 2, "name": "折扣计算器 - 在线计算打折价格", "item": "https://www.calc-tools.top/zh/calculators/discount" }
-            ]
-        },
-        {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-        {
-            "@type": "Question",
-            "name": "打 8 折是什么意思？",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "打 8 折就是按原价的 80% 出售，即价格乘以 0.8。折扣率 20% = 打 8 折。"
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "满减和打折哪个划算？",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "满减和打折哪个更划算取决于消费金额。大额消费通常打折更优惠，小额消费满减可能更合适。建议用计算器对比。"
-            }
-        }
-    ]
-}
-    ]
-}
-    </script>
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "折扣计算器 - 在线计算打折价格",
-    "url": "https://www.calc-tools.top/zh/calculators/discount",
-    "description": "免费在线折扣计算器，输入原价和折扣率，快速计算折后价格和节省金额，支持百分比折扣和满减计算。",
-    "applicationCategory": "UtilitiesApplication",
-    "operatingSystem": "Web",
-    "inLanguage": "zh-CN"
-}
-</script>
+    <script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
+<meta http-equiv="refresh" content="0; url=/zh/calculators/percentage-calc">
 </head>
+
 <body>
-    <header>
+<header>
     <a class="skip-link" href="#main">跳到主要内容</a>
     <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
     <nav>
@@ -97,54 +51,16 @@
         <button id="theme-toggle" class="theme-toggle" aria-label="切换暗黑模式"><span class="theme-icon">☀️</span></button>
     </nav>
 </header>
-
     <main id="main">
-        <div class="page-header">
-            <h1>折扣计算器 - 在线计算打折价格</h1>
-            <p>免费在线折扣计算器，输入原价和折扣率，快速计算折后价格和节省金额，支持百分比折扣和满减计算。</p>
-        </div>
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="discount"><span class="heart">❤</span> <span class="count">0</span></button></div>
+<h1>折扣计算器</h1>
 
-        
+<h2>折扣计算器</h2>
 
-        <div class="tool-form">
-            <div class="form-group"><label>原价（元）</label><input type="number" id="originalPrice" value="100" min="0" step="0.01"></div><div class="form-group"><label>折扣率（%）</label><input type="number" id="discountRate" value="20" min="0" max="100" step="1"></div><div class="form-actions"><button type="button" class="btn btn-primary" data-csp-click="doCalculate">计算</button><button type="reset" class="btn btn-secondary" data-csp-click="resetForm">重置</button></div>
-        </div>
+<p>折扣计算已合并到百分比计算器中</p>
 
-        <div class="result-card hidden" id="resultArea">
-            <div class="st-2"><p class="st-4">折后价格</p><p class="st-23"><span id="finalPrice"></span> 元</p><hr class="st-7"><p>原价折扣：<span id="discountPercent"></span></p><p>节省金额：<span id="savedAmount"></span> 元</p></div>
-        </div>
+<p><a href="/zh/calculators/percentage-calc">点击这里跳转到百分比计算器</a></p>
 
-        
-
-        <div class="tool-content"><h2>折扣计算器使用说明</h2><p>输入商品原价和折扣率，快速计算折后价格和节省金额。适用于网购比价、商场促销计算、团购优惠计算等场景。</p><h3>折扣换算技巧</h3><p>折扣率 10% = 打 9 折，折扣率 20% = 打 8 折，折扣率 50% = 打 5 折。折扣率越大，折后价越低。</p></div>
-
-        <div class="related-tools"><h3>相关工具</h3><ul><li><a href="/zh/calculators/electricity">电费计算器</a></li><li><a href="/zh/calculators/fuel-cost">油耗计算器</a></li></ul></div>
-            <section class="related-posts">
-        <h3>相关阅读</h3>
-        <ul>
-            <li><a href="/blog/zh/discount-calculation-tips">打折怎么算？折扣计算公式与省钱技巧</a></li>
-        </ul>
-    </section>
-<section class="tool-content">
-<h2>关于折扣计算器</h2>
-<p>折扣计算器是一款完全免费的在线工具，帮助用户计算折扣后价格与节省金额。无论你是普通用户还是专业人士，都可以在不安装任何软件的情况下快速使用。</p>
-<p>无论是写作者、编辑、学生还是网站开发者，凡是日常需要处理文本的人，都能借助它快速获得可靠的处理结果。</p>
-<h2>如何使用折扣计算器</h2>
-<ol>
-<li>在输入区域粘贴或输入你的文本。</li>
-<li>根据需求配置处理选项。</li>
-<li>点击“分析/处理”按钮，立即获得结果。</li>
-<li>使用复制按钮将结果保存到剪贴板。</li>
-</ol>
-<h2>折扣计算器常见问题</h2>
-<h3>折扣计算器完全免费吗？</h3><p>是的，折扣计算器完全免费，无需注册账号，也无需下载任何软件。</p>
-<h3>计算结果准确吗？</h3><p>所有计算均在浏览器本地完成，采用成熟可靠的计算公式，结果准确且稳定。</p>
-<h3>我的数据安全吗？</h3><p>你的隐私优先。所有输入内容都在你的设备上处理，不会上传到任何服务器。</p>
-<h3>手机可以使用吗？</h3><p>可以。页面完全适配手机、平板和电脑浏览器，随时随地都能使用。</p>
-</section>
     </main>
-
     <footer>
     <div class="footer-links">
         <a href="/">首页</a>
@@ -155,9 +71,6 @@
     </div>
     <p>© 2026 工具箱里 | 免费在线工具</p>
 </footer>
+</body>
 
-    <script src="/js/inline/discount.js" defer></script>
-
-    </body>
 </html>
-

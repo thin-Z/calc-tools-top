@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -13,80 +15,31 @@
 <script src="/js/theme-init.js"></script>
 <script src="/js/theme-toggle.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discount Calculator - Calculate Sale Price Online</title>
+    <title>Discount Calculator - ToolBox</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="Free online discount calculator. Enter original price and discount rate to calculate final price and savings instantly.">
-    <meta property='og:title' content='Discount Calculator - Calculate Sale Price Online'/>
-    <meta property='og:description' content='Free online discount calculator. Enter original price and discount rate to calculate final price and savings instantly.'/>
+    <meta name="description" content="Discount calculation has been merged into the Percentage Calculator">
+    <meta name="robots" content="noindex">
+    <meta property='og:title' content='Discount Calculator - ToolBox'/>
+    <meta property='og:description' content='Discount calculation has been merged into the Percentage Calculator'/>
     <meta property='og:type' content='website'/>
-    <meta property='og:url' content='https://www.calc-tools.top/en/calculators/discount'/>
+    <meta property='og:url' content='https://www.calc-tools.top/en/calculators/percentage-calc'/>
     <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
     <meta property='og:locale' content='en_US'/>
     <meta name='twitter:card' content='summary_large_image'/>
-    <meta name='twitter:title' content='Discount Calculator - Calculate Sale Price Online'/>
-    <meta name='twitter:description' content='Free online discount calculator. Enter original price and discount rate to calculate final price and savings instantly.'/>
-
-    <link rel="canonical" href="https://www.calc-tools.top/en/calculators/discount">
-    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/calculators/discount">
-    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/calculators/discount">
-    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/zh/calculators/discount">
+    <meta name='twitter:title' content='Discount Calculator - ToolBox'/>
+    <meta name='twitter:description' content='Discount calculation has been merged into the Percentage Calculator'/>
+    <link rel="canonical" href="https://www.calc-tools.top/en/calculators/percentage-calc">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/calculators/percentage-calc">
+    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/calculators/percentage-calc">
+    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/zh/calculators/percentage-calc">
     <link rel="stylesheet" href="../../css/style.css">
-
     <script src="/js/i18n.js" defer></script>
-    <script src="/js/like.js" defer></script>
-    <script src="/js/calculators/discount.js" defer></script>
-    <script type="application/ld+json">
-    {
-    "@context": "https://schema.org",
-    "@graph": [
-        {
-            "@type": "BreadcrumbList",
-            "itemListElement": [
-                { "@type": "ListItem", "position": 1, "name": "Online Calculators", "item": "https://www.calc-tools.top/en/" },
-                { "@type": "ListItem", "position": 2, "name": "Discount Calculator - Calculate Sale Price Online", "item": "https://www.calc-tools.top/en/calculators/discount" }
-            ]
-        },
-        {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-        {
-            "@type": "Question",
-            "name": "What does 20% off mean?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "20% off means you pay 80% of the original price. For example,  with 20% off costs ."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "Which is better: discount or fixed amount off?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "It depends on the purchase amount. Percentage discounts are usually better for larger purchases, while fixed amount off can be better for smaller purchases."
-            }
-        }
-    ]
-}
-    ]
-}
-    </script>
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Discount Calculator - Calculate Sale Price Online",
-    "url": "https://www.calc-tools.top/en/calculators/discount",
-    "description": "Free online discount calculator. Enter original price and discount rate to calculate final price and savings instantly.",
-    "applicationCategory": "UtilitiesApplication",
-    "operatingSystem": "Web",
-    "inLanguage": "en"
-}
-</script>
+    <script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
+<meta http-equiv="refresh" content="0; url=/en/calculators/percentage-calc">
 </head>
+
 <body>
-    <header>
+<header>
     <a class="skip-link" href="#main">Skip to main content</a>
     <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
     <nav>
@@ -98,57 +51,16 @@
         <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon">☀️</span></button>
     </nav>
 </header>
-
     <main id="main">
-        <div class="page-header">
-            <h1>Discount Calculator - Calculate Sale Price Online</h1>
-            <p>Free online discount calculator. Enter original price and discount rate to calculate final price and savings instantly.</p>
-        </div>
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="discount"><span class="heart">❤</span> <span class="count">0</span></button></div>
+<h1>Discount Calculator</h1>
 
-        
+<h2>Discount Calculator</h2>
 
-        <div class="tool-form">
-            <div class="form-group"><label>Original Price ($)</label><input type="number" id="originalPrice" value="100" min="0" step="0.01"></div><div class="form-group"><label>Discount Rate (%)</label><input type="number" id="discountRate" value="20" min="0" max="100" step="1"></div><div class="form-actions"><button type="button" class="btn btn-primary" data-csp-click="doCalculate">Calculate</button><button type="reset" class="btn btn-secondary" data-csp-click="resetForm">Reset</button></div>
-        </div>
+<p>Discount calculation has been merged into the Percentage Calculator</p>
 
-        <div class="result-card hidden" id="resultArea">
-            <div class="st-2"><p class="st-4">Final Price</p><p class="st-23">$<span id="finalPrice"></span></p><hr class="st-7"><p>Discount: <span id="discountPercent"></span></p><p>You Save: $<span id="savedAmount"></span></p></div>
-        </div>
+<p><a href="/en/calculators/percentage-calc">Go to Percentage Calculator</a></p>
 
-        
-
-        <div class="tool-content"><h2>Discount Calculator Guide</h2><p>Calculate sale prices and savings instantly. Perfect for shopping comparisons, promotional offers, and budget planning.</p><h3>Quick Reference</h3><p>10% off = pay 90%, 20% off = pay 80%, 50% off = pay 50%.</p></div>
-
-        <div class="related-tools"><h3>Related Tools</h3><ul><li><a href="/en/calculators/electricity">Electricity Calculator</a></li><li><a href="/en/calculators/fuel-cost">Fuel Cost Calculator</a></li></ul></div>
-            <section class="related-posts">
-        <h3>Related Reading</h3>
-        <ul>
-            <li><a href="/blog/en/discount-calculation-tips">How to Calculate Discounts: Formula and Shopping Tips</a></li>
-        </ul>
-    </section>
-<section class="tool-content">
-<h2>About Discount Calculator</h2>
-<p>Discount Calculator is a completely free online tool that helps you Calculate discounted price and savings. Whether you are a casual user or a professional, you can use it instantly without installing any software.</p>
-<p>It is especially useful for writers, editors, students and web developers who work with text every day and need quick, reliable processing.</p>
-<h2>How to Use Discount Calculator</h2>
-<ol>
-<li>Paste or type your text into the input area.</li>
-<li>Configure the options to match your exact requirements.</li>
-<li>Click the Process button to get the result immediately.</li>
-<li>Use the copy button to save the output to your clipboard.</li>
-</ol>
-<h2>Discount Calculator FAQ</h2>
-<h3>Is Discount Calculator free to use?</h3><p>Yes, Discount Calculator is completely free. There are no hidden fees, no account registration and no download required.</p>
-<h3>How accurate are the results?</h3><p>All calculations are performed locally in your browser using well-established formulas, so the results are accurate and consistent.</p>
-<h3>Is my data private?</h3><p>Your privacy is a priority. Everything you enter is processed directly on your device and is never uploaded to any server.</p>
-<h3>Does Discount Calculator work on mobile?</h3><p>Yes. The page is fully responsive and works smoothly on phones, tablets and desktop browsers.</p>
-
-<h2>Why Use discount</h2>
-<p>Unlike desktop applications or complicated spreadsheets, discount works instantly in your browser with zero setup. You get the same reliable results whether you are on a computer, tablet or phone, and there is nothing to download, register or pay for. The tool is updated regularly and designed with a clean, distraction-free interface so you can focus on the task instead of figuring out the software.</p>
-</section>
     </main>
-
     <footer>
     <div class="footer-links">
         <a href="/en/">Home</a>
@@ -159,10 +71,6 @@
     </div>
     <p>© 2026 Online Calculators | Free Online Calculators</p>
 </footer>
+</body>
 
-    <script src="/js/inline/discount.js" defer></script>
-
-
-    </body>
 </html>
-

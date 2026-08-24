@@ -781,15 +781,7 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-  <url>
-    <loc>https://www.calc-tools.top/en/calculators/age-calc</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/age-calc'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/age-calc'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/age-calc'/>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+  
   <url>
     <loc>https://www.calc-tools.top/en/calculators/bmi</loc>
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/bmi'/>
@@ -844,15 +836,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://www.calc-tools.top/en/calculators/discount</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/discount'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/discount'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/discount'/>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+  
   <url>
     <loc>https://www.calc-tools.top/en/calculators/electricity</loc>
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/electricity'/>
@@ -952,15 +936,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://www.calc-tools.top/en/calculators/password-strength</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/password-strength'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/password-strength'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/password-strength'/>
-    <lastmod>2026-08-23</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+  
   <url>
     <loc>https://www.calc-tools.top/en/calculators/percentage-calc</loc>
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/percentage-calc'/>
@@ -1252,15 +1228,7 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
-  <url>
-    <loc>https://www.calc-tools.top/zh/calculators/age-calc</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/age-calc'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/age-calc'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/age-calc'/>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+  
   <url>
     <loc>https://www.calc-tools.top/zh/calculators/bmi</loc>
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/bmi'/>
@@ -1315,15 +1283,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://www.calc-tools.top/zh/calculators/discount</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/discount'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/discount'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/discount'/>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+  
   <url>
     <loc>https://www.calc-tools.top/zh/calculators/electricity</loc>
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/electricity'/>
@@ -1423,15 +1383,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://www.calc-tools.top/zh/calculators/password-strength</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/password-strength'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/password-strength'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/password-strength'/>
-    <lastmod>2026-08-23</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
+  
   <url>
     <loc>https://www.calc-tools.top/zh/calculators/percentage-calc</loc>
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/percentage-calc'/>
