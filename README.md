@@ -6,13 +6,13 @@
 
 | 部分 | 说明 |
 |------|------|
-| 前端 | 纯静态 HTML/CSS/JS（无框架），`zh/`、`en/` 双语，`blog/` 博客（**全站 173 页**） |
+| 前端 | 纯静态 HTML/CSS/JS（无框架），`zh/`、`en/` 双语，`blog/` 博客（**源码 190 HTML / dist 185 页**：43 工具×2 语言 + 6 分类索引 + 78 博客 + 结构页） |
 | 构建 | Vercel `buildCommand = node scripts/build.mjs`，`outputDirectory = dist`（复制站点 → GA4/AdSense 注入 → 版本号 → 卫生转换 → CSS 压缩 → CMP 横幅） |
 | API | `api/likes.js`（点赞）、`api/clicks.js`（点击），Node Serverless Function |
 | 存储 | **Vercel KV（Upstash Redis）**，点赞/点击计数 + 限速/防刷均存于此 |
 | 广告 | AdSense Auto Ads，client ID 单一来源 `includes/adsense-head.html`，构建期注入全站 |
 | 分析 | GA4 `G-B61D908J5F`（`includes/adsense-head.html` 单一来源，构建期剥离占位符守卫） |
-| 安全 | **CSP 全站硬化**：script-src / style-src 无 `unsafe-inline`（`js/csp-events.js` 委托层 + `js/inline/*.js` 外链化），img-src 白名单化；`verify-site.mjs` 9 项断言守护 |
+| 安全 | **CSP 全站硬化**：script-src / style-src 无 `unsafe-inline`（`js/csp-events.js` 委托层 + `js/inline/*.js` 外链化），img-src 白名单化；`verify-site.mjs` 15 项断言守护 |
 
 ## 环境变量（Vercel 项目 Settings → Environment Variables）
 
@@ -61,7 +61,7 @@ KV_URL / KV_REDIS_URL
 | 脚本 | 作用 | 用法 |
 |------|------|------|
 | `build.mjs` | Vercel 构建入口：复制到 `dist/` → 清理旧 cookie-consent → GA4 启用/占位守卫 → 注入 AdSense（单一来源 `includes/adsense-head.html`）→ 注入缓存版本号（`?v=YYYYMMDDHHmm`，仅 dist）→ 卫生转换（去 BOM / charset 置首 / 懒加载 / inline→.hidden）→ CSS 压缩 → CMP 横幅注入 | `node scripts/build.mjs` |
-| `verify-site.mjs` | 集成校验 9 项断言：header/footer 字节一致 / JSON-LD 5 项 / 静态 AdSense 唯一性 / 断链 / 浮动控件清零 / GA4 ID 不变量 / CSP 无内联脚本 / 无内联事件处理器 / CSP 头无 unsafe-inline | `node scripts/verify-site.mjs`（全绿退出码 0） |
+| `verify-site.mjs` | 集成校验 **15 项断言**：header/footer 字节一致 / JSON-LD（check-jsonld 5 项）/ 静态 AdSense 唯一性 / 断链 / 浮动控件清零 / GA4 ID 不变量 / CSP 无内联脚本 / 无内联事件处理器 / CSP 头无 unsafe-inline / 图片懒加载 / 图片 alt / SRI integrity / a11y（main+skip-link+label）/ SEO 存在率 / site.js 无 var | `node scripts/verify-site.mjs`（全绿退出码 0） |
 | `normalize-template.mjs` | 全站 header/footer 模板归一（T02）：按 `includes/header-{zh,en}.html` / `footer-{zh,en}.html` 替换，移除静态 AdSense 标签与 `#gw-theme`/`.gw-lang`/内联 `switchLang`，脚本引用绝对化 | `node scripts/normalize-template.mjs --dry-run`（报告）/ 无参数（落盘） |
 | `inject-adsense.mjs` | 独立版 AdSense/GA4 注入（build.mjs 内嵌同逻辑） | `node scripts/inject-adsense.mjs` |
 | `check-links.js` | 断链扫描（相对/绝对路径存在性 + 越界 + cleanUrls） | `node scripts/check-links.js` |
@@ -100,8 +100,8 @@ KV_URL / KV_REDIS_URL
 #    → CSS 压缩 → CMP 横幅（仅 dist，源码不含 ?v）
 node scripts/build.mjs
 
-# 2) 集成校验 9 项断言：header/footer 字节一致 + JSON-LD + AdSense 唯一性
-#    + 断链 + 浮动控件清零 + GA4 不变量 + CSP 3 项（全绿退出码 0）
+# 2) 集成校验 15 项断言：header/footer 字节一致 + JSON-LD + AdSense 唯一性
+#    + 断链 + 浮动控件清零 + GA4 不变量 + CSP 3 项 + 懒加载/alt/SRI/a11y/SEO/var（全绿退出码 0）
 node scripts/verify-site.mjs
 
 # 3) 断链回归（单独跑亦可）
@@ -109,10 +109,10 @@ node scripts/check-links.js
 ```
 
 期望结果：
-- `build.mjs`：`AdSense 注入: 更新 173 | ...` + `版本号注入: <STAMP> | ...` + `CMP 横幅注入: ...`；
+- `build.mjs`：`AdSense 注入: 更新 185 | ...` + `版本号注入: <STAMP> | ...` + `CMP 横幅注入: ...`；
 - dist 内每页**恰好 1 个** adsbygoogle 标签（与 `includes/adsense-head.html` 字节一致）且含 `?v=`；
 - 源码内 **0 个**静态 adsbygoogle 标签、**0 个** `#gw-theme`/`.gw-lang`/内联 `switchLang`；
-- `verify-site.mjs` 输出 `✅ verify-site 全绿`（9/9 断言）。
+- `verify-site.mjs` 输出 `✅ verify-site 全绿`（15/15 断言）。
 
 > 模板统一说明：全站 header/footer 以 `includes/header-{zh,en}.html`、`includes/footer-{zh,en}.html` 为字节基准；
 > 改导航/页脚只需改这 4 个文件，然后跑 `node scripts/normalize-template.mjs` 重新落盘全站 HTML。
