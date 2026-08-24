@@ -3375,3 +3375,160 @@ button:active, .btn:active {
     color: var(--text-secondary);
     padding: 20px;
 }
+
+/* ============================================================
+   工具详情页美化 (2026-08-24) — 玻璃拟态 + 品牌渐变
+   纯 CSS 追加,不改动既有规则;全站工具页共用(zh/en × 92 页)
+   ============================================================ */
+
+/* --- 页面头部:品牌渐变标题 + 装饰线 --- */
+.page-header { position: relative; }
+.page-header h1 {
+    background: linear-gradient(120deg, var(--brand-blue), var(--brand-purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    text-shadow: none;
+}
+.page-header::after {
+    content: '';
+    display: block;
+    width: 64px;
+    height: 4px;
+    margin: 16px auto 0;
+    border-radius: var(--radius-full);
+    background: linear-gradient(90deg, var(--brand-blue), var(--brand-purple));
+    opacity: 0.8;
+}
+
+/* --- 表单卡片:玻璃拟态 + 圆角 + 柔和光晕 --- */
+.tool-form,
+.calculator-form {
+    background: var(--glass-bg);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 8px 30px rgba(0,122,255,0.06), var(--shadow-md);
+    position: relative;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.tool-form:hover,
+.calculator-form:hover {
+    box-shadow: 0 12px 36px rgba(0,122,255,0.1), var(--shadow-lg);
+}
+
+/* --- 输入控件:更圆润 + 聚焦光晕 --- */
+.form-group input,
+.form-group select,
+.input-group input[type="text"],
+.regex-pattern-input {
+    border-radius: var(--radius-md);
+    background: var(--bg-card);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-group input:focus,
+.form-group select:focus,
+.input-group input[type="text"]:focus,
+.regex-pattern-input:focus {
+    border-color: var(--brand-blue);
+    box-shadow: 0 0 0 3px var(--primary-light), 0 4px 16px rgba(0,122,255,0.15);
+}
+
+/* --- 按钮:主按钮渐变胶囊 + 副按钮玻璃描边 --- */
+.btn-primary {
+    background: linear-gradient(135deg, var(--brand-blue), var(--brand-blue-dark));
+    border-radius: var(--radius-full);
+    box-shadow: 0 4px 16px var(--primary-glow);
+}
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--brand-blue), var(--brand-blue-dark));
+    box-shadow: 0 6px 22px var(--primary-glow);
+}
+.btn-secondary {
+    border-radius: var(--radius-full);
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+/* --- 结果卡片:品牌渐变底 + 渐变数字 --- */
+.result-card {
+    background: linear-gradient(135deg, var(--primary-light), rgba(88,86,214,0.08));
+    border: 1px solid rgba(0,122,255,0.2);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 8px 30px rgba(0,122,255,0.08);
+    transition: box-shadow 0.3s ease;
+}
+.result-card .result-value {
+    background: linear-gradient(120deg, var(--brand-blue), var(--brand-purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* --- 内容说明区与相关工具:圆角统一 --- */
+.tool-content {
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+.related-tools {
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+/* --- 点赞按钮胶囊化 --- */
+.detail-like {
+    border-radius: var(--radius-full);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+/* --- 图片/文本工具上传区:玻璃拟态 + 品牌虚线 --- */
+.upload-zone {
+    border-radius: var(--radius-xl);
+    border: 2px dashed rgba(0,122,255,0.35);
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s ease;
+}
+.upload-zone:hover,
+.upload-zone.drag-over {
+    border-color: var(--brand-blue);
+    background: rgba(0,122,255,0.05);
+    transform: translateY(-2px);
+}
+
+/* --- 入场动画(复用既有 fadeInUp keyframes) --- */
+.tool-form,
+.calculator-form,
+.result-card {
+    animation: fadeInUp 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+/* --- 暗色模式适配 --- */
+[data-theme="dark"] .tool-form,
+[data-theme="dark"] .calculator-form {
+    background: rgba(28,28,30,0.72);
+    border-color: rgba(255,255,255,0.08);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4), var(--shadow-md);
+}
+[data-theme="dark"] .result-card {
+    background: linear-gradient(135deg, rgba(10,132,255,0.14), rgba(104,86,232,0.08));
+    border-color: rgba(10,132,255,0.25);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+}
+[data-theme="dark"] .btn-secondary {
+    background: rgba(44,44,46,0.7);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+[data-theme="dark"] .upload-zone {
+    background: rgba(28,28,30,0.6);
+    border-color: rgba(10,132,255,0.4);
+}
+[data-theme="dark"] .upload-zone:hover,
+[data-theme="dark"] .upload-zone.drag-over {
+    background: rgba(10,132,255,0.1);
+}
