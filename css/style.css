@@ -3532,3 +3532,199 @@ button:active, .btn:active {
 [data-theme="dark"] .upload-zone.drag-over {
     background: rgba(10,132,255,0.1);
 }
+
+/* ============================================================
+   其他页面类型美化 (2026-08-24) — 玻璃拟态 + 品牌渐变
+   覆盖: 博客文章 / 博客列表 / 分类索引 / 结构页 / 面包屑 / 标签
+   纯 CSS 追加,不改动既有规则;与工具详情页风格统一
+   ============================================================ */
+
+/* --- 博客文章页: 标题渐变 + 内容卡片化 --- */
+.blog-post h1 {
+    background: linear-gradient(120deg, var(--brand-blue), var(--brand-purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    font-size: 1.9rem;
+    line-height: 1.35;
+}
+.blog-post h2 {
+    position: relative;
+    padding-left: 14px;
+}
+.blog-post h2::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 4px;
+    bottom: 4px;
+    width: 4px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(180deg, var(--brand-blue), var(--brand-purple));
+    opacity: 0.7;
+}
+.blog-post blockquote {
+    background: linear-gradient(135deg, var(--primary-light), rgba(88,86,214,0.08));
+    border-left: 4px solid var(--brand-blue);
+    border-radius: var(--radius-md);
+    padding: 0.9rem 1.2rem;
+    margin: 1.2rem 0;
+}
+.blog-post img {
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+.blog-post .blog-cta {
+    background: linear-gradient(135deg, var(--brand-blue), var(--brand-purple));
+    border-radius: var(--radius-xl);
+    box-shadow: 0 8px 24px var(--primary-glow);
+}
+.blog-post .blog-cta a {
+    border-radius: var(--radius-full);
+}
+
+/* --- 博客文章元信息与标签 --- */
+.blog-post .blog-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    padding: 0.5rem 0 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+}
+.article-tags .tag,
+.blog-post .tag,
+.article-bottom-tags .tag {
+    border-radius: var(--radius-full);
+    padding: 0.3rem 0.9rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.article-tags .tag:hover,
+.blog-post .tag:hover,
+.article-bottom-tags .tag:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px var(--primary-glow);
+}
+
+/* --- 博客列表卡片(首页 / 博客索引) --- */
+.article-item {
+    border-radius: var(--radius-lg);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+    box-shadow: var(--shadow-sm);
+}
+.article-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-light);
+}
+.homepage-article-list .article-item {
+    border-radius: var(--radius-lg);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+}
+.homepage-article-list .article-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-light);
+}
+
+/* --- 分类索引页标题 --- */
+.category-header h1 {
+    background: linear-gradient(120deg, var(--brand-blue), var(--brand-purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+.category-header {
+    position: relative;
+}
+.category-header::after {
+    content: '';
+    display: block;
+    width: 56px;
+    height: 4px;
+    margin: 14px auto 0;
+    border-radius: var(--radius-full);
+    background: linear-gradient(90deg, var(--brand-blue), var(--brand-purple));
+    opacity: 0.8;
+}
+.tool-count {
+    margin-top: 0.75rem;
+}
+
+/* --- 结构页(about / contact / privacy / 404) --- */
+.about-page h1,
+.contact-page h1,
+.privacy-page h1,
+.lang-select-page h1 {
+    background: linear-gradient(120deg, var(--brand-blue), var(--brand-purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+.contact-card {
+    border-radius: var(--radius-lg);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.3s ease,
+                border-color 0.3s ease;
+    box-shadow: var(--shadow-sm);
+}
+.contact-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-light);
+}
+
+/* --- 面包屑: 玻璃胶囊 --- */
+.breadcrumb {
+    padding: 0.35rem 0.9rem;
+    max-width: 760px;
+    border-radius: var(--radius-full);
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+/* --- 统一入场动画 --- */
+.article-item,
+.homepage-article-list .article-item,
+.category-header,
+.about-page h1,
+.contact-page h1 {
+    animation: fadeInUp 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+/* --- 暗色模式适配 --- */
+[data-theme="dark"] .breadcrumb {
+    background: rgba(28,28,30,0.6);
+    border-color: rgba(255,255,255,0.08);
+}
+[data-theme="dark"] .blog-post blockquote {
+    background: linear-gradient(135deg, rgba(10,132,255,0.12), rgba(104,86,232,0.06));
+}
+[data-theme="dark"] .contact-card {
+    background: var(--bg-card);
+    border-color: var(--border);
+}
+[data-theme="dark"] .article-item {
+    background: var(--bg-card);
+    border-color: var(--border);
+}
+[data-theme="dark"] .article-item:hover,
+[data-theme="dark"] .homepage-article-list .article-item:hover {
+    border-color: rgba(10,132,255,0.4);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+}
