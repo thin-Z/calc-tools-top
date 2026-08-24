@@ -42,7 +42,7 @@
   ],
   "redirects": [
     {
-      "source": "/:path((?!ads.txt).*)",
+      "source": "/:path*",
       "has": [
         {
           "type": "host",
