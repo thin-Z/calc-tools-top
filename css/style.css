@@ -704,28 +704,151 @@ footer .footer-links a:hover {
     color: white;
 }
 
-/* ===== SEO Content & Related Tools ===== */
-.tool-content {
+/* ===== Tool Content & SEO Content (统一美化) ===== */
+.tool-content,
+.seo-content {
+    position: relative;
     margin-top: 2rem;
-    padding: 1.5rem;
+    padding: 1.75rem 1.75rem 1.5rem;
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    line-height: 1.8;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    line-height: 1.85;
+    font-size: 0.95rem;
 }
-.tool-content h2 {
-    font-size: 24px;
-    margin-bottom: 0.8rem;
+/* 顶部品牌渐变装饰条 */
+.tool-content::before,
+.seo-content::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 1.75rem;
+    right: 1.75rem;
+    height: 3px;
+    border-radius: 0 0 3px 3px;
+    background: linear-gradient(90deg, var(--brand-blue), var(--brand-purple, #5E5CE6));
+}
+.tool-content > h2:first-child,
+.seo-content > h2:first-child {
+    margin-top: 0;
+}
+.tool-content h2,
+.seo-content h2 {
+    position: relative;
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin: 1.5rem 0 1rem;
+    padding-left: 0.9rem;
     color: var(--text);
 }
-.tool-content h3 {
-    font-size: 1.1rem;
-    margin: 1.2rem 0 0.5rem;
+.tool-content h2::before,
+.seo-content h2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.18em;
+    bottom: 0.18em;
+    width: 4px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(180deg, var(--brand-blue), var(--brand-blue-dark));
+}
+.tool-content h3,
+.seo-content h3 {
+    position: relative;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.5;
+    margin: 1.4rem 0 0.6rem;
+    padding-left: 0.75rem;
     color: var(--text);
 }
-.tool-content p {
-    margin-bottom: 0.8rem;
+.tool-content h3::before,
+.seo-content h3::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.22em;
+    bottom: 0.22em;
+    width: 3px;
+    border-radius: 2px;
+    background: var(--brand-blue);
+}
+.tool-content p,
+.seo-content p {
+    margin-bottom: 0.9rem;
     color: var(--text-secondary);
+}
+.tool-content p:last-child,
+.seo-content p:last-child {
+    margin-bottom: 0;
+}
+.tool-content ul,
+.seo-content ul {
+    margin: 0.5rem 0 1rem;
+    padding-left: 0;
+    list-style: none;
+}
+.tool-content ul li,
+.seo-content ul li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.6rem;
+    color: var(--text-secondary);
+}
+.tool-content ul li::before,
+.seo-content ul li::before {
+    content: "";
+    position: absolute;
+    left: 0.3rem;
+    top: 0.62em;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--brand-blue);
+}
+.tool-content ol,
+.seo-content ol {
+    margin: 0.5rem 0 1rem;
+    padding-left: 1.6rem;
+    color: var(--text-secondary);
+}
+.tool-content ol li,
+.seo-content ol li {
+    margin-bottom: 0.6rem;
+    padding-left: 0.25rem;
+}
+.tool-content ol li::marker,
+.seo-content ol li::marker {
+    color: var(--brand-blue);
+    font-weight: 700;
+}
+.tool-content strong,
+.seo-content strong {
+    color: var(--text);
+    font-weight: 600;
+}
+.tool-content code,
+.seo-content code {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.1rem 0.4rem;
+    font-size: 0.88em;
+    font-family: "SF Mono", "Courier New", monospace;
+    color: var(--brand-blue);
+    word-break: break-word;
+}
+.tool-content blockquote,
+.seo-content blockquote {
+    margin: 1rem 0;
+    padding: 0.75rem 1rem;
+    border-left: 4px solid var(--brand-blue);
+    background: var(--bg-elevated);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    color: var(--text-secondary);
+    font-style: italic;
 }
 .related-tools {
     margin-top: 2rem;
@@ -2134,7 +2257,8 @@ button:active, .btn:active {
 }
 
 
-[data-theme="dark"] .tool-content {
+[data-theme="dark"] .tool-content,
+[data-theme="dark"] .seo-content {
     background: var(--bg-elevated);
 }
 [data-theme="dark"] .related-tools {
