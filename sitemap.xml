@@ -1142,15 +1142,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.calc-tools.top/en/tags/tools</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/tags/tools'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/tags/tools'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/tags/tools'/>
-    <lastmod>2026-08-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://www.calc-tools.top/en/tags/travel</loc>
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/tags/travel'/>
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/tags/travel'/>
@@ -1326,15 +1317,6 @@
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/tags/text'/>
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/tags/text'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/tags/text'/>
-    <lastmod>2026-08-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.calc-tools.top/tags/tools</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/tags/tools'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/tags/tools'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/tags/tools'/>
     <lastmod>2026-08-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>

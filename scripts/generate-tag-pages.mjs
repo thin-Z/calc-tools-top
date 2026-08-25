@@ -22,10 +22,10 @@ const SITE = 'https://www.calc-tools.top';
 const THRESHOLD = 1;
 
 const LABELS = {
-  zh: { finance: '财务', health: '健康', life: '生活', shopping: '购物', travel: '出行', utility: '工具', image: '图片', text: '文字', tools: '技术工具' },
-  en: { finance: 'Finance', health: 'Health', life: 'Lifestyle', shopping: 'Shopping', travel: 'Travel', utility: 'Utility', image: 'Image', text: 'Text', tools: 'Tech Tools' },
+  zh: { finance: '财务', health: '健康', life: '生活', shopping: '购物', travel: '出行', utility: '工具', image: '图片', text: '文字' },
+  en: { finance: 'Finance', health: 'Health', life: 'Lifestyle', shopping: 'Shopping', travel: 'Travel', utility: 'Utility', image: 'Image', text: 'Text' },
 };
-const EMOJI = { finance: '💰', health: '🏥', life: '🏠', shopping: '🛒', travel: '🚗', utility: '🔧', image: '🖼️', text: '✏️', tools: '🔧' };
+const EMOJI = { finance: '💰', health: '🏥', life: '🏠', shopping: '🛒', travel: '🚗', utility: '🔧', image: '🖼️', text: '✏️' };
 
 function stripTags(s) { return s.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim(); }
 

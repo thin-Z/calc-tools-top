@@ -62,7 +62,10 @@ const SITE_CONFIG = {
         { id: 'regex-tester', categories: ['text'] },
         { id: 'markdown-preview', categories: ['text'] },
         { id: 'percentage-calc', categories: ['shopping', 'finance'] },
-        { id: 'random-gen', categories: ['utility'] }
+        { id: 'random-gen', categories: ['utility'] },
+        { id: 'calorie-calculator', categories: ['health'] },
+        { id: 'workday-calculator', categories: ['life'] },
+        { id: 'image-crop', categories: ['image'] }
     ]
 };
 
@@ -526,7 +529,10 @@ const TOOLS_DATA = {
     'regex-tester': { icon: '🔍', name: { zh: '正则表达式测试器', en: 'Regex Tester' }, desc: { zh: '实时匹配高亮与捕获组解析', en: 'Real-time match highlight and group parsing' } },
     'markdown-preview': { icon: '📝', name: { zh: 'Markdown 预览器', en: 'Markdown Preview' }, desc: { zh: '实时预览 Markdown 渲染结果', en: 'Live Markdown rendering preview' } },
     'percentage-calc': { icon: '📊', name: { zh: '百分比计算器', en: 'Percentage Calculator' }, desc: { zh: '百分比计算/增减/变化多种模式', en: 'Percentage calc, increase, decrease, change' } },
-    'random-gen': { icon: '🎲', name: { zh: '随机数生成器', en: 'Random Number Generator' }, desc: { zh: '自定义范围生成随机整数', en: 'Generate random integers in custom range' } }
+    'random-gen': { icon: '🎲', name: { zh: '随机数生成器', en: 'Random Number Generator' }, desc: { zh: '自定义范围生成随机整数', en: 'Generate random integers in custom range' } },
+    'calorie-calculator': { icon: '🔥', name: { zh: '卡路里计算器', en: 'Calorie Calculator' }, desc: { zh: '按身高体重年龄性别计算每日所需热量', en: 'Calculate daily calorie needs by height, weight, age and gender' } },
+    'workday-calculator': { icon: '💼', name: { zh: '工作日计算器', en: 'Workday Calculator' }, desc: { zh: '计算两个日期之间的工作日天数，可选排除节假日', en: 'Count workdays between two dates, optionally excluding holidays' } },
+    'image-crop': { icon: '✂️', name: { zh: '图片裁剪', en: 'Image Cropper' }, desc: { zh: '拖拽裁剪图片，比例锁定，下载 PNG/JPEG', en: 'Drag to crop images with aspect lock, download PNG/JPEG' } }
 };
 const TOOL_KEYWORDS_ZH = {
     mortgage: '房贷,贷款,按揭,买房,月供,利息,商业贷款,公积金贷款',
@@ -568,7 +574,10 @@ const TOOL_KEYWORDS_ZH = {
     'regex-tester': '正则表达式,正则测试,正则匹配,regex,正则高亮,捕获组',
     'markdown-preview': 'markdown,markdown预览,md转html,markdown编辑器,markdown在线',
     'percentage-calc': '百分比,百分数,百分比计算,百分率,百分号计算',
-    'random-gen': '随机数,随机数生成,随机数字,抽奖随机,摇号'
+    'random-gen': '随机数,随机数生成,随机数字,抽奖随机,摇号',
+    'calorie-calculator': '卡路里,热量,每日热量,基础代谢,饮食,热量计算',
+    'workday-calculator': '工作日,工作日计算,工作天数,排除节假日,工作日天数',
+    'image-crop': '图片裁剪,裁剪图片,图片编辑,剪切图片,crop,图片裁剪工具'
 };
 
 // Default hot tools for new visitors

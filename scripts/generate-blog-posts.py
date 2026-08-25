@@ -91,7 +91,7 @@ BLOGS = [
      "🧮 贷款对比计算器", "🧮 Loan Comparison Calculator"),
 
     # ── Image tools ──
-    ("image-format-converter-guide", "tools", "tools",
+    ("image-format-converter-guide", "utility", "utility",
      "图片格式转换：JPG、PNG、WebP、GIF怎么选？",
      "常见图片格式的区别、适用场景和转换方法，帮你选择合适的图片格式。",
      "<p>不同的图片格式有不同的特点和适用场景，选择合适的格式可以在保证画质的同时减小文件体积。</p>\n<h2>常见图片格式对比</h2>\n<p><strong>JPG/JPEG</strong>：支持数百万颜色，有损压缩，文件小。适合照片、复杂图像，不适合需要透明背景的图片。</p>\n<p><strong>PNG</strong>：无损压缩，支持透明背景，文件较大。适合图标、截图、需要透明背景的设计素材。</p>\n<p><strong>WebP</strong>：Google推出的现代格式，支持有损和无损压缩，比JPG小25%-35%。适合网页使用，但部分老旧浏览器不支持。</p>\n<p><strong>GIF</strong>：支持动画，仅支持256色。适合简单动画和表情包，不适合存储照片。</p>\n<h2>什么时候需要格式转换</h2>\n<p>1. 上传到网站时用WebP或JPG减小加载时间；2. 设计素材需要透明背景时用PNG；3. 老旧系统可能只支持特定格式。</p>",
@@ -103,7 +103,7 @@ BLOGS = [
      "/zh/image/convert.html", "/en/image/convert.html",
      "🖼️ 格式转换", "🖼️ Format Converter"),
 
-    ("image-resize-crop-guide", "tools", "tools",
+    ("image-resize-crop-guide", "utility", "utility",
      "图片裁剪缩放：调整图片尺寸的最佳实践",
      "图片裁剪和缩放的方法、保持比例的技巧、不同平台的最佳图片尺寸。",
      "<p>图片裁剪和缩放是日常处理图片最常用的操作之一。无论是社交媒体发图，还是网站上传，都需要合适的图片尺寸。</p>\n<h2>裁剪 vs 缩放的区别</h2>\n<p><strong>裁剪</strong>：删除图片的部分区域，改变构图但不改变分辨率。适合去除不需要的边缘、调整主体位置。</p>\n<p><strong>缩放</strong>：改变图片整体尺寸，分辨率随之变化。适合缩小大图到指定尺寸。</p>\n<h2>保持宽高比</h2>\n<p>缩放时保持宽高比可以防止图片变形。常见比例的用途：1:1（头像）、4:3（普通照片）、16:9（视频封面/PPT）、3:4（手机竖屏）</p>\n<h2>各平台推荐图片尺寸</h2>\n<p>网站横幅：1920×1080px；微信公众号封面：900×500px；淘宝主图：800×800px；朋友圈配图：1080×1080px或1080×1920px。</p>",
@@ -115,7 +115,7 @@ BLOGS = [
      "/zh/image/resize.html", "/en/image/resize.html",
      "🖼️ 裁剪缩放", "🖼️ Crop & Resize"),
 
-    ("image-to-base64-guide", "tools", "tools",
+    ("image-to-base64-guide", "utility", "utility",
      "图片转Base64：HTML和CSS中嵌入图片的最佳方式",
      "图片转Base64编码的方法、适用场景和优缺点，帮你决定是否在网页中嵌入图片。",
      "<p>Base64编码可以将图片转换为纯文本格式，直接嵌入到HTML、CSS或JavaScript中，无需额外的HTTP请求。</p>\n<h2>什么是Base64图片编码？</h2>\n<p>Base64是一种将二进制数据转换为文本字符串的编码方式。图片Base64编码后可以直接写在HTML的src属性或CSS的background-image中。</p>\n<h2>适用场景</h2>\n<p><strong>小图标（<10KB）</strong>：减少HTTP请求，提升页面加载速度。</p>\n<p><strong>CSS Sprites替代方案</strong>：将多张小图标合并为一个Base64字符串。</p>\n<p><strong>邮件HTML</strong>：邮件客户端不支持外部资源引用，Base64嵌入是常用方案。</p>\n<h2>局限性</h2>\n<p>Base64编码会使图片体积增加约33%。大图不适合用Base64，因为会增加HTML/CSS文件大小，反而拖慢加载速度。一般建议10KB以下的小图标才考虑使用。</p>",
@@ -127,7 +127,7 @@ BLOGS = [
      "/zh/image/base64.html", "/en/image/base64.html",
      "🖼️ 图片转Base64", "🖼️ Image to Base64"),
 
-    ("color-picker-guide", "tools", "tools",
+    ("color-picker-guide", "utility", "utility",
      "在线取色器使用指南：屏幕取色与配色技巧",
      "取色器的使用方法、常见配色方案、十六进制/RGB/HSL颜色代码转换。",
      "<p>取色器是设计师和开发者的常用工具。从屏幕上获取准确的颜色值，是设计工作的第一步。</p>\n<h2>颜色代码格式</h2>\n<p><strong>十六进制（HEX）</strong>：#FF5733，最常用的网页颜色格式，6位十六进制数表示红绿蓝各256级。</p>\n<p><strong>RGB</strong>：rgb(255, 87, 51)，红绿蓝三通道各0-255取值。</p>\n<p><strong>HSL</strong>：hsl(9, 100%, 60%)，色相（0-360）、饱和度（0%-100%）、亮度（0%-100%）。</p>\n<h2>常见配色方案</h2>\n<p><strong>互补色</strong>：色环上相对的颜色，如蓝和橙，视觉效果强烈。</p>\n<p><strong>类似色</strong>：色环上相邻的颜色，如蓝、蓝绿、绿，和谐统一。</p>\n<p><strong>三色组合</strong>：色环上间隔120°三色，平衡且丰富。</p>\n<h2>取色技巧</h2>\n<p>使用取色器时，尽量从真实设计或自然图片中取色，这样搭配出来的颜色更自然和谐。保存常用颜色调色板，方便后续项目使用。</p>",
@@ -140,7 +140,7 @@ BLOGS = [
      "🖼️ 取色器", "🖼️ Color Picker"),
 
     # ── Text tools ──
-    ("word-counter-guide", "tools", "tools",
+    ("word-counter-guide", "utility", "utility",
      "字数统计工具：准确统计字符、词语和段落",
      "字数统计的使用场景、中英文统计差异、SEO写作中的字数控制建议。",
      "<p>字数统计是写作者最常用的工具之一。无论写文章、做报告、还是社交媒体发帖，了解字数都很重要。</p>\n<h2>字数统计的应用场景</h2>\n<p><strong>写作投稿</strong>：各平台对文章字数有明确要求，如公众号原创文章通常建议1500-3000字。</p>\n<p><strong>SEO写作</strong>：搜索引擎偏好的文章长度，工具类文章800-1500字，深度指南2000-4000字。</p>\n<p><strong>社交媒体</strong>：微博限140字（现已放宽），标题限70字以内最佳。</p>\n<h2>中英文统计差异</h2>\n<p>中文字数统计按字符计算，英文字数统计通常按单词计算。字数统计工具支持字符数、字数（英文单词数）、段落数、行数等多种统计方式。</p>\n<h2>SEO写作字数建议</h2>\n<p>博客文章：1500-2500字；产品描述：100-300字；元描述（Meta Description）：150-160字符。建议使用字数统计工具检查你的文章是否符合要求。</p>",
@@ -152,7 +152,7 @@ BLOGS = [
      "/zh/text/word-counter.html", "/en/text/word-counter.html",
      "🔣 字数统计", "🔣 Word Counter"),
 
-    ("case-converter-guide", "tools", "tools",
+    ("case-converter-guide", "utility", "utility",
      "大小写转换工具：英文大小写转换的几种方式",
      "大写、小写、首字母大写、驼峰命名等大小写转换方法，适用于编程和写作场景。",
      "<p>大小写转换在写作和编程中经常用到。了解不同的大小写转换方式，可以提高工作效率。</p>\n<h2>常见的转换方式</h2>\n<p><strong>全部大写（UPPERCASE）</strong>：适用于标题、缩写词、警示文字。</p>\n<p><strong>全部小写（lowercase）</strong>：适用于URL、邮箱地址、文件名。</p>\n<p><strong>首字母大写（Capitalize）</strong>：每个单词首字母大写，适用于文章标题。</p>\n<p><strong>驼峰命名（camelCase）</strong>：第一个单词小写，后续单词首字母大写，JavaScript变量命名常用。</p>\n<p><strong>蛇形命名（snake_case）</strong>：全小写，单词间用下划线分隔，Python变量命名常用。</p>\n<h2>什么时候需要大小写转换</h2>\n<p>1. 文案写作时统一格式；2. 编程时变量名命名规范要求；3. 数据库查询时大小写敏感性处理；4. 英文写作时专有名词规范化。</p>",
@@ -164,7 +164,7 @@ BLOGS = [
      "/zh/text/case-converter.html", "/en/text/case-converter.html",
      "🔣 大小写转换", "🔣 Case Converter"),
 
-    ("json-formatter-guide", "tools", "tools",
+    ("json-formatter-guide", "utility", "utility",
      "JSON格式化工具：美化、压缩和校验JSON数据",
      "JSON格式化的作用、在线校验JSON的重要性、常见JSON错误及修复方法。",
      "<p>JSON（JavaScript Object Notation）是当前最流行的数据交换格式之一。无论是在API开发、配置文件管理、还是数据存储中，JSON都无处不在。</p>\n<h2>JSON格式化与压缩</h2>\n<p><strong>格式化（美化）</strong>：将压缩的JSON转为带有缩进和换行的可读格式，方便阅读和调试。</p>\n<p><strong>压缩</strong>：移除所有空格和换行，将JSON压缩为一行，减小数据传输体积。</p>\n<h2>为什么需要JSON校验</h2>\n<p>一个语法错误的JSON会导致程序解析失败。常见的JSON错误包括：漏掉逗号、多余的逗号、字符串未加引号、使用单引号（JSON要求双引号）等。</p>\n<h2>JSON使用小技巧</h2>\n<p>1. 密钥名称必须用双引号包裹；2. 字符串必须用双引号，不能用单引号；3. 不支持注释（部分扩展格式除外）；4. 最后一个元素后面不能有逗号。</p>",
@@ -176,7 +176,7 @@ BLOGS = [
      "/zh/text/json-formatter.html", "/en/text/json-formatter.html",
      "🔣 JSON格式化", "🔣 JSON Formatter"),
 
-    ("base64-encode-guide", "tools", "tools",
+    ("base64-encode-guide", "utility", "utility",
      "Base64编解码工具：什么是Base64？怎么用？",
      "Base64编码原理、常见应用场景、在线编解码方法，适合开发者和普通用户。",
      "<p>Base64是一种将二进制数据转换为ASCII文本的编码方式，广泛应用于数据传输和存储场景。</p>\n<h2>什么是Base64？</h2>\n<p>Base64使用64个可打印字符（A-Z、a-z、0-9、+、/）来表示任意二进制数据。编码后的数据比原数据大约增加33%。</p>\n<h2>常见应用场景</h2>\n<p><strong>邮件附件</strong>：SMTP协议只支持7位ASCII字符，Base64编码可以让二进制附件通过邮件传输。</p>\n<p><strong>HTTP基本认证</strong>：用户名和密码通过Base64编码后放在Authorization头中传输。</p>\n<p><strong>数据URI</strong>：将图片等小文件编码后直接嵌入HTML/CSS中。</p>\n<p><strong>Token传输</strong>：JWT（JSON Web Token）使用Base64编码传输信息。</p>\n<h2>Base64注意事项</h2>\n<p>Base64不是加密！编码后的数据可以轻松解码回原文。不要用Base64来保护敏感信息。如果需要加密，请使用AES等加密算法。</p>",
@@ -188,7 +188,7 @@ BLOGS = [
      "/zh/text/base64-encode.html", "/en/text/base64-encode.html",
      "🔣 Base64编解码", "🔣 Base64 Encode/Decode"),
 
-    ("url-encode-guide", "tools", "tools",
+    ("url-encode-guide", "utility", "utility",
      "URL编解码工具：什么是URL编码？为什么要编码？",
      "URL编码的原理、特殊字符的处理、前端开发中的URL编解码场景。",
      "<p>URL编码（又称百分号编码）是Web开发中的基础概念。它确保URL中的特殊字符能被正确传输和解析。</p>\n<h2>什么是URL编码？</h2>\n<p>URL中只允许使用ASCII字符集中的字母、数字和部分特殊符号。其他字符（如中文、空格、&等）需要编码为%后跟两位十六进制数的格式。</p>\n<p>例如：空格编码为%20，中文'你好'编码为%E4%BD%A0%E5%A5%BD</p>\n<h2>什么时候需要URL编解码</h2>\n<p><strong>GET请求参数</strong>：URL中的查询参数包含特殊字符时需要进行编码。</p>\n<p><strong>URL路径</strong>：路径中包含中文或特殊字符的文件名。</p>\n<p><strong>表单提交</strong>：application/x-www-form-urlencoded格式提交的数据会自动编码。</p>\n<h2>常见需要编码的字符</h2>\n<p>空格 → %20、& → %26、? → %3F、= → %3D、# → %23、中文 → 多字节编码</p>",
@@ -200,7 +200,7 @@ BLOGS = [
      "/zh/text/url-encode.html", "/en/text/url-encode.html",
      "🔣 URL编解码", "🔣 URL Encode/Decode"),
 
-    ("text-cleaner-guide", "tools", "tools",
+    ("text-cleaner-guide", "utility", "utility",
      "文本清理工具：去除多余空格和空行的最佳方法",
      "文本清理的常见场景，去除多余空格、空行、制表符，整理不规范文本。",
      "<p>从不同来源复制粘贴的文本常常带有格式问题：多余的空格、空行、制表符等。文本清理工具可以一键帮你整理。</p>\n<h2>文本清理的常见问题</h2>\n<p><strong>多余空格</strong>：行首行尾的空格、单词间的多余空格。</p>\n<p><strong>多余空行</strong>：连续多个空行、文末多余换行。</p>\n<p><strong>制表符</strong>：制表符与空格的混用导致对齐不一致。</p>\n<h2>清理场景举例</h2>\n<p><strong>从PDF复制</strong>：PDF复制出来的文本常有意外换行和空格。</p>\n<p><strong>从网页复制</strong>：网页文本可能带有隐藏的格式字符。</p>\n<p><strong>从代码编辑器复制</strong>：带缩进的代码复制到其他地方可能需要重新整理。</p>\n<h2>清理后做什么</h2>\n<p>清理后的文本更适合用于排版、翻译、数据分析等后续处理。建议清理后再使用字数统计工具检查文本状态。</p>",
@@ -212,7 +212,7 @@ BLOGS = [
      "/zh/text/text-cleaner.html", "/en/text/text-cleaner.html",
      "🔣 文本清理", "🔣 Text Cleaner"),
 
-    ("html-stripper-guide", "tools", "tools",
+    ("html-stripper-guide", "utility", "utility",
      "HTML剥离工具：快速去除HTML标签获取纯文本",
      "HTML标签剥离方法、保留纯文本内容、从网页提取文字的最佳实践。",
      "<p>处理网页内容时，经常需要从HTML代码中提取纯文本。HTML剥离工具可以快速移除所有标签，只保留文字内容。</p>\n<h2>什么时候需要HTML剥离</h2>\n<p><strong>内容分析</strong>：对网页内容进行分词、关键词提取、情感分析等自然语言处理前，需要先移除HTML标签。</p>\n<p><strong>数据采集</strong>：网页爬虫采集到的数据通常包含HTML标签，需要清理后才能存储或显示。</p>\n<p><strong>邮件发送</strong>：有些邮件客户端只支持纯文本格式。</p>\n<p><strong>RSS生成</strong>：RSS Feed中的内容可能需要纯文本版本。</p>\n<h2>剥离前后的对比</h2>\n<p>处理前：&lt;p&gt;这是一段&lt;strong&gt;重要&lt;/strong&gt;的文字&lt;/p&gt;</p>\n<p>处理后：这是一段重要的文字</p>\n<h2>注意事项</h2>\n<p>HTML剥离会移除所有标签，包括图片、链接等信息。如果需要保留链接或图片引用，建议使用更精细的解析工具。</p>",
@@ -224,7 +224,7 @@ BLOGS = [
      "/zh/text/html-stripper.html", "/en/text/html-stripper.html",
      "🔣 HTML剥离", "🔣 HTML Stripper"),
 
-    ("text-diff-guide", "tools", "tools",
+    ("text-diff-guide", "utility", "utility",
      "文本对比工具：快速找出两段文本的差异",
      "文本对比的应用场景、差异对比方法、版本管理中常用的文本比较技巧。",
      "<p>文本对比是写作、编程和文档管理中常用的功能。比较两段文本的差异，可以帮助你快速定位修改内容。</p>\n<h2>文本对比的应用场景</h2>\n<p><strong>文章修改</strong>：对比修改前后的文章，确认改动是否符合预期。</p>\n<p><strong>代码审查</strong>：比较两段代码的差异，快速定位新增和删除的部分。</p>\n<p><strong>合同核对</strong>：对比不同版本的合同条款，避免遗漏关键变更。</p>\n<p><strong>翻译校对</strong>：对比原文和译文，检查是否有遗漏段落。</p>\n<h2>对比结果解读</h2>\n<p>通常标记为红色（删除部分）和绿色（新增部分），方便一目了然地看出差异。</p>\n<h2>使用建议</h2>\n<p>对比前先使用文本清理工具整理格式，避免因空格、换行等格式差异导致误报。大段文本对比时，建议逐段进行，提高准确度。</p>",
@@ -236,7 +236,7 @@ BLOGS = [
      "/zh/text/text-diff.html", "/en/text/text-diff.html",
      "🔣 文本对比", "🔣 Text Diff"),
 
-    ("uuid-generator-guide", "tools", "tools",
+    ("uuid-generator-guide", "utility", "utility",
      "UUID生成器：什么是UUID？批量生成唯一标识符",
      "UUID的版本区别、格式说明、应用场景，以及如何批量生成唯一标识符。",
      "<p>UUID（Universally Unique Identifier）是一种标准化的唯一标识符格式，在软件开发中广泛应用。</p>\n<h2>UUID的版本</h2>\n<p><strong>UUID v4</strong>：基于随机数生成，最常用的版本。约5.3×10^36个可能值，重复概率极低。</p>\n<p><strong>UUID v1</strong>：基于时间戳和MAC地址生成，可追溯生成时间和设备。</p>\n<p><strong>UUID v5</strong>：基于命名空间和名称生成，同样的输入产生同样的UUID。</p>\n<h2>UUID的格式</h2>\n<p>标准的UUID格式为32个十六进制数字，分为5组：8-4-4-4-12</p>\n<p>例如：550e8400-e29b-41d4-a716-446655440000</p>\n<h2>UUID的应用场景</h2>\n<p><strong>数据库主键</strong>：分布式系统中作为主键，无需自增ID。</p>\n<p><strong>会话标识</strong>：用户会话的唯一标识。</p>\n<p><strong>资源标识</strong>：API中资源的唯一ID。</p>\n<p><strong>文件名</strong>：防止文件重名。</p>",
@@ -248,7 +248,7 @@ BLOGS = [
      "/zh/text/uuid-generator.html", "/en/text/uuid-generator.html",
      "🔣 UUID生成器", "🔣 UUID Generator"),
 
-    ("reading-time-guide", "tools", "tools",
+    ("reading-time-guide", "utility", "utility",
      "阅读时间计算器：文章阅读时间和朗读时间估算",
      "阅读速度参考标准、不同内容类型的阅读时间估算方法、内容创作中的时间规划。",
      "<p>阅读时间计算可以帮助读者提前了解一篇文章需要花费多少时间，同时帮助内容创作者规划文章长度。</p>\n<h2>阅读速度参考</h2>\n<p><strong>中文阅读</strong>：成人平均阅读速度约300-500字/分钟，精读约200-300字/分钟。</p>\n<p><strong>英文阅读</strong>：成人平均阅读速度约200-300词/分钟。</p>\n<h2>朗读时间估算</h2>\n<p>中文朗读速度约150-200字/分钟，英文朗读速度约130-160词/分钟。朗读时间约为阅读时间的2-3倍。</p>\n<h2>内容创作建议</h2>\n<p>根据阅读时间规划文章长度：快速阅读（2-3分钟）对应600-900字；标准文章（5-7分钟）对应1500-2500字；深度阅读（10-15分钟）对应3000-5000字。</p>\n<h2>为什么标注阅读时间</h2>\n<p>在文章开头标注阅读时间可以帮助读者判断是否现在就开始阅读，提高阅读完成率。</p>",
@@ -260,7 +260,7 @@ BLOGS = [
      "/zh/text/reading-time.html", "/en/text/reading-time.html",
      "🔣 阅读时间", "🔣 Reading Time"),
 
-    ("keyword-density-guide", "tools", "tools",
+    ("keyword-density-guide", "utility", "utility",
      "关键词密度分析工具：SEO优化的关键指标",
      "关键词密度的计算方法、SEO最佳实践范围、关键词堆砌的处罚风险。",
      "<p>关键词密度（Keyword Density）是SEO中的一个重要概念，指的是关键词在页面中出现的频率。</p>\n<h2>关键词密度的计算方法</h2>\n<p><strong>关键词密度 = （关键词出现次数 ÷ 总词数）× 100%</strong></p>\n<p>例如：一篇500字的中文文章中，目标关键词出现5次，则密度为1%。</p>\n<h2>最佳关键词密度范围</h2>\n<p>一般认为2%-5%是比较理想的关键词密度范围。低于1%可能不足以让搜索引擎识别页面主题；高于8%可能被判定为关键词堆砌。</p>\n<h2>关键词堆砌的风险</h2>\n<p>过度使用关键词（关键词堆砌）会导致搜索引擎惩罚，降低网站排名。建议在标题、H1、首段和结尾自然融入关键词，正文中根据上下文适量出现即可。</p>\n<h2>长尾关键词策略</h2>\n<p>除了主要关键词，使用多个相关的长尾关键词可以获得更好的SEO效果，同时避免关键词堆砌的风险。</p>",
@@ -292,14 +292,14 @@ CATEGORY_ZH_MAP = {
     "finance": ("💰 财务", "tag-finance"),
     "health": ("🏞 健康", "tag-health"),
     "life": ("🏔 生活", "tag-life"),
-    "tools": ("🔧 技术工具", "tag-tools"),
+    "utility": ("🔧 工具", "tag-utility"),
 }
 
 CATEGORY_EN_MAP = {
     "finance": ("💰 Finance", "tag-finance"),
     "health": ("🏞 Health", "tag-health"),
     "life": ("🏔 Lifestyle", "tag-life"),
-    "tools": ("🔧 Dev Tools", "tag-tools"),
+    "utility": ("🔧 Tools", "tag-utility"),
 }
 
 
@@ -318,7 +318,7 @@ def build_related_posts_en(current_slug, cat, all_entries, max_items=4):
     return f'<div class="related-posts"><h3>📌 Related Articles</h3><ul>{items}</ul></div>'
 
 def generate_zh_blog(slug, cat, zh_title, zh_desc, zh_body, zh_cta_text, tool_path, tool_name, related_posts_zh=""):
-    cat_zh, tag_class = CATEGORY_ZH_MAP.get(cat, ("🔧 技术工具", "tag-tools"))
+    cat_zh, tag_class = CATEGORY_ZH_MAP.get(cat, ("🔧 工具", "tag-utility"))
     canonical = f"https://calc-tools.top/blog/zh/{slug}.html"
     en_canonical = f"https://calc-tools.top/blog/en/{slug}.html"
     article_id = f"blog_{slug.replace('-', '_')}"
@@ -407,7 +407,7 @@ def generate_zh_blog(slug, cat, zh_title, zh_desc, zh_body, zh_cta_text, tool_pa
     return html
 
 def generate_en_blog(slug, cat, en_title, en_desc, en_body, en_cta_text, tool_path, tool_name, related_posts_en=""):
-    cat_en, tag_class = CATEGORY_EN_MAP.get(cat, ("🔧 Dev Tools", "tag-tools"))
+    cat_en, tag_class = CATEGORY_EN_MAP.get(cat, ("🔧 Tools", "tag-utility"))
     canonical = f"https://calc-tools.top/blog/en/{slug}.html"
     zh_canonical = f"https://calc-tools.top/blog/zh/{slug}.html"
 
@@ -514,18 +514,18 @@ def main():
     with open(zh_index_path, 'r', encoding='utf-8') as f:
         zh_index = f.read()
 
-    # Add tools category filter
-    tools_filter = '''            <button class="category-chip" data-category="tools">🔧 技术工具</button>'''
+    # Add utility category filter
+    utility_filter = '''            <button class="category-chip" data-category="utility">🔧 工具</button>'''
     zh_index = zh_index.replace(
         '<button class="category-chip" data-category="life">🏔 生活</button>',
-        '<button class="category-chip" data-category="life">🏔 生活</button>\n' + tools_filter
+        '<button class="category-chip" data-category="life">🏔 生活</button>\n' + utility_filter
     )
 
     # Generate article list HTML for new entries
     new_articles_html_zh = ""
     for slug, cat, title, desc in zh_entries:
         article_id = f"blog_{slug.replace('-', '_')}"
-        cat_zh_display, _ = CATEGORY_ZH_MAP.get(cat, ("🔧 技术工具", "tag-tools"))
+        cat_zh_display, _ = CATEGORY_ZH_MAP.get(cat, ("🔧 工具", "tag-utility"))
         new_articles_html_zh += f'''
             <article class="article-item" data-category="{cat}">
                 <h2><a href="/blog/zh/{slug}.html">{title}</a></h2>
@@ -549,17 +549,17 @@ def main():
     with open(en_index_path, 'r', encoding='utf-8') as f:
         en_index = f.read()
 
-    # Add tools category filter
-    tools_filter_en = '''            <button class="category-chip" data-category="tools">🔧 Dev Tools</button>'''
+    # Add utility category filter
+    utility_filter_en = '''            <button class="category-chip" data-category="utility">🔧 Tools</button>'''
     en_index = en_index.replace(
         '<button class="category-chip" data-category="life">🏔 Lifestyle</button>',
-        '<button class="category-chip" data-category="life">🏔 Lifestyle</button>\n' + tools_filter_en
+        '<button class="category-chip" data-category="life">🏔 Lifestyle</button>\n' + utility_filter_en
     )
 
     new_articles_html_en = ""
     for slug, cat, title, desc in en_entries:
         article_id = f"blog_{slug.replace('-', '_')}"
-        cat_en_display, _ = CATEGORY_EN_MAP.get(cat, ("🔧 Dev Tools", "tag-tools"))
+        cat_en_display, _ = CATEGORY_EN_MAP.get(cat, ("🔧 Tools", "tag-utility"))
         new_articles_html_en += f'''
             <article class="article-item" data-category="{cat}">
                 <h2><a href="/blog/en/{slug}.html">{title}</a></h2>
@@ -603,10 +603,10 @@ def main():
         ("car-loan-calculator-guide", "finance", "买车贷款怎么算？车贷月供和利息全解析", "车贷月供计算、利息计算、首付比例选择，汽车贷款计算器帮你了解月供和总利息。", "2026-06-26", "💰 财务", "finance"),
     ]
 
-    cat_map = {"finance": ("💰 财务", "finance"), "health": ("🏥 健康", "health"), "life": ("🏠 生活", "life"), "tools": ("🔧 工具", "tools")}
+    cat_map = {"finance": ("💰 财务", "finance"), "health": ("🏥 健康", "health"), "life": ("🏠 生活", "life"), "utility": ("🔧 工具", "utility")}
     for blog in BLOGS:
         slug, cat_zh, cat_en, zh_title, zh_desc, zh_body, zh_cta, en_title, en_desc, en_body, en_cta, tool_zh, tool_en, name_zh, name_en = blog
-        tag_text, tag_cat = cat_map.get(cat_zh, ("🔧 工具", "tools"))
+        tag_text, tag_cat = cat_map.get(cat_zh, ("🔧 工具", "utility"))
         homepage_entries.append((slug, cat_zh, zh_title, zh_desc, DATE, tag_text, tag_cat))
 
     new_articles = ""

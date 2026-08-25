@@ -701,6 +701,26 @@
       "source": "/zh/image-crop.html",
       "destination": "/zh/image/image-crop",
       "permanent": true
+    },
+    {
+      "source": "/tags/tools",
+      "destination": "/tags/utility",
+      "permanent": true
+    },
+    {
+      "source": "/tags/tools.html",
+      "destination": "/tags/utility",
+      "permanent": true
+    },
+    {
+      "source": "/en/tags/tools",
+      "destination": "/en/tags/utility",
+      "permanent": true
+    },
+    {
+      "source": "/en/tags/tools.html",
+      "destination": "/en/tags/utility",
+      "permanent": true
     }
   ]
 }
