@@ -154,6 +154,11 @@ ${catLinks}
     },
   ];
 
+  // JSON-LD：与全站一致，每个 schema 独立 script 块（check-jsonld 要求每块顶层含 @context）
+  const jsonLdBlocks = jsonLd
+    .map((block) => `    <script type="application/ld+json">${JSON.stringify(block)}</script>`)
+    .join('\n');
+
   return `<!DOCTYPE html>
 <html lang="${titleLang}">
 <head>
@@ -177,7 +182,7 @@ ${catLinks}
     <link rel="alternate" hreflang="zh-CN" href="${zhUrl}">
     <link rel="alternate" hreflang="en" href="${enUrl}">
     <link rel="alternate" hreflang="x-default" href="${zhUrl}">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>
@@ -196,7 +201,7 @@ ${articleSection}
 ${categoriesNav}
     </main>
 ${footer}
-    <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
+${jsonLdBlocks}
 </body>
 </html>
 `;
