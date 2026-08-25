@@ -138,6 +138,29 @@
                         <option value="equal-principal" data-i18n="equalPrincipal">等额本金</option>
                     </select>
                 </div>
+                <div class="form-group optional-fields">
+                    <label data-i18n="optionalCosts">可选费用（每月计入月供）</label>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="propertyTax" data-i18n="propertyTax">年房产税（元）</label>
+                            <input type="number" id="propertyTax" value="0" min="0" step="100">
+                        </div>
+                        <div class="form-group">
+                            <label for="homeInsurance" data-i18n="homeInsurance">年房屋保险（元）</label>
+                            <input type="number" id="homeInsurance" value="0" min="0" step="50">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pmiRate" data-i18n="pmiRate">PMI 年费率（%，首付不足 20% 时）</label>
+                            <input type="number" id="pmiRate" value="0" min="0" step="0.1">
+                        </div>
+                        <div class="form-group">
+                            <label for="extraPayment" data-i18n="extraPayment">每月额外还款（元）</label>
+                            <input type="number" id="extraPayment" value="0" min="0" step="100">
+                        </div>
+                    </div>
+                </div>
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary" data-csp-click="doCalculate" data-i18n="calculate">开始计算</button>
                     <button type="reset" class="btn btn-secondary" data-csp-click="resetForm" data-i18n="reset">重置</button>
@@ -150,6 +173,9 @@
                 <div id="monthlyPaymentArea" class="st-8">
                     <div id="monthlyLabel" class="st-1"></div>
                     <div class="result-value" id="monthlyValue"></div>
+                </div>
+                <div id="extraCostsArea" class="st-14 hidden">
+                    <div id="extraCostsText" class="st-42"></div>
                 </div>
                 <div class="form-row st-26">
                     <div>
@@ -181,10 +207,12 @@
     <h3>相关工具</h3>
     <ul>
         <li><a href="/zh/calculators/housing-fund">公积金计算器</a></li>
-        <li><a href="/zh/calculators/tax2026">个税计算器 2026</a></li>
+        <li><a href="/zh/calculators/loan-compare">贷款对比计算器</a></li>
+        <li><a href="/zh/calculators/compound-interest">复利计算器</a></li>
+        <li><a href="/zh/calculators/car-loan">车贷计算器</a></li>
     </ul>
 </div>
-        <section class="related-posts">
+<section class="related-posts">
         <h3>相关阅读</h3>
         <ul>
             <li><a href="/blog/zh/mortgage-rate-trend-2026">2026 房贷利率最新趋势解读</a></li>
@@ -194,13 +222,13 @@
 <section class="tool-content">
 <h2>关于房贷计算器</h2>
 <p>房贷计算器是一款完全免费的在线工具，帮助用户等额本息+等额本金，支持商业/公积金组合贷款。无论你是普通用户还是专业人士，都可以在不安装任何软件的情况下快速使用。</p>
-<p>无论是写作者、编辑、学生还是网站开发者，凡是日常需要处理文本的人，都能借助它快速获得可靠的处理结果。</p>
-<h2>如何使用房贷计算器</h2>
+<p>无论是准备购房的刚需人群、考虑换房的改善型用户，还是研究月供方案的置业者，都能快速计算月供与利息明细。</p>
+<h2>如何使用</h2>
 <ol>
-<li>在输入区域粘贴或输入你的文本。</li>
-<li>根据需求配置处理选项。</li>
-<li>点击“分析/处理”按钮，立即获得结果。</li>
-<li>使用复制按钮将结果保存到剪贴板。</li>
+    <li>在"贷款金额"输入框中填写贷款总额（万元）。</li>
+    <li>填写年利率（%）与贷款年限。</li>
+    <li>选择还款方式：等额本息或等额本金。</li>
+    <li>点击"开始计算"，查看月供、总利息与本金利息对比图。</li>
 </ol>
 <h2>房贷计算器常见问题</h2>
 <h3>房贷计算器完全免费吗？</h3><p>是的，房贷计算器完全免费，无需注册账号，也无需下载任何软件。</p>
@@ -223,5 +251,6 @@
 
     <script src="/js/inline/mortgage.js" defer></script>
 
-    </body>
+        <script src="/js/url-state.js" defer></script>
+</body>
 </html>

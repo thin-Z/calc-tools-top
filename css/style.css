@@ -3852,3 +3852,79 @@ button:active, .btn:active {
     border-color: rgba(10,132,255,0.4);
     box-shadow: 0 12px 30px rgba(0,0,0,0.5);
 }
+
+/* ===== 打印样式（T-COMP 2026-08-25）：隐藏导航/广告/交互控件，保留内容与结果 ===== */
+@media print {
+    header, footer, .theme-toggle, .lang-switch, .search-bar,
+    .category-filters, .like-btn, .article-like, .detail-like-wrap,
+    .btn-group, .no-results, .cmp-banner, #cmp-banner {
+        display: none !important;
+    }
+    body {
+        background: #fff !important;
+        color: #000 !important;
+    }
+    main {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    .tool-card-wrap a.tool-card, .article-item a {
+        color: #000 !important;
+        text-decoration: none;
+    }
+    .calculator-form, .tool-form, .result-card, .chart-container,
+    .tool-content, .seo-content, .related-tools, .related-posts {
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+        background: #fff !important;
+        break-inside: avoid;
+    }
+    .result-card.hidden {
+        display: none !important;
+    }
+    a[href]::after {
+        content: "";
+    }
+}
+
+/* ===== 首页快速计算条（T-COMP 2026-08-25）：带参直达高频工具 ===== */
+.quick-calc-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    margin-bottom: 24px;
+    background: linear-gradient(135deg, rgba(79,70,229,0.06), rgba(139,92,246,0.08));
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+}
+.quick-calc-label {
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--text-primary);
+    white-space: nowrap;
+}
+.quick-calc-link {
+    display: inline-block;
+    padding: 6px 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--brand-blue);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.quick-calc-link:hover {
+    border-color: var(--brand-blue);
+    background: rgba(79,70,229,0.08);
+    transform: translateY(-1px);
+}
+[data-theme="dark"] .quick-calc-link {
+    background: var(--bg-elevated);
+    border-color: var(--border);
+    color: #93c5fd;
+}

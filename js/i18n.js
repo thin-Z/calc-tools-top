@@ -88,6 +88,18 @@ const i18n = {
         principal: "本金",
         interest: "利息",
         years: "年",
+        // 房贷可选项（2026-08-25 扩展）
+        optionalCosts: "可选费用（每月计入月供）",
+        propertyTax: "年房产税（元）",
+        homeInsurance: "年房屋保险（元）",
+        pmiRate: "PMI 年费率（%，首付不足 20% 时）",
+        extraPayment: "每月额外还款（元）",
+        propertyTaxShort: "房产税",
+        homeInsuranceShort: "保险",
+        pmiShort: "PMI",
+        extraPaymentShort: "额外还款",
+        monthlyPaymentWithExtras: "月供合计（含附加费用）",
+        extraCosts: "附加费用",
     },
     en: {
         siteName: "Online Calculators",
@@ -177,6 +189,18 @@ const i18n = {
         principal: "Principal",
         interest: "Interest",
         years: "Years",
+        // Mortgage optional costs (2026-08-25 extension)
+        optionalCosts: "Optional Costs (added to monthly payment)",
+        propertyTax: "Annual Property Tax ($)",
+        homeInsurance: "Annual Home Insurance ($)",
+        pmiRate: "PMI Annual Rate (%, if down payment < 20%)",
+        extraPayment: "Extra Monthly Payment ($)",
+        propertyTaxShort: "Property tax",
+        homeInsuranceShort: "Insurance",
+        pmiShort: "PMI",
+        extraPaymentShort: "Extra payment",
+        monthlyPaymentWithExtras: "Total monthly (incl. extras)",
+        extraCosts: "Extras",
     }
 };
 
