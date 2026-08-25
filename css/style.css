@@ -3887,48 +3887,6 @@ button:active, .btn:active {
         content: "";
     }
 }
-
-/* ===== 首页快速计算条（T-COMP 2026-08-25）：带参直达高频工具 ===== */
-.quick-calc-bar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 16px;
-    margin-bottom: 24px;
-    background: linear-gradient(135deg, rgba(79,70,229,0.06), rgba(139,92,246,0.08));
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-}
-.quick-calc-label {
-    font-weight: 600;
-    font-size: 0.92rem;
-    color: var(--text-primary);
-    white-space: nowrap;
-}
-.quick-calc-link {
-    display: inline-block;
-    padding: 6px 14px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    font-size: 0.88rem;
-    font-weight: 500;
-    color: var(--brand-blue);
-    text-decoration: none;
-    transition: all 0.2s ease;
-}
-.quick-calc-link:hover {
-    border-color: var(--brand-blue);
-    background: rgba(79,70,229,0.08);
-    transform: translateY(-1px);
-}
-[data-theme="dark"] .quick-calc-link {
-    background: var(--bg-elevated);
-    border-color: var(--border);
-    color: #93c5fd;
-}
-
 /* ===== 标签聚合落地页 (P1) ===== */
 .tag-page {
     max-width: 1100px;
@@ -3981,52 +3939,5 @@ button:active, .btn:active {
 .tag-cat-list .tag:hover {
     background: #007AFF;
     color: #fff;
-}
-
-/* ===== Home anchor nav (sticky category jump bar) ===== */
-.home-anchor-nav {
-    position: sticky;
-    top: 64px;
-    z-index: 99;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    margin: 8px 0 20px;
-    padding: 10px 14px;
-    background: var(--glass-bg);
-    backdrop-filter: blur(var(--glass-blur));
-    -webkit-backdrop-filter: blur(var(--glass-blur));
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-}
-.home-anchor-nav a {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 8px 16px;
-    font-size: 0.92rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-    background: var(--bg-card);
-    border: 1px solid var(--glass-border);
-    border-radius: 999px;
-    text-decoration: none;
-    transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.1s;
-}
-.home-anchor-nav a:hover,
-.home-anchor-nav a:focus-visible {
-    color: var(--primary);
-    background: var(--primary-light);
-    border-color: var(--primary-light);
-    text-decoration: none;
-}
-.home-anchor-nav a:active { transform: scale(0.96); }
-
-@media (max-width: 480px) {
-    .home-anchor-nav { margin: 6px 0 16px; padding: 8px 10px; gap: 6px; }
-    .home-anchor-nav a { padding: 7px 12px; font-size: 0.85rem; }
 }
 
