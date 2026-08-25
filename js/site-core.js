@@ -8,6 +8,10 @@
 function initTagClicks() {
     const tags = document.querySelectorAll('a.tag[data-tag]');
     for (let i = 0; i < tags.length; i++) {
+        const href = tags[i].getAttribute('href') || '';
+        // Blog tag links already point to the archive with ?cat= — let them navigate
+        // natively so they filter the blog index instead of being hijacked to the homepage.
+        if (href.indexOf('/blog/') !== -1) continue;
         tags[i].addEventListener('click', function(e) {
             e.preventDefault(); e.stopPropagation();
             const cat = this.getAttribute('data-tag');

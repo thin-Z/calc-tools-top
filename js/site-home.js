@@ -711,7 +711,9 @@ function initHotTools() {
             + '<h3>' + name + ' ' + trendBadge + '</h3>'
             + '<p>' + (tool.desc ? (tool.desc[lang] || tool.desc['zh']) : '') + '</p>'
             + '</a>'
-            + '<div class="tool-tags"><a href="' + (isZh ? '/' : '/en/') + '" class="tag tag-' + firstCat + '" data-tag="' + firstCat + '">' + catTexts[firstCat] + '</a></div>'
+            + '<div class="tool-tags">' + cats.map(function(c) {
+                return '<a href="' + (isZh ? '/' : '/en/') + '" class="tag tag-' + c + '" data-tag="' + c + '">' + (catTexts[c] || c) + '</a>';
+            }).join('') + '</div>'
             + '</div>';
     });
     
