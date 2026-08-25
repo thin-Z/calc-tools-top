@@ -1,5 +1,5 @@
-// Phase 1.4: 首页三源同步校验
-// 断言：首页卡片集(zh/en) == SITE_CONFIG.tools 集 == 磁盘页面集 == TOOLS_DATA 集 == TOOL_KEYWORDS_ZH 集
+// Phase 1.4 + 3.4: 首页多源同步校验（tools.json 为权威数据源）
+// 断言：tools.json 集 == 首页卡片集(zh/en) == SITE_CONFIG.tools 集 == 磁盘页面集 == TOOLS_DATA 集 == TOOL_KEYWORDS_ZH 集
 // 任一源漂移即报错并退出码 1。
 import { readFileSync, readdirSync } from 'fs';
 import { join, dirname, resolve } from 'path';
@@ -85,6 +85,10 @@ function constKeys(name) {
 const toolsDataKeys = constKeys('TOOLS_DATA');
 const kwKeys = constKeys('TOOL_KEYWORDS_ZH');
 
+// 5) tools.json 权威数据源
+const toolsJson = JSON.parse(readFileSync(join(root, 'tools.json'), 'utf8'));
+const toolsJsonSet = new Set(toolsJson.map((t) => t.slug));
+
 // ---------- 断言 ----------
 const errors = [];
 function check(name, a, b) {
@@ -94,11 +98,13 @@ function check(name, a, b) {
   }
 }
 
-check(`磁盘zh(${diskZh.size}) vs 首页zh(${homeZh.size})`, diskZh, homeZh);
-check(`磁盘en(${diskEn.size}) vs 首页en(${homeEn.size})`, diskEn, homeEn);
-check(`磁盘zh(${diskZh.size}) vs 配置(${configSet.size})`, diskZh, configSet);
-check(`磁盘zh(${diskZh.size}) vs TOOLS_DATA(${toolsDataKeys.size})`, diskZh, toolsDataKeys);
-check(`磁盘zh(${diskZh.size}) vs TOOL_KEYWORDS_ZH(${kwKeys.size})`, diskZh, kwKeys);
+check(`tools.json(${toolsJsonSet.size}) vs 磁盘zh(${diskZh.size})`, toolsJsonSet, diskZh);
+check(`tools.json(${toolsJsonSet.size}) vs 磁盘en(${diskEn.size})`, toolsJsonSet, diskEn);
+check(`tools.json(${toolsJsonSet.size}) vs 首页zh(${homeZh.size})`, toolsJsonSet, homeZh);
+check(`tools.json(${toolsJsonSet.size}) vs 首页en(${homeEn.size})`, toolsJsonSet, homeEn);
+check(`tools.json(${toolsJsonSet.size}) vs 配置(${configSet.size})`, toolsJsonSet, configSet);
+check(`tools.json(${toolsJsonSet.size}) vs TOOLS_DATA(${toolsDataKeys.size})`, toolsJsonSet, toolsDataKeys);
+check(`tools.json(${toolsJsonSet.size}) vs TOOL_KEYWORDS_ZH(${kwKeys.size})`, toolsJsonSet, kwKeys);
 
 // 6) 首页卡片 data-like-id 一致性：每张卡的 likeId 必须等于 slug 且属于配置集
 //    —— 捕捉「href 正确但 like-id 漂移」（如 image-crop 卡片误写 data-like-id="crop"）
@@ -121,4 +127,4 @@ if (errors.length) {
   for (const e of errors) console.error('  ✗ ' + e);
   process.exit(1);
 }
-console.log(`✅ 首页同步: 磁盘(${diskZh.size}) == 首页zh/en == 配置 == TOOLS_DATA == TOOL_KEYWORDS_ZH 全一致`);
+console.log(`✅ 首页同步: tools.json(${toolsJsonSet.size}) == 磁盘 == 首页zh/en == 配置 == TOOLS_DATA == TOOL_KEYWORDS_ZH 全一致`);
