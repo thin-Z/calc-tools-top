@@ -455,6 +455,79 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
   }
 }
 
+// ---------- 17. 搜索升级专项断言（2026-08-25 首页搜索迭代） ----------
+//   a) js/tool-pinyin.js 存在且 TOOL_PINYIN_ZH 覆盖 tools.json 全部 slug（拼音/首字母索引）
+//   b) js/site-home.js 已激活文章搜索（articleSearchBlob + 引用 .article-item）
+//   c) 首页热搜标签已去误导：index.html 不含"大家都在搜"、en/index.html 不含"Popular searches"
+//   d) 首页已引入拼音索引脚本且使用诚实标签（最近搜索 / Recent searches）
+{
+  const issues = [];
+
+  // a) 拼音索引覆盖
+  const toolsJson = JSON.parse(fs.readFileSync(path.join(ROOT, 'tools.json'), 'utf8'));
+  const slugs = toolsJson.map(t => t.slug).sort();
+  const pinPath = path.join(ROOT, 'js', 'tool-pinyin.js');
+  if (!fs.existsSync(pinPath)) {
+    issues.push('[search] js/tool-pinyin.js 缺失（拼音索引未生成）');
+  } else {
+    const pinSrc = fs.readFileSync(pinPath, 'utf8');
+    const pinKeys = [...pinSrc.matchAll(/^\s*"([a-z0-9-]+)":\s*\{/gm)].map(m => m[1]).sort();
+    const missing = slugs.filter(s => !pinKeys.includes(s));
+    if (missing.length) issues.push(`[search] TOOL_PINYIN_ZH 缺 ${missing.length} 个 slug（${missing.slice(0, 5).join(', ')}…）`);
+  }
+
+  // b) 文章搜索已激活
+  const homeJs = fs.readFileSync(path.join(ROOT, 'js', 'site-home.js'), 'utf8');
+  if (!/articleSearchBlob/.test(homeJs) || !/\.article-item/.test(homeJs)) {
+    issues.push('[search] site-home.js 未激活文章搜索（缺 articleSearchBlob 或未引用 .article-item）');
+  }
+  if (!/applyFilters/.test(homeJs)) {
+    issues.push('[search] site-home.js 缺少统一 applyFilters（搜索与分类未协同）');
+  }
+
+  // c) 热搜标签去误导
+  const idxHtml = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  const enHtml = fs.readFileSync(path.join(ROOT, 'en', 'index.html'), 'utf8');
+  if (/大家都在搜/.test(idxHtml)) issues.push('[search] index.html 仍含误导标签"大家都在搜"');
+  if (/Popular searches/i.test(enHtml)) issues.push('[search] en/index.html 仍含误导标签"Popular searches"');
+  if (!/最近搜索/.test(idxHtml)) issues.push('[search] index.html 未使用诚实标签"最近搜索"');
+  if (!/Recent searches/i.test(enHtml)) issues.push('[search] en/index.html 未使用诚实标签"Recent searches"');
+  if (!/tool-pinyin\.js/.test(idxHtml)) issues.push('[search] index.html 未引入 js/tool-pinyin.js');
+
+  if (issues.length) {
+    issues.forEach((f) => fail(f));
+  } else {
+    console.log(`[17] 搜索升级专项: 拼音索引(${slugs.length} slug) + 文章搜索 + 诚实热搜标签 ✓`);
+  }
+}
+
+// ---------- 18. 搜索升级 Phase C 断言（2026-08-25） ----------
+//   C3: GA4 零结果事件（trackSearchNoResult + search_no_result）
+//   C4: aria-live 结果计数（.search-live）+ .sr-only 视觉隐藏样式
+//   C5: EN 关键词补全（tools.json en.kw 全覆盖 + 卡片 data-keywords-en + site-home 消费）
+{
+  const issues = [];
+  const toolsJson = JSON.parse(fs.readFileSync(path.join(ROOT, 'tools.json'), 'utf8'));
+  const missingEnKw = toolsJson.filter(t => !(t.en && t.en.kw)).map(t => t.slug);
+  if (missingEnKw.length) issues.push(`[search-c] tools.json 缺 en.kw ${missingEnKw.length} 个（${missingEnKw.slice(0, 5).join(', ')}…）`);
+
+  const homeJs = fs.readFileSync(path.join(ROOT, 'js', 'site-home.js'), 'utf8');
+  if (!/trackSearchNoResult/.test(homeJs)) issues.push('[search-c] site-home.js 缺 trackSearchNoResult（GA4 零结果事件未接入）');
+  if (!/search_no_result/.test(homeJs)) issues.push('[search-c] site-home.js 未发送 search_no_result 事件');
+  if (!/search-live/.test(homeJs)) issues.push('[search-c] site-home.js 未创建 .search-live 无障碍计数区');
+  const css = fs.readFileSync(path.join(ROOT, 'css', 'style.css'), 'utf8');
+  if (!/\.sr-only\s*\{/.test(css)) issues.push('[search-c] css/style.css 缺 .sr-only 视觉隐藏类');
+  if (!/data-keywords-en|keywordsEn/.test(homeJs)) issues.push('[search-c] site-home.js 未消费 data-keywords-en');
+  const genHome = fs.readFileSync(path.join(ROOT, 'scripts', 'generate-home.mjs'), 'utf8');
+  if (!/data-keywords-en/.test(genHome)) issues.push('[search-c] generate-home.mjs 未注入 data-keywords-en');
+
+  if (issues.length) {
+    issues.forEach((f) => fail(f));
+  } else {
+    console.log(`[18] 搜索升级 Phase C: GA4零结果事件 + aria-live计数 + EN关键词(${toolsJson.length} slug) ✓`);
+  }
+}
+
 // ---------- 汇总 ----------
 if (failures.length) {
   console.error(`\n❌ verify-site 失败 ${failures.length} 项：`);

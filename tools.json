@@ -1,45 +1,781 @@
 [
-  {"slug":"mortgage","icon":"🏠","dir":"calculators","categories":["finance"],"zh":{"name":"房贷计算器","desc":"等额本息+等额本金，支持商业/公积金组合贷款","kw":"房贷,贷款,按揭,买房,月供,利息,商业贷款,公积金贷款"},"en":{"name":"Mortgage Calculator","desc":"Equal payment + principal, supports commercial + housing fund loans"}},
-  {"slug":"tax2026","icon":"📋","dir":"calculators","categories":["finance"],"zh":{"name":"个税计算器","desc":"2026最新个税税率，一键计算税后收入","kw":"个税,个人所得税,税率,工资,扣税,2026"},"en":{"name":"Tax Calculator 2026","desc":"Latest 2026 tax rates, calculate after-tax income"}},
-  {"slug":"housing-fund","icon":"💰","dir":"calculators","categories":["finance"],"zh":{"name":"公积金计算器","desc":"公积金贷款额度与利率计算，支持最新政策","kw":"公积金,住房公积金,贷款,利率"},"en":{"name":"Housing Fund Calculator","desc":"Housing fund loan amount + rate calculation"}},
-  {"slug":"car-loan","icon":"🚗","dir":"calculators","categories":["finance"],"zh":{"name":"车贷计算器","desc":"车贷月供与利息计算","kw":"车贷,买车,汽车贷款,月供"},"en":{"name":"Car Loan Calculator","desc":"Car loan monthly payment + interest"}},
-  {"slug":"loan-compare","icon":"📊","dir":"calculators","categories":["finance"],"zh":{"name":"贷款对比计算器","desc":"多种贷款方案利率对比","kw":"贷款对比,贷款方案,利率对比"},"en":{"name":"Loan Comparison","desc":"Compare multiple loan plans side by side"}},
-  {"slug":"compound-interest","icon":"📈","dir":"calculators","categories":["finance"],"zh":{"name":"复利计算器","desc":"复利收益与投资增长计算","kw":"复利,投资,理财,收益计算"},"en":{"name":"Compound Interest","desc":"Calculate compound interest growth"}},
-  {"slug":"overtime","icon":"⏰","dir":"calculators","categories":["finance"],"zh":{"name":"加班费计算器","desc":"加班工资计算，劳动法标准","kw":"加班费,加班工资,加班,劳动法"},"en":{"name":"Overtime Calculator","desc":"Overtime pay calculation per labor law"}},
-  {"slug":"percentage-calc","icon":"📊","dir":"calculators","categories":["shopping","finance"],"zh":{"name":"百分比计算器","desc":"百分比计算/增减/变化多种模式","kw":"百分比,百分数,百分比计算,百分率,百分号计算"},"en":{"name":"Percentage Calculator","desc":"Percentage calc, increase, decrease, change"}},
-  {"slug":"discount","icon":"🏷️","dir":"calculators","categories":["shopping","finance"],"zh":{"name":"折扣计算器","desc":"计算折扣后价格与节省金额","kw":"折扣,打折,优惠,省钱,降价"},"en":{"name":"Discount Calculator","desc":"Calculate discounted price and savings"}},
-  {"slug":"fuel-cost","icon":"⛽","dir":"calculators","categories":["travel","finance"],"zh":{"name":"油耗计算器","desc":"油费与每公里成本计算","kw":"油耗,油费,加油,每公里成本"},"en":{"name":"Fuel Cost Calculator","desc":"Fuel cost per kilometer calculation"}},
-  {"slug":"bmi","icon":"⚖️","dir":"calculators","categories":["health"],"zh":{"name":"BMI 计算器","desc":"根据身高体重计算身体质量指数","kw":"bmi,体重,身高,肥胖,超重,身体质量指数"},"en":{"name":"BMI Calculator","desc":"Calculate BMI from height and weight"}},
-  {"slug":"ideal-weight","icon":"🎯","dir":"calculators","categories":["health"],"zh":{"name":"标准体重计算器","desc":"标准体重对照与BMI参考","kw":"标准体重,理想体重,减肥,健康体重"},"en":{"name":"Ideal Weight Calculator","desc":"Standard weight reference + BMI guide"}},
-  {"slug":"ovulation","icon":"🌸","dir":"calculators","categories":["health","life"],"zh":{"name":"排卵期计算器","desc":"排卵期与安全期推算","kw":"排卵期,安全期,生理期,备孕"},"en":{"name":"Ovulation Calculator","desc":"Ovulation + safe period tracker"}},
-  {"slug":"calorie-calculator","icon":"🔥","dir":"calculators","categories":["health"],"zh":{"name":"卡路里计算器","desc":"按身高体重年龄性别计算每日所需热量","kw":"卡路里,热量,每日热量,基础代谢,饮食,热量计算"},"en":{"name":"Calorie Calculator","desc":"Calculate daily calorie needs by height, weight, age and gender"}},
-  {"slug":"date-calc","icon":"📅","dir":"calculators","categories":["life"],"zh":{"name":"日期计算器","desc":"计算日期差/推算目标日期/工作日","kw":"日期,天数,工作日,日期差,日期推算"},"en":{"name":"Date Calculator","desc":"Date difference, target date, workday calc"}},
-  {"slug":"workday-calculator","icon":"💼","dir":"calculators","categories":["life"],"zh":{"name":"工作日计算器","desc":"计算两个日期之间的工作日天数，可选排除节假日","kw":"工作日,工作日计算,工作天数,排除节假日,工作日天数"},"en":{"name":"Workday Calculator","desc":"Count workdays between two dates, optionally excluding holidays"}},
-  {"slug":"age-calc","icon":"🎂","dir":"calculators","categories":["life"],"zh":{"name":"年龄计算器","desc":"周岁/生肖/生日精确计算","kw":"年龄,周岁,生肖,生日"},"en":{"name":"Age Calculator","desc":"Exact age calculation including zodiac"}},
-  {"slug":"electricity","icon":"💡","dir":"calculators","categories":["life","finance"],"zh":{"name":"电费计算器","desc":"电费与用电量精确计算","kw":"电费,用电量,电价,电表"},"en":{"name":"Electricity Calculator","desc":"Calculate electricity bill and usage"}},
-  {"slug":"unit-converter","icon":"📏","dir":"calculators","categories":["utility"],"zh":{"name":"单位换算器","desc":"长度/重量/温度等常用单位换算","kw":"单位换算,长度换算,重量换算,温度换算,转换"},"en":{"name":"Unit Converter","desc":"Length/weight/temperature converter"}},
-  {"slug":"password-strength","icon":"🛡️","dir":"calculators","categories":["utility"],"zh":{"name":"密码强度检测器","desc":"实时检测密码安全性并给出改进建议","kw":"密码强度,密码安全,强密码检测,密码检测,密码评分"},"en":{"name":"Password Strength Checker","desc":"Test password security with improvement tips"}},
-  {"slug":"qr-generator","icon":"📱","dir":"calculators","categories":["utility"],"zh":{"name":"二维码生成器","desc":"文字或链接快速生成二维码，下载PNG","kw":"二维码,二维码生成器,qrcode,二维码制作,二维码在线"},"en":{"name":"QR Code Generator","desc":"Generate QR codes from text/URL, download as PNG"}},
-  {"slug":"password-gen","icon":"🔑","dir":"calculators","categories":["utility"],"zh":{"name":"密码生成器","desc":"自定义字符类型生成高强度密码","kw":"密码生成器,随机密码,强密码,密码生成,密码工具"},"en":{"name":"Password Generator","desc":"Generate strong passwords with custom options"}},
-  {"slug":"random-gen","icon":"🎲","dir":"calculators","categories":["utility"],"zh":{"name":"随机数生成器","desc":"自定义范围生成随机整数","kw":"随机数,随机数生成,随机数字,抽奖随机,摇号"},"en":{"name":"Random Number Generator","desc":"Generate random integers in custom range"}},
-  {"slug":"compress","icon":"🗜️","dir":"image","categories":["image"],"zh":{"name":"图片压缩","desc":"压缩图片大小，本地处理不上传","kw":"图片压缩,压缩图片,减小图片,压缩"},"en":{"name":"Image Compress","desc":"Compress images locally without upload"}},
-  {"slug":"convert","icon":"🔄","dir":"image","categories":["image"],"zh":{"name":"格式转换","desc":"JPG/PNG/WebP格式互转","kw":"格式转换,图片格式,jpg,png,webp"},"en":{"name":"Format Convert","desc":"Convert between JPG/PNG/WebP"}},
-  {"slug":"resize","icon":"📐","dir":"image","categories":["image"],"zh":{"name":"裁剪缩放","desc":"调整图片尺寸，保持宽高比","kw":"裁剪,缩放,调整大小,图片尺寸"},"en":{"name":"Resize & Crop","desc":"Resize and crop images"}},
-  {"slug":"base64","icon":"🔣","dir":"image","categories":["image"],"zh":{"name":"图片转Base64","desc":"图片转Base64编码嵌入","kw":"base64,图片编码,图片转码"},"en":{"name":"Image to Base64","desc":"Convert image to Base64 embedding"}},
-  {"slug":"color-picker","icon":"🎨","dir":"image","categories":["image"],"zh":{"name":"图片取色器","desc":"提取图片中的颜色值","kw":"取色器,颜色提取,拾色器,颜色选择"},"en":{"name":"Color Picker","desc":"Pick colors from images"}},
-  {"slug":"image-crop","icon":"✂️","dir":"image","categories":["image"],"zh":{"name":"图片裁剪","desc":"拖拽裁剪图片，比例锁定，下载 PNG/JPEG","kw":"图片裁剪,裁剪图片,图片编辑,剪切图片,crop,图片裁剪工具"},"en":{"name":"Image Cropper","desc":"Drag to crop images with aspect lock, download PNG/JPEG"}},
-  {"slug":"color-contrast","icon":"🎨","dir":"calculators","categories":["image"],"zh":{"name":"颜色对比度检查器","desc":"WCAG AA/AAA 对比度在线检测","kw":"颜色对比度,对比度检查,wcag,无障碍,aa,aaa,配色,前景色,背景色"},"en":{"name":"Color Contrast Checker","desc":"Check WCAG AA/AAA contrast ratio online"}},
-  {"slug":"case-converter","icon":"🔠","dir":"text","categories":["text"],"zh":{"name":"大小写转换","desc":"全半角/大小写字母转换","kw":"大小写转换,大写,小写,首字母大写"},"en":{"name":"Case Converter","desc":"Convert between upper/lower case"}},
-  {"slug":"json-formatter","icon":"📋","dir":"text","categories":["text"],"zh":{"name":"JSON 格式化","desc":"格式化/压缩/校验JSON数据","kw":"json格式化,json压缩,json校验,json"},"en":{"name":"JSON Formatter","desc":"Format, compress and validate JSON"}},
-  {"slug":"base64-encode","icon":"🔐","dir":"text","categories":["text"],"zh":{"name":"Base64 编解码","desc":"文本与Base64互转","kw":"base64编解码,base64加密,base64"},"en":{"name":"Base64 Encode/Decode","desc":"Encode and decode Base64 text"}},
-  {"slug":"url-encode","icon":"🔗","dir":"text","categories":["text"],"zh":{"name":"URL 编解码","desc":"URL编码与解码","kw":"url编码,url解码,网址编码"},"en":{"name":"URL Encode/Decode","desc":"Encode and decode URLs"}},
-  {"slug":"text-cleaner","icon":"🧹","dir":"text","categories":["text"],"zh":{"name":"文本清理","desc":"清理多余空格和换行","kw":"文本清理,去除空格,清理文本,空白字符"},"en":{"name":"Text Cleaner","desc":"Clean extra spaces and line breaks"}},
-  {"slug":"html-stripper","icon":"✂️","dir":"text","categories":["text"],"zh":{"name":"HTML 剥离","desc":"移除文本中的HTML标签","kw":"html剥离,去除html,提取文本"},"en":{"name":"HTML Stripper","desc":"Strip HTML tags from text"}},
-  {"slug":"text-diff","icon":"📊","dir":"text","categories":["text"],"zh":{"name":"文本对比","desc":"对比两段文本差异","kw":"文本对比,文本差异,比较文本"},"en":{"name":"Text Diff","desc":"Compare two texts for differences"}},
-  {"slug":"uuid-generator","icon":"🆔","dir":"text","categories":["text"],"zh":{"name":"UUID 生成","desc":"生成UUID唯一标识符","kw":"uuid生成,唯一标识符,随机id"},"en":{"name":"UUID Generator","desc":"Generate UUID identifiers"}},
-  {"slug":"reading-time","icon":"📖","dir":"text","categories":["text"],"zh":{"name":"阅读时间","desc":"估算文章阅读时长","kw":"阅读时间,文章阅读,阅读速度"},"en":{"name":"Reading Time","desc":"Estimate text reading time"}},
-  {"slug":"keyword-density","icon":"🎯","dir":"text","categories":["text"],"zh":{"name":"关键词密度","desc":"分析文章关键词密度","kw":"关键词密度,关键词频率,seo分析"},"en":{"name":"Keyword Density","desc":"Analyze keyword density in text"}},
-  {"slug":"word-counter","icon":"🔤","dir":"text","categories":["text"],"zh":{"name":"字数统计","desc":"统计字符/字数/段落","kw":"字数统计,字数,字符数,文章统计"},"en":{"name":"Word Counter","desc":"Count characters/words/paragraphs"}},
-  {"slug":"regex-tester","icon":"🔍","dir":"calculators","categories":["text"],"zh":{"name":"正则表达式测试器","desc":"实时匹配高亮与捕获组解析","kw":"正则表达式,正则测试,正则匹配,regex,正则高亮,捕获组"},"en":{"name":"Regex Tester","desc":"Real-time match highlight and group parsing"}},
-  {"slug":"markdown-preview","icon":"📝","dir":"calculators","categories":["text"],"zh":{"name":"Markdown 预览器","desc":"实时预览 Markdown 渲染结果","kw":"markdown,markdown预览,md转html,markdown编辑器,markdown在线"},"en":{"name":"Markdown Preview","desc":"Live Markdown rendering preview"}}
+  {
+    "slug": "mortgage",
+    "icon": "🏠",
+    "dir": "calculators",
+    "categories": [
+      "finance"
+    ],
+    "zh": {
+      "name": "房贷计算器",
+      "desc": "等额本息+等额本金，支持商业/公积金组合贷款",
+      "kw": "房贷,贷款,按揭,买房,月供,利息,商业贷款,公积金贷款"
+    },
+    "en": {
+      "name": "Mortgage Calculator",
+      "desc": "Equal payment + principal, supports commercial + housing fund loans",
+      "kw": "mortgage,home loan,house loan,monthly payment,interest,amortization"
+    }
+  },
+  {
+    "slug": "tax2026",
+    "icon": "📋",
+    "dir": "calculators",
+    "categories": [
+      "finance"
+    ],
+    "zh": {
+      "name": "个税计算器",
+      "desc": "2026最新个税税率，一键计算税后收入",
+      "kw": "个税,个人所得税,税率,工资,扣税,2026"
+    },
+    "en": {
+      "name": "Tax Calculator 2026",
+      "desc": "Latest 2026 tax rates, calculate after-tax income",
+      "kw": "tax,income tax,tax calculator,payroll tax,2026 tax,after tax"
+    }
+  },
+  {
+    "slug": "housing-fund",
+    "icon": "💰",
+    "dir": "calculators",
+    "categories": [
+      "finance"
+    ],
+    "zh": {
+      "name": "公积金计算器",
+      "desc": "公积金贷款额度与利率计算，支持最新政策",
+      "kw": "公积金,住房公积金,贷款,利率"
+    },
+    "en": {
+      "name": "Housing Fund Calculator",
+      "desc": "Housing fund loan amount + rate calculation",
+      "kw": "housing fund,provident fund,housing fund loan,china housing fund"
+    }
+  },
+  {
+    "slug": "car-loan",
+    "icon": "🚗",
+    "dir": "calculators",
+    "categories": [
+      "finance"
+    ],
+    "zh": {
+      "name": "车贷计算器",
+      "desc": "车贷月供与利息计算",
+      "kw": "车贷,买车,汽车贷款,月供"
+    },
+    "en": {
+      "name": "Car Loan Calculator",
+      "desc": "Car loan monthly payment + interest",
+      "kw": "car loan,auto loan,vehicle loan,monthly payment"
+    }
+  },
+  {
+    "slug": "loan-compare",
+    "icon": "📊",
+    "dir": "calculators",
+    "categories": [
+      "finance"
+    ],
+    "zh": {
+      "name": "贷款对比计算器",
+      "desc": "多种贷款方案利率对比",
+      "kw": "贷款对比,贷款方案,利率对比"
+    },
+    "en": {
+      "name": "Loan Comparison",
+      "desc": "Compare multiple loan plans side by side",
+      "kw": "loan comparison,compare loans,loan calculator"
+    }
+  },
+  {
+    "slug": "compound-interest",
+    "icon": "📈",
+    "dir": "calculators",
+    "categories": [
+      "finance"
+    ],
+    "zh": {
+      "name": "复利计算器",
+      "desc": "复利收益与投资增长计算",
+      "kw": "复利,投资,理财,收益计算"
+    },
+    "en": {
+      "name": "Compound Interest",
+      "desc": "Calculate compound interest growth",
+      "kw": "compound interest,investment growth,interest calculator,savings"
+    }
+  },
+  {
+    "slug": "overtime",
+    "icon": "⏰",
+    "dir": "calculators",
+    "categories": [
+      "finance"
+    ],
+    "zh": {
+      "name": "加班费计算器",
+      "desc": "加班工资计算，劳动法标准",
+      "kw": "加班费,加班工资,加班,劳动法"
+    },
+    "en": {
+      "name": "Overtime Calculator",
+      "desc": "Overtime pay calculation per labor law",
+      "kw": "overtime,overtime pay,overtime calculator,labor law"
+    }
+  },
+  {
+    "slug": "percentage-calc",
+    "icon": "📊",
+    "dir": "calculators",
+    "categories": [
+      "shopping",
+      "finance"
+    ],
+    "zh": {
+      "name": "百分比计算器",
+      "desc": "百分比计算/增减/变化多种模式",
+      "kw": "百分比,百分数,百分比计算,百分率,百分号计算"
+    },
+    "en": {
+      "name": "Percentage Calculator",
+      "desc": "Percentage calc, increase, decrease, change",
+      "kw": "percentage,percent,percentage calculator,percent change"
+    }
+  },
+  {
+    "slug": "discount",
+    "icon": "🏷️",
+    "dir": "calculators",
+    "categories": [
+      "shopping",
+      "finance"
+    ],
+    "zh": {
+      "name": "折扣计算器",
+      "desc": "计算折扣后价格与节省金额",
+      "kw": "折扣,打折,优惠,省钱,降价"
+    },
+    "en": {
+      "name": "Discount Calculator",
+      "desc": "Calculate discounted price and savings",
+      "kw": "discount,discount calculator,sale price,savings"
+    }
+  },
+  {
+    "slug": "fuel-cost",
+    "icon": "⛽",
+    "dir": "calculators",
+    "categories": [
+      "travel",
+      "finance"
+    ],
+    "zh": {
+      "name": "油耗计算器",
+      "desc": "油费与每公里成本计算",
+      "kw": "油耗,油费,加油,每公里成本"
+    },
+    "en": {
+      "name": "Fuel Cost Calculator",
+      "desc": "Fuel cost per kilometer calculation",
+      "kw": "fuel cost,gas cost,fuel consumption,gas price"
+    }
+  },
+  {
+    "slug": "bmi",
+    "icon": "⚖️",
+    "dir": "calculators",
+    "categories": [
+      "health"
+    ],
+    "zh": {
+      "name": "BMI 计算器",
+      "desc": "根据身高体重计算身体质量指数",
+      "kw": "bmi,体重,身高,肥胖,超重,身体质量指数"
+    },
+    "en": {
+      "name": "BMI Calculator",
+      "desc": "Calculate BMI from height and weight",
+      "kw": "bmi,body mass index,weight,height,obesity"
+    }
+  },
+  {
+    "slug": "ideal-weight",
+    "icon": "🎯",
+    "dir": "calculators",
+    "categories": [
+      "health"
+    ],
+    "zh": {
+      "name": "标准体重计算器",
+      "desc": "标准体重对照与BMI参考",
+      "kw": "标准体重,理想体重,减肥,健康体重"
+    },
+    "en": {
+      "name": "Ideal Weight Calculator",
+      "desc": "Standard weight reference + BMI guide",
+      "kw": "ideal weight,healthy weight,standard weight"
+    }
+  },
+  {
+    "slug": "ovulation",
+    "icon": "🌸",
+    "dir": "calculators",
+    "categories": [
+      "health",
+      "life"
+    ],
+    "zh": {
+      "name": "排卵期计算器",
+      "desc": "排卵期与安全期推算",
+      "kw": "排卵期,安全期,生理期,备孕"
+    },
+    "en": {
+      "name": "Ovulation Calculator",
+      "desc": "Ovulation + safe period tracker",
+      "kw": "ovulation,fertility,safe period,cycle"
+    }
+  },
+  {
+    "slug": "calorie-calculator",
+    "icon": "🔥",
+    "dir": "calculators",
+    "categories": [
+      "health"
+    ],
+    "zh": {
+      "name": "卡路里计算器",
+      "desc": "按身高体重年龄性别计算每日所需热量",
+      "kw": "卡路里,热量,每日热量,基础代谢,饮食,热量计算"
+    },
+    "en": {
+      "name": "Calorie Calculator",
+      "desc": "Calculate daily calorie needs by height, weight, age and gender",
+      "kw": "calorie,calories,daily calorie,bmr,metabolism"
+    }
+  },
+  {
+    "slug": "date-calc",
+    "icon": "📅",
+    "dir": "calculators",
+    "categories": [
+      "life"
+    ],
+    "zh": {
+      "name": "日期计算器",
+      "desc": "计算日期差/推算目标日期/工作日",
+      "kw": "日期,天数,工作日,日期差,日期推算"
+    },
+    "en": {
+      "name": "Date Calculator",
+      "desc": "Date difference, target date, workday calc",
+      "kw": "date calculator,date difference,days between,add days"
+    }
+  },
+  {
+    "slug": "workday-calculator",
+    "icon": "💼",
+    "dir": "calculators",
+    "categories": [
+      "life"
+    ],
+    "zh": {
+      "name": "工作日计算器",
+      "desc": "计算两个日期之间的工作日天数，可选排除节假日",
+      "kw": "工作日,工作日计算,工作天数,排除节假日,工作日天数"
+    },
+    "en": {
+      "name": "Workday Calculator",
+      "desc": "Count workdays between two dates, optionally excluding holidays",
+      "kw": "workday,business days,working days,exclude holidays"
+    }
+  },
+  {
+    "slug": "age-calc",
+    "icon": "🎂",
+    "dir": "calculators",
+    "categories": [
+      "life"
+    ],
+    "zh": {
+      "name": "年龄计算器",
+      "desc": "周岁/生肖/生日精确计算",
+      "kw": "年龄,周岁,生肖,生日"
+    },
+    "en": {
+      "name": "Age Calculator",
+      "desc": "Exact age calculation including zodiac",
+      "kw": "age calculator,exact age,zodiac,chinese zodiac"
+    }
+  },
+  {
+    "slug": "electricity",
+    "icon": "💡",
+    "dir": "calculators",
+    "categories": [
+      "life",
+      "finance"
+    ],
+    "zh": {
+      "name": "电费计算器",
+      "desc": "电费与用电量精确计算",
+      "kw": "电费,用电量,电价,电表"
+    },
+    "en": {
+      "name": "Electricity Calculator",
+      "desc": "Calculate electricity bill and usage",
+      "kw": "electricity bill,electricity cost,power consumption,kwh"
+    }
+  },
+  {
+    "slug": "unit-converter",
+    "icon": "📏",
+    "dir": "calculators",
+    "categories": [
+      "utility"
+    ],
+    "zh": {
+      "name": "单位换算器",
+      "desc": "长度/重量/温度等常用单位换算",
+      "kw": "单位换算,长度换算,重量换算,温度换算,转换"
+    },
+    "en": {
+      "name": "Unit Converter",
+      "desc": "Length/weight/temperature converter",
+      "kw": "unit converter,convert units,length,weight,temperature"
+    }
+  },
+  {
+    "slug": "password-strength",
+    "icon": "🛡️",
+    "dir": "calculators",
+    "categories": [
+      "utility"
+    ],
+    "zh": {
+      "name": "密码强度检测器",
+      "desc": "实时检测密码安全性并给出改进建议",
+      "kw": "密码强度,密码安全,强密码检测,密码检测,密码评分"
+    },
+    "en": {
+      "name": "Password Strength Checker",
+      "desc": "Test password security with improvement tips",
+      "kw": "password strength,password security,strong password"
+    }
+  },
+  {
+    "slug": "qr-generator",
+    "icon": "📱",
+    "dir": "calculators",
+    "categories": [
+      "utility"
+    ],
+    "zh": {
+      "name": "二维码生成器",
+      "desc": "文字或链接快速生成二维码，下载PNG",
+      "kw": "二维码,二维码生成器,qrcode,二维码制作,二维码在线"
+    },
+    "en": {
+      "name": "QR Code Generator",
+      "desc": "Generate QR codes from text/URL, download as PNG",
+      "kw": "qr code,qr generator,qrcode,generate qr"
+    }
+  },
+  {
+    "slug": "password-gen",
+    "icon": "🔑",
+    "dir": "calculators",
+    "categories": [
+      "utility"
+    ],
+    "zh": {
+      "name": "密码生成器",
+      "desc": "自定义字符类型生成高强度密码",
+      "kw": "密码生成器,随机密码,强密码,密码生成,密码工具"
+    },
+    "en": {
+      "name": "Password Generator",
+      "desc": "Generate strong passwords with custom options",
+      "kw": "password generator,random password,strong password"
+    }
+  },
+  {
+    "slug": "random-gen",
+    "icon": "🎲",
+    "dir": "calculators",
+    "categories": [
+      "utility"
+    ],
+    "zh": {
+      "name": "随机数生成器",
+      "desc": "自定义范围生成随机整数",
+      "kw": "随机数,随机数生成,随机数字,抽奖随机,摇号"
+    },
+    "en": {
+      "name": "Random Number Generator",
+      "desc": "Generate random integers in custom range",
+      "kw": "random number,random generator,random integer"
+    }
+  },
+  {
+    "slug": "compress",
+    "icon": "🗜️",
+    "dir": "image",
+    "categories": [
+      "image"
+    ],
+    "zh": {
+      "name": "图片压缩",
+      "desc": "压缩图片大小，本地处理不上传",
+      "kw": "图片压缩,压缩图片,减小图片,压缩"
+    },
+    "en": {
+      "name": "Image Compress",
+      "desc": "Compress images locally without upload",
+      "kw": "image compress,compress image,reduce image size"
+    }
+  },
+  {
+    "slug": "convert",
+    "icon": "🔄",
+    "dir": "image",
+    "categories": [
+      "image"
+    ],
+    "zh": {
+      "name": "格式转换",
+      "desc": "JPG/PNG/WebP格式互转",
+      "kw": "格式转换,图片格式,jpg,png,webp"
+    },
+    "en": {
+      "name": "Format Convert",
+      "desc": "Convert between JPG/PNG/WebP",
+      "kw": "image convert,format convert,jpg,png,webp"
+    }
+  },
+  {
+    "slug": "resize",
+    "icon": "📐",
+    "dir": "image",
+    "categories": [
+      "image"
+    ],
+    "zh": {
+      "name": "裁剪缩放",
+      "desc": "调整图片尺寸，保持宽高比",
+      "kw": "裁剪,缩放,调整大小,图片尺寸"
+    },
+    "en": {
+      "name": "Resize & Crop",
+      "desc": "Resize and crop images",
+      "kw": "image resize,resize image,crop image"
+    }
+  },
+  {
+    "slug": "base64",
+    "icon": "🔣",
+    "dir": "image",
+    "categories": [
+      "image"
+    ],
+    "zh": {
+      "name": "图片转Base64",
+      "desc": "图片转Base64编码嵌入",
+      "kw": "base64,图片编码,图片转码"
+    },
+    "en": {
+      "name": "Image to Base64",
+      "desc": "Convert image to Base64 embedding",
+      "kw": "image base64,base64 image,image to base64"
+    }
+  },
+  {
+    "slug": "color-picker",
+    "icon": "🎨",
+    "dir": "image",
+    "categories": [
+      "image"
+    ],
+    "zh": {
+      "name": "图片取色器",
+      "desc": "提取图片中的颜色值",
+      "kw": "取色器,颜色提取,拾色器,颜色选择"
+    },
+    "en": {
+      "name": "Color Picker",
+      "desc": "Pick colors from images",
+      "kw": "color picker,pick color,color extractor"
+    }
+  },
+  {
+    "slug": "image-crop",
+    "icon": "✂️",
+    "dir": "image",
+    "categories": [
+      "image"
+    ],
+    "zh": {
+      "name": "图片裁剪",
+      "desc": "拖拽裁剪图片，比例锁定，下载 PNG/JPEG",
+      "kw": "图片裁剪,裁剪图片,图片编辑,剪切图片,crop,图片裁剪工具"
+    },
+    "en": {
+      "name": "Image Cropper",
+      "desc": "Drag to crop images with aspect lock, download PNG/JPEG",
+      "kw": "image crop,crop image,image cropper"
+    }
+  },
+  {
+    "slug": "color-contrast",
+    "icon": "🎨",
+    "dir": "calculators",
+    "categories": [
+      "image"
+    ],
+    "zh": {
+      "name": "颜色对比度检查器",
+      "desc": "WCAG AA/AAA 对比度在线检测",
+      "kw": "颜色对比度,对比度检查,wcag,无障碍,aa,aaa,配色,前景色,背景色"
+    },
+    "en": {
+      "name": "Color Contrast Checker",
+      "desc": "Check WCAG AA/AAA contrast ratio online",
+      "kw": "color contrast,wcag,contrast checker,accessibility"
+    }
+  },
+  {
+    "slug": "case-converter",
+    "icon": "🔠",
+    "dir": "text",
+    "categories": [
+      "text"
+    ],
+    "zh": {
+      "name": "大小写转换",
+      "desc": "全半角/大小写字母转换",
+      "kw": "大小写转换,大写,小写,首字母大写"
+    },
+    "en": {
+      "name": "Case Converter",
+      "desc": "Convert between upper/lower case",
+      "kw": "case converter,uppercase,lowercase,title case"
+    }
+  },
+  {
+    "slug": "json-formatter",
+    "icon": "📋",
+    "dir": "text",
+    "categories": [
+      "text"
+    ],
+    "zh": {
+      "name": "JSON 格式化",
+      "desc": "格式化/压缩/校验JSON数据",
+      "kw": "json格式化,json压缩,json校验,json"
+    },
+    "en": {
+      "name": "JSON Formatter",
+      "desc": "Format, compress and validate JSON",
+      "kw": "json formatter,json beautify,json validator,format json"
+    }
+  },
+  {
+    "slug": "base64-encode",
+    "icon": "🔐",
+    "dir": "text",
+    "categories": [
+      "text"
+    ],
+    "zh": {
+      "name": "Base64 编解码",
+      "desc": "文本与Base64互转",
+      "kw": "base64编解码,base64加密,base64"
+    },
+    "en": {
+      "name": "Base64 Encode/Decode",
+      "desc": "Encode and decode Base64 text",
+      "kw": "base64,base64 encode,base64 decode,encode base64"
+    }
+  },
+  {
+    "slug": "url-encode",
+    "icon": "🔗",
+    "dir": "text",
+    "categories": [
+      "text"
+    ],
+    "zh": {
+      "name": "URL 编解码",
+      "desc": "URL编码与解码",
+      "kw": "url编码,url解码,网址编码"
+    },
+    "en": {
+      "name": "URL Encode/Decode",
+      "desc": "Encode and decode URLs",
+      "kw": "url encode,url decode,encode url,percent encoding"
+    }
+  },
+  {
+    "slug": "text-cleaner",
+    "icon": "🧹",
+    "dir": "text",
+    "categories": [
+      "text"
+    ],
+    "zh": {
+      "name": "文本清理",
+      "desc": "清理多余空格和换行",
+      "kw": "文本清理,去除空格,清理文本,空白字符"
+    },
+    "en": {
+      "name": "Text Cleaner",
+      "desc": "Clean extra spaces and line breaks",
+      "kw": "text cleaner,clean text,remove spaces,trim text"
+    }
+  },
+  {
+    "slug": "html-stripper",
+    "icon": "✂️",
+    "dir": "text",
+    "categories": [
+      "text"
+    ],
+    "zh": {
+      "name": "HTML 剥离",
+      "desc": "移除文本中的HTML标签",
+      "kw": "html剥离,去除html,提取文本"
+    },
+    "en": {
+      "name": "HTML Stripper",
+      "desc": "Strip HTML tags from text",
+      "kw": "html stripper,strip html,remove html tags"
+    }
+  },
+  {
+    "slug": "text-diff",
+    "icon": "📊",
+    "dir": "text",
+    "categories": [
+      "text"
+    ],
+    "zh": {
+      "name": "文本对比",
+      "desc": "对比两段文本差异",
+      "kw": "文本对比,文本差异,比较文本"
+    },
+    "en": {
+      "name": "Text Diff",
+      "desc": "Compare two texts for differences",
+      "kw": "text diff,compare text,text difference"
+    }
+  },
+  {
+    "slug": "uuid-generator",
+    "icon": "🆔",
+    "dir": "text",
+    "categories": [
+      "text"
+    ],
+    "zh": {
+      "name": "UUID 生成",
+      "desc": "生成UUID唯一标识符",
+      "kw": "uuid生成,唯一标识符,随机id"
+    },
+    "en": {
+      "name": "UUID Generator",
+      "desc": "Generate UUID identifiers",
+      "kw": "uuid,uuid generator,unique id,guid"
+    }
+  },
+  {
+    "slug": "reading-time",
+    "icon": "📖",
+    "dir": "text",
+    "categories": [
+      "text"
+    ],
+    "zh": {
+      "name": "阅读时间",
+      "desc": "估算文章阅读时长",
+      "kw": "阅读时间,文章阅读,阅读速度"
+    },
+    "en": {
+      "name": "Reading Time",
+      "desc": "Estimate text reading time",
+      "kw": "reading time,read time,words per minute"
+    }
+  },
+  {
+    "slug": "keyword-density",
+    "icon": "🎯",
+    "dir": "text",
+    "categories": [
+      "text"
+    ],
+    "zh": {
+      "name": "关键词密度",
+      "desc": "分析文章关键词密度",
+      "kw": "关键词密度,关键词频率,seo分析"
+    },
+    "en": {
+      "name": "Keyword Density",
+      "desc": "Analyze keyword density in text",
+      "kw": "keyword density,keyword analysis,seo,seo tool"
+    }
+  },
+  {
+    "slug": "word-counter",
+    "icon": "🔤",
+    "dir": "text",
+    "categories": [
+      "text"
+    ],
+    "zh": {
+      "name": "字数统计",
+      "desc": "统计字符/字数/段落",
+      "kw": "字数统计,字数,字符数,文章统计"
+    },
+    "en": {
+      "name": "Word Counter",
+      "desc": "Count characters/words/paragraphs",
+      "kw": "word counter,character count,word count,count words"
+    }
+  },
+  {
+    "slug": "regex-tester",
+    "icon": "🔍",
+    "dir": "calculators",
+    "categories": [
+      "text"
+    ],
+    "zh": {
+      "name": "正则表达式测试器",
+      "desc": "实时匹配高亮与捕获组解析",
+      "kw": "正则表达式,正则测试,正则匹配,regex,正则高亮,捕获组"
+    },
+    "en": {
+      "name": "Regex Tester",
+      "desc": "Real-time match highlight and group parsing",
+      "kw": "regex,regex tester,regular expression,regex matcher"
+    }
+  },
+  {
+    "slug": "markdown-preview",
+    "icon": "📝",
+    "dir": "calculators",
+    "categories": [
+      "text"
+    ],
+    "zh": {
+      "name": "Markdown 预览器",
+      "desc": "实时预览 Markdown 渲染结果",
+      "kw": "markdown,markdown预览,md转html,markdown编辑器,markdown在线"
+    },
+    "en": {
+      "name": "Markdown Preview",
+      "desc": "Live Markdown rendering preview",
+      "kw": "markdown,markdown preview,md preview,render markdown"
+    }
+  }
 ]

@@ -346,8 +346,11 @@ function initCategoryFilters() {
     const urlCat = urlParams.get('cat');
     if (urlCat) {
         sessionStorage.setItem('preselectCategory', urlCat);
-        // Clean URL without reload
-        const cleanUrl = window.location.pathname + window.location.hash;
+        // Clean URL without reload（保留其它参数如 ?q=）
+        const params = new URLSearchParams(window.location.search);
+        params.delete('cat');
+        const qs = params.toString();
+        const cleanUrl = window.location.pathname + (qs ? '?' + qs : '') + window.location.hash;
         history.replaceState(null, '', cleanUrl);
     }
 
@@ -379,56 +382,28 @@ function initCategoryFilters() {
     });
 }
 
-/* ===== Filter tools and articles by category ===== */
+/* ===== Filter tools and articles by category (delegates to unified applyFilters) ===== */
 function filterTools(category) {
-    // Filter tool cards
-    const cards = document.querySelectorAll('.tool-card');
-    cards.forEach(function(card) {
-        const cats = (card.dataset.category || "").split(",");
-        const match = category === "all" || cats.includes(category);
-        card.parentElement.classList.toggle("filtered-out", !match);
-    });
-
-    // Filter article items
-    const articles = document.querySelectorAll(".article-item");
-    articles.forEach(function(article) {
-        const cats = (article.dataset.category || "").split(",");
-        const match = category === "all" || cats.includes(category);
-        // Clear all inline display first (removes pagination artifacts)
-        article.style.display = "";
-        // Apply filtered-out class (CSS handles the visual hide via display:none)
-        article.classList.toggle("filtered-out", !match);
-    });
-
-    // Re-apply pagination for filtered items
-    applyFilteredPagination(category, articles);
-
-    const noResults = document.querySelector(".no-results");
-    if (noResults) {
-        const visibleCards = document.querySelectorAll(".tool-card-wrap:not(.filtered-out)");
-        noResults.classList.toggle("visible", visibleCards.length === 0);
-    }
+    // 当前分类已在 chip 点击处更新为 active；applyFilters 统一处理 搜索 ∩ 分类
+    applyFilters();
 }
 
 function applyFilteredPagination(category, articles) {
-    // Count visible (non-filtered) items
+    // 仅对"未被分类/搜索过滤"的文章做分页（.filtered-out 已编码 分类∩搜索 结果）
     const visibleItems = [];
     articles.forEach(function(article) {
-        const cats = (article.dataset.category || "").split(",");
-        const match = category === "all" || cats.includes(category);
-        if (match) {
-            visibleItems.push(article);
-        }
+        if (article.classList.contains("filtered-out")) return;
+        visibleItems.push(article);
     });
 
-    // Get or create load-more wrapper
     const section = document.querySelector(".homepage-article-list, .article-list");
     if (!section) return;
     let wrap = section.parentNode.querySelector(".load-more-wrap");
     let btn = wrap ? wrap.querySelector(".load-more-btn") : null;
 
     if (visibleItems.length <= PAGE_SIZE) {
-        // All visible items fit on one page - hide load-more if exists
+        // 全部可在一页显示：清除分页内联隐藏，隐藏"加载更多"
+        visibleItems.forEach(function(item) { item.style.display = ""; });
         if (wrap) wrap.style.display = "none";
         return;
     }
@@ -444,14 +419,9 @@ function applyFilteredPagination(category, articles) {
     }
     wrap.style.display = "";
 
-    // Hide items beyond PAGE_SIZE
-    const currentVisible = Math.min(PAGE_SIZE, visibleItems.length);
+    // 先全部隐藏，再按页展示（仅在可见集合内）
     visibleItems.forEach(function(item, i) {
-        if (i >= PAGE_SIZE) {
-            item.style.display = "none";
-        } else {
-            item.style.display = "";
-        }
+        item.style.display = (i < PAGE_SIZE) ? "" : "none";
     });
 
     const remaining = visibleItems.length - PAGE_SIZE;
@@ -465,23 +435,18 @@ function applyFilteredPagination(category, articles) {
     btn.parentNode.replaceChild(newBtn, btn);
 
     newBtn.addEventListener("click", function() {
-        // Count how many are currently visible
         let shown = 0;
-        let remainingCount = 0;
-        visibleItems.forEach(function(item, i) {
-            if (i < visibleItems.length && item.style.display !== "none") {
-                shown++;
-            }
+        visibleItems.forEach(function(item) {
+            if (item.style.display !== "none") shown++;
         });
         const toShow = Math.min(PAGE_SIZE, visibleItems.length - shown);
-        const shownSoFar = shown;
-        for (let i = shownSoFar; i < shownSoFar + toShow && i < visibleItems.length; i++) {
+        for (let i = shown; i < shown + toShow && i < visibleItems.length; i++) {
             visibleItems[i].style.display = "";
         }
         shown += toShow;
-        remainingCount = visibleItems.length - shown;
-        if (remainingCount > 0) {
-            newBtn.textContent = "加载更多 (" + remainingCount + " 篇)";
+        const rem = visibleItems.length - shown;
+        if (rem > 0) {
+            newBtn.textContent = "加载更多 (" + rem + " 篇)";
         } else {
             newBtn.textContent = "已显示全部文章";
             newBtn.disabled = true;
@@ -781,97 +746,389 @@ function initBlogPagination() {
     }
 }
 
-/* ===== Search ===== */
+/* ===== Search (unified: query ∩ category, tools + articles) ===== */
+// 全局热搜开关：默认 false = 使用本地历史（标签"最近搜索"）。
+// 置 true 并部署 /api/hot-search 后升级为真·全局热搜（见 loadHotSearchTerms）。
+window.USE_GLOBAL_HOT_SEARCH = false;
+
+// GA4：搜索零结果事件（防重复上报同一查询词）
+let lastNoResultTerm = null;
+function trackSearchNoResult(query) {
+    if (query === lastNoResultTerm) return;
+    lastNoResultTerm = query;
+    try {
+        if (typeof window.gtag === 'function') {
+            window.gtag('event', 'search_no_result', { search_term: query });
+        }
+    } catch (e) {}
+}
+
+function getActiveCategory() {
+    const activeCat = document.querySelector('.category-chip.active');
+    return (activeCat && activeCat.dataset.category) || 'all';
+}
+
+// 工具匹配文本：中文名/描述/关键词 + 全拼 + 首字母（大小写归一）
+function toolSearchBlob(card, toolId) {
+    const name = (card.querySelector('h3')?.textContent || '').toLowerCase();
+    const desc = (card.querySelector('p')?.textContent || '').toLowerCase();
+    const keywordsZh = (card.dataset.keywordsZh || (window.TOOL_KEYWORDS_ZH && window.TOOL_KEYWORDS_ZH[toolId]) || '').toLowerCase();
+    const keywordsEn = (card.dataset.keywordsEn || '').toLowerCase();
+    const pin = (window.TOOL_PINYIN_ZH && window.TOOL_PINYIN_ZH[toolId]) || { py: '', ini: '' };
+    return (name + ' ' + desc + ' ' + keywordsZh + ' ' + keywordsEn + ' ' + pin.py + ' ' + pin.ini).toLowerCase();
+}
+
+// 文章匹配文本：标题/摘要/标签
+function articleSearchBlob(article) {
+    const title = (article.querySelector('h4 a, h2 a')?.textContent || '').toLowerCase();
+    const summary = (article.querySelector('.article-summary')?.textContent || '').toLowerCase();
+    const tags = Array.from(article.querySelectorAll('.article-tags a')).map(a => a.textContent.toLowerCase()).join(' ');
+    return (title + ' ' + summary + ' ' + tags).toLowerCase();
+}
+
+// 相关度评分：标题>关键词>描述>首字母>全拼
+function scoreToolCard(card, query, toolId) {
+    if (!query) return 0;
+    const name = (card.querySelector('h3')?.textContent || '').toLowerCase();
+    const desc = (card.querySelector('p')?.textContent || '').toLowerCase();
+    const keywordsZh = (card.dataset.keywordsZh || (window.TOOL_KEYWORDS_ZH && window.TOOL_KEYWORDS_ZH[toolId]) || '').toLowerCase();
+    const keywordsEn = (card.dataset.keywordsEn || '').toLowerCase();
+    const pin = (window.TOOL_PINYIN_ZH && window.TOOL_PINYIN_ZH[toolId]) || { py: '', ini: '' };
+    let score = 0;
+    if (name.includes(query)) score += 100;
+    if (keywordsZh.includes(query)) score += 60;
+    if (keywordsEn.includes(query)) score += 60;
+    if (desc.includes(query)) score += 20;
+    if (pin.ini.includes(query)) score += 15;
+    if (pin.py.includes(query)) score += 10;
+    return score;
+}
+
+// 命中高亮：在 h3/p/标题 文本中包裹匹配子串为 <mark>（保留原始 HTML 以便还原）
+function highlightIn(el, query) {
+    if (!el) return;
+    if (el.dataset.orig === undefined) el.dataset.orig = el.innerHTML;
+    let html = el.dataset.orig;
+    if (query) {
+        const safe = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        try { html = html.replace(new RegExp('(' + safe + ')', 'gi'), '<mark>$1</mark>'); } catch (e) {}
+    }
+    if (el.innerHTML !== html) el.innerHTML = html;
+}
+function clearHighlight(card) {
+    card.querySelectorAll('h3, p').forEach(function(el) {
+        if (el.dataset.orig !== undefined) { el.innerHTML = el.dataset.orig; delete el.dataset.orig; }
+    });
+}
+
+// 编辑距离（模糊容错，阈值 1–2）
+function levenshtein(a, b) {
+    a = (a || '').toLowerCase(); b = (b || '').toLowerCase();
+    const m = a.length, n = b.length;
+    if (!m) return n; if (!n) return m;
+    const dp = Array.from({ length: m + 1 }, function(_, i) { return [i]; });
+    for (let j = 0; j <= n; j++) dp[0][j] = j;
+    for (let i = 1; i <= m; i++) {
+        for (let j = 1; j <= n; j++) {
+            const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+            dp[i][j] = Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1, dp[i - 1][j - 1] + cost);
+        }
+    }
+    return dp[m][n];
+}
+
+// 工具卡片链接（用于建议/纠错跳转）
+function getToolHref(card) {
+    return card.getAttribute('href') || (card.closest('.tool-card-wrap, .hot-tool-card')?.querySelector('.tool-card')?.getAttribute('href')) || '';
+}
+
+// URL 状态同步（?q=，保留 ?cat=）
+function syncSearchUrl(query) {
+    try {
+        const params = new URLSearchParams(window.location.search);
+        if (query) params.set('q', query); else params.delete('q');
+        const qs = params.toString();
+        const url = window.location.pathname + (qs ? '?' + qs : '') + window.location.hash;
+        history.replaceState(null, '', url);
+    } catch (e) {}
+}
+
+// 零结果纠错：编辑距离≤2 的相似工具推荐
+function buildFuzzySuggestions(query) {
+    const q = query.toLowerCase();
+    const cards = Array.from(document.querySelectorAll('.tool-card'));
+    const scored = [];
+    cards.forEach(function(card) {
+        const name = (card.querySelector('h3')?.textContent || '').toLowerCase();
+        const kw = (card.dataset.keywordsZh || '').toLowerCase();
+        let best = Infinity;
+        [name].concat(kw.split(',')).forEach(function(tok) {
+            tok = tok.trim(); if (!tok) return;
+            best = Math.min(best, levenshtein(q, tok));
+        });
+        if (best <= 2) scored.push({ card: card, d: best, name: card.querySelector('h3')?.textContent || '' });
+    });
+    scored.sort(function(a, b) { return a.d - b.d; });
+    const top = scored.slice(0, 4);
+    if (!top.length) return '';
+    const label = (document.documentElement.lang === 'en') ? 'Did you mean:' : '你是不是想找：';
+    const items = top.map(function(s) {
+        return '<a class="search-fallback-item" href="' + getToolHref(s.card) + '">' + (s.name || '') + '</a>';
+    }).join('');
+    return '<span class="search-fallback-label">' + label + '</span>' + items;
+}
+
+// 统一过滤：搜索词 ∩ 当前分类，同时作用于工具卡片与文章；含相关度排序+命中高亮+零结果纠错
+function applyFilters() {
+    const searchInput = document.querySelector('.search-bar input');
+    const query = ((searchInput && searchInput.value) || '').toLowerCase().trim();
+    const cat = getActiveCategory();
+
+    let visibleTools = 0, visibleArticles = 0;
+
+    document.querySelectorAll('.tool-card').forEach(card => {
+        const toolId = card.closest('.tool-card-wrap, .hot-tool-card')?.querySelector('[data-like-id]')?.getAttribute('data-like-id') || '';
+        const cats = (card.dataset.category || '').split(',');
+        const catMatch = cat === 'all' || cats.includes(cat);
+        const show = catMatch && (query === '' || toolSearchBlob(card, toolId).includes(query));
+        card.parentElement.classList.toggle('filtered-out', !show);
+        if (show) {
+            visibleTools++;
+            if (query) { highlightIn(card.querySelector('h3'), query); highlightIn(card.querySelector('p'), query); }
+            else clearHighlight(card);
+        } else {
+            clearHighlight(card);
+        }
+    });
+
+    // 相关度排序（保持分类分区：仅在每个 .tool-grid 内重排，分区结构不变）
+    document.querySelectorAll('.tool-grid').forEach(function(grid) {
+        const wraps = Array.from(grid.querySelectorAll('.tool-card-wrap'));
+        wraps.forEach(function(w, i) { if (w.dataset.origIndex === undefined) w.dataset.origIndex = String(i); });
+        const scored = wraps.map(function(w) {
+            const card = w.querySelector('.tool-card');
+            const toolId = card ? (card.closest('.tool-card-wrap, .hot-tool-card')?.querySelector('[data-like-id]')?.getAttribute('data-like-id') || '') : '';
+            return { w: w, score: query ? scoreToolCard(card, query, toolId) : 0, idx: parseInt(w.dataset.origIndex || '0', 10) };
+        });
+        scored.sort(function(a, b) { return query ? (b.score - a.score || a.idx - b.idx) : (a.idx - b.idx); });
+        scored.forEach(function(s) { grid.appendChild(s.w); });
+    });
+
+    const articles = document.querySelectorAll('.article-item');
+    articles.forEach(article => {
+        const cats = (article.dataset.category || '').split(',');
+        const catMatch = cat === 'all' || cats.includes(cat);
+        const show = catMatch && (query === '' || articleSearchBlob(article).includes(query));
+        article.style.display = ''; // 清除分页内联 display，避免与 .filtered-out(class) 冲突
+        article.classList.toggle('filtered-out', !show);
+        if (show) {
+            visibleArticles++;
+            if (query) highlightIn(article.querySelector('h4 a, h2 a'), query);
+        } else {
+            const t = article.querySelector('h4 a, h2 a');
+            if (t && t.dataset.orig !== undefined) { t.innerHTML = t.dataset.orig; delete t.dataset.orig; }
+        }
+    });
+
+    // 对"存活"文章重做分页（跳过 .filtered-out）
+    applyFilteredPagination(cat, articles);
+
+    // 无结果：展示"你是不是想找"纠错建议
+    const zero = (visibleTools === 0 && visibleArticles === 0);
+    const noResults = document.querySelector('.no-results');
+    if (noResults) {
+        noResults.classList.toggle('visible', zero);
+        const fb = noResults.querySelector('.search-fallback');
+        if (fb) {
+            if (zero && query) { fb.innerHTML = buildFuzzySuggestions(query); fb.classList.add('visible'); }
+            else { fb.innerHTML = ''; fb.classList.remove('visible'); }
+        }
+    }
+
+    // 无障碍：结果计数实时播报（aria-live polite）
+    const liveRegion = document.querySelector('.search-live');
+    if (liveRegion) {
+        const total = visibleTools + visibleArticles;
+        if (query) {
+            const en = (document.documentElement.lang === 'en');
+            liveRegion.textContent = en
+                ? (total > 0 ? `Found ${total} result${total === 1 ? '' : 's'} for "${query}"` : `No results found for "${query}"`)
+                : (total > 0 ? `找到 ${total} 个与"${query}"相关的结果` : `未找到与"${query}"相关的结果`);
+        } else {
+            liveRegion.textContent = '';
+        }
+    }
+
+    return { visibleTools: visibleTools, visibleArticles: visibleArticles, zero: zero };
+}
+
+const SEARCH_SUGGEST_MAX = 8;
+
 function initSearch() {
     const searchInput = document.querySelector('.search-bar input');
     const clearBtn = document.querySelector('.search-clear');
     if (!searchInput) return;
 
-    searchInput.addEventListener('input', () => {
+    // 标记原始顺序（相关度排序还原用）
+    document.querySelectorAll('.tool-grid').forEach(function(grid) {
+        Array.from(grid.querySelectorAll('.tool-card-wrap')).forEach(function(w, i) { w.dataset.origIndex = String(i); });
+    });
+
+    // 建议下拉容器（一次性创建，置于搜索框之后）
+    let suggBox = document.querySelector('.search-suggestions');
+    if (!suggBox) {
+        suggBox = document.createElement('ul');
+        suggBox.className = 'search-suggestions';
+        suggBox.setAttribute('role', 'listbox');
+        const bar = document.querySelector('.search-bar');
+        if (bar && bar.parentNode) bar.parentNode.insertBefore(suggBox, bar.nextSibling);
+    }
+    let liveRegion = document.querySelector('.search-live');
+    if (!liveRegion) {
+        liveRegion = document.createElement('div');
+        liveRegion.className = 'search-live sr-only';
+        liveRegion.setAttribute('aria-live', 'polite');
+        liveRegion.setAttribute('role', 'status');
+        const bar = document.querySelector('.search-bar');
+        if (bar && bar.parentNode) bar.parentNode.insertBefore(liveRegion, bar.nextSibling);
+    }
+    let activeSugg = -1;
+
+    function closeSuggestions() { suggBox.classList.remove('open'); activeSugg = -1; }
+    function updateActive(items) {
+        items.forEach(function(it, i) { it.classList.toggle('active', i === activeSugg); });
+    }
+
+    function renderSuggestions() {
         const query = searchInput.value.toLowerCase().trim();
-        if (clearBtn) clearBtn.classList.toggle('visible', query.length > 0);
-
-        const cards = document.querySelectorAll('.tool-card');
-        let visibleCount = 0;
-
-        cards.forEach(card => {
-            const name = (card.querySelector('h3')?.textContent || '').toLowerCase();
-            const desc = (card.querySelector('p')?.textContent || '').toLowerCase();
+        if (query.length < 1) { closeSuggestions(); return; }
+        const matches = [];
+        document.querySelectorAll('.tool-card').forEach(function(card) {
             const toolId = card.closest('.tool-card-wrap, .hot-tool-card')?.querySelector('[data-like-id]')?.getAttribute('data-like-id') || '';
-            const keywordsZh = card.dataset.keywordsZh || (TOOL_KEYWORDS_ZH[toolId] || '').toLowerCase();
-            const matches = query === '' || name.includes(query) || desc.includes(query) || keywordsZh.includes(query);
-            
-            // Only show if matches search AND current category filter
-            const activeCat = document.querySelector('.category-chip.active');
-            const cat = activeCat?.dataset.category || 'all';
-            const cats = (card.dataset.category || '').split(',');
-            const catMatch = cat === 'all' || cats.includes(cat);
-
-            if (matches && catMatch) {
-                card.parentElement.classList.remove('filtered-out');
-                visibleCount++;
-            } else {
-                card.parentElement.classList.add('filtered-out');
+            if (toolSearchBlob(card, toolId).includes(query)) {
+                matches.push({ name: card.querySelector('h3')?.textContent || '', href: getToolHref(card), score: scoreToolCard(card, query, toolId) });
             }
         });
+        matches.sort(function(a, b) { return b.score - a.score; });
+        const top = matches.slice(0, SEARCH_SUGGEST_MAX);
+        if (!top.length) { closeSuggestions(); return; }
+        suggBox.innerHTML = '';
+        top.forEach(function(m) {
+            const li = document.createElement('li');
+            li.className = 'search-suggestion';
+            li.setAttribute('role', 'option');
+            li.dataset.href = m.href;
+            li.textContent = m.name;
+            li.addEventListener('mousedown', function(e) { e.preventDefault(); window.location.href = m.href; });
+            suggBox.appendChild(li);
+        });
+        suggBox.classList.add('open');
+        activeSugg = -1;
+    }
 
-        const noResults = document.querySelector('.no-results');
-        if (noResults) {
-            noResults.classList.toggle('visible', visibleCount === 0);
+    let recordTimer = null;
+    searchInput.addEventListener('input', function() {
+        const query = searchInput.value.toLowerCase().trim();
+        if (clearBtn) clearBtn.classList.toggle('visible', query.length > 0);
+        const res = applyFilters();
+        renderSuggestions();
+        syncSearchUrl(query);
+        // 防抖记录（合并原第二个监听器，S12）
+        if (recordTimer) clearTimeout(recordTimer);
+        recordTimer = setTimeout(function() {
+            if (query.length >= 2) {
+                recordSearchTerm(query);
+                if (res && res.zero) trackSearchNoResult(query);
+            }
+        }, 400);
+    });
+
+    // 键盘可达性：↑↓ 选择 / Enter 跳转 / Esc 关闭
+    searchInput.addEventListener('keydown', function(e) {
+        const items = suggBox.querySelectorAll('.search-suggestion');
+        if (!suggBox.classList.contains('open') || !items.length) return;
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            activeSugg = (activeSugg + 1) % items.length;
+            updateActive(items);
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            activeSugg = (activeSugg - 1 + items.length) % items.length;
+            updateActive(items);
+        } else if (e.key === 'Enter') {
+            if (activeSugg >= 0) { e.preventDefault(); window.location.href = items[activeSugg].dataset.href; }
+        } else if (e.key === 'Escape') {
+            closeSuggestions();
         }
     });
 
+    searchInput.addEventListener('blur', function() { setTimeout(closeSuggestions, 150); });
+
     if (clearBtn) {
-        clearBtn.addEventListener('click', () => {
+        clearBtn.addEventListener('click', function() {
             searchInput.value = '';
             clearBtn.classList.remove('visible');
-            searchInput.dispatchEvent(new Event('input'));
+            applyFilters();
+            renderSuggestions();
+            syncSearchUrl('');
             searchInput.focus();
         });
     }
-    // 搜索记录：输入停顿 500ms 后记录
-    let searchTimer = null;
-    searchInput.addEventListener("input", function() {
-        if (searchTimer) clearTimeout(searchTimer);
-        searchTimer = setTimeout(function() {
-            const val = searchInput.value.trim();
-            if (val.length >= 2) {
-                recordSearchTerm(val);
-            }
-        }, 500);
-    });
 
-    // 渲染搜索热词
+    // 初始：还原 URL ?q= 状态
+    const initialQ = new URLSearchParams(window.location.search).get('q');
+    if (initialQ) {
+        searchInput.value = initialQ;
+        if (clearBtn) clearBtn.classList.add('visible');
+        applyFilters();
+        renderSuggestions();
+    } else {
+        applyFilters();
+    }
     renderHotSearch(searchInput);
+}
+
+// 全局热搜候选：默认本地历史；开启 USE_GLOBAL_HOT_SEARCH 时尝试 /api/hot-search，失败回退本地
+async function loadHotSearchTerms(maxCount) {
+    maxCount = maxCount || 6;
+    if (window.USE_GLOBAL_HOT_SEARCH) {
+        try {
+            const res = await fetch('/api/hot-search');
+            if (res.ok) {
+                const data = await res.json();
+                if (Array.isArray(data) && data.length) return data.slice(0, maxCount);
+            }
+        } catch (e) { /* 网络/接口异常，回退本地历史 */ }
+    }
+    return getHotSearchTerms(maxCount);
 }
 
 function renderHotSearch(searchInput) {
     const container = document.querySelector('.hot-search');
     if (!container) return;
-    const terms = getHotSearchTerms(6);
-    const termsContainer = container.querySelector('.hot-search-terms');
-    if (!termsContainer) return;
-    if (terms.length === 0) {
-        container.classList.add('hidden');
-        return;
-    }
-    container.classList.remove('hidden');
-    container.style.display = '';
-    termsContainer.innerHTML = '';
-    for (let i = 0; i < terms.length; i++) {
-        (function(term) {
+    loadHotSearchTerms(6).then(terms => {
+        const termsContainer = container.querySelector('.hot-search-terms');
+        if (!termsContainer) return;
+        if (terms.length === 0) {
+            container.classList.add('hidden');
+            return;
+        }
+        container.classList.remove('hidden');
+        termsContainer.innerHTML = '';
+        terms.forEach(function(term) {
             const el = document.createElement('span');
             el.className = 'hot-search-term';
             el.textContent = term;
             el.addEventListener('click', function() {
                 if (searchInput) {
                     searchInput.value = term;
-                    searchInput.dispatchEvent(new Event('input'));
+                    applyFilters();
+                    searchInput.focus();
                 }
             });
             termsContainer.appendChild(el);
-        })(terms[i]);
-    }
+        });
+    });
 }
 
 /* ===== Initialization (home/list pages) ===== */
