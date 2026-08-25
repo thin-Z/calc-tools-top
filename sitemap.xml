@@ -1277,36 +1277,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.calc-tools.top/includes/adsense-head</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://www.calc-tools.top/includes/footer-en</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://www.calc-tools.top/includes/footer-zh</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://www.calc-tools.top/includes/header-en</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://www.calc-tools.top/includes/header-zh</loc>
-    <lastmod>2026-08-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://www.calc-tools.top/tags/finance</loc>
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/tags/finance'/>
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/tags/finance'/>
