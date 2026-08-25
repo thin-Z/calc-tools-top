@@ -1,4 +1,4 @@
-:root {
+﻿:root {
     /* Brand Colors */
     --brand-blue: #007AFF;
     --brand-blue-dark: #0056CC;
@@ -4030,14 +4030,3 @@ button:active, .btn:active {
     .home-anchor-nav a { padding: 7px 12px; font-size: 0.85rem; }
 }
 
-/* ===== Tool sub-group heading (calc section) ===== */
-.tool-subgroup {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--text);
-    margin: 28px 0 14px;
-    padding-left: 12px;
-    border-left: 3px solid var(--primary);
-    letter-spacing: -0.2px;
-}
-.tool-subgroup:first-of-type { margin-top: 6px; }

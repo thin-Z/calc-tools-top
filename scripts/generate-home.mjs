@@ -7,6 +7,10 @@
  *   2. index.html: 工具卡片网格 HTML（标记间替换）
  *   3. en/index.html: 同上（英文版）
  *
+ * 区块划分（一级，无二级 subgroup）：
+ *   按工具的 categories 派生区块归属，多标签工具可同时出现在多个区块。
+ *   区块顺序由 SECTION_ORDER 控制（调整一处即全站生效）。
+ *
  * 用法: node scripts/generate-home.mjs [--dry-run]
  * 被 build.mjs 在构建前自动调用。
  */
@@ -26,35 +30,30 @@ if (!Array.isArray(tools) || tools.length === 0) {
 }
 console.log(`[generate-home] 读取 tools.json: ${tools.length} 个工具`);
 
-// ── 2. 辅助函数 ──────────────────────────────────────────────
-const slugToDir = (slug) => {
-  // 根据 section 字段决定目录（不依赖磁盘扫描）
-  // 但为了精确，直接从 tools.json 的 section 映射
-  return null; // 下面用 section 字段直接拼
+// ── 2. 区块定义（一级，无二级）──────────────────────────────
+// categories → 区块归属映射（一个分类可映射到一个区块）
+const CATEGORY_SECTION = {
+  finance: 'finance',
+  shopping: 'finance',
+  health: 'health',
+  life: 'life',
+  travel: 'life',
+  utility: 'utility',
+  image: 'image',
+  text: 'text',
 };
 
-const sectionDir = { calc: 'calculators', utility: 'calculators', image: 'image', text: 'text' };
-const sectionPrivacyBadge = { image: true };
-
-const subgroupLabels = {
-  finance:    { zh: '💰 财务计算',  en: '💰 Finance' },
-  health:     { zh: '🏥 健康计算',  en: '🏥 Health' },
-  lifestyle:  { zh: '🏠 生活 · 出行', en: '🏠 Lifestyle & Travel' },
-  general:    { zh: '🔧 通用计算',  en: '🔧 General' },
-  utility:    { zh: null, en: null },  // 单组无子标题
-  image:      { zh: null, en: null },
-  text:       { zh: null, en: null },
-};
+// 区块显示顺序（3.1: 调整此数组即可改变全站区块顺序）
+const SECTION_ORDER = ['finance', 'health', 'life', 'utility', 'image', 'text'];
 
 const sectionHeaders = {
-  calc:    { zh: '🧮 计算工具', en: '🧮 Calculator Tools', id: 'sec-calc' },
+  finance: { zh: '💰 财务计算', en: '💰 Finance', id: 'sec-finance' },
+  health:  { zh: '🏥 健康计算', en: '🏥 Health', id: 'sec-health' },
+  life:    { zh: '🏠 生活 · 出行', en: '🏠 Lifestyle & Travel', id: 'sec-life' },
   utility: { zh: '🔧 实用工具', en: '🔧 Utility Tools', id: 'sec-utility' },
   image:   { zh: '🖼️ 图片工具', en: '🖼️ Image Tools', id: 'sec-image', privacy: true },
   text:    { zh: '✏️ 文字工具', en: '✏️ Text Tools', id: 'sec-text' },
 };
-
-// section 显示顺序（3.1: 可通过调整此数组改变区块顺序）
-const SECTION_ORDER = ['calc', 'utility', 'image', 'text'];
 
 // ── 3. 生成 JS 配置 ──────────────────────────────────────────
 function generateSiteConfigTools() {
@@ -81,54 +80,53 @@ function generateToolKeywords() {
   return `const TOOL_KEYWORDS_ZH = {\n${lines.join(',\n')}\n};`;
 }
 
-// ── 4. 生成首页卡片 HTML ─────────────────────────────────────
+// ── 4. 生成首页卡片 HTML（按区块分组，多标签工具多区块显示）──
+const TAG_LABELS = {
+  finance: { zh: '💰 财务', en: '💰 Finance' },
+  health: { zh: '🏥 健康', en: '🏥 Health' },
+  life: { zh: '🏠 生活', en: '🏠 Lifestyle' },
+  shopping: { zh: '🛒 购物', en: '🛒 Shopping' },
+  travel: { zh: '🚗 出行', en: '🚗 Travel' },
+  utility: { zh: '🔧 工具', en: '🔧 Utility' },
+  image: { zh: '🖼️ 图片', en: '🖼️ Image' },
+  text: { zh: '✏️ 文字', en: '✏️ Text' },
+};
+
 function generateCardHTML(t, lang) {
-  const dir = sectionDir[t.section] || 'calculators';
   const prefix = lang === 'zh' ? '/zh' : '/en';
   const text = t[lang];
   const cats = t.categories.join(',');
+  const tagPrefix = lang === 'zh' ? '/tags/' : '/en/tags/';
   const tagsHTML = t.categories.map(c => {
-    const tagPrefix = lang === 'zh' ? '/tags/' : '/en/tags/';
-    const labels = {
-      finance: { zh: '💰 财务', en: '💰 Finance' },
-      health: { zh: '🏥 健康', en: '🏥 Health' },
-      life: { zh: '🏠 生活', en: '🏠 Lifestyle' },
-      shopping: { zh: '🛒 购物', en: '🛒 Shopping' },
-      travel: { zh: '🚗 出行', en: '🚗 Travel' },
-      utility: { zh: '🔧 工具', en: '🔧 Utility' },
-      image: { zh: '🖼️ 图片', en: '🖼️ Image' },
-      text: { zh: '✏️ 文字', en: '✏️ Text' },
-    };
-    const label = (labels[c] && labels[c][lang]) || c;
+    const label = (TAG_LABELS[c] && TAG_LABELS[c][lang]) || c;
     return `<a href="${tagPrefix}${c}.html" class="tag tag-${c}" data-tag="${c}">${label}</a>`;
   }).join('');
 
-  return `            <div class="tool-card-wrap"><a href="${prefix}/${dir}/${t.slug}" class="tool-card" data-category="${cats}" data-keywords-zh="${t.zh.kw}"><div class="icon">${t.icon}</div><h3>${text.name}</h3><p>${text.desc}</p></a><div class="tool-tags">${tagsHTML}</div><button class="like-btn" data-like-id="${t.slug}"><span class="heart">❤<span class="count">0</span></button></div>`;
+  return `            <div class="tool-card-wrap"><a href="${prefix}/${t.dir}/${t.slug}" class="tool-card" data-category="${cats}" data-keywords-zh="${t.zh.kw}"><div class="icon">${t.icon}</div><h3>${text.name}</h3><p>${text.desc}</p></a><div class="tool-tags">${tagsHTML}</div><button class="like-btn" data-like-id="${t.slug}"><span class="heart">❤<span class="count">0</span></button></div>`;
+}
+
+function toolSections(t) {
+  // 由 categories 派生区块归属（去重、保持 SECTION_ORDER 顺序）
+  const sections = [];
+  for (const sec of SECTION_ORDER) {
+    const hit = t.categories.some(c => CATEGORY_SECTION[c] === sec);
+    if (hit) sections.push(sec);
+  }
+  return sections;
 }
 
 function generateSectionHTML(section, lang) {
   const header = sectionHeaders[section];
-  const sectionTools = tools.filter(t => t.section === section);
+  const sectionTools = tools.filter(t => toolSections(t).includes(section));
   if (sectionTools.length === 0) return '';
 
-  const lines = [];
-  // 区块分隔符
   const badge = header.privacy
     ? `<span class="privacy-badge-sm">🔒 ${lang === 'zh' ? '本地处理 · 不上传' : 'Local processing · No upload'}</span>`
     : '';
+  const lines = [];
   lines.push(`        <div class="section-divider" id="${header.id}"><h2>${header[lang]}${badge}</h2></div><div class="tool-grid">`);
-
-  // 按 subgroup 分组
-  const subgroups = [...new Set(sectionTools.map(t => t.subgroup))];
-  for (const sg of subgroups) {
-    const sgTools = sectionTools.filter(t => t.subgroup === sg);
-    const label = subgroupLabels[sg];
-    if (label && label[lang]) {
-      lines.push(`            <h3 class="tool-subgroup-title">${label[lang]}</h3>`);
-    }
-    for (const t of sgTools) {
-      lines.push(generateCardHTML(t, lang));
-    }
+  for (const t of sectionTools) {
+    lines.push(generateCardHTML(t, lang));
   }
   lines.push('        </div>');
   return lines.join('\n');
