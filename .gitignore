@@ -16,6 +16,9 @@ _project_memory.md
 使用说明书.md
 docs/
 
+# 交付文档（存于 Obsidian 知识库 projects/2_AI建站项目/deliverables/，不进站点仓库）
+deliverables/*.md
+
 # 设计预览文件
 logo-font-preview.html
 logo-preview.html
