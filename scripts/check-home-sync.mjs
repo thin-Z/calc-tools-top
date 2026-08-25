@@ -38,22 +38,34 @@ function diskSlugs(lang) {
 const diskZh = diskSlugs('zh');
 const diskEn = diskSlugs('en');
 
-// 2) 首页卡片 slug 集（解析 class="tool-card" 的 href，属性顺序无关）
-function homeSlugs(file) {
+// 2) 首页卡片 slug 集 + data-like-id（like-id 位于同卡内 <button class="like-btn">，按位置就近配对）
+function homeCards(file) {
   const html = readFileSync(join(root, file), 'utf8');
-  const re = /<a\b([^>]*)>/g;
-  const s = new Set();
+  const anchorRe = /<a\b([^>]*)>/g;
+  const likeRe = /data-like-id="([^"]*)"/g;
+  const anchorMatches = [];
   let m;
-  while ((m = re.exec(html)) !== null) {
-    const tag = m[1];
-    if (!/\bclass="tool-card"/.test(tag)) continue;
-    const hm = tag.match(/\bhref="\/(?:zh|en)\/(?:calculators|text|image)\/([^"?]+)"/);
-    if (hm) s.add(hm[1]);
+  while ((m = anchorRe.exec(html)) !== null) {
+    if (!/\bclass="tool-card"/.test(m[1])) continue;
+    const hm = m[1].match(/\bhref="\/(?:zh|en)\/(?:calculators|text|image)\/([^"?]+)"/);
+    if (hm) anchorMatches.push({ pos: m.index, slug: hm[1] });
   }
-  return s;
+  const likeMatches = [];
+  while ((m = likeRe.exec(html)) !== null) likeMatches.push({ pos: m.index, id: m[1] });
+  const cards = [];
+  for (const a of anchorMatches) {
+    const next = likeMatches.find((l) => l.pos > a.pos);
+    cards.push({ slug: a.slug, likeId: next ? next.id : null });
+  }
+  return cards;
+}
+function homeSlugs(file) {
+  return new Set(homeCards(file).map((c) => c.slug));
 }
 const homeZh = homeSlugs('index.html');
 const homeEn = homeSlugs('en/index.html');
+const homeZhCards = homeCards('index.html');
+const homeEnCards = homeCards('en/index.html');
 
 // 3) SITE_CONFIG.tools id 集
 const js = readFileSync(join(root, 'js', 'site-home.js'), 'utf8');
@@ -87,6 +99,22 @@ check(`磁盘en(${diskEn.size}) vs 首页en(${homeEn.size})`, diskEn, homeEn);
 check(`磁盘zh(${diskZh.size}) vs 配置(${configSet.size})`, diskZh, configSet);
 check(`磁盘zh(${diskZh.size}) vs TOOLS_DATA(${toolsDataKeys.size})`, diskZh, toolsDataKeys);
 check(`磁盘zh(${diskZh.size}) vs TOOL_KEYWORDS_ZH(${kwKeys.size})`, diskZh, kwKeys);
+
+// 6) 首页卡片 data-like-id 一致性：每张卡的 likeId 必须等于 slug 且属于配置集
+//    —— 捕捉「href 正确但 like-id 漂移」（如 image-crop 卡片误写 data-like-id="crop"）
+function checkLikeIds(label, cards) {
+  for (const c of cards) {
+    if (c.likeId === null) {
+      errors.push(`${label}: 卡片 /${c.slug} 缺失 data-like-id`);
+    } else if (c.likeId !== c.slug) {
+      errors.push(`${label}: 卡片 /${c.slug} 的 data-like-id="${c.likeId}" 与 slug 不一致（应="${c.slug}"）`);
+    } else if (!configSet.has(c.slug)) {
+      errors.push(`${label}: 卡片 /${c.slug} 的 like-id 不在 SITE_CONFIG.tools 配置集`);
+    }
+  }
+}
+checkLikeIds('首页zh', homeZhCards);
+checkLikeIds('首页en', homeEnCards);
 
 if (errors.length) {
   console.error('❌ 首页三源不一致：');

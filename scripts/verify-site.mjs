@@ -443,6 +443,18 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
   }
 }
 
+// ---------- 16. 首页三源同步（Phase 1.4，check-home-sync.mjs） ----------
+// 断言：磁盘页面 == 首页zh/en 卡片 == SITE_CONFIG.tools == TOOLS_DATA == TOOL_KEYWORDS_ZH
+// 且每张卡片 data-like-id 与 slug 一致（捕捉 like-id 漂移，如 image-crop↔crop）。
+{
+  try {
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'check-home-sync.mjs')], { stdio: 'inherit', cwd: ROOT });
+    console.log('[16] 首页三源同步 (check-home-sync): ✓');
+  } catch (e) {
+    fail('[home-sync] scripts/check-home-sync.mjs 退出码非 0（三源不一致或卡片 data-like-id 漂移）');
+  }
+}
+
 // ---------- 汇总 ----------
 if (failures.length) {
   console.error(`\n❌ verify-site 失败 ${failures.length} 项：`);
