@@ -13,6 +13,7 @@
 | 广告 | AdSense Auto Ads，client ID 单一来源 `includes/adsense-head.html`，构建期注入全站 |
 | 分析 | GA4 `G-B61D908J5F`（`includes/adsense-head.html` 单一来源，构建期剥离占位符守卫） |
 | 安全 | **CSP 全站硬化**：script-src / style-src 无 `unsafe-inline`（`js/csp-events.js` 委托层 + `js/inline/*.js` 外链化），img-src 白名单化；`verify-site.mjs` 15 项断言守护 |
+| 竞品迭代（08-25） | **URL 参数预填**（`js/url-state.js`，46 计算器页带参直达/刷新保留/输入同步）、**打印样式**（`@media print` 隐藏导航广告）、**mortgage 输入扩展**（房产税/保险/PMI/额外还款）、**相关工具强化**（`scripts/strengthen-related-links.mjs`）、**首页快速计算条**（quick-calc-bar 带参直达 6 高频工具） |
 
 ## 环境变量（Vercel 项目 Settings → Environment Variables）
 
@@ -72,6 +73,9 @@ KV_URL / KV_REDIS_URL
 | `generate-blog-posts.py` / `generate-sitemap.ps1` | 博客生成 / sitemap 生成（**ps1 须排除 dist/docs/deliverables**，见记忆） | 见脚本头注释 |
 | `fix-hidden-display.mjs` | 修复 CSP 硬化后的 `.hidden` class 与 JS `style.display` 冲突 | `node scripts/fix-hidden-display.mjs [--dry-run]` |
 | `check-doc-sync.mjs` | 检查文档与代码的同步状态 | `node scripts/check-doc-sync.mjs` |
+| `fix-tool-content.mjs` | 修复工具页"模板串味"（About 受众 + How to Use 步骤重写，23 工具×2 语言） | `node scripts/fix-tool-content.mjs [--dry-run]` |
+| `inject-url-state.mjs` | 为计算器页注入 `js/url-state.js`（URL 参数预填，幂等） | `node scripts/inject-url-state.mjs [--dry-run]` |
+| `strengthen-related-links.mjs` | 强化工具页"相关工具"横向链接（语义映射，跳过 noindex stub） | `node scripts/strengthen-related-links.mjs [--dry-run]` |
 | `cleanup-deprecated.mjs` | 清理旧版 cookie-consent 引用 | `node scripts/cleanup-deprecated.mjs` |
 | `gen-allowed-ids.js` | 生成 API 白名单 ID | `node scripts/gen-allowed-ids.js` |
 | `csp-migrate-t02.mjs` / `csp-migrate-styles.mjs` | CSP 迁移历史脚本（内联脚本外链化 / 内联 style class 化），迁移已完成，保留作审计参考 | `node scripts/csp-migrate-t02.mjs --dry-run` |
