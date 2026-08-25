@@ -6,7 +6,7 @@
 
 | 部分 | 说明 |
 |------|------|
-| 前端 | 纯静态 HTML/CSS/JS（无框架），`zh/`、`en/` 双语，`blog/` 博客（**源码 208 HTML（含 5 includes 模板）/ dist 203 页**：46 工具×2 语言 + 80 博客 + 18 标签聚合页 + 结构页） |
+| 前端 | 纯静态 HTML/CSS/JS（无框架），`zh/`、`en/` 双语，`blog/` 博客（**源码 208 HTML（含 5 includes 模板）/ dist 203 页**：43 工具×2 语言 + 80 博客（含索引页）+ 18 标签聚合页 + 结构页） |
 | 构建 | Vercel `buildCommand = node scripts/build.mjs`，`outputDirectory = dist`（复制站点 → GA4/AdSense 注入 → 版本号 → 卫生转换 → CSS 压缩 → CMP 横幅） |
 | API | `api/likes.js`（点赞）、`api/clicks.js`（点击），Node Serverless Function |
 | 存储 | **Vercel KV（Upstash Redis）**，点赞/点击计数 + 限速/防刷均存于此 |
