@@ -4,25 +4,6 @@
  * 依赖：window.LikeSystem（js/like.js，需先加载）。
  */
 
-/* ===== Tag Click Handler ===== */
-function initTagClicks() {
-    const tags = document.querySelectorAll('a.tag[data-tag]');
-    for (let i = 0; i < tags.length; i++) {
-        const href = tags[i].getAttribute('href') || '';
-        // Blog tag links already point to the archive with ?cat= — let them navigate
-        // natively so they filter the blog index instead of being hijacked to the homepage.
-        if (href.indexOf('/blog/') !== -1) continue;
-        tags[i].addEventListener('click', function(e) {
-            e.preventDefault(); e.stopPropagation();
-            const cat = this.getAttribute('data-tag');
-            const lang = document.documentElement.lang || 'zh-CN';
-            const homeUrl = lang.indexOf('zh') === 0 ? '/' : '/en/';
-            sessionStorage.setItem('preselectCategory', cat);
-            window.location.href = homeUrl;
-        });
-    }
-}
-
 /* ===== Like System (delegates to js/like.js -> window.LikeSystem) =====
  * The actual like state/logic lives in js/like.js (single source of truth, T9).
  * These are thin read/write accessors so site-home.js (hot-tool scoring,
@@ -93,7 +74,6 @@ function initBackToTop() {
 
 /* ===== Initialization (core only) ===== */
 document.addEventListener('DOMContentLoaded', () => {
-    initTagClicks();
     initReadingProgress();
     initBackToTop();
 });

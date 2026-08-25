@@ -3928,3 +3928,57 @@ button:active, .btn:active {
     border-color: var(--border);
     color: #93c5fd;
 }
+
+/* ===== 标签聚合落地页 (P1) ===== */
+.tag-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem 4rem;
+}
+.tag-section {
+    margin-top: 2.5rem;
+}
+.tag-section h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    padding-left: 0.75rem;
+    border-left: 4px solid #007AFF;
+}
+.tag-page .tool-grid {
+    gap: 1rem;
+}
+.tag-categories {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color, #e5e7eb);
+}
+.tag-categories h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.9rem;
+}
+.tag-cat-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.tag-cat-list .tag {
+    display: inline-block;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    background: rgba(0, 122, 255, 0.08);
+    color: #007AFF;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+}
+.tag-cat-list .tag:hover {
+    background: #007AFF;
+    color: #fff;
+}

@@ -244,8 +244,8 @@ function switchLang(lang) {
     if (path === '/zh/index' || path === '/zh') path = '/';
     if (path === '/en') path = '/en/';
 
-    const isZh = path === '/' || path.startsWith('/zh/') || path.startsWith('/blog/zh/') || ZH_ROOT_PAGES.has(path);
-    const isEn = path === '/en/' || path.startsWith('/en/') || path.startsWith('/blog/en/');
+    const isZh = path === '/' || path.startsWith('/zh/') || path.startsWith('/blog/zh/') || ZH_ROOT_PAGES.has(path) || path.startsWith('/tags/');
+    const isEn = path === '/en/' || path.startsWith('/en/') || path.startsWith('/blog/en/') || path.startsWith('/en/tags/');
     // 已在目标语言 → 不跳转
     if (lang === 'zh' && isZh) return;
     if (lang === 'en' && isEn) return;
@@ -258,6 +258,8 @@ function switchLang(lang) {
             target = '/en/' + path.slice('/zh/'.length);
         } else if (ZH_ROOT_PAGES.has(path)) {
             target = '/en' + path;
+        } else if (path.startsWith('/tags/')) {
+            target = '/en/' + path;
         } else {
             target = '/en/';
         }
@@ -266,7 +268,11 @@ function switchLang(lang) {
             target = '/blog/zh/' + path.slice('/blog/en/'.length);
         } else if (path.startsWith('/en/')) {
             const rest = '/' + path.slice('/en/'.length);
-            target = ZH_ROOT_PAGES.has(rest) ? rest : (rest === '/' ? '/' : '/zh' + rest);
+            if (rest.startsWith('/tags/')) {
+                target = rest;
+            } else {
+                target = ZH_ROOT_PAGES.has(rest) ? rest : (rest === '/' ? '/' : '/zh' + rest);
+            }
         } else {
             target = '/';
         }

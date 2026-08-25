@@ -14,6 +14,9 @@ import { mkdirSync, readdirSync, statSync, copyFileSync, rmSync, existsSync, rea
 import { dirname, join, resolve } from 'path';
 import { fileURLToPath } from 'url';
 
+// P1：构建前自动生成标签聚合落地页（/tags/<cat>.html + /en/tags/<cat>.html）
+import './generate-tag-pages.mjs';
+
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dist = join(root, 'dist');
 

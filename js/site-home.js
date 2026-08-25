@@ -712,7 +712,7 @@ function initHotTools() {
             + '<p>' + (tool.desc ? (tool.desc[lang] || tool.desc['zh']) : '') + '</p>'
             + '</a>'
             + '<div class="tool-tags">' + cats.map(function(c) {
-                return '<a href="' + (isZh ? '/' : '/en/') + '" class="tag tag-' + c + '" data-tag="' + c + '">' + (catTexts[c] || c) + '</a>';
+                return '<a href="' + (isZh ? '/tags/' : '/en/tags/') + c + '.html" class="tag tag-' + c + '" data-tag="' + c + '">' + (catTexts[c] || c) + '</a>';
             }).join('') + '</div>'
             + '</div>';
     });
