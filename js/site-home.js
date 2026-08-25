@@ -22,8 +22,8 @@ const SITE_CONFIG = {
         { id: 'image', label: { zh: '图片', en: 'Image' }, icon: '🖼️' },
         { id: 'text', label: { zh: '文字', en: 'Text' }, icon: '✏️' }
     ],
-    /* __GENERATED_SITE_CONFIG_TOOLS_START__ */
     tools: [
+    /* __GENERATED_SITE_CONFIG_TOOLS_START__ */
         { id: 'mortgage', categories: ["finance"] },
         { id: 'tax2026', categories: ["finance"] },
         { id: 'housing-fund', categories: ["finance"] },
@@ -67,8 +67,8 @@ const SITE_CONFIG = {
         { id: 'word-counter', categories: ["text"] },
         { id: 'regex-tester', categories: ["text"] },
         { id: 'markdown-preview', categories: ["text"] }
+/* __GENERATED_SITE_CONFIG_TOOLS_END__ */
     ]
-/* __GENERATED_SITE_CONFIG_TOOLS_END__ */]
 };
 
 /* ===== Click Tracking ===== */

@@ -61,7 +61,8 @@ function generateSiteConfigTools() {
     const cats = JSON.stringify(t.categories);
     return `        { id: '${t.slug}', categories: ${cats} }`;
   });
-  return `    tools: [\n${lines.join(',\n')}\n    ]`;
+  // 只输出数组元素（tools: [ 与 ] 保留在 site-home.js 标记之外，避免重复闭合）
+  return lines.join(',\n');
 }
 
 function generateToolsData() {
