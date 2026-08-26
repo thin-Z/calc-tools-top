@@ -6,14 +6,14 @@
 
 | 部分 | 说明 |
 |------|------|
-| 前端 | 纯静态 HTML/CSS/JS（无框架），`zh/`、`en/` 双语，`blog/` 博客（**源码 208 HTML（含 5 includes 模板）/ dist 203 页**：43 工具×2 语言 + 80 博客（含索引页）+ 18 标签聚合页 + 结构页） |
+| 前端 | 纯静态 HTML/CSS/JS（无框架），`zh/`、`en/` 双语，`blog/` 博客（**源码 201 HTML（另含 5 includes 模板）/ dist 201 页**：43 工具×2 语言 + 80 博客 + 16 标签聚合页 + 结构页/语言层首页） |
 | 构建 | Vercel `buildCommand = node scripts/build.mjs`，`outputDirectory = dist`（复制站点 → GA4/AdSense 注入 → 版本号 → 卫生转换 → CSS 压缩 → CMP 横幅） |
 | API | `api/likes.js`（点赞）、`api/clicks.js`（点击），Node Serverless Function |
 | 存储 | **Vercel KV（Upstash Redis）**，点赞/点击计数 + 限速/防刷均存于此 |
 | 广告 | AdSense Auto Ads，client ID 单一来源 `includes/adsense-head.html`，构建期注入全站 |
 | 分析 | GA4 `G-B61D908J5F`（`includes/adsense-head.html` 单一来源，构建期剥离占位符守卫） |
-| 安全 | **CSP 全站硬化**：script-src / style-src 无 `unsafe-inline`（`js/csp-events.js` 委托层 + `js/inline/*.js` 外链化），img-src 白名单化；`verify-site.mjs` 15 项断言守护 |
-| 竞品迭代（08-25） | **URL 参数预填**（`js/url-state.js`，46 计算器页带参直达/刷新保留/输入同步）、**打印样式**（`@media print` 隐藏导航广告）、**mortgage 输入扩展**（房产税/保险/PMI/额外还款）、**相关工具强化**（`scripts/strengthen-related-links.mjs`）、**首页快速计算条**（quick-calc-bar 带参直达 6 高频工具）、**标签聚合落地页**（`scripts/generate-tag-pages.mjs`，9 分类 × zh/en = 18 页，工具+文章聚合 + JSON-LD + hreflang） |
+| 安全 | **CSP 全站硬化**：script-src / style-src 无 `unsafe-inline`（`js/csp-events.js` 委托层 + `js/inline/*.js` 外链化），img-src 白名单化；`verify-site.mjs` 18 项断言守护 |
+| 竞品迭代（08-25） | **URL 参数预填**（`js/url-state.js`，计算器工具页带参直达/刷新保留/输入同步）、**打印样式**（`@media print` 隐藏导航广告）、**mortgage 输入扩展**（房产税/保险/PMI/额外还款）、**相关工具强化**（`scripts/strengthen-related-links.mjs`）、**标签聚合落地页**（`scripts/generate-tag-pages.mjs`，8 分类 × zh/en = 16 页，工具+文章聚合 + JSON-LD + hreflang） |
 
 ## 环境变量（Vercel 项目 Settings → Environment Variables）
 
@@ -62,7 +62,7 @@ KV_URL / KV_REDIS_URL
 | 脚本 | 作用 | 用法 |
 |------|------|------|
 | `build.mjs` | Vercel 构建入口：复制到 `dist/` → 清理旧 cookie-consent → GA4 启用/占位守卫 → 注入 AdSense（单一来源 `includes/adsense-head.html`）→ 注入缓存版本号（`?v=YYYYMMDDHHmm`，仅 dist）→ 卫生转换（去 BOM / charset 置首 / 懒加载 / inline→.hidden）→ CSS 压缩 → CMP 横幅注入 | `node scripts/build.mjs` |
-| `verify-site.mjs` | 集成校验 **15 项断言**：header/footer 字节一致 / JSON-LD（check-jsonld 5 项）/ 静态 AdSense 唯一性 / 断链 / 浮动控件清零 / GA4 ID 不变量 / CSP 无内联脚本 / 无内联事件处理器 / CSP 头无 unsafe-inline / 图片懒加载 / 图片 alt / SRI integrity / a11y（main+skip-link+label）/ SEO 存在率 / site.js 无 var | `node scripts/verify-site.mjs`（全绿退出码 0） |
+| `verify-site.mjs` | 集成校验 **18 项断言**：header/footer 字节一致 / JSON-LD（check-jsonld 5 项）/ 静态 AdSense 唯一性 / 断链 / 浮动控件清零 / GA4 ID 不变量 / CSP 无内联脚本 / 无内联事件处理器 / CSP 头无 unsafe-inline / 图片懒加载 / 图片 alt / SRI integrity / a11y（main+skip-link+label）/ SEO 存在率 / site.js 无 var / **首页三源同步（check-home-sync）** / **搜索升级专项（拼音+文章搜索+诚实热搜）** / **搜索升级 Phase C（GA4 零结果+aria-live+EN 关键词）** | `node scripts/verify-site.mjs`（全绿退出码 0） |
 | `normalize-template.mjs` | 全站 header/footer 模板归一（T02）：按 `includes/header-{zh,en}.html` / `footer-{zh,en}.html` 替换，移除静态 AdSense 标签与 `#gw-theme`/`.gw-lang`/内联 `switchLang`，脚本引用绝对化 | `node scripts/normalize-template.mjs --dry-run`（报告）/ 无参数（落盘） |
 | `inject-adsense.mjs` | 独立版 AdSense/GA4 注入（build.mjs 内嵌同逻辑） | `node scripts/inject-adsense.mjs` |
 | `check-links.js` | 断链扫描（相对/绝对路径存在性 + 越界 + cleanUrls） | `node scripts/check-links.js` |
@@ -71,7 +71,7 @@ KV_URL / KV_REDIS_URL
 | `csp-migrate-t02.mjs` / `csp-migrate-styles.mjs` | CSP 迁移历史脚本（内联脚本外链化 / 内联 style class 化），迁移已完成，保留作审计参考 | `node scripts/csp-migrate-t02.mjs --dry-run` |
 | `measure-content.mjs` | 正文词数审计（h1→CTA 口径），支持 `--json` / `--summary` | `node scripts/measure-content.mjs [阈值] [根] [--json] [--summary]` |
 | `generate-blog-posts.py` / `generate-sitemap.ps1` | 博客生成 / sitemap 生成（**ps1 须排除 dist/docs/deliverables/includes**，见记忆） | 见脚本头注释 |
-| `generate-tag-pages.mjs` | 标签聚合落地页生成（9 分类 × zh/en = 18 页，解析首页工具卡 + 博客归档聚合，含 JSON-LD/hreflang/交叉导航；build.mjs 顶部自动调用） | `node scripts/generate-tag-pages.mjs` |
+| `generate-tag-pages.mjs` | 标签聚合落地页生成（8 分类 × zh/en = 16 页，解析首页工具卡 + 博客归档聚合，含 JSON-LD/hreflang/交叉导航；build.mjs 顶部自动调用） | `node scripts/generate-tag-pages.mjs` |
 | `fix-hidden-display.mjs` | 修复 CSP 硬化后的 `.hidden` class 与 JS `style.display` 冲突 | `node scripts/fix-hidden-display.mjs [--dry-run]` |
 | `check-doc-sync.mjs` | 检查文档与代码的同步状态 | `node scripts/check-doc-sync.mjs` |
 | `fix-tool-content.mjs` | 修复工具页"模板串味"（About 受众 + How to Use 步骤重写，23 工具×2 语言） | `node scripts/fix-tool-content.mjs [--dry-run]` |
@@ -82,7 +82,7 @@ KV_URL / KV_REDIS_URL
 | `csp-migrate-t02.mjs` / `csp-migrate-styles.mjs` | CSP 迁移历史脚本（内联脚本外链化 / 内联 style class 化），迁移已完成，保留作审计参考 | `node scripts/csp-migrate-t02.mjs --dry-run` |
 | `csp-migrate-t03.mjs` | CSP 迁移 T03 脚本（历史） | `node scripts/csp-migrate-t03.mjs --dry-run` |
 | `generate-blog-posts.py` / `generate-sitemap.ps1` | 博客生成 / sitemap 生成（**ps1 须排除 dist/docs/deliverables/includes**，见记忆） | 见脚本头注释 |
-| `generate-tag-pages.mjs` | 标签聚合落地页生成（9 分类 × zh/en = 18 页，解析首页工具卡 + 博客归档聚合，含 JSON-LD/hreflang/交叉导航；build.mjs 顶部自动调用） | `node scripts/generate-tag-pages.mjs` |
+| `generate-tag-pages.mjs` | 标签聚合落地页生成（8 分类 × zh/en = 16 页，解析首页工具卡 + 博客归档聚合，含 JSON-LD/hreflang/交叉导航；build.mjs 顶部自动调用） | `node scripts/generate-tag-pages.mjs` |
 | `scan-csp-inline.py` | 扫描全站内联脚本/事件/样式 | `python scripts/scan-csp-inline.py` |
 | `analyze_sitemap.py` | 分析 sitemap 结构 | `python scripts/analyze_sitemap.py` |
 | `full_seo_audit.py` | 全维度 SEO 审计 | `python scripts/full_seo_audit.py` |
@@ -106,8 +106,9 @@ KV_URL / KV_REDIS_URL
 #    → CSS 压缩 → CMP 横幅（仅 dist，源码不含 ?v）
 node scripts/build.mjs
 
-# 2) 集成校验 15 项断言：header/footer 字节一致 + JSON-LD + AdSense 唯一性
-#    + 断链 + 浮动控件清零 + GA4 不变量 + CSP 3 项 + 懒加载/alt/SRI/a11y/SEO/var（全绿退出码 0）
+# 2) 集成校验 18 项断言：header/footer 字节一致 + JSON-LD + AdSense 唯一性
+#    + 断链 + 浮动控件清零 + GA4 不变量 + CSP 3 项 + 懒加载/alt/SRI/a11y/SEO/var
+#    + 首页三源同步(check-home-sync) + 搜索升级专项 + 搜索升级 Phase C（全绿退出码 0）
 node scripts/verify-site.mjs
 
 # 3) 断链回归（单独跑亦可）
@@ -115,10 +116,10 @@ node scripts/check-links.js
 ```
 
 期望结果：
-- `build.mjs`：`AdSense 注入: 更新 203 | ...` + `版本号注入: <STAMP> | ...` + `CMP 横幅注入: ...`；
+- `build.mjs`：`AdSense 注入: 更新 201 | ...` + `版本号注入: <STAMP> | ...` + `CMP 横幅注入: ...`；
 - dist 内每页**恰好 1 个** adsbygoogle 标签（与 `includes/adsense-head.html` 字节一致）且含 `?v=`；
 - 源码内 **0 个**静态 adsbygoogle 标签、**0 个** `#gw-theme`/`.gw-lang`/内联 `switchLang`；
-- `verify-site.mjs` 输出 `✅ verify-site 全绿`（15/15 断言）。
+- `verify-site.mjs` 输出 `✅ verify-site 全绿`（18/18 断言）。
 
 > 模板统一说明：全站 header/footer 以 `includes/header-{zh,en}.html`、`includes/footer-{zh,en}.html` 为字节基准；
 > 改导航/页脚只需改这 4 个文件，然后跑 `node scripts/normalize-template.mjs` 重新落盘全站 HTML。
