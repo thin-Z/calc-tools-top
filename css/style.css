@@ -1135,6 +1135,13 @@ button:active,.btn:active {
 }
 .like-btn .heart {
     font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+}
+.like-btn .heart svg {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
 }
 .like-btn .count {
     font-weight: 600;
