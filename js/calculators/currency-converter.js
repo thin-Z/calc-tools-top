@@ -91,4 +91,5 @@
     window.getRate = getRate;
     window.convertCurrency = convertCurrency;
     window.formatMoney = formatMoney;
+    window.NAMES = NAMES;
 })();
