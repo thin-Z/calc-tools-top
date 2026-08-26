@@ -14,6 +14,12 @@
     <priority>0.3</priority>
   </url>
   <url>
+    <loc>https://www.calc-tools.top/fraction-decimal-table</loc>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://www.calc-tools.top/help</loc>
     <lastmod>2026-08-26</lastmod>
     <changefreq>monthly</changefreq>
@@ -768,6 +774,15 @@
     <lastmod>2026-08-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.calc-tools.top/en/fraction-decimal-table</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/fraction-decimal-table'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/fraction-decimal-table'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/fraction-decimal-table'/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   <url>
     <loc>https://www.calc-tools.top/en/help</loc>

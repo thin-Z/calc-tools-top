@@ -4028,3 +4028,9 @@ mark {
 .recent-tool { display: inline-block; padding: 0.45rem 0.9rem; border-radius: 999px; background: var(--bg-hover, #f1f5f9); color: var(--text, #1e293b); font-weight: 600; font-size: 0.9rem; text-decoration: none; border: 1px solid var(--border, #e2e8f0); }
 .recent-tool:hover { background: var(--brand, #007AFF); color: #fff; }
 
+/* ===== 参考表（C6, 2026-08-26）：分数-小数-百分比对照表 ===== */
+.ref-table { width: 100%; max-width: 460px; border-collapse: collapse; margin: 1rem 0; }
+.ref-table th, .ref-table td { padding: 0.5rem 0.9rem; text-align: left; border: 1px solid var(--border, #e2e8f0); }
+.ref-table thead th { background: var(--bg-hover, #f1f5f9); font-weight: 700; }
+.ref-table tbody tr:nth-child(even) { background: var(--bg-hover, #f8fafc); }
+
