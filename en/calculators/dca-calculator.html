@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DCA Calculator - Periodic Investment Future Value</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online DCA (dollar-cost averaging) calculator. Enter monthly investment, annual return and years to compute future value, total invested and interest earned.">
+    <meta property='og:title' content='DCA Calculator - Periodic Investment Growth'/>
+    <meta property='og:description' content='Free online DCA calculator. Compute the future value, total invested and interest earned of a periodic investment, compounded monthly.'/>
+    <meta property='og:type' content='website'/>
+    <meta property='og:url' content='https://www.calc-tools.top/en/calculators/dca-calculator'/>
+    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:locale' content='en_US'/>
+    <meta name='twitter:card' content='summary_large_image'/>
+    <meta name='twitter:title' content='DCA Calculator - Periodic Investment Growth'/>
+    <meta name='twitter:description' content='Free online DCA calculator. Compute future value, total invested and interest earned of a periodic investment, with optional initial principal.'/>
+
+    <link rel="canonical" href="https://www.calc-tools.top/en/calculators/dca-calculator">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/calculators/dca-calculator">
+    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/calculators/dca-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/zh/calculators/dca-calculator">
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/theme-toggle.js" defer></script>
+    <script src="/js/i18n.js" defer></script>
+    <script src="/js/like.js" defer></script>
+    <script src="/js/calculators/dca-calculator.js" defer></script>
+    <script src="/js/calculators/dca-calculator-ui.js" defer></script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Online Tools", "item": "https://www.calc-tools.top/" },
+            { "@type": "ListItem", "position": 2, "name": "DCA Calculator", "item": "https://www.calc-tools.top/en/calculators/dca-calculator" }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "DCA Calculator - Periodic Investment Growth",
+        "url": "https://www.calc-tools.top/en/calculators/dca-calculator",
+        "description": "Free online DCA (dollar-cost averaging) calculator. Compute the future value, total invested and interest earned of a periodic investment, compounded monthly.",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "en"
+    }
+    </script>
+</head>
+<body>
+    <header>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
+    <nav>
+        <a href="/en/"><span>Home</span></a>
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
+            <option value="zh">🇨🇳 中文</option>
+            <option value="en" selected>🇬🇧 English</option>
+        </select>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon">☀️</span></button>
+    </nav>
+</header>
+
+    <main id="main">
+        <div class="tool-container">
+            <h1>DCA Calculator</h1>
+            <p class="tool-description">A free online periodic-investment (DCA / dollar-cost averaging) calculator that compounds monthly to show how a fixed monthly contribution grows over time, along with the total invested and the interest earned.</p>
+
+            <div class="calculator-form">
+                <div class="input-group">
+                    <label for="dca-monthly">Monthly investment (currency)</label>
+                    <input type="number" id="dca-monthly" value="1000" min="1" step="100" inputmode="numeric" aria-label="Monthly investment amount">
+                </div>
+                <div class="input-group">
+                    <label for="dca-annualRate">Annual return (%)</label>
+                    <input type="number" id="dca-annualRate" value="8" min="0" step="0.1" inputmode="decimal" aria-label="Annual return rate">
+                </div>
+                <div class="input-group">
+                    <label for="dca-years">Investment period (years)</label>
+                    <input type="number" id="dca-years" value="10" min="1" max="50" step="1" inputmode="numeric" aria-label="Investment period in years">
+                </div>
+                <div class="input-group">
+                    <label for="dca-initial">Initial principal (optional)</label>
+                    <input type="number" id="dca-initial" value="0" min="0" step="100" inputmode="numeric" aria-label="Initial principal">
+                </div>
+                <div class="input-group">
+                    <label for="dca-months">Months (optional, default = years × 12)</label>
+                    <input type="number" id="dca-months" value="120" min="1" step="1" inputmode="numeric" aria-label="Total months">
+                </div>
+
+                <div class="result-area hidden" id="result-area">
+                    <div class="result-label">Result</div>
+                    <dl class="tz-result-list">
+                        <div class="tz-item"><dt>Future value</dt><dd id="dca-fv">--</dd></div>
+                        <div class="tz-item"><dt>Total invested</dt><dd id="dca-invested">--</dd></div>
+                        <div class="tz-item"><dt>Interest earned</dt><dd id="dca-interest">--</dd></div>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="tool-info">
+                <h2>What is DCA (Dollar-Cost Averaging)?</h2>
+                <p>Dollar-cost averaging (DCA / periodic investment) means investing a fixed amount at regular intervals — usually monthly. By spreading your purchases over time it smooths the average cost and reduces the risk of mistiming the market, making it a popular strategy for long-term savings and index/fund investing.</p>
+                <h3>How to Use This Tool</h3>
+                <ol>
+                    <li>Enter the amount you plan to invest each month in the "Monthly investment" box</li>
+                    <li>Enter your expected annual return (%) in the "Annual return" box</li>
+                    <li>Enter the number of years in the "Investment period" box — months auto-fill as years × 12, but you can override them</li>
+                    <li>Optionally add an "Initial principal" if you already have a starting amount; the result panel updates in real time</li>
+                </ol>
+                <h3>How the Calculation Works</h3>
+                <p>This tool uses the end-of-period annuity model with monthly compounding: future value = initial × (1 + monthly rate)^periods + monthly × [((1 + monthly rate)^periods - 1) / monthly rate], where monthly rate = annual return ÷ 12 ÷ 100. Interest earned = future value - total invested, and total invested = initial + monthly × periods.</p>
+                <h3>Frequently Asked Questions</h3>
+                <p><strong>Is the interest compounded?</strong>Yes. This calculator compounds monthly, so each month's return is added to the base for the next month, closely matching how fund and DCA accounts accrue.</p>
+                <p><strong>How do I enter the annual return?</strong>Enter your expected long-term average annual return as a percentage (for example, 8 means 8% per year). Past performance is no guarantee of future results — treat the output as an estimate.</p>
+                <p><strong>Is my data uploaded to a server?</strong>No. Everything runs locally in your browser; your input never leaves your device.</p>
+            </div>
+        </div>
+
+        <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="dca-calculator"><span class="heart">❤</span> <span class="count">0</span></button></div>
+    <div class="related-tools">
+    <h3>Related Tools</h3>
+    <ul>
+        <li><a href="/en/calculators/compound-interest">Compound Interest Calculator</a></li>
+        <li><a href="/en/calculators/loan-compare">Loan Comparison Calculator</a></li>
+        <li><a href="/en/calculators/overtime">Overtime Calculator</a></li>
+    </ul>
+</div>
+</main>
+
+    <footer>
+    <div class="footer-links">
+        <a href="/en/">Home</a>
+        <a href="/about">About</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/contact">Contact</a>
+        <a href="/blog/en/">Blog</a>
+    </div>
+    <p>© 2026 Online Calculators | Free Online Calculators</p>
+</footer>
+
+    <script src="/js/url-state.js" defer></script>
+</body>
+</html>

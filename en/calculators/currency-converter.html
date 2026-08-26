@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter - Online Exchange Rate for Multi-Currency</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online currency converter with built-in reference exchange rates. Convert between USD, CNY, EUR and more in real time with cross-rate calculation.">
+    <meta property='og:title' content='Currency Converter - Online Exchange Rate'/>
+    <meta property='og:description' content='Free online currency converter with reference exchange rates for USD, CNY, EUR and more. Convert between any two currencies in real time.'/>
+    <meta property='og:type' content='website'/>
+    <meta property='og:url' content='https://www.calc-tools.top/en/calculators/currency-converter'/>
+    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:locale' content='en_US'/>
+    <meta name='twitter:card' content='summary_large_image'/>
+    <meta name='twitter:title' content='Currency Converter - Online Exchange Rate'/>
+    <meta name='twitter:description' content='Free online currency converter with reference rates. Convert between any two currencies and calculate amounts in real time.'/>
+
+    <link rel="canonical" href="https://www.calc-tools.top/en/calculators/currency-converter">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/calculators/currency-converter">
+    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/calculators/currency-converter">
+    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/zh/calculators/currency-converter">
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/theme-toggle.js" defer></script>
+    <script src="/js/i18n.js" defer></script>
+    <script src="/js/like.js" defer></script>
+    <script src="/js/calculators/currency-converter.js" defer></script>
+    <script src="/js/calculators/currency-converter-ui.js" defer></script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Online Tools", "item": "https://www.calc-tools.top/" },
+            { "@type": "ListItem", "position": 2, "name": "Currency Converter", "item": "https://www.calc-tools.top/en/calculators/currency-converter" }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Currency Converter - Online Exchange Rate",
+        "url": "https://www.calc-tools.top/en/calculators/currency-converter",
+        "description": "Free online currency converter with built-in reference exchange rates. Convert between USD, CNY, EUR and more in real time with cross-rate calculation.",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "en"
+    }
+    </script>
+</head>
+<body>
+    <header>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
+    <nav>
+        <a href="/en/"><span>Home</span></a>
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
+            <option value="zh">🇨🇳 中文</option>
+            <option value="en" selected>🇬🇧 English</option>
+        </select>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon">☀️</span></button>
+    </nav>
+</header>
+
+    <main id="main">
+        <div class="tool-container">
+            <h1>Currency Converter</h1>
+            <p class="tool-description">Free online currency converter with built-in reference exchange rates. Convert between USD, CNY, EUR and any other major currency in real time, with the converted amount and cross-rate shown.</p>
+
+            <div class="calculator-form">
+                <div class="input-group">
+                    <label for="fx-amount">Amount</label>
+                    <input type="number" id="fx-amount" placeholder="100" inputmode="decimal" step="any" aria-label="Amount to convert">
+                    <button type="button" id="fx-swap" class="fx-swap" aria-label="Swap currencies">⇄ Swap</button>
+                </div>
+                <div class="input-group">
+                    <label for="fx-from">From</label>
+                    <select id="fx-from" aria-label="From currency"><option value="USD">US Dollar USD</option></select>
+                </div>
+                <div class="input-group">
+                    <label for="fx-to">To</label>
+                    <select id="fx-to" aria-label="To currency"><option value="CNY">Chinese Yuan CNY</option></select>
+                </div>
+
+                <div class="result-area hidden" id="result-area">
+                    <div class="result-label">Result</div>
+                    <div class="fx-result" id="fx-result">--</div>
+                    <p class="fx-rate" id="fx-rate">--</p>
+                </div>
+            </div>
+
+            <div class="tool-info">
+                <h2>What is an Exchange Rate?</h2>
+                <p>An exchange rate is the ratio at which one currency is exchanged for another — effectively the price of one currency quoted in another. Rates fluctuate continuously due to economic and monetary policy. This tool uses built-in reference rates (USD-based cross rates) so you can quickly estimate conversions for travel, overseas shopping or cross-border e-commerce.</p>
+                <h3>How to Use This Tool</h3>
+                <ol>
+                    <li>Enter the amount in the "Amount" field</li>
+                    <li>Choose the from and to currencies — the converted amount updates in real time</li>
+                    <li>Click "⇄ Swap" to reverse the direction</li>
+                    <li>The result also shows how much 1 unit of the source currency is worth in the target currency</li>
+                </ol>
+                <h3>Frequently Asked Questions</h3>
+                <p><strong>Are these live exchange rates?</strong> No. This is a fully static site; it uses fixed reference rates (approximate 2026-08 baseline) for quick estimation. It is not guaranteed to match live bank or market rates — always use the bank's quoted rate for real transactions.</p>
+                <p><strong>Why are the rates fixed?</strong> To keep the site purely static with zero external dependencies, the tool embeds a reference rate table updated periodically, avoiding runtime third-party API latency and instability.</p>
+                <p><strong>Is my data uploaded to a server?</strong> No. Everything runs locally in your browser; your input never leaves your device.</p>
+            </div>
+        </div>
+
+        <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="currency-converter"><span class="heart">❤</span> <span class="count">0</span></button></div>
+    <div class="related-tools">
+    <h3>Related Tools</h3>
+    <ul>
+        <li><a href="/en/calculators/fuel-cost">Fuel Cost Calculator</a></li>
+        <li><a href="/en/calculators/unit-converter">Unit Converter</a></li>
+        <li><a href="/en/calculators/percentage-calc">Percentage Calculator</a></li>
+    </ul>
+</div>
+</main>
+
+    <footer>
+    <div class="footer-links">
+        <a href="/en/">Home</a>
+        <a href="/about">About</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/contact">Contact</a>
+        <a href="/blog/en/">Blog</a>
+    </div>
+    <p>© 2026 Online Calculators | Free Online Calculators</p>
+</footer>
+
+    <script src="/js/url-state.js" defer></script>
+</body>
+</html>

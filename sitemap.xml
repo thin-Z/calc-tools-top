@@ -836,11 +836,29 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.calc-tools.top/en/calculators/currency-converter</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/currency-converter'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/currency-converter'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/currency-converter'/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.calc-tools.top/en/calculators/date-calc</loc>
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/date-calc'/>
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/date-calc'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/date-calc'/>
     <lastmod>2026-08-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.calc-tools.top/en/calculators/dca-calculator</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/dca-calculator'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/dca-calculator'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/dca-calculator'/>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -859,6 +877,15 @@
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/electricity'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/electricity'/>
     <lastmod>2026-08-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.calc-tools.top/en/calculators/fraction-calculator</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/fraction-calculator'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/fraction-calculator'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/fraction-calculator'/>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -971,6 +998,15 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.calc-tools.top/en/calculators/pregnancy</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/pregnancy'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/pregnancy'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/pregnancy'/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.calc-tools.top/en/calculators/qr-generator</loc>
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/qr-generator'/>
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/qr-generator'/>
@@ -994,6 +1030,15 @@
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/regex-tester'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/regex-tester'/>
     <lastmod>2026-08-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.calc-tools.top/en/calculators/simplified-traditional</loc>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/simplified-traditional'/>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/simplified-traditional'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/simplified-traditional'/>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1430,11 +1475,29 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.calc-tools.top/zh/calculators/currency-converter</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/currency-converter'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/currency-converter'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/currency-converter'/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.calc-tools.top/zh/calculators/date-calc</loc>
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/date-calc'/>
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/date-calc'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/date-calc'/>
     <lastmod>2026-08-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.calc-tools.top/zh/calculators/dca-calculator</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/dca-calculator'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/dca-calculator'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/dca-calculator'/>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1453,6 +1516,15 @@
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/electricity'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/electricity'/>
     <lastmod>2026-08-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.calc-tools.top/zh/calculators/fraction-calculator</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/fraction-calculator'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/fraction-calculator'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/fraction-calculator'/>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1565,6 +1637,15 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.calc-tools.top/zh/calculators/pregnancy</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/pregnancy'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/pregnancy'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/pregnancy'/>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.calc-tools.top/zh/calculators/qr-generator</loc>
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/qr-generator'/>
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/qr-generator'/>
@@ -1588,6 +1669,15 @@
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/regex-tester'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/regex-tester'/>
     <lastmod>2026-08-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.calc-tools.top/zh/calculators/simplified-traditional</loc>
+    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/simplified-traditional'/>
+    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/simplified-traditional'/>
+    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/simplified-traditional'/>
+    <lastmod>2026-08-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

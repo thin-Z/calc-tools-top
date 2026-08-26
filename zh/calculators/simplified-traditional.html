@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简繁转换器 - 在线简体繁体汉字互转, 批量文本一键转换工具</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="免费在线简繁转换工具，内置常用汉字简繁体对照表，简体中文与繁体中文实时互转，支持批量文本处理，适合稿件、翻译与学习场景。">
+    <meta property='og:title' content='简繁转换器 - 在线简体繁体互转'/>
+    <meta property='og:description' content='免费在线简繁转换器，内置常用汉字简繁体对照表，简体与繁体中文实时互转，支持批量文本。'/>
+    <meta property='og:type' content='website'/>
+    <meta property='og:url' content='https://www.calc-tools.top/zh/calculators/simplified-traditional'/>
+    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:locale' content='zh_CN'/>
+    <meta name='twitter:card' content='summary_large_image'/>
+    <meta name='twitter:title' content='简繁转换器 - 在线简体繁体互转'/>
+    <meta name='twitter:description' content='免费在线简繁转换器，常用汉字简繁体对照，简体与繁体互转并支持批量文本。'/>
+
+    <link rel="canonical" href="https://www.calc-tools.top/zh/calculators/simplified-traditional">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/calculators/simplified-traditional">
+    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/calculators/simplified-traditional">
+    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/zh/calculators/simplified-traditional">
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/theme-toggle.js" defer></script>
+    <script src="/js/i18n.js" defer></script>
+    <script src="/js/like.js" defer></script>
+    <script src="/js/calculators/simplified-traditional.js" defer></script>
+    <script src="/js/calculators/simplified-traditional-ui.js" defer></script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "在线工具", "item": "https://www.calc-tools.top/" },
+            { "@type": "ListItem", "position": 2, "name": "简繁转换器", "item": "https://www.calc-tools.top/zh/calculators/simplified-traditional" }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "简繁转换器 - 在线简体繁体互转",
+        "url": "https://www.calc-tools.top/zh/calculators/simplified-traditional",
+        "description": "免费在线简繁转换器，内置常用汉字简繁体对照表，简体中文与繁体中文实时互转，支持批量文本处理。",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "zh-CN"
+    }
+    </script>
+</head>
+<body>
+    <header>
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+    <nav>
+        <a href="/"><span>首页</span></a>
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="语言切换">
+            <option value="zh" selected>🇨🇳 中文</option>
+            <option value="en">🇬🇧 English</option>
+        </select>
+        <button id="theme-toggle" class="theme-toggle" aria-label="切换暗黑模式"><span class="theme-icon">☀️</span></button>
+    </nav>
+</header>
+
+    <main id="main">
+        <div class="tool-container">
+            <h1>简繁转换器</h1>
+            <p class="tool-description">免费在线简繁转换工具，内置常用汉字简繁体对照表，可实时将简体中文与繁体中文互转，支持批量文本处理，适合稿件编辑、翻译校对与语言学习。</p>
+
+            <div class="calculator-form">
+                <div class="input-group">
+                    <label for="tc-input">输入文本</label>
+                    <textarea id="tc-input" rows="5" placeholder="请输入要转换的简体或繁体文本" aria-label="输入文本"></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="tc-dir">转换方向</label>
+                    <select id="tc-dir" aria-label="转换方向">
+                        <option value="s2t" selected>简体 → 繁体</option>
+                        <option value="t2s">繁体 → 简体</option>
+                    </select>
+                </div>
+
+                <div class="result-area hidden" id="result-area">
+                    <div class="result-label">转换结果</div>
+                    <textarea id="tc-output" rows="5" readonly aria-label="转换结果"></textarea>
+                    <button type="button" id="tc-copy" class="tc-copy" aria-label="复制结果">复制</button>
+                </div>
+            </div>
+
+            <div class="tool-info">
+                <h2>什么是简繁转换？</h2>
+                <p>简体中文与繁体中文使用同一套汉语体系，但部分汉字在书写上有差异（如「汉」与「漢」、「见」与「見」）。简繁转换就是按字符对照表把二者互相转换。本工具内置常用汉字的简繁对照，覆盖日常高频字，可在发送邮件、写作投稿、跨境交流时快速统一用字。</p>
+                <h3>如何使用本工具</h3>
+                <ol>
+                    <li>在「输入文本」框粘贴需要转换的简体或繁体内容</li>
+                    <li>选择「简体 → 繁体」或「繁体 → 简体」方向</li>
+                    <li>转换结果实时显示在下方结果区</li>
+                    <li>点击「复制」一键复制转换后的文本</li>
+                </ol>
+                <h3>常见问题</h3>
+                <p><strong>能覆盖所有汉字吗？</strong>本工具内置的是常用汉字对照表，覆盖高频字，不保证覆盖所有生僻字。未收录的字会原样保留。</p>
+                <p><strong>为什么有些字转换后有歧义？</strong>部分简体字在繁体下对应多个字（如「发」对应「發」与「髮」、「后」对应「後」与「后」）。本工具按最常见用字转换，特殊语境下请人工核对。</p>
+                <p><strong>数据会上传到服务器吗？</strong>不会。所有转换都在浏览器本地完成，输入的数据不会离开你的设备。</p>
+            </div>
+        </div>
+
+        <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="simplified-traditional"><span class="heart">❤</span> <span class="count">0</span></button></div>
+    <div class="related-tools">
+    <h3>相关工具</h3>
+    <ul>
+        <li><a href="/zh/text/case-converter">大小写转换</a></li>
+        <li><a href="/zh/text/word-counter">字数统计</a></li>
+        <li><a href="/zh/text/text-cleaner">文本清理</a></li>
+    </ul>
+</div>
+</main>
+
+    <footer>
+    <div class="footer-links">
+        <a href="/">首页</a>
+        <a href="/about">关于</a>
+        <a href="/privacy">隐私政策</a>
+        <a href="/contact">联系</a>
+        <a href="/blog/zh/">博客</a>
+    </div>
+    <p>© 2026 工具箱里 | 免费在线工具</p>
+</footer>
+
+    <script src="/js/url-state.js" defer></script>
+</body>
+</html>

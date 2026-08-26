@@ -67,7 +67,12 @@ const SITE_CONFIG = {
         { id: 'word-counter', categories: ["text"] },
         { id: 'regex-tester', categories: ["text"] },
         { id: 'markdown-preview', categories: ["text"] },
-        { id: 'timestamp', categories: ["utility"] }
+        { id: 'timestamp', categories: ["utility"] },
+        { id: 'pregnancy', categories: ["health"] },
+        { id: 'dca-calculator', categories: ["finance"] },
+        { id: 'fraction-calculator', categories: ["utility"] },
+        { id: 'currency-converter', categories: ["travel","finance"] },
+        { id: 'simplified-traditional', categories: ["text"] }
 /* __GENERATED_SITE_CONFIG_TOOLS_END__ */
     ]
 };
@@ -502,7 +507,12 @@ const TOOLS_DATA = {
     'word-counter': { icon: '🔤', name: { zh: '字数统计', en: 'Word Counter' }, desc: { zh: '统计字符/字数/段落', en: 'Count characters/words/paragraphs' } },
     'regex-tester': { icon: '🔍', name: { zh: '正则表达式测试器', en: 'Regex Tester' }, desc: { zh: '实时匹配高亮与捕获组解析', en: 'Real-time match highlight and group parsing' } },
     'markdown-preview': { icon: '📝', name: { zh: 'Markdown 预览器', en: 'Markdown Preview' }, desc: { zh: '实时预览 Markdown 渲染结果', en: 'Live Markdown rendering preview' } },
-    timestamp: { icon: '🕐', name: { zh: '时间戳转换', en: 'Timestamp Converter' }, desc: { zh: 'Unix 时间戳与日期时间互转，支持秒/毫秒与本地/UTC', en: 'Convert Unix timestamps to dates and back, with seconds/milliseconds and local/UTC' } }
+    timestamp: { icon: '🕐', name: { zh: '时间戳转换', en: 'Timestamp Converter' }, desc: { zh: 'Unix 时间戳与日期时间互转，支持秒/毫秒与本地/UTC', en: 'Convert Unix timestamps to dates and back, with seconds/milliseconds and local/UTC' } },
+    pregnancy: { icon: '🤰', name: { zh: '孕期计算器', en: 'Pregnancy Calculator' }, desc: { zh: '按末次月经/受孕日推算预产期与孕周', en: 'Estimate due date and gestational week from LMP or conception' } },
+    'dca-calculator': { icon: '📈', name: { zh: '定投计算器', en: 'DCA Calculator' }, desc: { zh: '定期定额投资收益与复利增长计算', en: 'Calculate future value of regular periodic investments' } },
+    'fraction-calculator': { icon: '➗', name: { zh: '分数计算器', en: 'Fraction Calculator' }, desc: { zh: '分数的加减乘除与最简化', en: 'Add, subtract, multiply and divide fractions and simplify' } },
+    'currency-converter': { icon: '💱', name: { zh: '汇率换算器', en: 'Currency Converter' }, desc: { zh: '常见货币参考汇率，任意两种货币实时互换', en: 'Convert between major currencies with reference rates' } },
+    'simplified-traditional': { icon: '🀄', name: { zh: '简繁转换', en: 'Simplified-Traditional Converter' }, desc: { zh: '简体中文与繁体中文互转，常用字对照', en: 'Convert between simplified and traditional Chinese' } }
 };
 /* __GENERATED_TOOLS_DATA_END__ */
 /* __GENERATED_TOOL_KEYWORDS_START__ */
@@ -550,7 +560,12 @@ const TOOL_KEYWORDS_ZH = {
     'word-counter': '字数统计,字数,字符数,文章统计',
     'regex-tester': '正则表达式,正则测试,正则匹配,regex,正则高亮,捕获组',
     'markdown-preview': 'markdown,markdown预览,md转html,markdown编辑器,markdown在线',
-    timestamp: '时间戳,时间戳转换,unix时间戳,时间戳计算,时间戳转日期,日期转时间戳'
+    timestamp: '时间戳,时间戳转换,unix时间戳,时间戳计算,时间戳转日期,日期转时间戳',
+    pregnancy: '孕期,孕期计算器,预产期,孕周,怀孕,末次月经,受孕日',
+    'dca-calculator': '定投,定投计算器,基金定投,定期投资,复利,收益计算',
+    'fraction-calculator': '分数计算器,分数,分数加减乘除,最简分数,通分',
+    'currency-converter': '汇率,汇率换算,汇率计算器,货币换算,外币兑换,汇率转换',
+    'simplified-traditional': '简繁转换,繁体转换,简体转繁体,繁体转简体,汉字转换'
 };
 /* __GENERATED_TOOL_KEYWORDS_END__ */
 

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraction Calculator - Add, Subtract, Multiply, Divide</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online fraction calculator. Add, subtract, multiply, and divide fractions, with results automatically simplified to lowest terms.">
+    <meta property='og:title' content='Fraction Calculator - Add, Subtract, Multiply, Divide'/>
+    <meta property='og:description' content='Free online fraction calculator. Add, subtract, multiply and divide fractions, with results simplified to lowest terms automatically.'/>
+    <meta property='og:type' content='website'/>
+    <meta property='og:url' content='https://www.calc-tools.top/en/calculators/fraction-calculator'/>
+    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:locale' content='en_US'/>
+    <meta name='twitter:card' content='summary_large_image'/>
+    <meta name='twitter:title' content='Fraction Calculator - Add, Subtract, Multiply, Divide'/>
+    <meta name='twitter:description' content='Free online fraction calculator. Add, subtract, multiply and divide fractions, with results simplified to lowest terms automatically.'/>
+
+    <link rel="canonical" href="https://www.calc-tools.top/en/calculators/fraction-calculator">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/calculators/fraction-calculator">
+    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/calculators/fraction-calculator">
+    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/zh/calculators/fraction-calculator">
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/theme-toggle.js" defer></script>
+    <script src="/js/i18n.js" defer></script>
+    <script src="/js/like.js" defer></script>
+    <script src="/js/calculators/fraction-calculator.js" defer></script>
+    <script src="/js/calculators/fraction-calculator-ui.js" defer></script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Online Tools", "item": "https://www.calc-tools.top/" },
+            { "@type": "ListItem", "position": 2, "name": "Fraction Calculator", "item": "https://www.calc-tools.top/en/calculators/fraction-calculator" }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Fraction Calculator - Add, Subtract, Multiply, Divide",
+        "url": "https://www.calc-tools.top/en/calculators/fraction-calculator",
+        "description": "Free online fraction calculator. Add, subtract, multiply, and divide fractions, with results automatically simplified to lowest terms.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "en"
+    }
+    </script>
+</head>
+<body>
+    <header>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
+    <nav>
+        <a href="/en/"><span>Home</span></a>
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
+            <option value="zh">🇨🇳 中文</option>
+            <option value="en" selected>🇬🇧 English</option>
+        </select>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon">☀️</span></button>
+    </nav>
+</header>
+
+    <main id="main">
+        <div class="tool-container">
+            <h1>Fraction Calculator</h1>
+            <p class="tool-description">Free online fraction calculator for adding, subtracting, multiplying, and dividing proper and improper fractions. Enter numerators and denominators to get results in real time, automatically simplified to lowest terms, with clear feedback for zero or invalid fractions.</p>
+
+            <div class="calculator-form">
+                <div class="input-group">
+                    <label for="num1">First fraction · Numerator</label>
+                    <input type="text" id="num1" placeholder="1" inputmode="numeric" spellcheck="false" aria-label="First fraction numerator">
+                </div>
+                <div class="input-group">
+                    <label for="den1">First fraction · Denominator</label>
+                    <input type="text" id="den1" placeholder="2" inputmode="numeric" spellcheck="false" aria-label="First fraction denominator">
+                </div>
+                <div class="input-group">
+                    <label for="f-op">Operation</label>
+                    <select id="f-op" aria-label="Fraction operation">
+                        <option value="add" selected>+ Add</option>
+                        <option value="subtract">− Subtract</option>
+                        <option value="multiply">× Multiply</option>
+                        <option value="divide">÷ Divide</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="num2">Second fraction · Numerator</label>
+                    <input type="text" id="num2" placeholder="1" inputmode="numeric" spellcheck="false" aria-label="Second fraction numerator">
+                </div>
+                <div class="input-group">
+                    <label for="den2">Second fraction · Denominator</label>
+                    <input type="text" id="den2" placeholder="3" inputmode="numeric" spellcheck="false" aria-label="Second fraction denominator">
+                </div>
+
+                <div class="result-area hidden" id="result-area">
+                    <div class="result-label">Result</div>
+                    <div class="result-content" id="fr-result">--</div>
+                </div>
+            </div>
+
+            <div class="tool-info">
+                <h2>What is a Fraction Calculator?</h2>
+                <p>A fraction calculator performs addition, subtraction, multiplication, and division on two fractions. A fraction consists of a numerator (top) and a denominator (bottom), and the denominator can never be zero. This tool reduces every result to its simplest form (shown as an integer when the denominator is 1) entirely in your browser — your input never leaves your device.</p>
+                <h3>How to Use This Tool</h3>
+                <ol>
+                    <li>Enter numbers in the numerator and denominator boxes for the first fraction (denominator not zero; numerators may be negative)</li>
+                    <li>Choose the operation: add (+), subtract (−), multiply (×), or divide (÷)</li>
+                    <li>Enter the numerator and denominator for the second fraction</li>
+                    <li>The result panel shows the full calculation "first fraction [operator] second fraction = result" in real time</li>
+                </ol>
+                <h3>Frequently Asked Questions</h3>
+                <p><strong>Why is the result simplified?</strong> Fractions such as 2/4 and 1/2 represent the same value. This tool reduces the result to its lowest terms, so you can read and use it directly.</p>
+                <p><strong>Can a denominator be zero?</strong> No. A denominator of zero is undefined, and the tool shows "denominator cannot be zero".</p>
+                <p><strong>What if the second fraction's numerator is zero during division?</strong> Dividing by zero is undefined, so the tool shows "divisor cannot be zero".</p>
+                <p><strong>Is my data uploaded to a server?</strong> No. Everything runs locally in your browser; your input never leaves your device.</p>
+            </div>
+        </div>
+
+        <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="fraction-calculator"><span class="heart">❤</span> <span class="count">0</span></button></div>
+    <div class="related-tools">
+    <h3>Related Tools</h3>
+    <ul>
+        <li><a href="/en/calculators/percentage-calc">Percentage Calculator</a></li>
+        <li><a href="/en/calculators/unit-converter">Unit Converter</a></li>
+        <li><a href="/en/calculators/random-gen">Random Number Generator</a></li>
+    </ul>
+</div>
+</main>
+
+    <footer>
+    <div class="footer-links">
+        <a href="/en/">Home</a>
+        <a href="/about">About</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/contact">Contact</a>
+        <a href="/blog/en/">Blog</a>
+    </div>
+    <p>© 2026 Online Calculators | Free Online Calculators</p>
+</footer>
+
+    <script src="/js/url-state.js" defer></script>
+</body>
+</html>

@@ -795,5 +795,96 @@
       "desc": "Convert Unix timestamps to dates and back, with seconds/milliseconds and local/UTC",
       "kw": "timestamp,timestamp converter,unix timestamp,epoch,convert timestamp"
     }
+  },
+  {
+    "slug": "pregnancy",
+    "icon": "🤰",
+    "dir": "calculators",
+    "categories": [
+      "health"
+    ],
+    "zh": {
+      "name": "孕期计算器",
+      "desc": "按末次月经/受孕日推算预产期与孕周",
+      "kw": "孕期,孕期计算器,预产期,孕周,怀孕,末次月经,受孕日"
+    },
+    "en": {
+      "name": "Pregnancy Calculator",
+      "desc": "Estimate due date and gestational week from LMP or conception",
+      "kw": "pregnancy,pregnancy calculator,due date,gestational age,last menstrual period"
+    }
+  },
+  {
+    "slug": "dca-calculator",
+    "icon": "📈",
+    "dir": "calculators",
+    "categories": [
+      "finance"
+    ],
+    "zh": {
+      "name": "定投计算器",
+      "desc": "定期定额投资收益与复利增长计算",
+      "kw": "定投,定投计算器,基金定投,定期投资,复利,收益计算"
+    },
+    "en": {
+      "name": "DCA Calculator",
+      "desc": "Calculate future value of regular periodic investments",
+      "kw": "dca,dollar cost averaging,periodic investment,future value,compound"
+    }
+  },
+  {
+    "slug": "fraction-calculator",
+    "icon": "➗",
+    "dir": "calculators",
+    "categories": [
+      "utility"
+    ],
+    "zh": {
+      "name": "分数计算器",
+      "desc": "分数的加减乘除与最简化",
+      "kw": "分数计算器,分数,分数加减乘除,最简分数,通分"
+    },
+    "en": {
+      "name": "Fraction Calculator",
+      "desc": "Add, subtract, multiply and divide fractions and simplify",
+      "kw": "fraction,fraction calculator,simplify fraction,add fractions"
+    }
+  },
+  {
+    "slug": "currency-converter",
+    "icon": "💱",
+    "dir": "calculators",
+    "categories": [
+      "travel",
+      "finance"
+    ],
+    "zh": {
+      "name": "汇率换算器",
+      "desc": "常见货币参考汇率，任意两种货币实时互换",
+      "kw": "汇率,汇率换算,汇率计算器,货币换算,外币兑换,汇率转换"
+    },
+    "en": {
+      "name": "Currency Converter",
+      "desc": "Convert between major currencies with reference rates",
+      "kw": "currency,currency converter,exchange rate,convert money,forex,currency converter"
+    }
+  },
+  {
+    "slug": "simplified-traditional",
+    "icon": "🀄",
+    "dir": "calculators",
+    "categories": [
+      "text"
+    ],
+    "zh": {
+      "name": "简繁转换",
+      "desc": "简体中文与繁体中文互转，常用字对照",
+      "kw": "简繁转换,繁体转换,简体转繁体,繁体转简体,汉字转换"
+    },
+    "en": {
+      "name": "Simplified-Traditional Converter",
+      "desc": "Convert between simplified and traditional Chinese",
+      "kw": "simplified-traditional,traditional chinese,simplified chinese,convert chinese"
+    }
   }
 ]

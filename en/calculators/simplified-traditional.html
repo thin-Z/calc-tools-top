@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simplified-Traditional Chinese Converter - Online Text Tool</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online simplified-traditional Chinese converter with a built-in common-character table. Convert between simplified and traditional Chinese in real time, with batch text support.">
+    <meta property='og:title' content='Simplified-Traditional Chinese Converter'/>
+    <meta property='og:description' content='Free online converter between simplified and traditional Chinese using a common-character table. Real-time conversion with batch text support.'/>
+    <meta property='og:type' content='website'/>
+    <meta property='og:url' content='https://www.calc-tools.top/en/calculators/simplified-traditional'/>
+    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:locale' content='en_US'/>
+    <meta name='twitter:card' content='summary_large_image'/>
+    <meta name='twitter:title' content='Simplified-Traditional Chinese Converter'/>
+    <meta name='twitter:description' content='Free online simplified-traditional Chinese converter with a common-character table. Real-time conversion and copy.'/>
+
+    <link rel="canonical" href="https://www.calc-tools.top/en/calculators/simplified-traditional">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/calculators/simplified-traditional">
+    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/calculators/simplified-traditional">
+    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/zh/calculators/simplified-traditional">
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/theme-toggle.js" defer></script>
+    <script src="/js/i18n.js" defer></script>
+    <script src="/js/like.js" defer></script>
+    <script src="/js/calculators/simplified-traditional.js" defer></script>
+    <script src="/js/calculators/simplified-traditional-ui.js" defer></script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Online Tools", "item": "https://www.calc-tools.top/" },
+            { "@type": "ListItem", "position": 2, "name": "Simplified-Traditional Converter", "item": "https://www.calc-tools.top/en/calculators/simplified-traditional" }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Simplified-Traditional Chinese Converter",
+        "url": "https://www.calc-tools.top/en/calculators/simplified-traditional",
+        "description": "Free online converter between simplified and traditional Chinese using a built-in common-character table, with real-time conversion and batch text support.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "en"
+    }
+    </script>
+</head>
+<body>
+    <header>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
+    <nav>
+        <a href="/en/"><span>Home</span></a>
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
+            <option value="zh">🇨🇳 中文</option>
+            <option value="en" selected>🇬🇧 English</option>
+        </select>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon">☀️</span></button>
+    </nav>
+</header>
+
+    <main id="main">
+        <div class="tool-container">
+            <h1>Simplified-Traditional Chinese Converter</h1>
+            <p class="tool-description">Free online converter between simplified and traditional Chinese using a built-in common-character table. Convert large amounts of text in real time for editing, translation review, or language learning.</p>
+
+            <div class="calculator-form">
+                <div class="input-group">
+                    <label for="tc-input">Input text</label>
+                    <textarea id="tc-input" rows="5" placeholder="Type or paste simplified or traditional Chinese" aria-label="Input text"></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="tc-dir">Direction</label>
+                    <select id="tc-dir" aria-label="Conversion direction">
+                        <option value="s2t" selected>Simplified → Traditional</option>
+                        <option value="t2s">Traditional → Simplified</option>
+                    </select>
+                </div>
+
+                <div class="result-area hidden" id="result-area">
+                    <div class="result-label">Result</div>
+                    <textarea id="tc-output" rows="5" readonly aria-label="Converted result"></textarea>
+                    <button type="button" id="tc-copy" class="tc-copy" aria-label="Copy result">Copy</button>
+                </div>
+            </div>
+
+            <div class="tool-info">
+                <h2>What is Simplified-Traditional Conversion?</h2>
+                <p>Simplified and traditional Chinese share the same language system but differ in the written form of some characters (such as 汉/漢, 见/見). Simplification conversion maps characters between the two forms using a lookup table. This tool includes a common-character table covering high-frequency characters, useful for emails, writing submissions, and cross-border communication.</p>
+                <h3>How to Use This Tool</h3>
+                <ol>
+                    <li>Paste simplified or traditional Chinese in the "Input text" box</li>
+                    <li>Choose "Simplified → Traditional" or "Traditional → Simplified"</li>
+                    <li>The result updates in real time below</li>
+                    <li>Click "Copy" to copy the converted text</li>
+                </ol>
+                <h3>Frequently Asked Questions</h3>
+                <p><strong>Does it cover every character?</strong> It includes a table of common characters covering high-frequency usage. Rare characters are not guaranteed and are kept unchanged.</p>
+                <p><strong>Why do some conversions look ambiguous?</strong> Some simplified characters map to multiple traditional forms (如 发→發/髮, 后→後/后). This tool uses the most common form; please double-check for special contexts.</p>
+                <p><strong>Is my data uploaded to a server?</strong> No. Everything runs locally in your browser; your input never leaves your device.</p>
+            </div>
+        </div>
+
+        <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="simplified-traditional"><span class="heart">❤</span> <span class="count">0</span></button></div>
+    <div class="related-tools">
+    <h3>Related Tools</h3>
+    <ul>
+        <li><a href="/en/text/case-converter">Case Converter</a></li>
+        <li><a href="/en/text/word-counter">Word Counter</a></li>
+        <li><a href="/en/text/text-cleaner">Text Cleaner</a></li>
+    </ul>
+</div>
+</main>
+
+    <footer>
+    <div class="footer-links">
+        <a href="/en/">Home</a>
+        <a href="/about">About</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/contact">Contact</a>
+        <a href="/blog/en/">Blog</a>
+    </div>
+    <p>© 2026 Online Calculators | Free Online Calculators</p>
+</footer>
+
+    <script src="/js/url-state.js" defer></script>
+</body>
+</html>

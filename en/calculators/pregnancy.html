@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregnancy Calculator - Due Date &amp; Gestational Age</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online pregnancy calculator. Enter your last menstrual period to estimate your due date, current gestational age, and days left until delivery.">
+    <meta property='og:title' content='Pregnancy Calculator - Due Date &amp; Gestational Age'/>
+    <meta property='og:description' content='Free online pregnancy calculator. Enter your last menstrual period to estimate your due date, current week of pregnancy, and days left until delivery. Runs in your browser.'/>
+    <meta property='og:type' content='website'/>
+    <meta property='og:url' content='https://www.calc-tools.top/en/calculators/pregnancy'/>
+    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:locale' content='en_US'/>
+    <meta name='twitter:card' content='summary_large_image'/>
+    <meta name='twitter:title' content='Pregnancy Calculator - Due Date &amp; Gestational Age'/>
+    <meta name='twitter:description' content='Free online pregnancy calculator. Work out your due date, current gestational age, and days remaining based on your last menstrual period.'/>
+
+    <link rel="canonical" href="https://www.calc-tools.top/en/calculators/pregnancy">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/calculators/pregnancy">
+    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/calculators/pregnancy">
+    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/zh/calculators/pregnancy">
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/theme-toggle.js" defer></script>
+    <script src="/js/i18n.js" defer></script>
+    <script src="/js/like.js" defer></script>
+    <script src="/js/calculators/pregnancy.js" defer></script>
+    <script src="/js/calculators/pregnancy-ui.js" defer></script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Online Tools", "item": "https://www.calc-tools.top/" },
+            { "@type": "ListItem", "position": 2, "name": "Pregnancy Calculator", "item": "https://www.calc-tools.top/en/calculators/pregnancy" }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Pregnancy Calculator - Due Date & Gestational Age",
+        "url": "https://www.calc-tools.top/en/calculators/pregnancy",
+        "description": "Free online pregnancy calculator. Enter your last menstrual period to estimate your due date, current gestational age in weeks and days, days pregnant, and days left until delivery.",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "en"
+    }
+    </script>
+</head>
+<body>
+    <header>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo"></a>
+    <nav>
+        <a href="/en/"><span>Home</span></a>
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
+            <option value="zh">🇨🇳 中文</option>
+            <option value="en" selected>🇬🇧 English</option>
+        </select>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon">☀️</span></button>
+    </nav>
+</header>
+
+    <main id="main">
+        <div class="tool-container">
+            <h1>Pregnancy Calculator</h1>
+            <p class="tool-description">Estimate your due date, current gestational age, and days pregnant from your last menstrual period, with the days left until your due date. Optional cycle length and conception date support, all calculated locally.</p>
+
+            <div class="calculator-form">
+                <div class="input-group">
+                    <label for="lmp-date">Last Menstrual Period</label>
+                    <input type="date" id="lmp-date" aria-label="Last menstrual period date">
+                </div>
+                <div class="input-group">
+                    <label for="cycle-days">Menstrual Cycle (days)</label>
+                    <input type="number" id="cycle-days" value="28" min="20" max="45" step="1" aria-label="Menstrual cycle length in days">
+                </div>
+                <div class="input-group">
+                    <label for="conception-toggle"><input type="checkbox" id="conception-toggle" aria-label="Use conception date"> Use conception date (optional)</label>
+                </div>
+                <div class="input-group hidden" id="conception-row">
+                    <label for="conception-date">Conception Date</label>
+                    <input type="date" id="conception-date" aria-label="Conception date">
+                </div>
+
+                <div class="result-area hidden" id="result-area">
+                    <div class="result-label">Result</div>
+                    <dl class="tz-result-list">
+                        <div class="tz-item"><dt>Due Date</dt><dd id="due-date">--</dd></div>
+                        <div class="tz-item"><dt>Gestational Age</dt><dd><span id="gest-weeks">--</span> weeks <span id="gest-days">--</span> days</dd></div>
+                        <div class="tz-item"><dt>Days Pregnant</dt><dd><span id="days-pregnant">--</span> days</dd></div>
+                        <div class="tz-item"><dt>Days Until Due</dt><dd><span id="days-due">--</span> days</dd></div>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="tool-info">
+                <h2>What is a Pregnancy Calculator?</h2>
+                <p>A pregnancy calculator estimates your due date and current gestational age from your last menstrual period (LMP), helping expectant parents track how far along they are. The due date is typically estimated as LMP + 280 days (about 40 weeks), counting from the first day of your last period.</p>
+                <h3>How to Use This Tool</h3>
+                <ol>
+                    <li>Enter the first day of your last menstrual period (LMP)</li>
+                    <li>Optionally set your menstrual cycle length (defaults to 28 days, used only when estimating from a conception date)</li>
+                    <li>Optionally tick "Use conception date" and enter a conception date for a closer estimate</li>
+                    <li>The result panel shows your due date, current gestational age, days pregnant, and days left until due</li>
+                </ol>
+                <h3>Frequently Asked Questions</h3>
+                <p><strong>Is the due date exact?</strong> No. The due date is an estimate — only about 5% of babies are born on their due date, and most arrive within two weeks either side. Always follow your doctor's assessment and prenatal checkups.</p>
+                <p><strong>How are days and gestational weeks calculated?</strong> Days pregnant is the number of whole days from the first day of your LMP to today; gestational age counts 7 days per week, so weeks = days ÷ 7, plus the remaining days.</p>
+                <p><strong>Is my data uploaded to a server?</strong> No. Everything runs locally in your browser; your input never leaves your device.</p>
+            </div>
+        </div>
+
+        <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="pregnancy"><span class="heart">❤</span> <span class="count">0</span></button></div>
+    <div class="related-tools">
+    <h3>Related Tools</h3>
+    <ul>
+        <li><a href="/en/calculators/ovulation">Ovulation Calculator</a></li>
+        <li><a href="/en/calculators/date-calc">Date Calculator</a></li>
+        <li><a href="/en/calculators/bmi">BMI Calculator</a></li>
+    </ul>
+</div>
+</main>
+
+    <footer>
+    <div class="footer-links">
+        <a href="/en/">Home</a>
+        <a href="/about">About</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/contact">Contact</a>
+        <a href="/blog/en/">Blog</a>
+    </div>
+    <p>© 2026 Online Calculators | Free Online Calculators</p>
+</footer>
+
+    <script src="/js/url-state.js" defer></script>
+</body>
+</html>
