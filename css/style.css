@@ -1,4 +1,4 @@
-﻿:root {
+:root {
     /* Brand Colors */
     --brand-blue: #007AFF;
     --brand-blue-dark: #0056CC;
@@ -4012,4 +4012,13 @@ mark {
     font-size: 0.85rem;
 }
 .search-fallback-item:hover { background: var(--bg-hover, #f1f5f9); }
+
+/* ===== 嵌入 widget（C1, 2026-08-26）：iframe 嵌入时隐藏 wrapper 站点 chrome ===== */
+.embed-active header,
+.embed-active footer,
+.embed-active .skip-link { display: none !important; }
+.embed-widget { max-width: 900px; margin: 0 auto; padding: 1.5rem; }
+.embed-attribution { font-size: 0.85rem; color: #666; margin-bottom: 1rem; }
+.embed-attribution .embed-brand { font-weight: 600; margin-right: 0.5rem; }
+.embed-frame-wrap { border-radius: 10px; overflow: hidden; border: 1px solid #e2e8f0; }
 
