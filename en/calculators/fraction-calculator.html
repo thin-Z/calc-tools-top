@@ -50,6 +50,18 @@
         "inLanguage": "en"
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            { "@type": "Question", "name": "Why are results automatically simplified?", "acceptedAnswer": { "@type": "Answer", "text": "For example, 2/4 and 1/2 represent the same number; the tool simplifies to the lowest terms (1/2) so the result is easy to read and use." } },
+            { "@type": "Question", "name": "Can the denominator be zero?", "acceptedAnswer": { "@type": "Answer", "text": "No. A zero denominator is meaningless; the tool shows 'denominator cannot be 0'." } },
+            { "@type": "Question", "name": "What if the second fraction's numerator is 0 in division?", "acceptedAnswer": { "@type": "Answer", "text": "This is equivalent to dividing by zero and is undefined; the tool shows 'divisor cannot be 0'." } },
+            { "@type": "Question", "name": "Is my data uploaded to a server?", "acceptedAnswer": { "@type": "Answer", "text": "No. Everything runs locally in your browser; your input never leaves your device." } }
+        ]
+    }
+    </script>
 </head>
 <body>
     <header>

@@ -50,6 +50,17 @@
         "inLanguage": "en"
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            { "@type": "Question", "name": "Are these live exchange rates?", "acceptedAnswer": { "@type": "Answer", "text": "No. This is a fully static site; it uses fixed reference rates (approximate 2026-08 baseline) for quick estimation. It is not guaranteed to match live bank or market rates." } },
+            { "@type": "Question", "name": "Why are the rates fixed?", "acceptedAnswer": { "@type": "Answer", "text": "To keep the site purely static with zero external dependencies, the tool embeds a reference rate table updated periodically, avoiding runtime third-party API latency and instability." } },
+            { "@type": "Question", "name": "Is my data uploaded to a server?", "acceptedAnswer": { "@type": "Answer", "text": "No. Everything runs locally in your browser; your input never leaves your device." } }
+        ]
+    }
+    </script>
 </head>
 <body>
     <header>
