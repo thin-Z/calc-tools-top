@@ -222,6 +222,28 @@ walkHtml(dist, (f) => {
 });
 console.log(`[build] AdSense 注入: 更新 ${adsenseUpdated} | 跳过 ${adsenseSkipped}`);
 
+// 3b) 注入 PWA head 标签（manifest / theme-color / apple-touch-icon / SW 注册脚本）
+const PWA_INJECT = '<link rel="manifest" href="/manifest.json">'
+  + '\n    <meta name="theme-color" content="#007AFF">'
+  + '\n    <meta name="apple-mobile-web-app-capable" content="yes">'
+  + '\n    <link rel="apple-touch-icon" href="/assets/logo.svg">'
+  + '\n    <script src="/js/pwa.js" defer></script>';
+let pwaUpdated = 0;
+walkHtml(dist, (f) => {
+  const raw = readFileSync(f);
+  const hadBom = raw[0] === 0xef && raw[1] === 0xbb && raw[2] === 0xbf;
+  let text = raw.toString('utf8');
+  if (hadBom) text = text.slice(1);
+  if (text.includes('rel="manifest"')) return;
+  if (!headRe.test(text)) return;
+  const eol = text.includes('\r\n') ? '\r\n' : '\n';
+  const newText = text.replace(headRe, `<head>${eol}    ${PWA_INJECT}`);
+  if (newText === text) return;
+  writeFileSync(f, newText, 'utf8');
+  pwaUpdated++;
+});
+console.log(`[build] PWA 注入: 更新 ${pwaUpdated} 页`);
+
 // 4) 在 dist/ 内注入缓存版本号（构建时间戳 YYYYMMDDHHmm，仅 dist，源码不含 ?v）
 //    site-core.js / site-home.js / site.js / like.js / i18n.js / css/style.css → ?v=STAMP
 //    （幂等：已带 ?v 会统一覆盖为当前 STAMP；T05 起 site.js 拆分后按 site(?:-core|-home)? 匹配）
