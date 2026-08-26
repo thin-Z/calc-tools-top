@@ -86,6 +86,7 @@
         convertCurrency: convertCurrency,
         formatMoney: formatMoney
     };
+    window.currencies = currencies;
     window.CURRENCIES = currencies;
     window.getRate = getRate;
     window.convertCurrency = convertCurrency;
