@@ -80,6 +80,8 @@ const SITE_CONFIG = {
 /* ===== Click Tracking ===== */
 const CLICK_STORAGE_KEY = 'toolbox_clicks';
 const SEARCH_TERMS_KEY = 'toolbox_search_terms';
+const RECENT_KEY = 'toolbox_recent';   // 最近使用的工具（slug 去重，最新优先，最多 RECENT_MAX 个）
+const RECENT_MAX = 8;
 
 function updateClickUI(toolId, total) {
     // Update usage-count in regular tool cards only
@@ -145,6 +147,7 @@ function incrementClick(toolId) {
     if (!clicks[toolId].daily) clicks[toolId].daily = {};
     clicks[toolId].daily[today] = (clicks[toolId].daily[today] || 0) + 1;
     saveClicks(clicks);
+    recordRecent(toolId);
     // Async sync to server (fire-and-forget)
     if (typeof window.ApiClient !== 'undefined') {
         window.ApiClient.post('/api/clicks', { toolId: toolId }).then(function(data) {
@@ -159,6 +162,49 @@ function incrementClick(toolId) {
         // No server available, still re-sort based on local data
         setTimeout(function() { initToolSort(); }, 50);
     }
+}
+
+function getRecent() {
+    try {
+        const r = JSON.parse(localStorage.getItem(RECENT_KEY)) || [];
+        return Array.isArray(r) ? r : [];
+    } catch (e) { return []; }
+}
+
+function recordRecent(toolId) {
+    if (!toolId) return;
+    let r = getRecent().filter(function(s) { return s !== toolId; });
+    r.unshift(toolId);
+    if (r.length > RECENT_MAX) r = r.slice(0, RECENT_MAX);
+    try { localStorage.setItem(RECENT_KEY, JSON.stringify(r)); } catch (e) {}
+}
+
+function toolCardUrl(id) {
+    // 复用首页静态工具卡的真实 URL（扩展名去除），避免手写 dir 映射。
+    const el = document.querySelector('.tool-grid .tool-card[data-like-id="' + id + '"]');
+    return el ? el.getAttribute('href') : '';
+}
+
+function renderRecent() {
+    const sec = document.getElementById('recent-tools');
+    const grid = document.getElementById('recent-tools-grid');
+    if (!sec || !grid) return;
+    const recent = getRecent().filter(function(id) { return TOOLS_DATA[id]; });
+    if (!recent.length) { sec.classList.add('hidden'); grid.textContent = ''; return; }
+    const lang = document.documentElement.lang === 'en' ? 'en' : 'zh';
+    grid.textContent = '';
+    recent.forEach(function(id) {
+        const url = toolCardUrl(id);
+        if (!url) return;
+        const t = TOOLS_DATA[id];
+        const name = t.name[lang] || t.name['zh'];
+        const a = document.createElement('a');
+        a.href = url;
+        a.className = 'recent-tool';
+        a.textContent = name;
+        grid.appendChild(a);
+    });
+    sec.classList.remove('hidden');
 }
 
 function getDailyClicks(toolId) {
@@ -1159,6 +1205,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initHotTools();
     initArticleClicks();
     initClickTracking();
+    renderRecent();
     // Fetch global click counts and refresh hot tools + tool grid sort
     fetchAndMergeGlobalClicks(function() {
         initHotTools();
@@ -1171,6 +1218,7 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('pageshow', function(e) {
     if (e.persisted) {
         updateClickDisplay();
+        renderRecent();
         fetchAndMergeGlobalClicks(function() {
             initHotTools();
             initToolSort();

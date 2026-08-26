@@ -4022,3 +4022,9 @@ mark {
 .embed-attribution .embed-brand { font-weight: 600; margin-right: 0.5rem; }
 .embed-frame-wrap { border-radius: 10px; overflow: hidden; border: 1px solid #e2e8f0; }
 
+/* ===== 最近使用（C8, 2026-08-26）：首页记录最近访问的工具 ===== */
+.recent-section { margin: 1rem 0; }
+.recent-tools-grid { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.recent-tool { display: inline-block; padding: 0.45rem 0.9rem; border-radius: 999px; background: var(--bg-hover, #f1f5f9); color: var(--text, #1e293b); font-weight: 600; font-size: 0.9rem; text-decoration: none; border: 1px solid var(--border, #e2e8f0); }
+.recent-tool:hover { background: var(--brand, #007AFF); color: #fff; }
+
