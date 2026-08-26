@@ -18,7 +18,11 @@ function doConvert() {
         length: { mm: 1, cm: 10, m: 1000, km: 1000000, inch: 25.4, ft: 304.8, yard: 914.4, mile: 1609344 },
         weight: { mg: 1, g: 1000, kg: 1000000, ton: 1000000000, oz: 28349.5, lb: 453592 },
         temp: { c: 'c', f: 'f', k: 'k' },
-        area: { m2: 1, km2: 1000000, ha: 10000, mu: 666.67, acre: 4046.86, ft2: 0.092903 }
+        area: { m2: 1, km2: 1000000, ha: 10000, mu: 666.67, acre: 4046.86, ft2: 0.092903 },
+        volume: { ml: 1, l: 1000, m3: 1000000, gallon: 3785.411784, cup: 236.588 },
+        speed: { mps: 1, kmh: 0.2777778, mph: 0.44704, knot: 0.514444 },
+        data: { b: 0.125, B: 1, KB: 1024, MB: 1048576, GB: 1073741824, TB: 1099511627776 },
+        time: { ms: 1, s: 1000, min: 60000, hr: 3600000, day: 86400000, week: 604800000, year: 31536000000 }
     };
     
     let result;
@@ -59,7 +63,11 @@ function updateUnits() {
         length: ['mm','cm','m','km','inch','ft','yard','mile'],
         weight: ['mg','g','kg','ton','oz','lb'],
         temp: ['c','f','k'],
-        area: ['m2','km2','ha','mu','acre','ft2']
+        area: ['m2','km2','ha','mu','acre','ft2'],
+        volume: ['ml','l','m3','gallon','cup'],
+        speed: ['mps','kmh','mph','knot'],
+        data: ['b','B','KB','MB','GB','TB'],
+        time: ['ms','s','min','hr','day','week','year']
     };
     const sel = units[cat] || [];
     const fromSel = document.getElementById('fromUnit');
@@ -67,11 +75,19 @@ function updateUnits() {
     const labels = { mm:'毫米',cm:'厘米',m:'米',km:'公里',inch:'英寸',ft:'英尺',yard:'码',mile:'英里',
         mg:'毫克',g:'克',kg:'千克',ton:'吨',oz:'盎司',lb:'磅',
         c:'摄氏度',f:'华氏度',k:'开尔文',
-        m2:'平方米',km2:'平方公里',ha:'公顷',mu:'亩',acre:'英亩',ft2:'平方英尺' };
+        m2:'平方米',km2:'平方公里',ha:'公顷',mu:'亩',acre:'英亩',ft2:'平方英尺',
+        ml:'毫升',l:'升',m3:'立方米',gallon:'美制加仑',cup:'杯',
+        mps:'米/秒',kmh:'公里/小时',mph:'英里/小时',knot:'节',
+        b:'比特(bit)',B:'字节(B)',KB:'KB',MB:'MB',GB:'GB',TB:'TB',
+        ms:'毫秒',s:'秒',min:'分钟',hr:'小时',day:'天',week:'周',year:'年' };
     const labelsEn = { mm:'mm',cm:'cm',m:'m',km:'km',inch:'inch',ft:'ft',yard:'yard',mile:'mile',
         mg:'mg',g:'g',kg:'kg',ton:'ton',oz:'oz',lb:'lb',
         c:'°C',f:'°F',k:'K',
-        m2:'m²',km2:'km²',ha:'ha',mu:'mu',acre:'acre',ft2:'ft²' };
+        m2:'m²',km2:'km²',ha:'ha',mu:'mu',acre:'acre',ft2:'ft²',
+        ml:'ml',l:'L',m3:'m³',gallon:'gal (US)',cup:'cup',
+        mps:'m/s',kmh:'km/h',mph:'mph',knot:'kn',
+        b:'b',B:'B',KB:'KB',MB:'MB',GB:'GB',TB:'TB',
+        ms:'ms',s:'s',min:'min',hr:'h',day:'d',week:'w',year:'yr' };
     
     fromSel.innerHTML = sel.map(u => `<option value="${u}">${labels[u]||u}</option>`).join('');
     toSel.innerHTML = sel.map(u => `<option value="${u}">${labels[u]||u}</option>`).join('');
