@@ -57,10 +57,10 @@
     <nav>
         <a href="/en/"><span>Home</span></a>
         <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
-            <option value="zh">🇨🇳 中文</option>
-            <option value="en" selected>🇬🇧 English</option>
+            <option value="zh">中文</option>
+            <option value="en" selected>English</option>
         </select>
-        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon">☀️</span></button>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-sun"></use></svg></span></button>
     </nav>
 </header>
     <main id="main">
@@ -69,22 +69,22 @@
                 <h1>Reading Time Calculator</h1>
                 <p>Estimate reading and speaking time based on text word count. Supports English and Chinese mixed text.</p>
             </div>
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="reading-time"><span class="heart">❤</span> <span class="count">0</span></button></div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="reading-time"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
 
             
 
             <textarea class="text-input" id="rtInput" aria-label="Reading text input" placeholder="Paste or type your text here for reading time analysis..." data-csp-input="scheduleReadingTime">A reading time calculator is a practical online tool that helps authors and editors quickly estimate how long it takes to read an article. Whether you're writing a blog post, preparing a speech, or editing a news article, knowing the reading time helps you control content length and pacing. This tool supports both English and Chinese text, and provides three speed settings: slow (200 wpm), normal (300 wpm), and fast (400 wpm). It also assesses text difficulty level from elementary to professional.</textarea>
 
             <div class="speed-chips">
-                <span class="speed-chip" data-speed="slow" data-csp-click="setReadingSpeed" data-csp-arg="slow">🐢 Slow</span>
-                <span class="speed-chip active" data-speed="normal" data-csp-click="setReadingSpeed" data-csp-arg="normal">🚶 Normal</span>
-                <span class="speed-chip" data-speed="fast" data-csp-click="setReadingSpeed" data-csp-arg="fast">🏃 Fast</span>
+                <span class="speed-chip" data-speed="slow" data-csp-click="setReadingSpeed" data-csp-arg="slow"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-snail"></use></svg> Slow</span>
+                <span class="speed-chip active" data-speed="normal" data-csp-click="setReadingSpeed" data-csp-arg="normal"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-footprints"></use></svg> Normal</span>
+                <span class="speed-chip" data-speed="fast" data-csp-click="setReadingSpeed" data-csp-arg="fast"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-gauge"></use></svg> Fast</span>
             </div>
 
             <div class="action-bar">
-                <button class="btn btn-primary" data-csp-click="doReadingTime">📊 Analyze</button>
+                <button class="btn btn-primary" data-csp-click="doReadingTime"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-bar-chart"></use></svg> Analyze</button>
                 <button class="btn btn-secondary" data-csp-click="resetReadingTime">Clear</button>
-                <button class="copy-btn" id="copyRtBtn" data-csp-click="copyReadingTime">📋 Copy Results</button>
+                <button class="copy-btn" id="copyRtBtn" data-csp-click="copyReadingTime"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-clipboard"></use></svg> Copy Results</button>
             </div>
 
             <div class="rt-stats-grid">

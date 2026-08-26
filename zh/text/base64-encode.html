@@ -97,19 +97,19 @@
     <nav>
         <a href="/"><span>首页</span></a>
         <select class="lang-switch" data-csp-change="switchLang" aria-label="语言切换">
-            <option value="zh" selected>🇨🇳 中文</option>
-            <option value="en">🇬🇧 English</option>
+            <option value="zh" selected>中文</option>
+            <option value="en">English</option>
         </select>
-        <button id="theme-toggle" class="theme-toggle" aria-label="切换暗黑模式"><span class="theme-icon">☀️</span></button>
+        <button id="theme-toggle" class="theme-toggle" aria-label="切换暗黑模式"><span class="theme-icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-sun"></use></svg></span></button>
     </nav>
 </header>
     <main id="main">
         <div class="tool-page">
             <div class="tool-header">
-                <h1>🔐 Base64 编码解码工具</h1>
+                <h1><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-lock"></use></svg> Base64 编码解码工具</h1>
                 <p>在线 Base64 加密解密工具，支持文本与 Base64 互转。基于标准 Web API 实现 UTF-8 安全编解码，中文无乱码。浏览器本地处理，数据不上传服务器。</p>
             </div>
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="base64-encode"><span class="heart">❤</span> <span class="count">0</span></button></div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="base64-encode"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
 
             
 
@@ -118,8 +118,8 @@
 
                 <!-- 模式切换 -->
                 <div class="mode-chips">
-                    <span class="mode-chip active" data-mode="encode" data-csp-click="switchBase64Mode" data-csp-arg="encode">🔒 编码</span>
-                    <span class="mode-chip" data-mode="decode" data-csp-click="switchBase64Mode" data-csp-arg="decode">🔓 解码</span>
+                    <span class="mode-chip active" data-mode="encode" data-csp-click="switchBase64Mode" data-csp-arg="encode"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-lock"></use></svg> 编码</span>
+                    <span class="mode-chip" data-mode="decode" data-csp-click="switchBase64Mode" data-csp-arg="decode"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-unlock"></use></svg> 解码</span>
                 </div>
 
                 <div class="action-bar">
@@ -129,7 +129,7 @@
 
                 <!-- 错误提示 -->
                 <div class="result-area error-section st-16" id="errorSection">
-                    <div class="result-label st-10">❌ 解码错误</div>
+                    <div class="result-label st-10"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-x"></use></svg> 解码错误</div>
                     <div class="result-content st-11">
                         <p><strong>描述：</strong><span id="errorMsg"></span></p>
                     </div>
@@ -139,7 +139,7 @@
                 <div id="resultSection" class="result-section hidden">
                     <h3>输出结果</h3>
                     <pre class="result-area st-12" id="resultArea"></pre>
-                    <button class="btn btn-copy" id="copyBtn" data-csp-click="copyBase64Result">📋 复制结果</button>
+                    <button class="btn btn-copy" id="copyBtn" data-csp-click="copyBase64Result"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-clipboard"></use></svg> 复制结果</button>
                 </div>
             </div>
 

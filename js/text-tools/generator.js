@@ -186,9 +186,9 @@ function copyGeneratorAll() {
     if (navigator.clipboard) {
         navigator.clipboard.writeText(texts.join('\n')).then(function() {
             var btn = document.getElementById('copyGenAllBtn');
-            btn.textContent = '✅ 已复制';
+            btn.textContent = '已复制';
             btn.classList.add('copied');
-            setTimeout(function() { btn.textContent = '📋 复制全部'; btn.classList.remove('copied'); }, 2000);
+            setTimeout(function() { btn.textContent = '复制全部'; btn.classList.remove('copied'); }, 2000);
         });
     }
 }

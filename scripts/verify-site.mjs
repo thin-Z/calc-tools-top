@@ -528,6 +528,36 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
   }
 }
 
+// ---------- 19. P0 门禁：CSS 裸色值 + Emoji 清零（Phase 0, T0.4） ----------
+{
+  try {
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'check-p0-gate.mjs')], { stdio: 'inherit', cwd: ROOT });
+    console.log('[19] P0 门禁 (CSS裸色值+Emoji清零): ✓');
+  } catch (e) {
+    fail('[P0-gate] scripts/check-p0-gate.mjs 退出码非 0（CSS 裸色值或 emoji 未清零）');
+  }
+}
+
+// ---------- 20. canonical/hreflang 门禁（Phase 0, T0.5, D3 决策） ----------
+{
+  try {
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'check-canonical.mjs')], { stdio: 'inherit', cwd: ROOT });
+    console.log('[20] canonical/hreflang 门禁: ✓');
+  } catch (e) {
+    fail('[canonical] scripts/check-canonical.mjs 退出码非 0（canonical/hreflang 缺失或不一致）');
+  }
+}
+
+// ---------- 21. JS 语法门禁（复核缺陷 1 防御） ----------
+{
+  try {
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'check-js-syntax.mjs')], { stdio: 'inherit', cwd: ROOT });
+    console.log('[21] JS 语法门禁: ✓');
+  } catch (e) {
+    fail('[js-syntax] scripts/check-js-syntax.mjs 退出码非 0（JS 文件存在语法错误）');
+  }
+}
+
 // ---------- 汇总 ----------
 if (failures.length) {
   console.error(`\n❌ verify-site 失败 ${failures.length} 项：`);

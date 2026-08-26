@@ -60,7 +60,7 @@
             row.className = 'contrast-level ' + (item.pass ? 'pass' : 'fail');
             var badge = document.createElement('span');
             badge.className = 'contrast-badge';
-            badge.textContent = item.pass ? '✓ 通过' : '✗ 未通过';
+            badge.textContent = item.pass ? '通过' : '未通过';
             var label = document.createElement('span');
             label.textContent = item.label;
             row.appendChild(badge);

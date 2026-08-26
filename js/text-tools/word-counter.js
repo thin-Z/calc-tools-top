@@ -229,7 +229,7 @@ function copyResult() {
         return;
     }
     function done() {
-        if (btn) btn.textContent = '✓';
+        if (btn) btn.textContent = '已复制';
         setTimeout(function () { if (btn) btn.textContent = originalText; }, 1500);
     }
     function fallback(t) {
@@ -239,7 +239,7 @@ function copyResult() {
         ta.style.left = '-9999px';
         document.body.appendChild(ta);
         ta.select();
-        try { document.execCommand('copy'); done(); } catch (e) { if (btn) btn.textContent = '✗'; }
+        try { document.execCommand('copy'); done(); } catch (e) { if (btn) btn.textContent = '复制失败'; }
         document.body.removeChild(ta);
     }
     if (navigator.clipboard && navigator.clipboard.writeText) {

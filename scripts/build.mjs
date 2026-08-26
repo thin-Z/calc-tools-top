@@ -312,4 +312,49 @@ walkHtml(dist, (f) => {
 });
 console.log(`[build] CMP 横幅注入: ${cmpCount} 个文件`);
 
+// 7) Inline SVG sprite：将外部 <use href="/assets/icons/icons.svg#id"> 改为同文档 <use href="#id">
+//    并将 sprite 内容注入每个 HTML 的 <body> 开头，消除跨文档引用兼容性问题（Safari/部分 Chromium）
+const spritePath = join(root, 'assets', 'icons', 'icons.svg');
+if (existsSync(spritePath)) {
+  let spriteContent = readFileSync(spritePath, 'utf8');
+  // 确保有 xmlns（内联时必须）
+  if (!spriteContent.includes('xmlns=')) {
+    spriteContent = spriteContent.replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" ');
+  }
+  const SPRITE_RE = /href="\/assets\/icons\/icons\.svg#/g;
+  const bodyOpenRe = /<body[^>]*>/i;
+  let spriteUpdated = 0;
+  // Fix JS files too (they generate icons dynamically)
+  const jsDir = join(dist, 'js');
+  if (existsSync(jsDir)) {
+    for (const entry of readdirSync(jsDir, { withFileTypes: true })) {
+      if (!entry.name.endsWith('.js')) continue;
+      const f = join(jsDir, entry.name);
+      const raw = readFileSync(f);
+      let text = raw.toString('utf8');
+      if (raw[0] === 0xef && raw[1] === 0xbb && raw[2] === 0xbf) text = text.slice(1);
+      const newText = text.replace(SPRITE_RE, 'href="#');
+      if (newText !== text) { writeFileSync(f, newText, 'utf8'); spriteUpdated++; }
+    }
+  }
+  walkHtml(dist, (f) => {
+    const raw = readFileSync(f);
+    let text = raw.toString('utf8');
+    if (raw[0] === 0xef && raw[1] === 0xbb && raw[2] === 0xbf) text = text.slice(1);
+    // 已注入则跳过
+    if (text.includes('id="icon-activity"')) { spriteUpdated++; return; }
+    // 替换外部引用为同文档引用
+    const newText = text
+      .replace(SPRITE_RE, 'href="#')
+      .replace(bodyOpenRe, (m) => `${m}\n${spriteContent}`);
+    if (newText !== text) {
+      writeFileSync(f, newText, 'utf8');
+      spriteUpdated++;
+    }
+  });
+  console.log(`[build] Inline sprite 注入: ${spriteUpdated} 个文件`);
+} else {
+  console.warn('[build] Inline sprite: 跳过(assets/icons/icons.svg 不存在)');
+}
+
 process.exit(0);

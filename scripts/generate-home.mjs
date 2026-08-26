@@ -47,12 +47,12 @@ const CATEGORY_SECTION = {
 const SECTION_ORDER = ['finance', 'health', 'life', 'utility', 'image', 'text'];
 
 const sectionHeaders = {
-  finance: { zh: '💰 财务计算', en: '💰 Finance', id: 'sec-finance' },
-  health:  { zh: '🏥 健康计算', en: '🏥 Health', id: 'sec-health' },
-  life:    { zh: '🏠 生活 · 出行', en: '🏠 Lifestyle & Travel', id: 'sec-life' },
-  utility: { zh: '🔧 实用工具', en: '🔧 Utility Tools', id: 'sec-utility' },
-  image:   { zh: '🖼️ 图片工具', en: '🖼️ Image Tools', id: 'sec-image', privacy: true },
-  text:    { zh: '✏️ 文字工具', en: '✏️ Text Tools', id: 'sec-text' },
+  finance: { zh: '财务计算', en: 'Finance', id: 'sec-finance' },
+  health:  { zh: '健康计算', en: 'Health', id: 'sec-health' },
+  life:    { zh: '生活 · 出行', en: 'Lifestyle', id: 'sec-life' },
+  utility: { zh: '实用工具', en: 'Utility Tools', id: 'sec-utility' },
+  image:   { zh: '图片工具', en: 'Image Tools', id: 'sec-image', privacy: true },
+  text:    { zh: '文字工具', en: 'Text Tools', id: 'sec-text' },
 };
 
 // ── 3. 生成 JS 配置 ──────────────────────────────────────────
@@ -83,14 +83,14 @@ function generateToolKeywords() {
 
 // ── 4. 生成首页卡片 HTML（按区块分组，多标签工具多区块显示）──
 const TAG_LABELS = {
-  finance: { zh: '💰 财务', en: '💰 Finance' },
-  health: { zh: '🏥 健康', en: '🏥 Health' },
-  life: { zh: '🏠 生活', en: '🏠 Lifestyle' },
-  shopping: { zh: '🛒 购物', en: '🛒 Shopping' },
-  travel: { zh: '🚗 出行', en: '🚗 Travel' },
-  utility: { zh: '🔧 工具', en: '🔧 Utility' },
-  image: { zh: '🖼️ 图片', en: '🖼️ Image' },
-  text: { zh: '✏️ 文字', en: '✏️ Text' },
+  finance: { zh: '财务', en: 'Finance' },
+  health: { zh: '健康', en: 'Health' },
+  life: { zh: '生活', en: 'Lifestyle' },
+  shopping: { zh: '购物', en: 'Shopping' },
+  travel: { zh: '出行', en: 'Travel' },
+  utility: { zh: '工具', en: 'Utility' },
+  image: { zh: '图片', en: 'Image' },
+  text: { zh: '文字', en: 'Text' },
 };
 
 function generateCardHTML(t, lang) {
@@ -103,7 +103,7 @@ function generateCardHTML(t, lang) {
     return `<a href="${tagPrefix}${c}.html" class="tag tag-${c}" data-tag="${c}">${label}</a>`;
   }).join('');
 
-  return `            <div class="tool-card-wrap"><a href="${prefix}/${t.dir}/${t.slug}" class="tool-card" data-category="${cats}" data-keywords-zh="${t.zh.kw}" data-keywords-en="${t.en.kw || ''}"><div class="icon">${t.icon}</div><h3>${text.name}</h3><p>${text.desc}</p></a><div class="tool-tags">${tagsHTML}</div><button class="like-btn" data-like-id="${t.slug}"><span class="heart">❤<span class="count">0</span></button></div>`;
+  return `            <div class="tool-card-wrap"><a href="${prefix}/${t.dir}/${t.slug}" class="tool-card" data-category="${cats}" data-keywords-zh="${t.zh.kw}" data-keywords-en="${t.en.kw || ''}"><div class="icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-${t.icon}"></use></svg></div><h3>${text.name}</h3><p>${text.desc}</p></a><div class="tool-tags">${tagsHTML}</div><button class="like-btn" data-like-id="${t.slug}"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg><span class="count">0</span></button></div>`;
 }
 
 function toolSections(t) {
@@ -122,7 +122,7 @@ function generateSectionHTML(section, lang) {
   if (sectionTools.length === 0) return '';
 
   const badge = header.privacy
-    ? `<span class="privacy-badge-sm">🔒 ${lang === 'zh' ? '本地处理 · 不上传' : 'Local processing · No upload'}</span>`
+    ? `<span class="privacy-badge-sm"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-lock"></use></svg> ${lang === 'zh' ? '本地处理 · 不上传' : 'Local processing · No upload'}</span>`
     : '';
   const lines = [];
   lines.push(`        <div class="section-divider" id="${header.id}"><h2>${header[lang]}${badge}</h2></div><div class="tool-grid">`);
@@ -149,7 +149,7 @@ function patchBetween(content, startMarker, endMarker, replacement) {
   const si = content.indexOf(startMarker);
   const ei = content.indexOf(endMarker);
   if (si === -1 || ei === -1) {
-    console.warn(`  ⚠ 标记未找到: ${startMarker.slice(0, 40)}...`);
+    console.warn(`  标记未找到: ${startMarker.slice(0, 40)}...`);
     return null;
   }
   return content.slice(0, si + startMarker.length) + '\n' + replacement + '\n' + content.slice(ei);
@@ -174,7 +174,7 @@ for (const [key, gen] of [['siteConfigTools', configTools], ['toolsData', toolsD
   if (result !== null) {
     js = result;
     patched++;
-    console.log(`  ✅ site-home.js: ${key} 已替换`);
+    console.log(`   site-home.js: ${key} 已替换`);
   }
 }
 if (patched > 0 && !dryRun) writeFileSync(jsPath, js, 'utf8');
@@ -186,7 +186,7 @@ const zhResult = patchBetween(zhHtml, MARKERS.homeCards.start, MARKERS.homeCards
 if (zhResult !== null) {
   zhHtml = zhResult;
   patched++;
-  console.log(`  ✅ index.html: 工具卡片已替换`);
+  console.log(`   index.html: 工具卡片已替换`);
   if (!dryRun) writeFileSync(zhPath, zhHtml, 'utf8');
 }
 
@@ -197,7 +197,7 @@ const enResult = patchBetween(enHtml, MARKERS.homeCards.start, MARKERS.homeCards
 if (enResult !== null) {
   enHtml = enResult;
   patched++;
-  console.log(`  ✅ en/index.html: 工具卡片已替换`);
+  console.log(`   en/index.html: 工具卡片已替换`);
   if (!dryRun) writeFileSync(enPath, enHtml, 'utf8');
 }
 

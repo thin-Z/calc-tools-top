@@ -50,7 +50,7 @@
                 iframe.setAttribute('allow', 'fullscreen');
                 container.appendChild(iframe);
                 if (bar) {
-                    bar.innerHTML = '<span class="embed-brand">⚡ 免费在线工具</span> <a href="' + SITE + '/' + (lang === 'en' ? 'en/' : '') + '" target="_blank" rel="noopener">calc-tools.top</a>';
+                    bar.innerHTML = '<span class="embed-brand">免费在线工具</span> <a href="' + SITE + '/' + (lang === 'en' ? 'en/' : '') + '" target="_blank" rel="noopener">calc-tools.top</a>';
                 }
             })
             .catch(function () {

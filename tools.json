@@ -1,7 +1,7 @@
 [
   {
     "slug": "mortgage",
-    "icon": "🏠",
+    "icon": "home",
     "dir": "calculators",
     "categories": [
       "finance"
@@ -19,7 +19,7 @@
   },
   {
     "slug": "tax2026",
-    "icon": "📋",
+    "icon": "receipt-text",
     "dir": "calculators",
     "categories": [
       "finance"
@@ -37,7 +37,7 @@
   },
   {
     "slug": "housing-fund",
-    "icon": "💰",
+    "icon": "piggy-bank",
     "dir": "calculators",
     "categories": [
       "finance"
@@ -55,7 +55,7 @@
   },
   {
     "slug": "car-loan",
-    "icon": "🚗",
+    "icon": "car",
     "dir": "calculators",
     "categories": [
       "finance"
@@ -73,7 +73,7 @@
   },
   {
     "slug": "loan-compare",
-    "icon": "📊",
+    "icon": "scale",
     "dir": "calculators",
     "categories": [
       "finance"
@@ -91,7 +91,7 @@
   },
   {
     "slug": "compound-interest",
-    "icon": "📈",
+    "icon": "trending-up",
     "dir": "calculators",
     "categories": [
       "finance"
@@ -109,7 +109,7 @@
   },
   {
     "slug": "overtime",
-    "icon": "⏰",
+    "icon": "clock",
     "dir": "calculators",
     "categories": [
       "finance"
@@ -127,7 +127,7 @@
   },
   {
     "slug": "percentage-calc",
-    "icon": "📊",
+    "icon": "percent",
     "dir": "calculators",
     "categories": [
       "shopping",
@@ -146,7 +146,7 @@
   },
   {
     "slug": "discount",
-    "icon": "🏷️",
+    "icon": "tag",
     "dir": "calculators",
     "categories": [
       "shopping",
@@ -165,7 +165,7 @@
   },
   {
     "slug": "fuel-cost",
-    "icon": "⛽",
+    "icon": "fuel",
     "dir": "calculators",
     "categories": [
       "travel",
@@ -184,7 +184,7 @@
   },
   {
     "slug": "bmi",
-    "icon": "⚖️",
+    "icon": "scale",
     "dir": "calculators",
     "categories": [
       "health"
@@ -202,7 +202,7 @@
   },
   {
     "slug": "ideal-weight",
-    "icon": "🎯",
+    "icon": "target",
     "dir": "calculators",
     "categories": [
       "health"
@@ -220,7 +220,7 @@
   },
   {
     "slug": "ovulation",
-    "icon": "🌸",
+    "icon": "flower",
     "dir": "calculators",
     "categories": [
       "health",
@@ -239,7 +239,7 @@
   },
   {
     "slug": "calorie-calculator",
-    "icon": "🔥",
+    "icon": "flame",
     "dir": "calculators",
     "categories": [
       "health"
@@ -257,7 +257,7 @@
   },
   {
     "slug": "date-calc",
-    "icon": "📅",
+    "icon": "calendar",
     "dir": "calculators",
     "categories": [
       "life"
@@ -275,7 +275,7 @@
   },
   {
     "slug": "workday-calculator",
-    "icon": "💼",
+    "icon": "briefcase",
     "dir": "calculators",
     "categories": [
       "life"
@@ -293,7 +293,7 @@
   },
   {
     "slug": "age-calc",
-    "icon": "🎂",
+    "icon": "cake",
     "dir": "calculators",
     "categories": [
       "life"
@@ -311,7 +311,7 @@
   },
   {
     "slug": "electricity",
-    "icon": "💡",
+    "icon": "lightbulb",
     "dir": "calculators",
     "categories": [
       "life",
@@ -330,7 +330,7 @@
   },
   {
     "slug": "unit-converter",
-    "icon": "📏",
+    "icon": "ruler",
     "dir": "calculators",
     "categories": [
       "utility"
@@ -348,7 +348,7 @@
   },
   {
     "slug": "password-strength",
-    "icon": "🛡️",
+    "icon": "shield",
     "dir": "calculators",
     "categories": [
       "utility"
@@ -366,7 +366,7 @@
   },
   {
     "slug": "qr-generator",
-    "icon": "📱",
+    "icon": "qr-code",
     "dir": "calculators",
     "categories": [
       "utility"
@@ -384,7 +384,7 @@
   },
   {
     "slug": "password-gen",
-    "icon": "🔑",
+    "icon": "key-round",
     "dir": "calculators",
     "categories": [
       "utility"
@@ -402,7 +402,7 @@
   },
   {
     "slug": "random-gen",
-    "icon": "🎲",
+    "icon": "dice-5",
     "dir": "calculators",
     "categories": [
       "utility"
@@ -420,7 +420,7 @@
   },
   {
     "slug": "compress",
-    "icon": "🗜️",
+    "icon": "minimize-2",
     "dir": "image",
     "categories": [
       "image"
@@ -438,7 +438,7 @@
   },
   {
     "slug": "convert",
-    "icon": "🔄",
+    "icon": "repeat",
     "dir": "image",
     "categories": [
       "image"
@@ -456,7 +456,7 @@
   },
   {
     "slug": "resize",
-    "icon": "📐",
+    "icon": "scaling",
     "dir": "image",
     "categories": [
       "image"
@@ -474,7 +474,7 @@
   },
   {
     "slug": "base64",
-    "icon": "🔣",
+    "icon": "binary",
     "dir": "image",
     "categories": [
       "image"
@@ -492,7 +492,7 @@
   },
   {
     "slug": "color-picker",
-    "icon": "🎨",
+    "icon": "palette",
     "dir": "image",
     "categories": [
       "image"
@@ -510,7 +510,7 @@
   },
   {
     "slug": "image-crop",
-    "icon": "✂️",
+    "icon": "crop",
     "dir": "image",
     "categories": [
       "image"
@@ -528,7 +528,7 @@
   },
   {
     "slug": "color-contrast",
-    "icon": "🎨",
+    "icon": "contrast",
     "dir": "calculators",
     "categories": [
       "image"
@@ -546,7 +546,7 @@
   },
   {
     "slug": "case-converter",
-    "icon": "🔠",
+    "icon": "type",
     "dir": "text",
     "categories": [
       "text"
@@ -564,7 +564,7 @@
   },
   {
     "slug": "json-formatter",
-    "icon": "📋",
+    "icon": "braces",
     "dir": "text",
     "categories": [
       "text"
@@ -582,7 +582,7 @@
   },
   {
     "slug": "base64-encode",
-    "icon": "🔐",
+    "icon": "lock",
     "dir": "text",
     "categories": [
       "text"
@@ -600,7 +600,7 @@
   },
   {
     "slug": "url-encode",
-    "icon": "🔗",
+    "icon": "link",
     "dir": "text",
     "categories": [
       "text"
@@ -618,7 +618,7 @@
   },
   {
     "slug": "text-cleaner",
-    "icon": "🧹",
+    "icon": "broom",
     "dir": "text",
     "categories": [
       "text"
@@ -636,7 +636,7 @@
   },
   {
     "slug": "html-stripper",
-    "icon": "✂️",
+    "icon": "scissors",
     "dir": "text",
     "categories": [
       "text"
@@ -654,7 +654,7 @@
   },
   {
     "slug": "text-diff",
-    "icon": "📊",
+    "icon": "file-diff",
     "dir": "text",
     "categories": [
       "text"
@@ -672,7 +672,7 @@
   },
   {
     "slug": "uuid-generator",
-    "icon": "🆔",
+    "icon": "id-card",
     "dir": "text",
     "categories": [
       "text"
@@ -690,7 +690,7 @@
   },
   {
     "slug": "reading-time",
-    "icon": "📖",
+    "icon": "book-open",
     "dir": "text",
     "categories": [
       "text"
@@ -708,7 +708,7 @@
   },
   {
     "slug": "keyword-density",
-    "icon": "🎯",
+    "icon": "hash",
     "dir": "text",
     "categories": [
       "text"
@@ -726,7 +726,7 @@
   },
   {
     "slug": "word-counter",
-    "icon": "🔤",
+    "icon": "align-left",
     "dir": "text",
     "categories": [
       "text"
@@ -744,7 +744,7 @@
   },
   {
     "slug": "regex-tester",
-    "icon": "🔍",
+    "icon": "regex",
     "dir": "calculators",
     "categories": [
       "text"
@@ -762,7 +762,7 @@
   },
   {
     "slug": "markdown-preview",
-    "icon": "📝",
+    "icon": "file-text",
     "dir": "calculators",
     "categories": [
       "text"
@@ -780,7 +780,7 @@
   },
   {
     "slug": "timestamp",
-    "icon": "🕐",
+    "icon": "history",
     "dir": "calculators",
     "categories": [
       "utility"
@@ -798,7 +798,7 @@
   },
   {
     "slug": "pregnancy",
-    "icon": "🤰",
+    "icon": "baby",
     "dir": "calculators",
     "categories": [
       "health"
@@ -816,7 +816,7 @@
   },
   {
     "slug": "dca-calculator",
-    "icon": "📈",
+    "icon": "line-chart",
     "dir": "calculators",
     "categories": [
       "finance"
@@ -834,7 +834,7 @@
   },
   {
     "slug": "fraction-calculator",
-    "icon": "➗",
+    "icon": "divide",
     "dir": "calculators",
     "categories": [
       "utility"
@@ -852,7 +852,7 @@
   },
   {
     "slug": "currency-converter",
-    "icon": "💱",
+    "icon": "coins",
     "dir": "calculators",
     "categories": [
       "travel",
@@ -871,7 +871,7 @@
   },
   {
     "slug": "simplified-traditional",
-    "icon": "🀄",
+    "icon": "languages",
     "dir": "calculators",
     "categories": [
       "text"

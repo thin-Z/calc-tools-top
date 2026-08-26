@@ -3,7 +3,7 @@
    1. header 中无 #theme-toggle 时自动注入
    2. 统一接管 #theme-toggle 与 #gw-theme（清除 gw-theme 内联 onclick，避免双触发）
    3. 写入 theme-preference（并同步旧 theme key 兼容）
-   4. 更新所有主题按钮图标（🌙/☀️） */
+   4. 更新所有主题按钮图标（跟随主题） */
 (function () {
   var STORAGE_KEY = 'theme-preference';
   var LEGACY_KEY = 'theme';
@@ -13,12 +13,14 @@
   }
 
   function renderIcons() {
-    var icon = currentTheme() === 'dark' ? '\uD83C\uDF19' : '\u2600\uFE0F'; // 🌙 / ☀️
+    var sun = '<svg class="ic" aria-hidden="true"><use href="#icon-sun"></use></svg>';
+    var moon = '<svg class="ic" aria-hidden="true"><use href="#icon-moon"></use></svg>';
+    var icon = currentTheme() === 'dark' ? moon : sun;
     document.querySelectorAll('#theme-toggle, #gw-theme').forEach(function (btn) {
       if (!btn) return;
       var inner = btn.querySelector('.theme-icon');
-      if (inner) inner.textContent = icon;
-      else btn.textContent = icon;
+      if (inner) inner.innerHTML = icon;
+      else btn.innerHTML = icon;
     });
   }
 
@@ -44,7 +46,9 @@
     btn.className = 'theme-toggle';
     btn.type = 'button';
     btn.setAttribute('aria-label', '\u5207\u6362\u4E3B\u9898');
-    btn.textContent = currentTheme() === 'dark' ? '\uD83C\uDF19' : '\u2600\uFE0F';
+        btn.innerHTML = currentTheme() === 'dark'
+      ? '<svg class="ic" aria-hidden="true"><use href="#icon-moon"></use></svg>'
+      : '<svg class="ic" aria-hidden="true"><use href="#icon-sun"></use></svg>';
     nav.appendChild(btn);
   }
 

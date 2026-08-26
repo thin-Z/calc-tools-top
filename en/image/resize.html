@@ -57,22 +57,22 @@
     <nav>
         <a href="/en/"><span>Home</span></a>
         <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
-            <option value="zh">🇨🇳 中文</option>
-            <option value="en" selected>🇬🇧 English</option>
+            <option value="zh">中文</option>
+            <option value="en" selected>English</option>
         </select>
-        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon">☀️</span></button>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-sun"></use></svg></span></button>
     </nav>
 </header>
     <main id="main">
         <div class="tool-page">
             <div class="tool-header">
-                <span class="tool-privacy-badge">🔒 Processed in your browser · No uploads</span><h1>Resize & Crop</h1>
+                <span class="tool-privacy-badge"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-lock"></use></svg> Processed in your browser · No uploads</span><h1>Resize & Crop</h1>
                 <p>Resize images to custom dimensions. Keep aspect ratio. All in your browser.</p>
             </div>
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="resize"><span class="heart">❤</span> <span class="count">0</span></button></div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="resize"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
             <div class="upload-zone" id="dropZone">
-                <div class="upload-icon">📁</div>
-                <h3>Drag & drop image here, or click to select</h3><div class="upload-btn">📁 Select File</div>
+                <div class="upload-icon"></div>
+                <h3>Drag & drop image here, or click to select</h3><div class="upload-btn"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-folder"></use></svg> Select File</div>
                 <div class="upload-formats"><span class="format-badge">JPG</span><span class="format-badge">PNG</span><span class="format-badge">WebP</span><span class="format-badge">BMP</span><span class="format-badge">GIF</span></div><p class="st-5">Max 50MB · Browser local processing</p>
                 <input type="file" id="fileInput" aria-label="Select image file" accept="image/jpeg,image/png,image/webp,image/bmp,image/gif">
             </div>

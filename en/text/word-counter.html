@@ -57,19 +57,19 @@
     <nav>
         <a href="/en/"><span>Home</span></a>
         <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
-            <option value="zh">🇨🇳 中文</option>
-            <option value="en" selected>🇬🇧 English</option>
+            <option value="zh">中文</option>
+            <option value="en" selected>English</option>
         </select>
-        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon">☀️</span></button>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-sun"></use></svg></span></button>
     </nav>
 </header>
     <main id="main">
         <div class="tool-page">
             <div class="tool-header">
-                <h1>📝 Online Word Counter</h1>
+                <h1><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-pencil"></use></svg> Online Word Counter</h1>
                 <p>Count characters, words, paragraphs, sentences, and analyze keyword frequency. All processing happens locally in your browser.</p>
             </div>
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="word-counter"><span class="heart">❤</span> <span class="count">0</span></button></div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="word-counter"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
 
             <!-- Ad Slot -->
             
@@ -79,20 +79,20 @@
 
                 <!-- Mode Toggle -->
                 <div class="mode-chips">
-                    <span class="mode-chip active" data-mode="stats" data-csp-click="switchMode" data-csp-arg="stats">📊 Word Count</span>
-                    <span class="mode-chip" data-mode="keywords" data-csp-click="switchMode" data-csp-arg="keywords">🔑 Keyword Density</span>
+                    <span class="mode-chip active" data-mode="stats" data-csp-click="switchMode" data-csp-arg="stats"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-bar-chart"></use></svg> Word Count</span>
+                    <span class="mode-chip" data-mode="keywords" data-csp-click="switchMode" data-csp-arg="keywords"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-key"></use></svg> Keyword Density</span>
                 </div>
 
                 <div class="action-bar">
                     <button class="btn btn-primary" data-csp-click="doAnalyze">Analyze</button>
                     <button class="btn btn-secondary" data-csp-click="resetTool">Clear</button>
-                    <button class="copy-btn" id="copyResultBtn" data-csp-click="copyResult">📋 Copy Results</button>
+                    <button class="copy-btn" id="copyResultBtn" data-csp-click="copyResult"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-clipboard"></use></svg> Copy Results</button>
                 </div>
             </div>
 
             <!-- Stats Mode -->
             <div class="result-area" id="statsArea">
-                <div class="result-label">📊 Statistics</div>
+                <div class="result-label"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-bar-chart"></use></svg> Statistics</div>
                 <div class="stats-grid">
                     <div class="stat-card"><div class="stat-value" id="statTotalChars">0</div><div class="stat-label">Total Characters</div></div>
                     <div class="stat-card"><div class="stat-value" id="statChineseChars">0</div><div class="stat-label">Chinese Chars</div></div>
@@ -108,7 +108,7 @@
 
             <!-- Keyword Mode -->
             <div class="result-area hidden" id="keywordsArea">
-                <div class="result-label">🔑 Top 20 Keywords by Frequency</div>
+                <div class="result-label"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-key"></use></svg> Top 20 Keywords by Frequency</div>
                 <ul class="keyword-list" id="keywordList">
                     <li class="st-80">Enter text and click "Analyze" to see keywords</li>
                 </ul>

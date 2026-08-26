@@ -43,19 +43,19 @@
     <nav>
         <a href="/"><span>首页</span></a>
         <select class="lang-switch" data-csp-change="switchLang" aria-label="语言切换">
-            <option value="zh" selected>🇨🇳 中文</option>
-            <option value="en">🇬🇧 English</option>
+            <option value="zh" selected>中文</option>
+            <option value="en">English</option>
         </select>
-        <button id="theme-toggle" class="theme-toggle" aria-label="切换暗黑模式"><span class="theme-icon">☀️</span></button>
+        <button id="theme-toggle" class="theme-toggle" aria-label="切换暗黑模式"><span class="theme-icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-sun"></use></svg></span></button>
     </nav>
 </header>
     <main id="main">
         <div class="tool-page">
             <div class="tool-header">
-                <h1>📝 在线字数统计</h1>
+                <h1><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-pencil"></use></svg> 在线字数统计</h1>
                 <p>统计字符、单词、段落、句子，并分析关键词频率。所有处理均在浏览器本地完成。</p>
             </div>
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="word-counter"><span class="heart">❤</span> <span class="count">0</span></button></div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="word-counter"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
 
             <!-- Ad Slot -->
             
@@ -65,20 +65,20 @@
 
                 <!-- Mode Toggle -->
                 <div class="mode-chips">
-                    <span class="mode-chip active" data-mode="stats" data-csp-click="switchMode" data-csp-arg="stats">📊 字数统计</span>
-                    <span class="mode-chip" data-mode="keywords" data-csp-click="switchMode" data-csp-arg="keywords">🔑 关键词密度</span>
+                    <span class="mode-chip active" data-mode="stats" data-csp-click="switchMode" data-csp-arg="stats"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-bar-chart"></use></svg> 字数统计</span>
+                    <span class="mode-chip" data-mode="keywords" data-csp-click="switchMode" data-csp-arg="keywords"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-key"></use></svg> 关键词密度</span>
                 </div>
 
                 <div class="action-bar">
                     <button class="btn btn-primary" data-csp-click="doAnalyze">分析</button>
                     <button class="btn btn-secondary" data-csp-click="resetTool">清空</button>
-                    <button class="copy-btn" id="copyResultBtn" data-csp-click="copyResult">📋 复制结果</button>
+                    <button class="copy-btn" id="copyResultBtn" data-csp-click="copyResult"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-clipboard"></use></svg> 复制结果</button>
                 </div>
             </div>
 
             <!-- Stats Mode -->
             <div class="result-area" id="statsArea">
-                <div class="result-label">📊 统计</div>
+                <div class="result-label"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-bar-chart"></use></svg> 统计</div>
                 <div class="stats-grid">
                     <div class="stat-card"><div class="stat-value" id="statTotalChars">0</div><div class="stat-label">总字符数</div></div>
                     <div class="stat-card"><div class="stat-value" id="statChineseChars">0</div><div class="stat-label">中文字符数</div></div>
@@ -94,7 +94,7 @@
 
             <!-- Keyword Mode -->
             <div class="result-area hidden" id="keywordsArea">
-                <div class="result-label">🔑 词频前 20 关键词</div>
+                <div class="result-label"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-key"></use></svg> 词频前 20 关键词</div>
                 <ul class="keyword-list" id="keywordList">
                     <li class="st-80">输入文本并点击"分析"查看关键词</li>
                 </ul>

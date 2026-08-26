@@ -25,7 +25,7 @@ const LABELS = {
   zh: { finance: '财务', health: '健康', life: '生活', shopping: '购物', travel: '出行', utility: '工具', image: '图片', text: '文字' },
   en: { finance: 'Finance', health: 'Health', life: 'Lifestyle', shopping: 'Shopping', travel: 'Travel', utility: 'Utility', image: 'Image', text: 'Text' },
 };
-const EMOJI = { finance: '💰', health: '🏥', life: '🏠', shopping: '🛒', travel: '🚗', utility: '🔧', image: '🖼️', text: '✏️' };
+const EMOJI = {}; // 图标已迁移至自托管 Lucide sprite (assets/icons/icons.svg)
 
 function stripTags(s) { return s.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim(); }
 
@@ -63,7 +63,7 @@ function escAttr(s) { return esc(s).replace(/"/g, '&quot;'); }
 
 function toolCardHtml(t, lang, cat) {
   const tagLinks = t.cats.map((c) => {
-    const lbl = (EMOJI[c] || '') + ' ' + (LABELS[lang][c] || c);
+    const lbl = (LABELS[lang][c] || c);
     const href = lang === 'zh' ? `/tags/${c}.html` : `/en/tags/${c}.html`;
     return `<a href="${href}" class="tag tag-${c}" data-tag="${c}">${esc(lbl)}</a>`;
   }).join('');

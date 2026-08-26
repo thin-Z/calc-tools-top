@@ -13,7 +13,7 @@ const assert = require('node:assert');
 const http = require('http');
 
 // ---- 本地 KV REST 模拟服务器：支持 /get /incrby /expire 三类命令 ----
-// ⚠️ 严格对齐 Upstash REST 真实规范（勿按调用方代码照抄）：
+// 严格对齐 Upstash REST 真实规范（勿按调用方代码照抄）：
 //    INCRBY = POST /incrby/{key}，body 为裸数字；未知路径一律 400 报错。
 //    2026-08-17 教训：mock 曾复刻错误格式 /incr/{key}/{delta} 导致测试全绿、生产必挂。
 function startKvMock() {

@@ -95,25 +95,25 @@
     <nav>
         <a href="/en/"><span>Home</span></a>
         <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
-            <option value="zh">🇨🇳 中文</option>
-            <option value="en" selected>🇬🇧 English</option>
+            <option value="zh">中文</option>
+            <option value="en" selected>English</option>
         </select>
-        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon">☀️</span></button>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-sun"></use></svg></span></button>
     </nav>
 </header>
     <main id="main">
         <div class="tool-page">
             <div class="tool-header">
-                <h1>🎲 UUID / Password Generator</h1>
+                <h1><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-dice-5"></use></svg> UUID / Password Generator</h1>
                 <p>Generate UUID v4 identifiers or configure strong passwords. All processing is done locally in your browser.</p>
             </div>
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="uuid-generator"><span class="heart">❤</span> <span class="count">0</span></button></div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="uuid-generator"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
 
             
 
             <div class="gen-tabs">
-                <span class="gen-tab active" data-tab="uuid" data-csp-click="switchGeneratorTab" data-csp-arg="uuid">🔖 UUID</span>
-                <span class="gen-tab" data-tab="password" data-csp-click="switchGeneratorTab" data-csp-arg="password">🔑 Password</span>
+                <span class="gen-tab active" data-tab="uuid" data-csp-click="switchGeneratorTab" data-csp-arg="uuid"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-bookmark"></use></svg> UUID</span>
+                <span class="gen-tab" data-tab="password" data-csp-click="switchGeneratorTab" data-csp-arg="password"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-key"></use></svg> Password</span>
             </div>
 
             <!-- UUID Panel -->
@@ -126,8 +126,8 @@
                         <option value="5">5</option>
                         <option value="10">10</option>
                     </select>
-                    <button class="btn btn-primary" data-csp-click="doGenerateUUIDs">🎲 Generate UUIDs</button>
-                    <button class="copy-btn" id="copyGenAllBtn" data-csp-click="copyGeneratorAll">📋 Copy All</button>
+                    <button class="btn btn-primary" data-csp-click="doGenerateUUIDs"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-dice-5"></use></svg> Generate UUIDs</button>
+                    <button class="copy-btn" id="copyGenAllBtn" data-csp-click="copyGeneratorAll"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-clipboard"></use></svg> Copy All</button>
                 </div>
                 <div class="result-area">
                     <div class="result-label">Generated UUIDs:</div>
@@ -156,8 +156,8 @@
                         <option value="5">5</option>
                         <option value="10">10</option>
                     </select>
-                    <button class="btn btn-primary" data-csp-click="doGeneratePassword">🔑 Generate</button>
-                    <button class="copy-btn" id="copyGenAllBtnPw" data-csp-click="copyGeneratorAll">📋 Copy All</button>
+                    <button class="btn btn-primary" data-csp-click="doGeneratePassword"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-key"></use></svg> Generate</button>
+                    <button class="copy-btn" id="copyGenAllBtnPw" data-csp-click="copyGeneratorAll"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-clipboard"></use></svg> Copy All</button>
                 </div>
                 <div id="pwStrength"></div>
                 <div class="result-area">

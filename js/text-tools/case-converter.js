@@ -97,10 +97,10 @@ function copyResult() {
     if (navigator.clipboard) {
         navigator.clipboard.writeText(text).then(function() {
             var btn = document.getElementById('copyResultBtn');
-            btn.textContent = '✅ ' + (btn.textContent.indexOf('📋') !== -1 ? 'Copied' : '已复制');
+            btn.textContent = (document.documentElement.lang === 'en' ? 'Copied' : '已复制');
             btn.classList.add('copied');
             setTimeout(function() {
-                btn.textContent = btn.textContent.indexOf('Copied') !== -1 ? '📋 Copy Result' : '📋 复制结果';
+                btn.textContent = document.documentElement.lang === 'en' ? 'Copy Result' : '复制结果';
                 btn.classList.remove('copied');
             }, 2000);
         });

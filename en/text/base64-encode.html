@@ -97,19 +97,19 @@
     <nav>
         <a href="/en/"><span>Home</span></a>
         <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
-            <option value="zh">🇨🇳 中文</option>
-            <option value="en" selected>🇬🇧 English</option>
+            <option value="zh">中文</option>
+            <option value="en" selected>English</option>
         </select>
-        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon">☀️</span></button>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-sun"></use></svg></span></button>
     </nav>
 </header>
     <main id="main">
         <div class="tool-page">
             <div class="tool-header">
-                <h1>🔐 Base64 Encode / Decode</h1>
+                <h1><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-lock"></use></svg> Base64 Encode / Decode</h1>
                 <p>Free online Base64 encoder and decoder. Convert text to Base64 and decode Base64 back to text. UTF-8 safe with no garbled characters. All processing happens locally in your browser.</p>
             </div>
-            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="base64-encode"><span class="heart">❤</span> <span class="count">0</span></button></div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="base64-encode"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
 
             <!-- Ad Slot -->
             
@@ -119,8 +119,8 @@
 
                 <!-- Mode Toggle -->
                 <div class="mode-chips">
-                    <span class="mode-chip active" data-mode="encode" data-csp-click="switchBase64Mode" data-csp-arg="encode">🔒 Encode</span>
-                    <span class="mode-chip" data-mode="decode" data-csp-click="switchBase64Mode" data-csp-arg="decode">🔓 Decode</span>
+                    <span class="mode-chip active" data-mode="encode" data-csp-click="switchBase64Mode" data-csp-arg="encode"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-lock"></use></svg> Encode</span>
+                    <span class="mode-chip" data-mode="decode" data-csp-click="switchBase64Mode" data-csp-arg="decode"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-unlock"></use></svg> Decode</span>
                 </div>
 
                 <div class="action-bar">
@@ -130,7 +130,7 @@
 
                 <!-- Error Display -->
                 <div class="result-area error-section st-16" id="errorSection">
-                    <div class="result-label st-10">❌ Decode Error</div>
+                    <div class="result-label st-10"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-x"></use></svg> Decode Error</div>
                     <div class="result-content st-11">
                         <p><strong>Description:</strong> <span id="errorMsg"></span></p>
                     </div>
@@ -140,7 +140,7 @@
                 <div id="resultSection" class="result-section hidden">
                     <h3>Output</h3>
                     <pre class="result-area st-12" id="resultArea"></pre>
-                    <button class="btn btn-copy" id="copyBtn" data-csp-click="copyBase64Result">📋 Copy Result</button>
+                    <button class="btn btn-copy" id="copyBtn" data-csp-click="copyBase64Result"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-clipboard"></use></svg> Copy Result</button>
                 </div>
             </div>
 

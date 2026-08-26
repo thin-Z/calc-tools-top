@@ -13,14 +13,14 @@ const BLOG_PAGINATION_KEY = "blog_page";
 const SITE_CONFIG = {
     categories: [
         { id: 'all', label: { zh: '全部', en: 'All' } },
-        { id: 'finance', label: { zh: '财务', en: 'Finance' }, icon: '💰' },
-        { id: 'health', label: { zh: '健康', en: 'Health' }, icon: '🏥' },
-        { id: 'life', label: { zh: '生活', en: 'Lifestyle' }, icon: '🏠' },
-        { id: 'shopping', label: { zh: '购物', en: 'Shopping' }, icon: '🛒' },
-        { id: 'travel', label: { zh: '出行', en: 'Travel' }, icon: '🚗' },
-        { id: 'utility', label: { zh: '工具', en: 'Utility' }, icon: '🔧' },
-        { id: 'image', label: { zh: '图片', en: 'Image' }, icon: '🖼️' },
-        { id: 'text', label: { zh: '文字', en: 'Text' }, icon: '✏️' }
+        { id: 'finance', label: { zh: '财务', en: 'Finance' }, icon: 'wallet' },
+        { id: 'health', label: { zh: '健康', en: 'Health' }, icon: 'stethoscope' },
+        { id: 'life', label: { zh: '生活', en: 'Lifestyle' }, icon: 'home' },
+        { id: 'shopping', label: { zh: '购物', en: 'Shopping' }, icon: 'shopping-cart' },
+        { id: 'travel', label: { zh: '出行', en: 'Travel' }, icon: 'plane' },
+        { id: 'utility', label: { zh: '工具', en: 'Utility' }, icon: 'wrench' },
+        { id: 'image', label: { zh: '图片', en: 'Image' }, icon: 'image' },
+        { id: 'text', label: { zh: '文字', en: 'Text' }, icon: 'file-text' }
     ],
     tools: [
     /* __GENERATED_SITE_CONFIG_TOOLS_START__ */
@@ -90,12 +90,12 @@ function updateClickUI(toolId, total) {
         if (!wrap) return;
         const uc = wrap.querySelector('.usage-count');
         if (uc) {
-            uc.textContent = '✨ ' + total;
+            uc.textContent = total;
         }
         if (total > 0 && !uc) {
             const newUc = document.createElement('span');
             newUc.className = 'usage-count';
-            newUc.textContent = '✨ ' + total;
+            newUc.textContent = total;
             el.insertAdjacentElement('afterend', newUc);
         }
     });
@@ -314,7 +314,7 @@ function renderTrendBadges() {
         if (trend) {
             const badge = document.createElement('span');
             badge.className = 'trend-badge ' + (trend === 'hot' ? 'trend-hot' : 'trend-up');
-            badge.textContent = trend === 'hot' ? '🔥 今日热门' : '⬆ 上升中';
+            badge.textContent = trend === 'hot' ? '今日热门' : '上升中';
             h3.appendChild(badge);
         }
     });
@@ -331,7 +331,7 @@ function renderUsageCounts() {
         if (total > 0) {
             const uc = document.createElement('span');
             uc.className = 'usage-count';
-            uc.textContent = '✨ ' + total;
+            uc.textContent = total;
             likeBtn.insertAdjacentElement('afterend', uc);
         }
     });
@@ -513,55 +513,55 @@ function applyFilteredPagination(category, articles) {
 
 /* __GENERATED_TOOLS_DATA_START__ */
 const TOOLS_DATA = {
-    mortgage: { icon: '🏠', name: { zh: '房贷计算器', en: 'Mortgage Calculator' }, desc: { zh: '等额本息+等额本金，支持商业/公积金组合贷款', en: 'Equal payment + principal, supports commercial + housing fund loans' } },
-    tax2026: { icon: '📋', name: { zh: '个税计算器', en: 'Tax Calculator 2026' }, desc: { zh: '2026最新个税税率，一键计算税后收入', en: 'Latest 2026 tax rates, calculate after-tax income' } },
-    'housing-fund': { icon: '💰', name: { zh: '公积金计算器', en: 'Housing Fund Calculator' }, desc: { zh: '公积金贷款额度与利率计算，支持最新政策', en: 'Housing fund loan amount + rate calculation' } },
-    'car-loan': { icon: '🚗', name: { zh: '车贷计算器', en: 'Car Loan Calculator' }, desc: { zh: '车贷月供与利息计算', en: 'Car loan monthly payment + interest' } },
-    'loan-compare': { icon: '📊', name: { zh: '贷款对比计算器', en: 'Loan Comparison' }, desc: { zh: '多种贷款方案利率对比', en: 'Compare multiple loan plans side by side' } },
-    'compound-interest': { icon: '📈', name: { zh: '复利计算器', en: 'Compound Interest' }, desc: { zh: '复利收益与投资增长计算', en: 'Calculate compound interest growth' } },
-    overtime: { icon: '⏰', name: { zh: '加班费计算器', en: 'Overtime Calculator' }, desc: { zh: '加班工资计算，劳动法标准', en: 'Overtime pay calculation per labor law' } },
-    'percentage-calc': { icon: '📊', name: { zh: '百分比计算器', en: 'Percentage Calculator' }, desc: { zh: '百分比计算/增减/变化多种模式', en: 'Percentage calc, increase, decrease, change' } },
-    discount: { icon: '🏷️', name: { zh: '折扣计算器', en: 'Discount Calculator' }, desc: { zh: '计算折扣后价格与节省金额', en: 'Calculate discounted price and savings' } },
-    'fuel-cost': { icon: '⛽', name: { zh: '油耗计算器', en: 'Fuel Cost Calculator' }, desc: { zh: '油费与每公里成本计算', en: 'Fuel cost per kilometer calculation' } },
-    bmi: { icon: '⚖️', name: { zh: 'BMI 计算器', en: 'BMI Calculator' }, desc: { zh: '根据身高体重计算身体质量指数', en: 'Calculate BMI from height and weight' } },
-    'ideal-weight': { icon: '🎯', name: { zh: '标准体重计算器', en: 'Ideal Weight Calculator' }, desc: { zh: '标准体重对照与BMI参考', en: 'Standard weight reference + BMI guide' } },
-    ovulation: { icon: '🌸', name: { zh: '排卵期计算器', en: 'Ovulation Calculator' }, desc: { zh: '排卵期与安全期推算', en: 'Ovulation + safe period tracker' } },
-    'calorie-calculator': { icon: '🔥', name: { zh: '卡路里计算器', en: 'Calorie Calculator' }, desc: { zh: '按身高体重年龄性别计算每日所需热量', en: 'Calculate daily calorie needs by height, weight, age and gender' } },
-    'date-calc': { icon: '📅', name: { zh: '日期计算器', en: 'Date Calculator' }, desc: { zh: '计算日期差/推算目标日期/工作日', en: 'Date difference, target date, workday calc' } },
-    'workday-calculator': { icon: '💼', name: { zh: '工作日计算器', en: 'Workday Calculator' }, desc: { zh: '计算两个日期之间的工作日天数，可选排除节假日', en: 'Count workdays between two dates, optionally excluding holidays' } },
-    'age-calc': { icon: '🎂', name: { zh: '年龄计算器', en: 'Age Calculator' }, desc: { zh: '周岁/生肖/生日精确计算', en: 'Exact age calculation including zodiac' } },
-    electricity: { icon: '💡', name: { zh: '电费计算器', en: 'Electricity Calculator' }, desc: { zh: '电费与用电量精确计算', en: 'Calculate electricity bill and usage' } },
-    'unit-converter': { icon: '📏', name: { zh: '单位换算器', en: 'Unit Converter' }, desc: { zh: '长度/重量/温度等常用单位换算', en: 'Length/weight/temperature converter' } },
-    'password-strength': { icon: '🛡️', name: { zh: '密码强度检测器', en: 'Password Strength Checker' }, desc: { zh: '实时检测密码安全性并给出改进建议', en: 'Test password security with improvement tips' } },
-    'qr-generator': { icon: '📱', name: { zh: '二维码生成器', en: 'QR Code Generator' }, desc: { zh: '文字或链接快速生成二维码，下载PNG', en: 'Generate QR codes from text/URL, download as PNG' } },
-    'password-gen': { icon: '🔑', name: { zh: '密码生成器', en: 'Password Generator' }, desc: { zh: '自定义字符类型生成高强度密码', en: 'Generate strong passwords with custom options' } },
-    'random-gen': { icon: '🎲', name: { zh: '随机数生成器', en: 'Random Number Generator' }, desc: { zh: '自定义范围生成随机整数', en: 'Generate random integers in custom range' } },
-    compress: { icon: '🗜️', name: { zh: '图片压缩', en: 'Image Compress' }, desc: { zh: '压缩图片大小，本地处理不上传', en: 'Compress images locally without upload' } },
-    convert: { icon: '🔄', name: { zh: '格式转换', en: 'Format Convert' }, desc: { zh: 'JPG/PNG/WebP格式互转', en: 'Convert between JPG/PNG/WebP' } },
-    resize: { icon: '📐', name: { zh: '裁剪缩放', en: 'Resize & Crop' }, desc: { zh: '调整图片尺寸，保持宽高比', en: 'Resize and crop images' } },
-    base64: { icon: '🔣', name: { zh: '图片转Base64', en: 'Image to Base64' }, desc: { zh: '图片转Base64编码嵌入', en: 'Convert image to Base64 embedding' } },
-    'color-picker': { icon: '🎨', name: { zh: '图片取色器', en: 'Color Picker' }, desc: { zh: '提取图片中的颜色值', en: 'Pick colors from images' } },
-    'image-crop': { icon: '✂️', name: { zh: '图片裁剪', en: 'Image Cropper' }, desc: { zh: '拖拽裁剪图片，比例锁定，下载 PNG/JPEG', en: 'Drag to crop images with aspect lock, download PNG/JPEG' } },
-    'color-contrast': { icon: '🎨', name: { zh: '颜色对比度检查器', en: 'Color Contrast Checker' }, desc: { zh: 'WCAG AA/AAA 对比度在线检测', en: 'Check WCAG AA/AAA contrast ratio online' } },
-    'case-converter': { icon: '🔠', name: { zh: '大小写转换', en: 'Case Converter' }, desc: { zh: '全半角/大小写字母转换', en: 'Convert between upper/lower case' } },
-    'json-formatter': { icon: '📋', name: { zh: 'JSON 格式化', en: 'JSON Formatter' }, desc: { zh: '格式化/压缩/校验JSON数据', en: 'Format, compress and validate JSON' } },
-    'base64-encode': { icon: '🔐', name: { zh: 'Base64 编解码', en: 'Base64 Encode/Decode' }, desc: { zh: '文本与Base64互转', en: 'Encode and decode Base64 text' } },
-    'url-encode': { icon: '🔗', name: { zh: 'URL 编解码', en: 'URL Encode/Decode' }, desc: { zh: 'URL编码与解码', en: 'Encode and decode URLs' } },
-    'text-cleaner': { icon: '🧹', name: { zh: '文本清理', en: 'Text Cleaner' }, desc: { zh: '清理多余空格和换行', en: 'Clean extra spaces and line breaks' } },
-    'html-stripper': { icon: '✂️', name: { zh: 'HTML 剥离', en: 'HTML Stripper' }, desc: { zh: '移除文本中的HTML标签', en: 'Strip HTML tags from text' } },
-    'text-diff': { icon: '📊', name: { zh: '文本对比', en: 'Text Diff' }, desc: { zh: '对比两段文本差异', en: 'Compare two texts for differences' } },
-    'uuid-generator': { icon: '🆔', name: { zh: 'UUID 生成', en: 'UUID Generator' }, desc: { zh: '生成UUID唯一标识符', en: 'Generate UUID identifiers' } },
-    'reading-time': { icon: '📖', name: { zh: '阅读时间', en: 'Reading Time' }, desc: { zh: '估算文章阅读时长', en: 'Estimate text reading time' } },
-    'keyword-density': { icon: '🎯', name: { zh: '关键词密度', en: 'Keyword Density' }, desc: { zh: '分析文章关键词密度', en: 'Analyze keyword density in text' } },
-    'word-counter': { icon: '🔤', name: { zh: '字数统计', en: 'Word Counter' }, desc: { zh: '统计字符/字数/段落', en: 'Count characters/words/paragraphs' } },
-    'regex-tester': { icon: '🔍', name: { zh: '正则表达式测试器', en: 'Regex Tester' }, desc: { zh: '实时匹配高亮与捕获组解析', en: 'Real-time match highlight and group parsing' } },
-    'markdown-preview': { icon: '📝', name: { zh: 'Markdown 预览器', en: 'Markdown Preview' }, desc: { zh: '实时预览 Markdown 渲染结果', en: 'Live Markdown rendering preview' } },
-    timestamp: { icon: '🕐', name: { zh: '时间戳转换', en: 'Timestamp Converter' }, desc: { zh: 'Unix 时间戳与日期时间互转，支持秒/毫秒与本地/UTC', en: 'Convert Unix timestamps to dates and back, with seconds/milliseconds and local/UTC' } },
-    pregnancy: { icon: '🤰', name: { zh: '孕期计算器', en: 'Pregnancy Calculator' }, desc: { zh: '按末次月经/受孕日推算预产期与孕周', en: 'Estimate due date and gestational week from LMP or conception' } },
-    'dca-calculator': { icon: '📈', name: { zh: '定投计算器', en: 'DCA Calculator' }, desc: { zh: '定期定额投资收益与复利增长计算', en: 'Calculate future value of regular periodic investments' } },
-    'fraction-calculator': { icon: '➗', name: { zh: '分数计算器', en: 'Fraction Calculator' }, desc: { zh: '分数的加减乘除与最简化', en: 'Add, subtract, multiply and divide fractions and simplify' } },
-    'currency-converter': { icon: '💱', name: { zh: '汇率换算器', en: 'Currency Converter' }, desc: { zh: '常见货币参考汇率，任意两种货币实时互换', en: 'Convert between major currencies with reference rates' } },
-    'simplified-traditional': { icon: '🀄', name: { zh: '简繁转换', en: 'Simplified-Traditional Converter' }, desc: { zh: '简体中文与繁体中文互转，常用字对照', en: 'Convert between simplified and traditional Chinese' } }
+    mortgage: { icon: 'home', name: { zh: '房贷计算器', en: 'Mortgage Calculator' }, desc: { zh: '等额本息+等额本金，支持商业/公积金组合贷款', en: 'Equal payment + principal, supports commercial + housing fund loans' } },
+    tax2026: { icon: 'receipt-text', name: { zh: '个税计算器', en: 'Tax Calculator 2026' }, desc: { zh: '2026最新个税税率，一键计算税后收入', en: 'Latest 2026 tax rates, calculate after-tax income' } },
+    'housing-fund': { icon: 'piggy-bank', name: { zh: '公积金计算器', en: 'Housing Fund Calculator' }, desc: { zh: '公积金贷款额度与利率计算，支持最新政策', en: 'Housing fund loan amount + rate calculation' } },
+    'car-loan': { icon: 'car', name: { zh: '车贷计算器', en: 'Car Loan Calculator' }, desc: { zh: '车贷月供与利息计算', en: 'Car loan monthly payment + interest' } },
+    'loan-compare': { icon: 'scale', name: { zh: '贷款对比计算器', en: 'Loan Comparison' }, desc: { zh: '多种贷款方案利率对比', en: 'Compare multiple loan plans side by side' } },
+    'compound-interest': { icon: 'trending-up', name: { zh: '复利计算器', en: 'Compound Interest' }, desc: { zh: '复利收益与投资增长计算', en: 'Calculate compound interest growth' } },
+    overtime: { icon: 'clock', name: { zh: '加班费计算器', en: 'Overtime Calculator' }, desc: { zh: '加班工资计算，劳动法标准', en: 'Overtime pay calculation per labor law' } },
+    'percentage-calc': { icon: 'percent', name: { zh: '百分比计算器', en: 'Percentage Calculator' }, desc: { zh: '百分比计算/增减/变化多种模式', en: 'Percentage calc, increase, decrease, change' } },
+    discount: { icon: 'tag', name: { zh: '折扣计算器', en: 'Discount Calculator' }, desc: { zh: '计算折扣后价格与节省金额', en: 'Calculate discounted price and savings' } },
+    'fuel-cost': { icon: 'fuel', name: { zh: '油耗计算器', en: 'Fuel Cost Calculator' }, desc: { zh: '油费与每公里成本计算', en: 'Fuel cost per kilometer calculation' } },
+    bmi: { icon: 'scale', name: { zh: 'BMI 计算器', en: 'BMI Calculator' }, desc: { zh: '根据身高体重计算身体质量指数', en: 'Calculate BMI from height and weight' } },
+    'ideal-weight': { icon: 'target', name: { zh: '标准体重计算器', en: 'Ideal Weight Calculator' }, desc: { zh: '标准体重对照与BMI参考', en: 'Standard weight reference + BMI guide' } },
+    ovulation: { icon: 'flower', name: { zh: '排卵期计算器', en: 'Ovulation Calculator' }, desc: { zh: '排卵期与安全期推算', en: 'Ovulation + safe period tracker' } },
+    'calorie-calculator': { icon: 'flame', name: { zh: '卡路里计算器', en: 'Calorie Calculator' }, desc: { zh: '按身高体重年龄性别计算每日所需热量', en: 'Calculate daily calorie needs by height, weight, age and gender' } },
+    'date-calc': { icon: 'calendar', name: { zh: '日期计算器', en: 'Date Calculator' }, desc: { zh: '计算日期差/推算目标日期/工作日', en: 'Date difference, target date, workday calc' } },
+    'workday-calculator': { icon: 'briefcase', name: { zh: '工作日计算器', en: 'Workday Calculator' }, desc: { zh: '计算两个日期之间的工作日天数，可选排除节假日', en: 'Count workdays between two dates, optionally excluding holidays' } },
+    'age-calc': { icon: 'cake', name: { zh: '年龄计算器', en: 'Age Calculator' }, desc: { zh: '周岁/生肖/生日精确计算', en: 'Exact age calculation including zodiac' } },
+    electricity: { icon: 'lightbulb', name: { zh: '电费计算器', en: 'Electricity Calculator' }, desc: { zh: '电费与用电量精确计算', en: 'Calculate electricity bill and usage' } },
+    'unit-converter': { icon: 'ruler', name: { zh: '单位换算器', en: 'Unit Converter' }, desc: { zh: '长度/重量/温度等常用单位换算', en: 'Length/weight/temperature converter' } },
+    'password-strength': { icon: 'shield', name: { zh: '密码强度检测器', en: 'Password Strength Checker' }, desc: { zh: '实时检测密码安全性并给出改进建议', en: 'Test password security with improvement tips' } },
+    'qr-generator': { icon: 'qr-code', name: { zh: '二维码生成器', en: 'QR Code Generator' }, desc: { zh: '文字或链接快速生成二维码，下载PNG', en: 'Generate QR codes from text/URL, download as PNG' } },
+    'password-gen': { icon: 'key-round', name: { zh: '密码生成器', en: 'Password Generator' }, desc: { zh: '自定义字符类型生成高强度密码', en: 'Generate strong passwords with custom options' } },
+    'random-gen': { icon: 'dice-5', name: { zh: '随机数生成器', en: 'Random Number Generator' }, desc: { zh: '自定义范围生成随机整数', en: 'Generate random integers in custom range' } },
+    compress: { icon: 'minimize-2', name: { zh: '图片压缩', en: 'Image Compress' }, desc: { zh: '压缩图片大小，本地处理不上传', en: 'Compress images locally without upload' } },
+    convert: { icon: 'repeat', name: { zh: '格式转换', en: 'Format Convert' }, desc: { zh: 'JPG/PNG/WebP格式互转', en: 'Convert between JPG/PNG/WebP' } },
+    resize: { icon: 'scaling', name: { zh: '裁剪缩放', en: 'Resize & Crop' }, desc: { zh: '调整图片尺寸，保持宽高比', en: 'Resize and crop images' } },
+    base64: { icon: 'binary', name: { zh: '图片转Base64', en: 'Image to Base64' }, desc: { zh: '图片转Base64编码嵌入', en: 'Convert image to Base64 embedding' } },
+    'color-picker': { icon: 'palette', name: { zh: '图片取色器', en: 'Color Picker' }, desc: { zh: '提取图片中的颜色值', en: 'Pick colors from images' } },
+    'image-crop': { icon: 'crop', name: { zh: '图片裁剪', en: 'Image Cropper' }, desc: { zh: '拖拽裁剪图片，比例锁定，下载 PNG/JPEG', en: 'Drag to crop images with aspect lock, download PNG/JPEG' } },
+    'color-contrast': { icon: 'contrast', name: { zh: '颜色对比度检查器', en: 'Color Contrast Checker' }, desc: { zh: 'WCAG AA/AAA 对比度在线检测', en: 'Check WCAG AA/AAA contrast ratio online' } },
+    'case-converter': { icon: 'type', name: { zh: '大小写转换', en: 'Case Converter' }, desc: { zh: '全半角/大小写字母转换', en: 'Convert between upper/lower case' } },
+    'json-formatter': { icon: 'braces', name: { zh: 'JSON 格式化', en: 'JSON Formatter' }, desc: { zh: '格式化/压缩/校验JSON数据', en: 'Format, compress and validate JSON' } },
+    'base64-encode': { icon: 'lock', name: { zh: 'Base64 编解码', en: 'Base64 Encode/Decode' }, desc: { zh: '文本与Base64互转', en: 'Encode and decode Base64 text' } },
+    'url-encode': { icon: 'link', name: { zh: 'URL 编解码', en: 'URL Encode/Decode' }, desc: { zh: 'URL编码与解码', en: 'Encode and decode URLs' } },
+    'text-cleaner': { icon: 'broom', name: { zh: '文本清理', en: 'Text Cleaner' }, desc: { zh: '清理多余空格和换行', en: 'Clean extra spaces and line breaks' } },
+    'html-stripper': { icon: 'scissors', name: { zh: 'HTML 剥离', en: 'HTML Stripper' }, desc: { zh: '移除文本中的HTML标签', en: 'Strip HTML tags from text' } },
+    'text-diff': { icon: 'file-diff', name: { zh: '文本对比', en: 'Text Diff' }, desc: { zh: '对比两段文本差异', en: 'Compare two texts for differences' } },
+    'uuid-generator': { icon: 'id-card', name: { zh: 'UUID 生成', en: 'UUID Generator' }, desc: { zh: '生成UUID唯一标识符', en: 'Generate UUID identifiers' } },
+    'reading-time': { icon: 'book-open', name: { zh: '阅读时间', en: 'Reading Time' }, desc: { zh: '估算文章阅读时长', en: 'Estimate text reading time' } },
+    'keyword-density': { icon: 'hash', name: { zh: '关键词密度', en: 'Keyword Density' }, desc: { zh: '分析文章关键词密度', en: 'Analyze keyword density in text' } },
+    'word-counter': { icon: 'align-left', name: { zh: '字数统计', en: 'Word Counter' }, desc: { zh: '统计字符/字数/段落', en: 'Count characters/words/paragraphs' } },
+    'regex-tester': { icon: 'regex', name: { zh: '正则表达式测试器', en: 'Regex Tester' }, desc: { zh: '实时匹配高亮与捕获组解析', en: 'Real-time match highlight and group parsing' } },
+    'markdown-preview': { icon: 'file-text', name: { zh: 'Markdown 预览器', en: 'Markdown Preview' }, desc: { zh: '实时预览 Markdown 渲染结果', en: 'Live Markdown rendering preview' } },
+    timestamp: { icon: 'history', name: { zh: '时间戳转换', en: 'Timestamp Converter' }, desc: { zh: 'Unix 时间戳与日期时间互转，支持秒/毫秒与本地/UTC', en: 'Convert Unix timestamps to dates and back, with seconds/milliseconds and local/UTC' } },
+    pregnancy: { icon: 'baby', name: { zh: '孕期计算器', en: 'Pregnancy Calculator' }, desc: { zh: '按末次月经/受孕日推算预产期与孕周', en: 'Estimate due date and gestational week from LMP or conception' } },
+    'dca-calculator': { icon: 'line-chart', name: { zh: '定投计算器', en: 'DCA Calculator' }, desc: { zh: '定期定额投资收益与复利增长计算', en: 'Calculate future value of regular periodic investments' } },
+    'fraction-calculator': { icon: 'divide', name: { zh: '分数计算器', en: 'Fraction Calculator' }, desc: { zh: '分数的加减乘除与最简化', en: 'Add, subtract, multiply and divide fractions and simplify' } },
+    'currency-converter': { icon: 'coins', name: { zh: '汇率换算器', en: 'Currency Converter' }, desc: { zh: '常见货币参考汇率，任意两种货币实时互换', en: 'Convert between major currencies with reference rates' } },
+    'simplified-traditional': { icon: 'languages', name: { zh: '简繁转换', en: 'Simplified-Traditional Converter' }, desc: { zh: '简体中文与繁体中文互转，常用字对照', en: 'Convert between simplified and traditional Chinese' } }
 };
 /* __GENERATED_TOOLS_DATA_END__ */
 /* __GENERATED_TOOL_KEYWORDS_START__ */
@@ -730,8 +730,8 @@ function initHotTools() {
     const prefix = isZh ? '/zh/' : '/en/';
     
     const catTexts = isZh
-        ? { finance: '💰 财务', health: '🏥 健康', life: '🏠 生活', shopping: '🛒 购物', travel: '🚗 出行', utility: '🔧 工具', image: '🖼️ 图片', text: '✏️ 文字' }
-        : { finance: '💰 Finance', health: '🏥 Health', life: '🏠 Lifestyle', shopping: '🛒 Shopping', travel: '🚗 Travel', utility: '🔧 Utility', image: '🖼️ Image', text: '✏️ Text' };
+        ? { finance: '财务', health: '健康', life: '生活', shopping: '购物', travel: '出行', utility: '工具', image: '图片', text: '文字' }
+        : { finance: 'Finance', health: 'Health', life: 'Lifestyle', shopping: 'Shopping', travel: 'Travel', utility: 'Utility', image: 'Image', text: 'Text' };
     
     let html = '';
     selected.forEach(function(entry, idx) {
@@ -745,16 +745,16 @@ function initHotTools() {
         const totalClicks = getTotalClicks(entry.id);
         let trendBadge = '';
         if (todayClicks >= 3) {
-            trendBadge = '<span class="trend-badge trend-hot">🔥 今日热门</span>';
+            trendBadge = '<span class="trend-badge trend-hot">今日热门</span>';
         } else if (todayClicks >= 1 && totalClicks > 0) {
-            trendBadge = '<span class="trend-badge trend-up">⬆ 今日使用</span>';
+            trendBadge = '<span class="trend-badge trend-up">今日使用</span>';
         }
         
         html += '<div class="hot-tool-card">'
             + '<div class="hot-badge">#' + (idx + 1) + '</div>'
-            + '<span class="hot-score">🔥 ' + entry.score + '</span>'
+            + '<span class="hot-score">' + entry.score + '</span>'
             + '<a href="' + prefix + entry.id + '.html" class="tool-card" data-like-id="' + entry.id + '" data-category="' + cats.join(',') + '" data-keywords-zh="' + (TOOL_KEYWORDS_ZH[entry.id] || '') + '">'
-            + '<div class="icon icon-' + firstCat + '">' + tool.icon + '</div>'
+            + '<div class="icon icon-' + firstCat + '"><svg class="ic" aria-hidden="true"><use href="#icon-' + tool.icon + '"></use></svg></div>'
             + '<h3>' + name + ' ' + trendBadge + '</h3>'
             + '<p>' + (tool.desc ? (tool.desc[lang] || tool.desc['zh']) : '') + '</p>'
             + '</a>'

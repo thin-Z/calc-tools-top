@@ -115,7 +115,7 @@
 
     function showCopied() {
         const btn = document.getElementById('copyBtn');
-        btn.textContent = '✅ ' + (btn.dataset.copiedLabel || '已复制!');
+        btn.textContent = (btn.dataset.copiedLabel || '已复制!');
         setTimeout(() => {
             btn.textContent = btn.dataset.label || '复制 Base64';
         }, 2000);

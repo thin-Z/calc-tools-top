@@ -23,7 +23,7 @@
     function copyOutput() {
         if (!output.value) return;
         var done = function () {
-            if (copyBtn) copyBtn.textContent = '已复制 ✓';
+            if (copyBtn) copyBtn.textContent = '已复制';
             setTimeout(function () { if (copyBtn) copyBtn.textContent = '复制'; }, 1500);
         };
         if (navigator.clipboard && navigator.clipboard.writeText) {
