@@ -1143,6 +1143,15 @@ button:active,.btn:active {
     height: 1em;
     flex-shrink: 0;
 }
+
+/* Global SVG icon sizing — inline sprites have no width/height attributes,
+   browser default is 300x150px. Constrain to 1em (inherits parent font-size). */
+svg.ic {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+    vertical-align: middle;
+}
 .like-btn .count {
     font-weight: 600;
     min-width: 1.2rem;
