@@ -777,5 +777,23 @@
       "desc": "Live Markdown rendering preview",
       "kw": "markdown,markdown preview,md preview,render markdown"
     }
+  },
+  {
+    "slug": "timestamp",
+    "icon": "🕐",
+    "dir": "calculators",
+    "categories": [
+      "utility"
+    ],
+    "zh": {
+      "name": "时间戳转换",
+      "desc": "Unix 时间戳与日期时间互转，支持秒/毫秒与本地/UTC",
+      "kw": "时间戳,时间戳转换,unix时间戳,时间戳计算,时间戳转日期,日期转时间戳"
+    },
+    "en": {
+      "name": "Timestamp Converter",
+      "desc": "Convert Unix timestamps to dates and back, with seconds/milliseconds and local/UTC",
+      "kw": "timestamp,timestamp converter,unix timestamp,epoch,convert timestamp"
+    }
   }
 ]

@@ -66,7 +66,8 @@ const SITE_CONFIG = {
         { id: 'keyword-density', categories: ["text"] },
         { id: 'word-counter', categories: ["text"] },
         { id: 'regex-tester', categories: ["text"] },
-        { id: 'markdown-preview', categories: ["text"] }
+        { id: 'markdown-preview', categories: ["text"] },
+        { id: 'timestamp', categories: ["utility"] }
 /* __GENERATED_SITE_CONFIG_TOOLS_END__ */
     ]
 };
@@ -500,7 +501,8 @@ const TOOLS_DATA = {
     'keyword-density': { icon: '🎯', name: { zh: '关键词密度', en: 'Keyword Density' }, desc: { zh: '分析文章关键词密度', en: 'Analyze keyword density in text' } },
     'word-counter': { icon: '🔤', name: { zh: '字数统计', en: 'Word Counter' }, desc: { zh: '统计字符/字数/段落', en: 'Count characters/words/paragraphs' } },
     'regex-tester': { icon: '🔍', name: { zh: '正则表达式测试器', en: 'Regex Tester' }, desc: { zh: '实时匹配高亮与捕获组解析', en: 'Real-time match highlight and group parsing' } },
-    'markdown-preview': { icon: '📝', name: { zh: 'Markdown 预览器', en: 'Markdown Preview' }, desc: { zh: '实时预览 Markdown 渲染结果', en: 'Live Markdown rendering preview' } }
+    'markdown-preview': { icon: '📝', name: { zh: 'Markdown 预览器', en: 'Markdown Preview' }, desc: { zh: '实时预览 Markdown 渲染结果', en: 'Live Markdown rendering preview' } },
+    timestamp: { icon: '🕐', name: { zh: '时间戳转换', en: 'Timestamp Converter' }, desc: { zh: 'Unix 时间戳与日期时间互转，支持秒/毫秒与本地/UTC', en: 'Convert Unix timestamps to dates and back, with seconds/milliseconds and local/UTC' } }
 };
 /* __GENERATED_TOOLS_DATA_END__ */
 /* __GENERATED_TOOL_KEYWORDS_START__ */
@@ -547,7 +549,8 @@ const TOOL_KEYWORDS_ZH = {
     'keyword-density': '关键词密度,关键词频率,seo分析',
     'word-counter': '字数统计,字数,字符数,文章统计',
     'regex-tester': '正则表达式,正则测试,正则匹配,regex,正则高亮,捕获组',
-    'markdown-preview': 'markdown,markdown预览,md转html,markdown编辑器,markdown在线'
+    'markdown-preview': 'markdown,markdown预览,md转html,markdown编辑器,markdown在线',
+    timestamp: '时间戳,时间戳转换,unix时间戳,时间戳计算,时间戳转日期,日期转时间戳'
 };
 /* __GENERATED_TOOL_KEYWORDS_END__ */
 

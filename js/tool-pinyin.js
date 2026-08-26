@@ -171,5 +171,9 @@ window.TOOL_PINYIN_ZH = {
   "markdown-preview": {
     "py": "markdown yulanqi markdown,markdownyulan,mdzhuanhtml,markdownbianjiqi,markdownzaixian",
     "ini": "markdown ylq markdown,markdownyl,mdzhtml,markdownbjq,markdownzx"
+  },
+  "timestamp": {
+    "py": "shijianchuozhuanhuan shijianchuo,shijianchuozhuanhuan,unixshijianchuo,shijianchuojisuan,shijianchuozhuanriqi,riqizhuanshijianchuo",
+    "ini": "sjczh sjc,sjczh,usjc,sjcjs,sjczrq,rqzsjc"
   }
 };

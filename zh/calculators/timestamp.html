@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时间戳转换 - Unix时间戳与日期时间互转, 秒/毫秒在线工具</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="免费在线时间戳转换器，Unix时间戳(秒/毫秒)与人类可读日期时间实时互转，支持本地时间与UTC显示，适合开发者、运维与数据处理场景。">
+    <meta property='og:title' content='时间戳转换 - Unix时间戳与日期互转'/>
+    <meta property='og:description' content='免费在线时间戳转换器，秒/毫秒 Unix 时间戳与日期时间实时互转，显示本地时间与 UTC 时间，适合开发者与数据处理。'/>
+    <meta property='og:type' content='website'/>
+    <meta property='og:url' content='https://www.calc-tools.top/zh/calculators/timestamp'/>
+    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:locale' content='zh_CN'/>
+    <meta name='twitter:card' content='summary_large_image'/>
+    <meta name='twitter:title' content='时间戳转换 - Unix时间戳与日期互转'/>
+    <meta name='twitter:description' content='免费在线时间戳转换器，Unix 时间戳秒/毫秒与日期时间实时互转，支持本地与 UTC 显示。'/>
+
+    <link rel="canonical" href="https://www.calc-tools.top/zh/calculators/timestamp">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/calculators/timestamp">
+    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/calculators/timestamp">
+    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/zh/calculators/timestamp">
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/theme-toggle.js" defer></script>
+    <script src="/js/i18n.js" defer></script>
+    <script src="/js/like.js" defer></script>
+    <script src="/js/calculators/timestamp.js" defer></script>
+    <script src="/js/calculators/timestamp-ui.js" defer></script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "在线工具", "item": "https://www.calc-tools.top/" },
+            { "@type": "ListItem", "position": 2, "name": "时间戳转换", "item": "https://www.calc-tools.top/zh/calculators/timestamp" }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "时间戳转换 - Unix时间戳与日期互转",
+        "url": "https://www.calc-tools.top/zh/calculators/timestamp",
+        "description": "免费在线时间戳转换器，Unix 时间戳(秒/毫秒)与人类可读日期时间实时互转，支持本地时间与 UTC 显示。",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "zh-CN"
+    }
+    </script>
+</head>
+<body>
+    <header>
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo"></a>
+    <nav>
+        <a href="/"><span>首页</span></a>
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="语言切换">
+            <option value="zh" selected>🇨🇳 中文</option>
+            <option value="en">🇬🇧 English</option>
+        </select>
+        <button id="theme-toggle" class="theme-toggle" aria-label="切换暗黑模式"><span class="theme-icon">☀️</span></button>
+    </nav>
+</header>
+
+    <main id="main">
+        <div class="tool-container">
+            <h1>时间戳转换</h1>
+            <p class="tool-description">在线 Unix 时间戳转换器，秒/毫秒级时间戳与人类可读日期时间实时互转，并同时显示本地时区与 UTC 时间，方便开发者与数据处理场景使用。</p>
+
+            <div class="calculator-form">
+                <div class="input-group">
+                    <label for="ts-value">Unix 时间戳</label>
+                    <div class="ts-input-row">
+                        <input type="text" id="ts-value" placeholder="1600000000" inputmode="numeric" spellcheck="false" aria-label="Unix 时间戳数值">
+                        <select id="ts-unit" aria-label="时间戳单位">
+                            <option value="auto" selected>自动</option>
+                            <option value="s">秒</option>
+                            <option value="ms">毫秒</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="dt-value">日期时间</label>
+                    <input type="datetime-local" id="dt-value" aria-label="日期时间">
+                </div>
+
+                <div class="result-area hidden" id="result-area">
+                    <div class="result-label">转换结果</div>
+                    <dl class="tz-result-list">
+                        <div class="tz-item"><dt>本地时间</dt><dd id="ts-local">--</dd></div>
+                        <div class="tz-item"><dt>UTC 时间</dt><dd id="ts-utc">--</dd></div>
+                        <div class="tz-item"><dt>秒</dt><dd id="ts-sec">--</dd></div>
+                        <div class="tz-item"><dt>毫秒</dt><dd id="ts-ms">--</dd></div>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="tool-info">
+                <h2>什么是 Unix 时间戳？</h2>
+                <p>Unix 时间戳（Unix Timestamp / Epoch）是从 1970 年 1 月 1 日 00:00:00 UTC 起经过的秒数（不含闰秒）。它是计算机与数据库中表示时间的通用标准，具有跨时区、无歧义的优点。随着精度需求提升，许多系统使用毫秒级时间戳（当前时间乘以 1000），本工具可自动辨认秒级（约 10 位数字）与毫秒级（约 13 位数字）并按需转换。</p>
+                <h3>如何使用本工具</h3>
+                <ol>
+                    <li>在「Unix 时间戳」输入框中粘贴秒级或毫秒级时间戳，工具自动检测单位并实时显示对应的本地时间与 UTC 时间</li>
+                    <li>或直接选择日期时间，工具反向计算出对应的秒/毫秒时间戳</li>
+                    <li>通过单位下拉手动指定「秒 / 毫秒」，可查看同一数值在不同精度下的结果</li>
+                    <li>结果区同时给出本地时区时间与 UTC 时间，便于核对跨时区场景</li>
+                </ol>
+                <h3>常见问题</h3>
+                <p><strong>如何区分秒级与毫秒级时间戳？</strong>当前时间（2026 年）的秒级时间戳约为 17.8 亿（10 位），毫秒级约为 1.78 万亿（13 位）。本工具默认用 10^11 作为分界自动判定，也可手动切换指定。</p>
+                <p><strong>时间戳为什么有时区差异？</strong>时间戳本身是绝对时刻，与显示时区无关。换算成可读日期时才会受到时区影响。本工具同时显示本地时区与 UTC，方便你核对是否正确。</p>
+                <p><strong>数据会上传到服务器吗？</strong>不会。所有换算都在浏览器本地完成，输入的数据不会离开你的设备。</p>
+            </div>
+        </div>
+
+        <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="timestamp"><span class="heart">❤</span> <span class="count">0</span></button></div>
+    <div class="related-tools">
+    <h3>相关工具</h3>
+    <ul>
+        <li><a href="/zh/calculators/date-calc">日期计算器</a></li>
+        <li><a href="/zh/calculators/workday-calculator">工作日计算器</a></li>
+        <li><a href="/zh/calculators/unit-converter">单位换算器</a></li>
+    </ul>
+</div>
+</main>
+
+    <footer>
+    <div class="footer-links">
+        <a href="/">首页</a>
+        <a href="/about">关于</a>
+        <a href="/privacy">隐私政策</a>
+        <a href="/contact">联系</a>
+        <a href="/blog/zh/">博客</a>
+    </div>
+    <p>© 2026 工具箱里 | 免费在线工具</p>
+</footer>
+
+    <script src="/js/url-state.js" defer></script>
+</body>
+</html>
