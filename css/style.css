@@ -1,5 +1,16 @@
 @import url('./tokens.css');
 
+/* Inline SVG sprite container: hide robustly so it never flashes on first load (FOUC)
+   or occupies layout space. Overrides the inline style + zero-size attributes. */
+.icon-sprite {
+    display: none !important;
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+}
+
 
 
 
