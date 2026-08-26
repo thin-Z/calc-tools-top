@@ -2497,7 +2497,19 @@ svg.ic {
 .about-page strong { color: var(--text-primary); font-weight: 600; }
 .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
 .feature-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; }
-.feature-card .icon { font-size: var(--fs-2xl); margin-bottom: 0.5rem; display: block; }
+/* 通用卡片图标：渐变背景圆 + 白色图标（2026-08-28 统一所有卡片图标渐变） */
+.feature-card .icon,
+.contact-card .icon {
+    width: 46px;
+    height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg,var(--brand-blue),var(--blue-600));
+    color: var(--white);
+}
+.feature-card .icon { font-size: var(--fs-2xl); margin-bottom: 0.75rem; display: inline-flex; }
 .feature-card h3 { font-size: var(--fs-md); font-weight: 600; margin-bottom: 0.25rem; color: var(--text-primary); }
 .feature-card p { font-size: var(--fs-sm); margin-bottom: 0; }
 @media (max-width: 640px){ .feature-grid { grid-template-columns: 1fr; } }
@@ -2508,7 +2520,7 @@ svg.ic {
 .contact-page .subtitle { font-size: 0.9375rem; color: var(--text-secondary); margin-bottom: 2rem; line-height: 1.6; }
 .contact-methods { display: flex; flex-direction: column; gap: 1rem; }
 .contact-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; display: flex; align-items: flex-start; gap: 1rem; }
-.contact-card .icon { font-size: var(--fs-2xl); flex-shrink: 0; }
+.contact-card .icon { font-size: var(--fs-2xl); flex-shrink: 0; display: inline-flex; }
 .contact-card h3 { font-size: var(--fs-md); font-weight: 600; margin-bottom: 0.25rem; color: var(--text-primary); }
 .contact-card p { font-size: var(--fs-sm); color: var(--text-secondary); margin-bottom: 0; }
 .contact-card a { color: var(--primary); text-decoration: none; font-weight: 500; }
