@@ -5,6 +5,9 @@
 # Brainstorming visual companion
 .superpowers/
 
+# 一次性脚本/临时工作区（Phase 1 起归档至此，不进版本库）
+.workbuddy/
+
 # OS files
 Thumbs.db
 .DS_Store
