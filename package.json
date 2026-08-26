@@ -1,0 +1,32 @@
+{
+  "name": "calculator-site",
+  "version": "1.0.0",
+  "description": "免费在线工具站（计算器 / 图片 / 文字工具 + 中英双语博客）。纯静态站点托管在 Vercel，点赞/点击计数通过 Vercel Serverless Function + Upstash Redis（Vercel KV）实现。",
+  "main": "sw.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "axe-core": "^4.13.0"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "verify": "node scripts/verify-site.mjs",
+    "test": "node --test \"js/test/*.test.js\" \"api/test/*.test.js\"",
+    "test:e2e": "playwright test",
+    "e2e:server": "node scripts/e2e-server.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thin-Z/calc-tools-top.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/thin-Z/calc-tools-top/issues"
+  },
+  "homepage": "https://github.com/thin-Z/calc-tools-top#readme"
+}

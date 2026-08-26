@@ -1,7 +1,7 @@
 :root {
     --brand-blue: #007AFF;
     --brand-blue-dark: #0056CC;
-    --brand-purple: #5856D6;
+    /* D7 决策（2026-08-26）：纯 #007AFF 单一品牌蓝阶，--brand-purple 已移除，禁止 reintroduce */
     --brand-orange: #FF9500;
     --brand-green: #34C759;
     --bg: #F5F5F7;
@@ -11,7 +11,8 @@
     --bg-muted: #F8F8FA;
     --border: #E8E8ED;
     --text-primary: #1D1D1F;
-    --text-secondary: #86868B;
+    /* T1.4：#86868B 在浅灰背景上仅 ~3.4:1，未达 AA；#6E6E73 为 ≥4.5:1 的次级文字标准值 */
+    --text-secondary: #6E6E73;
     --text-tertiary: #98989D;
     --primary: #007AFF;
     --primary-hover: #0056CC;
@@ -67,27 +68,46 @@
     --like: #f43f5e;
     --like-bg: #fff1f2;
     --danger: #ef4444;
-    --danger-strong: #dc2626;
-    --success: #16a34a;
+    --danger-strong: var(--color-danger);
+    --success: var(--color-success-deep);
     --success-bg: #f0fdf4;
-    --hot-badge-from: #f59e0b;
+    /* Semantic status colors (T1.3 语义令牌补全：danger/warning/success/info 单一来源) */
+    --color-danger: #dc2626;
+    --color-warning: #f59e0b;
+    --color-success: #16a34a;
+    /* T1.4：#16a34a 在浅绿底(success-bg)上仅 ~3.14:1；组件层文字用深一档的 green-700 保 AA */
+    --color-success-deep: #15803d;
+    --color-info: #2563eb;
+    --color-info-alpha: rgba(37,99,235,0.8);
+    /* T1.4: tag text overrides for WCAG AA on light tint backgrounds */
+    --tag-image-deep: #065f46;
+    --tag-shopping-deep: #9d174d;
+    --tag-utility-deep: #475569;
+    --tag-text-deep: #c2410c;
+    /* 暗色模式正文文字色（T1.4：修复 Phase 0 将 --text 链接到 --bg 导致的黑底黑字） */
+    --text-on-dark: #F5F5F7;
+    /* 正文链接色（T1.4：亮色用 info 蓝保 AA；暗色由主题块覆写为高亮蓝） */
+    --link-color: var(--color-info);
+    --hot-badge-from: var(--color-warning);
     --hot-badge-to: #ef4444;
     --hot-likes: #d97706;
     --trend-hot-bg: #fef2f2;
-    --trend-hot-text: #dc2626;
+    --trend-hot-text: var(--color-danger);
     --trend-up-bg: #fff7ed;
     --trend-up-text: #ea580c;
-    --strength-fair: #f59e0b;
+    --strength-fair: var(--color-warning);
     --strength-strong: #eab308;
-    --cat-finance: #4f46e5;
+    --cat-finance: #1d4ed8;
     --cat-life: #ca8a04;
     --cat-shopping: #db2777;
     --cat-travel: #0284c7;
-    --cat-utility: #7c3aed;
+    --cat-utility: var(--slate-500);
     --cat-image: #059669;
     --white: #fff;
     --black: #000;
     --text-muted: #6b7280;
+    /* T1.4：浅色底(#e9eff7 等)上的说明文字需比 secondary 更深才达 4.5:1 */
+    --text-secondary-deep: #5d6470;
     --bg-subtle: #f1f5f9;
     --bg-soft: #f8fafc;
     --border-soft: #e5e7eb;
@@ -100,18 +120,20 @@
     --red-200: #fca5a5;
     --red-300: #f87171;
     --blue-100: #bfdbfe;
-    --blue-600: #2563eb;
+    /* T1.1 蓝阶补全（D7：纯蓝阶，indigo/violet 已移除） */
+    --blue-50: #eff6ff;
+    --blue-300: #93c5fd;
+    --blue-500: #3b82f6;
+    --blue-600: var(--color-info);
+    --blue-900: #1e3a8a;
+    --slate-300: #94a3b8;
+    --slate-500: #64748b;
     --orange-100: #fed7aa;
     --orange-200: #fdba74;
     --orange-400: #ff9f0a;
     --orange-500: #f97316;
     --orange-900: #713f12;
     --brown-900: #7c2d12;
-    --indigo-200: #a5b4fc;
-    --indigo-500: #6366f1;
-    --indigo-600: #5e5ce6;
-    --indigo-900: #312e81;
-    --indigo-50-2: #f0f0ff;
     --amber-100: #fde68a;
     --amber-400: #fbbf24;
     --pink-200: #f9a8d4;
@@ -120,9 +142,6 @@
     --sky-300: #7dd3fc;
     --sky-400: #38bdf8;
     --sky-900: #0c4a6e;
-    --violet-200: #c4b5fd;
-    --violet-500: #8b5cf6;
-    --violet-900: #4c1d95;
     --emerald-200: #6ee7b7;
     --emerald-500: #10b981;
     --emerald-900: #064e3b;
@@ -136,7 +155,6 @@
     --slate-800: #1e293b;
     --gray-800: #1f2937;
     --accent-blue: #0a84ff;
-    --brand-purple-2: #6856e8;
     --danger-bg-deep: #3a1a1a;
     --green-100: #86efac;
 
@@ -147,6 +165,10 @@
     --shadow-md-dark: 0 4px 12px rgba(0,0,0,0.12);
     --shadow-lg-dark: 0 4px 12px rgba(0,0,0,0.2);
     --shadow-xl: 0 0 0 3px rgba(0,122,255,0.15);
+    /* 暗色阴影色（修复 Phase 0 遗留：style.css 曾引用未定义的 --shadow-2xl/3xl/overlay） */
+    --shadow-color-dark: rgba(0,0,0,0.3);
+    --shadow-color-darker: rgba(0,0,0,0.4);
+    --shadow-color-deepest: rgba(0,0,0,0.5);
 
     /* ── Brand blue alpha tints ── */
     --blue-05: rgba(0,122,255,0.05);
@@ -171,13 +193,13 @@
     --accent-25: rgba(10,132,255,0.25);
     --accent-40: rgba(10,132,255,0.4);
 
-    /* ── Category alpha tints ── */
-    --cat-finance-bg: rgba(79,70,229,0.2);
+    /* ── Category alpha tints（T1.1：finance 紫→蓝 info tint；utility 紫→slate 中性） ── */
+    --cat-finance-bg: rgba(37,99,235,0.15);
     --cat-health-bg: rgba(22,163,74,0.2);
     --cat-life-bg: rgba(202,138,4,0.2);
     --cat-shopping-bg: rgba(219,39,119,0.2);
     --cat-travel-bg: rgba(2,132,199,0.2);
-    --cat-utility-bg: rgba(124,58,237,0.2);
+    --cat-utility-bg: rgba(100,116,139,0.15);
     --cat-image-bg: rgba(5,150,105,0.2);
     --cat-text-bg: rgba(234,88,12,0.2);
     --cat-tools-bg: rgba(8,145,178,0.2);
@@ -193,15 +215,12 @@
     --hot-likes-bg: rgba(251,191,36,0.15);
     --hot-likes-border: rgba(251,191,36,0.3);
     --hot-score-bg: rgba(239,68,68,0.2);
-    --purple-08: rgba(88,86,214,0.08);
-    --purple-06: rgba(104,86,232,0.06);
-    --purple-08b: rgba(104,86,232,0.08);
+    /* T1.1：--purple-08/06/08b 紫色 tint 已删除，引用处改用蓝色阶 tint（D7） */
     --orange-08: rgba(255,149,0,0.08);
     --green-08: rgba(52,199,89,0.08);
     --green-10a: rgba(48,209,88,0.1);
     --amber-10: rgba(255,159,10,0.1);
     --yellow-45: rgba(250,204,21,0.45);
-    --blue-violet-80: rgba(37,99,235,0.8);
 
     /* ── Glass / surface alphas ── */
     --glass-white-90: rgba(255,255,255,0.9);
@@ -217,6 +236,6 @@
     --overlay-bg: rgba(0,0,0,0.45);
 
     /* ── Link / badge ── */
-    --link-bg: rgba(37,99,235,0.8);
-    --violet-badge-bg: rgba(124,58,237,0.8);
+    --link-bg: var(--color-info-alpha);
+    --link-badge-deep: rgba(0,86,204,0.85);
 }

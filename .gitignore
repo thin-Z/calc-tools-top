@@ -30,6 +30,11 @@ tag-preview.html
 
 node_modules/
 
+# Playwright (T1.5 E2E) artifacts
+test-results/
+playwright-report/
+blob-report/
+
 # Vercel build output
 dist/
 
@@ -41,3 +46,5 @@ __pycache__/
 
 # 一次性脚本生成报告
 scripts/*_report.txt
+
+snapshots/

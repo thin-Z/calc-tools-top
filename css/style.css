@@ -14,20 +14,22 @@
     --success-bg: var(--cat-health-bg);
     --trend-hot-text: var(--red-200);
     --trend-up-text: var(--orange-200);
-    --cat-finance: var(--indigo-200);       --cat-finance-bg: var(--cat-finance-bg);
+    --cat-finance: var(--blue-300);
     --cat-life: var(--amber-100);          --cat-life-bg: var(--cat-life-bg);
     --cat-shopping: var(--pink-200);      --cat-shopping-bg: var(--cat-shopping-bg);
     --cat-travel: var(--sky-300);        --cat-travel-bg: var(--cat-travel-bg);
-    --cat-utility: var(--violet-200);       --cat-utility-bg: var(--cat-utility-bg);
+    --cat-utility: var(--slate-300);
     --cat-image: var(--emerald-200);         --cat-image-bg: var(--cat-image-bg);
     --bg: var(--black);
     --bg-card: var(--surface-darker);
     --bg-elevated: var(--surface-dark);
     --bg-muted: var(--surface-dark);
     --bg-surface: var(--surface-dark);
-    --text: var(--bg);
-    --text-primary: var(--bg);
+    --text: var(--text-on-dark);
+    --text-primary: var(--text-on-dark);
     --text-secondary: var(--text-tertiary);
+    /* T1.4：暗色下 info 蓝(#2563eb) 在纯黑上仅 4.06:1，链接提亮为 accent 蓝(≈5.2:1) */
+    --link-color: var(--accent-blue);
     --border: var(--surface-dark-2);
     --glass-bg: rgba(0,0,0,0.72);
     --glass-blur: 20px;
@@ -37,12 +39,12 @@
     --primary-light: var(--accent-15);
     --primary-glow: var(--accent-40);
     --brand-blue: var(--accent-blue);
-    --brand-purple: var(--brand-purple-2);
+    /* T1.1（D7）：--brand-purple 已删除，纯 #007AFF 蓝阶 */
     --brand-orange: var(--orange-400);
     --brand-green: var(--green-apple);
-    --shadow-sm: 0 1px 3px var(--shadow-2xl);
-    --shadow-md: 0 4px 12px var(--shadow-3xl);
-    --shadow-lg: 0 8px 30px var(--shadow-overlay);
+    --shadow-sm: 0 1px 3px var(--shadow-color-dark);
+    --shadow-md: 0 4px 12px var(--shadow-color-darker);
+    --shadow-lg: 0 8px 30px var(--shadow-color-deepest);
 }
 
 [data-theme="dark"] .tool-card-wrap {
@@ -52,12 +54,12 @@
 
 /* 暗色图标渐变（P2-3：提取为 CSS 变量，便于统一维护主题色） */
 [data-theme="dark"] {
-  --icon-finance-1: var(--indigo-900);  --icon-finance-2: var(--indigo-500);
+  --icon-finance-1: var(--blue-900);   --icon-finance-2: var(--blue-500);
   --icon-health-1: var(--green-900);   --icon-health-2: var(--green-500);
   --icon-life-1: var(--orange-900);     --icon-life-2: var(--strength-strong);
   --icon-shopping-1: var(--pink-900); --icon-shopping-2: var(--pink-500);
   --icon-travel-1: var(--sky-900);   --icon-travel-2: var(--sky-400);
-  --icon-utility-1: var(--violet-900);  --icon-utility-2: var(--violet-500);
+  --icon-utility-1: var(--slate-800);  --icon-utility-2: var(--slate-300);
   --icon-image-1: var(--emerald-900);    --icon-image-2: var(--emerald-500);
   --icon-text-1: var(--brown-900);     --icon-text-2: var(--orange-500);
 }
@@ -86,7 +88,7 @@ body {
     scroll-behavior: smooth;
 }
 
-a { color: var(--primary); text-decoration: none; transition: opacity 0.2s; }
+a { color: var(--link-color); text-decoration: none; transition: opacity 0.2s; }
 a:hover { text-decoration: underline; }
 
 /* ===== Header ===== */
@@ -612,7 +614,7 @@ footer .footer-links a:hover {
     right: 1.75rem;
     height: 3px;
     border-radius: 0 0 3px 3px;
-    background: linear-gradient(90deg,var(--brand-blue),var(--brand-purple,var(--indigo-600)));
+    background: linear-gradient(90deg,var(--brand-blue),var(--brand-blue-dark));
 }
 .tool-content > h2:first-child,.seo-content > h2:first-child {
     margin-top: 0;
@@ -1242,13 +1244,13 @@ button:active,.btn:active {
     box-shadow: 0 2px 4px var(--shadow-base);
 }
 .tag-finance { background: var(--cat-finance-bg); color: var(--cat-finance); }
-.tag-health { background: var(--success-bg); color: var(--success); }
+.tag-health { background: var(--success-bg); color: var(--color-success-deep); }
 .tag-life { background: var(--cat-life-bg); color: var(--cat-life); }
-.tag-shopping { background: var(--cat-shopping-bg); color: var(--cat-shopping); }
+.tag-shopping { background: var(--cat-shopping-bg); color: var(--tag-shopping-deep); }
 .tag-travel { background: var(--cat-travel-bg); color: var(--cat-travel); }
-.tag-utility { background: var(--cat-utility-bg); color: var(--cat-utility); }
-.tag-image { background: var(--cat-image-bg); color: var(--cat-image); }
-.tag-text { background: var(--trend-up-bg); color: var(--trend-up-text); }
+.tag-utility { background: var(--cat-utility-bg); color: var(--tag-utility-deep); }
+.tag-image { background: var(--cat-image-bg); color: var(--tag-image-deep); }
+.tag-text { background: var(--trend-up-bg); color: var(--tag-text-deep); }
 .tag-tools { background: var(--cyan-50); color: var(--cyan-600); }
 
 /* ===== Section Divider ===== */
@@ -2081,12 +2083,12 @@ button:active,.btn:active {
 
 
 /* ===== Dark Mode Overrides ===== */
-[data-theme="dark"] .tag-finance { background: var(--cat-finance-bg); color: var(--indigo-200); }
+[data-theme="dark"] .tag-finance { background: var(--cat-finance-bg); color: var(--blue-300); }
 [data-theme="dark"] .tag-health { background: var(--cat-health-bg); color: var(--green-100); }
 [data-theme="dark"] .tag-life { background: var(--cat-life-bg); color: var(--amber-100); }
 [data-theme="dark"] .tag-shopping { background: var(--cat-shopping-bg); color: var(--pink-200); }
 [data-theme="dark"] .tag-travel { background: var(--cat-travel-bg); color: var(--sky-300); }
-[data-theme="dark"] .tag-utility { background: var(--cat-utility-bg); color: var(--violet-200); }
+[data-theme="dark"] .tag-utility { background: var(--cat-utility-bg); color: var(--slate-300); }
 [data-theme="dark"] .tag-image { background: var(--cat-image-bg); color: var(--emerald-200); }
 [data-theme="dark"] .tag-text { background: var(--cat-text-bg); color: var(--amber-400); }
 [data-theme="dark"] .tag-tools { background: var(--cat-tools-bg); color: var(--cyan-300); }
@@ -2139,7 +2141,10 @@ button:active,.btn:active {
 
 [data-theme="dark"] .category-chip {
     background: var(--surface-dark-2);
-    color: var(--text-tertiary);
+    color: var(--glass-white-80);
+}
+[data-theme="dark"] .category-chip:hover {
+    color: var(--glass-white-90);
 }
 [data-theme="dark"] .category-chip.active {
     background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark));
@@ -2228,7 +2233,7 @@ button:active,.btn:active {
     border-color: var(--border);
 }
 [data-theme="dark"] .blog-cta {
-    background: linear-gradient(135deg,var(--link-bg),var(--violet-badge-bg));
+    background: linear-gradient(135deg,var(--link-bg),var(--link-badge-deep));
 }
 [data-theme="dark"] .blog-cta p { color: var(--white); }
 [data-theme="dark"] .blog-cta a {
@@ -2265,7 +2270,7 @@ button:active,.btn:active {
 .reading-progress .progress-fill {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg,var(--brand-blue),var(--brand-purple));
+    background: linear-gradient(90deg,var(--brand-blue),var(--brand-blue-dark));
     transition: width 0.1s linear;
     border-radius: 0 2px 2px 0;
 }
@@ -2382,7 +2387,7 @@ button:active,.btn:active {
 .blog-cta {
     margin: 2rem 0;
     padding: 1.2rem 1.5rem;
-    background: linear-gradient(135deg,var(--brand-blue),var(--brand-purple));
+    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark));
     color: var(--white);
     border-radius: var(--radius-lg);
     text-align: center;
@@ -2408,7 +2413,7 @@ button:active,.btn:active {
     transition: all 0.2s ease;
 }
 .blog-cta a:hover {
-    background: var(--indigo-50-2);
+    background: var(--blue-50);
     transform: translateY(-1px);
     box-shadow: 0 2px 8px var(--shadow-base);
     text-decoration: none;
@@ -2485,12 +2490,12 @@ button:active,.btn:active {
 /* 404 */
 .error-page { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; text-align: center; padding: 2rem; }
 .error-icon { font-size: var(--fs-4xl); margin-bottom: 1rem; }
-.error-code { font-size: 6rem; font-weight: 700; background: linear-gradient(135deg,var(--brand-blue),var(--brand-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.2; margin-bottom: 0.5rem; }
+.error-code { font-size: 6rem; font-weight: 700; background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.2; margin-bottom: 0.5rem; }
 .error-title { font-size: var(--fs-2xl); color: var(--text-primary); margin-bottom: 1rem; }
 .error-desc { color: var(--text-secondary); margin-bottom: 2rem; max-width: 400px; }
 .error-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
 .error-actions .btn { padding: 0.75rem 1.5rem; border-radius: var(--radius-md); text-decoration: none; font-weight: 600; transition: all 0.2s ease; }
-.btn-primary-404 { background: linear-gradient(135deg,var(--brand-blue),var(--brand-purple)); color: var(--white); }
+.btn-primary-404 { background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark)); color: var(--white); }
 .btn-primary-404:hover { transform: translateY(-2px); box-shadow: 0 4px 20px var(--primary-glow); }
 .btn-secondary-404 { background: var(--glass-bg); color: var(--text-primary); border: 1px solid var(--glass-border); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 .btn-secondary-404:hover { background: var(--bg-elevated); transform: translateY(-2px); }
@@ -2557,7 +2562,7 @@ button:active,.btn:active {
     color: var(--primary);
 }
 .mode-chip.active {
-    background: var(--primary);
+    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark));
     border-color: var(--primary);
     color: var(--white);
 }
@@ -2771,7 +2776,7 @@ button:active,.btn:active {
 .gen-tabs { display: flex; gap: var(--space-2); margin-bottom: var(--space-4); }
 .gen-tab { padding: 0.5rem 1.2rem; border-radius: 20px; border: 1.5px solid var(--border); background: var(--bg-card); color: var(--text-secondary); font-size: 0.9rem; cursor: pointer; transition: all 0.2s; user-select: none; }
 .gen-tab:hover { border-color: var(--primary); color: var(--primary); }
-.gen-tab.active { background: var(--primary); border-color: var(--primary); color: var(--white); }
+.gen-tab.active { background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark)); border-color: var(--primary); color: var(--white); }
 .gen-panel { display: none; }
 .gen-panel.active { display: block; }
 
@@ -2971,7 +2976,8 @@ button:active,.btn:active {
 .st-2 { text-align:center;padding:1rem; }
 .st-3 { padding:8px;border:1px solid var(--border); }
 .st-4 { font-size:0.9rem;color:var(--text-secondary); }
-.st-5 { margin-top:10px;margin-bottom:0;font-size:0.8rem;color:var(--text-tertiary); }
+.st-5 { margin-top:10px;margin-bottom:0;font-size:0.8rem;color:var(--text-secondary-deep) !important; }
+[data-theme="dark"] .st-5 { color: var(--text-secondary) !important; } /* T1.4: 暗色下用浅灰文字保 AA */
 .st-6 { font-size:1.3rem;font-weight:700;margin-top:4px; }
 .st-7 { margin:1rem 0; }
 .st-8 { margin-bottom:12px; }
@@ -3356,7 +3362,7 @@ button:active,.btn:active {
 /* --- 页面头部:品牌渐变标题 + 装饰线 --- */
 .page-header { position: relative; }
 .page-header h1 {
-    background: linear-gradient(120deg,var(--brand-blue),var(--brand-purple));
+    background: linear-gradient(120deg,var(--brand-blue),var(--brand-blue-dark));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -3370,7 +3376,7 @@ button:active,.btn:active {
     height: 4px;
     margin: 16px auto 0;
     border-radius: var(--radius-full);
-    background: linear-gradient(90deg,var(--brand-blue),var(--brand-purple));
+    background: linear-gradient(90deg,var(--brand-blue),var(--brand-blue-dark));
     opacity: 0.8;
 }
 
@@ -3420,14 +3426,14 @@ button:active,.btn:active {
 
 /* --- 结果卡片:品牌渐变底 + 渐变数字 --- */
 .result-card {
-    background: linear-gradient(135deg,var(--primary-light),var(--purple-08));
+    background: linear-gradient(135deg,var(--primary-light),var(--blue-08));
     border: 1px solid var(--blue-20);
     border-radius: var(--radius-xl);
     box-shadow: 0 8px 30px var(--blue-08);
     transition: box-shadow 0.3s ease;
 }
 .result-card .result-value {
-    background: linear-gradient(120deg,var(--brand-blue),var(--brand-purple));
+    background: linear-gradient(120deg,var(--brand-blue),var(--brand-blue-dark));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -3473,16 +3479,16 @@ button:active,.btn:active {
 [data-theme="dark"] .tool-form,[data-theme="dark"] .calculator-form {
     background: var(--surface-alpha-72);
     border-color: var(--glass-white-08);
-    box-shadow: 0 8px 30px var(--shadow-3xl),var(--shadow-md);
+    box-shadow: 0 8px 30px var(--shadow-color-darker),var(--shadow-md);
 }
 [data-theme="dark"] .result-card {
-    background: linear-gradient(135deg,var(--accent-14),var(--purple-08b));
+    background: linear-gradient(135deg,var(--accent-14),var(--accent-08));
     border-color: var(--accent-25);
     box-shadow: 0 8px 30px var(--overlay-bg);
 }
 [data-theme="dark"] .btn-secondary {
     background: var(--surface-alpha-70);
-    box-shadow: 0 2px 8px var(--shadow-2xl);
+    box-shadow: 0 2px 8px var(--shadow-color-dark);
 }
 [data-theme="dark"] .upload-zone {
     background: var(--surface-alpha-60);
@@ -3500,7 +3506,7 @@ button:active,.btn:active {
 
 /* --- 博客文章页: 标题渐变 + 内容卡片化 --- */
 .blog-post h1 {
-    background: linear-gradient(120deg,var(--brand-blue),var(--brand-purple));
+    background: linear-gradient(120deg,var(--brand-blue),var(--brand-blue-dark));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -3520,11 +3526,11 @@ button:active,.btn:active {
     bottom: 4px;
     width: 4px;
     border-radius: var(--radius-full);
-    background: linear-gradient(180deg,var(--brand-blue),var(--brand-purple));
+    background: linear-gradient(180deg,var(--brand-blue),var(--brand-blue-dark));
     opacity: 0.7;
 }
 .blog-post blockquote {
-    background: linear-gradient(135deg,var(--primary-light),var(--purple-08));
+    background: linear-gradient(135deg,var(--primary-light),var(--blue-08));
     border-left: 4px solid var(--brand-blue);
     border-radius: var(--radius-md);
     padding: 0.9rem 1.2rem;
@@ -3535,7 +3541,7 @@ button:active,.btn:active {
     box-shadow: var(--shadow-md);
 }
 .blog-post .blog-cta {
-    background: linear-gradient(135deg,var(--brand-blue),var(--brand-purple));
+    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark));
     border-radius: var(--radius-xl);
     box-shadow: 0 8px 24px var(--primary-glow);
 }
@@ -3588,7 +3594,7 @@ button:active,.btn:active {
 
 /* --- 分类索引页标题 --- */
 .category-header h1 {
-    background: linear-gradient(120deg,var(--brand-blue),var(--brand-purple));
+    background: linear-gradient(120deg,var(--brand-blue),var(--brand-blue-dark));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -3604,7 +3610,7 @@ button:active,.btn:active {
     height: 4px;
     margin: 14px auto 0;
     border-radius: var(--radius-full);
-    background: linear-gradient(90deg,var(--brand-blue),var(--brand-purple));
+    background: linear-gradient(90deg,var(--brand-blue),var(--brand-blue-dark));
     opacity: 0.8;
 }
 .tool-count {
@@ -3613,7 +3619,7 @@ button:active,.btn:active {
 
 /* --- 结构页(about / contact / privacy / 404)--- */
 .about-page h1,.contact-page h1,.privacy-page h1,.lang-select-page h1 {
-    background: linear-gradient(120deg,var(--brand-blue),var(--brand-purple));
+    background: linear-gradient(120deg,var(--brand-blue),var(--brand-blue-dark));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -3655,7 +3661,7 @@ button:active,.btn:active {
     border-color: var(--glass-white-08);
 }
 [data-theme="dark"] .blog-post blockquote {
-    background: linear-gradient(135deg,var(--accent-12),var(--purple-06));
+    background: linear-gradient(135deg,var(--accent-12),var(--accent-08));
 }
 [data-theme="dark"] .contact-card {
     background: var(--bg-card);
@@ -3667,7 +3673,7 @@ button:active,.btn:active {
 }
 [data-theme="dark"] .article-item:hover,[data-theme="dark"] .homepage-article-list .article-item:hover {
     border-color: var(--accent-40);
-    box-shadow: 0 12px 30px var(--shadow-overlay);
+    box-shadow: 0 12px 30px var(--shadow-color-deepest);
 }
 
 /* ===== 打印样式（T-COMP 2026-08-25）：隐藏导航/广告/交互控件，保留内容与结果 ===== */

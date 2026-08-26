@@ -528,13 +528,13 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
   }
 }
 
-// ---------- 19. P0 门禁：CSS 裸色值 + Emoji 清零（Phase 0, T0.4） ----------
+// ---------- 19. P0 门禁：CSS 裸色值 + Emoji 清零 + 紫二次色清零（Phase 0 T0.4 + Phase 1 T1.1/D7） ----------
 {
   try {
     execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'check-p0-gate.mjs')], { stdio: 'inherit', cwd: ROOT });
-    console.log('[19] P0 门禁 (CSS裸色值+Emoji清零): ✓');
+    console.log('[19] P0 门禁 (CSS裸色值+Emoji清零+紫二次色清零): ✓');
   } catch (e) {
-    fail('[P0-gate] scripts/check-p0-gate.mjs 退出码非 0（CSS 裸色值或 emoji 未清零）');
+    fail('[P0-gate] scripts/check-p0-gate.mjs 退出码非 0（CSS 裸色值、emoji 或紫二次色未清零）');
   }
 }
 

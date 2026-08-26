@@ -34,3 +34,37 @@ jobs:
         # 实测本地（排除环境 shim 后）: lines 89.34 / branches 81.00 / funcs 84.09。
         # 若 CI Node 版本不支持该 flag，由脚本解析覆盖率输出断言 lines>=80（见架构设计 T05）。
         run: node --test --experimental-test-coverage --test-coverage-lines=80 --test-coverage-branches=80 --test-coverage-functions=80 "js/test/*.test.js" "api/test/*.test.js"
+
+  e2e:
+    # T1.5 E5 Playwright 常驻 E2E 套件（Phase 1, D4 决策）：49 工具交互 + help/embed/PWA + 已知 bug 回归
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies (playwright)
+        run: npm ci
+
+      - name: Install Chromium browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Build (dist)
+        run: node scripts/build.mjs
+
+      - name: Run E2E suite
+        env:
+          CI: 'true'
+        run: npx playwright test
+
+      - name: Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
