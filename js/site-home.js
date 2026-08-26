@@ -181,8 +181,11 @@ function recordRecent(toolId) {
 
 function toolCardUrl(id) {
     // 复用首页静态工具卡的真实 URL（扩展名去除），避免手写 dir 映射。
-    const el = document.querySelector('.tool-grid .tool-card[data-like-id="' + id + '"]');
-    return el ? el.getAttribute('href') : '';
+    // a.tool-card 本身无 data-like-id，需从 like-btn → .tool-card-wrap → a.tool-card 定位。
+    const likeBtn = document.querySelector('.tool-grid [data-like-id="' + id + '"]');
+    const wrap = likeBtn ? likeBtn.closest('.tool-card-wrap, .hot-tool-card') : null;
+    const card = wrap ? wrap.querySelector('a.tool-card') : null;
+    return card ? card.getAttribute('href') : '';
 }
 
 function renderRecent() {
