@@ -95,11 +95,11 @@ function buildPage({ lang, cat, tools, articles, header, footer }) {
   const titleLang = lang === 'zh' ? 'zh-CN' : 'en';
 
   const title = lang === 'zh'
-    ? `${plain}相关工具与文章 - 工具箱里`
-    : `${plain} Tools & Articles - ToolBox`;
+    ? `${plain}分类免费在线工具与教程文章合集 - 在线工具箱 calc-tools.top`
+    : `${plain} Category - Free Online Tools & Guides`;
   const description = lang === 'zh'
-    ? `汇集${plain}分类下的免费在线工具与相关教程文章，${plain}工具即开即用，浏览器本地处理，数据不上传。`
-    : `Curated free online tools and guides in the ${plain} category. ${plain} tools run locally in your browser — no upload, no sign-up.`;
+    ? `汇集${plain}分类下的免费在线计算、图片与文字工具及相关教程文章，工具即开即用、浏览器本地处理、数据不上传。适合日常办公与生活场景，无需注册。`
+    : `Curated free online calculators, image and text tools plus guides in the ${plain} category. Tools run locally in your browser with no upload or sign-up.`;
 
   const toolSection = tools.length
     ? `    <section class="tag-section">
