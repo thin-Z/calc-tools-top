@@ -117,6 +117,15 @@
                     <li><strong>Email conversion</strong> Convert HTML emails to plain text format</li>
                     <li><strong>SEO optimization</strong> Review plain text readability of your pages</li>
                 </ul>
+                <h3>Why Strip HTML Tags?</h3>
+                <p>HTML tags are the code a browser uses to interpret page structure, but for reading and analyzing plain text, they're mostly noise. When you need to copy web content into a Word doc, send a plain-text email, store it in a database, or feed it to a natural-language model, these tags interfere with the cleanliness of the content. Removing them gives you genuinely "plain text".</p>
+                <p>Another common need is <strong>extracting body text for analysis</strong> — keyword counting, word statistics, text clustering, or turning a page's body into a readable summary. If you leave a bunch of <code>&lt;div&gt;</code>, <code>&lt;span&gt;</code>, class attributes, and inline styles, the numbers you compute won't be accurate. Strip the tags first so your analysis means something.</p>
+                <h3>Common Mistakes</h3>
+                <p><strong>① Don't assume "remove everything".</strong> Sometimes keeping <code>&lt;br&gt;</code> or <code>&lt;p&gt;</code> preserves paragraph structure; otherwise the plain text collapses into one big block and becomes harder to read. The tool lets you pick which tags to keep, exactly for this case.</p>
+                <p><strong>② Watch out for scripts and styles.</strong> Complex HTML often contains <code>&lt;script&gt;</code> or <code>&lt;style&gt;</code> that shouldn't remain in plain text; if the source is untrusted, stripping tags also removes that potentially risky code.</p>
+                <p><strong>③ Mind special entities.</strong> Things like <code>&amp;nbsp;</code> (space) and <code>&amp;amp;</code> (&amp;) may linger as artifacts after removal; give the result a quick review to make sure no weird characters remain.</p>
+                <h3>How to Use the Result</h3>
+                <p>The clean plain text can go straight into editing, analysis, database storage, or document organization. If you next need to count words or clean extra spaces, pair this with our Word Counter and Text Cleaner tools to build a full text-processing workflow.</p>
             </div>
         </div>
 
