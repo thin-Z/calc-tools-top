@@ -198,7 +198,16 @@ module.exports = async function handler(req, res) {
         }
         if (!cleanIds.length) return res.status(400).json({ error: 'invalid tools' });
         // 单次 MGET 取全部，替代 N 次串行 GET（KV 调用从 2N 次降至 1 次）
-        const values = await restMGet(cleanIds.map(function (id) { return 'click:tool:' + id; }));
+        const keys = cleanIds.map(function (id) { return 'click:tool:' + id; });
+        let values = await restMGet(keys);
+        // MGET 降级：若返回空数组（端点异常/超时），回退为逐个 GET
+        if (!values.length && keys.length) {
+          values = [];
+          for (const key of keys) {
+            const v = await rest('/get/' + key);
+            values.push(v);
+          }
+        }
         const out = {};
         cleanIds.forEach(function (id, i) {
           out[id] = Math.max(0, parseInt(values[i] || '0', 10));

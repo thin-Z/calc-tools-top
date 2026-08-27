@@ -193,8 +193,23 @@ module.exports = async function handler(req, res) {
         // 工具与博客 key 混合批量：每个 id 先查工具 key，miss 再查博客 key（两轮 MGET）
         const toolKeys = cleanIds.map(function (id) { return 'like:tool:' + id; });
         const blogKeys = cleanIds.map(function (id) { return 'like:blog:' + id; });
-        const toolVals = await restMGet(toolKeys);
-        const blogVals = await restMGet(blogKeys);
+        let toolVals = await restMGet(toolKeys);
+        let blogVals = await restMGet(blogKeys);
+        // MGET 降级：若返回空数组（端点异常/超时），回退为逐个 GET
+        if (!toolVals.length && toolKeys.length) {
+          toolVals = [];
+          for (const key of toolKeys) {
+            const v = await rest('/get/' + key);
+            toolVals.push(v);
+          }
+        }
+        if (!blogVals.length && blogKeys.length) {
+          blogVals = [];
+          for (const key of blogKeys) {
+            const v = await rest('/get/' + key);
+            blogVals.push(v);
+          }
+        }
         const out = {};
         cleanIds.forEach(function (id, i) {
           const v = toolVals[i] !== null && toolVals[i] !== undefined ? toolVals[i] : blogVals[i];
