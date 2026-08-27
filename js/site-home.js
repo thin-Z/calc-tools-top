@@ -1204,7 +1204,10 @@ function renderHotSearch(searchInput) {
 }
 
 /* ===== Initialization (home/list pages) ===== */
-document.addEventListener('DOMContentLoaded', () => {
+let _homeInited = false;
+function initAll() {
+    if (_homeInited) return;
+    _homeInited = true;
     /* Like buttons (tool + blog) are initialized by js/like.js (window.LikeSystem). */
     initCategoryFilters();
     initSearch();
@@ -1220,7 +1223,14 @@ document.addEventListener('DOMContentLoaded', () => {
         initToolSort();
         initClickTracking();
     });
-});
+}
+
+// ES module 兼容：DOMContentLoaded 可能已触发（动态 import 时）
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAll);
+} else {
+    initAll();
+}
 
 // Reload click display when page restored from bfcache (browser back/forward)
 window.addEventListener('pageshow', function(e) {
