@@ -106,6 +106,31 @@ function generateCardHTML(t, lang) {
   return `            <div class="tool-card-wrap"><a href="${prefix}/${t.dir}/${t.slug}" class="tool-card" data-category="${cats}" data-keywords-zh="${t.zh.kw}" data-keywords-en="${t.en.kw || ''}"><div class="icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-${t.icon}"></use></svg></div><h3>${text.name}</h3><p>${text.desc}</p></a><div class="tool-tags">${tagsHTML}</div><button class="like-btn" data-like-id="${t.slug}"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg><span class="count">0</span></button></div>`;
 }
 
+// ── P1-2：静态预渲染「热门工具」卡（消除 JS 填充缺口，降 CLS）──────────────
+// 默认热门工具集（与 site-home.js 的 DEFAULT_HOT_TOOLS 保持一致）
+const DEFAULT_HOT_TOOLS = ['mortgage', 'bmi', 'tax2026', 'color-picker', 'discount', 'unit-converter', 'word-counter', 'json-formatter'];
+
+// 按 site-home.js initHotTools 的 hot 卡结构生成：.hot-tool-card > hot-badge + hot-score + a.tool-card(.icon/.h3/.p) + tool-tags
+// score=0、无 trendBadge（新增用户默认态）；链接用 cleanUrl（与主卡片一致，initHotTools 重渲染时按用户数据覆盖）。
+function generateHotCardHTML(t, idx, lang) {
+  const prefix = lang === 'zh' ? '/zh' : '/en';
+  const text = t[lang];
+  const firstCat = (t.categories && t.categories[0]) || 'utility';
+  const tagPrefix = lang === 'zh' ? '/tags/' : '/en/tags/';
+  const tagsHTML = t.categories.map(c => {
+    const label = (TAG_LABELS[c] && TAG_LABELS[c][lang]) || c;
+    return `<a href="${tagPrefix}${c}.html" class="tag tag-${c}" data-tag="${c}">${label}</a>`;
+  }).join('');
+  return `<div class="hot-tool-card"><div class="hot-badge">#${idx + 1}</div><span class="hot-score">0</span><a href="${prefix}/${t.dir}/${t.slug}" class="tool-card" data-like-id="${t.slug}" data-category="${t.categories.join(',')}" data-keywords-zh="${t.zh.kw}"><div class="icon icon-${firstCat}"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-${t.icon}"></use></svg></div><h3>${text.name}</h3><p>${text.desc}</p></a><div class="tool-tags">${tagsHTML}</div></div>`;
+}
+
+function generateHotCardsHTML(lang) {
+  return DEFAULT_HOT_TOOLS.map((slug, i) => {
+    const t = tools.find(x => x.slug === slug);
+    return t ? generateHotCardHTML(t, i, lang) : '';
+  }).filter(Boolean).join('\n');
+}
+
 function toolSections(t) {
   // 由 categories 派生区块归属（去重、保持 SECTION_ORDER 顺序）
   const sections = [];
@@ -155,6 +180,13 @@ function patchBetween(content, startMarker, endMarker, replacement) {
   return content.slice(0, si + startMarker.length) + '\n' + replacement + '\n' + content.slice(ei);
 }
 
+// 把 hot 卡静态填入 <div class="hot-tools-grid" id="hotToolsGrid">…</div>
+function patchHotGrid(content, cards) {
+  const re = /(<div class="hot-tools-grid"[^>]*id="hotToolsGrid"[^>]*>)([\s\S]*?)(<\/div>)/;
+  if (!re.test(content)) return content;
+  return content.replace(re, (all, open, inner, close) => `${open}${cards}${close}`);
+}
+
 // ── 6. 执行生成 ──────────────────────────────────────────────
 const configTools = generateSiteConfigTools();
 const toolsData = generateToolsData();
@@ -179,7 +211,7 @@ for (const [key, gen] of [['siteConfigTools', configTools], ['toolsData', toolsD
 }
 if (patched > 0 && !dryRun) writeFileSync(jsPath, js, 'utf8');
 
-// 6b. index.html (zh)
+// 6b. index.html (zh) — 工具卡片 + 静态预渲染热门工具卡（P1-2）
 const zhPath = resolve(root, 'index.html');
 let zhHtml = readFileSync(zhPath, 'utf8');
 const zhResult = patchBetween(zhHtml, MARKERS.homeCards.start, MARKERS.homeCards.end, homeCardsZh);
@@ -187,10 +219,16 @@ if (zhResult !== null) {
   zhHtml = zhResult;
   patched++;
   console.log(`   index.html: 工具卡片已替换`);
-  if (!dryRun) writeFileSync(zhPath, zhHtml, 'utf8');
 }
+const zhHot = patchHotGrid(zhHtml, generateHotCardsHTML('zh'));
+if (zhHot !== zhHtml) {
+  zhHtml = zhHot;
+  patched++;
+  console.log(`   index.html: 热门工具卡已静态预渲染`);
+}
+if (patched > 0 && !dryRun) writeFileSync(zhPath, zhHtml, 'utf8');
 
-// 6c. en/index.html
+// 6c. en/index.html — 工具卡片 + 静态预渲染热门工具卡（P1-2）
 const enPath = resolve(root, 'en', 'index.html');
 let enHtml = readFileSync(enPath, 'utf8');
 const enResult = patchBetween(enHtml, MARKERS.homeCards.start, MARKERS.homeCards.end, homeCardsEn);
@@ -198,7 +236,13 @@ if (enResult !== null) {
   enHtml = enResult;
   patched++;
   console.log(`   en/index.html: 工具卡片已替换`);
-  if (!dryRun) writeFileSync(enPath, enHtml, 'utf8');
 }
+const enHot = patchHotGrid(enHtml, generateHotCardsHTML('en'));
+if (enHot !== enHtml) {
+  enHtml = enHot;
+  patched++;
+  console.log(`   en/index.html: 热门工具卡已静态预渲染`);
+}
+if (patched > 0 && !dryRun) writeFileSync(enPath, enHtml, 'utf8');
 
 console.log(`\n[generate-home] 完成: ${tools.length} 工具, ${patched} 处替换${dryRun ? ' (dry-run)' : ''}`);
