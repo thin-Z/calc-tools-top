@@ -1,3 +1,14 @@
+/* T2.3 防字体 CLS：度量对齐的 Inter 回退（local Arial + size-adjust），
+   仅影响 fallback 度量匹配，不引入新网络字体；配合 --font-sans 中的 'Inter Fallback'。 */
+@font-face {
+    font-family: 'Inter Fallback';
+    src: local('Arial');
+    size-adjust: 107%;
+    ascent-override: 90%;
+    descent-override: 22%;
+    line-gap-override: 0%;
+}
+
 :root {
     --brand-blue: #007AFF;
     --brand-blue-dark: #0056CC;
@@ -37,7 +48,7 @@
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
     --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
     --shadow-lg: 0 12px 30px rgba(0,0,0,0.08);
-    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-sans: 'Inter', 'Inter Fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
     --fs-xs: 0.75rem;
     --fs-sm: 0.875rem;
     --fs-md: 1rem;

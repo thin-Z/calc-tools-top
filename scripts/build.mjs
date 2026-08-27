@@ -244,13 +244,88 @@ walkHtml(dist, (f) => {
 });
 console.log(`[build] PWA 注入: 更新 ${pwaUpdated} 页`);
 
+// 3c) 性能硬指标 T2.1 / T2.2 / T2.3：关键 CSS 非阻塞 + 字体非阻塞 + 主题脚本预载
+//     ⚠️ CSP 约束：本站 script-src / style-src 无 'unsafe-inline'（verify [7]/[8]/[9] 强制 0 内联），
+//     故采用「外部关键 CSS + preload + 延迟外部脚本应用」方案，等效规范意图且 CSP 合规。
+const criticalCssPath = join(root, 'css', 'critical.css');
+const themeInitPath = join(root, 'js', 'theme-init.js');
+if (!existsSync(criticalCssPath)) {
+  console.error('[build] FATAL: 找不到 css/critical.css');
+  process.exit(1);
+}
+const criticalCss = readFileSync(criticalCssPath, 'utf8');
+const themeInitJs = readFileSync(themeInitPath, 'utf8');
+if (themeInitJs.includes('</script>')) {
+  console.error('[build] FATAL: theme-init.js 含 </script> 字面量，无法安全预载');
+  process.exit(1);
+}
+
+// 仅匹配 style.css 的阻塞样式表 link（用 lookahead 排除同带 rel=stylesheet 的 Google Fonts link）
+const STYLE_LINK_RE = /<link\b(?=[^>]*\brel\s*=\s*["']stylesheet["'])(?=[^>]*\bhref\s*=\s*["'][^"']*style\.css[^"']*["'])[^>]*>/i;
+// 仅匹配 Google Fonts 的阻塞样式表 link（必须 rel=stylesheet，排除已转换的 rel=preload；全局以覆盖多实例）
+const FONT_LINK_RE = /<link\b(?=[^>]*\brel\s*=\s*["']stylesheet["'])(?=[^>]*\bhref\s*=\s*["']https:\/\/fonts\.googleapis\.com\/css2[^"']*["'])[^>]*>/ig;
+// 主题初始化同步脚本（保留同步执行以防 FOUC；仅加 preload 重叠其网络获取）
+const THEME_INIT_RE = /<script\b[^>]*\bsrc\s*=\s*["']\/js\/theme-init\.js["'][^>]*>\s*<\/script>/i;
+
+let criticalInjected = 0, fontNonblock = 0, themePreloaded = 0;
+walkHtml(dist, (f) => {
+  const raw = readFileSync(f);
+  const hadBom = raw[0] === 0xef && raw[1] === 0xbb && raw[2] === 0xbf;
+  let text = raw.toString('utf8');
+  if (hadBom) text = text.slice(1);
+  let changed = false;
+
+  // T2.1：阻塞样式表 → 外部关键 CSS(阻塞,极小) + 全量 CSS(preload,延迟应用) + noscript 回退
+  const styleMatch = text.match(STYLE_LINK_RE);
+  if (styleMatch) {
+    const whole = styleMatch[0];
+    const hrefMatch = whole.match(/\bhref\s*=\s*["']([^"']+)["']/i);
+    const href = hrefMatch ? hrefMatch[1] : 'css/style.css';
+    const criticalHref = href.replace(/css\/style\.css(\?[^"']*)?/, 'css/critical.css');
+    const replacement =
+      `<link rel="stylesheet" href="${criticalHref}">\n` +
+      `    <link rel="preload" as="style" href="${href}" data-async-style>\n` +
+      `    <noscript><link rel="stylesheet" href="${href}"></noscript>\n` +
+      `    <script src="/js/css-async.js" defer></script>`;
+    text = text.replace(whole, replacement);
+    changed = true;
+    criticalInjected++;
+  }
+
+  // T2.3：Google Fonts 阻塞 link → preload(延迟应用) + noscript 回退（无内联 onload）
+  if (FONT_LINK_RE.test(text)) {
+    text = text.replace(FONT_LINK_RE, (m) => {
+      const hm = m.match(/\bhref\s*=\s*["']([^"']+)["']/i);
+      const href = hm ? hm[1] : 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
+      return `<link rel="preload" as="style" href="${href}" data-async-style>\n    <noscript><link rel="stylesheet" href="${href}"></noscript>`;
+    });
+    changed = true;
+    fontNonblock++;
+  }
+
+  // T2.2：主题脚本保留同步外部（防 FOUC）；加 preload 重叠其网络获取以降低阻塞窗口
+  //      （整站内联 <script> 被 verify [7] 禁止，故不内联；preload 为 CSP 安全优化）
+  if (THEME_INIT_RE.test(text)) {
+    text = text.replace(THEME_INIT_RE, (m) => `<link rel="preload" as="script" href="/js/theme-init.js">\n    ${m}`);
+    changed = true;
+    themePreloaded++;
+  }
+
+  if (changed) writeFileSync(f, text, 'utf8');
+});
+console.log(`[build] 关键CSS注入: ${criticalInjected} 页`);
+console.log(`[build] 字体非阻塞: ${fontNonblock} 页`);
+console.log(`[build] 主题脚本预载: ${themePreloaded} 页`);
+
 // 4) 在 dist/ 内注入缓存版本号（构建时间戳 YYYYMMDDHHmm，仅 dist，源码不含 ?v）
-//    site-core.js / site-home.js / site.js / like.js / i18n.js / css/style.css → ?v=STAMP
-//    （幂等：已带 ?v 会统一覆盖为当前 STAMP；T05 起 site.js 拆分后按 site(?:-core|-home)? 匹配）
+//    覆盖所有本地静态资源：/js/*.js、/css/*.css、/assets/*（含相对写法 css/、js/、assets/）
+//    锚定本地根路径（/ 或 相对），绝不触碰外部 URL（http/ https/ //）。
+//    保留 #fragment（SVG sprite <use href=".../icons.svg#icon-x"> 必须保真）。
+//    幂等：已带 ?v 会统一覆盖为当前 STAMP；immutable 长缓存依赖此戳保证改后内容访客立即可见。
 const now = new Date();
 const pad2 = (n) => String(n).padStart(2, '0');
 const STAMP = `${now.getFullYear()}${pad2(now.getMonth() + 1)}${pad2(now.getDate())}${pad2(now.getHours())}${pad2(now.getMinutes())}`;
-const ASSET_RE = /(["'])([^"']*?)((?:site(?:-core|-home)?|like|i18n)\.js|css\/style\.css)(\?v=[^"']*)?\1/g;
+const ASSET_RE = /(["'])((?:\/)?(?:js|css|assets)\/[^\s"']*?\.(?:js|css|svg|png|jpe?g|gif|webp|ico|woff2?))(\?v=[^"'\s#]*)?(#[^"']*)?\1/g;
 let versioned = 0;
 walkHtml(dist, (f) => {
   const raw = readFileSync(f);
@@ -258,7 +333,7 @@ walkHtml(dist, (f) => {
   let text = raw.toString('utf8');
   if (hadBom) text = text.slice(1);
 
-  const newText = text.replace(ASSET_RE, (m, q, prefix, name) => `${q}${prefix}${name}?v=${STAMP}${q}`);
+  const newText = text.replace(ASSET_RE, (m, q, path, v, frag) => `${q}${path}?v=${STAMP}${frag || ''}${q}`);
   if (newText !== text) {
     writeFileSync(f, newText, 'utf8');
     versioned++;

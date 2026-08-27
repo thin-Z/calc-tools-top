@@ -11,6 +11,11 @@
     visibility: hidden;
 }
 
+/* ===== 广告预留高度容器（T2.4：吸收 Auto Ads 注入位移，降低 CLS） =====
+   尺寸按常见广告位预留，宁可稍大。最终切换手动 ad unit 时由 slot ID 容器替换本占位。 */
+.ad-slot { min-height: 100px; }
+.ad-slot-leaderboard { min-height: 120px; }
+
 
 
 
