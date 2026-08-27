@@ -1045,6 +1045,12 @@ function applyFilters() {
             grid.style.display = hasVisible ? '' : 'none';
         }
     });
+    // 热门工具区域同理：筛选后无可见卡片时隐藏整个 hotToolsContainer
+    const hotContainer = document.getElementById('hotToolsContainer');
+    if (hotContainer) {
+        const hasVisibleHot = hotContainer.querySelector('.hot-tool-card:not(.filtered-out)');
+        hotContainer.style.display = hasVisibleHot ? '' : 'none';
+    }
 
     // 无结果：展示"你是不是想找"纠错建议
     const zero = (visibleTools === 0 && visibleArticles === 0);
