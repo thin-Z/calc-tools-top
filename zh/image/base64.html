@@ -125,6 +125,9 @@
 
                 <h3>编码结果该怎么用？</h3>
                 <p>拿到 Base64 字符串后，你可以直接嵌入页面并配合 <code>data:</code> URI 协议使用。若想让页面体积更小，可先用好「图片压缩」工具把图压小，再转 Base64；若想精确控制尺寸，也可先用「图片裁剪缩放」调整到目标像素，再做内联。</p>
+                <p>举个例子：如果你想在 HTML 里内联一个 4KB 的 logo，直接写 <code>&lt;img src="data:image/png;base64,iVBORw0KGgo..."&gt;</code> 即可，浏览器能立即解析并显示。这样做的好处是省去了一次网络请求，且图片能跟随 HTML 一起被缓存，适合图标类和"必须单文件"的场合。</p>
+                <h3>浏览器兼容性要注意什么？</h3>
+                <p>现代浏览器（Chrome、Firefox、Safari、Edge）都能完整支持 Base64 的 <code>data:</code> URI，包括 CSS 的 <code>background-image: url(data:...)</code>、HTML 的 <code>img</code> 和 `&lt;link&gt;`。但要注意：旧版 IE 对 Base64 图片的缓存和部分 MIME 类型支持较差，若目标用户包含大量旧浏览器，建议谨慎内联。此外，内联图片会显著增加 HTML 源文件长度，不利于源码阅读，因此更适合封装成组件或构建时自动处理，而非长期人工维护。</p>
             </div>
             <div class="related-tools">
     <h3>相关工具</h3>
