@@ -2860,35 +2860,35 @@ svg.ic {
 .cmp-banner {
   position: fixed;
   left: 50%;
-  bottom: 24px;
+  bottom: 16px;
   transform: translateX(-50%);
-  max-width: 640px;
-  width: calc(100% - 32px);
+  max-width: 440px;
+  width: calc(100% - 24px);
   z-index: 9999;
   background: var(--bg-card);
   color: var(--text);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  box-shadow: 0 12px 40px var(--shadow-lg-dark);
-  padding: 16px 18px;
+  border-radius: 12px;
+  box-shadow: 0 8px 28px var(--shadow-lg-dark);
+  padding: 10px 12px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
-  font-size: 0.88rem;
-  line-height: 1.5;
+  gap: 6px;
+  font-size: 0.74rem;
+  line-height: 1.4;
 }
 .cmp-banner[hidden] { display: none; }
 .cmp-banner p { margin: 0; flex: 1 1 320px; }
 .cmp-banner a { color: var(--primary); }
-.cmp-actions { display: flex; gap: 10px; flex-shrink: 0; }
+.cmp-actions { display: flex; gap: 6px; flex-shrink: 0; }
 .cmp-btn {
   border: 1px solid var(--border);
   background: var(--bg);
   color: var(--text);
-  border-radius: 10px;
-  padding: 8px 16px;
-  font-size: 0.85rem;
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 0.72rem;
   font-weight: 600;
   cursor: pointer;
   transition: transform 0.12s ease,background 0.2s ease;
