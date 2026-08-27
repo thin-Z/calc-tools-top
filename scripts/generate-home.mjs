@@ -180,20 +180,32 @@ function patchBetween(content, startMarker, endMarker, replacement) {
   return content.slice(0, si + startMarker.length) + '\n' + replacement + '\n' + content.slice(ei);
 }
 
-// 把 hot 卡静态填入 <div class="hot-tools-grid" id="hotToolsGrid">…</div>（幂等：用平衡 </div> 定位，避免嵌套 div 误匹配）
+// 把 hot 卡静态填入热门工具区，并**确定性重建**整个 hot-section 块为闭合结构。
+// 之前用「平衡 </div> 计数」定位闭合，但一旦源码该网格缺少独立闭合（历史上被破坏），
+// 平衡计数会一路扫到文档末尾，把网格之后的 recent-section / 主网格 / footer 全部截断。
+// 改为锚定 hot-section 开头 + 其后兄弟节点 recent-section（或主网格 marker）作为结束界，
+// 保留源码已有前缀（hot-section 开 + 分隔标题 + hot-tools-grid 开），再插入卡片并补上：
+//   </div></div>（闭合 grid 与 section），避免依赖输入是否已被污染——幂等。
 function patchHotGrid(content, cards) {
-  const openRe = /<div class="hot-tools-grid"[^>]*id="hotToolsGrid"[^>]*>/;
-  const om = content.match(openRe);
-  if (!om) return content;
-  const start = om.index + om[0].length;
-  let depth = 1, i = start;
-  while (i < content.length && depth > 0) {
-    if (content.startsWith('<div', i)) { depth++; i += 4; continue; }
-    if (content.startsWith('</div>', i)) { depth--; i += 6; continue; }
-    i++;
-  }
-  const close = i;
-  return content.slice(0, start) + '\n' + cards + '\n' + content.slice(close);
+  const sectionRe = /<div class="hot-section"[^>]*id="hotToolsContainer"[^>]*>/;
+  const gridRe = /<div class="hot-tools-grid"[^>]*id="hotToolsGrid"[^>]*>/;
+  const sm = content.match(sectionRe);
+  const gm = content.match(gridRe);
+  if (!sm || !gm) return content;
+  const start = sm.index;
+  const gridEnd = gm.index + gm[0].length;
+  if (start > gridEnd) return content;
+  // 结束界：紧邻的 recent-section（理想）或主网格 marker（兜底）
+  const recentIdx = content.indexOf('<div class="recent-section', start);
+  const markerIdx = content.indexOf('<!-- __GENERATED_TOOL_CARDS_START__ -->', start);
+  let end = -1;
+  if (recentIdx !== -1 && recentIdx > gridEnd) end = recentIdx;
+  else if (markerIdx !== -1 && markerIdx > gridEnd) end = markerIdx;
+  if (end === -1) return content;
+  // prefix：从 hot-section 开标签起，含分隔标题与 hot-tools-grid 开标签（保留语言文案）
+  const prefix = content.slice(start, gridEnd);
+  const rebuilt = prefix + '\n' + cards + '\n</div></div>\n';
+  return content.slice(0, start) + rebuilt + content.slice(end);
 }
 
 // ── 6. 执行生成 ──────────────────────────────────────────────
