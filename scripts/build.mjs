@@ -18,6 +18,8 @@ import { fileURLToPath } from 'url';
 import './generate-home.mjs';
 // P1：构建前自动生成标签聚合落地页（/tags/<cat>.html + /en/tags/<cat>.html）
 import './generate-tag-pages.mjs';
+// M2：构建期按页抽取关键 CSS（工具页 critical-tool.css）
+import { buildToolCriticalCss, isToolPagePath } from './extract-critical.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dist = join(root, 'dist');
@@ -260,6 +262,18 @@ if (themeInitJs.includes('</script>')) {
   process.exit(1);
 }
 
+// M2：从 style.css 抽取工具页首屏关键 CSS → dist/css/critical-tool.css（构建期实时抽取，避免与 style.css 漂移）
+mkdirSync(join(dist, 'css'), { recursive: true });
+const toolCssOut = join(dist, 'css', 'critical-tool.css');
+const toolCriticalCss = buildToolCriticalCss(join(root, 'css', 'style.css'));
+const minToolCss = toolCriticalCss
+  .replace(/\/\*[\s\S]*?\*\//g, '')
+  .replace(/\s*([{}:;,>])\s*/g, '$1')
+  .replace(/;}/g, '}')
+  .trim();
+writeFileSync(toolCssOut, minToolCss, 'utf8');
+console.log(`[build] 工具关键CSS抽取: ${minToolCss.length} 字节 → dist/css/critical-tool.css`);
+
 // 仅匹配 style.css 的阻塞样式表 link（用 lookahead 排除同带 rel=stylesheet 的 Google Fonts link）
 const STYLE_LINK_RE = /<link\b(?=[^>]*\brel\s*=\s*["']stylesheet["'])(?=[^>]*\bhref\s*=\s*["'][^"']*style\.css[^"']*["'])[^>]*>/i;
 // 仅匹配 Google Fonts 的阻塞样式表 link（必须 rel=stylesheet，排除已转换的 rel=preload；全局以覆盖多实例）
@@ -267,7 +281,7 @@ const FONT_LINK_RE = /<link\b(?=[^>]*\brel\s*=\s*["']stylesheet["'])(?=[^>]*\bhr
 // 主题初始化同步脚本（保留同步执行以防 FOUC；仅加 preload 重叠其网络获取）
 const THEME_INIT_RE = /<script\b[^>]*\bsrc\s*=\s*["']\/js\/theme-init\.js["'][^>]*>\s*<\/script>/i;
 
-let criticalInjected = 0, fontNonblock = 0, themePreloaded = 0;
+let criticalInjected = 0, fontNonblock = 0, themePreloaded = 0, toolCriticalInjected = 0;
 walkHtml(dist, (f) => {
   const raw = readFileSync(f);
   const hadBom = raw[0] === 0xef && raw[1] === 0xbb && raw[2] === 0xbf;
@@ -282,14 +296,18 @@ walkHtml(dist, (f) => {
     const hrefMatch = whole.match(/\bhref\s*=\s*["']([^"']+)["']/i);
     const href = hrefMatch ? hrefMatch[1] : 'css/style.css';
     const criticalHref = href.replace(/css\/style\.css(\?[^"']*)?/, 'css/critical.css');
+    const isTool = isToolPagePath(f.replace(dist, ''));
+    const criticalToolHref = isTool ? criticalHref.replace('critical.css', 'critical-tool.css') : null;
     const replacement =
       `<link rel="stylesheet" href="${criticalHref}">\n` +
+      (isTool ? `    <link rel="stylesheet" href="${criticalToolHref}">\n` : '') +
       `    <link rel="preload" as="style" href="${href}" data-async-style>\n` +
       `    <noscript><link rel="stylesheet" href="${href}"></noscript>\n` +
       `    <script src="/js/css-async.js" defer></script>`;
     text = text.replace(whole, replacement);
     changed = true;
     criticalInjected++;
+    if (isTool) toolCriticalInjected++;
   }
 
   // T2.3：Google Fonts 阻塞 link → preload(延迟应用) + noscript 回退（无内联 onload）
@@ -313,7 +331,7 @@ walkHtml(dist, (f) => {
 
   if (changed) writeFileSync(f, text, 'utf8');
 });
-console.log(`[build] 关键CSS注入: ${criticalInjected} 页`);
+console.log(`[build] 关键CSS注入: ${criticalInjected} 页（工具页补充 ${toolCriticalInjected} 页 critical-tool.css）`);
 console.log(`[build] 字体非阻塞: ${fontNonblock} 页`);
 console.log(`[build] 主题脚本预载: ${themePreloaded} 页`);
 
