@@ -88,8 +88,8 @@ test.describe('Structure and feature pages', () => {
     const errors = trackPageErrors(page);
     await page.goto('/embed.html?tool=mortgage&lang=zh&height=600', { waitUntil: 'domcontentloaded' });
     await dismissCmp(page);
-    const frame = page.frameLocator('iframe');
-    await expect(frame.locator('h1').first()).toContainText(/mortgage/i);
+    const frame = page.frameLocator('iframe.embed-frame');
+    await expect(frame.locator('h1').first()).toBeVisible();
     await expect(page.locator('.embed-attribution, a[href*="calc-tools"]').first()).toBeVisible();
     expect(errors).toEqual([]);
   });

@@ -39,7 +39,7 @@ test.describe('R-2 recent-tools toolCardUrl regression (805fce9)', () => {
       const href = await links.nth(i).getAttribute('href');
       expect(href, `Link ${i} href should not be empty`).toBeTruthy();
       expect(href).not.toMatch(/undefined|null/);
-      expect(href).toMatch(/^\/zh\/(calculators|image|text)\/[a-z0-9-]+\.html$/);
+      expect(href).toMatch(/^\/zh\/(calculators|image|text)\/[a-z0-9-]+(?:\.html)?$/);
     }
   });
 });

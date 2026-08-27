@@ -34,7 +34,8 @@
             return;
         }
 
-        fetch(SITE + '/tools.json')
+        // 用同源相对路径 /tools.json（原为跨域 SITE + '/tools.json'，会被 CORS/网络影响导致工具加载失败）
+        fetch('/tools.json')
             .then(function (r) { return r.json(); })
             .then(function (list) {
                 var tool = list.find(function (t) { return t.slug === slug; });
