@@ -197,17 +197,12 @@ module.exports = async function handler(req, res) {
           if (clean && cleanIds.indexOf(clean) === -1) cleanIds.push(clean);
         }
         if (!cleanIds.length) return res.status(400).json({ error: 'invalid tools' });
-        // 单次 MGET 取全部，替代 N 次串行 GET（KV 调用从 2N 次降至 1 次）
+        // 并发 GET 每个 key：Upstash REST 的 /mget 端点在部分环境不可靠（返回空/全 null），
+        // 改用已验证可靠的单 key GET（/get/<key>）并行取回，读限速 600/min 远高于 49 个并发。
         const keys = cleanIds.map(function (id) { return 'click:tool:' + id; });
-        let values = await restMGet(keys);
-        // MGET 降级：若返回空数组（端点异常/超时），回退为逐个 GET
-        if (!values.length && keys.length) {
-          values = [];
-          for (const key of keys) {
-            const v = await rest('/get/' + key);
-            values.push(v);
-          }
-        }
+        const values = await Promise.all(keys.map(function (key) {
+          return rest('/get/' + key);
+        }));
         const out = {};
         cleanIds.forEach(function (id, i) {
           out[id] = Math.max(0, parseInt(values[i] || '0', 10));

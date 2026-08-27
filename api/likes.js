@@ -190,26 +190,16 @@ module.exports = async function handler(req, res) {
           if (clean && cleanIds.indexOf(clean) === -1) cleanIds.push(clean);
         }
         if (!cleanIds.length) return res.status(400).json({ error: 'invalid tools' });
-        // 工具与博客 key 混合批量：每个 id 先查工具 key，miss 再查博客 key（两轮 MGET）
+        // 工具与博客 key 混合批量：每个 id 先查工具 key，miss 再查博客 key。
+        // 并发 GET 每个 key：Upstash REST 的 /mget 端点不可靠（返回空/全 null），改用单 key GET 并行。
         const toolKeys = cleanIds.map(function (id) { return 'like:tool:' + id; });
         const blogKeys = cleanIds.map(function (id) { return 'like:blog:' + id; });
-        let toolVals = await restMGet(toolKeys);
-        let blogVals = await restMGet(blogKeys);
-        // MGET 降级：若返回空数组（端点异常/超时），回退为逐个 GET
-        if (!toolVals.length && toolKeys.length) {
-          toolVals = [];
-          for (const key of toolKeys) {
-            const v = await rest('/get/' + key);
-            toolVals.push(v);
-          }
-        }
-        if (!blogVals.length && blogKeys.length) {
-          blogVals = [];
-          for (const key of blogKeys) {
-            const v = await rest('/get/' + key);
-            blogVals.push(v);
-          }
-        }
+        const toolVals = await Promise.all(toolKeys.map(function (key) {
+          return rest('/get/' + key);
+        }));
+        const blogVals = await Promise.all(blogKeys.map(function (key) {
+          return rest('/get/' + key);
+        }));
         const out = {};
         cleanIds.forEach(function (id, i) {
           const v = toolVals[i] !== null && toolVals[i] !== undefined ? toolVals[i] : blogVals[i];
