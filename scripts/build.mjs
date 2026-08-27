@@ -319,13 +319,14 @@ console.log(`[build] 主题脚本预载: ${themePreloaded} 页`);
 
 // 4) 在 dist/ 内注入缓存版本号（构建时间戳 YYYYMMDDHHmm，仅 dist，源码不含 ?v）
 //    覆盖所有本地静态资源：/js/*.js、/css/*.css、/assets/*（含相对写法 css/、js/、assets/）
+//    及嵌套页相对路径（../../css/style.css 等，H1 修复）。
 //    锚定本地根路径（/ 或 相对），绝不触碰外部 URL（http/ https/ //）。
 //    保留 #fragment（SVG sprite <use href=".../icons.svg#icon-x"> 必须保真）。
-//    幂等：已带 ?v 会统一覆盖为当前 STAMP；immutable 长缓存依赖此戳保证改后内容访客立即可见。
+//    保留既有 query（如有），追加/覆盖 v=STAMP；immutable 长缓存依赖此戳保证改后内容访客立即可见。
 const now = new Date();
 const pad2 = (n) => String(n).padStart(2, '0');
 const STAMP = `${now.getFullYear()}${pad2(now.getMonth() + 1)}${pad2(now.getDate())}${pad2(now.getHours())}${pad2(now.getMinutes())}`;
-const ASSET_RE = /(["'])((?:\/)?(?:js|css|assets)\/[^\s"']*?\.(?:js|css|svg|png|jpe?g|gif|webp|ico|woff2?))(\?v=[^"'\s#]*)?(#[^"']*)?\1/g;
+const ASSET_RE = /(["'])((?:\.\.\/)*(?:\/)?(?:js|css|assets)\/[^\s"']*?\.(?:js|css|svg|png|jpe?g|gif|webp|ico|woff2?))((?:\?[^"'\s#]*)?)(#[^"']*)?\1/g;
 let versioned = 0;
 walkHtml(dist, (f) => {
   const raw = readFileSync(f);
@@ -333,7 +334,17 @@ walkHtml(dist, (f) => {
   let text = raw.toString('utf8');
   if (hadBom) text = text.slice(1);
 
-  const newText = text.replace(ASSET_RE, (m, q, path, v, frag) => `${q}${path}?v=${STAMP}${frag || ''}${q}`);
+  const newText = text.replace(ASSET_RE, (m, q, path, query, frag) => {
+    let vq;
+    if (query) {
+      // 保留既有 query；若已有 v= 则覆盖其值，否则追加（L2）
+      if (/\bv=/i.test(query)) vq = query.replace(/([?&])v=[^&#]*/i, '$1v=' + STAMP);
+      else vq = query + '&v=' + STAMP;
+    } else {
+      vq = '?v=' + STAMP;
+    }
+    return `${q}${path}${vq}${frag || ''}${q}`;
+  });
   if (newText !== text) {
     writeFileSync(f, newText, 'utf8');
     versioned++;

@@ -3,7 +3,7 @@
  * scripts/check-p0-gate.mjs — Phase 0 P0 门禁（T0.4）+ Phase 1 紫色清零门禁（T1.1）
  * -----------------------------------------------------------------
  * 三项阻断检查：
- *   1. CSS 裸色值：style.css 中非变量定义行不允许出现 rgba() 或 #hex
+ *   1. CSS 裸色值：style.css 与 critical.css 中非变量定义行不允许出现 rgba() 或 #hex
  *   2. Emoji 清零：非博客 HTML + JS 源码不允许出现图形 emoji
  *      （排除：箭头区间 2190-21FF、博客 /blog/ 正文 UGC）
  *   3. 紫二次色清零（Phase 1 T1.1，D7 决策）：全站禁止 purple/violet/indigo
@@ -24,34 +24,39 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const jsonMode = process.argv.includes('--json');
 
 // ═══════════════════════════════════════════════════════════════
-// 1. CSS 裸色值检查（style.css only — tokens.css 是定义方，豁免）
+// 1. CSS 裸色值检查（style.css + critical.css — tokens.css 是定义方，豁免）
 // ═══════════════════════════════════════════════════════════════
 function checkCssColors() {
-  const file = path.join(ROOT, 'css', 'style.css');
-  if (!fs.existsSync(file)) return { ok: true, violations: 0, detail: 'style.css not found' };
-
-  const src = fs.readFileSync(file, 'utf8');
-  const lines = src.split('\n');
+  // 覆盖 style.css + critical.css（T2.1 新增的关键 CSS，M3 补齐门禁）；tokens.css 为定义源不检
+  const files = ['style.css', 'critical.css'];
   const violations = [];
 
-  for (let i = 0; i < lines.length; i++) {
-    const ln = lines[i];
-    // Skip variable definitions (--xxx: ...) and @import and comment lines
-    if (/^\s*--/.test(ln) || ln.trim().startsWith('@import') || ln.trim().startsWith('//') || ln.trim().startsWith('/*') || ln.trim().startsWith('*')) continue;
+  for (const cssFile of files) {
+    const file = path.join(ROOT, 'css', cssFile);
+    if (!fs.existsSync(file)) continue;
 
-    // Strip var() contexts to avoid false positives
-    const stripped = ln.replace(/var\([^)]+\)/g, '');
+    const src = fs.readFileSync(file, 'utf8');
+    const lines = src.split('\n');
 
-    // Check rgba (standalone, not inside var())
-    const rgbaMatch = stripped.match(/rgba?\([^)]+\)/g);
-    if (rgbaMatch) {
-      violations.push({ line: i + 1, type: 'rgba', values: rgbaMatch, context: ln.trim().slice(0, 120) });
-    }
+    for (let i = 0; i < lines.length; i++) {
+      const ln = lines[i];
+      // Skip variable definitions (--xxx: ...) and @import and comment lines
+      if (/^\s*--/.test(ln) || ln.trim().startsWith('@import') || ln.trim().startsWith('//') || ln.trim().startsWith('/*') || ln.trim().startsWith('*')) continue;
 
-    // Check hex colors (standalone, not inside var())
-    const hexMatch = stripped.match(/#[0-9a-fA-F]{3,8}\b/g);
-    if (hexMatch) {
-      violations.push({ line: i + 1, type: 'hex', values: hexMatch, context: ln.trim().slice(0, 120) });
+      // Strip var() contexts to avoid false positives
+      const stripped = ln.replace(/var\([^)]+\)/g, '');
+
+      // Check rgba (standalone, not inside var())
+      const rgbaMatch = stripped.match(/rgba?\([^)]+\)/g);
+      if (rgbaMatch) {
+        violations.push({ file: cssFile, line: i + 1, type: 'rgba', values: rgbaMatch, context: ln.trim().slice(0, 120) });
+      }
+
+      // Check hex colors (standalone, not inside var())
+      const hexMatch = stripped.match(/#[0-9a-fA-F]{3,8}\b/g);
+      if (hexMatch) {
+        violations.push({ file: cssFile, line: i + 1, type: 'hex', values: hexMatch, context: ln.trim().slice(0, 120) });
+      }
     }
   }
 
@@ -122,7 +127,7 @@ function checkEmoji() {
 // ═══════════════════════════════════════════════════════════════
 // 3. 紫二次色清零（Phase 1 T1.1，D7 决策：纯 #007AFF 单一品牌蓝阶）
 // ═══════════════════════════════════════════════════════════════
-// 覆盖：css/tokens.css、css/style.css（定义与引用双向禁止）+ 非 dist HTML/JS
+// 覆盖：css/tokens.css、css/style.css、css/critical.css（定义与引用双向禁止）+ 非 dist HTML/JS
 // （防 JS 内联/文档类名回潮）。注释行豁免（允许"已移除"类说明文字）。
 const PURPLE_HEX_RE = /#(?:5856[Dd]6|6856[Ee]8|7[Cc]3[Aa][Ee][Dd]|8[Bb]5[Cc][Ff]6|[Aa]78[Bb][Ff][Aa]|[Cc]4[Bb]5[Ff][Dd]|[Dd][Dd][Dd]6[Ff][Ee]|[Ee][Dd][Ee]9[Ff][Ee]|[Ff]5[Ff]3[Ff][Ff]|4[Cc]1[Dd]95|6[Dd]28[Dd]9|5[Bb]21[Bb]6|4[Ff]46[Ee]5|6366[Ff]1|[Aa]5[Bb]4[Ff][Cc]|312[Ee]81|5[Ee]5[Cc][Ee]6|[Ff]0[Ff]0[Ff][Ff]|[Ee][Ee][Ff]2[Ff][Ff])\b/g;
 const PURPLE_RGBA_RE = /rgba?\(\s*(?:124\s*,\s*58\s*,\s*237|88\s*,\s*86\s*,\s*214|104\s*,\s*86\s*,\s*232|79\s*,\s*70\s*,\s*229|99\s*,\s*102\s*,\s*241)\b/g;
@@ -144,8 +149,8 @@ function checkPurple() {
     }
   };
 
-  // a) CSS 两文件逐行扫描
-  for (const cssFile of ['tokens.css', 'style.css']) {
+  // a) CSS 文件逐行扫描（tokens.css + style.css + critical.css）
+  for (const cssFile of ['tokens.css', 'style.css', 'critical.css']) {
     const p = path.join(ROOT, 'css', cssFile);
     if (!fs.existsSync(p)) continue;
     fs.readFileSync(p, 'utf8').split('\n').forEach((ln, i) => scanLine(`css/${cssFile}`, i, ln));
@@ -185,7 +190,7 @@ if (jsonMode) {
   process.stdout.write(JSON.stringify({ css, emoji, purple, allOk }, null, 2) + '\n');
 } else {
   console.log(`[P0 gate] CSS 裸色值: ${css.violations === 0 ? '✓ 0' : '✗ ' + css.violations} 违规`);
-  if (!css.ok) css.detail.forEach(v => console.log(`  L${v.line} [${v.type}]: ${v.context}`));
+  if (!css.ok) css.detail.forEach(v => console.log(`  ${v.file||''}:L${v.line} [${v.type}]: ${v.context}`));
 
   console.log(`[P0 gate] Emoji 清零: ${emoji.violations === 0 ? '✓ 0' : '✗ ' + emoji.violations} 违规 (博客 ${emoji.blogFilesSkipped} 文件豁免)`);
   if (!emoji.ok) emoji.detail.slice(0, 10).forEach(v => console.log(`  ${v.file}:${v.line} [${v.emoji}]: ${v.context}`));
