@@ -27,7 +27,12 @@ test.describe('49 tools x zh/en load smoke', () => {
         const controlCount = await page.locator(
           '.tool-form input, .calculator-form input, .tool-form select, .calculator-form select, .tool-form textarea, .calculator-form textarea, .upload-zone, .btn-primary'
         ).count();
-        expect(controlCount, `${url} should have interactive controls`).toBeGreaterThan(0);
+        // 允许「已合并/废弃、无表单控件」的跳转页（如 password-strength 已并入 password-gen、
+        // keyword-density 已并入 word-counter）：无控件但 <main> 内有「<p><a>跳到其它工具」说明 → 视为合并/重定向页。
+        const isMergeRedirect = controlCount === 0 && await page.locator(
+          'main p:has(> a)'
+        ).count() > 0;
+        expect(controlCount > 0 || isMergeRedirect, `${url} should have interactive controls (or be a merged/redirected tool page)`).toBe(true);
         await page.waitForTimeout(350);
         expect(errors, `${url} errors:\n${errors.join('\n')}`).toEqual([]);
       });
@@ -53,7 +58,8 @@ test.describe('Representative tool deep interactions', () => {
     await page.goto('/zh/calculators/timestamp.html', { waitUntil: 'domcontentloaded' });
     await dismissCmp(page);
     await page.locator('#ts-value').fill('1600000000');
-    await expect(page.locator('#dt-value')).toHaveValue(/2020-09/, { timeout: 5000 });
+    // ts→dt 的输出在结果区 #ts-local（#dt-value 是反向 dt→ts 的输入框）
+    await expect(page.locator('#ts-local')).toContainText(/2020-09/, { timeout: 5000 });
     expect(errors).toEqual([]);
   });
 
