@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -109,19 +109,24 @@ Fourth line is new content.</textarea>
 
             <div class="seo-content">
                 <h2>About Text Diff</h2>
-                <p>Text diff is a technique for comparing differences between two blocks of text. This tool uses the LCS (Longest Common Subsequence) algorithm for line-level comparison.</p>
-                <ul>
-                    <li><strong class="st-35">Green background</strong> Added content</li>
-                    <li><strong class="st-11">Red background + strikethrough</strong> Deleted content</li>
-                    <li><strong>White background</strong> Unchanged content</li>
-                </ul>
+                <p>Text diff is a technique for comparing the differences between two blocks of text, helping you quickly see what was changed, removed, or added. This tool uses the LCS (Longest Common Subsequence) algorithm for line-level comparison: it aligns the two texts, treats identical lines as unchanged, and marks lines that appear in only one version as added or deleted — so the changes jump out at a glance.</p>
+                <p>Color key: <strong class="st-35">Green background</strong> marks added content; <strong class="st-11">Red background + strikethrough</strong> marks deleted content; <strong>White background</strong> marks unchanged content.</p>
+                <h3>How Does the LCS Algorithm Work?</h3>
+                <p>LCS (Longest Common Subsequence) finds the longest subsequence that appears in both sequences in the same order, then uses that common part as an anchor so the remaining differences are highlighted. Because it seeks the <em>longest</em> common portion, it minimizes redundant added/deleted marks, making the result closer to human intuition.</p>
+                <p>This is the approach mainstream diff tools (version control, document comparison) generally take — the main difference is granularity: some compare by character, others by line or word. This tool compares line by line, which suits whole-text comparison of code, config files, and documents.</p>
+                <h3>How to Use It</h3>
+                <p>1. Paste the first version into the &quot;Original&quot; box.<br>2. Paste the edited version into the &quot;New&quot; box.<br>3. Click &quot;Diff&quot;. The result shows two side-by-side panes with colors highlighting added/deleted/unchanged.<br>4. The stats at the top count added, deleted, and unchanged lines so you can gauge the scope at a glance.<br>5. Use &quot;Clear&quot; to start over.</p>
                 <h3>Use Cases</h3>
                 <ul>
-                    <li>Code version comparison</li>
-                    <li>Before/after article comparison</li>
-                    <li>Document proofreading</li>
-                    <li>Data difference analysis</li>
+                    <li>Code version comparison: see what logic changed between versions</li>
+                    <li>Before/after article comparison: spot editorial edits</li>
+                    <li>Document proofreading: catch missed edits, accidental deletions, or duplicated text</li>
+                    <li>Data difference analysis: compare two configs or exported text</li>
                 </ul>
+                <h3>Common Diff Pitfalls</h3>
+                <p><strong>① Case and whitespace.</strong> Comparison is exact, so a version differing only in case or spacing is treated as a changed line. If you don't want that, normalize formatting first.<br><strong>② Line endings.</strong> Windows CRLF vs. Unix LF can make lines that look identical be flagged as different.<br><strong>③ Large text performance.</strong> Very long text or huge files may be slow; compare in segments to isolate issues.</p>
+                <h3>How to Read the Result</h3>
+                <p>Added lines usually represent edits, insertions, or supplements; deleted lines represent removed or replaced content. To pinpoint a change, combine line numbers with surrounding context; to review systematically, look at the stats first to gauge the scope, then verify section by section.</p>
             </div>
         </div>
 

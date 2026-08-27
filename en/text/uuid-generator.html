@@ -167,8 +167,13 @@
             </div>
 
             <div class="seo-content">
-                <h2>UUID & Password Generator</h2>
-                <p>This tool offers two functions: UUID v4 batch generation and customizable password generation. UUIDs are ideal for database primary keys, session IDs, and distributed system identifiers. The password uuid-generator lets you configure character types and length, and evaluates password strength.</p>
+                <h2>UUID &amp; Password Generator</h2>
+                <p>This tool offers two useful functions: <strong>UUID v4 batch generation</strong> and <strong>custom password generation</strong>. A UUID is a 36-character string used to uniquely identify things, widely used for database primary keys, session IDs, and distributed-system node IDs in scenarios where duplicates must be impossible. The password generator produces strong random passwords to your spec and assesses their strength in real time.</p>
+                <h3>What Is a UUID? Why v4?</h3>
+                <p>A UUID (Universally Unique Identifier) is a standardized identifier format that looks like <code>550e8400-e29b-41d4-a716-446655440000</code>, made up of a version, a variant, and random bits. UUID v4 uses pure random generation, so the collision probability is astronomically low — it needs no central allocation and no central database to guarantee uniqueness across systems and machines.</p>
+                <p>In practice, using a UUID as a primary key avoids exposing business volume via auto-increment, suits distributed databases that merge, and makes it easy to migrate or sync data across systems.</p>
+                <h3>How to Use It</h3>
+                <p>1. In the &quot;UUID&quot; tab, pick how many UUIDs to generate (batch supported) and click generate.<br>2. The results list full UUID strings you can copy all at once or one by one.<br>3. In the &quot;Password&quot; tab, set the length and whether to include uppercase, lowercase, digits, and symbols.<br>4. Click generate to get a random password with an automatic strength rating.<br>5. Copy and store it somewhere safe. <strong>Never send plaintext passwords over public channels.</strong></p>
                 <h3>Password Strength Levels</h3>
                 <ul>
                     <li><strong class="st-35">Very Strong</strong> — 16+ characters with all 4 character types</li>
@@ -176,6 +181,10 @@
                     <li><strong class="st-79">Fair</strong> — 8-11 characters with at least 2 types</li>
                     <li><strong class="st-10">Weak</strong> — Less than 8 characters or only 1 type</li>
                 </ul>
+                <h3>Common Mistakes When Generating &amp; Using</h3>
+                <p><strong>① Don't treat complexity as the only measure.</strong> Strength depends on length and predictability, not just character variety. Length is always the number-one factor.<br><strong>② Don't use a UUID as a password.</strong> A UUID is unique but has a fixed format, includes hyphens, and is meant for identification rather than secrecy — it's not a good password.<br><strong>③ Don't reuse default passwords.</strong> Keep generated random passwords safe and consider a password manager so you don't reuse credentials.</p>
+                <h3>How to Use the Results</h3>
+                <p>The generated UUIDs can go straight into database primary keys, log trace IDs, order numbers, or API idempotency keys; the strong passwords suit account sign-ups or protecting keys. For higher security, give each account its own sufficiently random password and use a password manager.</p>
             </div>
         </div>
 
