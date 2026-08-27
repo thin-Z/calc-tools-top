@@ -770,14 +770,23 @@ function initHotTools() {
     if (!(grid.children.length > 0)) {
       grid.innerHTML = html;
     } else {
-      // 静态卡已存在：仅更新每张卡的 .hot-score 分数值，不重建 DOM（避免 CLS）
-      selected.forEach(function(entry) {
-        const card = grid.querySelector('[data-like-id="' + entry.id + '"]');
-        if (!card) return;
-        const hotCard = card.closest('.hot-tool-card');
-        if (!hotCard) return;
+      // 静态卡已存在：遍历每张已有卡片，按各卡 data-like-id 的真实得分更新 .hot-score，
+      // 不重建 DOM（保留 CLS 防抖意图，仅分数随全局数据更新，而非只更新 top8）。
+      grid.querySelectorAll('.hot-tool-card').forEach(function(hotCard) {
+        const cardEl = hotCard.querySelector('[data-like-id]');
+        if (!cardEl) return;
+        const id = cardEl.getAttribute('data-like-id');
+        if (!TOOLS_DATA[id]) return;
+        let s = (likes[id] || 0) * 3;
+        const localC = clicks[id] ? (clicks[id].total || 0) : 0;
+        const globalC = _globalClickTotals[id] || 0;
+        s += Math.max(localC, globalC);
+        const toolName = TOOLS_DATA[id].name['zh'].toLowerCase();
+        Object.keys(searchTerms).forEach(function(term) {
+          if (toolName.includes(term)) s += (searchTerms[term] || 0) * 2;
+        });
         const scoreEl = hotCard.querySelector('.hot-score');
-        if (scoreEl) scoreEl.textContent = entry.score;
+        if (scoreEl) scoreEl.textContent = s;
       });
     }
 }
