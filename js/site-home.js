@@ -764,11 +764,10 @@ function initHotTools() {
             + '</div>';
     });
 
-    // P1-2：首页已静态预渲染默认热门工具卡；若本次计算结果就是默认集（新增用户）且网格已填充，
-    // 则不重建（避免 DOMContentLoaded 时用 JS 卡替换静态卡造成剩余 CLS）。
-    const selectedIds = selected.map(function (s) { return s.id; }).join(',');
-    const isDefaultSelected = selectedIds === DEFAULT_HOT_TOOLS.join(',');
-    if (!(isDefaultSelected && grid.children.length > 0)) {
+    // P1-2：首页已静态预渲染默认热门工具卡。为避免全局点击数据异步加载后动态重排序/重建
+    // 造成 CLS 波动，只要网格已被静态填充就**不再重建**（热门工具稳定为预渲染的默认集，
+    // 点击/点赞/跳转仍可交互，仅排名不随全局计数实时变化）。
+    if (!(grid.children.length > 0)) {
       grid.innerHTML = html;
     }
 }
