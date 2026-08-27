@@ -15,6 +15,7 @@
    尺寸按常见广告位预留，宁可稍大。最终切换手动 ad unit 时由 slot ID 容器替换本占位。 */
 .ad-slot { min-height: 100px; }
 .ad-slot-leaderboard { min-height: 120px; }
+.ad-slot ins.adsbygoogle { display: block; width: 100%; }
 
 
 

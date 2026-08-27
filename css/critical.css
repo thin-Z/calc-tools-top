@@ -250,6 +250,7 @@ a:hover { text-decoration: underline; }
 /* 广告预留高度（T2.4）：首屏即生效，防止 style.css 异步应用时产生 CLS */
 .ad-slot { min-height: 100px; }
 .ad-slot-leaderboard { min-height: 120px; }
+.ad-slot ins.adsbygoogle { display: block; width: 100%; }
 
 /* ===== Header ===== */
 header {
