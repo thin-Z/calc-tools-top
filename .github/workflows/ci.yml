@@ -51,7 +51,18 @@ jobs:
         run: npm ci
 
       - name: Install Chromium browser
-        run: npx playwright install --with-deps chromium
+        shell: bash
+        run: |
+          # GitHub ubuntu-24.04 runner 预装 Microsoft apt 源(azure-cli / ubuntu-prod)，
+          # 其对 packages.microsoft.com 会间歇性 403，导致 `playwright install --with-deps`
+          # 内部 apt-get update 失败。Chromium 依赖来自 Ubuntu archives + dl.google.com，
+          # 与 Microsoft 源无关，故先移除这些源再安装，并加一层重试兜底。
+          sudo rm -f /etc/apt/sources.list.d/microsoft-*.list /etc/apt/sources.list.d/azure-cli.list 2>/dev/null || true
+          for i in 1 2 3; do
+            npx playwright install --with-deps chromium && exit 0
+            echo "playwright install 第 ${i} 次失败，重试..."; sleep 8
+          done
+          exit 1
 
       - name: Build (dist)
         run: node scripts/build.mjs
