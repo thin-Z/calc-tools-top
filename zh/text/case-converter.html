@@ -162,6 +162,15 @@
                     <li><strong>连字符式（kebab-case）</strong>：所有字母小写，单词间用连字符分隔，适用于CSS类名和URL。</li>
                     <li><strong>交替式（aLtErNaTiNg）</strong>：奇数字母大写、偶数字母小写，用于创意文本效果。</li>
                 </ul>
+                <h3>为什么编程里需要不同的命名规范？</h3>
+                <p>大小写转换在编程和数据处理里非常重要，因为不同语言、不同工具对命名风格有各自的约定。JavaScript 社区常用 <strong>camelCase（驼峰式）</strong>给变量命名，如 <code>userName</code>；Python 则偏爱 <strong>snake_case（蛇形式）</strong>，如 <code>user_name</code>；前端开发里 CSS 类名和 URL 常用 <strong>kebab-case（连字符式）</strong>，如 <code>user-profile</code>。这些规范虽然只是"写法习惯"，但统一命名能让代码更易读、更少出错，也方便团队协作和工具识别。</p>
+                <p>如果你在多语言项目间切换，或要把某个变量名转成另一种风格的命名，手动改很容易出错。用工具一键转换，能把 <code>userName</code> 转成 <code>user_name</code> 或 <code>user-name</code>，省去逐个改的麻烦，也避免漏改导致的命名不一致。</p>
+                <h3>大小写转换时的注意事项</h3>
+                <p><strong>① 语言差异。</strong> "首字母大写"（Title Case）和"句子大写"（Sentence case）在英文里很常用，但对中文基本没意义，因为中文没有字母大小写。所以转换工具主要服务于英文和拉丁字符文本。</p>
+                <p><strong>② 缩写与专有名词。</strong> 转换成小写时，像 "NASA"、"iPhone" 这类本来就有固定大小写的词会被全部小写化，可能不符合原意。转换后需要留意是否需要手动修正。</p>
+                <p><strong>③ 驼峰/蛇形的"分词"问题。</strong> 这些模式依赖单词边界的识别，如果输入是连续无空格的字符串（如 <code>helloworld</code>），工具难以判断该在哪断开，结果可能与预期不同。转换带清晰空格或下划线的文本，效果通常更好。</p>
+                <h3>结果怎么用？</h3>
+                <p>转换后的文本可以直接用于代码命名、标题格式化、数据清洗或内容排版。若你还要统计字数、清理空格或比较差异，可配合「字数统计」「文本清理」「文本对比」等工具一起使用。</p>
             </div>
         </div>
 
