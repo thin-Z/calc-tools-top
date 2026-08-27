@@ -180,11 +180,20 @@ function patchBetween(content, startMarker, endMarker, replacement) {
   return content.slice(0, si + startMarker.length) + '\n' + replacement + '\n' + content.slice(ei);
 }
 
-// 把 hot 卡静态填入 <div class="hot-tools-grid" id="hotToolsGrid">…</div>
+// 把 hot 卡静态填入 <div class="hot-tools-grid" id="hotToolsGrid">…</div>（幂等：用平衡 </div> 定位，避免嵌套 div 误匹配）
 function patchHotGrid(content, cards) {
-  const re = /(<div class="hot-tools-grid"[^>]*id="hotToolsGrid"[^>]*>)([\s\S]*?)(<\/div>)/;
-  if (!re.test(content)) return content;
-  return content.replace(re, (all, open, inner, close) => `${open}${cards}${close}`);
+  const openRe = /<div class="hot-tools-grid"[^>]*id="hotToolsGrid"[^>]*>/;
+  const om = content.match(openRe);
+  if (!om) return content;
+  const start = om.index + om[0].length;
+  let depth = 1, i = start;
+  while (i < content.length && depth > 0) {
+    if (content.startsWith('<div', i)) { depth++; i += 4; continue; }
+    if (content.startsWith('</div>', i)) { depth--; i += 6; continue; }
+    i++;
+  }
+  const close = i;
+  return content.slice(0, start) + '\n' + cards + '\n' + content.slice(close);
 }
 
 // ── 6. 执行生成 ──────────────────────────────────────────────
