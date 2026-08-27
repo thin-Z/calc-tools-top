@@ -274,6 +274,40 @@ const minToolCss = toolCriticalCss
 writeFileSync(toolCssOut, minToolCss, 'utf8');
 console.log(`[build] 工具关键CSS抽取: ${minToolCss.length} 字节 → dist/css/critical-tool.css`);
 
+// L1 DRY：构建时从 tokens.css 提取 @font-face + :root 块，注入 dist/css/critical.css（单一来源，消除漂移）
+const tokensSrc = readFileSync(join(root, 'css', 'tokens.css'), 'utf8');
+const distCriticalPath = join(dist, 'css', 'critical.css');
+if (existsSync(distCriticalPath)) {
+  let critDist = readFileSync(distCriticalPath, 'utf8');
+  // 提取 tokens.css 中的 @font-face 块和 :root { ... } 块
+  const fontFaceBlock = (tokensSrc.match(/@font-face\s*\{[^}]*\}/) || [''])[0];
+  const rootBlockMatch = tokensSrc.match(/:root\s*\{/);
+  let rootBlock = '';
+  if (rootBlockMatch) {
+    let depth = 0, si = rootBlockMatch.index;
+    for (let i = si; i < tokensSrc.length; i++) {
+      if (tokensSrc[i] === '{') depth++;
+      if (tokensSrc[i] === '}') { depth--; if (depth === 0) { rootBlock = tokensSrc.slice(si, i + 1); break; } }
+    }
+  }
+  // 替换 critical.css 中的硬编码 @font-face 和 :root 块
+  if (fontFaceBlock) {
+    critDist = critDist.replace(/@font-face\s*\{[^}]*\}/, fontFaceBlock);
+  }
+  if (rootBlock) {
+    const critRootMatch = critDist.match(/:root\s*\{/);
+    if (critRootMatch) {
+      let depth = 0, si = critRootMatch.index;
+      for (let i = si; i < critDist.length; i++) {
+        if (critDist[i] === '{') depth++;
+        if (critDist[i] === '}') { depth--; if (depth === 0) { critDist = critDist.slice(0, si) + rootBlock + critDist.slice(i + 1); break; } }
+      }
+    }
+  }
+  writeFileSync(distCriticalPath, critDist, 'utf8');
+  console.log(`[build] L1 DRY: critical.css :root 已从 tokens.css 同步`);
+}
+
 // 仅匹配 style.css 的阻塞样式表 link（用 lookahead 排除同带 rel=stylesheet 的 Google Fonts link）
 const STYLE_LINK_RE = /<link\b(?=[^>]*\brel\s*=\s*["']stylesheet["'])(?=[^>]*\bhref\s*=\s*["'][^"']*style\.css[^"']*["'])[^>]*>/i;
 // 仅匹配 Google Fonts 的阻塞样式表 link（必须 rel=stylesheet，排除已转换的 rel=preload；全局以覆盖多实例）
@@ -385,11 +419,13 @@ walkHtml(dist, (f) => {
 console.log(`[build] 卫生转换(去BOM/charset置首/懒加载/inline→hidden): ${hygieneCount} 个文件`);
 
 // 5) CSS 压缩（P3-1）：移除注释并折叠空白，减小传输体积
+// L3：同时重写 @import url('./tokens.css') → @import url('./tokens.css?v=STAMP')，防止 immutable 缓存下子资源滞留
 const cssPath = join(dist, 'css', 'style.css');
 if (existsSync(cssPath)) {
   const css = readFileSync(cssPath, 'utf8');
   const min = css
     .replace(/\/\*[\s\S]*?\*\//g, '')
+    .replace(/@import\s+url\(['"]\.\/tokens\.css['"]\)/g, `@import url('./tokens.css?v=${STAMP}')`)
     .replace(/\s*([{}:;,>])\s*/g, '$1')
     .replace(/;}/g, '}')
     .trim();
