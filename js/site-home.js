@@ -769,6 +769,16 @@ function initHotTools() {
     // 点击/点赞/跳转仍可交互，仅排名不随全局计数实时变化）。
     if (!(grid.children.length > 0)) {
       grid.innerHTML = html;
+    } else {
+      // 静态卡已存在：仅更新每张卡的 .hot-score 分数值，不重建 DOM（避免 CLS）
+      selected.forEach(function(entry) {
+        const card = grid.querySelector('[data-like-id="' + entry.id + '"]');
+        if (!card) return;
+        const hotCard = card.closest('.hot-tool-card');
+        if (!hotCard) return;
+        const scoreEl = hotCard.querySelector('.hot-score');
+        if (scoreEl) scoreEl.textContent = entry.score;
+      });
     }
 }
 
