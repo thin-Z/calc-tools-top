@@ -18,6 +18,11 @@ test.describe('49 tools x zh/en load smoke', () => {
         const url = `/${lang}/${t.dir}/${t.slug}.html`;
         const resp = await page.goto(url, { waitUntil: 'domcontentloaded' });
         expect(resp?.status(), `${url} status`).toBe(200);
+        // 已合并/重定向的 stub 页（如 discount→percentage-calc、age-calc→date-calc、
+        // password-strength→password-gen、keyword-density→word-counter）会带 <meta http-equiv="refresh">
+        // 自动跳到合并目标——属废弃跳转页，无需校验控件/错误（其重定向过程在 chromium 还会抛隐性 "Y"）。
+        const respHtml = resp ? await resp.text().catch(() => '') : '';
+        if (/http-equiv\s*=\s*["']refresh["']/i.test(respHtml)) return;
         await page.waitForSelector('#main, main', { timeout: 5000 }).catch(() => {});
         await dismissCmp(page);
         await page.waitForTimeout(400);
@@ -27,21 +32,9 @@ test.describe('49 tools x zh/en load smoke', () => {
         const controlCount = await page.locator(
           '.tool-form input, .calculator-form input, .tool-form select, .calculator-form select, .tool-form textarea, .calculator-form textarea, .upload-zone, .btn-primary'
         ).count();
-        // 合并/重定向 stub 页：<main> 内有「<p><a>跳到其它工具」说明（如 discount→percentage-calc、
-        // password-strength→password-gen、keyword-density→word-counter；无真正的工具表单）。
-        // 注意：不能要求 controlCount===0——这些 stub 页可能残留 .btn-primary 等（controlCount>0），
-        // 用「main 内 p 的直接子级 a」判别即可；正常工具页（mortgage/bmi 等）计数为 0，不会误伤。
-        const isMergeRedirect = await page.locator(
-          'main p:has(> a)'
-        ).count() > 0;
-        expect(controlCount > 0 || isMergeRedirect, `${url} should have interactive controls (or be a merged/redirected tool page)`).toBe(true);
+        expect(controlCount, `${url} should have interactive controls`).toBeGreaterThan(0);
         await page.waitForTimeout(350);
-        // 合并/重定向 stub 页（discount→percentage-calc / password-strength→password-gen 等）在 CI 的
-        // chromium 会抛一个隐性 pageerror（"Y"，msedge 不出现，属 stub 页的浏览器特例），非功能回归；
-        // 对其放宽严格错误断言，真实工具页仍保持 errors 必须为 []。
-        if (!isMergeRedirect) {
-          expect(errors, `${url} errors:\n${errors.join('\n')}`).toEqual([]);
-        }
+        expect(errors, `${url} errors:\n${errors.join('\n')}`).toEqual([]);
       });
     }
   }
