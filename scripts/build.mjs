@@ -417,15 +417,52 @@ walkHtml(dist, (f) => {
 console.log(`[build] CMP 横幅注入: ${cmpCount} 个文件`);
 
 // 7) Inline SVG sprite：将外部 <use href="/assets/icons/icons.svg#id"> 改为同文档 <use href="#id">
-//    并将 sprite 内容注入每个 HTML 的 <body> 开头，消除跨文档引用兼容性问题（Safari/部分 Chromium）
+//    并将【仅本页用到】的 symbol 内联到 <body> 开头（P0-1 按页 tree-shake，降 HTML 体积）。
+//    保留 R1（同文档 <use href="#id">）；未用到的 symbol 不注入，减小每页 HTML。
 const spritePath = join(root, 'assets', 'icons', 'icons.svg');
 if (existsSync(spritePath)) {
-  let spriteContent = readFileSync(spritePath, 'utf8');
+  let spriteSrc = readFileSync(spritePath, 'utf8');
   // 确保有 xmlns（内联时必须）
-  if (!spriteContent.includes('xmlns=')) {
-    spriteContent = spriteContent.replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" ');
+  if (!spriteSrc.includes('xmlns=')) {
+    spriteSrc = spriteSrc.replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" ');
   }
-  const SPRITE_RE = /href="\/assets\/icons\/icons\.svg#/g;
+  // 切开 <svg ...> 外层 / symbols / 收尾（含尾注释与 </svg>）
+  const firstSym = spriteSrc.indexOf('<symbol');
+  const lastSymEnd = spriteSrc.lastIndexOf('</symbol>');
+  const spriteOpen = (lastSymEnd >= 0 ? spriteSrc.slice(0, firstSym) : spriteSrc).trim();
+  const spriteClose = (lastSymEnd >= 0 ? spriteSrc.slice(lastSymEnd + '</symbol>'.length) : '').trim();
+  // id -> <symbol>...</symbol>（保持 sprite 原始顺序）
+  const symbolMap = new Map();
+  const symRe = /<symbol\b[^>]*\bid="([^"]+)"[^>]*>[\s\S]*?<\/symbol>/g;
+  let sm;
+  while ((sm = symRe.exec(spriteSrc))) symbolMap.set(sm[1], sm[0]);
+  // 全站 JS 引用到的图标 id（JS 会动态注入 <use href="#icon-x">，这些 symbol 必须在场）
+  const jsIconIds = new Set();
+  const jsDirAll = join(dist, 'js');
+  if (existsSync(jsDirAll)) {
+    for (const e of readdirSync(jsDirAll, { withFileTypes: true })) {
+      if (!e.name.endsWith('.js')) continue;
+      const t = readFileSync(join(jsDirAll, e.name), 'utf8');
+      for (const m of t.matchAll(/#(icon-[a-z0-9-]+)/g)) jsIconIds.add(m[1]);
+    }
+  }
+  // 递归补齐 symbol 内部嵌套 <use href="#icon-y"> 的依赖（防漏）
+  function expandNeeded(set) {
+    const out = new Set(set);
+    let changed = true;
+    while (changed) {
+      changed = false;
+      for (const id of [...out]) {
+        const sym = symbolMap.get(id);
+        if (!sym) continue;
+        for (const m of sym.matchAll(/href="#(icon-[a-z0-9-]+)"/g)) {
+          if (!out.has(m[1])) { out.add(m[1]); changed = true; }
+        }
+      }
+    }
+    return out;
+  }
+  const SPRITE_RE = /href="\/assets\/icons\/icons\.svg(?:\?[^"#]*)?#/g;
   const bodyOpenRe = /<body[^>]*>/i;
   let spriteUpdated = 0;
   // Fix JS files too (they generate icons dynamically)
@@ -445,18 +482,28 @@ if (existsSync(spritePath)) {
     const raw = readFileSync(f);
     let text = raw.toString('utf8');
     if (raw[0] === 0xef && raw[1] === 0xbb && raw[2] === 0xbf) text = text.slice(1);
-    // 已注入则跳过
-    if (text.includes('id="icon-activity"')) { spriteUpdated++; return; }
+    // 已注入（含 class="icon-sprite" 的外层）则跳过
+    if (text.includes('class="icon-sprite"')) { spriteUpdated++; return; }
+    // 本页静态引用的图标 id + 全站 JS 引用集
+    const pageIconIds = new Set();
+    for (const m of text.matchAll(/#(icon-[a-z0-9-]+)/g)) pageIconIds.add(m[1]);
+    for (const id of jsIconIds) pageIconIds.add(id);
+    const needed = expandNeeded(pageIconIds);
+    const keptSym = [];
+    for (const [id, block] of symbolMap) if (needed.has(id)) keptSym.push(block);
+    let miniSprite = spriteOpen;
+    if (keptSym.length) miniSprite += '\n' + keptSym.join('\n');
+    if (spriteClose) miniSprite += '\n' + spriteClose;
     // 替换外部引用为同文档引用
     const newText = text
       .replace(SPRITE_RE, 'href="#')
-      .replace(bodyOpenRe, (m) => `${m}\n${spriteContent}`);
+      .replace(bodyOpenRe, (m) => `${m}\n${miniSprite}`);
     if (newText !== text) {
       writeFileSync(f, newText, 'utf8');
       spriteUpdated++;
     }
   });
-  console.log(`[build] Inline sprite 注入: ${spriteUpdated} 个文件`);
+  console.log(`[build] Inline sprite 注入: ${spriteUpdated} 个文件（按页 tree-shake，全站 ${symbolMap.size} symbols）`);
 } else {
   console.warn('[build] Inline sprite: 跳过(assets/icons/icons.svg 不存在)');
 }
