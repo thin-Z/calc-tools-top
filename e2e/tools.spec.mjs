@@ -27,9 +27,11 @@ test.describe('49 tools x zh/en load smoke', () => {
         const controlCount = await page.locator(
           '.tool-form input, .calculator-form input, .tool-form select, .calculator-form select, .tool-form textarea, .calculator-form textarea, .upload-zone, .btn-primary'
         ).count();
-        // 允许「已合并/废弃、无表单控件」的跳转页（如 password-strength 已并入 password-gen、
-        // keyword-density 已并入 word-counter）：无控件但 <main> 内有「<p><a>跳到其它工具」说明 → 视为合并/重定向页。
-        const isMergeRedirect = controlCount === 0 && await page.locator(
+        // 合并/重定向 stub 页：<main> 内有「<p><a>跳到其它工具」说明（如 discount→percentage-calc、
+        // password-strength→password-gen、keyword-density→word-counter；无真正的工具表单）。
+        // 注意：不能要求 controlCount===0——这些 stub 页可能残留 .btn-primary 等（controlCount>0），
+        // 用「main 内 p 的直接子级 a」判别即可；正常工具页（mortgage/bmi 等）计数为 0，不会误伤。
+        const isMergeRedirect = await page.locator(
           'main p:has(> a)'
         ).count() > 0;
         expect(controlCount > 0 || isMergeRedirect, `${url} should have interactive controls (or be a merged/redirected tool page)`).toBe(true);
