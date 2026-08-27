@@ -46,4 +46,17 @@
   }
   document.addEventListener('focusin', onInteract, true);
   document.addEventListener('click', onInteract, true);
+
+  /* --- 自动加载：热门工具计数等动态数据无需交互即可显示 --- */
+  // 页面加载完成后自动注入 site-home.js（内部 initAll() 拉取真实点击/点赞数并刷新 hot-score）。
+  // 用 requestIdleCallback（Safari/旧浏览器用 setTimeout 兜底）延迟到空闲期，首屏渲染不被阻塞，
+  // 尽量保留 P2-1 首屏 JS 分割的收益。
+  function autoLoad() { load(); }
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(autoLoad, { timeout: 1500 });
+  } else if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () { setTimeout(autoLoad, 300); });
+  } else {
+    setTimeout(autoLoad, 300);
+  }
 })();
