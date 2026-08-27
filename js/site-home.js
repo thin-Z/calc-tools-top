@@ -1024,6 +1024,28 @@ function applyFilters() {
     // 对"存活"文章重做分页（跳过 .filtered-out）
     applyFilteredPagination(cat, articles);
 
+    // 隐藏无可见工具的分类标题（section-divider）
+    // 以及搜索/分类筛选时隐藏"最近使用"区域
+    const isFiltered = query !== '' || cat !== 'all';
+    const recentSection = document.getElementById('recent-tools');
+    if (recentSection) {
+        // 搜索/筛选时隐藏；清除筛选时恢复（renderRecent 已在 initAll 中调用，recent 已填充）
+        if (isFiltered) {
+            recentSection.classList.add('hidden');
+        } else if (recentSection.querySelector('.recent-tool')) {
+            // 有最近使用记录时才恢复显示（避免空区域闪烁）
+            recentSection.classList.remove('hidden');
+        }
+    }
+    document.querySelectorAll('.tool-grid').forEach(function(grid) {
+        const hasVisible = grid.querySelector('.tool-card-wrap:not(.filtered-out)');
+        const divider = grid.previousElementSibling;
+        if (divider && divider.classList.contains('section-divider')) {
+            divider.style.display = hasVisible ? '' : 'none';
+            grid.style.display = hasVisible ? '' : 'none';
+        }
+    });
+
     // 无结果：展示"你是不是想找"纠错建议
     const zero = (visibleTools === 0 && visibleArticles === 0);
     const noResults = document.querySelector('.no-results');
