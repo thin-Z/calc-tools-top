@@ -558,6 +558,21 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
   }
 }
 
+// ---------- 22. a11y 全站扫描门禁（Phase 4, T4.1, axe 全 WCAG 2.1 A/AA） ----------
+{
+  // 默认只读结果；较慢（代表页×明暗），用 E2E_SKIP_A11Y=1 跳过（CI 需开启方能保证不回归）
+  if (process.env.E2E_SKIP_A11Y === '1') {
+    console.log('[22] a11y 全站扫描: ⏭ 跳过（E2E_SKIP_A11Y=1）');
+  } else {
+    try {
+      execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'audit-a11y.mjs')], { stdio: 'inherit', cwd: ROOT, env: { ...process.env } });
+      console.log('[22] a11y 全站扫描 (axe WCAG 2.1 A/AA): ✓');
+    } catch (e) {
+      fail('[a11y] scripts/audit-a11y.mjs 退出码非 0（存在 WCAG 2.1 A/AA 违规；运行 node scripts/audit-a11y.mjs 查看明细）');
+    }
+  }
+}
+
 // ---------- 汇总 ----------
 if (failures.length) {
   console.error(`\n❌ verify-site 失败 ${failures.length} 项：`);
