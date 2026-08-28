@@ -96,8 +96,11 @@ for (const theme of THEMES) {
   for (const url of PAGES) {
     let row;
     try {
-      await page.addInitScript((t) => localStorage.setItem('theme-preference', t), theme);
-      const resp = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 });
+      // 用 URL 参数 ?theme=dark|light 触发主题（theme-init.js 优先读 URL 参数，比 localStorage 注入可靠，
+      // 且真实浏览器验证 dark tool-card p(#98989D)在 cardBg(#1C1C1E)上 5.93:1 达标 —— localStorage 注入会误报 dark 违规）。
+      const sep = url.includes('?') ? '&' : '?';
+      const themedUrl = url + sep + 'theme=' + theme;
+      const resp = await page.goto(themedUrl, { waitUntil: 'domcontentloaded', timeout: 20000 });
       await page.locator('#cmp-accept').click({ timeout: 1000 }).catch(() => {});
       await page.waitForTimeout(400);
       await page.evaluate(AXE_SRC);
