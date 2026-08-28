@@ -109,9 +109,9 @@
     --strength-fair: var(--color-warning);
     --strength-strong: #eab308;
     --cat-finance: #1d4ed8;
-    --cat-life: #ca8a04;
+    --cat-life: #8d6003;          /* 加深达 AA(4.54:1)，保持金黄相（原 #ca8a04 对比不足） */
     --cat-shopping: #db2777;
-    --cat-travel: #0284c7;
+    --cat-travel: #026aa0;        /* 加深达 AA(4.53:1)，保持天蓝相（原 #0284c7 对比不足） */
     --cat-utility: var(--slate-500);
     --cat-image: #059669;
     --white: #fff;
