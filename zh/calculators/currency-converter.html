@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>汇率换算器 - 在线货币转换, 支持美元/人民币/欧元等多币种</title>
@@ -26,7 +28,6 @@
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script>
     <script src="/js/calculators/currency-converter.js" defer></script>
-    <script src="/js/calculators/currency-converter-ui.js" defer></script>
 
     <script type="application/ld+json">
     {
@@ -77,60 +78,56 @@
 </header>
 
     <main id="main">
-        <div class="tool-container">
+        <div class="page-header">
             <h1>汇率换算器</h1>
-            <p class="tool-description">免费在线汇率换算器，内置常见货币参考汇率，支持美元、人民币、欧元等任意两种货币实时互换，并给出兑换金额与交叉汇率。</p>
-
-            <div class="calculator-form">
-                <div class="input-group">
-                    <label for="fx-amount">输入金额</label>
-                    <input type="number" id="fx-amount" placeholder="100" inputmode="decimal" step="any" aria-label="输入金额">
-                    <button type="button" id="fx-swap" class="fx-swap" aria-label="交换货币">⇄ 交换</button>
-                </div>
-                <div class="input-group">
-                    <label for="fx-from">源货币</label>
-                    <select id="fx-from" aria-label="源货币"><option value="USD">美元 USD</option></select>
-                </div>
-                <div class="input-group">
-                    <label for="fx-to">目标货币</label>
-                    <select id="fx-to" aria-label="目标货币"><option value="CNY">人民币 CNY</option></select>
-                </div>
-
-                <div class="result-area hidden" id="result-area">
-                    <div class="result-label">换算结果</div>
-                    <div class="fx-result" id="fx-result">--</div>
-                    <p class="fx-rate" id="fx-rate">--</p>
-                </div>
-            </div>
-
-            <div class="tool-info">
-                <h2>什么是汇率与货币换算？</h2>
-                <p>汇率（Exchange Rate）是两种货币之间的兑换比率，本质是一种货币以另一种货币计价的价格。由于各国经济与货币政策不同，汇率会持续波动。本工具内置常见货币的参考汇率（以美元为基准的交叉汇率），可让你快速估算任意两种货币的兑换金额，适合旅游出行、海外购物、跨境电商等场景。</p>
-                <h3>如何使用本工具</h3>
-                <ol>
-                    <li>在「输入金额」框填写要换算的数值</li>
-                    <li>选择源货币与目标货币，工具实时给出兑换金额</li>
-                    <li>点击「交换」可快速切换源/目标方向</li>
-                    <li>结果同时显示当前 1 单位源货币约合多少目标货币</li>
-                </ol>
-                <h3>常见问题</h3>
-                <p><strong>这里是实时汇率吗？</strong>不是。本站为纯静态工具，内置的是固定参考汇率（以约 2026-08 为基准），主要用于快速估算，不保证与银行或市场实时价格一致。涉及实际交易时请以银行挂牌汇率为准。</p>
-                <p><strong>汇率为什么是固定的？</strong>为保持站点纯静态、零外部依赖，本工具采用内置参考汇率表并周期性人工更新，避免运行时依赖第三方接口带来的延迟与稳定性问题。</p>
-                <p><strong>数据会上传到服务器吗？</strong>不会。所有换算都在浏览器本地完成，输入的数据不会离开你的设备。</p>
-                <h3>为什么汇率会不断波动？</h3>
-                <p>汇率是两种货币的相对价格，本质由两国的经济基本面与市场供需共同决定。短期内，利率差异、通胀水平、进出口贸易、资本流动、地缘政治与市场情绪都会让汇率起起伏伏；长期则更多取决于两国的经济增长与货币政策。因此你在不同时间看到的汇率数字往往不同，这也是为什么实时换算与出差、跨境购物时的"到手价"会有出入。</p>
-                <h3>跨境场景下，该信谁的汇率？</h3>
-                <p>实际换汇时，你能拿到的价格通常不是中间价，而是<strong>买卖价差</strong>：银行或支付平台会在基准汇率上再赚一点差价，并可能额外收取手续费、服务费。所以同一时刻，你查到的"参考汇率"和实际到账的金额可能存在约 1%-3% 的差异。真实交易请务必以银行柜台、支付平台或兑换机构的当场报价为准，本工具仅作估算参考。</p>
-                <p>此外，需要注意有些平台按"卖出价"、有些按"买入价"收费，方向不同价格也不同。做预算时建议留出一点富余，避免因汇率与手续费导致实际花费超出预期。</p>
-                <h3>换算结果怎么用？</h3>
-                <p>得到兑换金额后，你可以用它做旅行预算、海淘比价、海外订单成本核算，或评估跨境生意的利润空间。需要提醒的是，汇率在付款时还可能变动，因此涉及大额或正式交易时，最好在临近交易时锁定价格，或将汇率波动计入风险缓冲。</p>
-                <p>说到换算，很多人会问"为什么换同样的钱，不同渠道结果不一样"。这主要是因为市场上存在多种汇率：中间价（央行或机构发布的理论基准价）、买入价、卖出价、现钞价与现汇价，后三者往往各有差异。银行柜台的现钞兑换通常比现汇贵，支付平台的汇率则常包含一定加价。因此做跨境预算时，提前用小工具估算出大概范围，再留出 5% 左右的浮动空间，能让你对实际花费更有把握。</p>
-                <p>另外一个实用的技巧是：如果金额不大，可以对比多个渠道（银行、支付 App、兑换机构）的实时报价，选择综合成本最低的那个；如果是大额或长期持有，往往还要考虑汇率走势与避险需求。工具解决的是"快速得到近似换算"的需求，真实的资金决策仍需结合最新市场信息与自己的风险承受能力。</p>
-            </div>
+            <p>免费在线汇率换算器，内置常见货币参考汇率，支持美元、人民币、欧元等任意两种货币实时互换，并给出兑换金额与交叉汇率。</p>
         </div>
 
         <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="currency-converter"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
-    <div class="related-tools">
+
+        <div class="tool-form">
+            <div class="form-group"><label for="fx-amount">输入金额</label><input type="number" id="fx-amount" value="100" inputmode="decimal" step="any" data-csp-input="renderCurrency" aria-label="输入金额"></div>
+            <div class="form-group"><label for="fx-from">源货币</label><select id="fx-from" data-csp-change="renderCurrency" aria-label="源货币"></select></div>
+            <div class="form-group"><label for="fx-to">目标货币</label><select id="fx-to" data-csp-change="renderCurrency" aria-label="目标货币"></select></div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-primary" data-csp-click="swapCurrencies">交换货币</button>
+                <button type="reset" class="btn btn-secondary" data-csp-click="resetCurrency">重置</button>
+            </div>
+        </div>
+
+        <div class="result-card hidden" id="result-area">
+            <div class="st-2">
+                <p id="fx-result" class="st-64">--</p>
+                <p id="fx-rate" class="st-63">--</p>
+            </div>
+        </div>
+
+        <section class="tool-content">
+            <h2>什么是汇率与货币换算？</h2>
+            <p>汇率（Exchange Rate）是两种货币之间的兑换比率，本质是一种货币以另一种货币计价的价格。由于各国经济与货币政策不同，汇率会持续波动。本工具内置常见货币的参考汇率（以美元为基准的交叉汇率），可让你快速估算任意两种货币的兑换金额，适合旅游出行、海外购物、跨境电商等场景。</p>
+            <h3>如何使用本工具</h3>
+            <ol>
+                <li>在「输入金额」框填写要换算的数值</li>
+                <li>选择源货币与目标货币，工具实时给出兑换金额</li>
+                <li>点击「交换」可快速切换源/目标方向</li>
+                <li>结果同时显示当前 1 单位源货币约合多少目标货币</li>
+            </ol>
+            <h3>常见问题</h3>
+            <p><strong>这里是实时汇率吗？</strong>不是。本站为纯静态工具，内置的是固定参考汇率（以约 2026-08 为基准），主要用于快速估算，不保证与银行或市场实时价格一致。涉及实际交易时请以银行挂牌汇率为准。</p>
+            <p><strong>汇率为什么是固定的？</strong>为保持站点纯静态、零外部依赖，本工具采用内置参考汇率表并周期性人工更新，避免运行时依赖第三方接口带来的延迟与稳定性问题。</p>
+            <p><strong>数据会上传到服务器吗？</strong>不会。所有换算都在浏览器本地完成，输入的数据不会离开你的设备。</p>
+            <h3>为什么汇率会不断波动？</h3>
+            <p>汇率是两种货币的相对价格，本质由两国的经济基本面与市场供需共同决定。短期内，利率差异、通胀水平、进出口贸易、资本流动、地缘政治与市场情绪都会让汇率起起伏伏；长期则更多取决于两国的经济增长与货币政策。因此你在不同时间看到的汇率数字往往不同，这也是为什么实时换算与出差、跨境购物时的"到手价"会有出入。</p>
+            <h3>跨境场景下，该信谁的汇率？</h3>
+            <p>实际换汇时，你能拿到的价格通常不是中间价，而是<strong>买卖价差</strong>：银行或支付平台会在基准汇率上再赚一点差价，并可能额外收取手续费、服务费。所以同一时刻，你查到的"参考汇率"和实际到账的金额可能存在约 1%-3% 的差异。真实交易请务必以银行柜台、支付平台或兑换机构的当场报价为准，本工具仅作估算参考。</p>
+            <p>此外，需要注意有些平台按"卖出价"、有些按"买入价"收费，方向不同价格也不同。做预算时建议留出一点富余，避免因汇率与手续费导致实际花费超出预期。</p>
+            <h3>换算结果怎么用？</h3>
+            <p>得到兑换金额后，你可以用它做旅行预算、海淘比价、海外订单成本核算，或评估跨境生意的利润空间。需要提醒的是，汇率在付款时还可能变动，因此涉及大额或正式交易时，最好在临近交易时锁定价格，或将汇率波动计入风险缓冲。</p>
+            <p>说到换算，很多人会问"为什么换同样的钱，不同渠道结果不一样"。这主要是因为市场上存在多种汇率：中间价（央行或机构发布的理论基准价）、买入价、卖出价、现钞价与现汇价，后三者往往各有差异。银行柜台的现钞兑换通常比现汇贵，支付平台的汇率则常包含一定加价。因此做跨境预算时，提前用小工具估算出大概范围，再留出 5% 左右的浮动空间，能让你对实际花费更有把握。</p>
+            <p>另外一个实用的技巧是：如果金额不大，可以对比多个渠道（银行、支付 App、兑换机构）的实时报价，选择综合成本最低的那个；如果是大额或长期持有，往往还要考虑汇率走势与避险需求。工具解决的是"快速得到近似换算"的需求，真实的资金决策仍需结合最新市场信息与自己的风险承受能力。</p>
+        </section>
+
+        <div class="related-tools">
     <h3>相关工具</h3>
     <ul>
         <li><a href="/zh/calculators/fuel-cost">油耗计算器</a></li>

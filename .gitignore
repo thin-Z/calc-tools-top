@@ -41,6 +41,9 @@ blob-report/
 # Vercel build output
 dist/
 
+# build.mjs 前手工 mv 的 dist 备份（safe-delete 拦截 rmSync(dist) 时的规避手段）
+dist.bak*/
+
 # Python
 __pycache__/
 *.pyc

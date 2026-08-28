@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Currency Converter - Online Exchange Rate for Multi-Currency</title>
@@ -26,7 +28,6 @@
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script>
     <script src="/js/calculators/currency-converter.js" defer></script>
-    <script src="/js/calculators/currency-converter-ui.js" defer></script>
 
     <script type="application/ld+json">
     {
@@ -77,51 +78,47 @@
 </header>
 
     <main id="main">
-        <div class="tool-container">
+        <div class="page-header">
             <h1>Currency Converter</h1>
-            <p class="tool-description">Free online currency converter with built-in reference exchange rates. Convert between USD, CNY, EUR and any other major currency in real time, with the converted amount and cross-rate shown.</p>
-
-            <div class="calculator-form">
-                <div class="input-group">
-                    <label for="fx-amount">Amount</label>
-                    <input type="number" id="fx-amount" placeholder="100" inputmode="decimal" step="any" aria-label="Amount to convert">
-                    <button type="button" id="fx-swap" class="fx-swap" aria-label="Swap currencies">⇄ Swap</button>
-                </div>
-                <div class="input-group">
-                    <label for="fx-from">From</label>
-                    <select id="fx-from" aria-label="From currency"><option value="USD">US Dollar USD</option></select>
-                </div>
-                <div class="input-group">
-                    <label for="fx-to">To</label>
-                    <select id="fx-to" aria-label="To currency"><option value="CNY">Chinese Yuan CNY</option></select>
-                </div>
-
-                <div class="result-area hidden" id="result-area">
-                    <div class="result-label">Result</div>
-                    <div class="fx-result" id="fx-result">--</div>
-                    <p class="fx-rate" id="fx-rate">--</p>
-                </div>
-            </div>
-
-            <div class="tool-info">
-                <h2>What is an Exchange Rate?</h2>
-                <p>An exchange rate is the ratio at which one currency is exchanged for another — effectively the price of one currency quoted in another. Rates fluctuate continuously due to economic and monetary policy. This tool uses built-in reference rates (USD-based cross rates) so you can quickly estimate conversions for travel, overseas shopping or cross-border e-commerce.</p>
-                <h3>How to Use This Tool</h3>
-                <ol>
-                    <li>Enter the amount in the "Amount" field</li>
-                    <li>Choose the from and to currencies — the converted amount updates in real time</li>
-                    <li>Click "⇄ Swap" to reverse the direction</li>
-                    <li>The result also shows how much 1 unit of the source currency is worth in the target currency</li>
-                </ol>
-                <h3>Frequently Asked Questions</h3>
-                <p><strong>Are these live exchange rates?</strong> No. This is a fully static site; it uses fixed reference rates (approximate 2026-08 baseline) for quick estimation. It is not guaranteed to match live bank or market rates — always use the bank's quoted rate for real transactions.</p>
-                <p><strong>Why are the rates fixed?</strong> To keep the site purely static with zero external dependencies, the tool embeds a reference rate table updated periodically, avoiding runtime third-party API latency and instability.</p>
-                <p><strong>Is my data uploaded to a server?</strong> No. Everything runs locally in your browser; your input never leaves your device.</p>
-            </div>
+            <p>Free online currency converter with built-in reference exchange rates. Convert between USD, CNY, EUR and any other major currency in real time, with the converted amount and cross-rate shown.</p>
         </div>
 
         <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="currency-converter"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
-    <div class="related-tools">
+
+        <div class="tool-form">
+            <div class="form-group"><label for="fx-amount">Amount</label><input type="number" id="fx-amount" value="100" inputmode="decimal" step="any" data-csp-input="renderCurrency" aria-label="Amount to convert"></div>
+            <div class="form-group"><label for="fx-from">From</label><select id="fx-from" data-csp-change="renderCurrency" aria-label="From currency"></select></div>
+            <div class="form-group"><label for="fx-to">To</label><select id="fx-to" data-csp-change="renderCurrency" aria-label="To currency"></select></div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-primary" data-csp-click="swapCurrencies">Swap</button>
+                <button type="reset" class="btn btn-secondary" data-csp-click="resetCurrency">Reset</button>
+            </div>
+        </div>
+
+        <div class="result-card hidden" id="result-area">
+            <div class="st-2">
+                <p id="fx-result" class="st-64">--</p>
+                <p id="fx-rate" class="st-63">--</p>
+            </div>
+        </div>
+
+        <section class="tool-content">
+            <h2>What is an Exchange Rate?</h2>
+            <p>An exchange rate is the ratio at which one currency is exchanged for another — effectively the price of one currency quoted in another. Rates fluctuate continuously due to economic and monetary policy. This tool uses built-in reference rates (USD-based cross rates) so you can quickly estimate conversions for travel, overseas shopping or cross-border e-commerce.</p>
+            <h3>How to Use This Tool</h3>
+            <ol>
+                <li>Enter the amount in the "Amount" field</li>
+                <li>Choose the from and to currencies — the converted amount updates in real time</li>
+                <li>Click "⇄ Swap" to reverse the direction</li>
+                <li>The result also shows how much 1 unit of the source currency is worth in the target currency</li>
+            </ol>
+            <h3>Frequently Asked Questions</h3>
+            <p><strong>Are these live exchange rates?</strong> No. This is a fully static site; it uses fixed reference rates (approximate 2026-08 baseline) for quick estimation. It is not guaranteed to match live bank or market rates — always use the bank's quoted rate for real transactions.</p>
+            <p><strong>Why are the rates fixed?</strong> To keep the site purely static with zero external dependencies, the tool embeds a reference rate table updated periodically, avoiding runtime third-party API latency and instability.</p>
+            <p><strong>Is my data uploaded to a server?</strong> No. Everything runs locally in your browser; your input never leaves your device.</p>
+        </section>
+
+        <div class="related-tools">
     <h3>Related Tools</h3>
     <ul>
         <li><a href="/en/calculators/fuel-cost">Fuel Cost Calculator</a></li>

@@ -63,12 +63,30 @@ test.describe('Representative tool deep interactions', () => {
     expect(errors).toEqual([]);
   });
 
-  test('currency-converter: currency dropdowns populate', async ({ page }) => {
+  test('currency-converter: dropdowns populate + live render + swap + reset (主模板回归)', async ({ page }) => {
     const errors = trackPageErrors(page);
     await page.goto('/zh/calculators/currency-converter.html', { waitUntil: 'domcontentloaded' });
     await dismissCmp(page);
+    // 下拉框填充（fillSelect）
     await expect.poll(async () => page.locator('#fx-from option').count(), { timeout: 8000 }).toBeGreaterThan(3);
     await expect.poll(async () => page.locator('#fx-to option').count(), { timeout: 8000 }).toBeGreaterThan(3);
+    // 主模板结构：page-header / tool-form / result-card（视觉一致性回归）
+    await expect(page.locator('.page-header h1')).toBeVisible();
+    await expect(page.locator('.tool-form')).toBeVisible();
+    // 默认 100 USD→CNY 实时渲染
+    const resultCard = page.locator('#result-area');
+    await expect(resultCard).toBeVisible();
+    await expect(page.locator('#fx-result')).toContainText(/CNY/);
+    await expect(page.locator('#fx-rate')).toContainText(/1 USD/);
+    // 交换货币（data-csp-click 委托 → swapCurrencies）
+    await page.locator('button[data-csp-click="swapCurrencies"]').first().click();
+    await expect(page.locator('#fx-from')).toHaveValue('CNY');
+    await expect(page.locator('#fx-to')).toHaveValue('USD');
+    await expect(resultCard).toBeVisible();
+    await expect(page.locator('#fx-result')).toContainText(/USD/);
+    // 重置（data-csp-click 委托 → resetCurrency）：结果区隐藏
+    await page.locator('button[data-csp-click="resetCurrency"]').first().click();
+    await expect(resultCard).toBeHidden();
     expect(errors).toEqual([]);
   });
 
