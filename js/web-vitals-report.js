@@ -1,5 +1,5 @@
-// web-vitals -> GA4 上报（CSP 合规：库从 cdn.jsdelivr.net 加载，已在 vercel.json script-src 白名单）
-// 库全局为 window.webVitals（web-vitals v4 UMD 构建）。指标经 gtag 推到 GA4（G-B61D908J5F），non_interaction 避免影响跳出率。
+// web-vitals -> GA4 上报（CSP 合规：web-vitals 库为自托管 /js/web-vitals.attribution.js，IIFE 构建，无外部 CDN/SRI 依赖）
+// 库全局为 window.webVitals（web-vitals v4 IIFE 构建）。指标经 gtag 推到 GA4（G-B61D908J5F），non_interaction 避免影响跳出率。
 (function () {
   function report(metric) {
     try {
