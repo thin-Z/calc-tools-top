@@ -175,8 +175,13 @@ function initCurrencyConverter() {
     renderCurrency();
 }
 
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCurrencyConverter);
-} else {
-    initCurrencyConverter();
+// 守卫：本文件会被 `node --test`（js/test/currency-converter.test.js）以纯 Node 环境
+// require 用于校验逻辑层，该环境无 document。此处若无守卫会抛 ReferenceError。
+// 逻辑层（RATES/换算/格式化）不依赖 DOM，故 Node 下可安全加载。
+if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initCurrencyConverter);
+    } else {
+        initCurrencyConverter();
+    }
 }
