@@ -40,6 +40,12 @@ KV_URL / KV_REDIS_URL
 
 写入有白名单（`api/allowed-ids.js`）与防刷（每 IP 每工具每日 5 次操作，超出返回 429）。
 
+### POST 监控上报（Phase 5，轻量观测）
+- `POST /api/csp-report` — CSP 违规接收（浏览器 CspReport，204），Vercel 函数日志观测（`api/csp-report.js`）
+- `POST /api/error-report` — 前端 JS 错误上报（`js/error-report.js` 捕获 window.onerror/unhandledrejection → 此端点，204），Vercel 函数日志观测（`api/error-report.js`）
+
+> 两者均 origin 白名单 CORS + 60/min 限速 + ≤16KB；仅 console.log 结构化摘要（Vercel 日志即观测面），不落盘敏感数据。
+
 ## Upstash REST 调用约定（易错点）
 
 计数/限速/防刷全部通过 Upstash REST API：
