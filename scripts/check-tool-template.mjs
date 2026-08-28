@@ -5,7 +5,17 @@
  * 背景：calc-tools.top 早期 currency-converter 等页面使用与主模板并行的
  *       「第二套模板」（tool-container / calculator-form / tool-info /
  *       input-group / result-area 等零 CSS 类 + 缺 Inter 字体），导致
- *       视觉与交互与其他工具页不一致。本门禁强制所有工具页统一使用主模板。
+ *       视觉与交互与其他工具页不一致。本门禁强制 calculators 工具页统一使用主模板。
+ *
+ * 合法例外说明（勿误判为违约/回退）：站点工具页分两套明确规范——
+ *       (a) calculators/* 计算器工具页：必须用主模板（page-header + tool-form +
+ *           form-actions + result-card + st-* + tool-content + Inter 字体）。
+ *       (b) text/*、image/* 输入输出型工具页：使用独立的"输入输出型"布局
+ *           （tool-page / tool-header / tool-controls / btn / result-area /
+ *           text-input / upload-zone 等），功能完整、非破损，故不要求主模板，
+ *           其非合规状态属**预期合法例外**（当前由本门禁豁免，勿强制迁移）。
+ *       二者之外出现的非合规（如 calculators/* 含 tool-container/calculator-form/
+ *       tool-info/fx-* 等旧类或缺 page-header/Inter）才是必须修复的回归。
  *
  * 合规判定（全部满足才视为 compliant）：
  *   - 含 class="page-header"
