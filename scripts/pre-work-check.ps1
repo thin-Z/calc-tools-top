@@ -63,7 +63,11 @@ try {
         $issues++
     } else {
         $parts = ($count.Trim() -split '\s+')
-        $behind = [int]$parts[0]; $ahead = [int]$parts[1]
+        # git rev-list --left-right --count HEAD...origin/main 输出: [本地独有X] [远端独有Y]
+        #   X = 仅在 HEAD(本地领先/ahead) 的提交数
+        #   Y = 仅在 origin/main(本地落后/behind) 的提交数
+        # 注意左-右方向: parts[0]=ahead, parts[1]=behind,切勿颠倒(曾因此误报"领先19实为落后19")。
+        $ahead = [int]$parts[0]; $behind = [int]$parts[1]
         if ($behind -eq 0 -and $ahead -eq 0) {
             Write-Host "  OK 完全同步 (HEAD = $((git rev-parse --short HEAD)))" -ForegroundColor Green
         } elseif ($behind -gt 0) {
