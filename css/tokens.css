@@ -117,6 +117,8 @@
     --white: #fff;
     --black: #000;
     --text-muted: #6b7280;
+    /* T4.3：dark 下 text-muted(#6b7280) 在黑底 4.34:1 稍不足，提亮达标 */
+    --text-muted-dark: #8a8a8f;
     /* T1.4：浅色底(#e9eff7 等)上的说明文字需比 secondary 更深才达 4.5:1 */
     --text-secondary-deep: #5d6470;
     --bg-subtle: #f1f5f9;
