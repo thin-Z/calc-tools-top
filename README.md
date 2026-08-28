@@ -79,17 +79,17 @@ KV_URL / KV_REDIS_URL
 | `e2e-server.mjs` | Playwright e2e 本地预览服务器（e2e-server.mjs） | `node scripts/e2e-server.mjs` |
 | `r4-screenshots.mjs` | R4 门禁截图回归 | `node scripts/r4-screenshots.mjs` |
 | `pre-work-check.sh` / `pre-work-check.ps1` | 会话前置防护：对齐基线 / 防漂移检查 | `sh scripts/pre-work-check.sh` |
-| `audit-contrast.mjs` | 暗色模式 AA 对比度审计（Phase 1 T1.x） | `node scripts/audit-contrast.mjs` |
+| `audit-a11y.mjs` | 全站 axe 扫描（WCAG 2.1 A/AA，msedge 通道；verify #22） | `node scripts/audit-a11y.mjs` |
 | `seo-batch-audit.mjs` | SEO 软指标批量审计（title/desc 长度等） | `node scripts/seo-batch-audit.mjs` |
 | `gen-allowed-ids.js` | 生成 API 白名单 ID | `node scripts/gen-allowed-ids.js` |
 | `inject-url-state.mjs` | 为计算器页注入 `js/url-state.js`（URL 参数预填，幂等） | `node scripts/inject-url-state.mjs [--dry-run]` |
 | `strengthen-related-links.mjs` | 强化工具页"相关工具"横向链接（语义映射，跳过 noindex stub） | `node scripts/strengthen-related-links.mjs [--dry-run]` |
 | `check-doc-sync.mjs` | 检查文档与代码的同步状态（README ↔ scripts ↔ 配置） | `node scripts/check-doc-sync.mjs` |
 | `scan-csp-inline.py` | 扫描全站内联脚本/事件/样式 | `python scripts/scan-csp-inline.py` |
-| `analyze_sitemap.py` | 分析 sitemap 结构 | `python scripts/analyze_sitemap.py` |
-| `full_seo_audit.py` | 全维度 SEO 审计 | `python scripts/full_seo_audit.py` |
-| `security_audit.py` | 安全审计 | `python scripts/security_audit.py` |
-| `seo_audit.py` | SEO 审计 | `python scripts/seo_audit.py` |
+| ~~`analyze_sitemap.py`~~ | ~~分析 sitemap 结构~~（归档） | `python scripts/archive/analyze_sitemap.py` |
+| ~~`full_seo_audit.py`~~ | ~~全维度 SEO 审计~~（归档，被 `seo-batch-audit.mjs` 取代） | `python scripts/archive/full_seo_audit.py` |
+| ~~`security_audit.py`~~ | ~~安全审计~~（归档） | `python scripts/archive/security_audit.py` |
+| ~~`seo_audit.py`~~ | ~~SEO 审计~~（归档，被 `seo-batch-audit.mjs` 取代） | `python scripts/archive/seo_audit.py` |
 | `deploy-like-system.ps1` | 部署点赞系统 | `powershell scripts/deploy-like-system.ps1` |
 | `validate-encoding.ps1` | 验证编码 | `powershell scripts/validate-encoding.ps1` |
 
