@@ -560,16 +560,18 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
 
 // ---------- 22. a11y 全站扫描门禁（Phase 4, T4.1, axe 全 WCAG 2.1 A/AA） ----------
 {
-  // 默认只读结果；较慢（代表页×明暗），用 E2E_SKIP_A11Y=1 跳过（CI 需开启方能保证不回归）
-  if (process.env.E2E_SKIP_A11Y === '1') {
-    console.log('[22] a11y 全站扫描: ⏭ 跳过（E2E_SKIP_A11Y=1）');
-  } else {
+  // 全站 axe 扫描依赖 Playwright + 真实浏览器（msedge/chromium），CI/生产环境常无浏览器与 devDeps。
+  // 故**默认跳过**；仅当显式 E2E_A11Y=1 才启用（需本地已装 playwright + 可用浏览器通道）。
+  // 本地启用：E2E_A11Y=1 node scripts/audit-a11y.mjs  或  E2E_A11Y=1 node scripts/verify-site.mjs
+  if (process.env.E2E_A11Y === '1') {
     try {
       execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'audit-a11y.mjs')], { stdio: 'inherit', cwd: ROOT, env: { ...process.env } });
       console.log('[22] a11y 全站扫描 (axe WCAG 2.1 A/AA): ✓');
     } catch (e) {
-      fail('[a11y] scripts/audit-a11y.mjs 退出码非 0（存在 WCAG 2.1 A/AA 违规；运行 node scripts/audit-a11y.mjs 查看明细）');
+      fail('[a11y] scripts/audit-a11y.mjs 退出码非 0（存在 WCAG 2.1 A/AA 违规，或缺乏 playwright/浏览器通道；运行 node scripts/audit-a11y.mjs 查看明细）');
     }
+  } else {
+    console.log('[22] a11y 全站扫描: ⏭ 跳过（需 E2E_A11Y=1 且本地有 playwright+浏览器通道；audit-a11y.mjs 可独立运行）');
   }
 }
 
