@@ -3812,10 +3812,11 @@ svg.ic {
     padding: 0.4rem 0.9rem;
     border-radius: 999px;
     background: var(--blue-08);
-    color: var(--brand-blue);
+    color: #1d4ed8; /* C4-a11y(2026-08-28): 分类目录tag用深蓝, 浅底对比≥4.5(原#007aff仅3.33) */
     text-decoration: none;
     transition: background 0.2s,color 0.2s;
 }
+[data-theme="dark"] .tag-cat-list .tag { color: var(--brand-blue); } /* C4-a11y: dark 维持亮蓝(暗底达标) */
 .tag-cat-list .tag:hover {
     background: var(--brand-blue);
     color: var(--white);
@@ -3912,5 +3913,9 @@ mark {
 .ref-table th,.ref-table td { padding: 0.5rem 0.9rem; text-align: left; border: 1px solid var(--border,var(--border-soft)); }
 .ref-table thead th { background: var(--bg-hover,var(--bg-subtle)); font-weight: 700; }
 .ref-table tbody tr:nth-child(even){ background: var(--bg-hover,var(--bg-soft)); }
+/* C6-a11y(2026-08-28): .ref-table 在 dark 下 thead/even 行背景缺失覆盖，浅底浅字对比度仅1.04 → 补 dark 背景+文字 */
+[data-theme="dark"] .ref-table thead th { background: var(--surface-dark-2); color: var(--text-on-dark); }
+[data-theme="dark"] .ref-table tbody tr:nth-child(even){ background: var(--surface-dark); }
+[data-theme="dark"] .ref-table td,[data-theme="dark"] .ref-table th { color: var(--text-on-dark); border-color: var(--surface-dark-2); }
 
 
