@@ -3812,7 +3812,7 @@ svg.ic {
     padding: 0.4rem 0.9rem;
     border-radius: 999px;
     background: var(--blue-08);
-    color: #1d4ed8; /* C4-a11y(2026-08-28): 分类目录tag用深蓝, 浅底对比≥4.5(原#007aff仅3.33) */
+    color: var(--cat-finance); /* C4-a11y(2026-08-28): 分类目录tag用深蓝token, 浅底对比≥4.5(原品牌蓝仅3.33) */
     text-decoration: none;
     transition: background 0.2s,color 0.2s;
 }
