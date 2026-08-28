@@ -1,15 +1,17 @@
 /**
- * 分数计算器 - 核心逻辑
+ * 分数计算器 - 核心逻辑 + UI 交互（合并自 fraction-calculator.js + fraction-calculator-ui.js）
  * 功能：对两个分数执行加、减、乘、除运算，并将结果自动约分为最简分数。
- * 用法：本文件为纯函数模块（IIFE），在浏览器中暴露 window.fractionCalculator 命名空间
- *       以及 window.gcd / window.parseFraction / window.simplify / window.addFractions /
- *       window.subtractFractions / window.multiplyFractions / window.divideFractions /
- *       window.formatFraction 顶层函数（供 UI 层与单元测试直接调用）。
+ * 用法：本文件在浏览器中暴露 window.fractionCalculator 命名空间以及 window.gcd /
+ *       window.parseFraction / window.simplify / window.addFractions 等顶层函数
+ *       （供 UI 层与单元测试直接调用）。
  * 依赖：无（零第三方库，CSP 白名单不扩张）。
- * 说明：仅使用整数运算，结果保持在 Number.MAX_SAFE_INTEGER 内；超出安全范围返回 null。
+ * DOM 守卫：UI 层在纯 Node（node --test）环境下不触碰 document，避免回归
+ *         （参考 timestamp 合并回归教训）。
  */
 (function () {
     'use strict';
+
+    // ===== 核心逻辑（原 fraction-calculator.js，未改动） =====
 
     /**
      * 计算非负整数的最大公约数（欧几里得辗转相除法）。
@@ -142,4 +144,100 @@
     window.multiplyFractions = multiplyFractions;
     window.divideFractions = divideFractions;
     window.formatFraction = formatFraction;
+
+    // ===== UI 交互（原 fraction-calculator-ui.js，合并并加 DOM 守卫） =====
+    // 所有事件均通过 addEventListener 绑定（零内联事件，CSP 合规）。隐藏元素一律使用
+    // classList.add/remove('hidden')（.hidden 带 !important，覆盖 style.display 的显隐）。
+
+    var num1El = null;
+    var den1El = null;
+    var opEl = null;
+    var num2El = null;
+    var den2El = null;
+    var resultArea = null;
+    var resultEl = null;
+
+    var OP_SYMBOL = { add: '+', subtract: '−', multiply: '×', divide: '÷' };
+
+    /**
+     * 读取输入并渲染计算结果。任一输入为空或不合法时隐藏结果区或显示错误提示。
+     */
+    function render() {
+        var n1 = num1El.value.trim();
+        var d1 = den1El.value.trim();
+        var n2 = num2El.value.trim();
+        var d2 = den2El.value.trim();
+        if (!n1 || !d1 || !n2 || !d2) {
+            resultArea.classList.add('hidden');
+            return;
+        }
+
+        var a = parseFraction(n1, d1);
+        var b = parseFraction(n2, d2);
+        if (!a || !b) {
+            showError('分子或分母不合法（分母不能为 0）');
+            return;
+        }
+
+        var op = opEl.value;
+        var r = null;
+        if (op === 'add') r = addFractions(a, b);
+        else if (op === 'subtract') r = subtractFractions(a, b);
+        else if (op === 'multiply') r = multiplyFractions(a, b);
+        else if (op === 'divide') r = divideFractions(a, b);
+        if (!r) {
+            showError('除数不能为 0');
+            return;
+        }
+
+        resultEl.textContent = formatFraction(a) + ' ' + OP_SYMBOL[op] + ' ' + formatFraction(b) + ' = ' + formatFraction(r);
+        resultArea.classList.remove('hidden');
+    }
+
+    /**
+     * 在结果区显示错误提示并展示结果区。
+     * @param {string} msg - 错误信息文本。
+     */
+    function showError(msg) {
+        resultEl.textContent = msg;
+        resultArea.classList.remove('hidden');
+    }
+
+    function clearFraction() {
+        if (num1El) num1El.value = '1';
+        if (den1El) den1El.value = '2';
+        if (num2El) num2El.value = '1';
+        if (den2El) den2El.value = '3';
+        if (opEl) opEl.value = 'add';
+        if (resultArea) resultArea.classList.add('hidden');
+    }
+
+    function init() {
+        num1El = document.getElementById('num1');
+        den1El = document.getElementById('den1');
+        opEl = document.getElementById('f-op');
+        num2El = document.getElementById('num2');
+        den2El = document.getElementById('den2');
+        resultArea = document.getElementById('result-area');
+        resultEl = document.getElementById('fr-result');
+        if (!num1El || !den1El || !num2El || !den2El || !resultArea || !resultEl) return;
+
+        num1El.addEventListener('input', render);
+        den1El.addEventListener('input', render);
+        num2El.addEventListener('input', render);
+        den2El.addEventListener('input', render);
+        opEl.addEventListener('change', render);
+        render();
+    }
+
+    // DOM 守卫：纯 Node（node --test）环境下 document 未定义，跳过绑定，避免回归崩溃。
+    if (typeof document !== 'undefined') {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    }
+
+    window.clearFraction = clearFraction;
 })();

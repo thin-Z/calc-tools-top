@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simplified-Traditional Chinese Converter - Online Text Tool</title>
@@ -26,7 +28,6 @@
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script>
     <script src="/js/calculators/simplified-traditional.js" defer></script>
-    <script src="/js/calculators/simplified-traditional-ui.js" defer></script>
 
     <script type="application/ld+json">
     {
@@ -77,49 +78,47 @@
 </header>
 
     <main id="main">
-        <div class="tool-container">
+        <div class="page-header">
             <h1>Simplified-Traditional Chinese Converter</h1>
-            <p class="tool-description">Free online converter between simplified and traditional Chinese using a built-in common-character table. Convert large amounts of text in real time for editing, translation review, or language learning.</p>
-
-            <div class="calculator-form">
-                <div class="input-group">
-                    <label for="tc-input">Input text</label>
-                    <textarea id="tc-input" rows="5" placeholder="Type or paste simplified or traditional Chinese" aria-label="Input text"></textarea>
-                </div>
-                <div class="input-group">
-                    <label for="tc-dir">Direction</label>
-                    <select id="tc-dir" aria-label="Conversion direction">
-                        <option value="s2t" selected>Simplified → Traditional</option>
-                        <option value="t2s">Traditional → Simplified</option>
-                    </select>
-                </div>
-
-                <div class="result-area hidden" id="result-area">
-                    <div class="result-label">Result</div>
-                    <textarea id="tc-output" rows="5" readonly aria-label="Converted result"></textarea>
-                    <button type="button" id="tc-copy" class="tc-copy" aria-label="Copy result">Copy</button>
-                </div>
-            </div>
-
-            <div class="tool-info">
-                <h2>What is Simplified-Traditional Conversion?</h2>
-                <p>Simplified and traditional Chinese share the same language system but differ in the written form of some characters (such as 汉/漢, 见/見). Simplification conversion maps characters between the two forms using a lookup table. This tool includes a common-character table covering high-frequency characters, useful for emails, writing submissions, and cross-border communication.</p>
-                <h3>How to Use This Tool</h3>
-                <ol>
-                    <li>Paste simplified or traditional Chinese in the "Input text" box</li>
-                    <li>Choose "Simplified → Traditional" or "Traditional → Simplified"</li>
-                    <li>The result updates in real time below</li>
-                    <li>Click "Copy" to copy the converted text</li>
-                </ol>
-                <h3>Frequently Asked Questions</h3>
-                <p><strong>Does it cover every character?</strong> It includes a table of common characters covering high-frequency usage. Rare characters are not guaranteed and are kept unchanged.</p>
-                <p><strong>Why do some conversions look ambiguous?</strong> Some simplified characters map to multiple traditional forms (如 发→發/髮, 后→後/后). This tool uses the most common form; please double-check for special contexts.</p>
-                <p><strong>Is my data uploaded to a server?</strong> No. Everything runs locally in your browser; your input never leaves your device.</p>
-            </div>
+            <p>Free online converter between simplified and traditional Chinese using a built-in common-character table. Convert large amounts of text in real time for editing, translation review, or language learning.</p>
         </div>
 
         <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="simplified-traditional"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
-    <div class="related-tools">
+
+        <div class="tool-form">
+            <div class="form-group"><label for="tc-input">Input text</label><textarea id="tc-input" rows="5" placeholder="Type or paste simplified or traditional Chinese" aria-label="Input text"></textarea></div>
+            <div class="form-group"><label for="tc-dir">Direction</label><select id="tc-dir" aria-label="Conversion direction">
+                <option value="s2t" selected>Simplified → Traditional</option>
+                <option value="t2s">Traditional → Simplified</option>
+            </select></div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" data-csp-click="clearSimplifiedTraditional">Clear</button>
+            </div>
+        </div>
+
+        <div class="result-card hidden" id="result-area">
+            <div class="result-label">Result</div>
+            <textarea id="tc-output" rows="5" readonly aria-label="Converted result"></textarea>
+            <button type="button" id="tc-copy" class="btn btn-secondary" aria-label="Copy result">Copy</button>
+        </div>
+
+        <section class="tool-content">
+            <h2>What is Simplified-Traditional Conversion?</h2>
+            <p>Simplified and traditional Chinese share the same language system but differ in the written form of some characters (such as 汉/漢, 见/見). Simplification conversion maps characters between the two forms using a lookup table. This tool includes a common-character table covering high-frequency characters, useful for emails, writing submissions, and cross-border communication.</p>
+            <h3>How to Use This Tool</h3>
+            <ol>
+                <li>Paste simplified or traditional Chinese in the "Input text" box</li>
+                <li>Choose "Simplified → Traditional" or "Traditional → Simplified"</li>
+                <li>The result updates in real time below</li>
+                <li>Click "Copy" to copy the converted text</li>
+            </ol>
+            <h3>Frequently Asked Questions</h3>
+            <p><strong>Does it cover every character?</strong> It includes a table of common characters covering high-frequency usage. Rare characters are not guaranteed and are kept unchanged.</p>
+            <p><strong>Why do some conversions look ambiguous?</strong> Some simplified characters map to multiple traditional forms (如 发→發/髮, 后→後/后). This tool uses the most common form; please double-check for special contexts.</p>
+            <p><strong>Is my data uploaded to a server?</strong> No. Everything runs locally in your browser; your input never leaves your device.</p>
+        </section>
+
+        <div class="related-tools">
     <h3>Related Tools</h3>
     <ul>
         <li><a href="/en/text/case-converter">Case Converter</a></li>

@@ -1,17 +1,23 @@
 /**
- * Markdown 预览器 - 核心逻辑
- * 功能：把 Markdown 源码渲染为 HTML 字符串。支持语法子集（主理人已拍板）：
+ * Markdown 预览器 - 核心逻辑 + UI 交互（已合并）
+ * 逻辑：把 Markdown 源码渲染为 HTML 字符串。支持语法子集：
  *   标题 / 粗体 / 斜体 / 行内代码 / 围栏代码块 / 有序无序列表 / 链接 / 引用 /
  *   分隔线 / 表格。不实现：任务列表、图片语法。
- * 安全：块级解析在原始文本上进行（保证 > 引用等语法可识别），但**所有插入
- *       输出的文本均在渲染期转义**（renderInline / 代码块 / 表格单元），
- *       XSS 免疫；链接 URL 白名单化（仅 http/https/mailto/tel/#/站内绝对路径），
- *       拒绝 javascript: 等危险协议。
- * 用法：浏览器中暴露 window.markdownPreview 命名空间以及 window.escapeHtml /
- *       window.parseMarkdown 顶层函数。
+ * 安全：块级解析在原始文本上进行，但所有插入输出的文本均在渲染期转义，
+ *       XSS 免疫；链接 URL 白名单化（仅 http/https/mailto/tel/#/站内绝对路径）。
+ * UI：编辑器 + 实时预览（输入防抖 150ms）。预览 HTML 来自 parseMarkdown
+ *     （先转义后渲染，可安全 innerHTML）。所有事件 addEventListener，
+ *     隐藏元素仅用 classList.toggle('hidden')。
+ * 合并说明：UI 部分用 typeof document !== 'undefined' 守卫包裹 init()，
+ *     避免 node --test 下触发 ReferenceError: document is not defined（A1 回归教训）。
+ * 用法：浏览器暴露 window.markdownPreview 命名空间及 window.escapeHtml /
+ *       window.parseMarkdown；UI 处理器 window.fillMarkdownSample /
+ *       window.clearMarkdownPreview 供主模板 form-actions 的 data-csp-click 调用。
  */
 (function () {
     'use strict';
+
+    /* ===================== 核心逻辑（原 markdown-preview.js） ===================== */
 
     /**
      * HTML 转义（防止用户内容注入标签/脚本）。
@@ -32,10 +38,6 @@
      * 拒绝 javascript:、data:、vbscript: 等危险协议。
      * @param {string} url - 链接 URL。
      * @returns {string} 白名单内的 URL（原样返回，不做转义）；不合法返回 ''。
-     * 注意：本函数不转义——renderInline 会在整体 escapeHtml 之后才调用本函数，
-     * 传入的 URL 已转义一次，此处再转义会造成 `&` → `&amp;amp;` 双重转义
-     * （P2-1 修复：URL 只转义一次，XSS 防护由「先整体转义 + 白名单拒绝危险协议」
-     * 双重保障，不退化）。
      */
     function sanitizeUrl(url) {
         var u = String(url || '').trim();
@@ -258,4 +260,103 @@
     };
     window.escapeHtml = escapeHtml;
     window.parseMarkdown = parseMarkdown;
+
+    /* ===================== UI 交互（原 markdown-preview-ui.js） ===================== */
+
+    var editor = null;
+    var preview = null;
+    var previewSection = null;
+    var wordCountEl = null;
+    var debounceTimer = null;
+
+    function countWords(text) {
+        var cjk = (text.match(/[\u4e00-\u9fff]/g) || []).length;
+        var en = (text.match(/[A-Za-z]+/g) || []).length;
+        return cjk + en;
+    }
+
+    function render() {
+        var src = editor.value;
+        if (!src.trim()) {
+            preview.textContent = '';
+            previewSection.classList.add('hidden');
+            wordCountEl.textContent = '0 字';
+            return;
+        }
+        preview.innerHTML = parseMarkdown(src);
+        previewSection.classList.remove('hidden');
+        wordCountEl.textContent = countWords(src) + ' 字';
+    }
+
+    function scheduleRender() {
+        if (debounceTimer) clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(render, 150);
+    }
+
+    function fillMarkdownSample() {
+        if (editor.value.trim() !== '') return;
+        editor.value = [
+            '# Markdown 示例',
+            '',
+            '支持 **粗体**、*斜体* 和 `行内代码`。',
+            '',
+            '> 引用：预览器在浏览器本地渲染，内容不会上传。',
+            '',
+            '## 列表',
+            '',
+            '- 无序列表项一',
+            '- 无序列表项二',
+            '',
+            '1. 有序列表项一',
+            '2. 有序列表项二',
+            '',
+            '## 代码块',
+            '',
+            '```js',
+            'function hello() {',
+            '  return "world";',
+            '}',
+            '```',
+            '',
+            '## 表格',
+            '',
+            '| 工具 | 用途 |',
+            '| --- | --- |',
+            '| 颜色对比度 | WCAG 对比度检测 |',
+            '| 正则测试 | 匹配与分组 |',
+            '',
+            '---',
+            '',
+            '更多链接：[工具箱里](https://www.calc-tools.top/)'
+        ].join('\n');
+        render();
+    }
+
+    function clearMarkdownPreview() {
+        editor.value = '';
+        render();
+        editor.focus();
+    }
+
+    function init() {
+        editor = document.getElementById('md-editor');
+        preview = document.getElementById('md-preview');
+        previewSection = document.getElementById('result-area');
+        wordCountEl = document.getElementById('md-word-count');
+        if (!editor || !preview || !previewSection) return;
+
+        editor.addEventListener('input', scheduleRender);
+        render();
+    }
+
+    if (typeof document !== 'undefined') {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    }
+
+    window.fillMarkdownSample = fillMarkdownSample;
+    window.clearMarkdownPreview = clearMarkdownPreview;
 })();

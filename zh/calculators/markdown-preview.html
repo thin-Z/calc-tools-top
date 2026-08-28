@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Markdown 预览器 - 在线 Markdown 转 HTML</title>
@@ -26,7 +28,6 @@
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script>
     <script src="/js/calculators/markdown-preview.js" defer></script>
-    <script src="/js/calculators/markdown-preview-ui.js" defer></script>
 
     <script type="application/ld+json">
     {
@@ -66,63 +67,61 @@
 </header>
 
     <main id="main">
-        <div class="tool-container">
+        <div class="page-header">
             <h1>Markdown 预览器</h1>
-            <p class="tool-description">在左侧编辑 Markdown 源码，右侧实时预览渲染结果。支持标题、粗体斜体、行内代码、代码块、列表、链接、引用、分隔线和表格等常用语法。</p>
-
-            <div class="calculator-form">
-                <div class="md-toolbar">
-                    <button type="button" id="md-sample-btn" class="btn btn-secondary">填入示例</button>
-                    <button type="button" id="md-clear-btn" class="btn btn-secondary">清空</button>
-                    <span class="md-word-count" id="md-word-count">0 字</span>
-                </div>
-                <div class="input-group">
-                    <label for="md-editor">Markdown 源码</label>
-                    <textarea class="text-input md-editor" id="md-editor" placeholder="在此输入 Markdown 内容..." aria-label="Markdown 源码"></textarea>
-                </div>
-
-                <div class="result-area hidden" id="md-preview-section">
-                    <div class="result-label">预览</div>
-                    <div class="md-preview" id="md-preview"></div>
-                </div>
-            </div>
-
-            <div class="tool-info">
-                <h2>Markdown 是什么？</h2>
-                <p>Markdown 是一种轻量级标记语言，用简单的符号表示排版：`#` 表示标题、`**` 表示粗体、`-` 表示列表、反引号表示行内代码或代码块。Markdown 文件易读易写，是 GitHub、博客平台和技术文档的事实标准。本预览器支持常用语法子集：1-6 级标题、粗体与斜体、行内代码、围栏代码块、有序与无序列表、链接、引用、分隔线和表格，覆盖日常写作与文档排版的绝大多数场景。</p>
-                <h3>常用语法速查</h3>
-                <ul>
-                    <li><strong>标题</strong>：`# 一级标题` 到 `###### 六级标题`</li>
-                    <li><strong>粗体/斜体</strong>：`**粗体**`、`*斜体*`</li>
-                    <li><strong>行内代码</strong>：`` `代码` ``；<strong>代码块</strong>：``` ```语言 ```</li>
-                    <li><strong>列表</strong>：`- 无序` 或 `1. 有序`</li>
-                    <li><strong>表格</strong>：用 `|` 分隔列，第二行为 `|---|---|`</li>
-                </ul>
-                <h3>如何使用本工具</h3>
-                <ol>
-                    <li>在编辑区输入或粘贴 Markdown 内容</li>
-                    <li>右侧（下方）实时显示渲染结果，输入停顿 150ms 后刷新</li>
-                    <li>点击「填入示例」快速体验全部语法，点击「清空」重新开始</li>
-                    <li>编辑区下方显示当前字数（中文字符与英文单词合计）</li>
-                </ol>
-                <h3>常见问题</h3>
-                <p><strong>支持任务列表和图片语法吗？</strong>当前版本暂不支持任务列表与图片语法，其余常用语法均已覆盖。如需图片上传，请使用其他工具配合。</p>
-                <p><strong>渲染结果安全吗？</strong>安全。所有内容在渲染前都会进行 HTML 转义，脚本标签与危险链接会被过滤，不会执行任何代码。</p>
-                <p><strong>内容会保存或上传吗？</strong>不会。编辑与预览全部在浏览器本地完成，刷新页面后内容即清除。</p>
-                <h3>为什么要用 Markdown 写东西？</h3>
-                <p>Markdown 最大的好处，是让你在"不打断思路"的情况下完成排版。相比用 Word 反复点菜单调格式，你只需要敲几个简单的符号（比如 `#` 代表标题、`**` 代表加粗），就能得到结构清晰、格式统一的文档。写完的源文件是纯文本，任何编辑器都能打开，也不会因为软件版本不同而出现排版错乱——这正是它被 GitHub、博客、技术文档广泛采用的原因。</p>
-                <p>对写作者来说，Markdown 让你把注意力集中在"内容"而非"格式"上；对开发者来说，它能轻松转成 HTML、PDF、网页等格式，方便发布与分享。学会常见的几个语法，几乎可以覆盖日常写作和文档排版的 90% 需求，性价比非常高。</p>
-                <h3>容易出错的语法细节</h3>
-                <p><strong>① 空格与断行。</strong> 某些 Markdown 渲染器对"标题后要不要空格"、空行是否影响段落分割有严格规定，写得不符合规范时，预览结果可能和预期不符。写完后最好预览确认一下。</p>
-                <p><strong>② 嵌套列表。</strong> 有序列和无序列、以及多层级列表的缩进，不同的 Markdown 方言处理方式不同，嵌套过深容易变得混乱。</p>
-                <p><strong>③ 特殊字符转义。</strong> 像反引号、星号这类 Markdown 保留符号，如果要当普通文本显示，需要加反斜杠转义，否则会被当成语法处理。</p>
-                <h3>结果怎么用？</h3>
-                <p>通过实时预览，你能立刻看到写好的 Markdown 渲染出来的样子：标题的层级、加粗斜体、列表缩进、代码高亮、表格对齐是否正确，一目了然。它非常适合写 README、博客草稿、技术文档、笔记，以及需要"所见即所得"效果的写作场景。改到满意后，把源 Markdown 复制到你的平台或工具即可发布，预览只是帮你确认最终效果。</p>
-            </div>
+            <p>在左侧编辑 Markdown 源码，右侧实时预览渲染结果。支持标题、粗体斜体、行内代码、代码块、列表、链接、引用、分隔线和表格等常用语法。</p>
         </div>
 
         <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="markdown-preview"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
-    <div class="related-tools">
+
+        <div class="tool-form">
+            <div class="form-group"><label for="md-editor">Markdown 源码</label><textarea class="md-editor" id="md-editor" placeholder="在此输入 Markdown 内容..." aria-label="Markdown 源码"></textarea></div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" data-csp-click="fillMarkdownSample">填入示例</button>
+                <button type="button" class="btn btn-secondary" data-csp-click="clearMarkdownPreview">清空</button>
+            </div>
+            <p class="md-word-count" id="md-word-count">0 字</p>
+        </div>
+
+        <div class="result-card hidden" id="result-area">
+            <div class="result-label">预览</div>
+            <div class="md-preview" id="md-preview"></div>
+        </div>
+
+        <section class="tool-content">
+            <h2>Markdown 是什么？</h2>
+            <p>Markdown 是一种轻量级标记语言，用简单的符号表示排版：`#` 表示标题、`**` 表示粗体、`-` 表示列表、反引号表示行内代码或代码块。Markdown 文件易读易写，是 GitHub、博客平台和技术文档的事实标准。本预览器支持常用语法子集：1-6 级标题、粗体与斜体、行内代码、围栏代码块、有序与无序列表、链接、引用、分隔线和表格，覆盖日常写作与文档排版的绝大多数场景。</p>
+            <h3>常用语法速查</h3>
+            <ul>
+                <li><strong>标题</strong>：`# 一级标题` 到 `###### 六级标题`</li>
+                <li><strong>粗体/斜体</strong>：`**粗体**`、`*斜体*`</li>
+                <li><strong>行内代码</strong>：`` `代码` ``；<strong>代码块</strong>：``` ```语言 ```</li>
+                <li><strong>列表</strong>：`- 无序` 或 `1. 有序`</li>
+                <li><strong>表格</strong>：用 `|` 分隔列，第二行为 `|---|---|`</li>
+            </ul>
+            <h3>如何使用本工具</h3>
+            <ol>
+                <li>在编辑区输入或粘贴 Markdown 内容</li>
+                <li>右侧（下方）实时显示渲染结果，输入停顿 150ms 后刷新</li>
+                <li>点击「填入示例」快速体验全部语法，点击「清空」重新开始</li>
+                <li>编辑区下方显示当前字数（中文字符与英文单词合计）</li>
+            </ol>
+            <h3>常见问题</h3>
+            <p><strong>支持任务列表和图片语法吗？</strong>当前版本暂不支持任务列表与图片语法，其余常用语法均已覆盖。如需图片上传，请使用其他工具配合。</p>
+            <p><strong>渲染结果安全吗？</strong>安全。所有内容在渲染前都会进行 HTML 转义，脚本标签与危险链接会被过滤，不会执行任何代码。</p>
+            <p><strong>内容会保存或上传吗？</strong>不会。编辑与预览全部在浏览器本地完成，刷新页面后内容即清除。</p>
+            <h3>为什么要用 Markdown 写东西？</h3>
+            <p>Markdown 最大的好处，是让你在"不打断思路"的情况下完成排版。相比用 Word 反复点菜单调格式，你只需要敲几个简单的符号（比如 `#` 代表标题、`**` 代表加粗），就能得到结构清晰、格式统一的文档。写完的源文件是纯文本，任何编辑器都能打开，也不会因为软件版本不同而出现排版错乱——这正是它被 GitHub、博客、技术文档广泛采用的原因。</p>
+            <p>对写作者来说，Markdown 让你把注意力集中在"内容"而非"格式"上；对开发者来说，它能轻松转成 HTML、PDF、网页等格式，方便发布与分享。学会常见的几个语法，几乎可以覆盖日常写作和文档排版的 90% 需求，性价比非常高。</p>
+            <h3>容易出错的语法细节</h3>
+            <p><strong>① 空格与断行。</strong> 某些 Markdown 渲染器对"标题后要不要空格"、空行是否影响段落分割有严格规定，写得不符合规范时，预览结果可能和预期不符。写完后最好预览确认一下。</p>
+            <p><strong>② 嵌套列表。</strong> 有序列和无序列、以及多层级列表的缩进，不同的 Markdown 方言处理方式不同，嵌套过深容易变得混乱。</p>
+            <p><strong>③ 特殊字符转义。</strong> 像反引号、星号这类 Markdown 保留符号，如果要当普通文本显示，需要加反斜杠转义，否则会被当成语法处理。</p>
+            <h3>结果怎么用？</h3>
+            <p>通过实时预览，你能立刻看到写好的 Markdown 渲染出来的样子：标题的层级、加粗斜体、列表缩进、代码高亮、表格对齐是否正确，一目了然。它非常适合写 README、博客草稿、技术文档、笔记，以及需要"所见即所得"效果的写作场景。改到满意后，把源 Markdown 复制到你的平台或工具即可发布，预览只是帮你确认最终效果。</p>
+        </section>
+
+        <div class="related-tools">
     <h3>相关工具</h3>
     <ul>
         <li><a href="/zh/calculators/regex-tester">正则表达式测试器</a></li>

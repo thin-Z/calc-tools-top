@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DCA Calculator - Periodic Investment Future Value</title>
@@ -26,7 +28,6 @@
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script>
     <script src="/js/calculators/dca-calculator.js" defer></script>
-    <script src="/js/calculators/dca-calculator-ui.js" defer></script>
 
     <script type="application/ld+json">
     {
@@ -77,63 +78,67 @@
 </header>
 
     <main id="main">
-        <div class="tool-container">
+        <div class="page-header">
             <h1>DCA Calculator</h1>
-            <p class="tool-description">A free online periodic-investment (DCA / dollar-cost averaging) calculator that compounds monthly to show how a fixed monthly contribution grows over time, along with the total invested and the interest earned.</p>
-
-            <div class="calculator-form">
-                <div class="input-group">
-                    <label for="dca-monthly">Monthly investment (currency)</label>
-                    <input type="number" id="dca-monthly" value="1000" min="1" step="100" inputmode="numeric" aria-label="Monthly investment amount">
-                </div>
-                <div class="input-group">
-                    <label for="dca-annualRate">Annual return (%)</label>
-                    <input type="number" id="dca-annualRate" value="8" min="0" step="0.1" inputmode="decimal" aria-label="Annual return rate">
-                </div>
-                <div class="input-group">
-                    <label for="dca-years">Investment period (years)</label>
-                    <input type="number" id="dca-years" value="10" min="1" max="50" step="1" inputmode="numeric" aria-label="Investment period in years">
-                </div>
-                <div class="input-group">
-                    <label for="dca-initial">Initial principal (optional)</label>
-                    <input type="number" id="dca-initial" value="0" min="0" step="100" inputmode="numeric" aria-label="Initial principal">
-                </div>
-                <div class="input-group">
-                    <label for="dca-months">Months (optional, default = years × 12)</label>
-                    <input type="number" id="dca-months" value="120" min="1" step="1" inputmode="numeric" aria-label="Total months">
-                </div>
-
-                <div class="result-area hidden" id="result-area">
-                    <div class="result-label">Result</div>
-                    <dl class="tz-result-list">
-                        <div class="tz-item"><dt>Future value</dt><dd id="dca-fv">--</dd></div>
-                        <div class="tz-item"><dt>Total invested</dt><dd id="dca-invested">--</dd></div>
-                        <div class="tz-item"><dt>Interest earned</dt><dd id="dca-interest">--</dd></div>
-                    </dl>
-                </div>
-            </div>
-
-            <div class="tool-info">
-                <h2>What is DCA (Dollar-Cost Averaging)?</h2>
-                <p>Dollar-cost averaging (DCA / periodic investment) means investing a fixed amount at regular intervals — usually monthly. By spreading your purchases over time it smooths the average cost and reduces the risk of mistiming the market, making it a popular strategy for long-term savings and index/fund investing.</p>
-                <h3>How to Use This Tool</h3>
-                <ol>
-                    <li>Enter the amount you plan to invest each month in the "Monthly investment" box</li>
-                    <li>Enter your expected annual return (%) in the "Annual return" box</li>
-                    <li>Enter the number of years in the "Investment period" box — months auto-fill as years × 12, but you can override them</li>
-                    <li>Optionally add an "Initial principal" if you already have a starting amount; the result panel updates in real time</li>
-                </ol>
-                <h3>How the Calculation Works</h3>
-                <p>This tool uses the end-of-period annuity model with monthly compounding: future value = initial × (1 + monthly rate)^periods + monthly × [((1 + monthly rate)^periods - 1) / monthly rate], where monthly rate = annual return ÷ 12 ÷ 100. Interest earned = future value - total invested, and total invested = initial + monthly × periods.</p>
-                <h3>Frequently Asked Questions</h3>
-                <p><strong>Is the interest compounded?</strong>Yes. This calculator compounds monthly, so each month's return is added to the base for the next month, closely matching how fund and DCA accounts accrue.</p>
-                <p><strong>How do I enter the annual return?</strong>Enter your expected long-term average annual return as a percentage (for example, 8 means 8% per year). Past performance is no guarantee of future results — treat the output as an estimate.</p>
-                <p><strong>Is my data uploaded to a server?</strong>No. Everything runs locally in your browser; your input never leaves your device.</p>
-            </div>
+            <p>A free online periodic-investment (DCA / dollar-cost averaging) calculator that compounds monthly to show how a fixed monthly contribution grows over time, along with the total invested and the interest earned.</p>
         </div>
 
         <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="dca-calculator"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
-    <div class="related-tools">
+
+        <div class="tool-form">
+            <div class="form-group">
+                <label for="dca-monthly">Monthly investment (currency)</label>
+                <input type="number" id="dca-monthly" value="1000" min="1" step="100" inputmode="numeric" aria-label="Monthly investment amount">
+            </div>
+            <div class="form-group">
+                <label for="dca-annualRate">Annual return (%)</label>
+                <input type="number" id="dca-annualRate" value="8" min="0" step="0.1" inputmode="decimal" aria-label="Annual return rate">
+            </div>
+            <div class="form-group">
+                <label for="dca-years">Investment period (years)</label>
+                <input type="number" id="dca-years" value="10" min="1" max="50" step="1" inputmode="numeric" aria-label="Investment period in years">
+            </div>
+            <div class="form-group">
+                <label for="dca-initial">Initial principal (optional)</label>
+                <input type="number" id="dca-initial" value="0" min="0" step="100" inputmode="numeric" aria-label="Initial principal">
+            </div>
+            <div class="form-group">
+                <label for="dca-months">Months (optional, default = years × 12)</label>
+                <input type="number" id="dca-months" value="120" min="1" step="1" inputmode="numeric" aria-label="Total months">
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" data-csp-click="clearDCA">Clear</button>
+            </div>
+        </div>
+
+        <div class="result-card hidden" id="result-area">
+            <div class="result-label">Result</div>
+            <dl class="tz-result-list">
+                <div class="tz-item"><dt>Future value</dt><dd id="dca-fv">--</dd></div>
+                <div class="tz-item"><dt>Total invested</dt><dd id="dca-invested">--</dd></div>
+                <div class="tz-item"><dt>Interest earned</dt><dd id="dca-interest">--</dd></div>
+            </dl>
+        </div>
+
+        <section class="tool-content">
+            <h2>What is DCA (Dollar-Cost Averaging)?</h2>
+            <p>Dollar-cost averaging (DCA / periodic investment) means investing a fixed amount at regular intervals — usually monthly. By spreading your purchases over time it smooths the average cost and reduces the risk of mistiming the market, making it a popular strategy for long-term savings and index/fund investing.</p>
+            <h3>How to Use This Tool</h3>
+            <ol>
+                <li>Enter the amount you plan to invest each month in the "Monthly investment" box</li>
+                <li>Enter your expected annual return (%) in the "Annual return" box</li>
+                <li>Enter the number of years in the "Investment period" box — months auto-fill as years × 12, but you can override them</li>
+                <li>Optionally add an "Initial principal" if you already have a starting amount; the result panel updates in real time</li>
+            </ol>
+            <h3>How the Calculation Works</h3>
+            <p>This tool uses the end-of-period annuity model with monthly compounding: future value = initial × (1 + monthly rate)^periods + monthly × [((1 + monthly rate)^periods - 1) / monthly rate], where monthly rate = annual return ÷ 12 ÷ 100. Interest earned = future value - total invested, and total invested = initial + monthly × periods.</p>
+            <h3>Frequently Asked Questions</h3>
+            <p><strong>Is the interest compounded?</strong>Yes. This calculator compounds monthly, so each month's return is added to the base for the next month, closely matching how fund and DCA accounts accrue.</p>
+            <p><strong>How do I enter the annual return?</strong>Enter your expected long-term average annual return as a percentage (for example, 8 means 8% per year). Past performance is no guarantee of future results — treat the output as an estimate.</p>
+            <p><strong>Is my data uploaded to a server?</strong>No. Everything runs locally in your browser; your input never leaves your device.</p>
+        </section>
+
+        <div class="related-tools">
     <h3>Related Tools</h3>
     <ul>
         <li><a href="/en/calculators/compound-interest">Compound Interest Calculator</a></li>

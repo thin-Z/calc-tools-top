@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Markdown Preview - Online Markdown to HTML Converter</title>
@@ -26,7 +28,6 @@
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script>
     <script src="/js/calculators/markdown-preview.js" defer></script>
-    <script src="/js/calculators/markdown-preview-ui.js" defer></script>
 
     <script type="application/ld+json">
     {
@@ -66,56 +67,54 @@
 </header>
 
     <main id="main">
-        <div class="tool-container">
+        <div class="page-header">
             <h1>Markdown Preview</h1>
-            <p class="tool-description">Edit Markdown on the left and preview the rendered result on the right in real time. Supports headings, bold and italic, inline code, fenced code blocks, lists, links, blockquotes, horizontal rules and tables.</p>
-
-            <div class="calculator-form">
-                <div class="md-toolbar">
-                    <button type="button" id="md-sample-btn" class="btn btn-secondary">Load Sample</button>
-                    <button type="button" id="md-clear-btn" class="btn btn-secondary">Clear</button>
-                    <span class="md-word-count" id="md-word-count">0 words</span>
-                </div>
-                <div class="input-group">
-                    <label for="md-editor">Markdown Source</label>
-                    <textarea class="text-input md-editor" id="md-editor" placeholder="Type Markdown here..." aria-label="Markdown source"></textarea>
-                </div>
-
-                <div class="result-area hidden" id="md-preview-section">
-                    <div class="result-label">Preview</div>
-                    <div class="md-preview" id="md-preview"></div>
-                </div>
-            </div>
-
-            <div class="tool-info">
-                <h2>What is Markdown?</h2>
-                <p>Markdown is a lightweight markup language that uses simple symbols for formatting: `#` for headings, `**` for bold, `-` for lists and backticks for inline code or code blocks. Markdown files are easy to read and write, and it is the de facto standard for GitHub, blogs and technical documentation. This previewer supports a practical syntax subset: H1-H6 headings, bold and italic, inline code, fenced code blocks, ordered and unordered lists, links, blockquotes, horizontal rules and tables, covering most everyday writing and document formatting needs.</p>
-                <h3>Syntax Cheat Sheet</h3>
-                <ul>
-                    <li><strong>Headings</strong>: `# Heading 1` through `###### Heading 6`</li>
-                    <li><strong>Bold/Italic</strong>: `**bold**`, `*italic*`</li>
-                    <li><strong>Inline code</strong>: `` `code` ``; <strong>Code block</strong>: ``` ```language ```</li>
-                    <li><strong>Lists</strong>: `- unordered` or `1. ordered`</li>
-                    <li><strong>Tables</strong>: separate columns with `|`, second row as `|---|---|`</li>
-                </ul>
-                <h3>How to Use This Tool</h3>
-                <ol>
-                    <li>Type or paste Markdown content into the editor</li>
-                    <li>The preview updates in real time after a 150ms debounce</li>
-                    <li>Click "Load Sample" to try all supported syntax, or "Clear" to start over</li>
-                    <li>A word counter below the editor shows the combined CJK and English word count</li>
-                </ol>
-                <h3>Common Use Cases</h3>
-                <p>Markdown is widely used for README files, blog posts, knowledge bases, code documentation, forum posts and chat messages. With this previewer you can quickly check how your writing will look before publishing, verify that tables and code blocks render correctly, and estimate the length of your document before you commit it to a repository or a publishing system.</p>
-                <h3>Frequently Asked Questions</h3>
-                <p><strong>Do you support task lists and images?</strong> Not yet. Task lists and image syntax are not implemented in the current subset; all other common syntax is covered.</p>
-                <p><strong>Is the rendered output safe?</strong> Yes. All content is HTML-escaped before rendering; script tags and dangerous link protocols are filtered out, so no code is executed.</p>
-                <p><strong>Is my content saved or uploaded?</strong> No. Editing and previewing happen entirely in your browser; refreshing the page clears the content.</p>
-            </div>
+            <p>Edit Markdown on the left and preview the rendered result on the right in real time. Supports headings, bold and italic, inline code, fenced code blocks, lists, links, blockquotes, horizontal rules and tables.</p>
         </div>
 
         <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="markdown-preview"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
-    <div class="related-tools">
+
+        <div class="tool-form">
+            <div class="form-group"><label for="md-editor">Markdown Source</label><textarea class="md-editor" id="md-editor" placeholder="Type Markdown here..." aria-label="Markdown source"></textarea></div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" data-csp-click="fillMarkdownSample">Load Sample</button>
+                <button type="button" class="btn btn-secondary" data-csp-click="clearMarkdownPreview">Clear</button>
+            </div>
+            <p class="md-word-count" id="md-word-count">0 words</p>
+        </div>
+
+        <div class="result-card hidden" id="result-area">
+            <div class="result-label">Preview</div>
+            <div class="md-preview" id="md-preview"></div>
+        </div>
+
+        <section class="tool-content">
+            <h2>What is Markdown?</h2>
+            <p>Markdown is a lightweight markup language that uses simple symbols for formatting: `#` for headings, `**` for bold, `-` for lists and backticks for inline code or code blocks. Markdown files are easy to read and write, and it is the de facto standard for GitHub, blogs and technical documentation. This previewer supports a practical syntax subset: H1-H6 headings, bold and italic, inline code, fenced code blocks, ordered and unordered lists, links, blockquotes, horizontal rules and tables, covering most everyday writing and document formatting needs.</p>
+            <h3>Syntax Cheat Sheet</h3>
+            <ul>
+                <li><strong>Headings</strong>: `# Heading 1` through `###### Heading 6`</li>
+                <li><strong>Bold/Italic</strong>: `**bold**`, `*italic*`</li>
+                <li><strong>Inline code</strong>: `` `code` ``; <strong>Code block</strong>: ``` ```language ```</li>
+                <li><strong>Lists</strong>: `- unordered` or `1. ordered`</li>
+                <li><strong>Tables</strong>: separate columns with `|`, second row as `|---|---|`</li>
+            </ul>
+            <h3>How to Use This Tool</h3>
+            <ol>
+                <li>Type or paste Markdown content into the editor</li>
+                <li>The preview updates in real time after a 150ms debounce</li>
+                <li>Click "Load Sample" to try all supported syntax, or "Clear" to start over</li>
+                <li>A word counter below the editor shows the combined CJK and English word count</li>
+            </ol>
+            <h3>Common Use Cases</h3>
+            <p>Markdown is widely used for README files, blog posts, knowledge bases, code documentation, forum posts and chat messages. With this previewer you can quickly check how your writing will look before publishing, verify that tables and code blocks render correctly, and estimate the length of your document before you commit it to a repository or a publishing system.</p>
+            <h3>Frequently Asked Questions</h3>
+            <p><strong>Do you support task lists and images?</strong> Not yet. Task lists and image syntax are not implemented in the current subset; all other common syntax is covered.</p>
+            <p><strong>Is the rendered output safe?</strong> Yes. All content is HTML-escaped before rendering; script tags and dangerous link protocols are filtered out, so no code is executed.</p>
+            <p><strong>Is my content saved or uploaded?</strong> No. Editing and previewing happen entirely in your browser; refreshing the page clears the content.</p>
+        </section>
+
+        <div class="related-tools">
     <h3>Related Tools</h3>
     <ul>
         <li><a href="/en/calculators/regex-tester">Regex Tester</a></li>

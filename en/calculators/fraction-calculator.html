@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fraction Calculator - Add, Subtract, Multiply, Divide</title>
@@ -26,7 +28,6 @@
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script>
     <script src="/js/calculators/fraction-calculator.js" defer></script>
-    <script src="/js/calculators/fraction-calculator-ui.js" defer></script>
 
     <script type="application/ld+json">
     {
@@ -78,63 +79,67 @@
 </header>
 
     <main id="main">
-        <div class="tool-container">
+        <div class="page-header">
             <h1>Fraction Calculator</h1>
-            <p class="tool-description">Free online fraction calculator for adding, subtracting, multiplying, and dividing proper and improper fractions. Enter numerators and denominators to get results in real time, automatically simplified to lowest terms, with clear feedback for zero or invalid fractions.</p>
-
-            <div class="calculator-form">
-                <div class="input-group">
-                    <label for="num1">First fraction · Numerator</label>
-                    <input type="text" id="num1" placeholder="1" inputmode="numeric" spellcheck="false" aria-label="First fraction numerator">
-                </div>
-                <div class="input-group">
-                    <label for="den1">First fraction · Denominator</label>
-                    <input type="text" id="den1" placeholder="2" inputmode="numeric" spellcheck="false" aria-label="First fraction denominator">
-                </div>
-                <div class="input-group">
-                    <label for="f-op">Operation</label>
-                    <select id="f-op" aria-label="Fraction operation">
-                        <option value="add" selected>+ Add</option>
-                        <option value="subtract">− Subtract</option>
-                        <option value="multiply">× Multiply</option>
-                        <option value="divide">÷ Divide</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label for="num2">Second fraction · Numerator</label>
-                    <input type="text" id="num2" placeholder="1" inputmode="numeric" spellcheck="false" aria-label="Second fraction numerator">
-                </div>
-                <div class="input-group">
-                    <label for="den2">Second fraction · Denominator</label>
-                    <input type="text" id="den2" placeholder="3" inputmode="numeric" spellcheck="false" aria-label="Second fraction denominator">
-                </div>
-
-                <div class="result-area hidden" id="result-area">
-                    <div class="result-label">Result</div>
-                    <div class="result-content" id="fr-result">--</div>
-                </div>
-            </div>
-
-            <div class="tool-info">
-                <h2>What is a Fraction Calculator?</h2>
-                <p>A fraction calculator performs addition, subtraction, multiplication, and division on two fractions. A fraction consists of a numerator (top) and a denominator (bottom), and the denominator can never be zero. This tool reduces every result to its simplest form (shown as an integer when the denominator is 1) entirely in your browser — your input never leaves your device.</p>
-                <h3>How to Use This Tool</h3>
-                <ol>
-                    <li>Enter numbers in the numerator and denominator boxes for the first fraction (denominator not zero; numerators may be negative)</li>
-                    <li>Choose the operation: add (+), subtract (−), multiply (×), or divide (÷)</li>
-                    <li>Enter the numerator and denominator for the second fraction</li>
-                    <li>The result panel shows the full calculation "first fraction [operator] second fraction = result" in real time</li>
-                </ol>
-                <h3>Frequently Asked Questions</h3>
-                <p><strong>Why is the result simplified?</strong> Fractions such as 2/4 and 1/2 represent the same value. This tool reduces the result to its lowest terms, so you can read and use it directly.</p>
-                <p><strong>Can a denominator be zero?</strong> No. A denominator of zero is undefined, and the tool shows "denominator cannot be zero".</p>
-                <p><strong>What if the second fraction's numerator is zero during division?</strong> Dividing by zero is undefined, so the tool shows "divisor cannot be zero".</p>
-                <p><strong>Is my data uploaded to a server?</strong> No. Everything runs locally in your browser; your input never leaves your device.</p>
-            </div>
+            <p>Free online fraction calculator for adding, subtracting, multiplying, and dividing proper and improper fractions. Enter numerators and denominators to get results in real time, automatically simplified to lowest terms, with clear feedback for zero or invalid fractions.</p>
         </div>
 
         <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="fraction-calculator"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
-    <div class="related-tools">
+
+        <div class="tool-form">
+            <div class="form-group">
+                <label for="num1">First fraction · Numerator</label>
+                <input type="text" id="num1" placeholder="1" inputmode="numeric" spellcheck="false" aria-label="First fraction numerator">
+            </div>
+            <div class="form-group">
+                <label for="den1">First fraction · Denominator</label>
+                <input type="text" id="den1" placeholder="2" inputmode="numeric" spellcheck="false" aria-label="First fraction denominator">
+            </div>
+            <div class="form-group">
+                <label for="f-op">Operation</label>
+                <select id="f-op" aria-label="Fraction operation">
+                    <option value="add" selected>+ Add</option>
+                    <option value="subtract">− Subtract</option>
+                    <option value="multiply">× Multiply</option>
+                    <option value="divide">÷ Divide</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="num2">Second fraction · Numerator</label>
+                <input type="text" id="num2" placeholder="1" inputmode="numeric" spellcheck="false" aria-label="Second fraction numerator">
+            </div>
+            <div class="form-group">
+                <label for="den2">Second fraction · Denominator</label>
+                <input type="text" id="den2" placeholder="3" inputmode="numeric" spellcheck="false" aria-label="Second fraction denominator">
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" data-csp-click="clearFraction">Clear</button>
+            </div>
+        </div>
+
+        <div class="result-card hidden" id="result-area">
+            <div class="result-label">Result</div>
+            <div class="result-content" id="fr-result">--</div>
+        </div>
+
+        <section class="tool-content">
+            <h2>What is a Fraction Calculator?</h2>
+            <p>A fraction calculator performs addition, subtraction, multiplication, and division on two fractions. A fraction consists of a numerator (top) and a denominator (bottom), and the denominator can never be zero. This tool reduces every result to its simplest form (shown as an integer when the denominator is 1) entirely in your browser — your input never leaves your device.</p>
+            <h3>How to Use This Tool</h3>
+            <ol>
+                <li>Enter numbers in the numerator and denominator boxes for the first fraction (denominator not zero; numerators may be negative)</li>
+                <li>Choose the operation: add (+), subtract (−), multiply (×), or divide (÷)</li>
+                <li>Enter the numerator and denominator for the second fraction</li>
+                <li>The result panel shows the full calculation "first fraction [operator] second fraction = result" in real time</li>
+            </ol>
+            <h3>Frequently Asked Questions</h3>
+            <p><strong>Why is the result simplified?</strong> Fractions such as 2/4 and 1/2 represent the same value. This tool reduces the result to its lowest terms, so you can read and use it directly.</p>
+            <p><strong>Can a denominator be zero?</strong> No. A denominator of zero is undefined, and the tool shows "denominator cannot be zero".</p>
+            <p><strong>What if the second fraction's numerator is zero during division?</strong> Dividing by zero is undefined, so the tool shows "divisor cannot be zero".</p>
+            <p><strong>Is my data uploaded to a server?</strong> No. Everything runs locally in your browser; your input never leaves your device.</p>
+        </section>
+
+        <div class="related-tools">
     <h3>Related Tools</h3>
     <ul>
         <li><a href="/en/calculators/percentage-calc">Percentage Calculator</a></li>

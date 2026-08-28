@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pregnancy Calculator - Due Date &amp; Gestational Age</title>
@@ -26,7 +28,6 @@
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script>
     <script src="/js/calculators/pregnancy.js" defer></script>
-    <script src="/js/calculators/pregnancy-ui.js" defer></script>
 
     <script type="application/ld+json">
     {
@@ -77,57 +78,61 @@
 </header>
 
     <main id="main">
-        <div class="tool-container">
+        <div class="page-header">
             <h1>Pregnancy Calculator</h1>
-            <p class="tool-description">Estimate your due date, current gestational age, and days pregnant from your last menstrual period, with the days left until your due date. Optional cycle length and conception date support, all calculated locally.</p>
-
-            <div class="calculator-form">
-                <div class="input-group">
-                    <label for="lmp-date">Last Menstrual Period</label>
-                    <input type="date" id="lmp-date" aria-label="Last menstrual period date">
-                </div>
-                <div class="input-group">
-                    <label for="cycle-days">Menstrual Cycle (days)</label>
-                    <input type="number" id="cycle-days" value="28" min="20" max="45" step="1" aria-label="Menstrual cycle length in days">
-                </div>
-                <div class="input-group">
-                    <label for="conception-toggle"><input type="checkbox" id="conception-toggle" aria-label="Use conception date"> Use conception date (optional)</label>
-                </div>
-                <div class="input-group hidden" id="conception-row">
-                    <label for="conception-date">Conception Date</label>
-                    <input type="date" id="conception-date" aria-label="Conception date">
-                </div>
-
-                <div class="result-area hidden" id="result-area">
-                    <div class="result-label">Result</div>
-                    <dl class="tz-result-list">
-                        <div class="tz-item"><dt>Due Date</dt><dd id="due-date">--</dd></div>
-                        <div class="tz-item"><dt>Gestational Age</dt><dd><span id="gest-weeks">--</span> weeks <span id="gest-days">--</span> days</dd></div>
-                        <div class="tz-item"><dt>Days Pregnant</dt><dd><span id="days-pregnant">--</span> days</dd></div>
-                        <div class="tz-item"><dt>Days Until Due</dt><dd><span id="days-due">--</span> days</dd></div>
-                    </dl>
-                </div>
-            </div>
-
-            <div class="tool-info">
-                <h2>What is a Pregnancy Calculator?</h2>
-                <p>A pregnancy calculator estimates your due date and current gestational age from your last menstrual period (LMP), helping expectant parents track how far along they are. The due date is typically estimated as LMP + 280 days (about 40 weeks), counting from the first day of your last period.</p>
-                <h3>How to Use This Tool</h3>
-                <ol>
-                    <li>Enter the first day of your last menstrual period (LMP)</li>
-                    <li>Optionally set your menstrual cycle length (defaults to 28 days, used only when estimating from a conception date)</li>
-                    <li>Optionally tick "Use conception date" and enter a conception date for a closer estimate</li>
-                    <li>The result panel shows your due date, current gestational age, days pregnant, and days left until due</li>
-                </ol>
-                <h3>Frequently Asked Questions</h3>
-                <p><strong>Is the due date exact?</strong> No. The due date is an estimate — only about 5% of babies are born on their due date, and most arrive within two weeks either side. Always follow your doctor's assessment and prenatal checkups.</p>
-                <p><strong>How are days and gestational weeks calculated?</strong> Days pregnant is the number of whole days from the first day of your LMP to today; gestational age counts 7 days per week, so weeks = days ÷ 7, plus the remaining days.</p>
-                <p><strong>Is my data uploaded to a server?</strong> No. Everything runs locally in your browser; your input never leaves your device.</p>
-            </div>
+            <p>Estimate your due date, current gestational age, and days pregnant from your last menstrual period, with the days left until your due date. Optional cycle length and conception date support, all calculated locally.</p>
         </div>
 
         <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="pregnancy"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
-    <div class="related-tools">
+
+        <div class="tool-form">
+            <div class="form-group">
+                <label for="lmp-date">Last Menstrual Period</label>
+                <input type="date" id="lmp-date" aria-label="Last menstrual period date">
+            </div>
+            <div class="form-group">
+                <label for="cycle-days">Menstrual Cycle (days)</label>
+                <input type="number" id="cycle-days" value="28" min="20" max="45" step="1" aria-label="Menstrual cycle length in days">
+            </div>
+            <div class="form-group">
+                <label for="conception-toggle"><input type="checkbox" id="conception-toggle" aria-label="Use conception date"> Use conception date (optional)</label>
+            </div>
+            <div class="form-group hidden" id="conception-row">
+                <label for="conception-date">Conception Date</label>
+                <input type="date" id="conception-date" aria-label="Conception date">
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" data-csp-click="clearPregnancy">Clear</button>
+            </div>
+        </div>
+
+        <div class="result-card hidden" id="result-area">
+            <div class="result-label">Result</div>
+            <dl class="tz-result-list">
+                <div class="tz-item"><dt>Due Date</dt><dd id="due-date">--</dd></div>
+                <div class="tz-item"><dt>Gestational Age</dt><dd><span id="gest-weeks">--</span> weeks <span id="gest-days">--</span> days</dd></div>
+                <div class="tz-item"><dt>Days Pregnant</dt><dd><span id="days-pregnant">--</span> days</dd></div>
+                <div class="tz-item"><dt>Days Until Due</dt><dd><span id="days-due">--</span> days</dd></div>
+            </dl>
+        </div>
+
+        <section class="tool-content">
+            <h2>What is a Pregnancy Calculator?</h2>
+            <p>A pregnancy calculator estimates your due date and current gestational age from your last menstrual period (LMP), helping expectant parents track how far along they are. The due date is typically estimated as LMP + 280 days (about 40 weeks), counting from the first day of your last period.</p>
+            <h3>How to Use This Tool</h3>
+            <ol>
+                <li>Enter the first day of your last menstrual period (LMP)</li>
+                <li>Optionally set your menstrual cycle length (defaults to 28 days, used only when estimating from a conception date)</li>
+                <li>Optionally tick "Use conception date" and enter a conception date for a closer estimate</li>
+                <li>The result panel shows your due date, current gestational age, days pregnant, and days left until due</li>
+            </ol>
+            <h3>Frequently Asked Questions</h3>
+            <p><strong>Is the due date exact?</strong> No. The due date is an estimate — only about 5% of babies are born on their due date, and most arrive within two weeks either side. Always follow your doctor's assessment and prenatal checkups.</p>
+            <p><strong>How are days and gestational weeks calculated?</strong> Days pregnant is the number of whole days from the first day of your LMP to today; gestational age counts 7 days per week, so weeks = days ÷ 7, plus the remaining days.</p>
+            <p><strong>Is my data uploaded to a server?</strong> No. Everything runs locally in your browser; your input never leaves your device.</p>
+        </section>
+
+        <div class="related-tools">
     <h3>Related Tools</h3>
     <ul>
         <li><a href="/en/calculators/ovulation">Ovulation Calculator</a></li>

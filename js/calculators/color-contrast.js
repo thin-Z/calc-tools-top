@@ -1,13 +1,19 @@
 /**
- * 颜色对比度检查器 - 核心逻辑
- * 功能：基于 WCAG 2.1 相对亮度公式计算前景/背景对比度，并判定 AA/AAA 通过状态。
- * 用法：本文件为纯函数模块（IIFE），在浏览器中暴露 window.colorContrast 命名空间
- *      以及 window.hexToRgb / window.relativeLuminance / window.contrastRatio /
- *      window.evaluateContrast 四个顶层函数（供 UI 层与单元测试直接调用）。
- * 依赖：无（零第三方库，CSP 白名单不扩张）。
+ * 颜色对比度检查器 - 核心逻辑 + UI 交互（已合并）
+ * 逻辑：基于 WCAG 2.1 相对亮度公式计算前景/背景对比度，并判定 AA/AAA 通过状态。
+ * UI：绑定前景/背景色输入（原生取色器 + 文本输入），实时计算对比度并渲染
+ *     AA/AAA 判定结果。所有事件均通过 addEventListener 绑定（零内联事件，CSP 合规）。
+ *     隐藏元素一律使用 classList.toggle('hidden')。
+ * 合并说明：UI 部分用 typeof document !== 'undefined' 守卫包裹 init()，
+ *     避免 node --test 下触发 ReferenceError: document is not defined（A1 回归教训）。
+ * 用法：浏览器暴露 window.colorContrast 命名空间及 hexToRgb / relativeLuminance /
+ *       contrastRatio / evaluateContrast；UI 处理器 window.clearColorContrast
+ *       供主模板 form-actions 的 data-csp-click 调用。
  */
 (function () {
     'use strict';
+
+    /* ===================== 核心逻辑（原 color-contrast.js） ===================== */
 
     /**
      * 将 #RGB / #RRGGBB / RGB 颜色字符串解析为 {r, g, b}（0-255）。
@@ -66,7 +72,6 @@
      * @param {string} bg - 背景色 hex。
      * @returns {{ratio: number, valid: boolean, passAA: boolean, passAALarge: boolean,
      *            passAAA: boolean, passAAALarge: boolean}} 评估结果。
-     *    ratio: 对比度（保留两位小数）；valid: 输入是否合法；pass*: 各级别是否通过。
      */
     function evaluateContrast(fg, bg) {
         var ratio = contrastRatio(fg, bg);
@@ -92,4 +97,125 @@
     window.relativeLuminance = relativeLuminance;
     window.contrastRatio = contrastRatio;
     window.evaluateContrast = evaluateContrast;
+
+    /* ===================== UI 交互（原 color-contrast-ui.js） ===================== */
+
+    var fgColor = null;
+    var fgHex = null;
+    var bgColor = null;
+    var bgHex = null;
+    var resultArea = null;
+    var ratioEl = null;
+    var levelsEl = null;
+    var sampleEl = null;
+    var summaryEl = null;
+
+    function normalizeHex(value) {
+        var v = String(value || '').trim();
+        if (/^#[0-9a-fA-F]{3}$/.test(v) || /^#[0-9a-fA-F]{6}$/.test(v)) return v;
+        if (/^[0-9a-fA-F]{3}$/.test(v) || /^[0-9a-fA-F]{6}$/.test(v)) return '#' + v;
+        return '';
+    }
+
+    function isDark(rgb) {
+        return relativeLuminance(rgb) < 0.5;
+    }
+
+    function render() {
+        var fgVal = normalizeHex(fgHex.value);
+        var bgVal = normalizeHex(bgHex.value);
+        var fgRgb = hexToRgb(fgVal);
+        var bgRgb = hexToRgb(bgVal);
+
+        if (!fgRgb || !bgRgb) {
+            resultArea.classList.add('hidden');
+            return;
+        }
+        if (normalizeHex(fgColor.value) !== fgVal) fgColor.value = fgVal;
+        if (normalizeHex(bgColor.value) !== bgVal) bgColor.value = bgVal;
+
+        var res = evaluateContrast(fgVal, bgVal);
+
+        ratioEl.textContent = res.ratio + ':1';
+
+        var items = [
+            { label: 'AA（普通文本 ≥4.5）', pass: res.passAA },
+            { label: 'AA 大号文本（≥3）', pass: res.passAALarge },
+            { label: 'AAA（普通文本 ≥7）', pass: res.passAAA },
+            { label: 'AAA 大号文本（≥4.5）', pass: res.passAAALarge }
+        ];
+        levelsEl.textContent = '';
+        items.forEach(function (item) {
+            var row = document.createElement('div');
+            row.className = 'contrast-level ' + (item.pass ? 'pass' : 'fail');
+            var badge = document.createElement('span');
+            badge.className = 'contrast-badge';
+            badge.textContent = item.pass ? '通过' : '未通过';
+            var label = document.createElement('span');
+            label.textContent = item.label;
+            row.appendChild(badge);
+            row.appendChild(label);
+            levelsEl.appendChild(row);
+        });
+
+        sampleEl.style.color = fgVal;
+        sampleEl.style.backgroundColor = bgVal;
+        sampleEl.textContent = 'Aa 示例文字 Sample text';
+
+        var tip = res.passAA
+            ? (res.passAAA ? '对比度优秀，符合 AAA 级别，可放心用于正文。' : '对比度符合 AA 级别，适合正文与界面元素。')
+            : '对比度不足 AA（4.5:1），建议加深前景或提亮背景后重试。';
+        summaryEl.textContent = tip;
+
+        resultArea.classList.remove('hidden');
+    }
+
+    function onTextInput(el) {
+        el.addEventListener('input', function () {
+            render();
+        });
+    }
+
+    function onColorInput(el) {
+        el.addEventListener('input', function () {
+            render();
+        });
+    }
+
+    function clearColorContrast() {
+        if (fgColor) fgColor.value = '#333333';
+        if (fgHex) fgHex.value = '#333333';
+        if (bgColor) bgColor.value = '#ffffff';
+        if (bgHex) bgHex.value = '#ffffff';
+        if (resultArea) resultArea.classList.add('hidden');
+    }
+
+    function init() {
+        fgColor = document.getElementById('fg-color');
+        fgHex = document.getElementById('fg-hex');
+        bgColor = document.getElementById('bg-color');
+        bgHex = document.getElementById('bg-hex');
+        resultArea = document.getElementById('result-area');
+        ratioEl = document.getElementById('contrast-ratio');
+        levelsEl = document.getElementById('contrast-levels');
+        sampleEl = document.getElementById('contrast-sample');
+        summaryEl = document.getElementById('contrast-summary');
+        if (!fgColor || !fgHex || !bgColor || !bgHex || !resultArea) return;
+
+        onTextInput(fgHex);
+        onTextInput(bgHex);
+        onColorInput(fgColor);
+        onColorInput(bgColor);
+        render();
+    }
+
+    if (typeof document !== 'undefined') {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    }
+
+    window.clearColorContrast = clearColorContrast;
 })();

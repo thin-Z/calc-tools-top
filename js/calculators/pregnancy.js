@@ -1,14 +1,18 @@
 /**
- * 孕期计算器 - 核心逻辑
+ * 孕期计算器 - 核心逻辑 + UI 交互（合并自 pregnancy.js + pregnancy-ui.js）
  * 功能：根据末次月经日期（LMP）推算预产期、当前孕周、已怀孕天数与距离预产期的剩余天数，
  *       并支持按受孕日反推末次月经（可选）。
- * 用法：本文件为纯函数模块（IIFE），在浏览器中暴露 window.pregnancy 命名空间
- *       以及 window.calcDueDate / window.gestationalWeek / window.daysPregnant /
- *       window.daysToDue / window.estimateLmp 顶层函数（供 UI 层与单元测试直接调用）。
+ * 用法：本文件在浏览器中暴露 window.pregnancy 命名空间以及 window.calcDueDate /
+ *       window.gestationalWeek / window.daysPregnant / window.daysToDue /
+ *       window.estimateLmp 等顶层函数（供 UI 层与单元测试直接调用）。
  * 依赖：无（零第三方库，CSP 白名单不扩张）。所有日期均按本地午夜归一化处理。
+ * DOM 守卫：UI 层在纯 Node（node --test）环境下不触碰 document，避免回归
+ *         （参考 timestamp 合并回归教训）。
  */
 (function () {
     'use strict';
+
+    // ===== 核心逻辑（原 pregnancy.js，未改动） =====
 
     // 平均妊娠时长：末次月经（LMP）起 280 天 ≈ 40 周（Naegele 法则）
     var DUE_OFFSET_DAYS = 280;
@@ -157,4 +161,117 @@
     window.addDays = addDays;
     window.daysBetween = daysBetween;
     window.formatDate = formatDate;
+
+    // ===== UI 交互（原 pregnancy-ui.js，合并并加 DOM 守卫） =====
+    // 所有事件均通过 addEventListener 绑定（零内联事件，CSP 合规）。隐藏元素一律使用
+    // classList.toggle('hidden')，禁用 style.display（.hidden 带 !important，会覆盖导致结果区不显示）。
+
+    var lmpInput = null;
+    var cycleInput = null;
+    var conceptionToggle = null;
+    var conceptionRow = null;
+    var conceptionInput = null;
+    var resultArea = null;
+    var dueEl = null;
+    var gestWeeksEl = null;
+    var gestDaysEl = null;
+    var daysPregnantEl = null;
+    var daysDueEl = null;
+
+    function refreshConceptionVisibility() {
+        if (conceptionRow) {
+            conceptionRow.classList.toggle('hidden', !conceptionToggle.checked);
+        }
+    }
+
+    function render() {
+        var rawLmp = lmpInput.value.trim();
+        var rawConception = conceptionInput.value.trim();
+        var useConception = conceptionToggle.checked && rawConception !== '';
+
+        if (!rawLmp && !useConception) {
+            resultArea.classList.add('hidden');
+            return;
+        }
+
+        var cycle = parseInt(cycleInput.value, 10);
+        var lmp;
+        if (useConception) {
+            lmp = estimateLmp(rawConception, isNaN(cycle) ? 28 : cycle);
+        } else {
+            lmp = parseDate(rawLmp);
+        }
+        if (!lmp) {
+            resultArea.classList.add('hidden');
+            return;
+        }
+
+        var today = new Date();
+        var due = calcDueDate(lmp);
+        if (!due) {
+            resultArea.classList.add('hidden');
+            return;
+        }
+        var gw = gestationalWeek(lmp, today);
+        var dp = daysPregnant(lmp, today);
+        var dd = daysToDue(due, today);
+
+        dueEl.textContent = formatDate(due);
+        gestWeeksEl.textContent = String(gw.weeks);
+        gestDaysEl.textContent = String(gw.days);
+        daysPregnantEl.textContent = String(dp);
+        daysDueEl.textContent = String(dd);
+        resultArea.classList.remove('hidden');
+    }
+
+    function clearPregnancy() {
+        if (lmpInput) lmpInput.value = '';
+        if (conceptionInput) conceptionInput.value = '';
+        if (cycleInput) cycleInput.value = '28';
+        if (conceptionToggle) conceptionToggle.checked = false;
+        if (conceptionRow) conceptionRow.classList.add('hidden');
+        if (resultArea) resultArea.classList.add('hidden');
+    }
+
+    function init() {
+        lmpInput = document.getElementById('lmp-date');
+        cycleInput = document.getElementById('cycle-days');
+        conceptionToggle = document.getElementById('conception-toggle');
+        conceptionRow = document.getElementById('conception-row');
+        conceptionInput = document.getElementById('conception-date');
+        resultArea = document.getElementById('result-area');
+        dueEl = document.getElementById('due-date');
+        gestWeeksEl = document.getElementById('gest-weeks');
+        gestDaysEl = document.getElementById('gest-days');
+        daysPregnantEl = document.getElementById('days-pregnant');
+        daysDueEl = document.getElementById('days-due');
+        if (!lmpInput || !cycleInput || !resultArea) return;
+
+        lmpInput.addEventListener('input', render);
+        lmpInput.addEventListener('change', render);
+        cycleInput.addEventListener('input', render);
+        cycleInput.addEventListener('change', render);
+        conceptionToggle.addEventListener('change', function () {
+            refreshConceptionVisibility();
+            render();
+        });
+        if (conceptionInput) {
+            conceptionInput.addEventListener('input', render);
+            conceptionInput.addEventListener('change', render);
+        }
+
+        refreshConceptionVisibility();
+        render();
+    }
+
+    // DOM 守卫：纯 Node（node --test）环境下 document 未定义，跳过绑定，避免回归崩溃。
+    if (typeof document !== 'undefined') {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    }
+
+    window.clearPregnancy = clearPregnancy;
 })();

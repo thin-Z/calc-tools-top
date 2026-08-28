@@ -1,10 +1,12 @@
 /**
- * 时间戳转换 - 核心逻辑
+ * 时间戳转换 - 核心逻辑 + UI 交互（合并自 timestamp.js + timestamp-ui.js）
  * 功能：Unix 时间戳（秒/毫秒）与人类可读日期时间互转，支持本地与 UTC 显示。
- * 用法：本文件为纯函数模块（IIFE），在浏览器中暴露 window.timestamp 命名空间
- *       以及 window.detectUnit / window.tsToDate / window.dateToTs / window.formatDate
- *       四个顶层函数（供 UI 层与单元测试直接调用）。
+ * 用法：本文件在浏览器中暴露 window.timestamp 命名空间以及 window.detectUnit /
+ *       window.tsToDate / window.dateToTs / window.formatDate 四个顶层函数
+ *       （供 UI 层与单元测试直接调用）。
  * 依赖：无（零第三方库，CSP 白名单不扩张）。
+ * DOM 守卫：UI 层在纯 Node（node --test）环境下不触碰 document，避免回归
+ *         （参考 currency-converter 合并回归教训）。
  */
 (function () {
     'use strict';
@@ -78,4 +80,104 @@
     window.tsToDate = tsToDate;
     window.dateToTs = dateToTs;
     window.formatDate = formatDate;
+})();
+
+/* ===== UI 交互（原 timestamp-ui.js，合并并加 DOM 守卫） =====
+ * 所有事件均通过 addEventListener 绑定（零内联事件，CSP 合规）。隐藏元素一律使用
+ * classList.toggle('hidden')，禁用 style.display（.hidden 带 !important，会覆盖导致结果区不显示）。
+ */
+(function () {
+    'use strict';
+
+    var tsValue = null;
+    var tsUnit = null;
+    var dtValue = null;
+    var resultArea = null;
+    var localEl = null;
+    var utcEl = null;
+    var secEl = null;
+    var msEl = null;
+
+    function renderFromTs() {
+        var raw = tsValue.value.trim();
+        if (!raw) {
+            resultArea.classList.add('hidden');
+            return;
+        }
+        var unit = tsUnit.value;
+        var effective = unit === 'auto' ? detectUnit(raw) : unit;
+        if (!effective) {
+            resultArea.classList.add('hidden');
+            return;
+        }
+        // 按选择的单位解析（非 auto 时强制按该单位转换，便于查看不同精度）
+        var n = parseInt(raw, 10);
+        var ms = effective === 'ms' ? n : n * 1000;
+        var d = new Date(ms);
+        if (isNaN(d.getTime())) {
+            resultArea.classList.add('hidden');
+            return;
+        }
+        var sec = effective === 'ms' ? Math.floor(n / 1000) : n;
+        localEl.textContent = formatDate(d, false);
+        utcEl.textContent = formatDate(d, true);
+        secEl.textContent = String(sec);
+        msEl.textContent = effective === 'ms' ? String(n) : String(ms);
+        resultArea.classList.remove('hidden');
+    }
+
+    function renderFromDt() {
+        var raw = dtValue.value;
+        if (!raw) {
+            resultArea.classList.add('hidden');
+            return;
+        }
+        var d = new Date(raw);
+        if (isNaN(d.getTime())) {
+            resultArea.classList.add('hidden');
+            return;
+        }
+        var t = dateToTs(d);
+        tsValue.value = String(t.sec);
+        tsUnit.value = 's';
+        localEl.textContent = formatDate(d, false);
+        utcEl.textContent = formatDate(d, true);
+        secEl.textContent = String(t.sec);
+        msEl.textContent = String(t.ms);
+        resultArea.classList.remove('hidden');
+    }
+
+    function clearTimestamp() {
+        tsValue.value = '';
+        dtValue.value = '';
+        resultArea.classList.add('hidden');
+    }
+
+    function init() {
+        tsValue = document.getElementById('ts-value');
+        tsUnit = document.getElementById('ts-unit');
+        dtValue = document.getElementById('dt-value');
+        resultArea = document.getElementById('result-area');
+        localEl = document.getElementById('ts-local');
+        utcEl = document.getElementById('ts-utc');
+        secEl = document.getElementById('ts-sec');
+        msEl = document.getElementById('ts-ms');
+        if (!tsValue || !dtValue || !resultArea) return;
+
+        tsValue.addEventListener('input', renderFromTs);
+        tsUnit.addEventListener('change', renderFromTs);
+        dtValue.addEventListener('input', renderFromDt);
+        renderFromTs();
+    }
+
+    // DOM 守卫：纯 Node（node --test）环境下 document 未定义，跳过绑定，避免回归崩溃。
+    if (typeof document !== 'undefined') {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    }
+
+    window.clearTimestamp = clearTimestamp;
 })();

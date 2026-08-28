@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Timestamp Converter - Unix Time to Date</title>
@@ -26,7 +28,6 @@
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script>
     <script src="/js/calculators/timestamp.js" defer></script>
-    <script src="/js/calculators/timestamp-ui.js" defer></script>
 
     <script type="application/ld+json">
     {
@@ -77,57 +78,61 @@
 </header>
 
     <main id="main">
-        <div class="tool-container">
+        <div class="page-header">
             <h1>Timestamp Converter</h1>
-            <p class="tool-description">Convert Unix timestamps in seconds or milliseconds to human-readable dates and back in real time, showing both your local timezone and UTC — ideal for developers and data processing.</p>
-
-            <div class="calculator-form">
-                <div class="input-group">
-                    <label for="ts-value">Unix Timestamp</label>
-                    <div class="ts-input-row">
-                        <input type="text" id="ts-value" placeholder="1600000000" inputmode="numeric" spellcheck="false" aria-label="Unix timestamp value">
-                        <select id="ts-unit" aria-label="Timestamp unit">
-                            <option value="auto" selected>Auto</option>
-                            <option value="s">Seconds</option>
-                            <option value="ms">Milliseconds</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label for="dt-value">Date &amp; Time</label>
-                    <input type="datetime-local" id="dt-value" aria-label="Date and time">
-                </div>
-
-                <div class="result-area hidden" id="result-area">
-                    <div class="result-label">Result</div>
-                    <dl class="tz-result-list">
-                        <div class="tz-item"><dt>Local time</dt><dd id="ts-local">--</dd></div>
-                        <div class="tz-item"><dt>UTC time</dt><dd id="ts-utc">--</dd></div>
-                        <div class="tz-item"><dt>Seconds</dt><dd id="ts-sec">--</dd></div>
-                        <div class="tz-item"><dt>Milliseconds</dt><dd id="ts-ms">--</dd></div>
-                    </dl>
-                </div>
-            </div>
-
-            <div class="tool-info">
-                <h2>What is a Unix Timestamp?</h2>
-                <p>A Unix timestamp (or Unix time / Epoch) is the number of seconds that have elapsed since 1970-01-01 00:00:00 UTC (ignoring leap seconds). It is a universal, timezone-free way to represent an instant in time, widely used in computers and databases. As precision needs grow, many systems store milliseconds (the current time multiplied by 1000). This tool automatically distinguishes second-level timestamps (around 10 digits) from millisecond-level ones (around 13 digits) and converts as needed.</p>
-                <h3>How to Use This Tool</h3>
-                <ol>
-                    <li>Paste a second- or millisecond-level timestamp into the "Unix Timestamp" box — the tool detects the unit and shows the matching local and UTC date in real time</li>
-                    <li>Or pick a date and time to compute the corresponding seconds and milliseconds</li>
-                    <li>Use the unit selector to force "Seconds" or "Milliseconds" and inspect the same value at a different precision</li>
-                    <li>The result panel shows both your local timezone and UTC for cross-timezone checks</li>
-                </ol>
-                <h3>Frequently Asked Questions</h3>
-                <p><strong>How do I tell seconds from milliseconds?</strong> In 2026, the current second-level timestamp is about 1.78 billion (10 digits), while the millisecond-level value is about 1.78 trillion (13 digits). This tool defaults to a boundary of 10^11, but you can also force a unit manually.</p>
-                <p><strong>Why do timestamps look different across timezones?</strong> A timestamp is an absolute instant and is timezone-independent. Only the human-readable representation is affected by the timezone. This tool shows local and UTC side by side so you can verify.</p>
-                <p><strong>Is my data uploaded to a server?</strong> No. Everything runs locally in your browser; your input never leaves your device.</p>
-            </div>
+            <p>Convert Unix timestamps in seconds or milliseconds to human-readable dates and back in real time, showing both your local timezone and UTC — ideal for developers and data processing.</p>
         </div>
 
         <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="timestamp"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
-    <div class="related-tools">
+
+        <div class="tool-form">
+            <div class="form-group">
+                <label for="ts-value">Unix Timestamp</label>
+                <div class="ts-input-row">
+                    <input type="text" id="ts-value" placeholder="1600000000" inputmode="numeric" spellcheck="false" aria-label="Unix timestamp value">
+                    <select id="ts-unit" aria-label="Timestamp unit">
+                        <option value="auto" selected>Auto</option>
+                        <option value="s">Seconds</option>
+                        <option value="ms">Milliseconds</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="dt-value">Date &amp; Time</label>
+                <input type="datetime-local" id="dt-value" aria-label="Date and time">
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" data-csp-click="clearTimestamp">Clear</button>
+            </div>
+        </div>
+
+        <div class="result-card hidden" id="result-area">
+            <div class="result-label">Result</div>
+            <dl class="tz-result-list">
+                <div class="tz-item"><dt>Local time</dt><dd id="ts-local">--</dd></div>
+                <div class="tz-item"><dt>UTC time</dt><dd id="ts-utc">--</dd></div>
+                <div class="tz-item"><dt>Seconds</dt><dd id="ts-sec">--</dd></div>
+                <div class="tz-item"><dt>Milliseconds</dt><dd id="ts-ms">--</dd></div>
+            </dl>
+        </div>
+
+        <section class="tool-content">
+            <h2>What is a Unix Timestamp?</h2>
+            <p>A Unix timestamp (or Unix time / Epoch) is the number of seconds that have elapsed since 1970-01-01 00:00:00 UTC (ignoring leap seconds). It is a universal, timezone-free way to represent an instant in time, widely used in computers and databases. As precision needs grow, many systems store milliseconds (the current time multiplied by 1000). This tool automatically distinguishes second-level timestamps (around 10 digits) from millisecond-level ones (around 13 digits) and converts as needed.</p>
+            <h3>How to Use This Tool</h3>
+            <ol>
+                <li>Paste a second- or millisecond-level timestamp into the "Unix Timestamp" box — the tool detects the unit and shows the matching local and UTC date in real time</li>
+                <li>Or pick a date and time to compute the corresponding seconds and milliseconds</li>
+                <li>Use the unit selector to force "Seconds" or "Milliseconds" and inspect the same value at a different precision</li>
+                <li>The result panel shows both your local timezone and UTC for cross-timezone checks</li>
+            </ol>
+            <h3>Frequently Asked Questions</h3>
+            <p><strong>How do I tell seconds from milliseconds?</strong> In 2026, the current second-level timestamp is about 1.78 billion (10 digits), while the millisecond-level value is about 1.78 trillion (13 digits). This tool defaults to a boundary of 10^11, but you can also force a unit manually.</p>
+            <p><strong>Why do timestamps look different across timezones?</strong> A timestamp is an absolute instant and is timezone-independent. Only the human-readable representation is affected by the timezone. This tool shows local and UTC side by side so you can verify.</p>
+            <p><strong>Is my data uploaded to a server?</strong> No. Everything runs locally in your browser; your input never leaves your device.</p>
+        </section>
+
+        <div class="related-tools">
     <h3>Related Tools</h3>
     <ul>
         <li><a href="/en/calculators/date-calc">Date Calculator</a></li>

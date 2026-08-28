@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>时间戳转换 - Unix时间戳与日期时间互转, 秒/毫秒在线工具</title>
@@ -26,7 +28,6 @@
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script>
     <script src="/js/calculators/timestamp.js" defer></script>
-    <script src="/js/calculators/timestamp-ui.js" defer></script>
 
     <script type="application/ld+json">
     {
@@ -77,65 +78,69 @@
 </header>
 
     <main id="main">
-        <div class="tool-container">
+        <div class="page-header">
             <h1>时间戳转换</h1>
-            <p class="tool-description">在线 Unix 时间戳转换器，秒/毫秒级时间戳与人类可读日期时间实时互转，并同时显示本地时区与 UTC 时间，方便开发者与数据处理场景使用。</p>
-
-            <div class="calculator-form">
-                <div class="input-group">
-                    <label for="ts-value">Unix 时间戳</label>
-                    <div class="ts-input-row">
-                        <input type="text" id="ts-value" placeholder="1600000000" inputmode="numeric" spellcheck="false" aria-label="Unix 时间戳数值">
-                        <select id="ts-unit" aria-label="时间戳单位">
-                            <option value="auto" selected>自动</option>
-                            <option value="s">秒</option>
-                            <option value="ms">毫秒</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label for="dt-value">日期时间</label>
-                    <input type="datetime-local" id="dt-value" aria-label="日期时间">
-                </div>
-
-                <div class="result-area hidden" id="result-area">
-                    <div class="result-label">转换结果</div>
-                    <dl class="tz-result-list">
-                        <div class="tz-item"><dt>本地时间</dt><dd id="ts-local">--</dd></div>
-                        <div class="tz-item"><dt>UTC 时间</dt><dd id="ts-utc">--</dd></div>
-                        <div class="tz-item"><dt>秒</dt><dd id="ts-sec">--</dd></div>
-                        <div class="tz-item"><dt>毫秒</dt><dd id="ts-ms">--</dd></div>
-                    </dl>
-                </div>
-            </div>
-
-            <div class="tool-info">
-                <h2>什么是 Unix 时间戳？</h2>
-                <p>Unix 时间戳（Unix Timestamp / Epoch）是从 1970 年 1 月 1 日 00:00:00 UTC 起经过的秒数（不含闰秒）。它是计算机与数据库中表示时间的通用标准，具有跨时区、无歧义的优点。随着精度需求提升，许多系统使用毫秒级时间戳（当前时间乘以 1000），本工具可自动辨认秒级（约 10 位数字）与毫秒级（约 13 位数字）并按需转换。</p>
-                <h3>如何使用本工具</h3>
-                <ol>
-                    <li>在「Unix 时间戳」输入框中粘贴秒级或毫秒级时间戳，工具自动检测单位并实时显示对应的本地时间与 UTC 时间</li>
-                    <li>或直接选择日期时间，工具反向计算出对应的秒/毫秒时间戳</li>
-                    <li>通过单位下拉手动指定「秒 / 毫秒」，可查看同一数值在不同精度下的结果</li>
-                    <li>结果区同时给出本地时区时间与 UTC 时间，便于核对跨时区场景</li>
-                </ol>
-                <h3>常见问题</h3>
-                <p><strong>如何区分秒级与毫秒级时间戳？</strong>当前时间（2026 年）的秒级时间戳约为 17.8 亿（10 位），毫秒级约为 1.78 万亿（13 位）。本工具默认用 10^11 作为分界自动判定，也可手动切换指定。</p>
-                <p><strong>时间戳为什么有时区差异？</strong>时间戳本身是绝对时刻，与显示时区无关。换算成可读日期时才会受到时区影响。本工具同时显示本地时区与 UTC，方便你核对是否正确。</p>
-                <p><strong>数据会上传到服务器吗？</strong>不会。所有换算都在浏览器本地完成，输入的数据不会离开你的设备。</p>
-                <h3>为什么计算机普遍用"时间戳"而不是可读日期？</h3>
-                <p>计算机系统存储和比较时间时，更偏爱用时间戳这种"纯数字"形式，原因很实际：其一，它<strong>不含时区、语言和格式歧义</strong>，无论服务器在新加坡还是纽约，同一个时间戳代表的都是同一个绝对时刻；其二，数字之间的比较和排序非常直接，数据库索引和毫秒级精度处理都更高效；其三，它天然支持时间运算，比如"加一小时"就是加上 3600 秒，逻辑清晰。</p>
-                <p>相比之下，可读的日期时间（如"2026 年 8 月 27 日 10:30"）在不同时区、不同语言、不同格式下含义不同，还牵涉闰年、夏令时、闰秒等一堆规则，用来做程序逻辑容易出错。这也是为什么后端日志、数据库时间字段、API 返回的"时间"往往都是时间戳。</p>
-                <h3>写代码时的时间戳易错点</h3>
-                <p>对开发者来说，最常踩的坑是<strong>单位搞错</strong>：有的接口返回秒（10 位），有的返回毫秒（13 位），如果混用，得出的时间会差 1000 倍，表现为"时间跑到 1970 年"或"日期差了一年多"。此外，<strong>时区换算</strong>也容易出错——把一个"本地时间"当成 UTC 存进去，或者反过来，都会导致时间偏移若干小时。用本工具把时间戳转成可读时间核对，正是定位这类问题的快捷方式。</p>
-                <p>还有一点：时间戳以 UTC 零点为基准，不包含时区信息。它记录的永远是"绝对时刻"，转换成人看的日期时才叠加时区。因此做跨国、多时区的业务时，统一用 UTC 存储、显示时再转成用户本地时间，是最稳妥的做法。</p>
-                <h3>结果怎么用？</h3>
-                <p>得到时间戳与本地/UTC 时间后，你可以核对方便于调试、日志定位、数据库校验或跨时区业务处理；也可以把某个具体时间一键转成秒/毫秒时间戳，用于接口传参或测试。配合「日期计算器」「工作日计算器」，还能做更复杂的日期推算与排期。</p>
-            </div>
+            <p>在线 Unix 时间戳转换器，秒/毫秒级时间戳与人类可读日期时间实时互转，并同时显示本地时区与 UTC 时间，方便开发者与数据处理场景使用。</p>
         </div>
 
         <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="timestamp"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
-    <div class="related-tools">
+
+        <div class="tool-form">
+            <div class="form-group">
+                <label for="ts-value">Unix 时间戳</label>
+                <div class="ts-input-row">
+                    <input type="text" id="ts-value" placeholder="1600000000" inputmode="numeric" spellcheck="false" aria-label="Unix 时间戳数值">
+                    <select id="ts-unit" aria-label="时间戳单位">
+                        <option value="auto" selected>自动</option>
+                        <option value="s">秒</option>
+                        <option value="ms">毫秒</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="dt-value">日期时间</label>
+                <input type="datetime-local" id="dt-value" aria-label="日期时间">
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" data-csp-click="clearTimestamp">清空</button>
+            </div>
+        </div>
+
+        <div class="result-card hidden" id="result-area">
+            <div class="result-label">转换结果</div>
+            <dl class="tz-result-list">
+                <div class="tz-item"><dt>本地时间</dt><dd id="ts-local">--</dd></div>
+                <div class="tz-item"><dt>UTC 时间</dt><dd id="ts-utc">--</dd></div>
+                <div class="tz-item"><dt>秒</dt><dd id="ts-sec">--</dd></div>
+                <div class="tz-item"><dt>毫秒</dt><dd id="ts-ms">--</dd></div>
+            </dl>
+        </div>
+
+        <section class="tool-content">
+            <h2>什么是 Unix 时间戳？</h2>
+            <p>Unix 时间戳（Unix Timestamp / Epoch）是从 1970 年 1 月 1 日 00:00:00 UTC 起经过的秒数（不含闰秒）。它是计算机与数据库中表示时间的通用标准，具有跨时区、无歧义的优点。随着精度需求提升，许多系统使用毫秒级时间戳（当前时间乘以 1000），本工具可自动辨认秒级（约 10 位数字）与毫秒级（约 13 位数字）并按需转换。</p>
+            <h3>如何使用本工具</h3>
+            <ol>
+                <li>在「Unix 时间戳」输入框中粘贴秒级或毫秒级时间戳，工具自动检测单位并实时显示对应的本地时间与 UTC 时间</li>
+                <li>或直接选择日期时间，工具反向计算出对应的秒/毫秒时间戳</li>
+                <li>通过单位下拉手动指定「秒 / 毫秒」，可查看同一数值在不同精度下的结果</li>
+                <li>结果区同时给出本地时区时间与 UTC 时间，便于核对跨时区场景</li>
+            </ol>
+            <h3>常见问题</h3>
+            <p><strong>如何区分秒级与毫秒级时间戳？</strong>当前时间（2026 年）的秒级时间戳约为 17.8 亿（10 位），毫秒级约为 1.78 万亿（13 位）。本工具默认用 10^11 作为分界自动判定，也可手动切换指定。</p>
+            <p><strong>时间戳为什么有时区差异？</strong>时间戳本身是绝对时刻，与显示时区无关。换算成可读日期时才会受到时区影响。本工具同时显示本地时区与 UTC，方便你核对是否正确。</p>
+            <p><strong>数据会上传到服务器吗？</strong>不会。所有换算都在浏览器本地完成，输入的数据不会离开你的设备。</p>
+            <h3>为什么计算机普遍用"时间戳"而不是可读日期？</h3>
+            <p>计算机系统存储和比较时间时，更偏爱用时间戳这种"纯数字"形式，原因很实际：其一，它<strong>不含时区、语言和格式歧义</strong>，无论服务器在新加坡还是纽约，同一个时间戳代表的都是同一个绝对时刻；其二，数字之间的比较和排序非常直接，数据库索引和毫秒级精度处理都更高效；其三，它天然支持时间运算，比如"加一小时"就是加上 3600 秒，逻辑清晰。</p>
+            <p>相比之下，可读的日期时间（如"2026 年 8 月 27 日 10:30"）在不同时区、不同语言、不同格式下含义不同，还牵涉闰年、夏令时、闰秒等一堆规则，用来做程序逻辑容易出错。这也是为什么后端日志、数据库时间字段、API 返回的"时间"往往都是时间戳。</p>
+            <h3>写代码时的时间戳易错点</h3>
+            <p>对开发者来说，最常踩的坑是<strong>单位搞错</strong>：有的接口返回秒（10 位），有的返回毫秒（13 位），如果混用，得出的时间会差 1000 倍，表现为"时间跑到 1970 年"或"日期差了一年多"。此外，<strong>时区换算</strong>也容易出错——把一个"本地时间"当成 UTC 存进去，或者反过来，都会导致时间偏移若干小时。用本工具把时间戳转成可读时间核对，正是定位这类问题的快捷方式。</p>
+            <p>还有一点：时间戳以 UTC 零点为基准，不包含时区信息。它记录的永远是"绝对时刻"，转换成人看的日期时才叠加时区。因此做跨国、多时区的业务时，统一用 UTC 存储、显示时再转成用户本地时间，是最稳妥的做法。</p>
+            <h3>结果怎么用？</h3>
+            <p>得到时间戳与本地/UTC 时间后，你可以核对方便于调试、日志定位、数据库校验或跨时区业务处理；也可以把某个具体时间一键转成秒/毫秒时间戳，用于接口传参或测试。配合「日期计算器」「工作日计算器」，还能做更复杂的日期推算与排期。</p>
+        </section>
+
+        <div class="related-tools">
     <h3>相关工具</h3>
     <ul>
         <li><a href="/zh/calculators/date-calc">日期计算器</a></li>

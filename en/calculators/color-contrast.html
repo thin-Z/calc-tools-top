@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Color Contrast Checker - WCAG AA/AAA Test</title>
+    <title>Color Contrast Checker - Free WCAG AA/AAA Online Tool</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="Free online color contrast checker using the WCAG 2.1 relative luminance formula. Real-time AA/AAA pass or fail for accessible design.">
-    <meta property='og:title' content='Color Contrast Checker - WCAG AA/AAA Test'/>
-    <meta property='og:description' content='Free online color contrast checker using the WCAG 2.1 relative luminance formula. Real-time AA/AAA pass or fail for accessible design.'/>
+    <meta name="description" content="Calculate the contrast ratio between text and background in real time using the WCAG 2.1 relative luminance formula, with AA/AAA pass or fail judgment for accessible interface design.">
+    <meta property='og:title' content='Color Contrast Checker - WCAG AA/AAA Online Tool'/>
+    <meta property='og:description' content='Free online color contrast checker based on the WCAG 2.1 relative luminance formula. Computes the foreground and background contrast in real time and shows AA/AAA pass or fail.'/>
     <meta property='og:type' content='website'/>
     <meta property='og:url' content='https://www.calc-tools.top/en/calculators/color-contrast'/>
     <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
     <meta property='og:locale' content='en_US'/>
     <meta name='twitter:card' content='summary_large_image'/>
-    <meta name='twitter:title' content='Color Contrast Checker - WCAG AA/AAA Test'/>
-    <meta name='twitter:description' content='Free online color contrast checker using the WCAG 2.1 relative luminance formula. Real-time AA/AAA pass or fail for accessible design.'/>
+    <meta name='twitter:title' content='Color Contrast Checker - WCAG AA/AAA Online Tool'/>
+    <meta name='twitter:description' content='Free online color contrast checker based on the WCAG 2.1 relative luminance formula. Computes the foreground and background contrast in real time.'/>
 
     <link rel="canonical" href="https://www.calc-tools.top/en/calculators/color-contrast">
     <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/calculators/color-contrast">
@@ -26,7 +28,6 @@
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script>
     <script src="/js/calculators/color-contrast.js" defer></script>
-    <script src="/js/calculators/color-contrast-ui.js" defer></script>
 
     <script type="application/ld+json">
     {
@@ -42,9 +43,9 @@
     {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
-        "name": "Color Contrast Checker - WCAG AA/AAA Online Test",
+        "name": "Color Contrast Checker - WCAG AA/AAA Online Tool",
         "url": "https://www.calc-tools.top/en/calculators/color-contrast",
-        "description": "Free online color contrast checker that calculates the contrast ratio between foreground and background using the WCAG 2.1 relative luminance formula.",
+        "description": "Free online color contrast checker based on the WCAG 2.1 relative luminance formula. Computes the foreground and background contrast in real time and shows AA/AAA pass or fail.",
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "Web",
         "inLanguage": "en"
@@ -66,61 +67,65 @@
 </header>
 
     <main id="main">
-        <div class="tool-container">
+        <div class="page-header">
             <h1>Color Contrast Checker</h1>
-            <p class="tool-description">Calculate the contrast ratio between text and background in real time using the WCAG 2.1 relative luminance formula, with AA/AAA pass or fail judgment for accessible interface design.</p>
-
-            <div class="calculator-form">
-                <div class="input-group">
-                    <label for="fg-color">Foreground (text color)</label>
-                    <div class="color-input-row">
-                        <input type="color" id="fg-color" value="#333333" aria-label="Pick foreground color">
-                        <input type="text" id="fg-hex" value="#333333" maxlength="7" spellcheck="false" aria-label="Foreground hex value">
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label for="bg-color">Background color</label>
-                    <div class="color-input-row">
-                        <input type="color" id="bg-color" value="#ffffff" aria-label="Pick background color">
-                        <input type="text" id="bg-hex" value="#ffffff" maxlength="7" spellcheck="false" aria-label="Background hex value">
-                    </div>
-                </div>
-
-                <div class="result-area hidden" id="result-area">
-                    <div class="result-label">Contrast Ratio</div>
-                    <div class="contrast-ratio" id="contrast-ratio">--:1</div>
-                    <div id="contrast-levels" class="contrast-levels"></div>
-                    <div class="contrast-sample" id="contrast-sample"></div>
-                    <p class="contrast-summary" id="contrast-summary"></p>
-                </div>
-            </div>
-
-            <div class="tool-info">
-                <h2>What is Color Contrast?</h2>
-                <p>Color contrast ratio measures the difference in luminance between a foreground color (such as text) and a background color. The value ranges from 1:1 to 21:1. The higher the contrast, the easier text is to read, especially in low-light environments or on low-resolution screens. WCAG 2.1 defines a standard relative luminance formula: each sRGB channel is linearized first, then weighted by 0.2126, 0.7152 and 0.0722 to produce luminance L, and finally the ratio is computed as (L1 + 0.05) / (L2 + 0.05).</p>
-                <h3>WCAG AA and AAA Requirements</h3>
-                <ul>
-                    <li><strong>AA normal text</strong>: ratio ≥ 4.5:1, the minimum accessibility standard for most websites</li>
-                    <li><strong>AA large text</strong> (≥18pt or 14pt bold): ratio ≥ 3:1</li>
-                    <li><strong>AAA normal text</strong>: ratio ≥ 7:1, recommended for higher readability</li>
-                    <li><strong>AAA large text</strong>: ratio ≥ 4.5:1</li>
-                </ul>
-                <h3>How to Use This Tool</h3>
-                <ol>
-                    <li>Pick a color or type a hex value for the foreground (text) and the background</li>
-                    <li>The tool computes the ratio in real time and shows AA/AAA results for each level</li>
-                    <li>A preview area renders sample text with your chosen colors</li>
-                    <li>If a level fails, adjust the colors until it passes</li>
-                </ol>
-                <h3>Frequently Asked Questions</h3>
-                <p><strong>What contrast ratio is safe?</strong> Normal body text should reach at least AA 4.5:1. For older users or low-vision audiences, AAA 7:1 is recommended. Large headings and button text may use 3:1.</p>
-                <p><strong>Why does my color combination fail?</strong> Light gray text on a white background is usually only about 2:1. Darken the text, lighten the background, or switch to a deeper brand color. This tool lets you fine-tune colors until they pass.</p>
-                <p><strong>Is my data uploaded to a server?</strong> No. All calculations run locally in your browser; your colors never leave your device.</p>
-            </div>
+            <p>Calculate the contrast ratio between text and background in real time using the WCAG 2.1 relative luminance formula, with AA/AAA pass or fail judgment for accessible interface design.</p>
         </div>
 
         <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="color-contrast"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
-    <div class="related-tools">
+
+        <div class="tool-form">
+            <div class="form-group">
+                <label for="fg-color">Foreground (text color)</label>
+                <div class="color-input-row">
+                    <input type="color" id="fg-color" value="#333333" aria-label="Pick foreground color">
+                    <input type="text" id="fg-hex" value="#333333" maxlength="7" spellcheck="false" aria-label="Foreground hex value">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="bg-color">Background color</label>
+                <div class="color-input-row">
+                    <input type="color" id="bg-color" value="#ffffff" aria-label="Pick background color">
+                    <input type="text" id="bg-hex" value="#ffffff" maxlength="7" spellcheck="false" aria-label="Background hex value">
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" data-csp-click="clearColorContrast">Clear</button>
+            </div>
+        </div>
+
+        <div class="result-card hidden" id="result-area">
+            <div class="result-label">Contrast Ratio</div>
+            <div class="contrast-ratio" id="contrast-ratio">--:1</div>
+            <div id="contrast-levels" class="contrast-levels"></div>
+            <div class="contrast-sample" id="contrast-sample"></div>
+            <p class="contrast-summary" id="contrast-summary"></p>
+        </div>
+
+        <section class="tool-content">
+            <h2>What is Color Contrast?</h2>
+            <p>Color contrast ratio measures the difference in luminance between a foreground color (such as text) and a background color. The value ranges from 1:1 to 21:1. The higher the contrast, the easier text is to read, especially in low-light environments or on low-resolution screens. WCAG 2.1 defines a standard relative luminance formula: each sRGB channel is linearized first, then weighted by 0.2126, 0.7152 and 0.0722 to produce luminance L, and finally the ratio is computed as (L1 + 0.05) / (L2 + 0.05).</p>
+            <h3>WCAG AA and AAA Requirements</h3>
+            <ul>
+                <li><strong>AA normal text</strong>: ratio ≥ 4.5:1, the minimum accessibility standard for most websites</li>
+                <li><strong>AA large text</strong> (≥18pt or 14pt bold): ratio ≥ 3:1</li>
+                <li><strong>AAA normal text</strong>: ratio ≥ 7:1, recommended for higher readability</li>
+                <li><strong>AAA large text</strong>: ratio ≥ 4.5:1</li>
+            </ul>
+            <h3>How to Use This Tool</h3>
+            <ol>
+                <li>Pick a color or type a hex value for the foreground (text) and the background</li>
+                <li>The tool computes the ratio in real time and shows AA/AAA results for each level</li>
+                <li>A preview area renders sample text with your chosen colors</li>
+                <li>If a level fails, adjust the colors until it passes</li>
+            </ol>
+            <h3>Frequently Asked Questions</h3>
+            <p><strong>What contrast ratio is safe?</strong> Normal body text should reach at least AA 4.5:1. For older users or low-vision audiences, AAA 7:1 is recommended. Large headings and button text may use 3:1.</p>
+            <p><strong>Why does my color combination fail?</strong> Light gray text on a white background is usually only about 2:1. Darken the text, lighten the background, or switch to a deeper brand color. This tool lets you fine-tune colors until they pass.</p>
+            <p><strong>Is my data uploaded to a server?</strong> No. All calculations run locally in your browser; your colors never leave your device.</p>
+        </section>
+
+        <div class="related-tools">
     <h3>Related Tools</h3>
     <ul>
         <li><a href="/en/image/color-picker">Color Picker</a></li>
@@ -128,7 +133,7 @@
         <li><a href="/en/calculators/regex-tester">Regex Tester</a></li>
     </ul>
 </div>
-</main>
+    </main>
 
     <footer>
     <div class="footer-links">

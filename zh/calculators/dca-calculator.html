@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>定投计算器 - 每月定投未来价值计算, 按月复利投资收益估算工具</title>
@@ -26,7 +28,6 @@
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script>
     <script src="/js/calculators/dca-calculator.js" defer></script>
-    <script src="/js/calculators/dca-calculator-ui.js" defer></script>
 
     <script type="application/ld+json">
     {
@@ -77,72 +78,76 @@
 </header>
 
     <main id="main">
-        <div class="tool-container">
+        <div class="page-header">
             <h1>定投计算器</h1>
-            <p class="tool-description">在线定期定投（定期定额投资）计算器，按月复利计算每月固定投入在未来能积累的总额，同时给出累计投入本金与收益金额，帮助你估算长期定投的回报。</p>
-
-            <div class="calculator-form">
-                <div class="input-group">
-                    <label for="dca-monthly">每月投入金额（元）</label>
-                    <input type="number" id="dca-monthly" value="1000" min="1" step="100" inputmode="numeric" aria-label="每月投入金额">
-                </div>
-                <div class="input-group">
-                    <label for="dca-annualRate">年化收益率（%）</label>
-                    <input type="number" id="dca-annualRate" value="8" min="0" step="0.1" inputmode="decimal" aria-label="年化收益率">
-                </div>
-                <div class="input-group">
-                    <label for="dca-years">定投年限</label>
-                    <input type="number" id="dca-years" value="10" min="1" max="50" step="1" inputmode="numeric" aria-label="定投年限">
-                </div>
-                <div class="input-group">
-                    <label for="dca-initial">起始本金（元，可选）</label>
-                    <input type="number" id="dca-initial" value="0" min="0" step="100" inputmode="numeric" aria-label="起始本金">
-                </div>
-                <div class="input-group">
-                    <label for="dca-months">月数（可选，默认 = 年限×12）</label>
-                    <input type="number" id="dca-months" value="120" min="1" step="1" inputmode="numeric" aria-label="投资总月数">
-                </div>
-
-                <div class="result-area hidden" id="result-area">
-                    <div class="result-label">计算结果</div>
-                    <dl class="tz-result-list">
-                        <div class="tz-item"><dt>未来价值</dt><dd id="dca-fv">--</dd></div>
-                        <div class="tz-item"><dt>累计投入</dt><dd id="dca-invested">--</dd></div>
-                        <div class="tz-item"><dt>收益金额</dt><dd id="dca-interest">--</dd></div>
-                    </dl>
-                </div>
-            </div>
-
-            <div class="tool-info">
-                <h2>什么是定投（定期定额投资）？</h2>
-                <p>定投（定期定额投资，DCA / Dollar-Cost Averaging）是指每隔固定的时间（通常是每月）投入固定金额的一种投资方式。它通过分散投入时点，摊平买入成本，降低择时风险，非常适合长期储蓄与基金/指数投资。</p>
-                <h3>如何使用本工具</h3>
-                <ol>
-                    <li>在「每月投入金额」中输入你每月计划投入的金额（元）</li>
-                    <li>在「年化收益率」中输入预期的年化回报率（%）</li>
-                    <li>在「定投年限」中输入投资持续的年数，月数会自动按 年限×12 计算，也可手动覆盖</li>
-                    <li>如需期初已有本金，可在「起始本金」中填写；点击或输入后结果区实时更新</li>
-                </ol>
-                <h3>计算原理与说明</h3>
-                <p>本工具采用按月复利的期末年金模型：未来价值 = 起始本金×(1+月利率)^期数 + 每月投入×[((1+月利率)^期数 - 1) / 月利率]，其中月利率 = 年化收益率 ÷ 12 ÷ 100。收益金额 = 未来价值 - 累计投入本金，其中累计投入本金 = 起始本金 + 每月投入 × 期数。</p>
-                <h3>常见问题</h3>
-                <p><strong>收益是复利计算的吗？</strong>是的。本工具按月复利，每月的收益会滚入下个月的基数，这与现实中基金/定投的按日或按月计息方式近似。</p>
-                <p><strong>年化收益率如何填写？</strong>年化收益率是你预期的长期平均年回报率（%），例如填入 8 表示预期年化 8%。历史数据并不能保证未来收益，结果仅为估算。</p>
-                <p><strong>数据会上传到服务器吗？</strong>不会。所有计算都在浏览器本地完成，输入的数据不会离开你的设备。</p>
-                <h3>定投为什么能"摊平成本"？</h3>
-                <p>定投的核心优势，在于它放弃了"猜准时机"的执念，转而用"持续、定额"的方式来摊平长期买入成本。因为市场每天都在波动，你不可能每次都买在最低点。而定投让相同金额在不同价位买入：价格高时买得少一点，价格低时买得多一点，长期下来，你的平均持有成本会落在相对中性的位置，从而降低了一次性重仓买在高点的风险。</p>
-                <p>对普通投资者来说，这正是定投最吸引人的地方——它不要求你有精准的判断力，只需要长期坚持和纪律。越是波动大的市场，这"摊平"的效果往往越明显；而在持续上涨的市场里，定投虽然不会让你买在最低，但也能安稳跟上整体涨幅。</p>
-                <h3>定投的局限与误区</h3>
-                <p><strong>① 它不是"稳赚不赔"。</strong> 定投摊平的是成本，摊不平的是市场本身的系统性风险。如果市场长期下跌，定投仍然会亏损，只是可能亏得比一次性买入少一些。<br>
-                <strong>② 别频繁停投。</strong> 定投的价值在于"长期纪律"，如果在市场下跌时恐慌停投，恰恰容易错过低位加码、摊平成本的机会。<br>
-                <strong>③ 预期要合理。</strong> 工具里的"年化收益率"是假设值，真实的收益随市场变化，历史数据不代表未来。做长期规划时，用偏保守的收益率估算更稳妥。</p>
-                <h3>结果怎么解读？</h3>
-                <p>计算得到的是"持续投入固定金额、按月复利"下的未来价值与累计收益，能帮你直观理解"时间 + 纪律"的威力，看清长期坚持定投可能累积的财富。你可以用它做养老储蓄、子女教育金、长期理财的规划参考，但记得把通胀、费用和实际市场波动考虑进去，把它当作一个长期方向的参考，而非精确的收益承诺。</p>
-            </div>
+            <p>在线定期定投（定期定额投资）计算器，按月复利计算每月固定投入在未来能积累的总额，同时给出累计投入本金与收益金额，帮助你估算长期定投的回报。</p>
         </div>
 
         <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="dca-calculator"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
-    <div class="related-tools">
+
+        <div class="tool-form">
+            <div class="form-group">
+                <label for="dca-monthly">每月投入金额（元）</label>
+                <input type="number" id="dca-monthly" value="1000" min="1" step="100" inputmode="numeric" aria-label="每月投入金额">
+            </div>
+            <div class="form-group">
+                <label for="dca-annualRate">年化收益率（%）</label>
+                <input type="number" id="dca-annualRate" value="8" min="0" step="0.1" inputmode="decimal" aria-label="年化收益率">
+            </div>
+            <div class="form-group">
+                <label for="dca-years">定投年限</label>
+                <input type="number" id="dca-years" value="10" min="1" max="50" step="1" inputmode="numeric" aria-label="定投年限">
+            </div>
+            <div class="form-group">
+                <label for="dca-initial">起始本金（元，可选）</label>
+                <input type="number" id="dca-initial" value="0" min="0" step="100" inputmode="numeric" aria-label="起始本金">
+            </div>
+            <div class="form-group">
+                <label for="dca-months">月数（可选，默认 = 年限×12）</label>
+                <input type="number" id="dca-months" value="120" min="1" step="1" inputmode="numeric" aria-label="投资总月数">
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" data-csp-click="clearDCA">清空</button>
+            </div>
+        </div>
+
+        <div class="result-card hidden" id="result-area">
+            <div class="result-label">计算结果</div>
+            <dl class="tz-result-list">
+                <div class="tz-item"><dt>未来价值</dt><dd id="dca-fv">--</dd></div>
+                <div class="tz-item"><dt>累计投入</dt><dd id="dca-invested">--</dd></div>
+                <div class="tz-item"><dt>收益金额</dt><dd id="dca-interest">--</dd></div>
+            </dl>
+        </div>
+
+        <section class="tool-content">
+            <h2>什么是定投（定期定额投资）？</h2>
+            <p>定投（定期定额投资，DCA / Dollar-Cost Averaging）是指每隔固定的时间（通常是每月）投入固定金额的一种投资方式。它通过分散投入时点，摊平买入成本，降低择时风险，非常适合长期储蓄与基金/指数投资。</p>
+            <h3>如何使用本工具</h3>
+            <ol>
+                <li>在「每月投入金额」中输入你每月计划投入的金额（元）</li>
+                <li>在「年化收益率」中输入预期的年化回报率（%）</li>
+                <li>在「定投年限」中输入投资持续的年数，月数会自动按 年限×12 计算，也可手动覆盖</li>
+                <li>如需期初已有本金，可在「起始本金」中填写；点击或输入后结果区实时更新</li>
+            </ol>
+            <h3>计算原理与说明</h3>
+            <p>本工具采用按月复利的期末年金模型：未来价值 = 起始本金×(1+月利率)^期数 + 每月投入×[((1+月利率)^期数 - 1) / 月利率]，其中月利率 = 年化收益率 ÷ 12 ÷ 100。收益金额 = 未来价值 - 累计投入本金，其中累计投入本金 = 起始本金 + 每月投入 × 期数。</p>
+            <h3>常见问题</h3>
+            <p><strong>收益是复利计算的吗？</strong>是的。本工具按月复利，每月的收益会滚入下个月的基数，这与现实中基金/定投的按日或按月计息方式近似。</p>
+            <p><strong>年化收益率如何填写？</strong>年化收益率是你预期的长期平均年回报率（%），例如填入 8 表示预期年化 8%。历史数据并不能保证未来收益，结果仅为估算。</p>
+            <p><strong>数据会上传到服务器吗？</strong>不会。所有计算都在浏览器本地完成，输入的数据不会离开你的设备。</p>
+            <h3>定投为什么能"摊平成本"？</h3>
+            <p>定投的核心优势，在于它放弃了"猜准时机"的执念，转而用"持续、定额"的方式来摊平长期买入成本。因为市场每天都在波动，你不可能每次都买在最低点。而定投让相同金额在不同价位买入：价格高时买得少一点，价格低时买得多一点，长期下来，你的平均持有成本会落在相对中性的位置，从而降低了一次性重仓买在高点的风险。</p>
+            <p>对普通投资者来说，这正是定投最吸引人的地方——它不要求你有精准的判断力，只需要长期坚持和纪律。越是波动大的市场，这"摊平"的效果往往越明显；而在持续上涨的市场里，定投虽然不会让你买在最低，但也能安稳跟上整体涨幅。</p>
+            <h3>定投的局限与误区</h3>
+            <p><strong>① 它不是"稳赚不赔"。</strong> 定投摊平的是成本，摊不平的是市场本身的系统性风险。如果市场长期下跌，定投仍然会亏损，只是可能亏得比一次性买入少一些。<br>
+            <strong>② 别频繁停投。</strong> 定投的价值在于"长期纪律"，如果在市场下跌时恐慌停投，恰恰容易错过低位加码、摊平成本的机会。<br>
+            <strong>③ 预期要合理。</strong> 工具里的"年化收益率"是假设值，真实的收益随市场变化，历史数据不代表未来。做长期规划时，用偏保守的收益率估算更稳妥。</p>
+            <h3>结果怎么解读？</h3>
+            <p>计算得到的是"持续投入固定金额、按月复利"下的未来价值与累计收益，能帮你直观理解"时间 + 纪律"的威力，看清长期坚持定投可能累积的财富。你可以用它做养老储蓄、子女教育金、长期理财的规划参考，但记得把通胀、费用和实际市场波动考虑进去，把它当作一个长期方向的参考，而非精确的收益承诺。</p>
+        </section>
+
+        <div class="related-tools">
     <h3>相关工具</h3>
     <ul>
         <li><a href="/zh/calculators/compound-interest">复利计算器</a></li>

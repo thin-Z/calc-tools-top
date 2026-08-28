@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Regex Tester - Online Regex Match & Group Testing</title>
+    <title>Regex Tester - Free Online Pattern, Group & Highlight Tool</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="Free online regex tester with real-time match highlighting, capture group parsing and common flags. Runs locally in your browser, nothing is uploaded.">
-    <meta property='og:title' content='Regex Tester - Online Regex Match & Group Testing'/>
-    <meta property='og:description' content='Free online regex tester with real-time match highlighting, capture group parsing and common flags. Runs locally in your browser.'/>
+    <meta name="description" content="Online regex tester. Enter a pattern and test text to see matches, capture groups and highlights in real time. Supports g/i/m/s/u flags and runs locally in your browser.">
+    <meta property='og:title' content='Regex Tester - Online Pattern & Group Tester'/>
+    <meta property='og:description' content='Free online regex tester with live match highlighting, capture group parsing and common flags. Runs locally, no upload.'/>
     <meta property='og:type' content='website'/>
     <meta property='og:url' content='https://www.calc-tools.top/en/calculators/regex-tester'/>
     <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
     <meta property='og:locale' content='en_US'/>
     <meta name='twitter:card' content='summary_large_image'/>
-    <meta name='twitter:title' content='Regex Tester - Online Regex Match & Group Testing'/>
-    <meta name='twitter:description' content='Free online regex tester with real-time match highlighting, capture group parsing and common flags.'/>
+    <meta name='twitter:title' content='Regex Tester - Online Pattern & Group Tester'/>
+    <meta name='twitter:description' content='Free online regex tester with live match highlighting, capture group parsing and common flags.'/>
 
     <link rel="canonical" href="https://www.calc-tools.top/en/calculators/regex-tester">
     <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/calculators/regex-tester">
@@ -26,7 +28,6 @@
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script>
     <script src="/js/calculators/regex-tester.js" defer></script>
-    <script src="/js/calculators/regex-tester-ui.js" defer></script>
 
     <script type="application/ld+json">
     {
@@ -42,9 +43,9 @@
     {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
-        "name": "Regex Tester - Online Regex Match & Group Testing",
+        "name": "Regex Tester - Online Pattern & Group Tester",
         "url": "https://www.calc-tools.top/en/calculators/regex-tester",
-        "description": "Free online regex tester with real-time match highlighting, capture group parsing and common flags. Runs locally in your browser.",
+        "description": "Free online regex tester with live match highlighting, capture group parsing and common flags. Runs locally, no upload.",
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "Web",
         "inLanguage": "en"
@@ -66,67 +67,72 @@
 </header>
 
     <main id="main">
-        <div class="tool-container">
+        <div class="page-header">
             <h1>Regex Tester</h1>
-            <p class="tool-description">Enter a regular expression and test text to see matches, capture groups and highlighted positions in real time. Everything runs locally in your browser.</p>
-
-            <div class="calculator-form">
-                <div class="input-group">
-                    <label for="regex-pattern">Regular Expression</label>
-                    <input type="text" id="regex-pattern" class="regex-pattern-input" placeholder="e.g. \d{4}-\d{2}-\d{2}" spellcheck="false" aria-label="Regular expression">
-                </div>
-
-                <div class="regex-flags" role="group" aria-label="Regex flags">
-                    <label class="regex-flag"><input type="checkbox" name="regex-flags" value="g" checked> g global</label>
-                    <label class="regex-flag"><input type="checkbox" name="regex-flags" value="i"> i ignore case</label>
-                    <label class="regex-flag"><input type="checkbox" name="regex-flags" value="m"> m multiline</label>
-                    <label class="regex-flag"><input type="checkbox" name="regex-flags" value="s"> s dot matches newline</label>
-                    <label class="regex-flag"><input type="checkbox" name="regex-flags" value="u"> u unicode</label>
-                </div>
-
-                <div class="input-group">
-                    <label for="regex-text">Test Text</label>
-                    <textarea class="text-input" id="regex-text" placeholder="Paste text to match...">2026-08-23 released a new version, 2026-09-01 update planned.</textarea>
-                </div>
-
-                <div class="result-area hidden" id="regex-result">
-                    <div class="result-label" id="regex-count">0 matches</div>
-                    <pre class="result-content regex-highlight" id="regex-highlight"></pre>
-                    <div id="regex-match-list"></div>
-                    <div class="result-label">Capture Groups</div>
-                    <div id="regex-groups"></div>
-                </div>
-
-                <div class="result-area hidden" id="regex-error"></div>
-            </div>
-
-            <div class="tool-info">
-                <h2>What is a Regular Expression?</h2>
-                <p>A regular expression (regex) is a sequence of special characters that describes a text pattern. It is widely used for searching, replacing, validating and extracting data. For example, `\d{4}-\d{2}-\d{2}` matches dates like 2026-08-23, and `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$` validates email addresses. Core building blocks include character classes, quantifiers, groups and assertions; mastering them greatly improves text-processing efficiency.</p>
-                <h3>Common Flags</h3>
-                <ul>
-                    <li><strong>g (global)</strong>: find all matches, not just the first one</li>
-                    <li><strong>i (ignore case)</strong>: match without distinguishing case</li>
-                    <li><strong>m (multiline)</strong>: ^ and $ match at the start and end of each line</li>
-                    <li><strong>s (dot matches newline)</strong>: let . also match newline characters</li>
-                    <li><strong>u (unicode)</strong>: treat patterns as Unicode code points, useful for Chinese and emoji</li>
-                </ul>
-                <h3>How to Use This Tool</h3>
-                <ol>
-                    <li>Type a pattern such as `\b\w+@\w+\.\w+\b` in the expression field</li>
-                    <li>Select the flags you need</li>
-                    <li>Paste test text into the text area and view highlighted matches in real time</li>
-                    <li>Review the match count, each match position and the capture group list</li>
-                </ol>
-                <h3>Frequently Asked Questions</h3>
-                <p><strong>What if my regex has an error?</strong> The tool reports syntax errors (such as an unterminated group) in real time; fixing the pattern recalculates immediately.</p>
-                <p><strong>How do I match Chinese characters?</strong> Enable the u flag and use a Unicode property escape such as `\p{Script=Han}+`, or a character range like `[\u4e00-\u9fff]+`.</p>
-                <p><strong>Is my data uploaded to a server?</strong> No. Regex building, matching and highlighting all run locally in your browser.</p>
-            </div>
+            <p>Enter a regular expression and test text to see matches, capture groups and highlighted positions in real time. Everything runs locally in your browser.</p>
         </div>
 
         <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="regex-tester"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
-    <div class="related-tools">
+
+        <div class="tool-form">
+            <div class="form-group">
+                <label for="regex-pattern">Regular Expression</label>
+                <input type="text" id="regex-pattern" class="regex-pattern-input" placeholder="e.g. \d{4}-\d{2}-\d{2}" spellcheck="false" aria-label="Regular expression">
+            </div>
+
+            <div class="regex-flags" role="group" aria-label="Regex flags">
+                <label class="regex-flag"><input type="checkbox" name="regex-flags" value="g" checked> g global</label>
+                <label class="regex-flag"><input type="checkbox" name="regex-flags" value="i"> i ignore case</label>
+                <label class="regex-flag"><input type="checkbox" name="regex-flags" value="m"> m multiline</label>
+                <label class="regex-flag"><input type="checkbox" name="regex-flags" value="s"> s dot matches newline</label>
+                <label class="regex-flag"><input type="checkbox" name="regex-flags" value="u"> u unicode</label>
+            </div>
+
+            <div class="form-group">
+                <label for="regex-text">Test Text</label>
+                <textarea class="text-input" id="regex-text" placeholder="Paste text to match...">2026-08-23 released a new version, 2026-09-01 update planned.</textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" data-csp-click="clearRegexTester">Clear</button>
+            </div>
+        </div>
+
+        <div class="result-card hidden" id="regex-result">
+            <div class="result-label" id="regex-count">0 matches</div>
+            <pre class="result-content regex-highlight" id="regex-highlight"></pre>
+            <div id="regex-match-list"></div>
+            <div class="result-label">Capture Groups</div>
+            <div id="regex-groups"></div>
+        </div>
+
+        <div class="result-card hidden" id="regex-error"></div>
+
+        <section class="tool-content">
+            <h2>What is a Regular Expression?</h2>
+            <p>A regular expression (regex) is a sequence of special characters that describes a text pattern. It is widely used for searching, replacing, validating and extracting data. For example, `\d{4}-\d{2}-\d{2}` matches dates like 2026-08-23, and `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$` validates email addresses. Core building blocks include character classes, quantifiers, groups and assertions; mastering them greatly improves text-processing efficiency.</p>
+            <h3>Common Flags</h3>
+            <ul>
+                <li><strong>g (global)</strong>: find all matches, not just the first one</li>
+                <li><strong>i (ignore case)</strong>: match without distinguishing case</li>
+                <li><strong>m (multiline)</strong>: ^ and $ match at the start and end of each line</li>
+                <li><strong>s (dot matches newline)</strong>: let . also match newline characters</li>
+                <li><strong>u (unicode)</strong>: treat patterns as Unicode code points, useful for Chinese and emoji</li>
+            </ul>
+            <h3>How to Use This Tool</h3>
+            <ol>
+                <li>Type a pattern such as `\b\w+@\w+\.\w+\b` in the expression field</li>
+                <li>Select the flags you need</li>
+                <li>Paste test text into the text area and view highlighted matches in real time</li>
+                <li>Review the match count, each match position and the capture group list</li>
+            </ol>
+            <h3>Frequently Asked Questions</h3>
+            <p><strong>What if my regex has an error?</strong> The tool reports syntax errors (such as an unterminated group) in real time; fixing the pattern recalculates immediately.</p>
+            <p><strong>How do I match Chinese characters?</strong> Enable the u flag and use a Unicode property escape such as `\p{Script=Han}+`, or a character range like `[\u4e00-\u9fff]+`.</p>
+            <p><strong>Is my data uploaded to a server?</strong> No. Regex building, matching and highlighting all run locally in your browser.</p>
+        </section>
+
+        <div class="related-tools">
     <h3>Related Tools</h3>
     <ul>
         <li><a href="/en/text/json-formatter">JSON Formatter</a></li>

@@ -1,8 +1,10 @@
 /**
- * 简繁转换 - 核心逻辑
+ * 简繁转换 - 核心逻辑 + UI 交互（已合并）
  * 功能：基于内置常用字符对照表，在简体中文与繁体中文之间转换文本（逐字符映射）。
  * 用法：本文件为纯函数模块（IIFE），在浏览器中暴露 window.tradConverter 命名空间
  *       以及 window.toTraditional / window.toSimplified / window.convertText。
+ *      UI 部分用 typeof document !== 'undefined' 守卫包裹 init()，避免 node --test 下
+ *      触发 ReferenceError: document is not defined（A1 回归教训）。
  * 依赖：无（零第三方库，CSP 白名单不扩张）。覆盖高频常用字，非完整 GB/OpenCC 词典。
  */
 (function () {
@@ -93,4 +95,68 @@
     window.toTraditional = toTraditional;
     window.toSimplified = toSimplified;
     window.convertText = convertText;
+
+    /* ===================== UI 交互（原 simplified-traditional-ui.js） ===================== */
+
+    var input = null;
+    var dirSelect = null;
+    var output = null;
+    var resultArea = null;
+    var copyBtn = null;
+
+    function render() {
+        var text = input.value;
+        var dir = dirSelect.value;
+        output.value = convertText(text, dir);
+        if (text.trim()) resultArea.classList.remove('hidden');
+        else resultArea.classList.add('hidden');
+    }
+
+    function copyOutput() {
+        if (!output.value) return;
+        var done = function () {
+            if (copyBtn) copyBtn.textContent = '已复制';
+            setTimeout(function () { if (copyBtn) copyBtn.textContent = '复制'; }, 1500);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(output.value).then(done, function () { done(); });
+        } else {
+            output.select();
+            document.execCommand('copy');
+            done();
+        }
+    }
+
+    /**
+     * 清空处理器：接入主模板 form-actions 的"清空"按钮。
+     */
+    function clearSimplifiedTraditional() {
+        if (input) input.value = '';
+        if (output) output.value = '';
+        if (resultArea) resultArea.classList.add('hidden');
+    }
+
+    function init() {
+        input = document.getElementById('tc-input');
+        dirSelect = document.getElementById('tc-dir');
+        output = document.getElementById('tc-output');
+        resultArea = document.getElementById('result-area');
+        copyBtn = document.getElementById('tc-copy');
+        if (!input || !dirSelect || !output || !resultArea) return;
+
+        input.addEventListener('input', render);
+        dirSelect.addEventListener('change', render);
+        if (copyBtn) copyBtn.addEventListener('click', copyOutput);
+        render();
+    }
+
+    if (typeof document !== 'undefined') {
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    }
+
+    window.clearSimplifiedTraditional = clearSimplifiedTraditional;
 })();
