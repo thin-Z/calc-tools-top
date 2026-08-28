@@ -2500,6 +2500,7 @@ svg.ic {
 .about-page h1 { font-size: var(--fs-3xl); font-weight: 700; margin-bottom: 0.5rem; color: var(--text-primary); }
 .about-page h2 { font-size: var(--fs-xl); font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-primary); }
 .about-page p,.about-page li { font-size: 0.9375rem; line-height: 1.7; color: var(--text-secondary); margin-bottom: 0.75rem; }
+.about-page p a,.about-page li a { text-decoration: underline; }
 .about-page ul { padding-left: 1.25rem; margin-bottom: 1rem; }
 .about-page li { margin-bottom: 0.5rem; }
 .about-page strong { color: var(--text-primary); font-weight: 600; }
@@ -2540,6 +2541,7 @@ svg.ic {
 .policy-page .last-updated { font-size: var(--fs-sm); color: var(--text-secondary); margin-bottom: 2rem; }
 .policy-page h2 { font-size: var(--fs-xl); font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text-primary); }
 .policy-page p,.policy-page li { font-size: 0.9375rem; line-height: 1.7; color: var(--text-secondary); margin-bottom: 0.75rem; }
+.policy-page p a,.policy-page li a { text-decoration: underline; }
 .policy-page ul { padding-left: 1.25rem; margin-bottom: 1rem; }
 .policy-page li { margin-bottom: 0.5rem; }
 .policy-page strong { color: var(--text-primary); font-weight: 600; }
