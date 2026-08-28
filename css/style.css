@@ -2475,7 +2475,7 @@ svg.ic {
     margin-right: auto;
 }
 .breadcrumb a {
-    color: var(--brand-blue);
+    color: var(--link-color);
     text-decoration: none;
 }
 .breadcrumb a:hover {
@@ -3897,6 +3897,8 @@ mark {
 .embed-widget { max-width: 900px; margin: 0 auto; padding: 1.5rem; }
 .embed-attribution { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; }
 .embed-attribution .embed-brand { font-weight: 600; margin-right: 0.5rem; }
+/* T4.3 AA：dark 下 --text-muted(#6b7280) 在黑底 4.34:1 稍不足，提亮至 #8a8a8f(≈5.66:1) */
+[data-theme="dark"] .embed-attribution { color: #8a8a8f; }
 .embed-frame-wrap { border-radius: 10px; overflow: hidden; border: 1px solid var(--border-soft); }
 
 /* ===== 最近使用（C8,2026-08-26）：首页记录最近访问的工具 ===== */
