@@ -575,6 +575,19 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
   }
 }
 
+// ---------- 23. 4.2 工具页模板一致性门禁（2026-08-28） ----------
+// 复用 scripts/check-tool-template.mjs：枚举 6 个工具目录，判定每页是否使用主模板
+// （page-header + tool-form + result-card + Inter 字体 link + 无遗留类），并与
+// scripts/tool-template-baseline.json 交叉校验：新增违规 / 基线过期 / 基线路径过期 → FAIL。
+{
+  try {
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'check-tool-template.mjs')], { stdio: 'inherit', cwd: ROOT });
+    console.log('[23] 4.2 工具页模板一致性门禁: ✓');
+  } catch (e) {
+    fail('[tool-template] scripts/check-tool-template.mjs 退出码非 0（存在新增模板违规、基线过期或基线路径过期，须修复或收紧基线）');
+  }
+}
+
 // ---------- 汇总 ----------
 if (failures.length) {
   console.error(`\n❌ verify-site 失败 ${failures.length} 项：`);
