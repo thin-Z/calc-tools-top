@@ -596,7 +596,34 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
     execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'check-redirects.mjs')], { stdio: 'inherit', cwd: ROOT });
     console.log('[24] 重定向顺序门禁 (check-redirects): ✓');
   } catch (e) {
-    fail('[redirects] scripts/check-redirects.mjs 退出码非 0（通配 /(.*).html 未置于末尾，将遮蔽具体 .html 规则导致 404）');
+    fail('[redirects] scripts/check-redirects.mjs 退出码非 0（通配未置于末尾，或存在 .html 规则缺无 .html companion —— cleanUrls 下将导致旧 URL 404）');
+  }
+}
+
+// ---------- 25. CSP 委托层处理器可达性门禁（P1-1，2026-08-30） ----------
+// data-csp-click/change/input="fn" 由 js/csp-events.js 通过 window[fn] 调用，
+// 因此 fn 必须是真正的 window 属性（顶层 function/var 声明，或显式 window.fn=）。
+// 嵌套在 {} 内的声明、顶层 const/let、以及完全缺失的定义都会导致按钮静默失灵。
+// 复用 scripts/check-csp-fns.mjs（括号深度判定作用域，非行首缩进）。
+{
+  try {
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'check-csp-fns.mjs')], { stdio: 'inherit', cwd: ROOT });
+    console.log('[25] CSP 委托层处理器可达性门禁 (check-csp-fns): ✓');
+  } catch (e) {
+    fail('[csp-fns] scripts/check-csp-fns.mjs 退出码非 0（存在 data-csp-* 处理器无法通过 window[fn] 访问，按钮将静默失灵）');
+  }
+}
+
+// ---------- 26. 文档同步门禁（P1-2，2026-08-30） ----------
+// README 脚本表必须与 scripts/ 实际文件一致：①新增脚本须入文档；②归档脚本须以
+// `~~名字~~` 标注且落在 scripts/archive/；③README 标注的断言数须与 verify-site 实际
+// 编号块数一致。复用 scripts/check-doc-sync.mjs。
+{
+  try {
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'check-doc-sync.mjs')], { stdio: 'inherit', cwd: ROOT });
+    console.log('[26] 文档同步门禁 (check-doc-sync): ✓');
+  } catch (e) {
+    fail('[doc-sync] scripts/check-doc-sync.mjs 退出码非 0（README 脚本表与 scripts/ 实际文件不一致：新增脚本未入文档 / 归档脚本未标注 / 断言数谎报）');
   }
 }
 

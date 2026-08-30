@@ -7,8 +7,9 @@
  * violations>0 时退出码 1（可接入 verify-site #22 / CI 阻断）。
  * incomplete（无法判定）仅记录不阻断。
  *
- * 说明：默认 `chromium.launch()` 会找 chromium_headless_shell-*（本机缺失），
- *       务必用 `channel:'msedge'`（复用系统 Edge）或 E2E_CHANNEL=msedge。
+ * 说明：默认 `chromium.launch({ channel:'msedge' })` 复用系统 Edge（本机已装）。
+ *       CI(ubuntu-latest) 无 msedge，设 `E2E_CHANNEL=chromium` 可走 Playwright 自带 chromium
+ *       （launch 不带 channel，避免找不到 msedge channel 而报错）。
  *
  * 用法：
  *   node scripts/audit-a11y.mjs              # 人读输出；违规 exit 1
@@ -82,9 +83,12 @@ function startServer(port) {
 const PORT = Number(process.env.E2E_PORT || 4318);
 await startServer(PORT);
 
-// 复用系统 Edge（msedge channel），兜底 E2E_CHANNEL
+// 复用系统 Edge（msedge channel），兜底 E2E_CHANNEL。
+// CI(ubuntu-latest) 无 msedge，设 E2E_CHANNEL=chromium 走 Playwright 自带 chromium（launch 不带 channel）。
 const channel = process.env.E2E_CHANNEL || 'msedge';
-const browser = await chromium.launch({ channel, headless: true });
+const launchOpts = { headless: true };
+if (channel !== 'chromium') launchOpts.channel = channel;
+const browser = await chromium.launch(launchOpts);
 const context = await browser.newContext({ baseURL: `http://127.0.0.1:${PORT}`, viewport: { width: 1280, height: 900 } });
 const page = await context.newPage();
 

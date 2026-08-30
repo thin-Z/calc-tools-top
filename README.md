@@ -12,7 +12,7 @@
 | 存储 | **Vercel KV（Upstash Redis）**，点赞/点击计数 + 限速/防刷均存于此 |
 | 广告 | AdSense Auto Ads，client ID 单一来源 `includes/adsense-head.html`，构建期注入全站 |
 | 分析 | GA4 `G-B61D908J5F`（`includes/adsense-head.html` 单一来源，构建期剥离占位符守卫） |
-| 安全 | **CSP 全站硬化**：script-src / style-src 无 `unsafe-inline`（`js/csp-events.js` 委托层 + `js/inline/*.js` 外链化），img-src 白名单化；`verify-site.mjs` 21 项断言守护 |
+| 安全 | **CSP 全站硬化**：script-src / style-src 无 `unsafe-inline`（`js/csp-events.js` 委托层 + `js/inline/*.js` 外链化），img-src 白名单化；`verify-site.mjs` 26 项断言守护 |
 | 竞品迭代（08-25） | **URL 参数预填**（`js/url-state.js`，计算器工具页带参直达/刷新保留/输入同步）、**打印样式**（`@media print` 隐藏导航广告）、**mortgage 输入扩展**（房产税/保险/PMI/额外还款）、**相关工具强化**（`scripts/strengthen-related-links.mjs`）、**标签聚合落地页**（`scripts/generate-tag-pages.mjs`，8 分类 × zh/en = 16 页，工具+文章聚合 + JSON-LD + hreflang） |
 
 ## 环境变量（Vercel 项目 Settings → Environment Variables）
@@ -68,10 +68,10 @@ KV_URL / KV_REDIS_URL
 | 脚本 | 作用 | 用法 |
 |------|------|------|
 | `build.mjs` | Vercel 构建入口：复制到 `dist/` → 清理旧 cookie-consent → GA4 启用/占位守卫 → 注入 AdSense（单一来源 `includes/adsense-head.html`）→ 注入缓存版本号（`?v=YYYYMMDDHHmm`，仅 dist）→ 卫生转换（去 BOM / charset 置首 / 懒加载 / inline→.hidden）→ CSS 压缩 → CMP 横幅注入 | `node scripts/build.mjs` |
-| `verify-site.mjs` | 集成校验 **21 项断言**：header/footer 字节一致 / JSON-LD（check-jsonld 5 项）/ 静态 AdSense 唯一性 / 断链 / 浮动控件清零 / GA4 ID 不变量 / CSP 无内联脚本 / 无内联事件处理器 / CSP 头无 unsafe-inline / 图片懒加载 / 图片 alt / SRI integrity / a11y（main+skip-link+label）/ SEO 存在率 / site.js 无 var / **首页三源同步（check-home-sync）** / **搜索升级专项（拼音+文章搜索+诚实热搜）** / **搜索升级 Phase C（GA4 零结果+aria-live+EN 关键词）** / **P0 门禁（CSS裸色值+Emoji清零+紫二次色清零）** / **canonical/hreflang 门禁** / **JS 语法门禁** | `node scripts/verify-site.mjs`（全绿退出码 0） |
+| `verify-site.mjs` | 集成校验 **26 项断言**：header/footer 字节一致 / JSON-LD（check-jsonld 5 项）/ 静态 AdSense 唯一性 / 断链 / 浮动控件清零 / GA4 ID 不变量 / CSP 无内联脚本 / 无内联事件处理器 / CSP 头无 unsafe-inline / 图片懒加载 / 图片 alt / SRI integrity / a11y（main+skip-link+label）/ SEO 存在率 / site.js 无 var / **首页三源同步（check-home-sync）** / **搜索升级专项（拼音+文章搜索+诚实热搜）** / **搜索升级 Phase C（GA4 零结果+aria-live+EN 关键词）** / **P0 门禁（CSS裸色值+Emoji清零+紫二次色清零）** / **canonical/hreflang 门禁** / **JS 语法门禁** / a11y 全站扫描（#22，需 `E2E_A11Y=1`）/ **工具页模板一致性（#23）** / **重定向门禁（#24）** / **CSP 委托层可达性（#25）** / **文档同步（#26）** | `node scripts/verify-site.mjs`（全绿退出码 0） |
 | `check-links.js` | 断链扫描（相对/绝对路径存在性 + 越界 + cleanUrls） | `node scripts/check-links.js` |
 | `check-jsonld.mjs` | 全站 JSON-LD 5 项断言（解析 / @context+type\|graph / 无双斜杠 URL / FAQPage mainEntity / @graph 节点 @type），退出码非 0 | `node scripts/check-jsonld.mjs` |
-| `check-csp-fns.mjs` | CSP 函数级断言（assertNoInlineScripts / assertNoInlineEventHandlers / assertCspHeader），verify-site 的 [7][8][9] 独立版 | `node scripts/check-csp-fns.mjs` |
+| `check-csp-fns.mjs` | CSP 委托层处理器可达性门禁：`data-csp-*` 引用的函数必须是真正的 window 属性（按括号深度判定作用域，识别 NESTED / 顶层 const-let / MISSING）（verify-site [25] 调用） | `node scripts/check-csp-fns.mjs` |
 | `check-canonical.mjs` | canonical/hreflang 一致性门禁（verify-site [20] 调用） | `node scripts/check-canonical.mjs` |
 | `check-home-sync.mjs` | 首页三源同步：磁盘页面 == 首页 zh/en 卡片 == 配置 == TOOLS_DATA（verify-site [16] 调用） | `node scripts/check-home-sync.mjs` |
 | `check-p0-gate.mjs` | P0 门禁：CSS 裸色值 / Emoji 清零 / 紫二次色清零（verify-site [19] 调用） | `node scripts/check-p0-gate.mjs` |
@@ -90,12 +90,15 @@ KV_URL / KV_REDIS_URL
 | `gen-allowed-ids.js` | 生成 API 白名单 ID | `node scripts/gen-allowed-ids.js` |
 | `inject-url-state.mjs` | 为计算器页注入 `js/url-state.js`（URL 参数预填，幂等） | `node scripts/inject-url-state.mjs [--dry-run]` |
 | `strengthen-related-links.mjs` | 强化工具页"相关工具"横向链接（语义映射，跳过 noindex stub） | `node scripts/strengthen-related-links.mjs [--dry-run]` |
-| `check-doc-sync.mjs` | 检查文档与代码的同步状态（README ↔ scripts ↔ 配置） | `node scripts/check-doc-sync.mjs` |
+| `check-doc-sync.mjs` | 检查文档与代码的同步状态（README ↔ scripts ↔ 配置；归档脚本须以 `~~名字~~` 标注并落在 `scripts/archive/`）（verify-site [26] 调用） | `node scripts/check-doc-sync.mjs` |
+| `check-redirects.mjs` | 重定向门禁：通配 `/(.*).html` 须置于末尾 + 每条 `.html` 规则须有无 `.html` companion（`cleanUrls` 会先剥离 `.html`）（verify-site [24] 调用） | `node scripts/check-redirects.mjs` |
+| `check-tool-template.mjs` | 4.2 工具页模板一致性门禁（与 `tool-template-baseline.json` 交叉校验：新增违规/基线过期均 FAIL）（verify-site [23] 调用） | `node scripts/check-tool-template.mjs` |
 | `scan-csp-inline.py` | 扫描全站内联脚本/事件/样式 | `python scripts/scan-csp-inline.py` |
 | ~~`analyze_sitemap.py`~~ | ~~分析 sitemap 结构~~（归档） | `python scripts/archive/analyze_sitemap.py` |
 | ~~`full_seo_audit.py`~~ | ~~全维度 SEO 审计~~（归档，被 `seo-batch-audit.mjs` 取代） | `python scripts/archive/full_seo_audit.py` |
 | ~~`security_audit.py`~~ | ~~安全审计~~（归档） | `python scripts/archive/security_audit.py` |
 | ~~`seo_audit.py`~~ | ~~SEO 审计~~（归档，被 `seo-batch-audit.mjs` 取代） | `python scripts/archive/seo_audit.py` |
+| ~~`audit-contrast.mjs`~~ | ~~暗色主题对比度审计（Phase 1 T1.4 一次性）~~（归档，日常由 `audit-a11y.mjs` 覆盖） | `node scripts/archive/audit-contrast.mjs` |
 | `deploy-like-system.ps1` | 部署点赞系统 | `powershell scripts/deploy-like-system.ps1` |
 | `validate-encoding.ps1` | 验证编码 | `powershell scripts/validate-encoding.ps1` |
 
@@ -111,9 +114,10 @@ KV_URL / KV_REDIS_URL
 #    → CSS 压缩 → CMP 横幅（仅 dist，源码不含 ?v）
 node scripts/build.mjs
 
-# 2) 集成校验 21 项断言：header/footer 字节一致 + JSON-LD + AdSense 唯一性
+# 2) 集成校验 26 项断言：header/footer 字节一致 + JSON-LD + AdSense 唯一性
 #    + 断链 + 浮动控件清零 + GA4 不变量 + CSP 3 项 + 懒加载/alt/SRI/a11y/SEO/var
-#    + 首页三源同步(check-home-sync) + 搜索升级专项 + 搜索升级 Phase C（全绿退出码 0）
+#    + 首页三源同步(check-home-sync) + 搜索升级专项 + 搜索升级 Phase C
+#    + 工具页模板(#23) + 重定向(#24) + CSP 委托层可达性(#25) + 文档同步(#26)（全绿退出码 0）
 node scripts/verify-site.mjs
 
 # 3) 断链回归（单独跑亦可）
@@ -124,7 +128,7 @@ node scripts/check-links.js
 - `build.mjs`：`AdSense 注入: 更新 218 | ...` + `版本号注入: <STAMP> | ...` + `CMP 横幅注入: ...`；
 - dist 内每页**恰好 1 个** adsbygoogle 标签（与 `includes/adsense-head.html` 字节一致）且含 `?v=`；
 - 源码内 **0 个**静态 adsbygoogle 标签、**0 个** `#gw-theme`/`.gw-lang`/内联 `switchLang`；
-- `verify-site.mjs` 输出 `✅ verify-site 全绿`（21/21 断言）。
+- `verify-site.mjs` 输出 `✅ verify-site 全绿`（26/26 断言）。
 
 > 模板统一说明：全站 header/footer 以 `includes/header-{zh,en}.html`、`includes/footer-{zh,en}.html` 为字节基准；
 > 改导航/页脚只需改这 4 个文件，然后跑 `node scripts/normalize-template.mjs` 重新落盘全站 HTML。

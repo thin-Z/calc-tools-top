@@ -21,7 +21,7 @@ jobs:
       - name: Build (dist)
         run: node scripts/build.mjs
 
-      - name: Verify site (build → verify → link/jsonld/CSP/a11y/SRI 断言 1-15)
+      - name: Verify site (26 项断言；#22 a11y 全站扫描默认跳过，由 a11y 作业专门回归)
         run: node scripts/verify-site.mjs
 
       - name: Unit tests (node --test)
@@ -78,4 +78,50 @@ jobs:
         with:
           name: playwright-report
           path: playwright-report/
+          retention-days: 7
+
+  # P1-3 (2026-08-30): a11y 全站回归防护。
+  # verify-site #22 默认跳过 a11y 全站扫描（依赖真实浏览器），故单独在此作业常驻扫描，
+  # 阻断 WCAG 2.1 A/AA 违规回归（verify 作业只做结构化/字符串级断言，≠ 运行时可访问性验证）。
+  a11y:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies (playwright + axe-core)
+        run: npm ci
+
+      - name: Install Chromium browser
+        shell: bash
+        run: |
+          sudo rm -f /etc/apt/sources.list.d/microsoft-*.list /etc/apt/sources.list.d/azure-cli.list 2>/dev/null || true
+          for i in 1 2 3; do
+            npx playwright install --with-deps chromium && exit 0
+            echo "playwright install 第 ${i} 次失败，重试..."; sleep 8
+          done
+          exit 1
+
+      - name: Build (dist)
+        run: node scripts/build.mjs
+
+      - name: a11y 全站审计 (axe WCAG 2.1 A/AA，E2E_CHANNEL=chromium)
+        env:
+          CI: 'true'
+          E2E_CHANNEL: chromium
+        run: |
+          set -o pipefail
+          node scripts/audit-a11y.mjs --json | tee a11y-report.json
+
+      - name: Upload a11y report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: a11y-audit-report
+          path: a11y-report.json
           retention-days: 7
