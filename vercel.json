@@ -545,11 +545,6 @@
       "permanent": true
     },
     {
-      "source": "/(.*).html",
-      "destination": "/$1",
-      "permanent": true
-    },
-    {
       "source": "/en/calorie-calculator.html",
       "destination": "/en/calculators/calorie-calculator",
       "permanent": true
@@ -747,6 +742,11 @@
     {
       "source": "/en/tags/tools.html",
       "destination": "/en/tags/utility",
+      "permanent": true
+    },
+    {
+      "source": "/(.*).html",
+      "destination": "/$1",
       "permanent": true
     }
   ]

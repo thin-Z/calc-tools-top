@@ -14,7 +14,7 @@
     "build": "node scripts/build.mjs",
     "verify": "node scripts/verify-site.mjs",
     "test": "node --test \"js/test/*.test.js\" \"api/test/*.test.js\"",
-    "test:cov": "node --test --experimental-test-coverage --test-coverage-lines=80 --test-coverage-branches=80 --test-coverage-functions=80 --test-coverage-exclude=\"**/js/calculators/**\" --test-coverage-exclude=\"**/js/like.js\" \"js/test/*.test.js\" \"api/test/*.test.js\"",
+    "test:cov": "node --test --experimental-test-coverage --test-coverage-lines=80 --test-coverage-branches=80 --test-coverage-functions=80 --test-coverage-exclude=\"**/js/calculators/**\" --test-coverage-exclude=\"**/js/like.js\" --test-coverage-exclude=\"**/genie-safe-delete.cjs\" --test-coverage-exclude=\"**/app.asar.unpacked/**\" \"js/test/*.test.js\" \"api/test/*.test.js\"",
     "test:e2e": "playwright test",
     "e2e:server": "node scripts/e2e-server.mjs"
   },

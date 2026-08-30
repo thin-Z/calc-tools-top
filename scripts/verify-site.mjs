@@ -588,6 +588,18 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
   }
 }
 
+// ---------- 24. 重定向顺序门禁（P0-1 防回归，2026-08-30） ----------
+// 通配规则 /(.*).html 必须位于 redirects 数组末尾，否则会遮蔽其后所有具体 .html
+// 规则导致旧 URL 线上 404。复用 scripts/check-redirects.mjs。
+{
+  try {
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'check-redirects.mjs')], { stdio: 'inherit', cwd: ROOT });
+    console.log('[24] 重定向顺序门禁 (check-redirects): ✓');
+  } catch (e) {
+    fail('[redirects] scripts/check-redirects.mjs 退出码非 0（通配 /(.*).html 未置于末尾，将遮蔽具体 .html 规则导致 404）');
+  }
+}
+
 // ---------- 汇总 ----------
 if (failures.length) {
   console.error(`\n❌ verify-site 失败 ${failures.length} 项：`);
