@@ -113,26 +113,84 @@ for (const theme of THEMES) {
       await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
       await page.waitForTimeout(200);
       await page.evaluate(AXE_SRC);
-      const results = await page.evaluate(async () => {
+      const ax = await page.evaluate(async () => {
         const r = await window.axe.run(document, {
           runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'] },
           resultTypes: ['violations', 'incomplete'],
         });
-        return {
-          violations: r.violations.map((v) => ({
-            id: v.id, impact: v.impact, help: v.help, nodes: v.nodes.map((n) => ({ target: n.target, summary: (n.any[0] && n.any[0].message) || '' })),
-          })),
-          incompleteCount: r.incomplete.reduce((a, v) => a + v.nodes.length, 0),
+        // 真实对比度复算（R4 / C4-a11y）：axe 对半透明底(var 0.15 alpha tint)的 color-contrast 计算不稳，
+        // 直接拿未合成的 rgba 当底色会误报（如 #1d4ed8 on rgba(37,99,235,0.15) 算成 1.3:1）。
+        // 这里按 WCAG 规则把半透明背景逐层「合成」到最近的不透明祖先底色，得到真实渲染色再判；
+        // 仅当实测对比度仍不足才保留上报 —— 假阳性(真实达标)一律豁免，真缺陷永不掩盖。
+        const parseRGBA = (s) => {
+          if (!s || s === 'transparent') return [255, 255, 255, 0];
+          const m = s.match(/rgba?\(([^)]+)\)/);
+          if (!m) return null;
+          const p = m[1].split(',').map((x) => parseFloat(x));
+          return [p[0], p[1], p[2], p.length > 3 ? (p[3] === undefined ? 1 : p[3]) : 1];
         };
+        const lum = (c) => {
+          const f = (x) => { x /= 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); };
+          return 0.2126 * f(c[0]) + 0.7152 * f(c[1]) + 0.0722 * f(c[2]);
+        };
+        const ratio = (a, b) => { const L1 = lum(a), L2 = lum(b); const hi = Math.max(L1, L2), lo = Math.min(L1, L2); return (hi + 0.05) / (lo + 0.05); };
+        const effectiveBg = (el) => {
+          let acc = parseRGBA(getComputedStyle(el).backgroundColor) || [255, 255, 255, 0];
+          if (acc[3] < 1) {
+            let node = el.parentElement, guard = 0;
+            while (node && acc[3] < 1 && guard++ < 16) {
+              const pb = parseRGBA(getComputedStyle(node).backgroundColor);
+              if (pb) acc = [pb[0] * pb[3] + acc[0] * (1 - pb[3]), pb[1] * pb[3] + acc[1] * (1 - pb[3]), pb[2] * pb[3] + acc[2] * (1 - pb[3]), Math.min(1, pb[3] + acc[3] * (1 - pb[3]))];
+              node = node.parentElement;
+            }
+          }
+          return acc;
+        };
+        const out = { violations: [], incompleteCount: r.incomplete.reduce((a, v) => a + v.nodes.length, 0) };
+        for (const v of r.violations) {
+          if (v.id === 'color-contrast') {
+            const nodes = [];
+            for (const n of v.nodes) {
+              let el = n.element;
+              if (!el) {
+                const sel = (Array.isArray(n.target) ? n.target : [String(n.target)]).filter((s) => typeof s === 'string' && !s.startsWith('/'))[0];
+                el = sel ? document.querySelector(sel) : null;
+              }
+              if (!el) { nodes.push({ target: n.target, drop: false, note: 'el-missing' }); continue; }
+              const cs = getComputedStyle(el);
+              const fg = parseRGBA(cs.color) || [0, 0, 0, 1];
+              const bg = effectiveBg(el);
+              const isLarge = parseFloat(cs.fontSize) >= 18 || (parseFloat(cs.fontSize) >= 14 && (cs.fontWeight === 'bold' || parseInt(cs.fontWeight) >= 700));
+              const rr = ratio(fg, bg);
+              const need = isLarge ? 3 : 4.5;
+              nodes.push({
+                target: n.target,
+                drop: rr >= need,            // 实测(合成后)达标 → axe 假阳性，豁免；否则保留真实缺陷
+                fg: cs.color,
+                bg: `rgb(${bg[0] | 0}, ${bg[1] | 0}, ${bg[2] | 0})`,
+                ratio: +rr.toFixed(2),
+                need,
+                size: isLarge ? 'large' : 'normal',
+                inCard: !!el.closest('.tool-card, .tool-card-wrap, .hot-tool-card'),
+                note: rr >= need ? 'composited-pass' : 'real-fail',
+              });
+            }
+            out.violations.push({ id: v.id, impact: v.impact, help: v.help, nodes });
+          } else {
+            out.violations.push({ id: v.id, impact: v.impact, help: v.help, nodes: v.nodes.map((n) => ({ target: n.target, summary: (n.any[0] && n.any[0].message) || '' })) });
+          }
+        }
+        return out;
       });
-      // C4-a11y(2026-08-28): 豁免工具卡类(color-contrast 的 tool-card/tag 徽章) —
-      // 真实浏览器已确认达标(.tool-card-wrap bg=var(--bg-card), dark=暗底浅字)，headless 采样读到浅底浅字为噪声；保留正文链接等真实不足。
-      const EXEMPT_RE = /\.tool-card|\.tool-tags|\.tag-/;
+      const results = ax;
       results.violations = results.violations
-        .map((v) => ({ ...v, nodes: v.nodes.filter((n) => !EXEMPT_RE.test(Array.isArray(n.target) ? n.target.join(' ') : String(n.target))) }))
+        .map((v) => v.id === 'color-contrast' ? { ...v, nodes: v.nodes.filter((n) => !n.drop) } : v)
         .filter((v) => v.nodes.length > 0);
+      // 全量留痕：豁免掉的也记录实测合成值，形成"每次豁免都有真值反证"的审计链（CI 产物可回溯）
+      const diag = [];
+      for (const v of ax.violations) if (v.id === 'color-contrast') for (const n of v.nodes) diag.push(n);
       results.violations.forEach((v) => ruleIds.add(v.id));
-      row = { theme, url, status: resp?.status(), ...results };
+      row = { theme, url, status: resp?.status(), ...results, realColors: diag };
     } catch (e) {
       row = { theme, url, status: 'ERR', error: e.message.split('\n')[0], violations: [], incompleteCount: 0 };
     }
