@@ -61,6 +61,15 @@ if (!fs.existsSync(vercelPath)) {
     if (!embedGroup) {
       fail('vercel.json 缺少 /embed 独立 headers 规则（无 frame-ancestors = 第三方站点无法嵌入该 widget）');
     } else {
+      // 2a. 顺序断言：Vercel 同 key 头「按规则顺序后者覆盖」——/embed 规则必须在通配 /(.*)
+      //     之后，否则其 CSP（含 frame-ancestors *）会被通配规则的全站 CSP 整体覆盖而失效。
+      const wi = wildcard ? groups.indexOf(wildcard) : -1;
+      const ei = groups.indexOf(embedGroup);
+      if (wi >= 0 && ei < wi) {
+        fail(`/embed headers 规则位于通配 /(.*) 之前（索引 ${ei} < ${wi}）：线上 /embed 的 CSP 会被通配规则覆盖，frame-ancestors 不生效（2026-09-02 线上实测）——应将 /embed 规则移到 headers 数组末尾`);
+      } else {
+        console.log('  /embed 规则位于通配规则之后（CSP 覆盖方向正确）✓');
+      }
       const csp = (embedGroup.headers || []).find((h) => h.key.toLowerCase() === 'content-security-policy');
       if (!csp) {
         fail('/embed headers 规则缺少 Content-Security-Policy（需在 CSP 中下发 frame-ancestors 才允许被嵌入）');
