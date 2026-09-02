@@ -7,7 +7,23 @@
  * 若 adsbygoogle.js 尚未加载，push 会进入 window.adsbygoogle 队列，加载后统一处理。
  */
 (function () {
+  // 被 iframe 嵌入时（如 /embed 或第三方站点嵌入工具页）不触发广告填充：
+  // Google 政策禁止在第三方 iframe 内展示广告，且空广告位无收益却占版面。
+  // 判定必须在 push 之前，故放在 activateAds 入口。
+  function isEmbedded() {
+    try {
+      return window.self !== window.top;
+    } catch (e) {
+      // 跨域访问 window.top 抛错 = 一定被嵌套
+      return true;
+    }
+  }
+
   function activateAds() {
+    if (isEmbedded()) {
+      document.documentElement.classList.add('is-embedded');
+      return;
+    }
     if (document.querySelector('ins.adsbygoogle')) {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
     }

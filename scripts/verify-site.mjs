@@ -627,6 +627,33 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
   }
 }
 
+// ---------- 27. embed 可嵌入性门禁（审计 B-1，2026-09-02） ----------
+// js/embed.js 实现了 iframe 嵌入 widget，但全站 X-Frame-Options: DENY 会连同源
+// iframe 一起拒绝 → 功能 100% 静默失效，而旧 26 项断言无一覆盖（门禁盲区）。
+// 复用 scripts/check-embed.mjs：XFO 不得 DENY / /embed 须有 frame-ancestors /
+// embed.html↔embed.js 接线 / 嵌入态广告保护（AdSense 政策）。
+{
+  try {
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'check-embed.mjs')], { stdio: 'inherit', cwd: ROOT });
+    console.log('[27] embed 可嵌入性门禁 (check-embed): ✓');
+  } catch (e) {
+    fail('[embed] scripts/check-embed.mjs 退出码非 0（X-Frame-Options=DENY 或 /embed 缺 frame-ancestors → 嵌入功能静默失效）');
+  }
+}
+
+// ---------- 28. sitemap 健康门禁（审计 A-2，2026-09-02） ----------
+// noindex 跳转壳页若列进 sitemap，GSC 报 "Submitted URL marked noindex"，直接拖累
+// 核心增长目标（Indexed 143/350 → ≥250）。复用 scripts/check-sitemap.mjs：
+// 死链 / noindex×sitemap 交叉 / 条数规模下界。
+{
+  try {
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'check-sitemap.mjs')], { stdio: 'inherit', cwd: ROOT });
+    console.log('[28] sitemap 健康门禁 (check-sitemap): ✓');
+  } catch (e) {
+    fail('[sitemap] scripts/check-sitemap.mjs 退出码非 0（sitemap 含死链或 noindex 页，须重跑 scripts/generate-sitemap.ps1）');
+  }
+}
+
 // ---------- 汇总 ----------
 if (failures.length) {
   console.error(`\n❌ verify-site 失败 ${failures.length} 项：`);

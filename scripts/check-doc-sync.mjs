@@ -142,6 +142,27 @@ if (fs.existsSync(verifyPath)) {
     if (n !== count) fail(`README 声称 verify-site "${n} 项断言"，实际 ${count} 项（文档漂移）`);
   }
   if (nums.length) console.log(`  README 断言数声明与实际一致 (${count}) ✓`);
+
+  // 其余文档（CONTRIBUTING.md / scripts/README.md）的断言数声明同样不得漂移。
+  // 背景（审计 A-1）：这两份文档长期停留在"22 项断言"而无任何门禁校验，属文档漂移盲区。
+  for (const rel of ['CONTRIBUTING.md', path.join('scripts', 'README.md')]) {
+    const p = path.join(ROOT, rel);
+    if (!fs.existsSync(p)) continue;
+    const txt = fs.readFileSync(p, 'utf8');
+    // 只校验「集成校验 / verify-site.mjs」上下文中的断言数；其他脚本的 "N 项断言"
+    // （如 JSON-LD 5 项断言）不属于 verify-site，不得误报。
+    const declared = [];
+    for (const line of txt.split('\n')) {
+      if (!/集成校验|verify-site\.mjs/.test(line)) continue;
+      for (const m of line.matchAll(/(\d+)\s*项断言/g)) declared.push(Number(m[1]));
+    }
+    const bad = declared.filter((n) => n !== count);
+    if (bad.length) {
+      fail(`${rel} 声称 verify-site "${bad.join('/')} 项断言"，实际 ${count} 项（文档漂移）`);
+    } else if (declared.length) {
+      console.log(`  ${rel} 断言数声明与实际一致 (${count}) ✓`);
+    }
+  }
 } else {
   fail('verify-site.mjs 不存在');
 }

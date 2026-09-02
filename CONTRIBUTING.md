@@ -37,10 +37,11 @@ node scripts/build.mjs
 node scripts/verify-site.mjs
 ```
 
-**22 项断言**：header/footer 字节一致 / JSON-LD / AdSense 唯一性 / 断链 / 浮动控件 / GA4 不变量 / CSP 无内联脚本 / 无内联事件 / CSP 头 / 懒加载 / alt / SRI / a11y 结构 / SEO / 无 var / 首页三源同步 / 搜索升级 / P0 门禁 / canonical-hreflang / JS 语法 / a11y 全站扫描。
+**集成校验 28 项断言**（`verify-site.mjs`）：header/footer 字节一致 / JSON-LD / AdSense 唯一性 / 断链 / 浮动控件 / GA4 不变量 / CSP 无内联脚本 / 无内联事件 / CSP 头 / 懒加载 / alt / SRI / a11y 结构 / SEO / 无 var / 首页三源同步 / 搜索升级 / P0 门禁 / canonical-hreflang / JS 语法 / a11y 全站扫描 / 工具页模板一致性(#23) / 重定向顺序(#24) / CSP 委托层可达性(#25) / 文档同步(#26) / embed 可嵌入性(#27) / sitemap×noindex 交叉(#28)。
 
 - **全绿（exit 0）才能提交**。这是项目硬规则。
 - a11y 全站扫描（#22）**默认跳过**（需浏览器），启用：`E2E_A11Y=1 node scripts/audit-a11y.mjs`（本地需 playwright + msedge）。
+- 新增断言必须**同批次**接入 `verify-site.mjs` 与 `.github/workflows/*.yml`，否则 FAIL 不可见（R5）。
 
 ### 门禁规则（不可协商）
 
@@ -94,7 +95,7 @@ curl -I https://www.calc-tools.top/js/web-vitals-report.js
 | 文件 | 用途 |
 |------|------|
 | `scripts/build.mjs` | Vercel 构建入口 |
-| `scripts/verify-site.mjs` | 集成校验 22 项 |
+| `scripts/verify-site.mjs` | 集成校验 26 项 |
 | `scripts/audit-a11y.mjs` | 全站 axe 扫描 |
 | `includes/adsense-head.html` | GA4/AdSense 注入单源 |
 | `js/tools.json` | 工具权威数据源（49 工具） |

@@ -21,7 +21,7 @@ jobs:
       - name: Build (dist)
         run: node scripts/build.mjs
 
-      - name: Verify site (26 项断言；#22 a11y 全站扫描默认跳过，由 a11y 作业专门回归)
+      - name: Verify site (28 项断言；#22 a11y 全站扫描默认跳过，由 a11y 作业专门回归)
         run: node scripts/verify-site.mjs
 
       - name: Unit tests (node --test)

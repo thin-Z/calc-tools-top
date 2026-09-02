@@ -7,7 +7,7 @@
 | 脚本 | 被谁引用 | 用途 |
 |------|----------|------|
 | `build.mjs` | Vercel build | 构建入口（复制→注入→卫生→压缩） |
-| `verify-site.mjs` | CI / 本地 | 集成校验 22 项断言 |
+| `verify-site.mjs` | CI / 本地 | 集成校验 28 项断言（#27 embed 可嵌入性 / #28 sitemap×noindex 交叉，2026-09-02 新增） |
 | `check-jsonld.mjs` | verify #2 | JSON-LD 5 项断言 |
 | `check-links.js` | verify #4 | 断链检查 |
 | `seo-batch-audit.mjs` | verify #14 | SEO 批量审计 |

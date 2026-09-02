@@ -98,7 +98,7 @@ function buildPage({ lang, cat, tools, articles, header, footer }) {
     ? `${plain}分类免费在线工具与教程文章合集 - 在线工具箱 calc-tools.top`
     : `${plain} Category - Free Online Tools & Guides`;
   const description = lang === 'zh'
-    ? `汇集${plain}分类下的免费在线计算、图片与文字工具及相关教程文章，工具即开即用、浏览器本地处理、数据不上传。适合日常办公与生活场景，无需注册。`
+    ? `汇集${plain}分类下的免费在线计算、图片与文字工具及相关教程文章，工具即开即用、浏览器本地处理、数据不上传，支持一键复制与导出结果，无需下载安装、无需注册，适合日常办公与生活场景随时使用。`
     : `Curated free online calculators, image and text tools plus guides in the ${plain} category. Tools run locally in your browser with no upload or sign-up.`;
 
   const toolSection = tools.length
