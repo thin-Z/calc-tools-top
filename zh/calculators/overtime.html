@@ -111,7 +111,7 @@
             <div class="form-group"><label>月薪（元）</label><input type="number" id="monthlySalary" value="8000" min="1000" step="100"></div><div class="form-group"><label>工作日加班（小时）</label><input type="number" id="weekdayOvertime" value="0" min="0" step="0.5"></div><div class="form-group"><label>休息日加班（小时）</label><input type="number" id="weekendOvertime" value="0" min="0" step="0.5"></div><div class="form-group"><label>法定节假日加班（小时）</label><input type="number" id="holidayOvertime" value="0" min="0" step="0.5"></div><div class="form-actions"><button type="button" class="btn btn-primary" data-csp-click="doCalculate">计算</button><button type="reset" class="btn btn-secondary" data-csp-click="resetForm">重置</button></div>
         </div>
 
-        <div class="result-card hidden" id="resultArea" tabindex="0"
+        <div class="result-card hidden" id="resultArea" tabindex="0">
             <div class="st-2"><p class="st-4">加班费总计</p><p class="st-55"><span id="totalOvertimePay"></span> 元</p><hr class="st-7"><p>工作日加班：<span id="weekdayPay"></span> 元（1.5 倍）</p><p>休息日加班：<span id="weekendPay"></span> 元（2 倍）</p><p>节假日加班：<span id="holidayPay"></span> 元（3 倍）</p><p>小时工资基数：<span id="hourlyRate"></span> 元/小时</p></div>
         </div>
 
