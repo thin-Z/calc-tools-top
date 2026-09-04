@@ -226,4 +226,15 @@ function clearCd() {
   document.getElementById('errorSection').style.display = 'none';
 }
 
-document.addEventListener('DOMContentLoaded', function () { runCd(); });
+document.addEventListener('DOMContentLoaded', function () {
+  var ti = document.getElementById('textInput');
+  if (ti) {
+    ti.addEventListener('keydown', function (e) {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        runCd();
+      }
+    });
+  }
+  runCd();
+});
