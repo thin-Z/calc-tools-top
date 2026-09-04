@@ -2,7 +2,7 @@
  * e2e/smoke.spec.mjs - Site-wide structure smoke (T1.5 E5)
  */
 import { test, expect } from '@playwright/test';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { dismissCmp, trackPageErrors } from './helpers.mjs';
@@ -134,9 +134,17 @@ test.describe('PWA', () => {
 });
 
 test.describe('Asset integrity', () => {
-  test('tools.json matches disk pages (49 tools x zh/en)', async ({ request }) => {
+  test('tools.json matches disk pages (zh/en)', async ({ request }) => {
     const tools = JSON.parse(readFileSync(path.join(ROOT, 'tools.json'), 'utf8'));
-    expect(tools.length).toBe(49);
+    // Derive the expected page count from disk so this assertion never bit-rots
+    // when a tool is added/removed (was hard-coded to 49, broke at tool #50).
+    let diskPages = 0;
+    for (const lang of ['zh', 'en']) {
+      for (const t of tools) {
+        if (existsSync(path.join(ROOT, lang, t.dir, `${t.slug}.html`))) diskPages++;
+      }
+    }
+    expect(diskPages, 'every tool must have a zh+en page on disk').toBe(tools.length * 2);
     for (const t of tools) {
       for (const lang of ['zh', 'en']) {
         const url = `/${lang}/${t.dir}/${t.slug}.html`;

@@ -1,5 +1,5 @@
 /**
- * e2e/tools.spec.mjs - 49-tool full interaction suite (T1.5 E5, D4)
+ * e2e/tools.spec.mjs - 50-tool full interaction suite (T1.5 E5, D4)
  */
 import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
@@ -10,7 +10,7 @@ import { dismissCmp, trackPageErrors } from './helpers.mjs';
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const TOOLS = JSON.parse(readFileSync(path.join(ROOT, 'tools.json'), 'utf8'));
 
-test.describe('49 tools x zh/en load smoke', () => {
+test.describe('50 tools x zh/en load smoke', () => {
   for (const t of TOOLS) {
     for (const lang of ['zh', 'en']) {
       test(`[${t.slug}/${lang}] loads + controls present + no errors`, async ({ page }) => {
