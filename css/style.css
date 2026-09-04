@@ -1212,6 +1212,12 @@ button:active,.btn:active {
     height: 1em;
     flex-shrink: 0;
 }
+/* CSP-safe heart pop: class-driven (no inline style.animation) */
+.like-btn .heart.heart-pop,
+.detail-like .heart.heart-pop,
+.article-like .heart.heart-pop {
+    animation: heartPop 0.4s ease;
+}
 
 /* Global SVG icon sizing — inline sprites have no width/height attributes,
    browser default is 300x150px. Constrain to 1em (inherits parent font-size). */

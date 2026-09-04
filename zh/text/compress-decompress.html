@@ -112,6 +112,15 @@
             </div>
             <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="compress-decompress"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
 
+            <div class="related-tools">
+                <h3>相关工具</h3>
+                <ul>
+                    <li><a href="/zh/text/base64-encode">Base64 编解码</a></li>
+                    <li><a href="/zh/text/url-encode">URL 编解码</a></li>
+                    <li><a href="/zh/text/json-formatter">JSON 格式化</a></li>
+                </ul>
+            </div>
+
             <div class="tool-controls">
                 <textarea class="text-input" id="textInput" aria-label="文本输入" placeholder="请输入要压缩或解压缩的文本..." data-csp-input="runCd">这是一段用于演示压缩效果的示例文本。重复的内容越多，压缩率越高。Zlib、Gzip、Deflate 与 Brotli 都是常用的无损压缩算法，适合压缩 HTML、CSS、JSON 与日志等文本数据。</textarea>
 
@@ -186,16 +195,7 @@
                 <p>在后端接口联调时，可用本工具快速验证和解压 Java、Python、Node.js 等服务端返回的 Zlib/Gzip 数据；在前端与运维排查时，可用 Gzip 校验 CDN 是否正确开启了压缩；在数据存储与传输前，可用 Brotli 获得更优的压缩体积。若你还需要处理 Base64 或 URL 参数，可配合「Base64 编解码」「URL 编解码」一起使用。</p>
             </div>
         </div>
-
-        <div class="related-tools">
-    <h3>相关工具</h3>
-    <ul>
-        <li><a href="/zh/text/base64-encode">Base64 编解码</a></li>
-        <li><a href="/zh/text/url-encode">URL 编解码</a></li>
-        <li><a href="/zh/text/json-formatter">JSON 格式化</a></li>
-    </ul>
-</div>
-</main>
+    </main>
     <footer>
     <div class="footer-links">
         <a href="/">首页</a>

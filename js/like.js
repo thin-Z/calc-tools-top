@@ -85,10 +85,11 @@
 
     function heartPop(toolId) {
         document.querySelectorAll('[data-like-id="' + toolId + '"] .heart').forEach(function (el) {
-            el.style.animation = 'none';
+            /* class-driven animation (CSP-safe: no inline style.animation) */
+            el.classList.remove('heart-pop');
             /* force reflow to restart the animation */
             void el.offsetWidth;
-            el.style.animation = 'heartPop 0.4s ease';
+            el.classList.add('heart-pop');
         });
     }
 
