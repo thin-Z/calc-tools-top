@@ -55,7 +55,15 @@ function toB64(u8) {
   return btoa(bin);
 }
 function fromB64(str) {
-  return new Uint8Array(atob(str.trim()).split('').map(function (c) { return c.charCodeAt(0); }));
+  str = str.trim().replace(/\s+/g, '');
+  if (!str) throw new Error('请输入待解压的数据');
+  if (!/^[A-Za-z0-9+/=]+$/.test(str)) throw new Error('Base64 包含非法字符，请检查是否混入了空格或换行');
+  if (str.length % 4 !== 0) throw new Error('Base64 长度无效（应为 4 的倍数）——数据可能复制不完整，请重新复制整段');
+  try {
+    return new Uint8Array(atob(str).split('').map(function (c) { return c.charCodeAt(0); }));
+  } catch (e) {
+    throw new Error('Base64 解码失败，数据可能不完整或已损坏');
+  }
 }
 
 /* Zlib = 裸 Deflate + 2 字节头(0x78 0x9c) + 4 字节 Adler-32 校验和（大端）。
@@ -171,7 +179,11 @@ function runCd() {
         resultSection.classList.remove('hidden');
       }
     } catch (e) {
-      document.getElementById('errorMsg').textContent = e.message || '处理失败';
+      var msg = e.message || '处理失败';
+      if (CD_MODE === 'decompress') {
+        msg = '解压失败：' + msg + '（请确认数据完整、未损坏，且 Base64/Hex 已整段复制）';
+      }
+      document.getElementById('errorMsg').textContent = msg;
       errorSection.style.display = 'block';
     }
   };
