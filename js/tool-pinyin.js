@@ -174,26 +174,30 @@ window.TOOL_PINYIN_ZH = {
   },
   "timestamp": {
     "py": "shijianchuozhuanhuan shijianchuo,shijianchuozhuanhuan,unixshijianchuo,shijianchuojisuan,shijianchuozhuanriqi,riqizhuanshijianchuo",
-    "ini": "sjczh sjc,sjczh,usjc,sjcjs,sjczrq,rqzsjc"
+    "ini": "sjczh sjc,sjczh,unixsjc,sjcjs,sjczrq,rqzsjc"
   },
   "pregnancy": {
-    "py": "yunqijisuanqi yunqi,yunqijisuanqi,yuchanqi,yunzhou,huaiyun,mocijing,shouyunri",
-    "ini": "yqjsq yq,yqjsq,ycq,yz,hy,mcj,syr"
+    "py": "yunqijisuanqi yunqi,yunqijisuanqi,yuchanqi,yunzhou,huaiyun,mociyuejing,shouyunri",
+    "ini": "yqjsq yq,yqjsq,ycq,yz,hy,mcyj,syr"
   },
   "dca-calculator": {
     "py": "dingtoujisuanqi dingtou,dingtoujisuanqi,jijindingtou,dingqitouzi,fuli,shouyijisuan",
     "ini": "dtjsq dt,dtjsq,jjdt,dqtz,fl,syjs"
   },
   "fraction-calculator": {
-    "py": "fenshujisuanqi fenshu,fenshujisuanqi,fenshujiajianchengchu,zuijianfenshu,tongfen",
-    "ini": "fsjsq fs,fsjsq,fsjjcc,zjfs,tf"
+    "py": "fenshujisuanqi fenshujisuanqi,fenshu,fenshujiajianchengchu,zuijianfenshu,tongfen",
+    "ini": "fsjsq fsjsq,fs,fsjjcc,zjfs,tf"
   },
   "currency-converter": {
     "py": "huilvhuansuanqi huilv,huilvhuansuan,huilvjisuanqi,huobihuansuan,waibiduihuan,huilvzhuanhuan",
     "ini": "hlhsq hl,hlhs,hljsq,hbhs,wbdh,hlzh"
   },
   "simplified-traditional": {
-    "py": "jianfanzhuanhuan jianfan,fantizhuanhuan,jianTizhuanfanti,fantizhuanjian,hanzizhuanhuan",
-    "ini": "jfzh jf,ftzh,jtzft,ftzj,hzzh"
+    "py": "jianfanzhuanhuan jianfanzhuanhuan,fantizhuanhuan,jiantizhuanfanti,fantizhuanjianti,hanzizhuanhuan",
+    "ini": "jfzh jfzh,ftzh,jtzft,ftzjt,hzzh"
+  },
+  "compress-decompress": {
+    "py": "yasuojieyasuo yasuo,jieyasuo,zlib,gzip,deflate,brotli,zaixianyasuo",
+    "ini": "ysjys ys,jys,zlib,gzip,deflate,brotli,zxys"
   }
 };

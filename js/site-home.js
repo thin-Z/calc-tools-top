@@ -72,7 +72,8 @@ const SITE_CONFIG = {
         { id: 'dca-calculator', categories: ["finance"] },
         { id: 'fraction-calculator', categories: ["utility"] },
         { id: 'currency-converter', categories: ["travel","finance"] },
-        { id: 'simplified-traditional', categories: ["text"] }
+        { id: 'simplified-traditional', categories: ["text"] },
+        { id: 'compress-decompress', categories: ["text"] }
 /* __GENERATED_SITE_CONFIG_TOOLS_END__ */
     ]
 };
@@ -561,7 +562,8 @@ const TOOLS_DATA = {
     'dca-calculator': { icon: 'line-chart', name: { zh: '定投计算器', en: 'DCA Calculator' }, desc: { zh: '定期定额投资收益与复利增长计算', en: 'Calculate future value of regular periodic investments' } },
     'fraction-calculator': { icon: 'divide', name: { zh: '分数计算器', en: 'Fraction Calculator' }, desc: { zh: '分数的加减乘除与最简化', en: 'Add, subtract, multiply and divide fractions and simplify' } },
     'currency-converter': { icon: 'coins', name: { zh: '汇率换算器', en: 'Currency Converter' }, desc: { zh: '常见货币参考汇率，任意两种货币实时互换', en: 'Convert between major currencies with reference rates' } },
-    'simplified-traditional': { icon: 'languages', name: { zh: '简繁转换', en: 'Simplified-Traditional Converter' }, desc: { zh: '简体中文与繁体中文互转，常用字对照', en: 'Convert between simplified and traditional Chinese' } }
+    'simplified-traditional': { icon: 'languages', name: { zh: '简繁转换', en: 'Simplified-Traditional Converter' }, desc: { zh: '简体中文与繁体中文互转，常用字对照', en: 'Convert between simplified and traditional Chinese' } },
+    'compress-decompress': { icon: 'compress', name: { zh: '压缩解压缩', en: 'Compress & Decompress' }, desc: { zh: 'Zlib/Gzip/Deflate/Brotli 压缩与解压', en: 'Zlib/Gzip/Deflate/Brotli compress & decompress' } }
 };
 /* __GENERATED_TOOLS_DATA_END__ */
 /* __GENERATED_TOOL_KEYWORDS_START__ */
@@ -614,7 +616,8 @@ const TOOL_KEYWORDS_ZH = {
     'dca-calculator': '定投,定投计算器,基金定投,定期投资,复利,收益计算',
     'fraction-calculator': '分数计算器,分数,分数加减乘除,最简分数,通分',
     'currency-converter': '汇率,汇率换算,汇率计算器,货币换算,外币兑换,汇率转换',
-    'simplified-traditional': '简繁转换,繁体转换,简体转繁体,繁体转简体,汉字转换'
+    'simplified-traditional': '简繁转换,繁体转换,简体转繁体,繁体转简体,汉字转换',
+    'compress-decompress': '压缩,解压缩,zlib,gzip,deflate,brotli,在线压缩'
 };
 /* __GENERATED_TOOL_KEYWORDS_END__ */
 

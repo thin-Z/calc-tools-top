@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+
+
+    <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<script src="/js/theme-init.js"></script>
+<script src="/js/theme-toggle.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>压缩解压缩工具 - 在线 Zlib Gzip Deflate Brotli 压缩</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="免费在线压缩解压缩工具，支持 Zlib、Gzip、Deflate、Brotli 四种无损压缩算法。文本可压缩为 Hex 或 Base64，浏览器本地处理，数据不上传服务器，保护隐私安全。">
+    <meta property='og:title' content='压缩解压缩工具 - 在线 Zlib Gzip Deflate Brotli 压缩'/>
+    <meta property='og:description' content='免费在线压缩解压缩工具，支持 Zlib、Gzip、Deflate、Brotli 四种无损压缩算法。文本可压缩为 Hex 或 Base64，浏览器本地处理，数据不上传服务器，保护隐私安全。'/>
+    <meta property='og:type' content='website'/>
+    <meta property='og:url' content='https://www.calc-tools.top/zh/text/compress-decompress'/>
+    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:locale' content='zh_CN'/>
+    <meta name='twitter:card' content='summary_large_image'/>
+    <meta name='twitter:title' content='压缩解压缩工具 - 在线 Zlib Gzip Deflate Brotli 压缩'/>
+    <meta name='twitter:description' content='免费在线压缩解压缩工具，支持 Zlib、Gzip、Deflate、Brotli 四种无损压缩算法。文本可压缩为 Hex 或 Base64，浏览器本地处理，数据不上传服务器，保护隐私安全。'/>
+
+    <link rel="canonical" href="https://www.calc-tools.top/zh/text/compress-decompress">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/text/compress-decompress">
+    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/text/compress-decompress">
+    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/zh/text/compress-decompress">
+    <link rel="stylesheet" href="../../css/style.css">
+
+    <script src="/js/i18n.js" defer></script>
+    <script src="/js/vendor/fflate.min.js" defer></script>
+    <script src="/js/text-tools/compress-decompress.js" defer></script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "在线工具", "item": "https://www.calc-tools.top/" },
+        { "@type": "ListItem", "position": 2, "name": "压缩解压缩", "item": "https://www.calc-tools.top/zh/text/compress-decompress" }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Zlib、Gzip、Deflate 和 Brotli 有什么区别？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "四者都是无损压缩算法，但格式与用途不同。Deflate 是裸压缩算法（RFC 1951）；Zlib 在 Deflate 外增加了 2 字节头和 Adler-32 校验（RFC 1950），常见于网络传输；Gzip 在 Deflate 外加文件头和 CRC 校验（RFC 1952），多用于文件压缩；Brotli 是较新的算法，在相同体积下通常比 Gzip 压缩率更高，广泛用于 Web 资源传输。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "压缩后的数据为什么是 Hex 或 Base64？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "压缩后得到的是二进制字节，无法直接当作文本显示或复制。本工具提供 Hex（十六进制）与 Base64 两种文本化编码：Hex 更直观易读，Base64 更紧凑。解压时按相同编码粘贴即可还原。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "我的数据会被上传吗？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "不会。所有压缩与解压缩均在你的浏览器本地完成，数据不会发送到任何服务器，适合处理敏感文本。这也意味着处理结果只取决于输入，与网络状态无关（Brotli 编解码库仅在首次选择 Brotli 时按需加载）。"
+            }
+        }
+    ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "压缩解压缩工具 - 在线 Zlib Gzip Deflate Brotli 压缩",
+    "url": "https://www.calc-tools.top/zh/text/compress-decompress",
+    "description": "免费在线压缩解压缩工具，支持 Zlib、Gzip、Deflate、Brotli 四种无损压缩算法。文本可压缩为 Hex 或 Base64，浏览器本地处理，数据不上传服务器，保护隐私安全。",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web",
+    "inLanguage": "zh-CN"
+}
+</script>
+</head>
+<body>
+    <header>
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo" width="180" height="45"></a>
+    <nav>
+        <a href="/"><span>首页</span></a>
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="语言切换">
+            <option value="zh" selected>中文</option>
+            <option value="en">English</option>
+        </select>
+        <button id="theme-toggle" class="theme-toggle" aria-label="切换暗黑模式"><span class="theme-icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-sun"></use></svg></span></button>
+    </nav>
+</header>
+    <main id="main">
+        <div class="tool-page">
+            <div class="tool-header">
+                <h1><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-compress"></use></svg> 压缩解压缩工具</h1>
+                <p>在线 Zlib、Gzip、Deflate、Brotli 压缩与解压缩工具。文本可压缩为 Hex 或 Base64，浏览器本地处理，数据不上传服务器。</p>
+            </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="compress-decompress"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
+
+            <div class="tool-controls">
+                <textarea class="text-input" id="textInput" aria-label="文本输入" placeholder="请输入要压缩或解压缩的文本..." data-csp-input="runCd">这是一段用于演示压缩效果的示例文本。重复的内容越多，压缩率越高。Zlib、Gzip、Deflate 与 Brotli 都是常用的无损压缩算法，适合压缩 HTML、CSS、JSON 与日志等文本数据。</textarea>
+
+                <!-- 模式切换 -->
+                <div class="mode-chips">
+                    <span class="mode-chip active" data-mode="compress" data-csp-click="switchCdMode" data-csp-arg="compress">压缩</span>
+                    <span class="mode-chip" data-mode="decompress" data-csp-click="switchCdMode" data-csp-arg="decompress">解压缩</span>
+                </div>
+
+                <!-- 算法选择 -->
+                <div class="algo-chips">
+                    <span class="algo-chip" data-algo="zlib" data-csp-click="switchCdAlgo" data-csp-arg="zlib">Zlib</span>
+                    <span class="algo-chip active" data-algo="gzip" data-csp-click="switchCdAlgo" data-csp-arg="gzip">Gzip</span>
+                    <span class="algo-chip" data-algo="deflate" data-csp-click="switchCdAlgo" data-csp-arg="deflate">Deflate</span>
+                    <span class="algo-chip" data-algo="brotli" data-csp-click="switchCdAlgo" data-csp-arg="brotli">Brotli</span>
+                </div>
+
+                <!-- 编码格式 -->
+                <div class="format-row">
+                    <label for="formatSelect">编码格式</label>
+                    <select id="formatSelect" class="format-select" data-csp-change="switchCdFormat" aria-label="编码格式">
+                        <option value="base64" selected>Base64</option>
+                        <option value="hex">Hex</option>
+                    </select>
+                </div>
+
+                <div class="action-bar">
+                    <button class="btn btn-primary" data-csp-click="runCd">执行</button>
+                    <button class="btn btn-secondary" data-csp-click="clearCd">清空</button>
+                </div>
+
+                <!-- 错误提示 -->
+                <div class="result-area error-section st-16" id="errorSection">
+                    <div class="result-label st-10"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-x"></use></svg> 处理错误</div>
+                    <div class="result-content st-11">
+                        <p><strong>描述：</strong><span id="errorMsg"></span></p>
+                    </div>
+                </div>
+
+                <!-- 结果区域 -->
+                <div id="resultSection" class="result-section hidden">
+                    <h3>输出结果</h3>
+                    <pre class="result-area st-12" id="resultArea"></pre>
+                    <div class="result-stats st-13" id="statsArea"></div>
+                    <div class="result-note st-14" id="noteArea"></div>
+                    <button class="btn btn-copy" id="copyBtn" data-csp-click="copyCdResult"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-clipboard"></use></svg> 复制结果</button>
+                </div>
+            </div>
+
+            <!-- SEO 内容区 -->
+            <div class="seo-content">
+                <h2>什么是 Zlib、Gzip、Deflate 与 Brotli 压缩？</h2>
+                <p>四者都是<strong>无损压缩</strong>算法，解压后能完全还原原始数据，不会丢失任何字节。它们的核心算法都基于 Deflate（LZ77 + Huffman），但封装格式和适用场景不同：</p>
+                <ul>
+                    <li><strong>Deflate</strong> — 裸压缩数据流（RFC 1951），不含任何头部或校验，是 Zlib 和 Gzip 的内核。</li>
+                    <li><strong>Zlib</strong> — 在 Deflate 外增加 2 字节头与 4 字节 Adler-32 校验（RFC 1950），常见于 HTTP 压缩、PNG、Git 等场景。</li>
+                    <li><strong>Gzip</strong> — 在 Deflate 外增加文件头与 CRC-32 校验（RFC 1952），是 .gz 文件与大多数服务器压缩的标准格式。</li>
+                    <li><strong>Brotli</strong> — Google 推出的较新算法，采用更先进的上下文建模，在同等体积下通常比 Gzip 压缩率更高，广泛用于 Web 字体与静态资源传输。</li>
+                </ul>
+
+                <h3>为什么要把压缩结果转成 Hex 或 Base64？</h3>
+                <p>压缩后得到的是<strong>二进制字节</strong>，无法直接作为文本显示、复制或在聊天工具里粘贴。本工具提供两种文本化编码：<strong>Hex（十六进制）</strong>每个字节用两个字符表示，直观易读；<strong>Base64</strong> 更紧凑，体积约为原始的 4/3。压缩时按所选格式输出，解压时粘贴相同格式的字符串即可还原。注意：<strong>压缩与解压缩必须使用同一种算法和同一种编码格式</strong>，否则会解压失败。</p>
+
+                <h3>压缩率说明</h3>
+                <p>压缩算法对<strong>重复内容多、冗余度高</strong>的文本（如 HTML、CSS、JSON、日志、配置文件）效果最好，通常能压缩到原来的 20%–40%；而对已经压缩过的数据或随机内容，几乎无法再压缩，体积甚至可能略微增大。重复内容越多，压缩率越高——这也是为什么大段重复文本适合用 Brotli 进一步压小。</p>
+
+                <h3>数据隐私</h3>
+                <p>本工具的所有压缩与解压缩都在<strong>你的浏览器本地</strong>完成，输入内容不会上传到任何服务器，适合处理敏感文本。处理速度取决于设备性能与文本长度，Brotli 编解码库仅在首次选择 Brotli 时按需加载，不影响使用其他算法的体验。</p>
+
+                <h3>常见使用场景</h3>
+                <p>在后端接口联调时，可用本工具快速验证和解压 Java、Python、Node.js 等服务端返回的 Zlib/Gzip 数据；在前端与运维排查时，可用 Gzip 校验 CDN 是否正确开启了压缩；在数据存储与传输前，可用 Brotli 获得更优的压缩体积。若你还需要处理 Base64 或 URL 参数，可配合「Base64 编解码」「URL 编解码」一起使用。</p>
+            </div>
+        </div>
+
+        <div class="related-tools">
+    <h3>相关工具</h3>
+    <ul>
+        <li><a href="/zh/text/base64-encode">Base64 编解码</a></li>
+        <li><a href="/zh/text/url-encode">URL 编解码</a></li>
+        <li><a href="/zh/text/json-formatter">JSON 格式化</a></li>
+    </ul>
+</div>
+</main>
+    <footer>
+    <div class="footer-links">
+        <a href="/">首页</a>
+        <a href="/help">帮助</a>
+        <a href="/about">关于</a>
+        <a href="/privacy">隐私政策</a>
+        <a href="/contact">联系</a>
+        <a href="/blog/zh/">博客</a>
+    </div>
+    <p>© 2026 工具箱里 | 免费在线工具</p>
+</footer>
+    <script src="/js/like.js" defer></script>
+    </body>
+</html>

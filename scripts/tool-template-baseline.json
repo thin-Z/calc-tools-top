@@ -42,6 +42,8 @@
     "zh/text/text-diff.html",
     "zh/text/url-encode.html",
     "zh/text/uuid-generator.html",
-    "zh/text/word-counter.html"
+    "zh/text/word-counter.html",
+    "zh/text/compress-decompress.html",
+    "en/text/compress-decompress.html"
   ]
 }

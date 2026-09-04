@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+
+
+    <meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<script src="/js/theme-init.js"></script>
+<script src="/js/theme-toggle.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compress & Decompress - Online Zlib Gzip Deflate Brotli Tool</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online compression and decompression tool supporting Zlib, Gzip, Deflate and Brotli lossless algorithms. Compress text to Hex or Base64, all processed locally in your browser with no upload.">
+    <meta property='og:title' content='Compress & Decompress - Online Zlib Gzip Deflate Brotli Tool'/>
+    <meta property='og:description' content='Free online compression and decompression tool supporting Zlib, Gzip, Deflate and Brotli lossless algorithms. Compress text to Hex or Base64, all processed locally in your browser with no upload.'/>
+    <meta property='og:type' content='website'/>
+    <meta property='og:url' content='https://www.calc-tools.top/en/text/compress-decompress'/>
+    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:locale' content='en_US'/>
+    <meta name='twitter:card' content='summary_large_image'/>
+    <meta name='twitter:title' content='Compress & Decompress - Online Zlib Gzip Deflate Brotli Tool'/>
+    <meta name='twitter:description' content='Free online compression and decompression tool supporting Zlib, Gzip, Deflate and Brotli lossless algorithms. Compress text to Hex or Base64, all processed locally in your browser with no upload.'/>
+
+    <link rel="canonical" href="https://www.calc-tools.top/en/text/compress-decompress">
+    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/text/compress-decompress">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/text/compress-decompress">
+    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/en/text/compress-decompress">
+    <link rel="stylesheet" href="../../css/style.css">
+
+    <script src="/js/i18n.js" defer></script>
+    <script src="/js/vendor/fflate.min.js" defer></script>
+    <script src="/js/text-tools/compress-decompress.js" defer></script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Online Calculators", "item": "https://www.calc-tools.top/" },
+        { "@type": "ListItem", "position": 2, "name": "Compress & Decompress", "item": "https://www.calc-tools.top/en/text/compress-decompress" }
+    ]
+}
+</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What is the difference between Zlib, Gzip, Deflate and Brotli?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "All four are lossless compression algorithms but differ in format and use. Deflate is the raw compressed stream (RFC 1951). Zlib wraps Deflate with a 2-byte header and an Adler-32 checksum (RFC 1950), common in network transfer. Gzip adds a file header and CRC-32 (RFC 1952), the standard for .gz files and most server compression. Brotli is a newer algorithm that usually compresses better than Gzip at the same size and is widely used for web assets."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Why is the compressed output shown as Hex or Base64?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Compression produces binary bytes that cannot be displayed or copied as plain text. This tool offers two text encodings: Hex (hexadecimal) is readable and explicit, while Base64 is more compact. Paste the same-format string back to decompress."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Will my data be uploaded?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. All compression and decompression happen locally in your browser; nothing is sent to any server, making it safe for sensitive text. Brotli codec is loaded on demand only the first time you pick Brotli."
+            }
+        }
+    ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Compress & Decompress - Online Zlib Gzip Deflate Brotli Tool",
+    "url": "https://www.calc-tools.top/en/text/compress-decompress",
+    "description": "Free online compression and decompression tool supporting Zlib, Gzip, Deflate and Brotli lossless algorithms. Compress text to Hex or Base64, all processed locally in your browser with no upload.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Web",
+    "inLanguage": "en"
+}
+</script>
+</head>
+<body>
+    <header>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo" width="180" height="45"></a>
+    <nav>
+        <a href="/en/"><span>Home</span></a>
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
+            <option value="zh">中文</option>
+            <option value="en" selected>English</option>
+        </select>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-sun"></use></svg></span></button>
+    </nav>
+</header>
+    <main id="main">
+        <div class="tool-page">
+            <div class="tool-header">
+                <h1><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-compress"></use></svg> Compress &amp; Decompress</h1>
+                <p>Online Zlib, Gzip, Deflate and Brotli compression and decompression. Compress text to Hex or Base64, all processed locally in your browser with no upload.</p>
+            </div>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="compress-decompress"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
+
+            <div class="tool-controls">
+                <textarea class="text-input" id="textInput" aria-label="Text input" placeholder="Enter text to compress or decompress..." data-csp-input="runCd">This is a sample paragraph used to demonstrate compression. The more repetitive the content, the higher the compression ratio. Zlib, Gzip, Deflate and Brotli are common lossless algorithms, ideal for compressing text such as HTML, CSS, JSON and logs.</textarea>
+
+                <!-- Mode Toggle -->
+                <div class="mode-chips">
+                    <span class="mode-chip active" data-mode="compress" data-csp-click="switchCdMode" data-csp-arg="compress">Compress</span>
+                    <span class="mode-chip" data-mode="decompress" data-csp-click="switchCdMode" data-csp-arg="decompress">Decompress</span>
+                </div>
+
+                <!-- Algorithm -->
+                <div class="algo-chips">
+                    <span class="algo-chip" data-algo="zlib" data-csp-click="switchCdAlgo" data-csp-arg="zlib">Zlib</span>
+                    <span class="algo-chip active" data-algo="gzip" data-csp-click="switchCdAlgo" data-csp-arg="gzip">Gzip</span>
+                    <span class="algo-chip" data-algo="deflate" data-csp-click="switchCdAlgo" data-csp-arg="deflate">Deflate</span>
+                    <span class="algo-chip" data-algo="brotli" data-csp-click="switchCdAlgo" data-csp-arg="brotli">Brotli</span>
+                </div>
+
+                <!-- Encoding format -->
+                <div class="format-row">
+                    <label for="formatSelect">Encoding</label>
+                    <select id="formatSelect" class="format-select" data-csp-change="switchCdFormat" aria-label="Encoding format">
+                        <option value="base64" selected>Base64</option>
+                        <option value="hex">Hex</option>
+                    </select>
+                </div>
+
+                <div class="action-bar">
+                    <button class="btn btn-primary" data-csp-click="runCd">Run</button>
+                    <button class="btn btn-secondary" data-csp-click="clearCd">Clear</button>
+                </div>
+
+                <!-- Error Display -->
+                <div class="result-area error-section st-16" id="errorSection">
+                    <div class="result-label st-10"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-x"></use></svg> Error</div>
+                    <div class="result-content st-11">
+                        <p><strong>Description:</strong> <span id="errorMsg"></span></p>
+                    </div>
+                </div>
+
+                <!-- Result Area -->
+                <div id="resultSection" class="result-section hidden">
+                    <h3>Output</h3>
+                    <pre class="result-area st-12" id="resultArea"></pre>
+                    <div class="result-stats st-13" id="statsArea"></div>
+                    <div class="result-note st-14" id="noteArea"></div>
+                    <button class="btn btn-copy" id="copyBtn" data-csp-click="copyCdResult"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-clipboard"></use></svg> Copy Result</button>
+                </div>
+            </div>
+
+            <!-- SEO Content -->
+            <div class="seo-content">
+                <h2>What are Zlib, Gzip, Deflate and Brotli?</h2>
+                <p>All four are <strong>lossless compression</strong> algorithms: decompression restores the original bytes exactly. They share the Deflate core (LZ77 + Huffman) but wrap it differently:</p>
+                <ul>
+                    <li><strong>Deflate</strong> — the raw compressed stream (RFC 1951) with no header or checksum; the kernel of Zlib and Gzip.</li>
+                    <li><strong>Zlib</strong> — Deflate plus a 2-byte header and a 4-byte Adler-32 checksum (RFC 1950), common in HTTP compression, PNG and Git.</li>
+                    <li><strong>Gzip</strong> — Deflate plus a file header and CRC-32 (RFC 1952), the standard for .gz files and most server compression.</li>
+                    <li><strong>Brotli</strong> — a newer Google algorithm with more advanced context modeling, usually compressing better than Gzip at the same size, widely used for web fonts and static assets.</li>
+                </ul>
+
+                <h3>Why encode the compressed result as Hex or Base64?</h3>
+                <p>Compression produces <strong>binary bytes</strong> that cannot be shown or copied as plain text. This tool offers two text encodings: <strong>Hex</strong> uses two characters per byte and is explicit and readable; <strong>Base64</strong> is more compact (about 4/3 of the original). Compress with the chosen format, then paste a string in the same format to decompress. Note: <strong>compression and decompression must use the same algorithm and the same encoding format</strong>, or decompression will fail.</p>
+
+                <h3>About compression ratio</h3>
+                <p>These algorithms work best on <strong>repetitive, redundant text</strong> such as HTML, CSS, JSON, logs and config files, often shrinking it to 20%–40% of the original. Already-compressed or random data barely compresses and may even grow slightly. The more repetition, the higher the ratio — which is why long repetitive text benefits most from Brotli.</p>
+
+                <h3>Data privacy</h3>
+                <p>All compression and decompression happen <strong>locally in your browser</strong>; your input is never uploaded to any server, so it is safe for sensitive text. Speed depends on your device and the text length. The Brotli codec is loaded on demand only the first time you choose Brotli, so it does not affect using the other algorithms.</p>
+
+                <h3>Common use cases</h3>
+                <p>When debugging backend APIs, use this tool to verify and decompress Zlib/Gzip payloads returned by Java, Python or Node.js services. For frontend and ops checks, use Gzip to confirm whether a CDN enabled compression correctly. Before storing or transferring data, use Brotli for a smaller footprint. Pair it with the Base64 or URL encode tools when you also need those transforms.</p>
+            </div>
+        </div>
+
+        <div class="related-tools">
+    <h3>Related Tools</h3>
+    <ul>
+        <li><a href="/en/text/base64-encode">Base64 Encode/Decode</a></li>
+        <li><a href="/en/text/url-encode">URL Encode/Decode</a></li>
+        <li><a href="/en/text/json-formatter">JSON Formatter</a></li>
+    </ul>
+</div>
+</main>
+    <footer>
+    <div class="footer-links">
+        <a href="/en/">Home</a>
+        <a href="/en/help">Help</a>
+        <a href="/about">About</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/contact">Contact</a>
+        <a href="/blog/en/">Blog</a>
+    </div>
+    <p>© 2026 Online Calculators | Free Online Calculators</p>
+</footer>
+    <script src="/js/like.js" defer></script>
+    </body>
+</html>

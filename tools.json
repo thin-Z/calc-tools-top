@@ -886,5 +886,23 @@
       "desc": "Convert between simplified and traditional Chinese",
       "kw": "simplified-traditional,traditional chinese,simplified chinese,convert chinese"
     }
+  },
+  {
+    "slug": "compress-decompress",
+    "icon": "compress",
+    "dir": "text",
+    "categories": [
+      "text"
+    ],
+    "zh": {
+      "name": "压缩解压缩",
+      "desc": "Zlib/Gzip/Deflate/Brotli 压缩与解压",
+      "kw": "压缩,解压缩,zlib,gzip,deflate,brotli,在线压缩"
+    },
+    "en": {
+      "name": "Compress & Decompress",
+      "desc": "Zlib/Gzip/Deflate/Brotli compress & decompress",
+      "kw": "compress,decompress,zlib,gzip,deflate,brotli,compression tool"
+    }
   }
 ]
