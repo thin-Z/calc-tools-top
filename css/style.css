@@ -861,6 +861,12 @@ footer .footer-links a:hover {
     outline-offset: -2px;
 }
 
+/* 工具页卡片间距：相关工具卡(related-tools)直接后邻工具模块(tool-controls)时补出底部空行，
+   避免两卡边缘贴死；仅作用于“卡片→工具模块”相邻布局，不影响博客 <p class="related-tools"> 内联用法 */
+.related-tools + .tool-controls {
+    margin-top: 2rem;
+}
+
 /* ===== Blog Post Styles ===== */
 .blog-post {
     max-width: 720px;
