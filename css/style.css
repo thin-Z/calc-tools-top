@@ -793,30 +793,36 @@ footer .footer-links a:hover {
 .related-tools {
     margin-top: 2rem;
     padding: 1.5rem;
-    background: linear-gradient(135deg,var(--cat-finance-bg)0%,var(--cat-utility-bg)100%);
-    border: 1px solid var(--cat-finance-bg);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
 }
 .related-tools h3 {
-    font-size: var(--fs-md);
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 1rem;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 0.5rem;
+    margin: 0 0 1rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-primary);
 }
+/* 标题装饰：纯 CSS 竖条（非 emoji/字符/字体图标），继承品牌蓝令牌，双主题自动适配 */
 .related-tools h3::before {
-    content: "\1F517";
-    font-size: var(--fs-md);
+    content: "";
+    width: 4px;
+    height: 1em;
+    border-radius: 2px;
+    background: var(--brand-blue);
+    flex-shrink: 0;
 }
 .related-tools ul {
     list-style: none;
     padding: 0;
     margin: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(180px,1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.5rem;
 }
 .related-tools li {
     margin: 0;
@@ -824,30 +830,35 @@ footer .footer-links a:hover {
 .related-tools li a {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 14px;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    color: var(--text-primary);
+    min-height: 40px;
+    padding: 0.4rem 0.75rem;
+    border-radius: var(--radius-md);
+    color: var(--text-secondary);
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 500;
-    transition: all 0.2s ease;
-    box-shadow: 0 1px 2px var(--shadow-2xs);
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
-.related-tools li a:hover {
-    border-color: var(--primary);
+.related-tools li a:hover,
+.related-tools li a:focus-visible {
+    background: var(--primary-light);
     color: var(--primary);
     text-decoration: none;
-    box-shadow: 0 2px 8px var(--primary-glow);
-    transform: translateY(-1px);
 }
-.related-tools li a .rt-icon {
-    font-size: 1.15rem;
-    flex-shrink: 0;
-    width: 20px;
-    text-align: center;
+/* 兼容博客旧用法：<p class="related-tools"> 直接内联 <a>（无 ul/li），
+   链接文字走正文色令牌，保证暗色下对 --bg-elevated 的 AA 对比度（同 .related-posts a 语言） */
+.related-tools > a {
+    color: var(--text-primary);
+    text-decoration: none;
+}
+.related-tools > a:hover,
+.related-tools > a:focus-visible {
+    color: var(--brand-blue);
+    text-decoration: underline;
+}
+.related-tools li a:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
 }
 
 /* ===== Blog Post Styles ===== */
@@ -2217,17 +2228,7 @@ svg.ic {
     background: var(--bg-elevated);
 }
 [data-theme="dark"] .related-tools {
-    background: linear-gradient(135deg,var(--cat-finance-bg),var(--cat-utility-bg));
-    border-color: var(--cat-finance-bg);
-}
-[data-theme="dark"] .related-tools li a {
-    background: var(--bg-card);
-    border-color: var(--border);
-    color: var(--text-secondary);
-}
-[data-theme="dark"] .related-tools li a:hover {
-    border-color: var(--brand-blue);
-    color: var(--brand-blue);
+    background: var(--bg-elevated);
 }
 
 [data-theme="dark"] .category-chip {
@@ -3561,12 +3562,8 @@ svg.ic {
     -webkit-text-fill-color: transparent;
 }
 
-/* --- 内容说明区与相关工具:圆角统一 --- */
+/* --- 内容说明区:圆角统一 --- */
 .tool-content {
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
-}
-.related-tools {
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
 }
