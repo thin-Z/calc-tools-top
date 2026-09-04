@@ -112,7 +112,7 @@
             <div class="form-group"><label for="percentMode">Calculation Mode</label><select id="percentMode"><option value="whatPercent">What percent is A of B?</option><option value="percentOf">What is A% of B?</option><option value="addPercent">A plus A's B%</option><option value="subtractPercent">A minus A's B%</option><option value="percentChange">Percentage change from A to B</option><option value="discount">Discount (original price × discount rate → final price)</option></select></div><div class="form-group"><label for="percentVal1">Value A</label><input type="number" id="percentVal1" value="" min="0" step="any"></div><div class="form-group"><label for="percentVal2">Value B</label><input type="number" id="percentVal2" value="" min="0" step="any"></div><div class="form-actions"><button type="button" class="btn btn-primary" data-csp-click="doCalculate">Calculate</button><button type="reset" class="btn btn-secondary" data-csp-click="resetForm">Reset</button></div>
         </div>
 
-        <div class="result-card hidden" id="resultArea">
+        <div class="result-card hidden" id="resultArea" tabindex="0"
             <div class="st-2"><p id="percentResult" class="st-28"></p></div>
         </div>
 

@@ -82,7 +82,7 @@
             <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="compound-interest"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
         
         <div class="tool-form"><div class="form-group"><label>本金（元）</label><input type="number" id="principal" value="100000" min="1" step="100"></div><div class="form-group"><label>年利率（%）</label><input type="number" id="annualRate" value="5" min="0" step="0.1"></div><div class="form-group"><label>投资年限</label><input type="number" id="years" value="10" min="1" max="50" step="1"></div><div class="form-group"><label>复利频率</label><select id="compoundFreq"><option value="1">每年</option><option value="4">每季度</option><option value="12" selected>每月</option></select></div><div class="form-actions"><button type="button" class="btn btn-primary" data-csp-click="doCalculate">计算</button><button type="reset" class="btn btn-secondary" data-csp-click="resetForm">重置</button></div></div>
-        <div class="result-card hidden" id="resultArea"><div class="st-2"><p class="st-4">复利终值</p><p class="st-23"><span id="finalAmount"></span> 元</p><hr><p>总收益：<span id="totalInterest"></span> 元</p><p>收益率：<span id="interestRate"></span>%</p></div></div>
+        <div class="result-card hidden" id="resultArea" tabindex="0"<div class="st-2"><p class="st-4">复利终值</p><p class="st-23"><span id="finalAmount"></span> 元</p><hr><p>总收益：<span id="totalInterest"></span> 元</p><p>收益率：<span id="interestRate"></span>%</p></div></div>
         
         <div class='tool-content'><h2>复利计算器 - 在线计算复利收益 使用说明</h2><p>免费在线复利计算器，输入本金、年利率和投资年限，快速计算复利终值和投资收益。</p></div>
         <div class="related-tools">
