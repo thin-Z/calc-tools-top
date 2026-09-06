@@ -1,7 +1,8 @@
 <!-- calc-tools.top self-hosted Lucide icon sprite (zero runtime dependency) -->
-<!-- R1: must be inline sprite (same-document <use href="#id">). Hidden via class + inline style + zero size
-     so it never flashes on first load (FOUC) and never takes layout space (2026-08-28 fix). -->
-<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="display:none;position:absolute" aria-hidden="true" focusable="false" class="icon-sprite">
+<!-- R1: must be inline sprite (same-document <use href="#id">). Hidden via class (.icon-sprite in css/style.css
+     + css/critical.css: display:none;position:absolute) + zero size, so it never flashes on first load (FOUC)
+     and never takes layout space. No inline style (CSP R25 硬化：禁止 unsafe-inline). -->
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false" class="icon-sprite">
   <symbol id="icon-activity" viewBox="0 0 24 24">
 <svg
   class="lucide lucide-activity"
