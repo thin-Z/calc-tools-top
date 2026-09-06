@@ -18,7 +18,7 @@
     localStorage.setItem(LIKE_KEY, JSON.stringify(likes));
   }
 
-  // 带超时的 fetch 封装
+  // 带超时的 fetch 封装（成功/失败均返回解析后的 data；失败返回 null）
   function apiFetch(url, options) {
     var controller = new AbortController();
     var timer = setTimeout(function() { controller.abort(); }, TIMEOUT_MS);
@@ -29,6 +29,23 @@
     }).catch(function() {
       clearTimeout(timer);
       return null;
+    });
+  }
+
+  // 带状态位的 fetch 封装：返回 { data, status }，供 like.js 区分限流(429)等
+  function apiFetchRaw(url, options) {
+    var controller = new AbortController();
+    var timer = setTimeout(function() { controller.abort(); }, TIMEOUT_MS);
+    return fetch(url, options).then(function(res) {
+      clearTimeout(timer);
+      return res.json().then(function(d) {
+        return { data: res.ok ? d : (d || null), status: res.status };
+      }).catch(function() {
+        return { data: null, status: res.status };
+      });
+    }).catch(function() {
+      clearTimeout(timer);
+      return { data: null, status: 0 };
     });
   }
 
@@ -62,9 +79,9 @@
     return apiFetch('/api/clicks?tools=' + encodeURIComponent(uniq.join(',')));
   }
 
-  // 点赞/取消点赞
+  // 点赞/取消点赞（返回 { data, status } 以便 like.js 区分限流/失败）
   function toggleLike(toolId, action) {
-    return apiFetch(API_BASE, {
+    return apiFetchRaw(API_BASE, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ toolId: toolId, action: action || 'like' })

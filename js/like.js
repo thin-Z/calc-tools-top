@@ -132,11 +132,28 @@
             signal: ctrl.signal
         }).then(function (r) {
             clearTimeout(t);
-            return r.ok ? r.json() : null;
+            // 返回 {data, status}：成功(data.count 为数字) / 限流 429 / 其他失败(status)
+            return r.json().then(function (d) {
+                return { data: d, status: r.status };
+            }).catch(function () {
+                return { data: null, status: r.status };
+            });
         }).catch(function () {
             clearTimeout(t);
-            return null;
+            return { data: null, status: 0 }; // 网络/超时：status 0
         });
+    }
+
+    /** CSP 安全的轻提示（class 化，禁止内联 style）。 */
+    function showToast(msg) {
+        try {
+            var t = document.createElement('div');
+            t.className = 'like-toast';
+            t.setAttribute('role', 'status');
+            t.textContent = msg;
+            document.body.appendChild(t);
+            setTimeout(function () { if (t.parentNode) t.parentNode.removeChild(t); }, 3200);
+        } catch (e) { /* 静默 */ }
     }
     function apiGet(toolId) {
         var url = API_BASE + '?toolId=' + encodeURIComponent(toolId);
@@ -243,14 +260,22 @@
             if (typeof expected !== 'boolean') return;
             var wasBefore = !expected;
 
-            apiPost(id, expected ? 'like' : 'unlike').then(function (data) {
+            apiPost(id, expected ? 'like' : 'unlike').then(function (resp) {
+                var data = resp && resp.data;
                 if (data && typeof data.count === 'number') {
                     serverCounts[id] = data.count;
                     paint(nodesOf(id), countSelector, data.count, expected);
                 } else {
-                    // 失败回滚：恢复本地状态与显示值，保证已展示的全局计数不被破坏
+                    // 写请求失败（限流/网络/白名单）：恢复本地状态与显示值。
                     setLiked(id, wasBefore);
-                    paint(nodesOf(id), countSelector, rollbackCount(base, wasBefore), wasBefore);
+                    if (typeof serverCounts[id] === 'number') {
+                        // 已知全局总数 → 回滚到真实值（正确，不丢计数）
+                        paint(nodesOf(id), countSelector, serverCounts[id], wasBefore);
+                    }
+                    // 未知真实值（GET 未回填）→ 保留乐观态，避免静默归零到 0
+                    var status = resp ? resp.status : 0;
+                    if (status === 429) showToast('今日该工具点赞已达上限（每工具每天 5 次，明日重置）');
+                    else if (status === 403) showToast('该工具暂不支持点赞');
                 }
             });
         }, DEBOUNCE_MS);

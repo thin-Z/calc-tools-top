@@ -1251,6 +1251,27 @@ svg.ic {
     min-width: 1.2rem;
 }
 
+/* 点赞写请求失败轻提示（CSP 安全：纯 class，禁止内联 style） */
+.like-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 1.5rem;
+    transform: translateX(-50%);
+    z-index: 9999;
+    max-width: 90vw;
+    padding: 0.6rem 1rem;
+    border-radius: 0.6rem;
+    background: var(--toast-bg);
+    color: var(--tooltip-text);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    text-align: center;
+    box-shadow: var(--toast-shadow);
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
 
 /* No results message */
 .no-results {

@@ -245,6 +245,8 @@
     --surface-alpha-70: rgba(44,44,46,0.7);
     --surface-alpha-72: rgba(28,28,30,0.72);
     --surface-alpha-80: rgba(28,28,30,0.8);
+    --toast-bg: rgba(20, 22, 28, 0.92);
+    --toast-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
     --glass-border-light: rgba(128,128,128,0.4);
     --overlay-bg: rgba(0,0,0,0.45);
 
