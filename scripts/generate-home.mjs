@@ -121,7 +121,7 @@ function generateHotCardHTML(t, idx, lang) {
     const label = (TAG_LABELS[c] && TAG_LABELS[c][lang]) || c;
     return `<a href="${tagPrefix}${c}.html" class="tag tag-${c}" data-tag="${c}">${label}</a>`;
   }).join('');
-  return `<div class="hot-tool-card"><div class="hot-badge">#${idx + 1}</div><span class="hot-score">0</span><a href="${prefix}/${t.dir}/${t.slug}" class="tool-card" data-like-id="${t.slug}" data-category="${t.categories.join(',')}" data-keywords-zh="${t.zh.kw}"><div class="icon icon-${firstCat}"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-${t.icon}"></use></svg></div><h3>${text.name}</h3><p>${text.desc}</p></a><div class="tool-tags">${tagsHTML}</div></div>`;
+  return `<div class="hot-tool-card"><div class="hot-badge">#${idx + 1}</div><span class="hot-score">0</span><a href="${prefix}/${t.dir}/${t.slug}" class="tool-card" data-like-id="${t.slug}" data-category="${t.categories.join(',')}" data-keywords-zh="${t.zh.kw}"><div class="icon icon-${firstCat}"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-${t.icon}"></use></svg></div><h3>${text.name}</h3><p>${text.desc}</p></a><div class="tool-tags">${tagsHTML}</div><button class="like-btn" data-like-id="${t.slug}"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span><span class="count">0</span></button></div>`;
 }
 
 function generateHotCardsHTML(lang) {

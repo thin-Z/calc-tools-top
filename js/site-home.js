@@ -764,6 +764,7 @@ function initHotTools() {
             + '<div class="tool-tags">' + cats.map(function(c) {
                 return '<a href="' + (isZh ? '/tags/' : '/en/tags/') + c + '.html" class="tag tag-' + c + '" data-tag="' + c + '">' + (catTexts[c] || c) + '</a>';
             }).join('') + '</div>'
+            + '<button class="like-btn" data-like-id="' + entry.id + '"><span class="heart"><svg class="ic" aria-hidden="true"><use href="#icon-heart"></use></svg></span><span class="count">0</span></button>'
             + '</div>';
     });
 
@@ -811,8 +812,8 @@ function initToolSort() {
             return scoreB - scoreA;
         })
         wraps.forEach(function(w) { grid.appendChild(w); });
-        // Prevent CSS animation from re-triggering after DOM reorder
-        wraps.forEach(function(w) { w.style.animation = 'none'; });
+        // Prevent CSS animation from re-triggering after DOM reorder (class 化，避免 CSP 报内联样式)
+        wraps.forEach(function(w) { w.classList.add('no-reorder-anim'); });
     });
 }
 

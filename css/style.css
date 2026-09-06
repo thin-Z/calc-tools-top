@@ -339,6 +339,8 @@ main {
     animation: fadeInUp 0.5s cubic-bezier(0.175,0.885,0.32,1.275)both;
     animation-iteration-count: 1;
 }
+/* 排序重排后由 JS 加此类关闭入场动画（class 化替代内联 style，避免触发 CSP 报错） */
+.tool-card-wrap.no-reorder-anim { animation: none; }
 .tool-grid .tool-card-wrap:nth-child(1){ animation-delay: 0.05s; }
 .tool-grid .tool-card-wrap:nth-child(2){ animation-delay: 0.10s; }
 .tool-grid .tool-card-wrap:nth-child(3){ animation-delay: 0.15s; }

@@ -91,12 +91,19 @@ globalThis.document = {
   addEventListener: () => {},
   querySelector() { return null; },
   querySelectorAll(selector) {
-    if (selector.startsWith('[data-like-id="')) {
-      const id = selector.slice('[data-like-id="'.length, -2);
+    // tool: 支持 '.like-btn[data-like-id="ID"]'（生产选择器，排除 hot 卡 <a>）
+    //       与旧式裸 '[data-like-id="ID"]'（兼容历史调用）。
+    const toolPrefix = '.like-btn[data-like-id="';
+    const toolLegacy = '[data-like-id="';
+    if (selector.startsWith(toolPrefix) || selector.startsWith(toolLegacy)) {
+      const id = selector.slice(selector.startsWith(toolPrefix) ? toolPrefix.length : toolLegacy.length, -2);
       return domBtns.filter(b => b._dataLikeId === id);
     }
-    if (selector.startsWith('.article-like[data-blog-id="')) {
-      const id = selector.slice('.article-like[data-blog-id="'.length, -2);
+    // blog: 支持 '.article-like[data-blog-id="ID"]' 与旧式裸 '[data-blog-id="ID"]'。
+    const blogPrefix = '.article-like[data-blog-id="';
+    const blogLegacy = '[data-blog-id="';
+    if (selector.startsWith(blogPrefix) || selector.startsWith(blogLegacy)) {
+      const id = selector.slice(selector.startsWith(blogPrefix) ? blogPrefix.length : blogLegacy.length, -2);
       return domBtns.filter(b => b._dataBlogId === id);
     }
     if (selector.endsWith(':not([data-initialized])')) {

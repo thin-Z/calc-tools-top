@@ -35,6 +35,17 @@
  *      发起时刻的 lastMutationAt，回调到达时若本地已发生新变更则丢弃。
  *   连点打满日限额（5 次/日/IP/工具）：toggle 加 300ms 防抖合并，
  *      静默期内多次点击只发 1 次写请求（action 为最终态）。
+ *
+ * ---------------------------------------------------------------------------
+ * BUGFIX (2026-09-06 · 本批第 3 部分) — 首页/动态按钮收口
+ * ---------------------------------------------------------------------------
+ *   MutationObserver：boot() 仅在 DOMContentLoaded/pageshow 各跑一次，无 observer
+ *      时「之后才出现」的 .like-btn / .article-like 永远收不到点击事件。首页 hot
+ *      卡（generate-home.mjs 静态预渲染）+ recent-tools + site-home.js 懒渲染卡均
+ *      属此类。新增 startObserver() 监听文档子树，对新出现的未初始化按钮幂等绑定。
+ *   likeNodes 限定 .like-btn：首页 hot 卡 <a> 也带 data-like-id（用于热度排序），
+ *      原选择器 [data-like-id] 会把 <a> 与按钮一起 paint → 脏更新。改为
+ *      .like-btn[data-like-id] 精确匹配，避免双重 data-like-id 误 paint。
  */
 (function () {
     'use strict';
@@ -162,7 +173,8 @@
     }
 
     function likeNodes(toolId) {
-        return document.querySelectorAll('[data-like-id="' + toolId + '"]');
+        // 仅匹配 .like-btn，避免首页 hot 卡 <a data-like-id> 与按钮同 id 时被误 paint
+        return document.querySelectorAll('.like-btn[data-like-id="' + toolId + '"]');
     }
     function articleNodes(blogId) {
         return document.querySelectorAll('.article-like[data-blog-id="' + blogId + '"]');
@@ -312,7 +324,34 @@
         _setDebounceMs: function (ms) { DEBOUNCE_MS = ms; }
     };
 
-    function boot() { initLikes(); initArticleLikes(); }
+    function boot() { initLikes(); initArticleLikes(); startObserver(); }
+
+    /* ---------- 动态节点自动绑定（MutationObserver） ----------
+     * 首页 hot 卡 / recent-tools / 任何运行时注入的 .like-btn / .article-like
+     * 在 boot() 之后才出现，若无 observer 则永远收不到点击事件。observe 文档子树，
+     * 仅对新出现的「未初始化」按钮调用 bind（幂等：data-initialized 守卫）。 */
+    var _likeObserver = null;
+    function startObserver() {
+        if (_likeObserver || typeof MutationObserver === 'undefined') return;
+        _likeObserver = new MutationObserver(function (mutations) {
+            var needTool = false, needBlog = false;
+            for (var i = 0; i < mutations.length; i++) {
+                var m = mutations[i];
+                if (m.type !== 'childList') continue;
+                for (var j = 0; j < m.addedNodes.length; j++) {
+                    var n = m.addedNodes[j];
+                    if (n.nodeType !== 1) continue; // 仅元素节点
+                    if (n.matches && n.matches('.like-btn:not([data-initialized])')) needTool = true;
+                    else if (n.querySelector && n.querySelector('.like-btn:not([data-initialized])')) needTool = true;
+                    if (n.matches && n.matches('.article-like:not([data-initialized])')) needBlog = true;
+                    else if (n.querySelector && n.querySelector('.article-like:not([data-initialized])')) needBlog = true;
+                }
+            }
+            if (needTool) initLikes();
+            if (needBlog) initArticleLikes();
+        });
+        _likeObserver.observe(document.documentElement, { childList: true, subtree: true });
+    }
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', boot);
