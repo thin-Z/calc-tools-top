@@ -4058,5 +4058,7 @@ mark {
 /* 2026-09-07 统一：simplified-traditional 结果框等宽 pre（卡片内左对齐+限高滚动） */
 #tc-output { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); max-height: 320px; overflow: auto; text-align: left; word-break: break-all; }
 /* 2026-09-07 统一(2)：simplified-traditional 结果外层渐变卡让位，输出框以 .result-area 标准卡呈现（与 text 族同款） */
-#result-area.result-card { background: transparent; border: none; box-shadow: none; padding: 0; margin: 0 auto 2rem; text-align: left; }
+#result-area.result-card { background: transparent; border: none; box-shadow: none; padding: 0; max-width: none; margin: 0 0 2rem; text-align: left; }
 #result-area .result-label { margin-bottom: 0.75rem; }
+/* 2026-09-07 统一(3)：外包 tool-page 容器后表单/结果与相关工具同宽（text 族 800 布局） */
+.tool-page .tool-form { max-width: none; }

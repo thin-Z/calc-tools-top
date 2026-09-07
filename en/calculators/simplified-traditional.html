@@ -78,6 +78,7 @@
 </header>
 
     <main id="main">
+        <div class="tool-page">
         <div class="page-header">
             <h1><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-languages"></use></svg> Simplified-Traditional Chinese Converter</h1>
             <p>Free online converter between simplified and traditional Chinese using a built-in common-character table. Convert large amounts of text in real time for editing, translation review, or language learning.</p>
@@ -95,7 +96,7 @@
 </div>
 
         <div class="tool-form">
-            <div class="form-group"><label for="tc-input">Input text</label><textarea id="tc-input" rows="5" placeholder="Type or paste simplified or traditional Chinese" aria-label="Input text"></textarea></div>
+            <div class="form-group"><label for="tc-input">Input text</label><textarea id="tc-input" class="text-input" rows="5" placeholder="Type or paste simplified or traditional Chinese" aria-label="Input text"></textarea></div>
             <div class="form-group"><label for="tc-dir">Direction</label><select id="tc-dir" aria-label="Conversion direction">
                 <option value="s2t" selected>Simplified → Traditional</option>
                 <option value="t2s">Traditional → Simplified</option>
@@ -126,6 +127,8 @@
             <p><strong>Why do some conversions look ambiguous?</strong> Some simplified characters map to multiple traditional forms (如 发→發/髮, 后→後/后). This tool uses the most common form; please double-check for special contexts.</p>
             <p><strong>Is my data uploaded to a server?</strong> No. Everything runs locally in your browser; your input never leaves your device.</p>
         </section>
+
+    </div>
 
 </main>
 
