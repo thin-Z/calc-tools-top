@@ -2881,6 +2881,62 @@ svg.ic {
     margin-top: 4px;
 }
 
+/* 阅读时间计算器 — 复用 .stats-grid / .mode-chip 统一视觉
+   （类名保留 rt-/speed- 前缀：reading-time.js 用 .speed-chip / .rt-stat-value 做 DOM 选择，不可改） */
+.rt-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(140px,1fr));
+    gap: 12px;
+    margin-top: 1rem;
+}
+.rt-stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 16px;
+    text-align: center;
+}
+.rt-stat-card .rt-stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    line-height: 1.2;
+}
+.rt-stat-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+.speed-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+.speed-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    border: 1.5px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+}
+.speed-chip:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+.speed-chip.active {
+    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark));
+    border-color: var(--primary);
+    color: var(--white);
+}
+
 /* Keyword Frequency List */
 .keyword-list {
     list-style: none;
