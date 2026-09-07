@@ -122,11 +122,20 @@
 
         <div class="result-card hidden" id="result-area">
             <div class="result-label">Result</div>
-            <dl class="tz-result-list">
-                <div class="tz-item"><dt>Future value</dt><dd id="dca-fv">--</dd></div>
-                <div class="tz-item"><dt>Total invested</dt><dd id="dca-invested">--</dd></div>
-                <div class="tz-item"><dt>Interest earned</dt><dd id="dca-interest">--</dd></div>
-            </dl>
+            <div class="result-grid">
+                <div class="result-item">
+                    <div class="result-label">Future value</div>
+                    <div class="result-value" id="dca-fv">--</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Total invested</div>
+                    <div class="result-value" id="dca-invested">--</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Interest earned</div>
+                    <div class="result-value" id="dca-interest">--</div>
+                </div>
+            </div>
         </div>
 
         <section class="tool-content">

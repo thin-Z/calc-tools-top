@@ -544,6 +544,25 @@ main {
     color: var(--text-secondary);
 }
 
+/* 定投结果区三列网格：复用 .result-value 品牌色大数字（迁移自遗留 tz- 模板，对齐主模板体系） */
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 8px;
+}
+.result-item {
+    padding: 14px 10px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+}
+.result-item .result-label { margin-bottom: 6px; }
+.result-item .result-value { margin: 0; font-size: var(--fs-2xl); }
+@media (max-width: 560px) {
+    .result-grid { grid-template-columns: 1fr; }
+}
+
 .result-card .result-detail {
     font-size: 0.95rem;
     color: var(--text-primary);
@@ -4067,9 +4086,10 @@ mark {
 .page-header h1 svg.ic { color: var(--brand-blue); }
 /* 2026-09-07 统一：simplified-traditional 结果框等宽 pre（卡片内左对齐+限高滚动） */
 #tc-output { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); max-height: 320px; overflow: auto; text-align: left; word-break: break-all; }
-/* 2026-09-07 统一(2)：simplified-traditional 结果外层渐变卡让位，输出框以 .result-area 标准卡呈现（与 text 族同款） */
-#result-area.result-card { background: transparent; border: none; box-shadow: none; padding: 0; max-width: none; margin: 0 0 2rem; text-align: left; }
-#result-area .result-label { margin-bottom: 0.75rem; }
+/* 2026-09-07 统一(2)：simplified-traditional/markdown 等 text 族工具外包 .tool-page，结果外层渐变卡让位，输出框以 .result-area 标准卡呈现（与 text 族同款）。
+   作用域收窄到 .tool-page：常规计算器（dca/汇率/分数/孕期/对比度/时间戳等 id=result-area 但在 .tool-form 内）保持统一渐变 .result-card，避免被误伤去样式。 */
+.tool-page #result-area.result-card { background: transparent; border: none; box-shadow: none; padding: 0; max-width: none; margin: 0 0 2rem; text-align: left; }
+.tool-page #result-area .result-label { margin-bottom: 0.75rem; }
 /* 2026-09-07 统一(3)：外包 tool-page 容器后表单/结果与相关工具同宽（text 族 800 布局） */
 .tool-page .tool-form { max-width: none; }
 /* 2026-09-07 统一(4)：regex-tester/markdown-preview 文本工具外包 tool-page；regex 渐变结果卡让位（高亮 pre 自带框） */
