@@ -2774,6 +2774,7 @@ svg.ic {
 
 /* 压缩结果可能很长：限制高度并启用滚动条，避免撑爆页面（T 2026-09-04） */
 #resultArea {
+    max-width: none;
     max-height: 320px;
     overflow: auto;
     white-space: pre-wrap;
