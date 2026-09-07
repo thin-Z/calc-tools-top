@@ -2782,12 +2782,11 @@ svg.ic {
     white-space: pre-wrap;
 }
 
-/* 压缩结果可能很长：允许自然展开，不再限制高度/滚动条（T 2026-09-07 反馈"计算结果不需要滚动条"） */
+/* 不再限制高度/滚动条（T 2026-09-07 反馈"计算结果不需要滚动条"） */
+/* 宽度与图表容器对齐(600px)；去掉 white-space:pre-wrap，避免结构化结果卡里静态HTML换行/缩进被保留成大量空白，导致卡片被撑得过高（实测 805px→244px）。 */
 #resultArea {
-    max-width: 760px;
+    max-width: 600px;
     margin: 24px auto 32px;
-    white-space: pre-wrap;
-    word-break: break-all;
 }
 
 /* Copy Button */
