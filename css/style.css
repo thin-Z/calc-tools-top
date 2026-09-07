@@ -871,7 +871,8 @@ footer .footer-links a:hover {
 
 /* ===== Blog Post Styles ===== */
 .blog-post {
-    max-width: 720px;
+    /* 与工具详情页 main 容器对齐（1100px 宽屏），不再限制为 720px 阅读宽度 */
+    max-width: 1100px;
     margin: 0 auto;
     padding: 1.5rem;
     line-height: 1.9;
@@ -2591,7 +2592,7 @@ svg.ic {
     color: var(--text-secondary);
     margin-bottom: 1rem;
     padding: 0 1.5rem;
-    max-width: 720px;
+    max-width: 1100px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -3833,7 +3834,7 @@ svg.ic {
 /* --- 面包屑: 玻璃胶囊 --- */
 .breadcrumb {
     padding: 0.35rem 0.9rem;
-    max-width: 760px;
+    max-width: 1100px;
     border-radius: var(--radius-full);
     background: var(--glass-bg);
     backdrop-filter: blur(10px);
