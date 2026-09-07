@@ -4055,3 +4055,5 @@ mark {
 .related-tools + .tool-form { margin-top: 2rem; }
 .related-tools + .upload-zone { margin-top: 2rem; }
 .page-header h1 svg.ic { color: var(--brand-blue); }
+/* 2026-09-07 统一：simplified-traditional 结果框等宽 pre（卡片内左对齐+限高滚动） */
+#tc-output { max-height: 320px; overflow: auto; text-align: left; word-break: break-all; }

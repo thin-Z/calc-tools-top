@@ -107,22 +107,28 @@
     function render() {
         var text = input.value;
         var dir = dirSelect.value;
-        output.value = convertText(text, dir);
+        output.textContent = convertText(text, dir);
         if (text.trim()) resultArea.classList.remove('hidden');
         else resultArea.classList.add('hidden');
     }
 
     function copyOutput() {
-        if (!output.value) return;
+        if (!output.textContent) return;
         var done = function () {
             if (copyBtn) copyBtn.textContent = '已复制';
             setTimeout(function () { if (copyBtn) copyBtn.textContent = '复制'; }, 1500);
         };
         if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(output.value).then(done, function () { done(); });
+            navigator.clipboard.writeText(output.textContent).then(done, function () { done(); });
         } else {
-            output.select();
+            var ta = document.createElement('textarea');
+            ta.value = output.textContent;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
             document.execCommand('copy');
+            document.body.removeChild(ta);
             done();
         }
     }
