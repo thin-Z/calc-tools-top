@@ -2033,6 +2033,38 @@ svg.ic {
     margin-bottom: 10px;
 }
 .hot-tool-card .tool-tags { padding: 12px 24px 16px; }
+/* Hot card like-btn: match .tool-card-wrap .like-btn glass style, positioned bottom-right */
+.hot-tool-card .like-btn {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    border: 1.5px solid var(--border);
+    background: var(--glass-white-90);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    line-height: 1;
+}
+.hot-tool-card .like-btn:hover {
+    border-color: var(--like);
+    color: var(--like);
+    background: var(--like-bg);
+}
+.hot-tool-card .like-btn.liked {
+    border-color: var(--like);
+    color: var(--like);
+    background: var(--like-bg);
+}
 .hot-tool-card .hot-likes {
     background: var(--warning-alpha);
     position: absolute;
@@ -2241,6 +2273,16 @@ svg.ic {
 }
 [data-theme="dark"] .hot-tool-card .hot-likes { background: var(--hot-likes-bg); color: var(--amber-400); }
 [data-theme="dark"] .hot-tool-card .hot-score { background: var(--hot-score-bg); color: var(--red-200); }
+[data-theme="dark"] .hot-tool-card .like-btn {
+    background: var(--glass-white-06);
+    border-color: var(--border);
+    color: var(--text-secondary);
+}
+[data-theme="dark"] .hot-tool-card .like-btn.liked {
+    background: var(--danger-bg-deep);
+    border-color: var(--danger);
+    color: var(--danger);
+}
 [data-theme="dark"] .trend-hot {
     background: var(--danger-alpha-2);
     color: var(--red-200);
