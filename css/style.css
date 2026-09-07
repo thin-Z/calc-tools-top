@@ -431,7 +431,7 @@ main {
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: 28px;
-    max-width: 600px;
+    max-width: none;
     margin: 0 auto 32px;
     box-shadow: var(--shadow-sm);
 }
