@@ -255,7 +255,25 @@ module.exports = async function handler(req, res) {
       const delta = action === 'unlike' ? -1 : 1;
       // INCRBY 原子增减（POST /incrby/{key}，body 为裸数字；Upstash REST 不接受
       // /incr/{key}/{delta} 路径参数），杜绝并发读改写（TOCTOU）丢计数
-      let count = Math.max(0, parseInt((await rest('/incrby/' + key, 'POST', String(delta))) || '0', 10));
+      const incVal = await rest('/incrby/' + key, 'POST', String(delta));
+      const hasInc = incVal !== null && incVal !== undefined && Number.isFinite(parseInt(incVal, 10));
+      const inc = hasInc ? parseInt(incVal, 10) : 0;
+      let count;
+      if (hasInc && delta < 0 && inc < 0) {
+        // 取消点赞不允许把 KV 减成负数：回写钳制为 0。
+        // 否则 KV 会存下「负数债务」——读侧虽钳成 0 显示正常，但后续每次
+        // like(+1) 都先被债务吸收，用户看到「点了赞、计数始终不动」。
+        // 实测：compress-decompress 存值 -1 → 连点两次才从 0 变成 1。
+        count = 0;
+        await rest('/set/' + key, 'POST', '0');
+      } else if (hasInc && delta > 0 && inc <= 0) {
+        // 存值为负（历史 unlike 造成的债务）→ 以 0 为基准 +1 并回写，
+        // 让本次点赞立刻可见，而不是先被债务吸收。
+        count = 1;
+        await rest('/set/' + key, 'POST', '1');
+      } else {
+        count = Math.max(0, inc);
+      }
       // INCR 不设 TTL，写入后刷新 365 天 TTL，防止无界存储放大
       await rest('/expire/' + key + '/31536000');
 

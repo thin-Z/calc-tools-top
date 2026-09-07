@@ -55,6 +55,23 @@ function startKvMock() {
         res.end(JSON.stringify({ result: vals }));
       });
       return;
+    } else if (pathname.startsWith('/set/')) {
+      // Upstash REST SET：POST /set/{key}，body 为裸值；亦兼容 /set/{key}/{value} 路径形式。
+      // 数字值按 number 存，便于断言"存值不得为负"。
+      const restPath = pathname.slice('/set/'.length);
+      let raw = '';
+      req.on('data', (c) => { raw += c; });
+      req.on('end', () => {
+        const idx = restPath.lastIndexOf('/');
+        const usePathValue = idx !== -1 && raw === '';
+        const key = usePathValue ? restPath.slice(0, idx) : restPath;
+        const value = usePathValue ? restPath.slice(idx + 1) : raw;
+        const num = Number(value);
+        store.set(key, value !== '' && !isNaN(num) ? num : value);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ result: 'OK' }));
+      });
+      return;
     } else if (pathname.startsWith('/expire/')) {
       const restPath = pathname.slice('/expire/'.length);
       const idx = restPath.lastIndexOf('/');
@@ -264,4 +281,36 @@ test('POST 白名单外 id → 403', async () => {
   const r = await httpCall(handlerPort, 'POST', '/api/likes', JSON_HEADERS, { toolId: 'not-registered-id-xyz', action: 'like' });
   if (prev !== undefined) process.env.ID_WHITELIST_OFF = prev;
   assert.strictEqual(r.status, 403);
+});
+
+// ── 负数债务回归（compress-decompress 实测 Bug：存值 -1 → 点赞后计数仍显示 0）──
+// 独立 IP，避免与前面用例共享 20/min 写限速
+const DEBT_IP = { 'content-type': 'application/json', 'origin': 'https://www.calc-tools.top', 'x-forwarded-for': '203.0.113.77' };
+
+test('POST 取消到底 → 计数保持 0 且 KV 不留负数债务', async () => {
+  const toolId = 'nodebt-tool';
+  await httpCall(handlerPort, 'POST', '/api/likes', DEBT_IP, { toolId, action: 'like' });   // 1
+  await httpCall(handlerPort, 'POST', '/api/likes', DEBT_IP, { toolId, action: 'unlike' });  // 0
+  const r = await httpCall(handlerPort, 'POST', '/api/likes', DEBT_IP, { toolId, action: 'unlike' }); // 再取消
+  assert.strictEqual(r.status, 200);
+  assert.strictEqual(r.body.count, 0);
+  const stored = mock.store.get('like:tool:' + toolId);
+  assert.ok(stored >= 0, 'KV 存值不得为负（负数会吸收后续点赞），实际: ' + stored);
+});
+
+test('POST 存值为 -1 时点赞立即变 1（债务不得吸收本次点赞）', async () => {
+  const toolId = 'debt-tool';
+  mock.store.set('like:tool:' + toolId, -1); // 复刻历史 unlike 造成的负数债务
+  const r = await httpCall(handlerPort, 'POST', '/api/likes', DEBT_IP, { toolId, action: 'like' });
+  assert.strictEqual(r.status, 200);
+  assert.strictEqual(r.body.count, 1, '存值 -1 时点赞应直接显示 1，而不是被债务吸收成 0');
+  assert.strictEqual(mock.store.get('like:tool:' + toolId), 1, 'KV 应回写为 1');
+});
+
+test('POST 存值为 -3（深债务）时点赞同样立即为 1', async () => {
+  const toolId = 'deep-debt-tool';
+  mock.store.set('like:tool:' + toolId, -3);
+  const r = await httpCall(handlerPort, 'POST', '/api/likes', DEBT_IP, { toolId, action: 'like' });
+  assert.strictEqual(r.body.count, 1);
+  assert.strictEqual(mock.store.get('like:tool:' + toolId), 1);
 });
