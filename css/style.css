@@ -554,13 +554,22 @@ main {
 
 /* ===== 图表区域 ===== */
 .chart-container {
-    max-width: 600px;
+    max-width: none;
+    position: relative;
     margin: 0 auto 40px;
     padding: 20px;
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
+}
+
+/* 饼图 aspectRatio≈1，若放任会撑成与容器等宽(1044×1044)巨图；居中并限到合理尺寸 */
+.chart-container canvas {
+    display: block;
+    margin: 0 auto;
+    max-width: 640px;
+    max-height: 640px;
 }
 
 /* ===== 页脚 ===== */
@@ -2772,11 +2781,9 @@ svg.ic {
     white-space: pre-wrap;
 }
 
-/* 压缩结果可能很长：限制高度并启用滚动条，避免撑爆页面（T 2026-09-04） */
+/* 压缩结果可能很长：允许自然展开，不再限制高度/滚动条（T 2026-09-07 反馈"计算结果不需要滚动条"） */
 #resultArea {
     max-width: none;
-    max-height: 320px;
-    overflow: auto;
     white-space: pre-wrap;
     word-break: break-all;
 }
