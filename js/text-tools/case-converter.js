@@ -70,7 +70,7 @@ function convertCase(text, mode) {
 function doConvert() {
     var text = document.getElementById('textInput').value;
     var result = convertCase(text, currentMode);
-    document.getElementById('resultArea').value = result;
+    document.getElementById('resultArea').textContent = result;
     document.getElementById('charCount').textContent = result.length;
     document.getElementById('wordCount').textContent = result.trim() ? result.trim().split(/\s+/).length : 0;
 }
@@ -88,7 +88,7 @@ function switchMode(mode) {
 
 function copyResult() {
     var resultArea = document.getElementById('resultArea');
-    var text = resultArea.value;
+    var text = resultArea.textContent;
     if (!text) {
         alert('请先生成转换结果');
         return;
@@ -118,7 +118,7 @@ function copyResult() {
 
 function resetTool() {
     document.getElementById('textInput').value = '';
-    document.getElementById('resultArea').value = '';
+    document.getElementById('resultArea').textContent = '';
     document.getElementById('charCount').textContent = '0';
     document.getElementById('wordCount').textContent = '0';
     switchMode('upper');
