@@ -67,6 +67,7 @@
 </header>
 
     <main id="main">
+        <div class="tool-page">
         <div class="page-header">
             <h1><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-eye"></use></svg> Markdown Preview</h1>
             <p>Edit Markdown on the left and preview the rendered result on the right in real time. Supports headings, bold and italic, inline code, fenced code blocks, lists, links, blockquotes, horizontal rules and tables.</p>
@@ -83,7 +84,7 @@
 </div>
 
         <div class="tool-form">
-            <div class="form-group"><label for="md-editor">Markdown Source</label><textarea class="md-editor" id="md-editor" placeholder="Type Markdown here..." aria-label="Markdown source"></textarea></div>
+            <div class="form-group"><label for="md-editor">Markdown Source</label><textarea class="text-input md-editor" id="md-editor" placeholder="Type Markdown here..." aria-label="Markdown source"></textarea></div>
             <div class="form-actions">
                 <button type="button" class="btn btn-secondary" data-csp-click="fillMarkdownSample">Load Sample</button>
                 <button type="button" class="btn btn-secondary" data-csp-click="clearMarkdownPreview">Clear</button>
@@ -122,7 +123,9 @@
             <p><strong>Is my content saved or uploaded?</strong> No. Editing and previewing happen entirely in your browser; refreshing the page clears the content.</p>
         </section>
 
-    </main>
+        </div>
+
+</main>
 
     <footer>
     <div class="footer-links">
