@@ -103,7 +103,7 @@ function generateCardHTML(t, lang) {
     return `<a href="${tagPrefix}${c}.html" class="tag tag-${c}" data-tag="${c}">${label}</a>`;
   }).join('');
 
-  return `            <div class="tool-card-wrap"><a href="${prefix}/${t.dir}/${t.slug}" class="tool-card" data-category="${cats}" data-keywords-zh="${t.zh.kw}" data-keywords-en="${t.en.kw || ''}"><div class="icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-${t.icon}"></use></svg></div><h3>${text.name}</h3><p>${text.desc}</p></a><div class="tool-tags">${tagsHTML}</div><button class="like-btn" data-like-id="${t.slug}"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg><span class="count">0</span></button></div>`;
+  return `            <div class="tool-card-wrap"><a href="${prefix}/${t.dir}/${t.slug}" class="tool-card" data-category="${cats}" data-keywords-zh="${t.zh.kw}" data-keywords-en="${t.en.kw || ''}"><div class="icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-${t.icon}"></use></svg></div><h3>${text.name}</h3><p>${text.desc}</p></a><div class="tool-tags">${tagsHTML}</div><button class="like-btn" data-like-id="${t.slug}"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span><span class="count">0</span></button></div>`;
 }
 
 // ── P1-2：静态预渲染「热门工具」卡（消除 JS 填充缺口，降 CLS）──────────────
