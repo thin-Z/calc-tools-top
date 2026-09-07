@@ -13,7 +13,7 @@
  *   6. GA4 Measurement ID 不变量（占位符态跳过）
  *   7. CSP assertNoInlineScripts：dist 无可执行内联 <script>（终点基准 0）
  *   8. CSP assertNoInlineEventHandlers：dist 无 onxxx= 内联事件处理器（终点基准 0）
- *   9. CSP assertCspHeader：vercel.json 强制头 script-src 无 'unsafe-inline' 且含三方白名单
+ *   9. CSP assertCspHeader：vercel.json 强制头 script-src 无 'unsafe-inline' 且含必需三方白名单（AdSense/GA4）
  *      —— 7/8/9 为迁移终点基准：T01-T03 期间预期 FAIL，T04/T05 起必须全绿。
  * 用法：node scripts/verify-site.mjs
  * 退出码：0 = 全绿；非 0 = 任一校验失败（供 CI/审计）。
@@ -222,7 +222,9 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
 
 // ---------- 9. CSP assertCspHeader：vercel.json 强制头 script-src 硬化（终点基准） ----------
 // 校验 Content-Security-Policy（强制头）的 script-src：不含 'unsafe-inline' 且含三方白名单
-// （pagead2.googlesyndication.com / cdn.jsdelivr.net / www.googletagmanager.com）。
+// （pagead2.googlesyndication.com / www.googletagmanager.com）。
+// 注：cdn.jsdelivr.net 已于 2026-09-07 全站本地化（chart.js + qrcodejs 均 vendor 到 js/vendor/），
+// 故从必需白名单移除；dist 中不再有任何 jsdelivr <script>（见 [12] SRI 门禁）。
 // T01 时强制头仍带 'unsafe-inline' → 预期 FAIL；T05 切换硬化后通过。
 {
   const vercelPath = path.join(ROOT, 'vercel.json');
@@ -244,7 +246,7 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
     } else {
       const src = scriptSrcMatch[1];
       const hasUnsafeInline = /'unsafe-inline'/.test(src);
-      const whitelist = ['pagead2.googlesyndication.com', 'cdn.jsdelivr.net', 'www.googletagmanager.com'];
+      const whitelist = ['pagead2.googlesyndication.com', 'www.googletagmanager.com'];
       const missing = whitelist.filter((d) => !src.includes(d));
       if (hasUnsafeInline || missing.length) {
         const bits = [];
@@ -252,7 +254,7 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
         if (missing.length) bits.push(`缺少白名单: ${missing.join(', ')}`);
         fail(`[csp-header] 强制 CSP script-src 未硬化（终点基准；T01 预期 FAIL）：${bits.join('；')}`);
       } else {
-        console.log('[9] CSP assertCspHeader: script-src 无 unsafe-inline 且含三方白名单 ✓');
+        console.log('[9] CSP assertCspHeader: script-src 无 unsafe-inline 且含必需三方白名单(AdSense/GA4) ✓');
       }
     }
   } else {
