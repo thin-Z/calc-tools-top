@@ -562,7 +562,7 @@ const TOOLS_DATA = {
     'dca-calculator': { icon: 'line-chart', name: { zh: '定投计算器', en: 'DCA Calculator' }, desc: { zh: '定期定额投资收益与复利增长计算', en: 'Calculate future value of regular periodic investments' } },
     'fraction-calculator': { icon: 'divide', name: { zh: '分数计算器', en: 'Fraction Calculator' }, desc: { zh: '分数的加减乘除与最简化', en: 'Add, subtract, multiply and divide fractions and simplify' } },
     'currency-converter': { icon: 'coins', name: { zh: '汇率换算器', en: 'Currency Converter' }, desc: { zh: '常见货币参考汇率，任意两种货币实时互换', en: 'Convert between major currencies with reference rates' } },
-    'simplified-traditional': { icon: 'languages', name: { zh: '简繁转换', en: 'Simplified-Traditional Converter' }, desc: { zh: '简体中文与繁体中文互转，常用字对照', en: 'Convert between simplified and traditional Chinese' } },
+    'simplified-traditional': { icon: 'languages', name: { zh: '中文简繁转换', en: 'Simplified-Traditional Converter' }, desc: { zh: '简体中文与繁体中文互转，常用字对照', en: 'Convert between simplified and traditional Chinese' } },
     'compress-decompress': { icon: 'compress', name: { zh: '压缩解压缩', en: 'Compress & Decompress' }, desc: { zh: 'Zlib/Gzip/Deflate/Brotli 压缩与解压', en: 'Zlib/Gzip/Deflate/Brotli compress & decompress' } }
 };
 /* __GENERATED_TOOLS_DATA_END__ */
