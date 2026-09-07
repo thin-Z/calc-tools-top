@@ -768,15 +768,32 @@ function initHotTools() {
             + '</div>';
     });
 
-    // P1-2：首页已静态预渲染默认热门工具卡。为避免全局点击数据异步加载后动态重排序/重建
-    // 造成 CLS 波动，只要网格已被静态填充就**不再重建**（热门工具稳定为预渲染的默认集，
-    // 点击/点赞/跳转仍可交互，仅排名不随全局计数实时变化）。
-    if (!(grid.children.length > 0)) {
+    // 修复：此前 CLS 守卫 `if (!(grid.children.length > 0))` 因静态预渲染恒为 true，
+    // 永远走 else 只更新 .hot-score 数字、绝不重排 DOM，导致序号徽章 #1–#8 永远按
+    // 写死的预设顺序显示，与右上角真实综合分数讲两套故事（如 discount 恒为 #5 却显示 0）。
+    // 现改为签名比对：仅当展示集合/顺序与真实排名不符时才重建 innerHTML 重排，否则仅
+    // 就地更新分数数值，以最小化 CLS 与 like 按钮状态丢失。
+    // 安全前提：js/like.js 的 MutationObserver（startObserver）会自动接管任何新出现的
+    // .like-btn[data-like-id]，故 grid.innerHTML = html 重建后点赞按钮无需手动重绑。
+    function sigOf(ids) { return ids.join('|'); }
+    // 当前 DOM 中 8 张卡的 data-like-id 签名（按展示顺序）
+    const currentIds = [];
+    grid.querySelectorAll('.hot-tool-card').forEach(function (hotCard) {
+      const cardEl = hotCard.querySelector('[data-like-id]');
+      if (cardEl) currentIds.push(cardEl.getAttribute('data-like-id') || '');
+    });
+    const currentSig = sigOf(currentIds);
+    const newSig = sigOf(selected.map(function (e) { return e.id; }));
+
+    if (grid.children.length === 0) {
+      // 首绘兜底（静态预渲染下理论上不会命中）：直接填充默认集
+      grid.innerHTML = html;
+    } else if (currentSig !== newSig) {
+      // 真实排名与当前展示不符（顺序或集合变化）→ 按综合分数重排/重渲染 DOM
       grid.innerHTML = html;
     } else {
-      // 静态卡已存在：遍历每张已有卡片，按各卡 data-like-id 的真实得分更新 .hot-score，
-      // 不重建 DOM（保留 CLS 防抖意图，仅分数随全局数据更新，而非只更新 top8）。
-      grid.querySelectorAll('.hot-tool-card').forEach(function(hotCard) {
+      // 集合与顺序未变，仅分数数值可能更新 → 就地更新各卡 .hot-score，保留 like 按钮状态
+      grid.querySelectorAll('.hot-tool-card').forEach(function (hotCard) {
         const cardEl = hotCard.querySelector('[data-like-id]');
         if (!cardEl) return;
         const id = cardEl.getAttribute('data-like-id');
@@ -786,7 +803,7 @@ function initHotTools() {
         const globalC = _globalClickTotals[id] || 0;
         s += Math.max(localC, globalC);
         const toolName = TOOLS_DATA[id].name['zh'].toLowerCase();
-        Object.keys(searchTerms).forEach(function(term) {
+        Object.keys(searchTerms).forEach(function (term) {
           if (toolName.includes(term)) s += (searchTerms[term] || 0) * 2;
         });
         const scoreEl = hotCard.querySelector('.hot-score');
