@@ -2033,12 +2033,11 @@ svg.ic {
     margin-bottom: 10px;
 }
 .hot-tool-card .tool-tags { padding: 12px 24px 16px; }
-/* Hot card like-btn: match .tool-card-wrap .like-btn glass style, positioned bottom-right */
+/* Hot card like-btn: 文档流右对齐（与 tag 同在底部行，但避免 absolute 覆盖标签）。
+   选择 align-self 而非 absolute：保留与 .tool-card-wrap .like-btn 不同的视觉层级。 */
 .hot-tool-card .like-btn {
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
-    z-index: 2;
+    align-self: flex-end;
+    margin: -8px 12px 12px auto;
     display: inline-flex;
     align-items: center;
     gap: 4px;
