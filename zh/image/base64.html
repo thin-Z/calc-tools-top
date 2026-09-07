@@ -65,10 +65,18 @@
     <main id="main">
         <div class="tool-page">
             <div class="tool-header">
-                <span class="tool-privacy-badge"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-lock"></use></svg> 浏览器本地处理 · 不上传服务器</span><h1>图片转 Base64</h1>
+                <span class="tool-privacy-badge"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-lock"></use></svg> 浏览器本地处理 · 不上传服务器</span><h1><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-image"></use></svg> 图片转 Base64</h1>
                 <p>将图片转换为 Base64 编码字符串，方便嵌入 HTML、CSS。</p>
             </div>
             <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="base64"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
+            <div class="related-tools">
+                <h3>相关工具</h3>
+                <ul>
+                    <li><a href="/zh/image/color-picker">图片取色器</a></li>
+                    <li><a href="/zh/image/compress">图片压缩</a></li>
+                    <li><a href="/zh/image/resize">裁剪缩放</a></li>
+                </ul>
+            </div>
             <div class="upload-zone" id="dropZone">
                 <div class="upload-icon"></div>
                 <h3>拖拽图片到此处，或点击选择文件</h3><div class="upload-btn"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-folder"></use></svg> 选择文件</div>
@@ -129,14 +137,6 @@
                 <h3>浏览器兼容性要注意什么？</h3>
                 <p>现代浏览器（Chrome、Firefox、Safari、Edge）都能完整支持 Base64 的 <code>data:</code> URI，包括 CSS 的 <code>background-image: url(data:...)</code>、HTML 的 <code>img</code> 和 `&lt;link&gt;`。但要注意：旧版 IE 对 Base64 图片的缓存和部分 MIME 类型支持较差，若目标用户包含大量旧浏览器，建议谨慎内联。此外，内联图片会显著增加 HTML 源文件长度，不利于源码阅读，因此更适合封装成组件或构建时自动处理，而非长期人工维护。</p>
             </div>
-            <div class="related-tools">
-    <h3>相关工具</h3>
-    <ul>
-        <li><a href="/zh/image/color-picker">图片取色器</a></li>
-        <li><a href="/zh/image/compress">图片压缩</a></li>
-        <li><a href="/zh/image/resize">裁剪缩放</a></li>
-    </ul>
-</div>
 </main>
     <footer>
     <div class="footer-links">

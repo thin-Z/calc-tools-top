@@ -52,10 +52,18 @@
     <main id="main">
         <div class="tool-page">
             <div class="tool-header">
-                <h1>文本清理器</h1>
+                <h1><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-sparkles"></use></svg> 文本清理器</h1>
                 <p>免费在线文本清理工具。去除多余空格、换行、空行，修剪首尾空白，并可移除标点符号。可自由组合多种操作。所有处理均在浏览器本地完成。</p>
             </div>
             <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="text-cleaner"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
+            <div class="related-tools">
+                <h3>相关工具</h3>
+                <ul>
+                    <li><a href="/zh/text/html-stripper">HTML 剥离</a></li>
+                    <li><a href="/zh/text/text-diff">文本对比</a></li>
+                    <li><a href="/zh/text/word-counter">字数统计</a></li>
+                </ul>
+            </div>
 
             <!-- Ad Slot -->
             
@@ -89,7 +97,7 @@
                         <span class="stat-badge">清理后：<strong id="charAfter">0</strong> 字符</span>
                     </div>
                     <pre class="result-area st-12" id="resultArea" tabindex="0"></pre>
-                    <button class="btn btn-copy" id="copyBtn" data-csp-click="copyTextCleanerResult"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-clipboard"></use></svg> 复制结果</button>
+                    <button class="copy-btn" id="copyBtn" data-csp-click="copyTextCleanerResult"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-clipboard"></use></svg> 复制结果</button>
                 </div>
             </div>
 
@@ -127,14 +135,6 @@
             </div>
         </div>
 
-        <div class="related-tools">
-    <h3>相关工具</h3>
-    <ul>
-        <li><a href="/zh/text/html-stripper">HTML 剥离</a></li>
-        <li><a href="/zh/text/text-diff">文本对比</a></li>
-        <li><a href="/zh/text/word-counter">字数统计</a></li>
-    </ul>
-</div>
 </main>
     <footer>
     <div class="footer-links">

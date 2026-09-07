@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JSON 格式化工具 - 在线 JSON 格式化、压缩和校验</title>
@@ -102,6 +103,14 @@
                 <p>在线 JSON 格式化、压缩和校验工具。支持格式化美化、压缩优化和语法错误检测，自动定位错误行号。浏览器本地处理，数据不上传服务器。</p>
             </div>
             <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="json-formatter"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
+            <div class="related-tools">
+                <h3>相关工具</h3>
+                <ul>
+                    <li><a href="/zh/calculators/regex-tester">正则表达式测试器</a></li>
+                    <li><a href="/zh/text/base64-encode">Base64 编解码</a></li>
+                    <li><a href="/zh/text/text-diff">文本对比</a></li>
+                </ul>
+            </div>
 
             <div class="tool-controls">
                 <textarea class="text-input" id="jsonInput" aria-label="JSON 输入" placeholder="请粘贴或输入 JSON 数据...">{"name":"在线工具箱","version":"1.0.0","features":["JSON格式化","JSON压缩","语法校验"],"config":{"theme":"dark","lang":"zh-CN"},"active":true}</textarea>
@@ -135,7 +144,7 @@
                         <span class="char-badge">原始大小：<strong id="originalSize">0</strong> 字节</span>
                         <span class="char-badge">处理后大小：<strong id="formattedSize">0</strong> 字节</span>
                     </div>
-                    <button class="btn btn-copy" id="copyJSONBtn" data-csp-click="copyJSONResult"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-clipboard"></use></svg> 复制结果</button>
+                    <button class="copy-btn" id="copyJSONBtn" data-csp-click="copyJSONResult"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-clipboard"></use></svg> 复制结果</button>
                 </div>
             </div>
 
@@ -171,14 +180,6 @@
             </div>
         </div>
 
-        <div class="related-tools">
-    <h3>相关工具</h3>
-    <ul>
-        <li><a href="/zh/calculators/regex-tester">正则表达式测试器</a></li>
-        <li><a href="/zh/text/base64-encode">Base64 编解码</a></li>
-        <li><a href="/zh/text/text-diff">文本对比</a></li>
-    </ul>
-</div>
 </main>
     <footer>
     <div class="footer-links">

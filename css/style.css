@@ -4051,5 +4051,7 @@ mark {
 [data-theme="dark"] .ref-table thead th { background: var(--surface-dark-2); color: var(--text-on-dark); }
 [data-theme="dark"] .ref-table tbody tr:nth-child(even){ background: var(--surface-dark); }
 [data-theme="dark"] .ref-table td,[data-theme="dark"] .ref-table th { color: var(--text-on-dark); border-color: var(--surface-dark-2); }
-
-
+/* 2026-09-07 工具详情页骨架统一：相关工具上移后与后邻控件间距 + page-header 渐变标题下图标着色 */
+.related-tools + .tool-form { margin-top: 2rem; }
+.related-tools + .upload-zone { margin-top: 2rem; }
+.page-header h1 svg.ic { color: var(--brand-blue); }

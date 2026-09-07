@@ -52,13 +52,21 @@
     <main id="main">
         <div class="tool-page">
             <div class="tool-header">
-                <h1>阅读时间计算器</h1>
+                <h1><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-book-open"></use></svg> 阅读时间计算器</h1>
                 <p>根据文本字数估算阅读和说话所需时间，支持中英文混合文本。</p>
             </div>
             <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="reading-time"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
+            <div class="related-tools">
+                <h3>相关工具</h3>
+                <ul>
+                    <li><a href="/zh/text/word-counter">字数统计</a></li>
+                    <li><a href="/zh/text/case-converter">大小写转换</a></li>
+                </ul>
+            </div>
 
             
 
+            <div class="tool-controls">
             <textarea class="text-input" id="rtInput" aria-label="阅读文本输入" placeholder="在此粘贴或输入文本以分析阅读时间..." data-csp-input="scheduleReadingTime">阅读时间计算器是一款实用的在线工具，帮助作者和编辑快速估算文章阅读时长。无论你是在写博客、准备演讲，还是编辑新闻稿，了解阅读时间都能帮你把控内容长度与节奏。本工具支持中英文文本，并提供三档速度设置：慢速（200 词/分）、正常（300 词/分）、快速（400 词/分），还能评估文本难度等级（从初级到专业）。</textarea>
 
             <div class="speed-chips">
@@ -103,6 +111,7 @@
                     <div class="rt-stat-label">难度等级</div>
                 </div>
             </div>
+            </div>
 
             <div class="seo-content">
                 <h2>关于阅读时间计算器</h2>
@@ -143,13 +152,6 @@
             </div>
         </div>
 
-        <div class="related-tools">
-    <h3>相关工具</h3>
-    <ul>
-        <li><a href="/zh/text/word-counter">字数统计</a></li>
-        <li><a href="/zh/text/case-converter">大小写转换</a></li>
-    </ul>
-</div>
 </main>
     <footer>
     <div class="footer-links">
