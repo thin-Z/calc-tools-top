@@ -6,7 +6,7 @@
 
 | 部分 | 说明 |
 |------|------|
-| 前端 | 纯静态 HTML/CSS/JS（无框架），`zh/`、`en/` 双语，`blog/` 博客（**源码 218 HTML（另含 5 includes 模板）/ dist 218 页**：49 工具×2 语言 + 80 博客 + 16 标签聚合页 + 结构页/语言层首页） |
+| 前端 | 纯静态 HTML/CSS/JS（无框架），`zh/`、`en/` 双语，`blog/` 博客（**源码 225 HTML（另含 5 includes 模板）/ dist 220 页**（实测 2026-09-07）：50 工具×2 语言（92 真实 + 8 noindex 存根）+ 80 博客（zh40+en40）+ 16 标签聚合页（zh/en 各 8）+ 结构页/语言层首页） |
 | 构建 | Vercel `buildCommand = node scripts/build.mjs`，`outputDirectory = dist`（复制站点 → GA4/AdSense 注入 → 版本号 → 卫生转换 → CSS 压缩 → CMP 横幅） |
 | API | `api/likes.js`（点赞）、`api/clicks.js`（点击），Node Serverless Function |
 | 存储 | **Vercel KV（Upstash Redis）**，点赞/点击计数 + 限速/防刷均存于此 |
@@ -127,10 +127,10 @@ node scripts/check-links.js
 ```
 
 期望结果：
-- `build.mjs`：`AdSense 注入: 更新 218 | ...` + `版本号注入: <STAMP> | ...` + `CMP 横幅注入: ...`；
+- `build.mjs`：`AdSense 注入: 更新 220 | ...` + `版本号注入: <STAMP> | 220 个文件` + `CMP 横幅注入: 220 个文件`；
 - dist 内每页**恰好 1 个** adsbygoogle 标签（与 `includes/adsense-head.html` 字节一致）且含 `?v=`；
 - 源码内 **0 个**静态 adsbygoogle 标签、**0 个** `#gw-theme`/`.gw-lang`/内联 `switchLang`；
-- `verify-site.mjs` 输出 `✅ verify-site 全绿`（26/26 断言）。
+- `verify-site.mjs` 输出 `✅ verify-site 全绿`（28/28 断言）。
 
 > 模板统一说明：全站 header/footer 以 `includes/header-{zh,en}.html`、`includes/footer-{zh,en}.html` 为字节基准；
 > 改导航/页脚只需改这 4 个文件，然后跑 `node scripts/normalize-template.mjs` 重新落盘全站 HTML。
