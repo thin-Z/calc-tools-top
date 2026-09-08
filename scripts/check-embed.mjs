@@ -7,14 +7,18 @@
  * 且线上 CSP 无 frame-ancestors → /embed 页面里的工具 iframe 100% 不渲染。
  * 更糟的是 26 项断言无一覆盖该能力，功能静默失效无人知晓（典型门禁盲区）。
  *
- * 本门禁把「embed 可嵌入性」固化为断言，五条：
+ * 本门禁把「embed 可嵌入性」固化为断言，六条：
  *   1. 全站通配 headers 的 X-Frame-Options 不得为 DENY（否则同源嵌入即失效）
- *   2. /embed（或 /embed.html）必须有独立 headers 规则，且其 CSP 含 frame-ancestors
- *      （无该指令 = 第三方站点无法嵌入；值为 'none' 等同封死）
- *   3. /embed 规则必须显式覆盖 X-Frame-Options，且值不得为 SAMEORIGIN / DENY
- *      （否则与 CSP frame-ancestors * 自相矛盾 → 旧版 Safari / 企业策略环境跨站嵌入被拦截）
- *   4. embed.html 必须引用 js/embed.js，且 js/embed.js 存在（功能接线完好）
- *   5. js/ads-units.js 必须含被嵌入时跳过广告填充的保护（Google 政策：iframe 内禁投广告）
+ *   2. /embed（或 /embed.html）必须有独立 headers 规则；且其 CSP 的 frame-ancestors
+ *      必须**恰为 `*`** —— 缺失 / 'none' / 'self' / 指定域名都会让第三方嵌入静默失效
+ *   3. /embed 规则必须显式覆盖 X-Frame-Options，且值须为**单值** ALLOWALL
+ *      —— SAMEORIGIN / DENY 阻断跨站嵌入（与 frame-ancestors * 自相矛盾）；
+ *         多值（如 "ALLOWALL, INVALID"、尾逗号 "ALLOWALL,"）按 WHATWG §7.7 step 06
+ *         同样判 embedding disallowed
+ *   4. /embed 规则**之后**不得再有任何规则下发 X-Frame-Options
+ *      （后者覆盖前者 → 会冲掉 ALLOWALL，重新引入跨站嵌入拦截）
+ *   5. embed.html 必须引用 js/embed.js，且 js/embed.js 存在（功能接线完好）
+ *   6. js/ads-units.js 必须含被嵌入时跳过广告填充的保护（Google 政策：iframe 内禁投广告）
  *
  * 用法：node scripts/check-embed.mjs
  * 退出码：0 = 通过；1 = 存在阻断项
@@ -77,11 +81,16 @@ if (!fs.existsSync(vercelPath)) {
         fail('/embed headers 规则缺少 Content-Security-Policy（需在 CSP 中下发 frame-ancestors 才允许被嵌入）');
       } else if (!/\bframe-ancestors\b/.test(csp.value)) {
         fail('/embed 的 CSP 缺少 frame-ancestors 指令（第三方站点嵌入将被拒绝）');
-      } else if (/\bframe-ancestors\s+'none'/.test(csp.value)) {
-        fail("/embed 的 CSP frame-ancestors='none'（等同完全禁止嵌入）");
       } else {
+        // 2a-2. frame-ancestors 必须恰为 `*`：收紧为 'none' / 'self' / 指定域名（如
+        //       https://a.com）都会让第三方站点嵌入静默失效，而 28 项门禁仍全绿无人察觉
+        //       —— 这是「只校验头存在、不校验值语义」同类的门禁盲区。
         const fa = csp.value.match(/frame-ancestors\s+([^;]+)/)[1].trim();
-        console.log(`  /embed frame-ancestors: ${fa} ✓`);
+        if (fa !== '*') {
+          fail(`/embed 的 CSP frame-ancestors=${fa}（必须恰为 '*'）：'none' 等同完全禁止嵌入，'self' 或指定域名会让第三方站点嵌入静默失效，而 28 项门禁仍全绿无人察觉（H1 加固 2026-09-08）`);
+        } else {
+          console.log(`  /embed frame-ancestors: ${fa} ✓`);
+        }
       }
 
       // 2b. X-Frame-Options 必须被 /embed 显式覆盖（H1 线上 Bug，2026-09-08）
@@ -98,19 +107,36 @@ if (!fs.existsSync(vercelPath)) {
       if (!embedXfo) {
         fail('vercel.json /embed 规则未显式覆盖 X-Frame-Options：通配 /(.*) 的 SAMEORIGIN 会残留到 /embed，与自身的 CSP frame-ancestors * 冲突，旧版 Safari / 企业策略环境下跨站 iframe 嵌入会被拦截（应在 /embed 规则追加 {"key":"X-Frame-Options","value":"ALLOWALL"}）');
       } else {
-        // 多值场景（如 "SAMEORIGIN, ALLOWALL"）同样阻断：HTML 规范 §7.7 多值表明确该组合
-        // 结果为「embedding disallowed」，因此逐 token 判定。
-        const tokens = embedXfo.value
-          .split(',')
-          .map((v) => v.trim().toUpperCase())
-          .filter((v) => v.length > 0);
-        const blocking = tokens.filter((v) => v === 'SAMEORIGIN' || v === 'DENY');
-        if (blocking.length > 0) {
-          fail(`/embed 的 X-Frame-Options=${embedXfo.value} 含阻断值 ${blocking.join('/')}：会禁止跨站 iframe 嵌入，与同规则内 CSP frame-ancestors * 自相矛盾（H1：应改为 ALLOWALL —— 非标准值，浏览器按 HTML 规范视为无效并忽略，等价于不放开限制）`);
-        } else if (tokens.length === 0) {
+        // 值判定三连：空值 → 阻断值 → 非单值（阻断值优先，报错信息更精确）。
+        // 逐 token 判定而非字符串等值：若 Vercel 由「覆盖」变为「追加」，等值判断会漏掉。
+        // 单值要求依据 WHATWG §7.7 多值表："ALLOWALL, INVALID" 与尾逗号 "ALLOWALL," 均判
+        // embedding disallowed —— 因此**不能**先滤掉空 token，必须按原始逗号切分计数。
+        const rawTokens = embedXfo.value.split(',');
+        const tokens = rawTokens.map((v) => v.trim().toUpperCase());
+        const nonEmpty = tokens.filter((v) => v.length > 0);
+        const blocking = nonEmpty.filter((v) => v === 'SAMEORIGIN' || v === 'DENY');
+        if (nonEmpty.length === 0) {
           fail('/embed 的 X-Frame-Options 为空值（无法覆盖通配规则的 SAMEORIGIN）');
+        } else if (blocking.length > 0) {
+          fail(`/embed 的 X-Frame-Options=${embedXfo.value} 含阻断值 ${blocking.join('/')}：会禁止跨站 iframe 嵌入，与同规则内 CSP frame-ancestors * 自相矛盾（H1：应改为单个 ALLOWALL —— 非标准值，浏览器按 HTML 规范视为无效并忽略，等价于不放开限制）`);
+        } else if (rawTokens.length !== 1) {
+          fail(`/embed 的 X-Frame-Options=${embedXfo.value} 不是单值（按逗号切分得到 ${rawTokens.length} 段）：WHATWG §7.7 step 06 规定多值组合（如 "ALLOWALL, INVALID"、尾逗号 "ALLOWALL,"）判定为 embedding disallowed，跨站嵌入会被静默拦截（应为单个 ALLOWALL）`);
         } else {
           console.log(`  /embed X-Frame-Options: ${embedXfo.value} ✓`);
+        }
+      }
+
+      // 2c. /embed 之后不得再有规则下发 X-Frame-Options（H1 加固 2026-09-08）
+      //     Vercel 同 key 头「后者覆盖前者」：任何排在 /embed 之后且带 XFO 的规则，都会把
+      //     ALLOWALL 覆盖回 SAMEORIGIN/DENY，让 H1 原地复活。/embed 必须是 headers 数组
+      //     里最后一条下发 XFO 的规则。
+      for (let i = ei + 1; i < groups.length; i++) {
+        const later = groups[i];
+        const laterXfo = (later.headers || []).find(
+          (h) => h.key.toLowerCase() === 'x-frame-options'
+        );
+        if (laterXfo) {
+          fail(`headers 规则 ${JSON.stringify(later.source)}（索引 ${i}，位于 /embed 之后）下发了 X-Frame-Options: ${laterXfo.value}：按「后者覆盖前者」会冲掉 /embed 的 ALLOWALL，重新引入 H1 跨站嵌入拦截（应将 /embed 规则移到 headers 数组末尾，或让该规则不再下发 XFO）`);
         }
       }
     }

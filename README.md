@@ -93,7 +93,7 @@ KV_URL / KV_REDIS_URL
 | `check-doc-sync.mjs` | 检查文档与代码的同步状态（README ↔ scripts ↔ 配置；归档脚本须以 `~~名字~~` 标注并落在 `scripts/archive/`）（verify-site [26] 调用） | `node scripts/check-doc-sync.mjs` |
 | `check-redirects.mjs` | 重定向门禁：通配 `/(.*).html` 须置于末尾 + 每条 `.html` 规则须有无 `.html` companion（`cleanUrls` 会先剥离 `.html`）（verify-site [24] 调用） | `node scripts/check-redirects.mjs` |
 | `check-tool-template.mjs` | 4.2 工具页模板一致性门禁（与 `tool-template-baseline.json` 交叉校验：新增违规/基线过期均 FAIL）（verify-site [23] 调用） | `node scripts/check-tool-template.mjs` |
-| `check-embed.mjs` | embed 可嵌入性门禁：全站 `X-Frame-Options` 不得为 DENY + `/embed` 须有 CSP `frame-ancestors` + `embed.html`↔`js/embed.js` 接线 + 嵌入态广告保护（verify-site [27] 调用） | `node scripts/check-embed.mjs` |
+| `check-embed.mjs` | embed 可嵌入性门禁：全站 `X-Frame-Options` 不得为 DENY + `/embed` 的 CSP `frame-ancestors` 须恰为 `*` + `/embed` 须显式覆盖 `X-Frame-Options` 为单值 `ALLOWALL` + `/embed` 之后不得再有规则下发 `X-Frame-Options` + `embed.html`↔`js/embed.js` 接线 + 嵌入态广告保护（verify-site [27] 调用） | `node scripts/check-embed.mjs` |
 | `check-sitemap.mjs` | sitemap 健康门禁：无死链 + noindex 页不进 sitemap + 条数规模下界（verify-site [28] 调用） | `node scripts/check-sitemap.mjs` |
 | `scan-csp-inline.py` | 扫描全站内联脚本/事件/样式 | `python scripts/scan-csp-inline.py` |
 | ~~`analyze_sitemap.py`~~ | ~~分析 sitemap 结构~~（归档） | `python scripts/archive/analyze_sitemap.py` |
