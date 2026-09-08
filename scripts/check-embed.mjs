@@ -7,12 +7,14 @@
  * 且线上 CSP 无 frame-ancestors → /embed 页面里的工具 iframe 100% 不渲染。
  * 更糟的是 26 项断言无一覆盖该能力，功能静默失效无人知晓（典型门禁盲区）。
  *
- * 本门禁把「embed 可嵌入性」固化为断言，四条：
+ * 本门禁把「embed 可嵌入性」固化为断言，五条：
  *   1. 全站通配 headers 的 X-Frame-Options 不得为 DENY（否则同源嵌入即失效）
  *   2. /embed（或 /embed.html）必须有独立 headers 规则，且其 CSP 含 frame-ancestors
  *      （无该指令 = 第三方站点无法嵌入；值为 'none' 等同封死）
- *   3. embed.html 必须引用 js/embed.js，且 js/embed.js 存在（功能接线完好）
- *   4. js/ads-units.js 必须含被嵌入时跳过广告填充的保护（Google 政策：iframe 内禁投广告）
+ *   3. /embed 规则必须显式覆盖 X-Frame-Options，且值不得为 SAMEORIGIN / DENY
+ *      （否则与 CSP frame-ancestors * 自相矛盾 → 旧版 Safari / 企业策略环境跨站嵌入被拦截）
+ *   4. embed.html 必须引用 js/embed.js，且 js/embed.js 存在（功能接线完好）
+ *   5. js/ads-units.js 必须含被嵌入时跳过广告填充的保护（Google 政策：iframe 内禁投广告）
  *
  * 用法：node scripts/check-embed.mjs
  * 退出码：0 = 通过；1 = 存在阻断项
@@ -80,6 +82,36 @@ if (!fs.existsSync(vercelPath)) {
       } else {
         const fa = csp.value.match(/frame-ancestors\s+([^;]+)/)[1].trim();
         console.log(`  /embed frame-ancestors: ${fa} ✓`);
+      }
+
+      // 2b. X-Frame-Options 必须被 /embed 显式覆盖（H1 线上 Bug，2026-09-08）
+      //     背景：通配 /(.*) 给**全站**下发 X-Frame-Options: SAMEORIGIN，而 /embed 规则历史上
+      //     只覆盖了 CSP（frame-ancestors *）。两者矛盾：
+      //       · 现代 Chrome/Firefox：HTML 规范规定 frame-ancestors 存在时忽略 XFO → 能嵌入；
+      //       · 旧版 Safari / 部分企业策略环境：XFO 优先级更高 → 跨站 iframe 被拦截（空白页）。
+      //     修复：/embed 规则追加 X-Frame-Options: ALLOWALL（非标准值；HTML 规范 §7.7 明确
+      //     ALLOWALL 属无效值 → 「embedding allowed」，不识别的浏览器按忽略处理，等价于不发
+      //     该头，从而让 CSP frame-ancestors * 单独生效）。
+      const embedXfo = (embedGroup.headers || []).find(
+        (h) => h.key.toLowerCase() === 'x-frame-options'
+      );
+      if (!embedXfo) {
+        fail('vercel.json /embed 规则未显式覆盖 X-Frame-Options：通配 /(.*) 的 SAMEORIGIN 会残留到 /embed，与自身的 CSP frame-ancestors * 冲突，旧版 Safari / 企业策略环境下跨站 iframe 嵌入会被拦截（应在 /embed 规则追加 {"key":"X-Frame-Options","value":"ALLOWALL"}）');
+      } else {
+        // 多值场景（如 "SAMEORIGIN, ALLOWALL"）同样阻断：HTML 规范 §7.7 多值表明确该组合
+        // 结果为「embedding disallowed」，因此逐 token 判定。
+        const tokens = embedXfo.value
+          .split(',')
+          .map((v) => v.trim().toUpperCase())
+          .filter((v) => v.length > 0);
+        const blocking = tokens.filter((v) => v === 'SAMEORIGIN' || v === 'DENY');
+        if (blocking.length > 0) {
+          fail(`/embed 的 X-Frame-Options=${embedXfo.value} 含阻断值 ${blocking.join('/')}：会禁止跨站 iframe 嵌入，与同规则内 CSP frame-ancestors * 自相矛盾（H1：应改为 ALLOWALL —— 非标准值，浏览器按 HTML 规范视为无效并忽略，等价于不放开限制）`);
+        } else if (tokens.length === 0) {
+          fail('/embed 的 X-Frame-Options 为空值（无法覆盖通配规则的 SAMEORIGIN）');
+        } else {
+          console.log(`  /embed X-Frame-Options: ${embedXfo.value} ✓`);
+        }
       }
     }
   }
