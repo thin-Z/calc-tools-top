@@ -125,9 +125,11 @@
             <form id="calorieForm" data-csp-submit="prevent">
                 <div class="form-group">
                     <label>性别</label>
-                    <div class="st-19">
-                        <label class="st-20"><input type="radio" name="gender" value="male" id="genderMale" checked> 男</label>
-                        <label class="st-20"><input type="radio" name="gender" value="female"> 女</label>
+                    <div class="gender-seg" role="radiogroup" aria-label="性别">
+                        <input type="radio" name="gender" id="genderMale" value="male" checked>
+                        <label for="genderMale">男</label>
+                        <input type="radio" name="gender" id="genderFemale" value="female">
+                        <label for="genderFemale">女</label>
                     </div>
                 </div>
                 <div class="form-row">
