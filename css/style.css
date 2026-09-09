@@ -3313,12 +3313,17 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--primary); }
 .st-43 { font-size:1.2rem;font-weight:700;margin-top:4px;color:var(--success); }
 .st-44 { font-size:1.2rem;font-weight:700;margin-top:4px;color:var(--primary); }
 .st-45 { margin-top:12px;padding-top:12px;border-top:1px solid var(--blue-100);font-size:0.8rem;color:var(--text-secondary); }
-.st-46 { display:flex;gap:12px;margin-bottom:24px;justify-content:center; }
+/* date-calc 模式胶囊：与 .seg-group 完全同构（连体分段、10px 组圆角、1px 外框、.55rem 1.4rem 内距）。
+   结构不动（toggleMode 依赖 #modeXLabel + inline style）：由容器承担边框/圆角，label 自身去边框，
+   使 inline borderColor 不再影响外观；未选中态改为透明底 + var(--text)，与 .seg-group 一致。 */
+.st-46 { display:flex;width:fit-content;gap:0;margin:.3rem auto 1.5rem;border:1px solid var(--border);border-radius:10px;overflow:hidden; }
 /* 隐去 date-calc 模式胶囊内的原生 radio 圆点：保留 JS(toggleMode) 控制的胶囊分段视觉，去掉突兀圆点 */
 .st-46 input[type="radio"]{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;}
-/* st-47 选中态改为实蓝底白字，与 .seg-group input:checked + label 视觉统一 */
-.st-47 { display:flex;align-items:center;gap:6px;cursor:pointer;padding:8px 16px;border:2px solid var(--primary);border-radius:var(--radius);font-weight:600;font-size:0.95rem;background:var(--primary);color:var(--white); }
-.st-48 { display:flex;align-items:center;gap:6px;cursor:pointer;padding:8px 16px;border:2px solid var(--border);border-radius:var(--radius);font-weight:500;font-size:0.95rem;background:var(--bg-card);color:var(--text-secondary); }
+.st-47, .st-48 { display:block;margin:0;border:0;padding:.55rem 1.4rem;cursor:pointer;font-size:.95rem;line-height:1.2;user-select:none;transition:background .15s,color .15s; }
+.st-46 label + label { border-left:1px solid var(--border); }
+.st-47 { background:var(--primary);color:var(--white);font-weight:600; }
+.st-48 { background:transparent;color:var(--text);font-weight:500; }
+.st-46 label:has(input:focus-visible){outline:2px solid var(--primary);outline-offset:-2px;}
 .st-49 { margin-top:8px; }
 .st-50 { font-size:1.5rem;font-weight:bold;color:var(--strength-fair); }
 .st-51 { padding:1rem; }
