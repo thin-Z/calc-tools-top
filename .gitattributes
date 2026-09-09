@@ -1,0 +1,51 @@
+# calc-tools.top — 行尾与二进制归一化（迭代二 Q-1，2026-09-09）
+#
+# 目的：根治「百度同步盘间歇注入 CRLF」导致 style.css 等文件整文件翻转 diff
+#       （历史：`c09c8ef` 486 行 diff 实为 40 行、`d1d1f28` 486→8 行）。
+#       统一全仓库 text=auto + eol=lf，任何平台/同步盘写入的 CRLF 在
+#       git add 时被归一为 LF，杜绝未来整文件翻转。
+#
+# ⚠️ 二进制资源必须显式声明 binary，否则 text=auto 会尝试归一化导致损坏。
+
+# —— 文本：统一 LF ——
+*                       text=auto eol=lf
+
+# —— 显式文本（即便无扩展名也按文本处理）——
+*.html                  text eol=lf
+*.css                   text eol=lf
+*.js                    text eol=lf
+*.mjs                   text eol=lf
+*.cjs                   text eol=lf
+*.json                  text eol=lf
+*.md                    text eol=lf
+*.py                    text eol=lf
+*.ps1                   text eol=lf
+*.sh                    text eol=lf
+*.svg                   text eol=lf
+*.txt                   text eol=lf
+*.yml                   text eol=lf
+*.yaml                  text eol=lf
+*.xml                   text eol=lf
+*.toml                  text eol=lf
+*.map                   text eol=lf
+
+# —— 二进制（禁止归一化，避免损坏）——
+*.png                   binary
+*.jpg                   binary
+*.jpeg                  binary
+*.gif                   binary
+*.ico                   binary
+*.webp                  binary
+*.avif                  binary
+*.woff                  binary
+*.woff2                 binary
+*.ttf                   binary
+*.otf                   binary
+*.eot                   binary
+*.mp4                   binary
+*.webm                  binary
+*.ogv                   binary
+*.zip                   binary
+*.gz                    binary
+*.pdf                   binary
+*.ico                   binary

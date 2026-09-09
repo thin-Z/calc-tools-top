@@ -243,6 +243,38 @@ walkHtml(dist, (f) => {
 });
 console.log(`[build] AdSense 注入: 更新 ${adsenseUpdated} | 跳过 ${adsenseSkipped}`);
 
+// 3a) 注入 runtime-head（csp-events 事件委托层，与 AdSense 解耦，迭代二 Q-3，2026-09-09）
+//      csp-events.js 是全站 232 处事件委托层，原寄生在 includes/adsense-head.html；
+//      广告片段一变（如替换 client id / A-B 测试）全站静默失效。现独立注入，
+//      事件层生命周期与广告/GA4 彻底解耦（参考 scripts/verify-site.mjs [30] 断言）。
+const runtimeHeadPath = join(root, 'includes', 'runtime-head.html');
+if (!existsSync(runtimeHeadPath)) {
+  console.error('[build] FATAL: 找不到 includes/runtime-head.html');
+  process.exit(1);
+}
+let runtimeSnippet = readFileSync(runtimeHeadPath, 'utf8').trim();
+if (!runtimeSnippet.includes('csp-events.js')) {
+  console.error('[build] FATAL: includes/runtime-head.html 不含 csp-events.js');
+  process.exit(1);
+}
+const cspEventsRe = /<script\b[^>]*\bcsp-events\.js\b[^>]*>\s*<\/script>/gi;
+let runtimeUpdated = 0;
+let runtimeSkipped = 0;
+walkHtml(dist, (f) => {
+  const raw = readFileSync(f);
+  const hadBom = raw[0] === 0xef && raw[1] === 0xbb && raw[2] === 0xbf;
+  let text = raw.toString('utf8');
+  if (hadBom) text = text.slice(1);
+  if (text.includes('csp-events.js')) { runtimeSkipped++; return; } // 幂等：已含则跳过
+  if (!headRe.test(text)) { console.warn('[build] 跳过 runtime-head(无 <head>):', f.replace(dist, '')); return; }
+  const eol = text.includes('\r\n') ? '\r\n' : '\n';
+  const newText = text.replace(headRe, `<head>${eol}    ${runtimeSnippet}`);
+  if (newText === text) { runtimeSkipped++; return; }
+  writeFileSync(f, newText, 'utf8');
+  runtimeUpdated++;
+});
+console.log(`[build] runtime-head(csp-events) 注入: 更新 ${runtimeUpdated} | 跳过 ${runtimeSkipped}`);
+
 // 3b) 注入 PWA head 标签（manifest / theme-color / apple-touch-icon / SW 注册脚本）
 const PWA_INJECT = '<link rel="manifest" href="/manifest.json">'
   + '\n    <meta name="theme-color" content="#007AFF">'

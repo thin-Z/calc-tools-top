@@ -167,6 +167,34 @@ if (fs.existsSync(verifyPath)) {
   fail('verify-site.mjs 不存在');
 }
 
+// ---------- 4.5 scripts/README.md 触发方式列校验（迭代二 Q-4，2026-09-09） ----------
+// 校验「保留清单」表中每个活跃脚本行都标注了触发方式（自动/手动/一次性），
+// 防止「脚本未文档化/未分类」漂移。归档行（删除线）与表头/分隔行跳过。
+console.log('\n[4] 校验 scripts/README.md 触发方式列...');
+const scriptsReadmePath = path.join(SCRIPTS_DIR, 'README.md');
+const TRIGGER_RE = /(自动|手动|一次性)/;
+if (fs.existsSync(scriptsReadmePath)) {
+  const sLines = fs.readFileSync(scriptsReadmePath, 'utf8').split('\n');
+  let triggerBad = 0;
+  for (const line of sLines) {
+    const t = line.trimStart();
+    if (!t.startsWith('|')) continue;
+    if (/^\|[\s:-]+\|$/.test(t)) continue; // 分隔行 |---|
+    if (/^\|\s*`?脚本`?\s*\|/.test(t)) continue; // 表头行
+    const cells = t.split('|').slice(1, -1).map((c) => c.trim());
+    if (cells.length < 4) continue; // 非四列行（如归档说明/空行）跳过
+    const name = cells[0].replace(/`/g, '').trim();
+    if (!SCRIPT_EXT.test(name) || /~~/.test(name)) continue; // 非脚本/归档行跳过
+    if (!TRIGGER_RE.test(cells[3].trim())) {
+      fail(`scripts/README.md 脚本 \`${name}\` 未标注触发方式（须含 自动/手动/一次性）`);
+      triggerBad++;
+    }
+  }
+  if (!triggerBad) console.log('  ✓ 触发方式列完整（自动/手动/一次性）');
+} else {
+  fail('scripts/README.md 不存在（无法校验触发方式列）');
+}
+
 // ---------- 5. 汇总 ----------
 console.log('\n========== 检查结果 ==========');
 if (failures.length) {

@@ -5,13 +5,17 @@
  * 功能：在 zh/en 两侧的 calculators/*.html（非 index）中，于 </body> 前注入
  *       <script src="/js/url-state.js" defer></script>（幂等：已含则跳过）。
  * 背景：Calculator.net 模式 — 表单值序列化到 URL，刷新保留、可分享带参链接。
- * 用法：node scripts/inject-url-state.mjs [--dry-run]
+ * 用法：node scripts/inject-url-state.mjs [--write]
+ * ⚠️ 安全：默认 dry-run（不写改源码），必须显式传 --write 才真实注入。
+ *    迭代二 Q-4（2026-09-09）：原默认真实写入，存在「误跑即改源码 HTML」风险，
+ *    现改为默认只读预演，杜绝孤儿脚本意外改写源文件。
  */
 import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
 import { join } from 'path';
 
 const ROOT = process.cwd();
-const DRY = process.argv.includes('--dry-run');
+const WRITE = process.argv.includes('--write');
+const DRY = !WRITE;
 const SCRIPT_TAG = '<script src="/js/url-state.js" defer></script>';
 
 function walkHtml(dir, callback) {

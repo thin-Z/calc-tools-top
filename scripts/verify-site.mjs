@@ -668,6 +668,34 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
   }
 }
 
+// ---------- 30. csp-events 解耦断言（迭代二 Q-3，2026-09-09） ----------
+// (a) csp-events.js 不得再寄生 includes/adsense-head.html（已迁至 runtime-head.html，
+//     与广告/GA4 片段解耦，杜绝「广告片段一变全站静默失效」）；
+// (b) 构建后 dist 全页必含 js/csp-events.js（全站 232 处事件委托层必须常驻）。
+{
+  const adsenseInclude = path.join(ROOT, 'includes', 'adsense-head.html');
+  const adsenseSrc = fs.readFileSync(adsenseInclude, 'utf8');
+  if (adsenseSrc.includes('csp-events.js')) {
+    fail('[csp-events] includes/adsense-head.html 仍含 csp-events.js（应与 runtime-head.html 解耦，迭代二 Q-3）');
+  } else {
+    console.log('[30] csp-events 已从 adsense-head 解耦 ✓');
+  }
+  if (fs.existsSync(DIST)) {
+    let bad = [];
+    walkHtml(DIST, (f) => {
+      const t = fs.readFileSync(f, 'utf8').replace(/^\uFEFF/, '');
+      if (!t.includes('js/csp-events.js')) bad.push(path.relative(DIST, f));
+    });
+    if (bad.length) {
+      fail(`[csp-events] dist 中 ${bad.length} 页缺失 js/csp-events.js（${bad.slice(0, 5).join(', ')}）`);
+    } else {
+      console.log('[30] csp-events 全页覆盖 ✓');
+    }
+  } else {
+    console.log('[30] dist 不存在，跳过全页覆盖检查（仅校验 includes 解耦）');
+  }
+}
+
 // ---------- 汇总 ----------
 if (failures.length) {
   console.error(`\n❌ verify-site 失败 ${failures.length} 项：`);
