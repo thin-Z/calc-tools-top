@@ -656,6 +656,18 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
   }
 }
 
+// ---------- 29. dist 卫生门禁（迭代一 / 防 P0-3 构建产物泄漏复发，2026-09-09） ----------
+// 断言 dist 中不得含 .workbuddy/ / e2e/ / test-results/ / __* / 根级配置 .mjs / 根级 .json
+// （manifest.json 与 tools.json 为运行时必需，白名单放行；详见 scripts/check-dist-hygiene.mjs）。
+{
+  try {
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'check-dist-hygiene.mjs')], { stdio: 'inherit', cwd: ROOT });
+    console.log('[29] dist 卫生门禁 (check-dist-hygiene): ✓');
+  } catch (e) {
+    fail('[dist-hygiene] scripts/check-dist-hygiene.mjs 退出码非 0（dist 含 .workbuddy/ e2e/ test-results/ __* / 根级配置 .mjs/.json，疑似 P0-3 构建产物泄漏复发）');
+  }
+}
+
 // ---------- 汇总 ----------
 if (failures.length) {
   console.error(`\n❌ verify-site 失败 ${failures.length} 项：`);

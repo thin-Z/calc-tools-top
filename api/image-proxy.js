@@ -24,6 +24,7 @@
 'use strict';
 
 const dns = require('dns');
+const https = require('node:https');
 const { Readable } = require('node:stream');
 
 // 复用 api/likes.js 已验证的客户端 IP 提取规则（只信任 XFF 最右段）。
@@ -44,6 +45,10 @@ const ALLOWED_ORIGINS = [
 ];
 
 // ---------- 限速：内存滑动窗口（与 likes.js 读限速同一模式，不消耗 KV 配额） ----------
+// S-3 决策：保持内存限速，不迁 Upstash。理由：image-proxy 每个请求都是「抓取一次即透传」的纯读，
+// 无任何写操作、无 KV 债务风险；与 likes.js「读限速走内存、写限速走 KV」的既定策略完全一致
+// （likes.js 注释明确「读限速不消耗 KV 配额，防爬已足够」）。多实例部署下内存限额会被放大约等于
+// 实例数倍，但本端点无状态写、无越权风险，该取舍与项目全局一致，故不在本迭代引入外部依赖。
 const rateHits = new Map();
 
 function isRateLimited(ip) {
@@ -152,7 +157,7 @@ function isPrivateIp(ip) {
  * 解析 host 的全部 A/AAAA 记录并逐条校验。
  * @returns {null|{status:number, code:string}} null = 放行；否则为错误响应
  */
-async function guardHost(hostname) {
+async function resolveAndValidate(hostname) {
   const bare = String(hostname).replace(/^\[/, '').replace(/\]$/, '');
   let addrs = null;
   try {
@@ -164,8 +169,50 @@ async function guardHost(hostname) {
   for (let i = 0; i < addrs.length; i++) {
     if (isPrivateIp(addrs[i].address)) return { status: 400, code: 'private_address' };
   }
-  return null;
+  // 全部通过校验后，选定一个 IP（优先 IPv4）用于连接锁定，根治 DNS rebinding（TOCTOU）
+  const chosen = addrs.find(function (a) { return a.family === 4; }) || addrs[0];
+  return { ip: chosen.address, family: chosen.family };
 }
+
+// 上游连接层：用 https.request + lookup 回调锁定到 resolveAndValidate 已校验的 IP。
+// S-1 根治：connect 时忽略真实 DNS，直接用 pinnedIp（SNI 用原域名验证 TLS 证书），
+// 因此「校验时公网 / 建连时内网」的 TOCTOU 窗口被彻底消除。
+// 返回与 fetch Response 兼容的 { status, headers.get, body(web ReadableStream) } 接口，
+// 使 handler 内部消费逻辑（status / content-type / location / body 流）零改动。
+let upstreamFetcher = function httpsFetcher(urlString, pinnedIp, family) {
+  return new Promise(function (resolve, reject) {
+    const u = new URL(urlString);
+    const req = https.request(u, {
+      method: 'GET',
+      headers: { accept: 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8' },
+      lookup: function (hostname, options, callback) {
+        // 兼容 lookup 两参 / 三参签名
+        if (typeof callback !== 'function') callback = options;
+        callback(null, pinnedIp, family); // 锁定到已校验 IP
+      },
+      servername: u.hostname, // SNI：TLS 证书按原域名验证
+      signal: AbortSignal.timeout(TIMEOUT_MS),
+    }, function (response) {
+      const headerMap = new Map();
+      for (const k in response.headers) {
+        const v = response.headers[k];
+        headerMap.set(String(k).toLowerCase(), Array.isArray(v) ? v.join(', ') : v);
+      }
+      resolve({
+        status: response.statusCode,
+        headers: {
+          get: function (name) {
+            const key = String(name).toLowerCase();
+            return headerMap.has(key) ? headerMap.get(key) : null;
+          },
+        },
+        body: Readable.toWeb(response),
+      });
+    });
+    req.on('error', reject);
+    req.end();
+  });
+};
 
 function isTimeoutError(e) {
   if (!e) return false;
@@ -207,6 +254,9 @@ module.exports = async function handler(req, res) {
   }
   if (target.protocol !== 'https:') return fail(res, 400, 'invalid_protocol');
 
+  // S-4：仅放行上游 443（防止利用图片代理对内网/公网做任意端口扫描侧信道）
+  if (target.port && target.port !== '443') return fail(res, 400, 'invalid_url');
+
   let current = target.href;
 
   for (let hop = 0; hop <= MAX_REDIRECTS; hop++) {
@@ -218,18 +268,15 @@ module.exports = async function handler(req, res) {
     }
     if (u.protocol !== 'https:') return fail(res, 400, 'invalid_protocol');
 
-    // 每一跳都重新做 IP 校验（防止首跳公网、次跳内网）
-    const guard = await guardHost(u.hostname);
-    if (guard) return fail(res, guard.status, guard.code);
+    // S-1：每一跳都重新解析+校验 IP，并选定锁定 IP。
+    // 连接时 httpsFetcher 用 lookup 回调锁定到此处已校验的 IP，彻底消除
+    // 「校验时公网 / 建连时内网」的 DNS rebinding（TOCTOU）窗口。
+    const resolved = await resolveAndValidate(u.hostname);
+    if (resolved.status) return fail(res, resolved.status, resolved.code);
 
     let upstream;
     try {
-      upstream = await fetch(u.href, {
-        method: 'GET',
-        redirect: 'manual',
-        signal: AbortSignal.timeout(TIMEOUT_MS),
-        headers: { accept: 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8' },
-      });
+      upstream = await upstreamFetcher(u.href, resolved.ip, resolved.family);
     } catch (e) {
       return fail(res, isTimeoutError(e) ? 504 : 502, isTimeoutError(e) ? 'upstream_timeout' : 'fetch_failed');
     }
@@ -255,6 +302,14 @@ module.exports = async function handler(req, res) {
     const contentType = String(upstream.headers.get('content-type') || '').split(';')[0].trim().toLowerCase();
     if (ALLOWED_TYPES.indexOf(contentType) === -1) return fail(res, 415, 'unsupported_type');
     if (!upstream.body) return fail(res, 502, 'fetch_failed');
+
+    // S-2：先读 Content-Length 早拒超大响应（避免无谓拉取 8MB+ 字节流驻留内存，
+    // 这是 S-2 防 OOM 的核心防线；对无 content-length 的 chunked 响应，下方流中
+    // 超限即时中断兜底）。【取舍】不采用全流式 pipe：会牺牲「body 读取错误时返回
+    // JSON 错误码」的既有语义（头已发 200 后无法改状态码），故保留「先读后发」。
+    // 8MB 上限内的全载入在 serverless 内存预算内安全，错误响应必须精确（504/502）。
+    const declaredLen = Number(upstream.headers.get('content-length')) || 0;
+    if (declaredLen > MAX_BYTES) return fail(res, 413, 'too_large');
 
     const chunks = [];
     let total = 0;
@@ -287,3 +342,6 @@ module.exports = async function handler(req, res) {
 
 // 供单元测试直接覆盖网段判定表（不影响 Vercel 调用：module.exports 仍是 handler）
 module.exports.isPrivateIp = isPrivateIp;
+// 测试注入点：用桩替换上游连接层，保持 handler 内部 Response 消费逻辑零改动
+module.exports.__setFetcher = function (fn) { upstreamFetcher = fn; };
+module.exports.__getFetcher = function () { return upstreamFetcher; };

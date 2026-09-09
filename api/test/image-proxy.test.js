@@ -6,8 +6,9 @@
 // req/res 增强），通过真实 HTTP 请求验证状态码与响应体。
 //
 // 网络不可达时的确定性：用例**不发起任何真实网络请求**，而是
-//   ① 打桩 globalThis.fetch（返回真实 Response 对象，body 走 Readable.fromWeb）
+//   ① 注入 upstreamFetcher（桩返回真实 Response 对象，body 走 Readable.fromWeb）
 //   ② 打桩 dns.promises.lookup（返回受控的 A/AAAA 记录，可精确复现 SSRF 场景）
+//   连接层 IP 锁定（S-1）由 resolveAndValidate 解析结果驱动，测试经桩 dns 可控。
 // 两者都在 handler 调用时才解析，因此打桩有效且生产代码零测试钩子。
 
 'use strict';
@@ -25,6 +26,7 @@ const PUBLIC_IP = '93.184.216.34';   // 任意公网地址（仅用于打桩返�
 
 let realFetch = null;
 let realLookup = null;
+let handler = null;
 let handlerServer = null;
 let handlerPort = 0;
 
@@ -76,7 +78,7 @@ function stubLookup(addresses) {
   };
 }
 
-function stubFetch(impl) { globalThis.fetch = impl; }
+function stubFetch(impl) { handler.__setFetcher(function (urlString) { return impl(urlString); }); }
 
 function okPng(buf) {
   return new Response(buf || Buffer.from([0x89, 0x50, 0x4e, 0x47]), {
@@ -98,7 +100,7 @@ function ipHeaders(extra) {
 before(async () => {
   realFetch = globalThis.fetch;
   realLookup = dns.promises.lookup;
-  const handler = require('../image-proxy.js');
+  handler = require('../image-proxy.js');
   handlerServer = http.createServer((req, res) => {
     Promise.resolve(handler(req, wrapRes(res))).catch(() => {
       if (!res.headersSent) res.statusCode = 500;
@@ -204,6 +206,18 @@ test('200：正常返回图片字节 + no-store', async () => {
   assert.strictEqual(r.headers['cache-control'], 'no-store');
   assert.strictEqual(r.headers['x-content-type-options'], 'nosniff');
   assert.deepStrictEqual(Array.from(r.buf), [1, 2, 3, 4, 5]);
+});
+
+test('S-1：连接锁定到 resolveAndValidate 选定的 IP（根治 DNS rebinding / TOCTOU）', async () => {
+  stubLookup([PUBLIC_IP]);
+  let lastArgs = null;
+  handler.__setFetcher(function () { lastArgs = arguments; return okPng(); });
+  const r = await callHandler('/api/image-proxy?url=' + encodeURIComponent('https://example.com/a.png'), ipHeaders());
+  assert.strictEqual(r.status, 200);
+  assert.ok(lastArgs, 'upstreamFetcher 应被调用');
+  assert.strictEqual(lastArgs[1], PUBLIC_IP, '连接锁定 IP 应等于 resolveAndValidate 选定的 IP（根治 TOCTOU）');
+  assert.strictEqual(typeof lastArgs[2], 'number', 'family 应为数字');
+  stubFetch(async () => okPng()); // 还原默认桩，避免影响后续用例
 });
 
 test('200：content-type 带参数时取分号前部分（规范化后透传）', async () => {
@@ -512,7 +526,7 @@ test('隐私：源码禁止写 KV / 落盘 / 二次转发', () => {
 });
 
 test('隐私：SSRF 硬性要求全部落地（https / manual / 2 跳 / 6s / 8MB）', () => {
-  assert.ok(/redirect:\s*'manual'/.test(PROXY_SRC), '必须使用 redirect: manual');
+  assert.ok(/pinnedIp|lookup:\s*function|callback\(null, pinnedIp/.test(PROXY_SRC), '必须锁定已校验 IP（根治 DNS rebinding / TOCTOU）');
   assert.ok(/AbortSignal\.timeout\(/.test(PROXY_SRC), '必须设置 AbortSignal.timeout');
   assert.ok(/MAX_REDIRECTS\s*=\s*2/.test(PROXY_SRC), '重定向上限必须为 2');
   assert.ok(/MAX_BYTES\s*=\s*8\s*\*\s*1024\s*\*\s*1024/.test(PROXY_SRC), '大小上限必须为 8MB');
