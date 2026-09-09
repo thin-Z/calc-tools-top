@@ -1940,6 +1940,120 @@ svg.ic {
     font-size: 0.85rem;
 }
 
+/* ===== Color Picker 多渠道（5 渠道重构） =====
+   仅新增 .cp-* 修饰类；不改 .seg-group 基础定义（见 3285 行）。*/
+.seg-group.cp-channels { flex-wrap: wrap; }
+.seg-group.cp-channels label.is-disabled {
+    opacity: .45;
+    cursor: not-allowed;
+    background: var(--bg-muted);
+}
+.seg-group.cp-channels label.is-disabled:hover { background: var(--bg-muted); }
+
+.cp-panel { margin-top: 1.25rem; }
+
+.cp-error {
+    color: var(--danger);
+    font-size: .875rem;
+    padding: .5rem .75rem;
+    margin-top: .5rem;
+    background: var(--cp-danger-bg);
+    border: 1px solid var(--cp-danger-border);
+    border-radius: 6px;
+}
+
+.cp-note {
+    color: var(--text-secondary);
+    font-size: .875rem;
+    padding: .5rem .75rem;
+    margin-top: .5rem;
+    background: var(--bg-muted);
+    border-radius: 6px;
+}
+
+.cp-privacy-note {
+    font-size: .8rem;
+    color: var(--text-secondary);
+    margin-top: .5rem;
+    line-height: 1.5;
+}
+
+.cp-label {
+    display: block;
+    font-size: .875rem;
+    font-weight: 600;
+    margin-bottom: .35rem;
+    color: var(--text);
+}
+
+.cp-url-row { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
+.cp-url-row .text-input { flex: 1 1 240px; min-width: 0; }
+
+.cp-paste-zone {
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    background: var(--bg-card);
+}
+.cp-paste-zone h3 { margin: .5rem 0; }
+.cp-paste-zone p { color: var(--text-secondary); margin-top: .25rem; }
+.cp-paste-icon { font-size: 2.5rem; color: var(--primary); line-height: 1; }
+.cp-paste-icon .ic { width: 2.5rem; height: 2.5rem; }
+
+.cp-lookup-panel { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
+.cp-lookup-field { display: flex; flex-direction: column; gap: .35rem; }
+.cp-lookup-text { flex: 1 1 260px; }
+.cp-lookup-text .text-input { width: 100%; }
+.cp-lookup-panel input[type="color"] {
+    width: 56px;
+    height: 42px;
+    padding: 2px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-card);
+    cursor: pointer;
+}
+.cp-lookup-panel .text-input.is-invalid { border-color: var(--danger); }
+
+.cp-copy-status {
+    font-size: .8rem;
+    color: var(--success);
+    align-self: center;
+    min-height: 1em;
+}
+
+.cp-alpha-note {
+    margin-top: .75rem;
+    padding: .5rem .75rem;
+    font-size: .85rem;
+    color: var(--text);
+    background: var(--cp-warn-bg);
+    border: 1px solid var(--cp-warn-border);
+    border-radius: 6px;
+}
+
+/* 棋盘格：画布与色板共用，用于直观呈现透明/半透明像素 */
+.cp-checker {
+    background-image:
+        linear-gradient(45deg, var(--cp-checker-cell) 25%, transparent 25%),
+        linear-gradient(-45deg, var(--cp-checker-cell) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, var(--cp-checker-cell) 75%),
+        linear-gradient(-45deg, transparent 75%, var(--cp-checker-cell) 75%);
+    background-size: 16px 16px;
+    background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+    background-color: var(--white);
+}
+
+/* 暗色模式下的取色器色值覆盖（紧跟新增段落，便于维护） */
+[data-theme="dark"] {
+    --cp-checker-cell: #3a3a3c;
+    --cp-danger-bg: rgba(239,68,68,0.16);
+    --cp-danger-border: rgba(239,68,68,0.36);
+    --cp-warn-bg: rgba(245,158,11,0.16);
+    --cp-warn-border: rgba(245,158,11,0.42);
+}
+
 /* Responsive for image tools */
 @media (max-width: 768px){
     .upload-zone { padding: 36px 20px; }
@@ -1949,6 +2063,11 @@ svg.ic {
     .result-stats { flex-direction: column; gap: 12px; }
     .color-info { flex-direction: column; align-items: flex-start; }
     .tool-header h1 { font-size: 1.3rem; }
+    .seg-group.cp-channels { flex-wrap: wrap; border-radius: 12px; }
+    .seg-group.cp-channels label { padding: .45rem .7rem; font-size: .85rem; }
+    .cp-url-row { flex-direction: column; align-items: stretch; }
+    .cp-lookup-panel { flex-direction: column; align-items: stretch; }
+    .cp-paste-zone { padding: 28px 16px; }
 }
 
 @media (max-width: 480px){

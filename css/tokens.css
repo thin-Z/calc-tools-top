@@ -253,4 +253,13 @@
     /* ── Link / badge ── */
     --link-bg: var(--color-info-alpha);
     --link-badge-deep: rgba(0,86,204,0.85);
+
+    /* ── Color Picker 多渠道（PRD 3.1）──
+       棋盘格用于画布/色板呈现透明像素；错误条与半透明提示条的色值统一收在此处，
+       style.css 内只引用 var()，以满足「CSS 裸色值清零」门禁。 */
+    --cp-checker-cell: #d4d4d4;
+    --cp-danger-bg: rgba(239,68,68,0.1);
+    --cp-danger-border: rgba(239,68,68,0.28);
+    --cp-warn-bg: rgba(245,158,11,0.12);
+    --cp-warn-border: rgba(245,158,11,0.38);
 }

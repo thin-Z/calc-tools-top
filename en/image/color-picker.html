@@ -15,16 +15,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Color Picker from Image - Free Online Tool</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="Free online color picker from image. Browser-local processing. Extract HEX, RGB, HSL values from images.">
+    <meta name="description" content="Pick colors from an upload, screenshot, image URL, screen or color value — get HEX / RGB / HSL, click to copy. Only image URLs are fetched once by our server.">
     <meta property='og:title' content='Color Picker from Image - Free Online Tool'/>
-    <meta property='og:description' content='Free online color picker from image. Browser-local processing. Extract HEX, RGB, HSL values from images.'/>
+    <meta property='og:description' content='Five color sources, one output: HEX, RGB and HSL. Uploads, pasted screenshots, screen picking and color lookup all run on your device; only image URLs are fetched once by our server and never stored.'/>
     <meta property='og:type' content='website'/>
     <meta property='og:url' content='https://www.calc-tools.top/en/image/color-picker'/>
     <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
     <meta property='og:locale' content='en_US'/>
     <meta name='twitter:card' content='summary_large_image'/>
     <meta name='twitter:title' content='Color Picker from Image - Free Online Tool'/>
-    <meta name='twitter:description' content='Free online color picker from image. Browser-local processing. Extract HEX, RGB, HSL values from images.'/>
+    <meta name='twitter:description' content='Five color sources, one output: HEX, RGB and HSL. Uploads, pasted screenshots, screen picking and color lookup all run on your device; only image URLs are fetched once by our server and never stored.'/>
 
     <link rel="canonical" href="https://www.calc-tools.top/en/image/color-picker">
     <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/image/color-picker">
@@ -43,7 +43,7 @@
     "@type": "SoftwareApplication",
     "name": "Color Picker from Image - Free Online Tool",
     "url": "https://www.calc-tools.top/en/image/color-picker",
-    "description": "Free online color picker from image. Browser-local processing. Extract HEX, RGB, HSL values from images.",
+    "description": "Free online color picker with five sources: upload, pasted screenshot, image URL, screen picker and color lookup. Outputs HEX, RGB and HSL values, click to copy. Local, paste and screen picking stay on your device; only image URLs are fetched once by our server and never stored.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Web",
     "inLanguage": "en"
@@ -66,8 +66,8 @@
     <main id="main">
         <div class="tool-page">
             <div class="tool-header">
-                <span class="tool-privacy-badge"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-lock"></use></svg> Processed in your browser · No uploads</span><h1><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-palette"></use></svg> Color Picker</h1>
-                <p>Click anywhere on an image to extract exact colors. Click values to copy.</p>
+                <span class="tool-privacy-badge"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-lock"></use></svg> Local, paste &amp; screen picking stay on your device · only image URLs are fetched once by our server</span><h1><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-palette"></use></svg> Color Picker</h1>
+                <p>Pick colors from an upload, a pasted screenshot, an image URL, your screen, or a color value — outputs HEX / RGB / HSL, click to copy.</p>
             </div>
             <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="color-picker"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
             <div class="related-tools">
@@ -78,42 +78,101 @@
                     <li><a href="/en/image/compress">Image Compressor</a></li>
                 </ul>
             </div>
-            <div class="upload-zone" id="dropZone">
-                <div class="upload-icon"></div>
-                <h3>Drag & drop image here, or click to select</h3><div class="upload-btn"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-folder"></use></svg> Select File</div>
-                <div class="upload-formats"><span class="format-badge">JPG</span><span class="format-badge">PNG</span><span class="format-badge">WebP</span><span class="format-badge">BMP</span><span class="format-badge">GIF</span></div><p class="st-5">Max 50MB · Browser local processing</p>
-                <input type="file" id="fileInput" aria-label="Select image file" accept="image/jpeg,image/png,image/webp,image/bmp,image/gif">
+            <div class="seg-group cp-channels" role="radiogroup" aria-label="Color source">
+                <input type="radio" id="chUpload" name="cpChannel" value="upload" checked>
+                <label for="chUpload">Upload</label>
+                <input type="radio" id="chPaste" name="cpChannel" value="paste">
+                <label for="chPaste">Paste</label>
+                <input type="radio" id="chUrl" name="cpChannel" value="url">
+                <label for="chUrl">Image URL</label>
+                <input type="radio" id="chScreen" name="cpChannel" value="screen">
+                <label for="chScreen">Screen Picker</label>
+                <input type="radio" id="chLookup" name="cpChannel" value="lookup">
+                <label for="chLookup">Color Lookup</label>
+            </div>
+            <div class="cp-panel" id="panelUpload">
+                <div class="upload-zone" id="dropZone">
+                    <div class="upload-icon"></div>
+                    <h3>Drag &amp; drop image here, or click to select</h3><div class="upload-btn"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-folder"></use></svg> Select File</div>
+                    <div class="upload-formats"><span class="format-badge">JPG</span><span class="format-badge">PNG</span><span class="format-badge">WebP</span><span class="format-badge">BMP</span><span class="format-badge">GIF</span></div><p class="st-5">Max 50MB · Browser local processing</p>
+                    <input type="file" id="fileInput" aria-label="Select image file" accept="image/jpeg,image/png,image/webp,image/bmp,image/gif">
+                </div>
+                <div class="cp-error hidden" id="uploadError" role="alert"></div>
+            </div>
+            <div class="cp-panel hidden" id="panelPaste">
+                <div class="cp-paste-zone" id="pasteZone">
+                    <div class="cp-paste-icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-palette"></use></svg></div>
+                    <h3>Paste a screenshot to pick colors</h3>
+                    <p>Press Ctrl + V (⌘ + V on macOS) to paste an image from your clipboard</p>
+                    <p class="cp-privacy-note">Take a screenshot and paste it — no need to save it as a file first</p>
+                </div>
+                <div class="cp-error hidden" id="pasteError" role="alert"></div>
+            </div>
+            <div class="cp-panel hidden" id="panelUrl">
+                <div class="cp-url-form">
+                    <label class="cp-label" for="urlInput">Image URL (https)</label>
+                    <div class="cp-url-row">
+                        <input type="url" id="urlInput" class="text-input" placeholder="https://example.com/photo.png" autocomplete="off" spellcheck="false" aria-label="Image URL (https)">
+                        <button class="btn btn-primary" id="urlLoadBtn">Load Image</button>
+                    </div>
+                    <p class="cp-privacy-note">For this channel only, our server downloads the image once and does not store the image or the URL. All other channels run entirely on your device.</p>
+                    <div class="cp-error hidden" id="urlError" role="alert"></div>
+                    <div class="btn-group hidden" id="urlFallbackWrap"><button class="btn btn-secondary" id="fallbackUploadBtn">Use Upload instead</button></div>
+                </div>
+            </div>
+            <div class="cp-panel hidden" id="panelScreen">
+                <h3>Screen Color Picker (Eyedropper)</h3>
+                <p>Click the button below, choose the screen, window or tab you want to sample, and we'll freeze one frame for you to click on.</p>
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="screenStartBtn">Start Screen Picking</button>
+                    <button class="btn btn-secondary hidden" id="screenRecaptureBtn">Capture Again</button>
+                </div>
+                <div class="cp-note hidden" id="screenNote" role="status"></div>
+                <div class="cp-error hidden" id="screenError" role="alert"></div>
+                <div class="btn-group hidden" id="screenFallbackWrap"><button class="btn btn-secondary" id="screenFallbackBtn">Use Paste instead</button></div>
+            </div>
+            <div class="cp-panel hidden" id="panelLookup">
+                <div class="cp-lookup-panel">
+                    <span class="cp-lookup-field"><label class="cp-label" for="colorWheel">Pick from the system color picker</label><input type="color" id="colorWheel" value="#ff6b35" aria-label="Pick from the system color picker"></span>
+                    <span class="cp-lookup-field cp-lookup-text"><label class="cp-label" for="colorTextInput">Or enter a color value</label><input type="text" id="colorTextInput" class="text-input" placeholder="e.g. #FF6B35 / rgb(255,107,53) / hsl(12,100%,61%)" autocomplete="off" spellcheck="false" aria-label="Or enter a color value"></span>
+                    <button class="btn btn-secondary" id="colorParseBtn">Parse</button>
+                </div>
+                <p class="cp-privacy-note">Supported: #RGB, #RRGGBB, #RRGGBBAA, rgb(), rgba(), hsl(), hsla()</p>
+                <div class="cp-error hidden" id="lookupError" role="alert"></div>
             </div>
             <div id="pickerContainer" class="hidden">
                 <div class="preview-card">
                     <h3>Click on image to pick color <span class="picker-hint">(hover to preview)</span></h3>
-                    <div class="picker-center"><div class="color-picker-canvas-wrapper"><canvas id="imageCanvas"></canvas></div></div>
+                    <div class="picker-center"><div class="color-picker-canvas-wrapper"><canvas id="imageCanvas" class="cp-checker"></canvas></div></div>
                     <div class="file-info" id="fileInfo"></div>
                 </div>
                 <div class="tool-controls" >
                     <h3>Hover Preview</h3>
                     <div class="hover-preview">
-                        <div id="hoverPreview" class="hover-swatch"></div>
+                        <div id="hoverPreview" class="hover-swatch cp-checker"></div>
                         <span class="hover-hex" id="hoverHex">-</span>
                         <span class="hover-coords">Coords: <span id="hoverCoords">-</span></span>
                     </div>
                 </div>
-                <div id="colorInfo" class="hidden">
-                    <div class="tool-controls">
-                        <h3>Selected Color</h3>
-                        <div class="color-info">
-                            <div class="color-swatch" id="colorSwatch"></div>
-                            <div class="color-values">
-                                <span class="color-value" id="hexValue" title="Click to copy">#000000</span>
-                                <span class="color-value" id="rgbValue" title="Click to copy">rgb(0,0,0)</span>
-                                <span class="color-value" id="hslValue" title="Click to copy">hsl(0,0%,0%)</span>
-                            </div>
+            </div>
+            <div id="colorInfo" class="hidden">
+                <div class="tool-controls">
+                    <h3>Selected Color</h3>
+                    <div class="color-info">
+                        <div class="color-swatch cp-checker" id="colorSwatch"></div>
+                        <div class="color-values">
+                            <span class="color-value" id="hexValue" data-fmt="HEX" title="Click to copy">#000000</span>
+                            <span class="color-value" id="rgbValue" data-fmt="RGB" title="Click to copy">rgb(0,0,0)</span>
+                            <span class="color-value" id="hslValue" data-fmt="HSL" title="Click to copy">hsl(0,0%,0%)</span>
+                            <span class="cp-copy-status" id="copyStatus" role="status" aria-live="polite"></span>
                         </div>
                     </div>
+                    <div class="cp-alpha-note hidden" id="alphaNote" role="status"></div>
+                    <div class="cp-error hidden" id="copyError" role="alert"></div>
                 </div>
-                <div class="btn-group picker-reset"><button class="btn btn-secondary" id="resetBtn">Choose Another</button></div>
             </div>
-            <div class="tool-content"><h2>Online Color Picker: Extract Exact Colors From Any Image</h2><p>This color picker is a completely free online tool that lets you extract precise color values from any point of an image without installing professional design software. It keeps image upload, color analysis, and result copying entirely inside your browser, so your image is never sent to a server — giving you better privacy and faster results.</p><p>Whether you're a designer pulling a brand color from a logo, a developer trying to reproduce a website's palette, or just a curious user wondering "what exactly is that nice blue in this photo?", this tool gives you an accurate answer in seconds.</p><h3>How Is a Color Actually "Picked"?</h3><p>An image is, at its core, a grid of pixels, and each pixel has one unique color value. After you load the image locally, the tool reads the RGB data of the pixel under your cursor and converts it into three common color notations: HEX (hexadecimal, used in web CSS and design mockups), RGB (three red/green/blue channels), and HSL (hue, saturation, lightness).</p><p>Because all the math runs in browser memory with no network request, even large high-resolution images respond instantly, and the sampled color is not distorted by upload compression.</p><h3>How to Use It</h3><p>1. Drag and drop an image into the dashed area, or click "Select File" to choose from your computer (JPG / PNG / WebP / BMP / GIF supported, up to 50MB).<br>2. Once the image loads, move your mouse over it — the preview panel on the right updates in real time.<br>3. Move to the target position and click; that pixel's color is locked in.<br>4. In the result area below, click any of the HEX / RGB / HSL values to copy it to your clipboard instantly.</p><h3>Common Pitfalls When Sampling Colors</h3><p><strong>① JPEG compression artifacts.</strong> JPEG is lossy, so edges and gradients often show slight color noise, and the sampled value may differ a bit from your first impression. For strict color work, prefer PNG or WebP.<br><strong>② Don't ignore transparency.</strong> If the image has an alpha channel (like a PNG icon), you may sample a blended color that looks different on a solid background.<br><strong>③ Position matters.</strong> Sampling the center of a uniform block vs. its shadowed or highlighted edge can yield values several steps apart. To get a standard color, aim for the even middle of the block.</p><h3>Understanding HEX, RGB, and HSL</h3><p>HEX starts with a hash (e.g. <code>#FF6B35</code>) and is the most common format in web development — each pair of digits represents red, green, or blue intensity. RGB uses three 0–255 numbers (e.g. <code>rgb(255,107,53)</code>) and suits programmatic work. HSL is more intuitive: it splits color into hue (which color), saturation (how vivid), and lightness (how bright), making it easier for designers to tune a palette.</p><p>With these three values in hand, you can drop them directly into CSS, Sketch, Figma, or Photoshop without manually matching colors.</p><h3>How to Interpret and Use the Result</h3><p>The extracted values can be used directly for web styling, brand visual systems, data-visualization palettes, or as a starting point for further tuning. If you want to verify that a foreground color stays readable on a given background, pair this with our Color Contrast Checker to confirm it meets WCAG accessibility standards — so your palette is both attractive and usable.</p></div>
+            <div class="btn-group picker-reset"><button class="btn btn-secondary" id="resetBtn">Choose Another</button></div>
+            <div class="tool-content"><h2>Online Color Picker: Extract Exact Colors From Any Image</h2><p>This color picker is a completely free online tool that lets you extract precise color values from any point of an image without installing professional design software. It offers five sources: an upload, a pasted screenshot, an image URL, your screen, and a color value. Uploads, pasted screenshots, screen picking and color lookup all run inside your browser, so the image never leaves your device. Only the Image URL channel is fetched once by our server, which streams the bytes straight back to your browser and stores neither the image nor the URL.</p><p>Whether you're a designer pulling a brand color from a logo, a developer trying to reproduce a website's palette, or just a curious user wondering "what exactly is that nice blue in this photo?", this tool gives you an accurate answer in seconds.</p><h3>How Is a Color Actually "Picked"?</h3><p>An image is, at its core, a grid of pixels, and each pixel has one unique color value. After you load the image locally, the tool reads the RGB data of the pixel under your cursor and converts it into three common color notations: HEX (hexadecimal, used in web CSS and design mockups), RGB (three red/green/blue channels), and HSL (hue, saturation, lightness).</p><p>For uploads, pasted screenshots and screen capture, all the math runs in browser memory with no network request, so even large high-resolution images respond instantly, and the sampled color is not distorted by upload compression. The screen picker uses a single frozen frame: pick a screen or window, the tool captures one frame, sharing stops immediately, and you then sample that still image pixel by pixel.</p><h3>How to Use the Five Channels</h3><p>1. <strong>Upload</strong>: drag and drop an image into the dashed area, or click "Select File" to choose from your computer (JPG / PNG / WebP / BMP / GIF, up to 50MB).<br>2. <strong>Paste</strong>: take a screenshot (Win+Shift+S on Windows, ⌘+Shift+4 on macOS), come back and press Ctrl/⌘ + V — no need to save a file first.<br>3. <strong>Image URL</strong>: paste a direct https image link, click "Load Image", and the server fetches it once so you can sample it locally.<br>4. <strong>Screen Picker</strong>: click "Start Screen Picking", choose a screen, window or tab, and click the frozen frame (desktop Chrome / Edge).<br>5. <strong>Color Lookup</strong>: open the system color picker, or type a value such as #FF6B35, rgb(255,107,53) or hsl(12,100%,61%) to convert it instantly.</p><p>Once an image is loaded, move your mouse over it to preview the color and coordinates under the cursor; move to the target spot and click to lock that pixel in. In the result area below, click any of the HEX / RGB / HSL values to copy it to your clipboard instantly. Switching channels never clears the loaded image — only "Choose Another" resets everything.</p><h3>Common Pitfalls When Sampling Colors</h3><p><strong>① JPEG compression artifacts.</strong> JPEG is lossy, so edges and gradients often show slight color noise, and the sampled value may differ a bit from your first impression. For strict color work, prefer PNG or WebP.<br><strong>② Don't ignore transparency.</strong> If the image has an alpha channel (like a PNG icon), you may sample a semi-transparent color that looks different on a solid background. For those pixels the tool emits 8-digit HEX (e.g. #FF6B3580) plus rgba()/hsla() and flags it; a fully transparent pixel is reported as such rather than shown as black.<br><strong>③ Position matters.</strong> Sampling the center of a uniform block vs. its shadowed or highlighted edge can yield values several steps apart. To get a standard color, aim for the even middle of the block.</p><h3>Understanding HEX, RGB, and HSL</h3><p>HEX starts with a hash (e.g. <code>#FF6B35</code>) and is the most common format in web development — each pair of digits represents red, green, or blue intensity. RGB uses three 0–255 numbers (e.g. <code>rgb(255,107,53)</code>) and suits programmatic work. HSL is more intuitive: it splits color into hue (which color), saturation (how vivid), and lightness (how bright), making it easier for designers to tune a palette.</p><p>With these three values in hand, you can drop them directly into CSS, Sketch, Figma, or Photoshop without manually matching colors.</p><h3>How to Interpret and Use the Result</h3><p>The extracted values can be used directly for web styling, brand visual systems, data-visualization palettes, or as a starting point for further tuning. If you want to verify that a foreground color stays readable on a given background, pair this with our Color Contrast Checker to confirm it meets WCAG accessibility standards — so your palette is both attractive and usable.</p></div>
 </main>
     <footer>
     <div class="footer-links">

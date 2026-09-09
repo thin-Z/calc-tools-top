@@ -285,3 +285,8 @@ module.exports = async function handler(req, res) {
     return res.status(500).json({ error: 'internal error' });
   }
 };
+
+// 供 api/image-proxy.js 复用：同一套「只信任 XFF 最右段」的 IP 提取规则，
+// 避免两个端点对同一请求得出不同限速主体。挂在导出对象上不影响 Vercel 调用
+// （module.exports 本身仍是 handler）。
+module.exports.getClientIp = getClientIp;
