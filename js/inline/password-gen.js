@@ -3,7 +3,9 @@
  * 功能：对用户输入的密码进行强度评分与反馈（合并自原密码强度检测器页面）。
  */
 document.addEventListener("DOMContentLoaded", function() {
-    // 无需额外初始化
+    // 初始化滑块的填充进度与数值显示
+    var len = document.getElementById('pwdLength');
+    if (len && typeof updatePwdLength === 'function') updatePwdLength(len.value, len);
 });
 
 /**

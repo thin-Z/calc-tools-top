@@ -19,6 +19,25 @@ function escapeHtml(s) {
 }
 
 /**
+ * 同步长度滑块的数值显示与填充进度（csp-events.js data-csp-input 委托调用，约定 value 在前）。
+ * @param {string|number} value - 滑块当前值（csp-events 传入 el.value）。
+ * @param {HTMLInputElement} [el] - 滑块元素（用于读取 min/max 计算填充比例）。
+ * @returns {void}
+ */
+function updatePwdLength(value, el) {
+    var val = parseInt(value) || 0;
+    var display = document.getElementById('pwdLengthVal');
+    if (display) display.textContent = val;
+    var slider = el || document.getElementById('pwdLength');
+    if (slider && slider.min !== undefined) {
+        var min = parseInt(slider.min) || 0;
+        var max = parseInt(slider.max) || 100;
+        var pct = max > min ? ((val - min) / (max - min)) * 100 : 0;
+        slider.style.setProperty('--pg-fill', pct + '%');
+    }
+}
+
+/**
  * 读取表单并生成指定数量的密码（UI 入口）。
  * @returns {void} 无返回值；未选择任何字符类型时弹出提示并中断。
  */
@@ -28,19 +47,20 @@ function doCalculate() {
     var includeLower = document.getElementById('pwdLower').checked;
     var includeDigits = document.getElementById('pwdDigits').checked;
     var includeSymbols = document.getElementById('pwdSymbols').checked;
-    var count = parseInt(document.getElementById('pwdCount').value) || 1;
-    
+    var countRadio = document.querySelector('input[name="pwdCount"]:checked');
+    var count = countRadio ? parseInt(countRadio.value) : 1;
+
     var pool = '';
     if (includeUpper) pool += UPPER;
     if (includeLower) pool += LOWER;
     if (includeDigits) pool += DIGITS;
     if (includeSymbols) pool += SYMBOLS;
-    
+
     if (!pool) {
         alert('请至少选择一个字符类型 / Please select at least one character type');
         return;
     }
-    
+
     var result = '';
     for (var n = 0; n < count; n++) {
         var pwd = '';
@@ -49,10 +69,10 @@ function doCalculate() {
         }
         result += '<div class="password-result-line"><code>' + escapeHtml(pwd) + '</code><button type="button" class="btn btn-sm" data-csp-click="copyPassword">复制</button></div>';
     }
-    
+
     document.getElementById('passwordResult').innerHTML = result;
     document.getElementById('resultArea').classList.remove('hidden');
-    
+
     var strength = getStrength(length, pool);
     var strengthEl = document.getElementById('passwordStrength');
     var colors = { weak: '#ef4444', medium: '#f59e0b', strong: '#22c55e' };
@@ -96,12 +116,15 @@ function copyPassword(btn) {
  * @returns {void} 无返回值。
  */
 function resetForm() {
-    document.getElementById('pwdLength').value = 12;
+    var lenEl = document.getElementById('pwdLength');
+    lenEl.value = 12;
+    updatePwdLength(lenEl.value, lenEl);
     document.getElementById('pwdUpper').checked = true;
     document.getElementById('pwdLower').checked = true;
     document.getElementById('pwdDigits').checked = true;
     document.getElementById('pwdSymbols').checked = false;
-    document.getElementById('pwdCount').value = 1;
+    var defaultCount = document.getElementById('pwdCount1');
+    if (defaultCount) defaultCount.checked = true;
     document.getElementById('resultArea').classList.add('hidden');
     document.getElementById('passwordResult').innerHTML = '';
     document.getElementById('passwordStrength').textContent = '';

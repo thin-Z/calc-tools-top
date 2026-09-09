@@ -4290,3 +4290,176 @@ mark {
 /* 2026-09-07 统一(4)：regex-tester/markdown-preview 文本工具外包 tool-page；regex 渐变结果卡让位（高亮 pre 自带框） */
 #regex-result.result-card { background: transparent; border: none; box-shadow: none; padding: 0; max-width: none; margin: 0 0 2rem; text-align: left; }
 #regex-result .result-label { margin-bottom: 0.75rem; }
+
+/* ===== 密码生成器控件重设计（Apple / glassmorphism / #007AFF） ===== */
+.pg-length {
+    --pg-thumb-shadow: rgba(0,0,0,0.12);
+    margin-bottom: 22px;
+}
+.pg-length-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.pg-length-head > label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+.pg-length-val {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: -0.02em;
+}
+.pg-length-val > span { font-variant-numeric: tabular-nums; }
+.pg-length input[type="range"] {
+    width: 100%;
+    margin: 0;
+    background: transparent;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 28px;
+    cursor: pointer;
+    outline: none;
+}
+.pg-length input[type="range"]::-webkit-slider-runnable-track {
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(to right, var(--primary) 0%, var(--primary) var(--pg-fill, 0%), var(--border) var(--pg-fill, 0%), var(--border) 100%);
+}
+.pg-length input[type="range"]::-moz-range-track {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--border);
+}
+.pg-length input[type="range"]::-moz-range-progress {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--primary);
+}
+.pg-length input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 2px solid var(--primary);
+    margin-top: -8px;
+    box-shadow: 0 1px 3px var(--pg-thumb-shadow);
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+.pg-length input[type="range"]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 2px solid var(--primary);
+    box-shadow: 0 1px 3px var(--pg-thumb-shadow);
+}
+.pg-length input[type="range"]:hover::-webkit-slider-thumb { transform: scale(1.08); }
+.pg-length input[type="range"]:focus-visible::-webkit-slider-thumb {
+    transform: scale(1.12);
+    box-shadow: 0 0 0 6px var(--primary-light);
+}
+.pg-length input[type="range"]:focus-visible::-moz-range-thumb {
+    box-shadow: 0 0 0 6px var(--primary-light);
+}
+
+.pg-section-label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+.pg-charset { margin-bottom: 22px; }
+.pg-charset-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+.check-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    margin: 0;
+    font-weight: normal;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--bg-card);
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    user-select: none;
+}
+.check-card:hover {
+    border-color: color-mix(in srgb, var(--primary) 40%, var(--border));
+}
+.check-card input[type="checkbox"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+    outline: none;
+}
+.check-card .check-box {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg-card);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.15s, background 0.15s;
+}
+.check-card .check-box::after {
+    content: "";
+    width: 5px;
+    height: 10px;
+    border: solid var(--white);
+    border-width: 0 2.5px 2.5px 0;
+    transform: rotate(45deg) scale(0);
+    margin-top: -2px;
+    transition: transform 0.12s;
+}
+.check-card:has(input:checked) {
+    border-color: var(--primary);
+    background: color-mix(in srgb, var(--primary) 8%, var(--bg-card));
+}
+.check-card:has(input:checked) .check-box {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+.check-card:has(input:checked) .check-box::after {
+    transform: rotate(45deg) scale(1);
+}
+.check-card input:focus-visible + .check-box {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+.check-card .check-text {
+    flex: 1;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+.check-card .check-text em {
+    font-style: normal;
+    color: var(--text-secondary);
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 0.85rem;
+    margin-left: 2px;
+}
+
+.pg-count { margin-bottom: 22px; }
+.pg-count .seg-group { margin-top: 0; }
+
+@media (max-width: 480px) {
+    .pg-charset-grid { grid-template-columns: 1fr; }
+}
