@@ -141,11 +141,15 @@
                 <h3>裁剪设置</h3>
                 <div class="control-group">
                     <label>比例锁定</label>
-                    <div class="st-72">
-                        <label class="st-9"><input type="radio" name="cropRatio" value="free" checked> 自由</label>
-                        <label class="st-9"><input type="radio" name="cropRatio" value="1:1"> 1:1</label>
-                        <label class="st-9"><input type="radio" name="cropRatio" value="4:3"> 4:3</label>
-                        <label class="st-9"><input type="radio" name="cropRatio" value="16:9"> 16:9</label>
+                    <div class="seg-group" role="radiogroup" aria-label="比例锁定">
+                        <input type="radio" name="cropRatio" id="cropFree" value="free" checked>
+                        <label for="cropFree">自由</label>
+                        <input type="radio" name="cropRatio" id="crop11" value="1:1">
+                        <label for="crop11">1:1</label>
+                        <input type="radio" name="cropRatio" id="crop43" value="4:3">
+                        <label for="crop43">4:3</label>
+                        <input type="radio" name="cropRatio" id="crop169" value="16:9">
+                        <label for="crop169">16:9</label>
                     </div>
                 </div>
                 <div class="btn-group">

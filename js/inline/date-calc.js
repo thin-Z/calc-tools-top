@@ -6,7 +6,7 @@ function toggleMode() {
             const labelA = document.getElementById('modeALabel');
             const labelB = document.getElementById('modeBLabel');
             const labelC = document.getElementById('modeCLabel');
-            const active = { borderColor: 'var(--primary)', background: 'var(--primary-light)', color: 'var(--primary)', fontWeight: '600' };
+            const active = { borderColor: 'var(--primary)', background: 'var(--primary)', color: 'var(--white)', fontWeight: '600' };
             const inactive = { borderColor: 'var(--border)', background: 'var(--bg-card)', color: 'var(--text-secondary)', fontWeight: '500' };
 
             modeAFields.style.display = mode === 'A' ? 'block' : 'none';
