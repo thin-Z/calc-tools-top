@@ -13,18 +13,18 @@
 <script src="/js/theme-init.js"></script>
 <script src="/js/theme-toggle.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UUID生成器与密码生成器 - 免费批量生成唯一标识符与强密码</title>
+    <title>UUID生成器 - 免费批量生成UUID v4唯一标识符</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="免费在线UUID生成器, 批量生成UUID v4唯一标识符, 同时支持配置字符类型的强密码生成与强度评估, 浏览器本地处理。在实际开发中，用 UUID 作为主键可以避免自增 ID 暴露业务量、适合分布式数据库合并、也方便数据在多个系统间迁移或同步。">
-    <meta property='og:title' content='在线UUID生成器与密码生成器 - 免费随机密码工具'/>
-    <meta property='og:description' content='免费在线UUID生成器和密码生成器。支持UUID v4批量生成、随机密码生成（可配置大小写、数字、符号）、密码强度评估。浏览器本地处理，数据不上传服务器。'/>
+    <meta name="description" content="免费在线UUID生成器, 批量生成UUID v4唯一标识符。浏览器本地处理，数据不上传服务器。UUID 可用作数据库主键、会话ID、分布式标识等场景。">
+    <meta property='og:title' content='在线UUID生成器 - 免费随机UUID工具'/>
+    <meta property='og:description' content='免费在线UUID生成器，支持UUID v4批量生成。浏览器本地处理，数据不上传服务器。'/>
     <meta property='og:type' content='website'/>
     <meta property='og:url' content='https://www.calc-tools.top/zh/text/uuid-generator'/>
     <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
     <meta property='og:locale' content='zh_CN'/>
     <meta name='twitter:card' content='summary_large_image'/>
-    <meta name='twitter:title' content='在线UUID生成器与密码生成器 - 免费随机密码工具'/>
-    <meta name='twitter:description' content='免费在线UUID生成器和密码生成器。支持UUID v4批量生成、随机密码生成（可配置大小写、数字、符号）、密码强度评估。浏览器本地处理，数据不上传服务器。'/>
+    <meta name='twitter:title' content='在线UUID生成器 - 免费随机UUID工具'/>
+    <meta name='twitter:description' content='免费在线UUID生成器，支持UUID v4批量生成。浏览器本地处理，数据不上传服务器。'/>
 
     <link rel="canonical" href="https://www.calc-tools.top/zh/text/uuid-generator">
     <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/text/uuid-generator">
@@ -40,7 +40,7 @@
     "@type": "BreadcrumbList",
     "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "在线工具", "item": "https://www.calc-tools.top/" },
-        { "@type": "ListItem", "position": 2, "name": "UUID/密码生成器", "item": "https://www.calc-tools.top/zh/text/uuid-generator" }
+        { "@type": "ListItem", "position": 2, "name": "UUID生成器", "item": "https://www.calc-tools.top/zh/text/uuid-generator" }
     ]
 }
 </script>
@@ -51,18 +51,10 @@
     "mainEntity": [
         {
             "@type": "Question",
-            "name": "UUID和密码生成器安全吗？",
+            "name": "UUID生成器安全吗？",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "本工具使用浏览器内置的 crypto.randomUUID() 和 Crypto API 生成随机值，所有生成过程在浏览器本地完成，数据不上传服务器，确保安全性和隐私性。"
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "密码强度如何评估？",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "密码强度根据长度和字符类型种类综合评估：16位以上且包含大小写字母、数字、符号四类为非常强；12-15位且包含至少三类为强；8-11位且包含至少两类为中等；不足8位或仅包含单一类型为弱。"
+                "text": "本工具使用浏览器内置的 crypto.randomUUID() 生成随机值，所有生成过程在浏览器本地完成，数据不上传服务器，确保安全性和隐私性。"
             }
         },
         {
@@ -79,9 +71,9 @@
 {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "在线UUID生成器与密码生成器 - 免费随机密码工具",
+    "name": "在线UUID生成器 - 免费随机UUID工具",
     "url": "https://www.calc-tools.top/zh/text/uuid-generator",
-    "description": "免费在线UUID生成器和密码生成器。支持UUID v4批量生成、随机密码生成（可配置大小写、数字、符号）、密码强度评估。浏览器本地处理，数据不上传服务器。",
+    "description": "免费在线UUID生成器，支持UUID v4批量生成。浏览器本地处理，数据不上传服务器。",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Web",
     "inLanguage": "zh-CN"
@@ -104,15 +96,14 @@
     <main id="main">
         <div class="tool-page">
             <div class="tool-header">
-                <h1><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-dice-5"></use></svg> UUID / 密码生成器</h1>
-                <p>生成UUID v4唯一标识符或配置强密码。浏览器本地处理，数据不上传服务器。</p>
+                <h1><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-dice-5"></use></svg> UUID 生成器</h1>
+                <p>生成UUID v4唯一标识符。浏览器本地处理，数据不上传服务器。</p>
             </div>
             <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="uuid-generator"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
             <div class="related-tools">
                 <h3>相关工具</h3>
                 <ul>
                     <li><a href="/zh/calculators/random-gen">随机数生成器</a></li>
-                    <li><a href="/zh/calculators/password-gen">密码生成器</a></li>
                     <li><a href="/zh/calculators/regex-tester">正则表达式测试器</a></li>
                 </ul>
             </div>
@@ -120,10 +111,6 @@
             
 
             <div class="tool-controls">
-            <div class="gen-tabs">
-                <span class="gen-tab active" data-tab="uuid" data-csp-click="switchGeneratorTab" data-csp-arg="uuid"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-bookmark"></use></svg> UUID</span>
-                <span class="gen-tab" data-tab="password" data-csp-click="switchGeneratorTab" data-csp-arg="password"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-key"></use></svg> 密码</span>
-            </div>
 
             <!-- UUID Panel -->
             <div id="uuidPanel" class="gen-panel st-77">
@@ -144,67 +131,20 @@
                 </div>
             </div>
 
-            <!-- Password Panel -->
-            <div id="passwordPanel" class="gen-panel hidden">
-                <div class="pw-options">
-                    <div class="pw-length-wrap">
-                        <label class="st-17">长度：</label>
-                        <input type="range" id="pwLength" min="8" max="64" value="16" data-csp-input="updatePwLength">
-                        <span class="pw-length-val" id="pwLengthVal">16</span>
-                    </div>
-                    <label><input type="checkbox" id="pwUpper" checked> 大写字母 (A-Z)</label>
-                    <label><input type="checkbox" id="pwLower" checked> 小写字母 (a-z)</label>
-                    <label><input type="checkbox" id="pwDigits" checked> 数字 (0-9)</label>
-                    <label><input type="checkbox" id="pwSymbols" checked> 符号 (!@#$%^&*)</label>
-                </div>
-                <div class="st-36">
-                    <label class="st-17">生成数量：</label>
-                    <select id="pwCount" class="st-37">
-                        <option value="1" selected>1</option>
-                        <option value="3">3</option>
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                    </select>
-                    <button class="btn btn-primary" data-csp-click="doGeneratePassword"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-key"></use></svg> 生成密码</button>
-                    <button class="copy-btn" id="copyGenAllBtnPw" data-csp-click="copyGeneratorAll"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-clipboard"></use></svg> 复制全部</button>
-                </div>
-                <div id="pwStrength"></div>
-                <div class="result-area">
-                    <div class="result-label">生成的密码：</div>
-                    <div id="pwResult"></div>
-                </div>
-            </div>
             </div>
 
             <div class="seo-content">
-                <h2>UUID 与密码生成器</h2>
-                <p>本工具提供两种实用功能：<strong>UUID v4 批量生成</strong>和<strong>自定义密码生成</strong>。UUID 是用来唯一标识事物的 36 位字符串，广泛用于数据库主键、接口会话 ID、分布式系统节点 ID 等需要"绝不重复"的场景；密码生成器则能按你的要求生成高强度随机密码，并实时评估它的强度。</p>
+                <h2>UUID 生成器</h2>
+                <p>UUID（Universally Unique Identifier，通用唯一标识符）是一个 36 位的全局唯一字符串，本工具基于浏览器内置的 <code>crypto.randomUUID()</code> 生成 UUID v4，批量、本地、即时完成，数据不上传服务器。它广泛用于数据库主键、接口会话 ID、分布式系统节点 ID 等任何"绝不重复"的场景。</p>
                 <h3>什么是 UUID？为什么用 v4？</h3>
-                <p>UUID（Universally Unique Identifier，通用唯一标识符）是一个标准化的标识符格式，形如 <code>550e8400-e29b-41d4-a716-446655440000</code>，由版本号、变体和随机数构成。UUID v4 采用纯粹的随机数生成，理论上碰撞概率极低，几乎不可能撞车，因此它不需要集中分配、不依赖中心数据库，就能保证跨系统、跨机器的唯一性。</p>
-                <p>在实际开发中，用 UUID 作为主键可以避免自增 ID 暴露业务量、适合分布式数据库合并、也方便数据在多个系统间迁移或同步。</p>
+                <p>UUID 形如 <code>550e8400-e29b-41d4-a716-446655440000</code>，由版本号、变体和随机数构成。UUID v4 采用纯随机数生成，理论上碰撞概率极低，几乎不可能撞车，因此不需要集中分配、不依赖中心数据库，即可保证跨系统、跨机器的唯一性。</p>
+                <p>在实际开发中，用 UUID 作主键可以避免自增 ID 暴露业务量、适合分布式数据库合并、也方便数据在多个系统间迁移或同步。</p>
                 <h3>具体怎么用？</h3>
-                <p>1. 在"UUID"标签页选择要生成的个数（可批量），点击生成。<br>
-                2. 结果区会列出一个个完整的 UUID 字符串，可一键复制全部或逐条复制。<br>
-                3. 在"密码"标签页，设置密码长度与是否包含大写、小写、数字、符号。<br>
-                4. 点击生成，得到随机密码，并根据复杂度自动给出强度评级。<br>
-                5. 复制后存放到安全的地方。<strong>请勿再用公开渠道明文传播密码。</strong></p>
-                <h3>密码强度等级参考</h3>
-                <ul>
-                    <li><strong class="st-35">非常强</strong> — 16位以上，包含大小写、数字、符号四类</li>
-                    <li><strong class="st-78">强</strong> — 12-15位，包含至少三类字符</li>
-                    <li><strong class="st-79">中等</strong> — 8-11位，包含至少两类字符</li>
-                    <li><strong class="st-10">弱</strong> — 不足8位或仅包含单一类型字符</li>
-                </ul>
-                <h3>生成与使用时的常见误区</h3>
-                <p><strong>① 别把"复杂度"当唯一标准。</strong> 密码强度不仅看字符种类，更看长度和是否可预测。长度永远是第一要素。<br>
-                <strong>② 别用 UUID 当密码。</strong> UUID 虽然唯一，但格式固定、含连字符，且通常用于标识而非保密，不适合作为用户密码。<br>
-                <strong>③ 别在真实环境用默认密码。</strong> 生成的随机密码应妥善保存，并建议启用密码管理器，避免重复使用。</p>
-                <h3>结果怎么用？</h3>
-                <p>生成的 UUID 可直接用于数据库主键、日志追踪 ID、订单号、API 幂等键等；生成的强密码可用于账号注册、公私钥保护等场景，配合密码管理器使用更安全。若你对安全性有更高要求，建议为每个账号使用独特且足够的随机密码。</p>
+                <p>1. 选择要生成的个数（支持批量 1/3/5/10），点击"生成 UUID"。<br>2. 结果区会列出一个个完整的 UUID 字符串，可一键"复制全部"或逐条复制。<br>3. 复制后用于你的代码、配置或数据库即可。</p>
                 <h3>UUID 和自增 ID 该怎么选？</h3>
-                <p>自增 ID（如 1、2、3…）简单、紧凑、排序友好，但会暴露业务量，且在多机合并时容易冲突；UUID 则天然唯一、无需中心协调，适合分布式系统和数据迁移。一般规律是：单机应用、对体积敏感的可用自增 ID；需要跨系统同步、分布式写入、或不愿意暴露数据规模时，用 UUID 更稳妥。</p>
-                <h3>生成密码时的安全提醒</h3>
-                <p>生成密码时，优先选择"更长"而不是"更多符号"——长度每增加一位，暴力破解的难度都成倍上升。建议让密码至少 14 位，并混合大小写、数字与符号；生成后立即存入密码管理器，避免用电子表格、聊天记录或纸质便签明文留存，也要避免多个账号复用同一个密码。</p>
+                <p>自增 ID（1、2、3…）简单、紧凑、排序友好，但会暴露业务量，且在多机合并时容易冲突；UUID 则天然唯一、无需中心协调，适合分布式系统和数据迁移。一般规律：单机应用、对体积敏感的场景可用自增 ID；需要跨系统同步、分布式写入、或不愿暴露数据规模时，用 UUID 更稳妥。</p>
+                <h3>结果怎么用？</h3>
+                <p>生成的 UUID 可直接作为数据库主键、日志追踪 ID、订单号、API 幂等键等；也可以拼到文件名、临时令牌、缓存 key 中避免碰撞。若需要更短或可排序的标识，可结合时间戳或雪花算法（Snowflake）做进一步处理。</p>
             </div>
         </div>
 

@@ -13,18 +13,18 @@
 <script src="/js/theme-init.js"></script>
 <script src="/js/theme-toggle.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UUID Generator - Random UUID v4 & Passwords</title>
+    <title>UUID Generator - Random UUID v4</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="Free online UUID generator: create random UUID v4 identifiers, batch generate, and generate strong passwords too.">
-    <meta property='og:title' content='UUID Generator - Random UUID v4 & Passwords'/>
-    <meta property='og:description' content='Free online UUID generator: create random UUID v4 identifiers, batch generate, and generate strong passwords too.'/>
+    <meta name="description" content="Free online UUID generator: create random UUID v4 identifiers in batches, locally in your browser.">
+    <meta property='og:title' content='UUID Generator - Random UUID v4'/>
+    <meta property='og:description' content='Free online UUID generator: create random UUID v4 identifiers in batches, locally in your browser.'/>
     <meta property='og:type' content='website'/>
     <meta property='og:url' content='https://www.calc-tools.top/en/text/uuid-generator'/>
     <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
     <meta property='og:locale' content='en_US'/>
     <meta name='twitter:card' content='summary_large_image'/>
-    <meta name='twitter:title' content='UUID Generator - Random UUID v4 & Passwords'/>
-    <meta name='twitter:description' content='Free online UUID generator: create random UUID v4 identifiers, batch generate, and generate strong passwords too.'/>
+    <meta name='twitter:title' content='UUID Generator - Random UUID v4'/>
+    <meta name='twitter:description' content='Free online UUID generator: create random UUID v4 identifiers in batches, locally in your browser.'/>
 
     <link rel="canonical" href="https://www.calc-tools.top/en/text/uuid-generator">
     <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/text/uuid-generator">
@@ -40,7 +40,7 @@
     "@type": "BreadcrumbList",
     "itemListElement": [
         { "@type": "ListItem", "position": 1, "name": "Online Calculators", "item": "https://www.calc-tools.top/" },
-        { "@type": "ListItem", "position": 2, "name": "UUID/Password Generator", "item": "https://www.calc-tools.top/en/text/uuid-generator" }
+        { "@type": "ListItem", "position": 2, "name": "UUID Generator", "item": "https://www.calc-tools.top/en/text/uuid-generator" }
     ]
 }
 </script>
@@ -51,18 +51,10 @@
     "mainEntity": [
         {
             "@type": "Question",
-            "name": "Is the UUID and password uuid-generator secure?",
+            "name": "Is the UUID uuid-generator secure?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "This tool uses the browser's built-in crypto.randomUUID() and Crypto API to generate random values. All generation happens locally in your browser — no data is uploaded to any server, ensuring security and privacy."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "How is password strength evaluated?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Password strength is evaluated based on length and character type diversity: 16+ characters with all four types (upper, lower, digits, symbols) is very strong; 12-15 with at least three types is strong; 8-11 with at least two types is fair; less than 8 characters or only one type is weak."
+                "text": "This tool uses the browser's built-in crypto.randomUUID() to generate random values. All generation happens locally in your browser — no data is uploaded to any server, ensuring security and privacy."
             }
         },
         {
@@ -79,9 +71,9 @@
 {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "name": "UUID Generator & Password Generator - Free Online Tool",
+    "name": "UUID Generator - Free Online Tool",
     "url": "https://www.calc-tools.top/en/text/uuid-generator",
-    "description": "Free online UUID v4 uuid-generator and random password uuid-generator. Batch generate UUIDs, create strong passwords with configurable character sets, and evaluate password strength. Browser-based, privacy-first.",
+    "description": "Free online UUID v4 generator. Batch generate UUIDs locally in your browser. Privacy-first, no uploads.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Web",
     "inLanguage": "en"
@@ -104,15 +96,14 @@
     <main id="main">
         <div class="tool-page">
             <div class="tool-header">
-                <h1><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-dice-5"></use></svg> UUID / Password Generator</h1>
-                <p>Generate UUID v4 identifiers or configure strong passwords. All processing is done locally in your browser.</p>
+                <h1><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-dice-5"></use></svg> UUID Generator</h1>
+                <p>Generate UUID v4 identifiers. All processing is done locally in your browser.</p>
             </div>
             <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="uuid-generator"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
             <div class="related-tools">
                 <h3>Related Tools</h3>
                 <ul>
                     <li><a href="/en/calculators/random-gen">Random Number Generator</a></li>
-                    <li><a href="/en/calculators/password-gen">Password Generator</a></li>
                     <li><a href="/en/calculators/regex-tester">Regex Tester</a></li>
                 </ul>
             </div>
@@ -120,10 +111,6 @@
             
 
             <div class="tool-controls">
-            <div class="gen-tabs">
-                <span class="gen-tab active" data-tab="uuid" data-csp-click="switchGeneratorTab" data-csp-arg="uuid"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-bookmark"></use></svg> UUID</span>
-                <span class="gen-tab" data-tab="password" data-csp-click="switchGeneratorTab" data-csp-arg="password"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-key"></use></svg> Password</span>
-            </div>
 
             <!-- UUID Panel -->
             <div id="uuidPanel" class="gen-panel st-77">
@@ -144,57 +131,20 @@
                 </div>
             </div>
 
-            <!-- Password Panel -->
-            <div id="passwordPanel" class="gen-panel hidden">
-                <div class="pw-options">
-                    <div class="pw-length-wrap">
-                        <label class="st-17">Length:</label>
-                        <input type="range" id="pwLength" min="8" max="64" value="16" data-csp-input="updatePwLength">
-                        <span class="pw-length-val" id="pwLengthVal">16</span>
-                    </div>
-                    <label><input type="checkbox" id="pwUpper" checked> Uppercase (A-Z)</label>
-                    <label><input type="checkbox" id="pwLower" checked> Lowercase (a-z)</label>
-                    <label><input type="checkbox" id="pwDigits" checked> Digits (0-9)</label>
-                    <label><input type="checkbox" id="pwSymbols" checked> Symbols (!@#$%^&*)</label>
-                </div>
-                <div class="st-36">
-                    <label class="st-17">Count:</label>
-                    <select id="pwCount" class="st-37">
-                        <option value="1" selected>1</option>
-                        <option value="3">3</option>
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                    </select>
-                    <button class="btn btn-primary" data-csp-click="doGeneratePassword"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-key"></use></svg> Generate</button>
-                    <button class="copy-btn" id="copyGenAllBtnPw" data-csp-click="copyGeneratorAll"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-clipboard"></use></svg> Copy All</button>
-                </div>
-                <div id="pwStrength"></div>
-                <div class="result-area">
-                    <div class="result-label">Generated Passwords:</div>
-                    <div id="pwResult"></div>
-                </div>
-            </div>
             </div>
 
             <div class="seo-content">
-                <h2>UUID &amp; Password Generator</h2>
-                <p>This tool offers two useful functions: <strong>UUID v4 batch generation</strong> and <strong>custom password generation</strong>. A UUID is a 36-character string used to uniquely identify things, widely used for database primary keys, session IDs, and distributed-system node IDs in scenarios where duplicates must be impossible. The password generator produces strong random passwords to your spec and assesses their strength in real time.</p>
+                <h2>UUID Generator</h2>
+                <p>A UUID (Universally Unique Identifier) is a 36-character globally unique string. This tool uses the browser's built-in <code>crypto.randomUUID()</code> to generate UUID v4 — in batches, locally, and instantly, with no data uploaded to any server. It's widely used for database primary keys, session IDs, and distributed-system node IDs wherever uniqueness must be guaranteed.</p>
                 <h3>What Is a UUID? Why v4?</h3>
-                <p>A UUID (Universally Unique Identifier) is a standardized identifier format that looks like <code>550e8400-e29b-41d4-a716-446655440000</code>, made up of a version, a variant, and random bits. UUID v4 uses pure random generation, so the collision probability is astronomically low — it needs no central allocation and no central database to guarantee uniqueness across systems and machines.</p>
+                <p>A UUID looks like <code>550e8400-e29b-41d4-a716-446655440000</code>, made up of a version, a variant, and random bits. UUID v4 uses pure random generation, so the collision probability is astronomically low — it needs no central allocation and no central database to guarantee uniqueness across systems and machines.</p>
                 <p>In practice, using a UUID as a primary key avoids exposing business volume via auto-increment, suits distributed databases that merge, and makes it easy to migrate or sync data across systems.</p>
                 <h3>How to Use It</h3>
-                <p>1. In the &quot;UUID&quot; tab, pick how many UUIDs to generate (batch supported) and click generate.<br>2. The results list full UUID strings you can copy all at once or one by one.<br>3. In the &quot;Password&quot; tab, set the length and whether to include uppercase, lowercase, digits, and symbols.<br>4. Click generate to get a random password with an automatic strength rating.<br>5. Copy and store it somewhere safe. <strong>Never send plaintext passwords over public channels.</strong></p>
-                <h3>Password Strength Levels</h3>
-                <ul>
-                    <li><strong class="st-35">Very Strong</strong> — 16+ characters with all 4 character types</li>
-                    <li><strong class="st-78">Strong</strong> — 12-15 characters with at least 3 types</li>
-                    <li><strong class="st-79">Fair</strong> — 8-11 characters with at least 2 types</li>
-                    <li><strong class="st-10">Weak</strong> — Less than 8 characters or only 1 type</li>
-                </ul>
-                <h3>Common Mistakes When Generating &amp; Using</h3>
-                <p><strong>① Don't treat complexity as the only measure.</strong> Strength depends on length and predictability, not just character variety. Length is always the number-one factor.<br><strong>② Don't use a UUID as a password.</strong> A UUID is unique but has a fixed format, includes hyphens, and is meant for identification rather than secrecy — it's not a good password.<br><strong>③ Don't reuse default passwords.</strong> Keep generated random passwords safe and consider a password manager so you don't reuse credentials.</p>
+                <p>1. Pick how many UUIDs to generate (batch 1/3/5/10) and click "Generate UUIDs".<br>2. The results list full UUID strings you can copy all at once or one by one.<br>3. Paste them into your code, config, or database.</p>
+                <h3>UUID vs. Auto-Increment ID</h3>
+                <p>Auto-increment IDs (1, 2, 3…) are simple, compact, and sort-friendly, but they reveal business volume and can collide when merging across machines. UUIDs are inherently unique and need no central coordinator, making them ideal for distributed systems and data migration. Rule of thumb: use auto-increment for single-machine, size-sensitive apps; use UUIDs when you need cross-system sync, distributed writes, or want to hide your data scale.</p>
                 <h3>How to Use the Results</h3>
-                <p>The generated UUIDs can go straight into database primary keys, log trace IDs, order numbers, or API idempotency keys; the strong passwords suit account sign-ups or protecting keys. For higher security, give each account its own sufficiently random password and use a password manager.</p>
+                <p>The generated UUIDs drop straight into database primary keys, log trace IDs, order numbers, or API idempotency keys. You can also use them in filenames, temporary tokens, or cache keys to avoid collisions. If you need shorter or sortable identifiers, combine them with timestamps or a Snowflake-style algorithm.</p>
             </div>
         </div>
 
