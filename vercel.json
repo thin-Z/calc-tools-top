@@ -98,6 +98,36 @@
       "permanent": true
     },
     {
+      "source": "/zh/about",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/zh/about.html",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/zh/contact",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/zh/contact.html",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/zh/privacy",
+      "destination": "/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/zh/privacy.html",
+      "destination": "/privacy",
+      "permanent": true
+    },
+    {
       "source": "/zh/compress",
       "destination": "/zh/image/compress",
       "permanent": true

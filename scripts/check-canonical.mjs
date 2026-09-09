@@ -6,6 +6,8 @@
  *   1. 每页恰好 1 个 <link rel="canonical" href="...">，URL 与文件路径一致
  *   2. 双语页面有正确的 hreflang 互指（zh↔en）
  *   3. 博客文章有 canonical（keyword-density 博客补 canonical 已完成）
+ *   4. SEO-1 收敛：dist 中不得出现 canonical 指向 /zh/about|/zh/contact|/zh/privacy
+ *      （这 3 对中文重复内容已 301 收敛到根规范页，禁止 self-canonical 重复分裂）
  *
  * 用法：node scripts/check-canonical.mjs [--json]
  * 退出码：0 = 全绿；1 = 存在违规。
@@ -107,6 +109,31 @@ for (const filepath of allHtml) {
   }
 }
 
+// ── Check 3: SEO-1 收敛 — 根↔zh 不得同时 self-canonical ──
+// /about /contact /privacy 规范侧为根页（中文）；/zh/* 变体已 301 收敛到根。
+// 回归守卫：dist 中不得出现 canonical 指向 /zh/about|/zh/contact|/zh/privacy
+//（否则会与根页形成重复内容权重分裂，正是 SEO-1 要消除的）。
+const BANNED_ZH_CANON = ['/zh/about', '/zh/contact', '/zh/privacy'];
+let seo1_ok = 0, seo1_fail = 0;
+for (const filepath of allHtml) {
+  const rel = path.relative(DIST, filepath).split(path.sep).join('/');
+  const src = fs.readFileSync(filepath, 'utf8');
+  if (/noindex/i.test(src)) continue;
+  const cm = src.match(/<link[^>]+rel="canonical"[^>]+href="([^"]+)"/i)
+    || src.match(/<link[^>]+href="([^"]+)"[^>]+rel="canonical"/i);
+  if (!cm) continue;
+  const href = cm[1].replace(/\/$/, '');
+  const pathOnly = href.replace(/^https?:\/\/[^/]+/, '');
+  if (BANNED_ZH_CANON.includes(pathOnly)) {
+    fail(`[SEO-1] ${rel}: canonical 指向已收敛路径 "${href}"（/zh/{about,contact,privacy} 已 301→根页，禁止 self-canonical 重复内容）`);
+    seo1_fail++;
+  } else {
+    seo1_ok++;
+  }
+}
+stats.seo1_ok = seo1_ok;
+stats.seo1_fail = seo1_fail;
+
 // ── Output ──
 if (jsonMode) {
   process.stdout.write(JSON.stringify({ stats, failures }, null, 2) + '\n');
@@ -114,6 +141,7 @@ if (jsonMode) {
   console.log(`[canonical] 检查 ${stats.checked} 页（跳过 ${stats.skipped_noindex} noindex）`);
   console.log(`[canonical] 通过: ${stats.canonical_ok} / 失败: ${stats.canonical_fail}`);
   console.log(`[hreflang]  通过: ${stats.hreflang_ok} / 失败: ${stats.hreflang_fail}`);
+  console.log(`[SEO-1]    通过: ${stats.seo1_ok} / 失败: ${stats.seo1_fail}`);
   if (failures.length) {
     failures.forEach(f => console.log(`  ✗ ${f}`));
   }
