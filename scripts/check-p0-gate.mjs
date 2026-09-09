@@ -178,16 +178,52 @@ function checkPurple() {
 }
 
 // ═══════════════════════════════════════════════════════════════
+// 4. 重复选择器数（T-1 趋势指标，非阻断）
+//    仅观察 style.css 内重复出现的选择器数量，用于跟踪 CSS 膨胀趋势；
+//    不计入 allOk（不阻断构建 / verify）。
+// ═══════════════════════════════════════════════════════════════
+function checkDuplicateSelectors() {
+  const p = path.join(ROOT, 'css', 'style.css');
+  if (!fs.existsSync(p)) return { ok: true, total: 0, duplicates: 0, top: [] };
+
+  const src = fs.readFileSync(p, 'utf8');
+  const freq = new Map();
+  let total = 0;
+
+  for (const block of src.split('}')) {
+    const idx = block.lastIndexOf('{');
+    if (idx < 0) continue;
+    const head = block.slice(0, idx).trim();
+    // 跳过 at-rule（@media / @keyframes / @supports 等），避免伪选择器噪声
+    if (head.startsWith('@')) continue;
+    for (const raw of head.split(',')) {
+      const sel = raw.trim();
+      if (!sel) continue;
+      total++;
+      freq.set(sel, (freq.get(sel) || 0) + 1);
+    }
+  }
+
+  const dups = [...freq.entries()].filter(([, n]) => n > 1)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8)
+    .map(([sel, n]) => ({ sel, n }));
+
+  return { ok: true, total, duplicates: dups.length, top: dups };
+}
+
+// ═══════════════════════════════════════════════════════════════
 // Main
 // ═══════════════════════════════════════════════════════════════
 const css = checkCssColors();
 const emoji = checkEmoji();
 const purple = checkPurple();
+const dupSel = checkDuplicateSelectors(); // 趋势指标，非阻断
 
 const allOk = css.ok && emoji.ok && purple.ok;
 
 if (jsonMode) {
-  process.stdout.write(JSON.stringify({ css, emoji, purple, allOk }, null, 2) + '\n');
+  process.stdout.write(JSON.stringify({ css, emoji, purple, duplicateSelectors: dupSel, allOk }, null, 2) + '\n');
 } else {
   console.log(`[P0 gate] CSS 裸色值: ${css.violations === 0 ? '✓ 0' : '✗ ' + css.violations} 违规`);
   if (!css.ok) css.detail.forEach(v => console.log(`  ${v.file||''}:L${v.line} [${v.type}]: ${v.context}`));
@@ -199,6 +235,10 @@ if (jsonMode) {
   console.log(`[P0 gate] 紫二次色清零 (T1.1/D7): ${purple.violations === 0 ? '✓ 0' : '✗ ' + purple.violations} 违规`);
   if (!purple.ok) purple.detail.slice(0, 10).forEach(v => console.log(`  ${v.file}:${v.line} [${v.what}]: ${v.context}`));
   if (purple.detail.length > 10) console.log(`  ... and ${purple.detail.length - 10} more`);
+
+  // 趋势指标（非阻断）
+  console.log(`[P0 gate] 重复选择器(趋势,不阻断): 总计 ${dupSel.total} / 重复 ${dupSel.duplicates} 个`);
+  dupSel.top.forEach(d => console.log(`   ×${d.n}  ${d.sel.slice(0, 80)}`));
 
   console.log(`\n[P0 gate] 结果: ${allOk ? '✅ 全绿' : '❌ 未通过（阻断）'}`);
 }

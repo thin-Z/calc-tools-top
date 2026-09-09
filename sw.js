@@ -41,7 +41,7 @@ self.addEventListener('fetch', function (event) {
                 caches.open(CACHE).then(function (c) { c.put('/', copy); });
                 return resp;
             }).catch(function () {
-                return caches.match('/').then(function (hit) { return hit || caches.match(req); });
+                return caches.match('/', { ignoreSearch: true }).then(function (hit) { return hit || caches.match(req, { ignoreSearch: true }); });
             })
         );
         return;
@@ -50,7 +50,7 @@ self.addEventListener('fetch', function (event) {
     // 同源静态：cache-first + 后台更新
     if (url.pathname.match(/\.(css|js|svg|png|jpg|jpeg|webp|woff2?|ico)$/)) {
         event.respondWith(
-            caches.match(req).then(function (cached) {
+            caches.match(req, { ignoreSearch: true }).then(function (cached) {
                 const fetchPromise = fetch(req).then(function (resp) {
                     if (resp && resp.ok) {
                         const copy = resp.clone();
