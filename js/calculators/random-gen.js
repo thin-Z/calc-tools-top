@@ -49,7 +49,7 @@ function doCalculate() {
         html += '<span class="random-number-badge">' + num + '</span>';
     });
     html += '</div>';
-    html += '<button class="btn btn-sm" onclick="copyRandomResults()">复制结果 / Copy Results</button>';
+    html += '<button type="button" class="btn btn-sm" data-csp-click="copyRandomResults">复制结果 / Copy Results</button>';
     
     document.getElementById('randomResult').innerHTML = html;
     document.getElementById('resultArea').classList.remove('hidden');
@@ -62,9 +62,12 @@ function doCalculate() {
 function copyRandomResults() {
     var badges = document.querySelectorAll('.random-number-badge');
     var text = Array.from(badges).map(function(b) { return b.textContent; }).join(', ');
-    navigator.clipboard.writeText(text).then(function() {
+    window.copyText(text).then(function() {
         var btn = document.querySelector('#randomResult .btn');
         if (btn) { btn.textContent = '\u2713'; setTimeout(function() { btn.textContent = '复制结果 / Copy Results'; }, 1500); }
+    }).catch(function() {
+        var btn = document.querySelector('#randomResult .btn');
+        if (btn) { btn.textContent = '失败 / Failed'; setTimeout(function() { btn.textContent = '复制结果 / Copy Results'; }, 1500); }
     });
 }
 

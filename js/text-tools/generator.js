@@ -115,7 +115,7 @@ function doGenerateUUIDs() {
     var uuids = generateUUIDs(count);
     var html = '';
     for (var i = 0; i < uuids.length; i++) {
-        html += '<div class="uuid-row"><code class="uuid-text">' + uuids[i] + '</code><button class="copy-btn" onclick="copyRowText(this)">复制</button></div>';
+        html += '<div class="uuid-row"><code class="uuid-text">' + uuids[i] + '</code><button type="button" class="copy-btn" data-csp-click="copyRowText">复制</button></div>';
     }
     document.getElementById('uuidResult').innerHTML = html;
 }
@@ -139,7 +139,7 @@ function doGeneratePassword() {
     for (var i = 0; i < count; i++) {
         var pw = generatePassword(length, { upper: upper, lower: lower, digits: digits, symbols: symbols });
         if (i === 0) firstPw = pw;
-        passHtml += '<div class="uuid-row"><code class="uuid-text">' + escapeHtml(pw) + '</code><button class="copy-btn" onclick="copyRowText(this)">复制</button></div>';
+        passHtml += '<div class="uuid-row"><code class="uuid-text">' + escapeHtml(pw) + '</code><button type="button" class="copy-btn" data-csp-click="copyRowText">复制</button></div>';
     }
     document.getElementById('pwResult').innerHTML = passHtml;
 
@@ -164,13 +164,14 @@ function copyRowText(btn) {
     var code = btn.parentNode.querySelector('.uuid-text');
     if (!code) return;
     var text = code.textContent;
-    if (navigator.clipboard) {
-        navigator.clipboard.writeText(text).then(function() {
-            btn.textContent = '已复制';
-            btn.classList.add('copied');
-            setTimeout(function() { btn.textContent = '复制'; btn.classList.remove('copied'); }, 2000);
-        });
-    }
+    window.copyText(text).then(function() {
+        btn.textContent = '已复制';
+        btn.classList.add('copied');
+        setTimeout(function() { btn.textContent = '复制'; btn.classList.remove('copied'); }, 2000);
+    }).catch(function() {
+        btn.textContent = '复制失败';
+        setTimeout(function() { btn.textContent = '复制'; btn.classList.remove('copied'); }, 2000);
+    });
 }
 
 function updatePwLength(val) {
@@ -183,14 +184,20 @@ function copyGeneratorAll() {
     var texts = [];
     container.querySelectorAll('.uuid-text').forEach(function(el) { texts.push(el.textContent); });
     if (texts.length === 0) return;
-    if (navigator.clipboard) {
-        navigator.clipboard.writeText(texts.join('\n')).then(function() {
-            var btn = document.getElementById('copyGenAllBtn');
+    window.copyText(texts.join('\n')).then(function() {
+        var btn = document.getElementById('copyGenAllBtn');
+        if (btn) {
             btn.textContent = '已复制';
             btn.classList.add('copied');
             setTimeout(function() { btn.textContent = '复制全部'; btn.classList.remove('copied'); }, 2000);
-        });
-    }
+        }
+    }).catch(function() {
+        var btn = document.getElementById('copyGenAllBtn');
+        if (btn) {
+            btn.textContent = '复制失败';
+            setTimeout(function() { btn.textContent = '复制全部'; btn.classList.remove('copied'); }, 2000);
+        }
+    });
 }
 
 function escapeHtml(str) {

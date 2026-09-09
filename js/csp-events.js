@@ -61,4 +61,33 @@
     } else {
         init();
     }
+
+    /**
+     * 全局剪贴板工具：优先使用 navigator.clipboard（安全上下文 / 用户手势），
+     * 失败或非安全上下文回退到 textarea + execCommand('copy')。
+     * 返回 Promise，供各页面 copy* 函数统一调用，规避 CSP 对动态内联 onclick 的拦截。
+     * @param {string} text - 待复制文本。
+     * @returns {Promise<void>}
+     */
+    window.copyText = function (text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            return navigator.clipboard.writeText(text);
+        }
+        return new Promise(function (resolve, reject) {
+            try {
+                var ta = document.createElement('textarea');
+                ta.value = text;
+                ta.setAttribute('readonly', '');
+                ta.style.position = 'fixed';
+                ta.style.top = '-1000px';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                ta.setSelectionRange(0, ta.value.length);
+                var ok = document.execCommand('copy');
+                document.body.removeChild(ta);
+                if (ok) resolve(); else reject(new Error('execCommand copy failed'));
+            } catch (err) { reject(err); }
+        });
+    };
 })();

@@ -47,7 +47,7 @@ function doCalculate() {
         for (var i = 0; i < length; i++) {
             pwd += pool.charAt(Math.floor(Math.random() * pool.length));
         }
-        result += '<div class="password-result-line"><code>' + escapeHtml(pwd) + '</code><button class="btn btn-sm" onclick="copyPassword(this)">复制</button></div>';
+        result += '<div class="password-result-line"><code>' + escapeHtml(pwd) + '</code><button type="button" class="btn btn-sm" data-csp-click="copyPassword">复制</button></div>';
     }
     
     document.getElementById('passwordResult').innerHTML = result;
@@ -81,12 +81,14 @@ function getStrength(length, pool) {
  */
 function copyPassword(btn) {
     var code = btn.previousElementSibling;
-    if (code) {
-        navigator.clipboard.writeText(code.textContent).then(function() {
-            btn.textContent = '\u2713';
-            setTimeout(function() { btn.textContent = '\u590D\u5236 / Copy'; }, 1500);
-        });
-    }
+    if (!code) return;
+    window.copyText(code.textContent).then(function() {
+        btn.textContent = '\u2713';
+        setTimeout(function() { btn.textContent = '\u590D\u5236 / Copy'; }, 1500);
+    }).catch(function() {
+        btn.textContent = '\u5931\u8D25 / Failed';
+        setTimeout(function() { btn.textContent = '\u590D\u5236 / Copy'; }, 1500);
+    });
 }
 
 /**
