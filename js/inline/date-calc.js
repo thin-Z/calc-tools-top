@@ -6,7 +6,10 @@ function toggleMode() {
             const labelA = document.getElementById('modeALabel');
             const labelB = document.getElementById('modeBLabel');
             const labelC = document.getElementById('modeCLabel');
-            const active = { background: 'var(--primary)', color: 'var(--white)', fontWeight: '600' };
+            // 选中态配色必须与 CSS 保持一致：.st-47 / .seg-group input:checked + label
+            // 均为 background:var(--primary-hover); color:var(--white); font-weight:600。
+            // 用 var(--primary)（#0A84FF）配白字在 dark 下仅 3.65:1，不达 WCAG AA 4.5:1。
+            const active = { background: 'var(--primary-hover)', color: 'var(--white)', fontWeight: '600' };
             const inactive = { background: 'transparent', color: 'var(--text)', fontWeight: '500' };
 
             modeAFields.style.display = mode === 'A' ? 'block' : 'none';

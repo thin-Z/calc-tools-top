@@ -28,6 +28,9 @@ const dist = join(root, 'dist');
 const EXCLUDE_DIRS = new Set([
   '.git',
   '.githooks',
+  '.github',      // P0-3：CI 工作流属内部资产，禁止进入生产产物
+  '.workbuddy',   // P0-3：本地智能体工作区（含一次性脚本/快照），禁止进入生产产物
+  '.audit_tmp',   // P0-3：审计临时目录
   'node_modules',
   'dist',
   'scripts',
@@ -36,16 +39,29 @@ const EXCLUDE_DIRS = new Set([
   'snapshots',
   'deliverables',
   'api',
+  'e2e',          // P0-3：E2E 测试源码（tools.spec.mjs 等）禁止进入生产产物
+  'test-results', // P0-3：测试产物与探针输出，禁止进入生产产物
 ]);
 const EXCLUDE_FILES = new Set([
   '.gitignore',
   'vercel.json',
   'AGENTS.md',
+  'package.json',      // P0-3：依赖清单属内部资产，暴露依赖版本利于供应链攻击
+  'package-lock.json', // P0-3：锁定文件同理
 ]);
+// ⚠️ tools.json 必须保留，不可加入排除：
+//    js/embed.js:38 在运行时 fetch('/tools.json') 解析工具目录（供 /embed 嵌入 widget 使用），
+//    排除后会直接破坏线上嵌入功能。已全仓核实为该文件唯一的运行时消费者。
+//    其内容是公开的工具目录，与首页展示一致，无敏感信息。
 // 按相对路径排除的子目录（P3：测试文件不应进入生产产物）
 const EXCLUDE_SUBDIRS = new Set(['js/test']);
-// 按扩展名排除的临时/脚本文件（P3：工作区遗留 .tmp/.cjs 不进入生产产物）
-const EXCLUDE_FILE_RE = /\.(?:tmp|cjs)$/;
+// 按扩展名排除的脚本/临时文件（P0-3：内部脚本与工作区遗留不进入生产产物）
+// 已核实站点运行时无 .mjs/.py/.sh 等依赖（HTML 与 js/ 下均无此类文件）
+const EXCLUDE_FILE_RE = /\.(?:tmp|cjs|mjs|py|ps1|sh|bash|zsh|rb|pl)$/;
+// 根级一次性探针/临时文件（__* 前缀，如 __a11y_probe.mjs / __perf-results.json / __struct.txt）
+const EXCLUDE_PROBE_RE = /^__/;
+// Playwright 配置（各扩展名，如 playwright.config.mjs）
+const EXCLUDE_CONFIG_RE = /^playwright\.config\./;
 
 function copyDir(src, dst, rel) {
   mkdirSync(dst, { recursive: true });
@@ -60,7 +76,10 @@ function copyDir(src, dst, rel) {
         copyDir(srcPath, dstPath, relPath);
       }
     } else {
-      if (!EXCLUDE_FILES.has(name) && !EXCLUDE_FILE_RE.test(name)) {
+      if (!EXCLUDE_FILES.has(name)
+        && !EXCLUDE_FILE_RE.test(name)
+        && !EXCLUDE_PROBE_RE.test(name)
+        && !EXCLUDE_CONFIG_RE.test(name)) {
         copyFileSync(srcPath, dstPath);
       }
     }

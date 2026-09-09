@@ -72,6 +72,13 @@ const PRIVATE_V4 = [
   { base: 0xC0000000, bits: 24 },  // 192.0.0.0/24
   { base: 0xC0A80000, bits: 16 },  // 192.168.0.0/16
   { base: 0xC6120000, bits: 15 },  // 198.18.0.0/15（benchmark）
+  { base: 0xE0000000, bits: 4 },   // 224.0.0.0/4（组播，非有效 SSRF 目标）
+  { base: 0xF0000000, bits: 4 },   // 240.0.0.0/4（保留，非有效目标）
+  { base: 0xFFFFFFFF, bits: 32 },  // 255.255.255.255/32（广播）
+  { base: 0xC0586300, bits: 24 },  // 192.88.99.0/24（6to4 中继任播）
+  { base: 0xC0000200, bits: 24 },  // 192.0.2.0/24（TEST-NET-1）
+  { base: 0xC6336400, bits: 24 },  // 198.51.100.0/24（TEST-NET-2）
+  { base: 0xCB007100, bits: 24 },  // 203.0.113.0/24（TEST-NET-3）
 ];
 
 function isPrivateIpv4(ip) {
@@ -107,6 +114,27 @@ function isPrivateIpv6(ip) {
     }
     return true;
   }
+  // 6to4（2002::/16）：前两个 hextet 即内嵌 IPv4，可绕过白名单（实测可触发）
+  if (/^2002:/i.test(v)) {
+    const parts = v.slice(5).split(':');
+    const a = parseInt(parts[0], 16);
+    const b = parseInt(parts[1], 16);
+    if (isFinite(a) && isFinite(b)) {
+      return isPrivateIpv4([(a >> 8) & 255, a & 255, (b >> 8) & 255, b & 255].join('.'));
+    }
+    return true; // 解析失败 → fail-closed
+  }
+  // NAT64（64:ff9b::/96）：末 32 位即内嵌 IPv4（实测可触发）
+  if (/^64:ff9b:/i.test(v)) {
+    const parts = v.split(':').filter(Boolean);
+    const a = parseInt(parts[parts.length - 2], 16);
+    const b = parseInt(parts[parts.length - 1], 16);
+    if (isFinite(a) && isFinite(b)) {
+      return isPrivateIpv4([(a >> 8) & 255, a & 255, (b >> 8) & 255, b & 255].join('.'));
+    }
+    return true; // 解析失败 → fail-closed
+  }
+  if (/^2001:db8:/i.test(v)) return true;                     // 文档保留段
   if (v === '::' || v === '::1') return true;                 // 未指定 / 环回
   if (!/^[0-9a-f:]{2,}$/.test(v)) return true;                // 含非法字符 → fail-closed
   if (/^f[cd][0-9a-f]{2}:/.test(v)) return true;              // fc00::/7 唯一本地
