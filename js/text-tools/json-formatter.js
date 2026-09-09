@@ -144,6 +144,17 @@ function clearJSON() {
 // 暴露纯函数供单元测试与浏览器控制台使用（P1P2-03）
 window.formatJSON = formatJSON;
 
+// 暴露 DOM 驱动函数命名空间（迭代六 T-3/T-9：固化全局契约 + 支持单测）
+if (typeof window !== 'undefined') {
+    window.jsonFormatter = {
+        formatJSON: formatJSON,
+        doFormat: doFormat,
+        switchJSONMode: switchJSONMode,
+        copyJSONResult: copyJSONResult,
+        clearJSON: clearJSON
+    };
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     doFormat();
 });

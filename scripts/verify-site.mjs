@@ -708,6 +708,18 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
   }
 }
 
+// ---------- 32. 全局契约门禁（迭代六 T-3，2026-09-09） ----------
+// 校验 js/csp-events.js 同时定义 window.copyText + window.showError（站点级契约），
+// 且 runtime-head 注入 csp-events（与迭代二解耦一致）。任一缺失即阻断。
+{
+  try {
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'check-global-contract.mjs')], { stdio: 'inherit', cwd: ROOT });
+    console.log('[32] 全局契约门禁（copyText+showError 契约完整）✓');
+  } catch (e) {
+    fail('[contract] scripts/check-global-contract.mjs 未通过（window.copyText/window.showError 契约破坏或 runtime-head 未注入 csp-events）');
+  }
+}
+
 // ---------- 汇总 ----------
 if (failures.length) {
   console.error(`\n❌ verify-site 失败 ${failures.length} 项：`);

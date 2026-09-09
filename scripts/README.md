@@ -12,7 +12,7 @@
 | 脚本 | 被谁引用 | 用途 | 触发方式 |
 |------|----------|------|----------|
 | `build.mjs` | Vercel build | 构建入口（复制→注入→卫生→压缩） | 自动 |
-| `verify-site.mjs` | CI / 本地 | 集成校验 31 项断言（#27 embed / #28 sitemap / #29 dist 卫生 / #30 csp-events 解耦 / #31 设计系统门禁，2026-09-02 / 2026-09-09 新增） | 自动 |
+| `verify-site.mjs` | CI / 本地 | 集成校验 32 项断言（#27 embed / #28 sitemap / #29 dist 卫生 / #30 csp-events 解耦 / #31 设计系统门禁 / #32 全局契约门禁，2026-09-02 / 2026-09-09 新增） | 自动 |
 | `check-jsonld.mjs` | verify #2 | JSON-LD 5 项断言 | 自动 |
 | `check-links.js` | verify #4 | 断链检查 | 自动 |
 | `seo-batch-audit.mjs` | verify #14 | SEO 批量审计 | 自动 |
@@ -29,6 +29,10 @@
 | `check-tool-template.mjs` | verify #23 | 工具页模板一致性门禁 | 自动 |
 | `check-dist-hygiene.mjs` | verify #29 | dist 卫生门禁（禁 .workbuddy/e2e/test-results/__*/根级配置 .mjs/.json，白名单放行 manifest.json+tools.json） | 自动 |
 | `check-design-system.mjs` | verify #31 | 设计系统门禁：裸 checkbox/radio 数量只降不升（基线 scripts/design-baseline.json，退化即 fail） | 自动 |
+| `check-global-contract.mjs` | verify #32 | 全局契约门禁：copyText+showError 契约完整 + runtime-head 注入 csp-events（硬门禁） | 自动 |
+| `check-innerhtml-escape.mjs` | 独立趋势（非阻断） | innerHTML 赋值扫描，提示疑似未转义拼接供 review，不阻断构建/verify | 手动 |
+| `check-global-contract.mjs` | verify #32 | 全局契约门禁：js/csp-events.js 须同时定义 window.copyText + window.showError，且 runtime-head 注入 csp-events | 自动 |
+| `check-innerhtml-escape.mjs` | 独立（非阻断趋势） | innerHTML 动态内容转义趋势指标：统计拼接用法 + 标记无 escapeHtml 工具的可疑项（供 review，不阻断构建） | 手动 |
 | `check-doc-sync.mjs` | — | 文档-代码同步检查（README ↔ scripts ↔ archive ↔ 配置） | 手动 |
 | `generate-home.mjs` | build | 首页生成（读源码） | 自动 |
 | `generate-tag-pages.mjs` | build | 标签聚合页生成 | 自动 |

@@ -37,7 +37,7 @@ node scripts/build.mjs
 node scripts/verify-site.mjs
 ```
 
-**集成校验 31 项断言**（`verify-site.mjs`）：header/footer 字节一致 / JSON-LD / AdSense 唯一性 / 断链 / 浮动控件 / GA4 不变量 / CSP 无内联脚本 / 无内联事件 / CSP 头 / 懒加载 / alt / SRI / a11y 结构 / SEO / 无 var / 首页三源同步 / 搜索升级 / P0 门禁 / canonical-hreflang / JS 语法 / a11y 全站扫描 / 工具页模板一致性(#23) / 重定向顺序(#24) / CSP 委托层可达性(#25) / 文档同步(#26) / embed 可嵌入性(#27) / sitemap×noindex 交叉(#28) / dist 卫生门禁(#29，防 P0-3 构建产物泄漏复发) / csp-events 解耦(#30，事件委托层与 AdSense 片段解耦 + 全页覆盖) / 设计系统门禁(#31，裸 checkbox/radio 只降不升，基线 scripts/design-baseline.json)。
+**集成校验 32 项断言**（`verify-site.mjs`）：header/footer 字节一致 / JSON-LD / AdSense 唯一性 / 断链 / 浮动控件 / GA4 不变量 / CSP 无内联脚本 / 无内联事件 / CSP 头 / 懒加载 / alt / SRI / a11y 结构 / SEO / 无 var / 首页三源同步 / 搜索升级 / P0 门禁 / canonical-hreflang / JS 语法 / a11y 全站扫描 / 工具页模板一致性(#23) / 重定向顺序(#24) / CSP 委托层可达性(#25) / 文档同步(#26) / embed 可嵌入性(#27) / sitemap×noindex 交叉(#28) / dist 卫生门禁(#29，防 P0-3 构建产物泄漏复发) / csp-events 解耦(#30，事件委托层与 AdSense 片段解耦 + 全页覆盖) / 设计系统门禁(#31，裸 checkbox/radio 只降不升，基线 scripts/design-baseline.json) / 全局契约门禁(#32，window.copyText+window.showError 契约完整 + runtime-head 注入 csp-events)。
 
 - **全绿（exit 0）才能提交**。这是项目硬规则。
 - a11y 全站扫描（#22）**默认跳过**（需浏览器），启用：`E2E_A11Y=1 node scripts/audit-a11y.mjs`（本地需 playwright + msedge）。
@@ -51,6 +51,8 @@ node scripts/verify-site.mjs
 | **R2** | 改 `.js` 必过 verify #21（`node --check`），**禁纯正则盲替**（字符串感知） |
 | **R3** | 阶段收尾临时文件清零：仓库根 `_*.mjs` 为空；新临时脚本即时 `mv` 至 `.workbuddy/archive/` |
 | **R4** | verify 伪绿防御：图标/CSS/JS 变更，除 verify 外**必须叠加真实浏览器渲染断言**（Playwright 或 opencli 真实 Edge），不可仅以 verify 全绿宣称完成 |
+| **R5** | innerHTML 动态内容须转义：任何 `el.innerHTML = ...` 拼接**用户输入/外部数据**时，必须先用 `escapeHtml()` 转义；纯常量/纯数字结果（如 percentage-calc 拼接数值）可豁免。趋势指标 `node scripts/check-innerhtml-escape.mjs`（非阻断，供 review） |
+| **R6** | 新工具「零 DOM + 单测」准入（Q-5）：算法逻辑抽到 `js/calculators/<tool>.js` **纯函数**（无 `document` 依赖），UI 交互在 `js/inline/<tool>.js`；纯函数文件**必须配 `js/test/<tool>.test.js` 单测**。样板：`js/calculators/bmi.js`（纯函数 `calculateBMI`）+ `js/inline/bmi.js`（UI）。存量 26 个耦合计算器按页逐步拆（长线，非阻断） |
 
 ---
 
