@@ -4456,6 +4456,12 @@ mark {
     font-size: 0.85rem;
     margin-left: 2px;
 }
+/* check-card 置于 .form-group 内时，修正 .form-group label 的 block 覆盖，保证卡片横向布局 */
+.form-group .check-card {
+    display: flex;
+    font-size: 0.95rem;
+    font-weight: normal;
+}
 
 .pg-count { margin-bottom: 22px; }
 .pg-count .seg-group { margin-top: 0; }
