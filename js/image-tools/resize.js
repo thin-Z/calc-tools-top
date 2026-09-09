@@ -65,7 +65,7 @@
 
     function loadFile(file) {
         if (file.size > MAX_FILE_SIZE) {
-            alert('文件大小超过 50MB 限制。');
+            window.showError('文件大小超过 50MB 限制。');
             return;
         }
 
@@ -112,13 +112,13 @@
         let newHeight = parseInt(document.getElementById('heightInput').value, 10);
 
         if (!newWidth || !newHeight || newWidth < 1 || newHeight < 1) {
-            alert('请输入有效的宽度和高度（至少 1px）。');
+            window.showError('请输入有效的宽度和高度（至少 1px）。');
             return;
         }
 
         // Cap at reasonable size
         if (newWidth > 10000 || newHeight > 10000) {
-            alert('尺寸不能超过 10000px。');
+            window.showError('尺寸不能超过 10000px。');
             return;
         }
 

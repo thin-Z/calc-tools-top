@@ -15,12 +15,12 @@ function doCalculate() {
     var sortResult = document.getElementById('randSort').checked;
     
     if (min >= max) {
-        alert('最大值必须大于最小值 / Max must be greater than min');
+        window.showError('最大值必须大于最小值 / Max must be greater than min');
         return;
     }
     
     if (unique && (max - min + 1) < count) {
-        alert('不重复模式下，生成数量不能超过范围 / Count cannot exceed range in unique mode');
+        window.showError('不重复模式下，生成数量不能超过范围 / Count cannot exceed range in unique mode');
         return;
     }
     

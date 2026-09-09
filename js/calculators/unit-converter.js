@@ -12,7 +12,7 @@ function doConvert() {
     const from = document.getElementById('fromUnit').value;
     const to = document.getElementById('toUnit').value;
     const cat = document.getElementById('category').value;
-    if (!val) { alert('请输入数值'); return; }
+    if (!val) { window.showError('请输入数值'); return; }
     
     const rates = {
         length: { mm: 1, cm: 10, m: 1000, km: 1000000, inch: 25.4, ft: 304.8, yard: 914.4, mile: 1609344 },

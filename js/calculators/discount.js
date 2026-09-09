@@ -10,7 +10,7 @@
 function doCalculate() {
     const price = parseFloat(document.getElementById('originalPrice').value);
     const discount = parseFloat(document.getElementById('discountRate').value);
-    if (!price || !discount) { alert('请输入价格和折扣'); return; }
+    if (!price || !discount) { window.showError('请输入价格和折扣'); return; }
     const finalPrice = price * (1 - discount / 100);
     const saved = price - finalPrice;
     document.getElementById('finalPrice').textContent = finalPrice.toFixed(2);

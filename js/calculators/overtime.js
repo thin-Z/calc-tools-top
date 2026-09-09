@@ -12,7 +12,7 @@ function doCalculate() {
     const weekday = parseFloat(document.getElementById('weekdayOvertime').value) || 0;
     const weekend = parseFloat(document.getElementById('weekendOvertime').value) || 0;
     const holiday = parseFloat(document.getElementById('holidayOvertime').value) || 0;
-    if (!salary) { alert('请输入月薪'); return; }
+    if (!salary) { window.showError('请输入月薪'); return; }
     const hourlyRate = salary / 21.75 / 8;
     const weekdayPay = hourlyRate * 1.5 * weekday;
     const weekendPay = hourlyRate * 2 * weekend;

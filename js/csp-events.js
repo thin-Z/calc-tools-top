@@ -71,7 +71,7 @@
      */
     window.copyText = function (text) {
         if (navigator.clipboard && navigator.clipboard.writeText) {
-            return navigator.clipboard.writeText(text);
+            return navigator.clipboard.writeText(text).then(function () { return true; });
         }
         return new Promise(function (resolve, reject) {
             try {
@@ -86,8 +86,36 @@
                 ta.setSelectionRange(0, ta.value.length);
                 var ok = document.execCommand('copy');
                 document.body.removeChild(ta);
-                if (ok) resolve(); else reject(new Error('execCommand copy failed'));
+                if (ok) resolve(true); else reject(new Error('execCommand copy failed'));
             } catch (err) { reject(err); }
         });
     };
+
+    /**
+     * 全局错误条：替代阻塞式 alert()，在页面首个 .tool-error 容器显示错误文案。
+     * 若页面无 .tool-error 容器，自动创建并挂载到 .tool-form（.form-actions 之前）或 main/body 末尾。
+     * @param {string} msg - 错误文案
+     */
+    window.showError = function (msg) {
+        if (!msg) return;
+        var zone = document.querySelector('.tool-error');
+        if (!zone) {
+            zone = document.createElement('div');
+            zone.className = 'tool-error';
+            zone.setAttribute('role', 'alert');
+            zone.setAttribute('aria-live', 'assertive');
+            var form = document.querySelector('.tool-form');
+            if (form) {
+                var actions = form.querySelector('.form-actions');
+                if (actions && actions.parentNode) actions.parentNode.insertBefore(zone, actions);
+                else form.appendChild(zone);
+            } else {
+                var main = document.querySelector('main') || document.body;
+                main.appendChild(zone);
+            }
+        }
+        zone.textContent = msg;
+        zone.classList.remove('hidden');
+    };
+
 })();

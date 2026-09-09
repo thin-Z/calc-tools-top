@@ -16,7 +16,7 @@ function checkPwdStrength() {
     var input = document.getElementById('checkPwdInput');
     var password = input ? input.value : '';
     if (!password) {
-        alert('请输入密码 / Please enter a password');
+        window.showError('请输入密码 / Please enter a password');
         return;
     }
     var result = evaluatePwdStrength(password);

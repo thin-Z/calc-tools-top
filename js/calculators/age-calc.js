@@ -35,7 +35,7 @@ function calculateAge(birthDate) {
 function doCalculate() {
     const birthDate = document.getElementById('birthDate').value;
     const name = document.getElementById('name').value || '';
-    if (!birthDate) { alert('请选择出生日期'); return; }
+    if (!birthDate) { window.showError('请选择出生日期'); return; }
     const r = calculateAge(birthDate);
     const area = document.getElementById('resultArea');
     document.getElementById('ageDisplay').textContent = `${r.years}岁${r.months}个月${r.days}天`;

@@ -103,19 +103,19 @@
         var activity = document.getElementById('activity').value;
 
         if (!gender) {
-            alert(getLang() === 'zh' ? '请选择性别。' : 'Please select a gender.');
+            window.showError(getLang() === 'zh' ? '请选择性别。' : 'Please select a gender.');
             return;
         }
         if (isNaN(age) || age < 1 || age > 120) {
-            alert(getLang() === 'zh' ? '请输入有效的年龄（1-120 岁）。' : 'Please enter a valid age (1-120).');
+            window.showError(getLang() === 'zh' ? '请输入有效的年龄（1-120 岁）。' : 'Please enter a valid age (1-120).');
             return;
         }
         if (isNaN(height) || height < 50 || height > 250) {
-            alert(getLang() === 'zh' ? '请输入有效的身高（50-250 cm）。' : 'Please enter a valid height (50-250 cm).');
+            window.showError(getLang() === 'zh' ? '请输入有效的身高（50-250 cm）。' : 'Please enter a valid height (50-250 cm).');
             return;
         }
         if (isNaN(weight) || weight < 10 || weight > 300) {
-            alert(getLang() === 'zh' ? '请输入有效的体重（10-300 kg）。' : 'Please enter a valid weight (10-300 kg).');
+            window.showError(getLang() === 'zh' ? '请输入有效的体重（10-300 kg）。' : 'Please enter a valid weight (10-300 kg).');
             return;
         }
 

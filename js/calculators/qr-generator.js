@@ -10,7 +10,7 @@
 function doCalculate() {
     var text = document.getElementById('qrText').value.trim();
     if (!text) {
-        alert('请输入内容 / Please enter content');
+        window.showError('请输入内容 / Please enter content');
         return;
     }
     

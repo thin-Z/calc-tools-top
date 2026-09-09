@@ -16,7 +16,7 @@ function doCalculate() {
     switch(mode) {
         case 'whatPercent':
             // X is what % of Y?
-            if (val2 === 0) { alert('第二个值不能为0 / Value cannot be zero'); return; }
+            if (val2 === 0) { window.showError('第二个值不能为0 / Value cannot be zero'); return; }
             var pct = (val1 / val2 * 100);
             result = val1 + ' 是 ' + val2 + ' 的 <strong>' + pct.toFixed(2) + '%</strong>';
             break;
@@ -34,14 +34,14 @@ function doCalculate() {
             break;
         case 'percentChange':
             // From X to Y = ?% change
-            if (val1 === 0) { alert('起始值不能为0 / Starting value cannot be zero'); return; }
+            if (val1 === 0) { window.showError('起始值不能为0 / Starting value cannot be zero'); return; }
             var change = ((val2 - val1) / val1 * 100);
             var direction = change >= 0 ? '增长' : '下降';
             result = '从 ' + val1 + ' 到 ' + val2 + '：<strong>' + direction + ' ' + Math.abs(change).toFixed(2) + '%</strong>';
             break;
         case 'discount':
             // 折扣计算：A=原价, B=折扣率(%) → 折后价 + 节省金额
-            if (val2 < 0 || val2 > 100) { alert('折扣率需在 0-100 之间 / Discount rate must be 0-100'); return; }
+            if (val2 < 0 || val2 > 100) { window.showError('折扣率需在 0-100 之间 / Discount rate must be 0-100'); return; }
             var finalPrice = val1 * (1 - val2 / 100);
             var savedAmount = val1 - finalPrice;
             result = '原价 ' + val1 + '，折扣 ' + val2 + '%：折后价 <strong>' + finalPrice.toFixed(2) + '</strong>，节省 <strong>' + savedAmount.toFixed(2) + '</strong>';

@@ -11,7 +11,7 @@ function doCalculate() {
     const distance = parseFloat(document.getElementById('distance').value);
     const fuelPer100 = parseFloat(document.getElementById('fuelPer100').value);
     const pricePerLiter = parseFloat(document.getElementById('pricePerLiter').value);
-    if (!distance || !fuelPer100) { alert('请输入行驶距离和油耗'); return; }
+    if (!distance || !fuelPer100) { window.showError('请输入行驶距离和油耗'); return; }
     const fuelUsed = distance * fuelPer100 / 100;
     const totalCost = pricePerLiter ? fuelUsed * pricePerLiter : 0;
     const costPerKm = pricePerLiter ? totalCost / distance : 0;

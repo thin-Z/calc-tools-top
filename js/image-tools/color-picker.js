@@ -6,7 +6,7 @@
  *     ⚠️ 不要改写成 HTML 内联 onclick，也不要用 data-csp-*：本站 CSP 为
  *     script-src 'self'（无 unsafe-inline），且 data-csp-* 委托要求函数为顶层声明。
  *   - 5 个渠道共用同一个 #imageCanvas 与同一套取色/输出管线。
- *   - 不使用 alert()，全部错误走内联 .cp-error 错误条。
+ *   - 不使用弹出提示框（alert()），全部错误走内联 .cp-error 错误条 + 全局 window.showError()。
  */
 (function () {
     'use strict';
@@ -682,36 +682,7 @@
     }
 
     // ---------------------------------------------------------------- 复制
-    function legacyCopy(text) {
-        try {
-            var ta = document.createElement('textarea');
-            ta.value = text;
-            ta.setAttribute('readonly', 'readonly');
-            ta.style.position = 'fixed';
-            ta.style.top = '-1000px';
-            ta.style.opacity = '0';
-            document.body.appendChild(ta);
-            ta.select();
-            if (ta.setSelectionRange) ta.setSelectionRange(0, ta.value.length);
-            var ok = document.execCommand('copy');
-            document.body.removeChild(ta);
-            return !!ok;
-        } catch (e) {
-            return false;
-        }
-    }
-
-    /** @returns {Promise<boolean>} 复制是否成功 */
-    function copyText(text) {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            return navigator.clipboard.writeText(text).then(function () {
-                return true;
-            }, function () {
-                return legacyCopy(text);
-            });
-        }
-        return Promise.resolve(legacyCopy(text));
-    }
+    // 复制统一交由全局 window.copyText（csp-events.js 提供：clipboard + execCommand 回退）
 
     function flashCopied(el) {
         var fmt = el.getAttribute('data-fmt') || '';
@@ -913,7 +884,7 @@
                     // 取不到（理论上首次点击前已 set）时再退化到 textContent。
                     var raw = el.getAttribute('data-original');
                     var text = (raw != null ? String(raw) : String(el.textContent || '')).replace(/^\s+/, '').replace(/\s+$/, '');
-                    copyText(text).then(function (ok) {
+                    window.copyText(text).then(function (ok) {
                         if (ok) {
                             clearError('copyError');
                             flashCopied(el);

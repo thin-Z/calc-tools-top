@@ -11,7 +11,7 @@ function doCalculate() {
     const cycle = parseInt(document.getElementById('cycleDays').value, 10) || 28;
     const period = parseInt(document.getElementById('periodDays').value, 10) || 5;
     const lastPeriod = document.getElementById('lastPeriod').value;
-    if (!lastPeriod) { alert('请选择末次月经日期'); return; }
+    if (!lastPeriod) { window.showError('请选择末次月经日期'); return; }
     
     const last = new Date(lastPeriod);
     const ovulationDay = new Date(last);

@@ -12,7 +12,7 @@ function doCalculate() {
     const hours = parseFloat(document.getElementById('hours').value);
     const days = parseFloat(document.getElementById('days').value) || 30;
     const rate = parseFloat(document.getElementById('rate').value) || 0.6;
-    if (!power || !hours) { alert('请输入功率和使用时间'); return; }
+    if (!power || !hours) { window.showError('请输入功率和使用时间'); return; }
     const dailyKwh = power * hours / 1000;
     const monthlyKwh = dailyKwh * days;
     const monthlyCost = monthlyKwh * rate;

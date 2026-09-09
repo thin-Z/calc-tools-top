@@ -696,6 +696,18 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
   }
 }
 
+// ---------- 31. 设计系统门禁（迭代四 T-2，2026-09-09） ----------
+// 裸 checkbox/radio 数量只降不升：防止新增页面绕开设计系统控件
+// （.check-card / .seg-group / .gender-seg / .mode-pills）。
+{
+  try {
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'check-design-system.mjs')], { stdio: 'inherit', cwd: ROOT });
+    console.log('[31] 设计系统门禁（裸控件只降不升）✓');
+  } catch (e) {
+    fail('[design] scripts/check-design-system.mjs 未通过（裸 checkbox/radio 数量退化，或基线 scripts/design-baseline.json 缺失）');
+  }
+}
+
 // ---------- 汇总 ----------
 if (failures.length) {
   console.error(`\n❌ verify-site 失败 ${failures.length} 项：`);

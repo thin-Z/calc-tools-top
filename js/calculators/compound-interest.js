@@ -12,7 +12,7 @@ function doCalculate() {
     const rate = parseFloat(document.getElementById('annualRate').value);
     const years = parseInt(document.getElementById('years').value, 10);
     const freq = parseInt(document.getElementById('compoundFreq').value, 10);
-    if (!principal || !rate || !years) { alert('请填写完整信息'); return; }
+    if (!principal || !rate || !years) { window.showError('请填写完整信息'); return; }
     
     const r = rate / 100 / freq;
     const n = years * freq;

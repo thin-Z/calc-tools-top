@@ -175,13 +175,13 @@
         }
 
         if (!startStr || !endStr) {
-            alert(getLang() === 'zh' ? '请选择开始日期和结束日期。' : 'Please select both start and end dates.');
+            window.showError(getLang() === 'zh' ? '请选择开始日期和结束日期。' : 'Please select both start and end dates.');
             return;
         }
 
         var result = countWorkdays(startStr, endStr, holidays, excludeWeekends);
         if (!result) {
-            alert(getLang() === 'zh' ? '结束日期不能早于开始日期。' : 'The end date cannot be earlier than the start date.');
+            window.showError(getLang() === 'zh' ? '结束日期不能早于开始日期。' : 'The end date cannot be earlier than the start date.');
             return;
         }
 

@@ -6,7 +6,7 @@ function toggleMode() {
             const labelA = document.getElementById('modeALabel');
             const labelB = document.getElementById('modeBLabel');
             const labelC = document.getElementById('modeCLabel');
-            // 选中态配色必须与 CSS 保持一致：.st-47 / .seg-group input:checked + label
+            // 选中态配色必须与 CSS 保持一致：.mode-pill.is-active / .seg-group input:checked + label
             // 均为 background:var(--primary-hover); color:var(--white); font-weight:600。
             // 用 var(--primary)（#0A84FF）配白字在 dark 下仅 3.65:1，不达 WCAG AA 4.5:1。
             const active = { background: 'var(--primary-hover)', color: 'var(--white)', fontWeight: '600' };
@@ -26,11 +26,11 @@ function toggleMode() {
             const days = parseInt(document.getElementById('daysInput').value);
 
             if (!startDate) {
-                alert(getLang() === 'zh' ? '请选择开始日期' : 'Please select a start date');
+                window.showError(getLang() === 'zh' ? '请选择开始日期' : 'Please select a start date');
                 return;
             }
             if (isNaN(days)) {
-                alert(getLang() === 'zh' ? '请输入有效天数' : 'Please enter a valid number of days');
+                window.showError(getLang() === 'zh' ? '请输入有效天数' : 'Please enter a valid number of days');
                 return;
             }
 
@@ -51,7 +51,7 @@ function toggleMode() {
             const endDate = document.getElementById('endDate').value;
 
             if (!startDate || !endDate) {
-                alert(getLang() === 'zh' ? '请选择开始和结束日期' : 'Please select both start and end dates');
+                window.showError(getLang() === 'zh' ? '请选择开始和结束日期' : 'Please select both start and end dates');
                 return;
             }
 
@@ -66,7 +66,7 @@ function toggleMode() {
         function calcModeC() {
             const birthDate = document.getElementById('birthDate').value;
             if (!birthDate) {
-                alert(getLang() === 'zh' ? '请选择出生日期' : 'Please select your date of birth');
+                window.showError(getLang() === 'zh' ? '请选择出生日期' : 'Please select your date of birth');
                 return;
             }
             const today = new Date();

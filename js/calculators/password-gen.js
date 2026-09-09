@@ -57,7 +57,7 @@ function doCalculate() {
     if (includeSymbols) pool += SYMBOLS;
 
     if (!pool) {
-        alert('请至少选择一个字符类型 / Please select at least one character type');
+        window.showError('请至少选择一个字符类型 / Please select at least one character type');
         return;
     }
 

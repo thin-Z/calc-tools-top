@@ -62,7 +62,7 @@ function doURLConvert() {
 function copyURLResult() {
     var content = document.getElementById('resultArea').textContent;
     if (!content) {
-        alert('Please convert data first');
+        window.showError('Please convert data first');
         return;
     }
     if (navigator.clipboard) {

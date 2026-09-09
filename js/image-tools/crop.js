@@ -107,11 +107,11 @@
     /* ---------- 图片加载 ---------- */
     function loadFile(file) {
         if (!file.type || file.type.indexOf('image/') !== 0) {
-            alert(getLang() === 'zh' ? '请选择图片文件。' : 'Please choose an image file.');
+            window.showError(getLang() === 'zh' ? '请选择图片文件。' : 'Please choose an image file.');
             return;
         }
         if (file.size > MAX_FILE_SIZE) {
-            alert(getLang() === 'zh' ? '文件大小超过 50MB 限制。' : 'File size exceeds the 50MB limit.');
+            window.showError(getLang() === 'zh' ? '文件大小超过 50MB 限制。' : 'File size exceeds the 50MB limit.');
             return;
         }
 
@@ -126,7 +126,7 @@
                 setupCanvas();
             };
             img.onerror = function () {
-                alert(getLang() === 'zh' ? '图片加载失败，请换一张图片。' : 'Failed to load the image. Please try another file.');
+                window.showError(getLang() === 'zh' ? '图片加载失败，请换一张图片。' : 'Failed to load the image. Please try another file.');
             };
             img.src = e.target.result;
         };

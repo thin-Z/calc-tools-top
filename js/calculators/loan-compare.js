@@ -12,7 +12,7 @@ function doCalculate() {
     const rate1 = parseFloat(document.getElementById('rate1').value);
     const rate2 = parseFloat(document.getElementById('rate2').value);
     const years = parseFloat(document.getElementById('loanYears').value);
-    if (!amount || !rate1 || !rate2 || !years) { alert('请填写完整信息'); return; }
+    if (!amount || !rate1 || !rate2 || !years) { window.showError('请填写完整信息'); return; }
     
     const calc = (rate) => {
         const mr = rate / 100 / 12;

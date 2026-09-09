@@ -200,7 +200,7 @@ function runCd() {
 
 function copyCdResult() {
   var content = document.getElementById('resultArea').textContent;
-  if (!content) { alert('请先生成结果'); return; }
+  if (!content) { window.showError('请先生成结果'); return; }
   var btn = document.getElementById('copyBtn');
   function mark() {
     btn.textContent = '已复制';

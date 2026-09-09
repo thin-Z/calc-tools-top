@@ -40,7 +40,7 @@
 
     function loadFile(file) {
         if (file.size > MAX_FILE_SIZE) {
-            alert('文件大小超过 50MB 限制。');
+            window.showError('文件大小超过 50MB 限制。');
             return;
         }
 

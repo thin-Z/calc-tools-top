@@ -73,12 +73,12 @@
     function loadFile(file) {
         // Validate file type
         if (!SUPPORTED_TYPES.includes(file.type) && !file.name.match(/\.(jpg|jpeg|png|webp|bmp|gif)$/i)) {
-            alert('不支持的文件格式。请上传 JPG、PNG、WebP、BMP 或 GIF 图片。');
+            window.showError('不支持的文件格式。请上传 JPG、PNG、WebP、BMP 或 GIF 图片。');
             return;
         }
 
         if (file.size > MAX_FILE_SIZE) {
-            alert('文件大小超过 50MB 限制，请压缩后再试。');
+            window.showError('文件大小超过 50MB 限制，请压缩后再试。');
             return;
         }
 

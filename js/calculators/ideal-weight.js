@@ -11,7 +11,7 @@ function doCalculate() {
     const gender = document.querySelector('input[name="gender"]:checked')?.value;
     const height = parseFloat(document.getElementById('height').value);
     const age = parseInt(document.getElementById('age').value, 10) || 30;
-    if (!gender || !height) { alert('请选择性别并输入身高'); return; }
+    if (!gender || !height) { window.showError('请选择性别并输入身高'); return; }
     // Broca formula: (height - 100) for male, (height - 105) for female
     const broca = gender === 'male' ? (height - 100) : (height - 105);
     // BMI-based ideal weight: 22 * height(m)^2

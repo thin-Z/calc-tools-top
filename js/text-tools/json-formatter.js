@@ -108,7 +108,7 @@ function switchJSONMode(mode) {
 function copyJSONResult() {
     var content = document.getElementById('resultArea').textContent;
     if (!content) {
-        alert('\u8BF7\u5148\u683C\u5F0F\u5316JSON\u6570\u636E');
+        window.showError('\u8BF7\u5148\u683C\u5F0F\u5316JSON\u6570\u636E');
         return;
     }
     if (navigator.clipboard) {

@@ -39,7 +39,7 @@
 
     function loadFile(file) {
         if (file.size > MAX_FILE_SIZE) {
-            alert('文件大小超过 50MB 限制。');
+            window.showError('文件大小超过 50MB 限制。');
             return;
         }
 
@@ -108,7 +108,7 @@
             document.execCommand('copy');
             showCopied();
         } catch (e) {
-            alert('复制失败，请手动选择文本复制。');
+            window.showError('复制失败，请手动选择文本复制。');
         }
         document.body.removeChild(textarea);
     }
