@@ -1,8 +1,12 @@
-# Generate correct sitemap.xml based on actual file structure
+﻿# Generate correct sitemap.xml based on actual file structure
+# 默认以脚本所在目录的上一级（仓库根）为 Root，避免从其他目录调用时扫到空目录、生成 0 条脏 sitemap。
 param(
     [string]$Root = (Get-Location).Path,
     [string]$BaseUrl = "https://www.calc-tools.top"
 )
+
+# 始终以脚本所在目录的上一级（仓库根）为 Root，避免从其他目录调用时扫到空目录生成脏 sitemap。
+$Root = (Split-Path $PSScriptRoot)
 
 $exclude = @("404.html", "zh/index.html", "embed.html")
 
@@ -10,8 +14,12 @@ $exclude = @("404.html", "zh/index.html", "embed.html")
 # 门禁：scripts/check-sitemap.mjs（verify #28）交叉校验，防止此处过滤逻辑被绕过。
 $noindexSkipped = 0
 
-# Collect all HTML files
-$files = Get-ChildItem -Recurse -Filter "*.html" $Root | Where-Object { $_.FullName -notmatch '\\node_modules\\' -and $_.FullName -notmatch '\\(dist|docs|deliverables|includes)\\' }
+# Collect all HTML files.
+# 排除集必须与 verify #33 门禁 check-sitemap-coverage.mjs 的 EXCLUDE_DIRS 严格对齐，
+# 否则重跑会把 e2e/test-results/snapshots/api/scripts/css/js/assets/.workbuddy 等工程/测试产物的
+# .html 扫进 sitemap 造成死链（历史上曾产出 328 条脏 sitemap）。改这里须同步改门禁，反之亦然。
+$excludeDirRe = '\\(node_modules|dist|docs|deliverables|includes|api|scripts|css|js|assets|snapshots|e2e|test-results|playwright-report|\.workbuddy|\.git|\.githooks)\\'
+$files = Get-ChildItem -Recurse -Filter "*.html" $Root | Where-Object { $_.FullName -notmatch $excludeDirRe }
 
 $pages = @()
 foreach ($f in $files) {
@@ -57,12 +65,12 @@ foreach ($f in $files) {
     } elseif ($name -match "^(en|zh)/calculators/" -or $name -match "^(en|zh)/image/" -or $name -match "^(en|zh)/text/") {
         $priority = "0.8"
         $changefreq = "monthly"
-    } elseif ($name -match "^(about|contact|privacy)\.html" -or $name -match "^(en|zh)/(about|contact|privacy)\.html") {
+    } elseif ($name -match "^(about|contact|privacy|methodology)\.html" -or $name -match "^(en|zh)/(about|contact|privacy|methodology)\.html") {
         $priority = "0.3"
         $changefreq = "yearly"
     }
 
-    # File last modified date → W3C Datetime (YYYY-MM-DD)
+    # File last modified date -> W3C Datetime (YYYY-MM-DD)
     $lastmod = $f.LastWriteTime.ToString("yyyy-MM-dd")
 
     $pages += @{

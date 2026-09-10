@@ -34,9 +34,9 @@ const EXCLUSIONS_PATH = path.join(ROOT, 'scripts', 'sitemap-exclusions.json');
 const BASE = 'https://www.calc-tools.top';
 
 /**
- * 目录排除集：与 scripts/generate-sitemap.ps1:14（node_modules/dist/docs/deliverables/includes）
- * 及 scripts/verify-site.mjs:30-33 取并集，并补上工程目录（.workbuddy/e2e/test-results），
- * 避免把测试产物/快照 HTML 扫进来造成误报。
+ * 目录排除集：与 scripts/generate-sitemap.ps1 严格对齐（同集：node_modules/dist/docs/deliverables/
+ * includes/api/scripts/css/js/assets/snapshots/e2e/test-results/playwright-report/.workbuddy/.git/.githooks），
+ * 任一改动须双向同步；避免把测试产物/快照 HTML 扫进来造成误报或漏报。
  */
 const EXCLUDE_DIRS = new Set([
   '.git', '.githooks', '.workbuddy', 'dist', 'node_modules', 'includes', 'docs',
