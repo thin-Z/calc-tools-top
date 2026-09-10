@@ -4287,9 +4287,13 @@ mark {
 [data-theme="dark"] .ref-table thead th { background: var(--surface-dark-2); color: var(--text-on-dark); }
 [data-theme="dark"] .ref-table tbody tr:nth-child(even){ background: var(--surface-dark); }
 [data-theme="dark"] .ref-table td,[data-theme="dark"] .ref-table th { color: var(--text-on-dark); border-color: var(--surface-dark-2); }
-/* 2026-09-07 工具详情页骨架统一：相关工具上移后与后邻控件间距 + page-header 渐变标题下图标着色 */
-.related-tools + .tool-form { margin-top: 2rem; }
-.related-tools + .upload-zone { margin-top: 2rem; }
+/* 2026-09-10 工具页正文参考表占满卡片宽度：.ref-table 的 460px 上限只服务独立对照表页 fraction-decimal-table，
+   该页表在 .tool-container 内不受此覆盖影响；工具页 .tool-content 内的多列数据表需占满可用宽度。 */
+.tool-content .ref-table { max-width: none; }
+/* 2026-09-07 工具详情页骨架统一：相关工具上移后与后邻控件间距 + page-header 渐变标题下图标着色。
+   2026-09-10：相关工具卡→工具模块间距 2rem 偏挤，加宽到 3rem（tool-form 与 upload-zone 同步，保持同一设计意图）。 */
+.related-tools + .tool-form { margin-top: 3rem; }
+.related-tools + .upload-zone { margin-top: 3rem; }
 .page-header h1 svg.ic { color: var(--brand-blue); }
 /* 2026-09-07 统一：simplified-traditional 结果框等宽 pre（卡片内左对齐+限高滚动） */
 #tc-output { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); max-height: 320px; overflow: auto; text-align: left; word-break: break-all; }
