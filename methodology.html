@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+
+
+
+    <meta charset="UTF-8">
+<script src="/js/theme-init.js"></script>
+<script src="/js/theme-toggle.js" defer></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>计算方法与准确性 - 工具箱里，公式透明、结果可核查</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+
+    <meta name="description" content="工具箱里各计算工具的实现方法、所用公式、关键假设与精度说明：房贷、个税、BMI、复利、日期、公积金等，全部在浏览器本地运行，公式公开可核查。">
+
+    <meta property='og:title' content="计算方法与准确性 - 工具箱里">
+    <meta property='og:description' content="各工具的实现方法、公式、假设与精度说明，全部本地运行、公式公开。">
+
+    <meta property='og:type' content='website'/>
+    <meta property='og:url' content='https://www.calc-tools.top/methodology'/>
+    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:locale' content='zh_CN'/>
+    <meta name='twitter:card' content='summary_large_image'/>
+    <meta name='twitter:title' content='计算方法与准确性 - 工具箱里'>
+
+    <link rel="canonical" href="https://www.calc-tools.top/methodology">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/methodology">
+    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/methodology">
+<link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/methodology">
+
+    <link rel="stylesheet" href="css/style.css">    <script src="/js/i18n.js" defer></script>
+</head>
+
+<body>
+    <header>
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo" width="180" height="45"></a>
+    <nav>
+        <a href="/"><span>首页</span></a>
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="语言切换">
+            <option value="zh" selected>中文</option>
+            <option value="en">English</option>
+        </select>
+        <button id="theme-toggle" class="theme-toggle" aria-label="切换暗黑模式"><span class="theme-icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-sun"></use></svg></span></button>
+    </nav>
+</header>
+
+    <main id="main">
+        <div class="policy-page">
+            <h1>计算方法与准确性</h1>
+            <p class="last-updated">最后更新：2026 年 9 月 10 日</p>
+
+            <div class="highlight-box">
+                <strong>核心原则：</strong>所有工具都在你的浏览器本地运行，公式公开、可核查。本页说明各工具的实现方法、所用公式、关键假设与精度边界，方便你判断结果是否适用于自己的场景。
+            </div>
+
+            <h2>1. 我们如何工作</h2>
+            <p>工具箱里的计算逻辑完全运行在前端 JavaScript 中，不上传任何输入。每个工具都基于公开的经典公式实现，并通过已知样例做回归校验。如果你对某个结果有疑问，欢迎在<a href="/contact">联系页面</a>指出。</p>
+
+            <h2>2. 计算工具公式与假设</h2>
+            <ul>
+                <li><strong>BMI 计算器</strong>：BMI = 体重(kg) ÷ 身高(m)²。采用 WHO 标准分类（偏瘦 / 正常 / 超重 / 肥胖）。身高单位自动换算，结果保留两位小数。</li>
+                <li><strong>复利计算器</strong>：A = P(1 + r/n)<sup>nt</sup>，其中 P 为本金、r 为年化利率、n 为每年计息次数、t 为年数。默认按年复利，可切换按月 / 按日。</li>
+                <li><strong>房贷计算器</strong>：采用等额本息公式，月供 = 贷款本金 × 月利率 × (1+月利率)<sup>期数</sup> ÷ ((1+月利率)<sup>期数</sup> − 1)。利率与期限以你输入为准，未含税费与保险费。</li>
+                <li><strong>个税计算器</strong>：依据中国大陆综合所得累进税率表估算，含基本减除费用与常见专项扣除的简化假设；实际以税务申报为准。</li>
+                <li><strong>日期计算</strong>：基于公历天数差计算，支持跨年、闰年。结果为自然日，不含工作日规则（工作日计算为独立工具）。</li>
+                <li><strong>公积金贷款</strong>：参考各地公积金中心公布的利率与额度规则做估算，具体额度以当地政策为准。</li>
+            </ul>
+
+            <h2>3. 图片与文字工具</h2>
+            <p>图片工具（压缩、格式转换、裁剪缩放、Base64、取色）全部通过浏览器 Canvas / File API 在本地完成，文件不会离开你的设备。文字工具（字数统计、JSON 格式化、Base64、UUID、文本对比）均为确定性的本地算法，结果可复现。</p>
+
+            <h2>4. 精度与局限</h2>
+            <p>浮点数运算存在极小舍入误差，我们对展示结果做四舍五入；涉及金额、税务、健康等指标时，结果仅供参考，<strong>不构成专业建议</strong>。政策类工具（税费、公积金）会随法规调整而变化，我们标注适用口径并定期更新。</p>
+
+            <h2>5. 数据来源</h2>
+            <p>公式来源为公开权威标准（WHO BMI 分类、央行 / 公积金中心公布的利率口径、综合所得个人所得税法）。我们尽量在工具页内标注关键假设；如你有更权威的口径，欢迎反馈。</p>
+
+            <h2>6. 联系我们</h2>
+            <p>发现公式或假设有误？请通过 <a href="/contact">联系页面</a> 告诉我们，我们会尽快核查并更新。</p>
+        </div>
+    </main>
+
+    <footer>
+    <div class="footer-links">
+        <a href="/">首页</a>
+        <a href="/help">帮助</a>
+        <a href="/about">关于</a>
+        <a href="/privacy">隐私政策</a>
+        <a href="/contact">联系</a>
+        <a href="/blog/zh/">博客</a>
+    </div>
+    <p>© 2026 工具箱里 | 免费在线工具</p>
+</footer>
+</body>
+</html>

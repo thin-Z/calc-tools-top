@@ -12,7 +12,7 @@
 | 脚本 | 被谁引用 | 用途 | 触发方式 |
 |------|----------|------|----------|
 | `build.mjs` | Vercel build | 构建入口（复制→注入→卫生→压缩） | 自动 |
-| `verify-site.mjs` | CI / 本地 | 集成校验 32 项断言（#27 embed / #28 sitemap / #29 dist 卫生 / #30 csp-events 解耦 / #31 设计系统门禁 / #32 全局契约门禁，2026-09-02 / 2026-09-09 新增） | 自动 |
+| `verify-site.mjs` | CI / 本地 | 集成校验 33 项断言（#27 embed / #28 sitemap / #29 dist 卫生 / #30 csp-events 解耦 / #31 设计系统门禁 / #32 全局契约门禁，2026-09-02 / 2026-09-09 新增） | 自动 |
 | `check-jsonld.mjs` | verify #2 | JSON-LD 5 项断言 | 自动 |
 | `check-links.js` | verify #4 | 断链检查 | 自动 |
 | `seo-batch-audit.mjs` | verify #14 | SEO 批量审计 | 自动 |
@@ -26,6 +26,8 @@
 | `check-embed.mjs` | verify #27 | embed 可嵌入性门禁（XFO 冲突 / frame-ancestors / 接线） | 自动 |
 | `check-redirects.mjs` | verify #24 | 重定向门禁（通配须置末 + companion） | 自动 |
 | `check-sitemap.mjs` | verify #28 | sitemap 健康门禁（无死链 + noindex 不进 + 规模下界） | 自动 |
+| `check-sitemap-coverage.mjs` | verify #33 | sitemap 反向覆盖门禁：页面存在但漏收录 sitemap 检测 + 豁免清单 stale 检测（判据用文件系统推导，不用 ID 白名单；配置 scripts/sitemap-exclusions.json，每条须带 reason） | 自动 |
+| `measure-content.mjs` | 独立（非门禁） | 内容度量基线：zh 纯汉字 / en 词数 / 跨页重叠率，量化厚度与重复度，供内容加密度批次对比 | 手动 |
 | `check-tool-template.mjs` | verify #23 | 工具页模板一致性门禁 | 自动 |
 | `check-dist-hygiene.mjs` | verify #29 | dist 卫生门禁（禁 .workbuddy/e2e/test-results/__*/根级配置 .mjs/.json，白名单放行 manifest.json+tools.json） | 自动 |
 | `check-design-system.mjs` | verify #31 | 设计系统门禁：裸 checkbox/radio 数量只降不升（基线 scripts/design-baseline.json，退化即 fail） | 自动 |

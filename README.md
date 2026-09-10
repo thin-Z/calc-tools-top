@@ -12,7 +12,7 @@
 | 存储 | **Vercel KV（Upstash Redis）**，点赞/点击计数 + 限速/防刷均存于此 |
 | 广告 | AdSense Auto Ads，client ID 单一来源 `includes/adsense-head.html`，构建期注入全站 |
 | 分析 | GA4 `G-B61D908J5F`（`includes/adsense-head.html` 单一来源，构建期剥离占位符守卫） |
-| 安全 | **CSP 全站硬化**：script-src / style-src 无 `unsafe-inline`（`js/csp-events.js` 委托层 + `js/inline/*.js` 外链化），img-src 白名单化；`verify-site.mjs` 32 项断言守护 |
+| 安全 | **CSP 全站硬化**：script-src / style-src 无 `unsafe-inline`（`js/csp-events.js` 委托层 + `js/inline/*.js` 外链化），img-src 白名单化；`verify-site.mjs` 33 项断言守护 |
 | 竞品迭代（08-25） | **URL 参数预填**（`js/url-state.js`，计算器工具页带参直达/刷新保留/输入同步）、**打印样式**（`@media print` 隐藏导航广告）、**mortgage 输入扩展**（房产税/保险/PMI/额外还款）、**相关工具强化**（`scripts/strengthen-related-links.mjs`）、**标签聚合落地页**（`scripts/generate-tag-pages.mjs`，8 分类 × zh/en = 16 页，工具+文章聚合 + JSON-LD + hreflang） |
 
 ## 环境变量（Vercel 项目 Settings → Environment Variables）
@@ -68,7 +68,7 @@ KV_URL / KV_REDIS_URL
 | 脚本 | 作用 | 用法 |
 |------|------|------|
 | `build.mjs` | Vercel 构建入口：复制到 `dist/` → 清理旧 cookie-consent → GA4 启用/占位守卫 → 注入 AdSense（单一来源 `includes/adsense-head.html`）→ 注入缓存版本号（`?v=YYYYMMDDHHmm`，仅 dist）→ 卫生转换（去 BOM / charset 置首 / 懒加载 / inline→.hidden）→ CSS 压缩 → CMP 横幅注入 | `node scripts/build.mjs` |
-| `verify-site.mjs` | 集成校验 **32 项断言**：header/footer 字节一致 / JSON-LD（check-jsonld 5 项）/ 静态 AdSense 唯一性 / 断链 / 浮动控件清零 / GA4 ID 不变量 / CSP 无内联脚本 / 无内联事件处理器 / CSP 头无 unsafe-inline / 图片懒加载 / 图片 alt / SRI integrity / a11y（main+skip-link+label）/ SEO 存在率 / site.js 无 var / **首页三源同步（check-home-sync）** / **搜索升级专项（拼音+文章搜索+诚实热搜）** / **搜索升级 Phase C（GA4 零结果+aria-live+EN 关键词）** / **P0 门禁（CSS裸色值+Emoji清零+紫二次色清零）** / **canonical/hreflang 门禁** / **JS 语法门禁** / a11y 全站扫描（#22，需 `E2E_A11Y=1`）/ **工具页模板一致性（#23）** / **重定向门禁（#24）** / **CSP 委托层可达性（#25）** / **文档同步（#26）** / **embed 可嵌入性（#27）** / **sitemap 健康（#28）** / **dist 卫生（#29，防 P0-3 构建产物泄漏：禁 .workbuddy/e2e/test-results/__*/根级配置 .mjs/根级 .json，白名单放行 manifest.json+tools.json）** / **csp-events 解耦（#30，事件委托层与 AdSense 片段解耦 + 全页覆盖断言）** / **设计系统门禁（#31，裸 checkbox/radio 只降不升，基线 scripts/design-baseline.json）** / **全局契约门禁（#32，window.copyText+window.showError 契约完整 + runtime-head 注入 csp-events）** | `node scripts/verify-site.mjs`（全绿退出码 0） |
+| `verify-site.mjs` | 集成校验 **33 项断言**：header/footer 字节一致 / JSON-LD（check-jsonld 5 项）/ 静态 AdSense 唯一性 / 断链 / 浮动控件清零 / GA4 ID 不变量 / CSP 无内联脚本 / 无内联事件处理器 / CSP 头无 unsafe-inline / 图片懒加载 / 图片 alt / SRI integrity / a11y（main+skip-link+label）/ SEO 存在率 / site.js 无 var / **首页三源同步（check-home-sync）** / **搜索升级专项（拼音+文章搜索+诚实热搜）** / **搜索升级 Phase C（GA4 零结果+aria-live+EN 关键词）** / **P0 门禁（CSS裸色值+Emoji清零+紫二次色清零）** / **canonical/hreflang 门禁** / **JS 语法门禁** / a11y 全站扫描（#22，需 `E2E_A11Y=1`）/ **工具页模板一致性（#23）** / **重定向门禁（#24）** / **CSP 委托层可达性（#25）** / **文档同步（#26）** / **embed 可嵌入性（#27）** / **sitemap 健康（#28）** / **dist 卫生（#29，防 P0-3 构建产物泄漏：禁 .workbuddy/e2e/test-results/__*/根级配置 .mjs/根级 .json，白名单放行 manifest.json+tools.json）** / **csp-events 解耦（#30，事件委托层与 AdSense 片段解耦 + 全页覆盖断言）** / **设计系统门禁（#31，裸 checkbox/radio 只降不升，基线 scripts/design-baseline.json）** / **全局契约门禁（#32，window.copyText+window.showError 契约完整 + runtime-head 注入 csp-events）** / **sitemap 反向覆盖门禁（#33，页面漏收录 sitemap 检测 + 豁免清单 stale 检测，2026-09-10 新增）** | `node scripts/verify-site.mjs`（全绿退出码 0） |
 | `check-links.js` | 断链扫描（相对/绝对路径存在性 + 越界 + cleanUrls） | `node scripts/check-links.js` |
 | `check-jsonld.mjs` | 全站 JSON-LD 5 项断言（解析 / @context+type\|graph / 无双斜杠 URL / FAQPage mainEntity / @graph 节点 @type），退出码非 0 | `node scripts/check-jsonld.mjs` |
 | `check-csp-fns.mjs` | CSP 委托层处理器可达性门禁：`data-csp-*` 引用的函数必须是真正的 window 属性（按括号深度判定作用域，识别 NESTED / 顶层 const-let / MISSING）（verify-site [25] 调用） | `node scripts/check-csp-fns.mjs` |
@@ -95,6 +95,8 @@ KV_URL / KV_REDIS_URL
 | `check-tool-template.mjs` | 4.2 工具页模板一致性门禁（与 `tool-template-baseline.json` 交叉校验：新增违规/基线过期均 FAIL）（verify-site [23] 调用） | `node scripts/check-tool-template.mjs` |
 | `check-embed.mjs` | embed 可嵌入性门禁：全站 `X-Frame-Options` 不得为 DENY + `/embed` 的 CSP `frame-ancestors` 须恰为 `*` + `/embed` 须显式覆盖 `X-Frame-Options` 为单值 `ALLOWALL` + `/embed` 之后不得再有规则下发 `X-Frame-Options` + `embed.html`↔`js/embed.js` 接线 + 嵌入态广告保护（verify-site [27] 调用） | `node scripts/check-embed.mjs` |
 | `check-sitemap.mjs` | sitemap 健康门禁：无死链 + noindex 页不进 sitemap + 条数规模下界（verify-site [28] 调用） | `node scripts/check-sitemap.mjs` |
+| `check-sitemap-coverage.mjs` | sitemap 反向覆盖门禁：页面存在但漏收录 sitemap 检测 + 豁免清单 stale 检测（判据用文件系统推导期望集，不用 TOOL_IDS/BLOG_IDS 白名单；豁免配置 scripts/sitemap-exclusions.json，每条须带 reason），防"页面写好了却永不被发现"（verify-site [33] 调用，2026-09-10 新增） | `node scripts/check-sitemap-coverage.mjs` |
+| `measure-content.mjs` | 内容度量基线（批次 0）：纯汉字数（zh）/ 词数（en）/ 跨页重叠率（shingle+Jaccard），量化内容厚度与重复度，为内容加密度批次提供可重复基线数字（非门禁，只度量，异常才非 0） | `node scripts/measure-content.mjs --top 8` |
 | `check-dist-hygiene.mjs` | dist 卫生门禁：禁 `.workbuddy/`/`e2e/`/`test-results/`/`__*`/根级配置 `.mjs`/根级 `.json`（白名单放行 `manifest.json`+`tools.json`，二者为 PWA 清单与 `js/embed.js` 运行时依赖），防 P0-3 构建产物泄漏复发（verify-site [29] 调用） | `node scripts/check-dist-hygiene.mjs` |
 | `check-design-system.mjs` | 设计系统门禁：统计全站裸 checkbox/radio，阈值只降不升（基线写在 `scripts/design-baseline.json`，由 verkify 当前扫描结果锁定），防 UX 控件回归（verify-site [31] 调用） | `node scripts/check-design-system.mjs` |
 | `check-global-contract.mjs` | 全局契约门禁：校验 `window.copyText`+`window.showError` 契约完整且 `runtime-head` 注入 `csp-events`（防删 csp-events 或重命名 break 全站事件委托），硬门禁（verify-site [32] 调用） | `node scripts/check-global-contract.mjs` |
@@ -120,7 +122,7 @@ KV_URL / KV_REDIS_URL
 #    → CSS 压缩 → CMP 横幅（仅 dist，源码不含 ?v）
 node scripts/build.mjs
 
-# 2) 集成校验 32 项断言：header/footer 字节一致 + JSON-LD + AdSense 唯一性
+# 2) 集成校验 33 项断言：header/footer 字节一致 + JSON-LD + AdSense 唯一性
 #    + 断链 + 浮动控件清零 + GA4 不变量 + CSP 3 项 + 懒加载/alt/SRI/a11y/SEO/var
 #    + 首页三源同步(check-home-sync) + 搜索升级专项 + 搜索升级 Phase C
 #    + 工具页模板(#23) + 重定向(#24) + CSP 委托层可达性(#25) + 文档同步(#26)（全绿退出码 0）

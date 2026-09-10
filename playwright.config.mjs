@@ -9,7 +9,9 @@
  */
 import { defineConfig } from '@playwright/test';
 
-const channel = process.env.E2E_CHANNEL || '';
+// 本地默认用系统 Edge（msedge），免去下载 chromium；CI 强制回退到空字符串
+// （Playwright 自带 chromium），保证 CI 仍走 chromium 且 line 62 的 `playwright install chromium` 生效。
+const channel = process.env.E2E_CHANNEL || (process.env.CI ? '' : 'msedge');
 const PORT = Number(process.env.E2E_PORT || 4173);
 
 export default defineConfig({

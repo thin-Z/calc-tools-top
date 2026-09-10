@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+
+    <meta charset="UTF-8">
+<script src="/js/theme-init.js"></script>
+<script src="/js/theme-toggle.js" defer></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Methodology &amp; Accuracy - ToolBox Inside</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+
+    <meta name="description" content="How ToolBox Inside tools work: the formulas, key assumptions, and accuracy notes behind our mortgage, tax, BMI, compound-interest, date, and housing-fund calculators. Everything runs locally in your browser.">
+
+    <meta property='og:title' content='Methodology &amp; Accuracy - ToolBox Inside'/>
+    <meta property='og:description' content='The formulas, assumptions, and accuracy notes behind each tool. Everything runs locally and is verifiable.'/>
+    <meta property='og:type' content='website'/>
+    <meta property='og:url' content='https://www.calc-tools.top/en/methodology'/>
+    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:locale' content='en_US'/>
+    <meta name='twitter:card' content='summary_large_image'/>
+    <meta name='twitter:title' content='Methodology &amp; Accuracy - ToolBox Inside'/>
+
+    <link rel="canonical" href="https://www.calc-tools.top/en/methodology">
+    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/methodology">
+<link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/en/methodology">
+
+    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/methodology">
+
+    <link rel="stylesheet" href="../css/style.css">    <script src="/js/i18n.js" defer></script>
+</head>
+
+<body>
+    <header>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo" width="180" height="45"></a>
+    <nav>
+        <a href="/en/"><span>Home</span></a>
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
+            <option value="zh">中文</option>
+            <option value="en" selected>English</option>
+        </select>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-sun"></use></svg></span></button>
+    </nav>
+</header>
+
+    <main id="main">
+        <div class="policy-page">
+            <h1>Methodology &amp; Accuracy</h1>
+            <p class="last-updated">Last updated: September 10, 2026</p>
+
+            <div class="highlight-box">
+                <strong>Core principle:</strong> Every tool runs locally in your browser, with open and verifiable formulas. This page explains how each tool works, the formulas it uses, key assumptions, and accuracy limits — so you can judge whether a result fits your situation.
+            </div>
+
+            <h2>1. How we work</h2>
+            <p>All calculation logic runs entirely in front-end JavaScript — no input is uploaded. Each tool is built on a well-known published formula and regression-tested against known examples. If you question any result, please tell us via the <a href="/en/contact">contact page</a>.</p>
+
+            <h2>2. Calculator formulas &amp; assumptions</h2>
+            <ul>
+                <li><strong>BMI calculator</strong>: BMI = weight(kg) ÷ height(m)². Uses the WHO classification (underweight / normal / overweight / obese). Units are converted automatically; results show two decimals.</li>
+                <li><strong>Compound interest</strong>: A = P(1 + r/n)<sup>nt</sup>, where P is principal, r is annual rate, n is compounding frequency per year, t is years. Defaults to annual compounding; switchable to monthly / daily.</li>
+                <li><strong>Mortgage calculator</strong>: Equal monthly installment formula, monthly payment = principal × monthly rate × (1+monthly rate)<sup>terms</sup> ÷ ((1+monthly rate)<sup>terms</sup> − 1). Rate and term come from your input; excludes tax and insurance.</li>
+                <li><strong>Income tax calculator</strong>: Estimates using China's comprehensive-income progressive brackets, with simplified assumptions for the basic deduction and common special deductions; final figures follow your tax filing.</li>
+                <li><strong>Date calculation</strong>: Gregorian day-difference, supports cross-year and leap years. Returns calendar days; does not apply business-day rules (use the separate workday tool).</li>
+                <li><strong>Housing fund loan</strong>: Estimates using rates and quota rules published by local housing-fund centers; actual quota follows local policy.</li>
+            </ul>
+
+            <h2>3. Image &amp; text tools</h2>
+            <p>Image tools (compress, convert, resize/crop, Base64, color picker) run entirely locally via the browser Canvas / File API — files never leave your device. Text tools (word count, JSON formatter, Base64, UUID, text diff) are deterministic local algorithms with reproducible results.</p>
+
+            <h2>4. Accuracy &amp; limitations</h2>
+            <p>Floating-point math carries negligible rounding error; we round displayed results. For amounts, taxes, or health metrics, results are for reference only and <strong>not professional advice</strong>. Policy-driven tools (tax, housing fund) change with regulations; we label the applicable scope and update periodically.</p>
+
+            <h2>5. Data sources</h2>
+            <p>Formulas come from public authoritative standards (WHO BMI classification, rates published by the central bank / housing-fund centers, the Individual Income Tax Law). We label key assumptions on each tool page; if you have a more authoritative source, let us know.</p>
+
+            <h2>6. Contact us</h2>
+            <p>Found a wrong formula or assumption? Tell us via the <a href="/en/contact">contact page</a> and we'll verify and update promptly.</p>
+        </div>
+    </main>
+
+    <footer>
+    <div class="footer-links">
+        <a href="/en/">Home</a>
+        <a href="/en/help">Help</a>
+        <a href="/about">About</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/contact">Contact</a>
+        <a href="/blog/en/">Blog</a>
+    </div>
+    <p>© 2026 Online Calculators | Free Online Calculators</p>
+</footer>
+</body>
+</html>

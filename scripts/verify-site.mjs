@@ -720,6 +720,20 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
   }
 }
 
+// ---------- 33. sitemap 双向门禁（反向覆盖，2026-09-10） ----------
+// 技术债审计 #1：#28 只做「sitemap→页面」单向（sitemap 含死链），缺反向
+// 「页面存在但漏收录进 sitemap」。判据用文件系统推导期望集（与 generate-sitemap.ps1
+// 同口径），不用 TOOL_IDS/BLOG_IDS 白名单（__health__ 必假阳性）。
+// 另含豁免清单 stale 检测：豁免条目对应源文件不存在即 FAIL，防清单腐化。
+{
+  try {
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'check-sitemap-coverage.mjs')], { stdio: 'inherit', cwd: ROOT });
+    console.log('[33] sitemap 反向覆盖门禁 (check-sitemap-coverage): ✓');
+  } catch (e) {
+    fail('[sitemap-coverage] scripts/check-sitemap-coverage.mjs 未通过（存在页面漏收录 sitemap，或 scripts/sitemap-exclusions.json 含失效条目；须重跑 scripts/generate-sitemap.ps1 或清理豁免清单）');
+  }
+}
+
 // ---------- 汇总 ----------
 if (failures.length) {
   console.error(`\n❌ verify-site 失败 ${failures.length} 项：`);

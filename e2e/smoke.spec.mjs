@@ -120,16 +120,22 @@ test.describe('PWA', () => {
 
   test('Service Worker registers successfully', async ({ page }) => {
     await page.goto('/', { waitUntil: 'domcontentloaded' });
-    const registered = await page.evaluate(async () => {
-      const deadline = Date.now() + 8000;
-      while (Date.now() < deadline) {
-        const reg = await navigator.serviceWorker.getRegistration();
-        if (reg) return true;
-        await new Promise((r) => setTimeout(r, 300));
-      }
-      return false;
-    }).catch(() => false);
-    expect(registered, 'SW should register within 8s').toBe(true);
+    // 用 ready（SW 进入 active 状态）而非轮询 getRegistration，且放宽到 15s：
+    // 并行(workers≥2)下 sw.js 注册/激活受网络争用影响偶发 >8s，导致间歇失败。
+    const registered = await page
+      .evaluate(async () => {
+        try {
+          await Promise.race([
+            navigator.serviceWorker.ready,
+            new Promise((_, rej) => setTimeout(() => rej(new Error('sw-timeout')), 15000)),
+          ]);
+          return true;
+        } catch {
+          return false;
+        }
+      })
+      .catch(() => false);
+    expect(registered, 'SW should register+activate within 15s').toBe(true);
   });
 });
 
