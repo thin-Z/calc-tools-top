@@ -40,21 +40,45 @@ function walk(dir) {
   return out;
 }
 
+// 单遍标签栈解析：对每个 checkbox/radio 取真实父容器（及上方 3 层祖先），
+// 任一含设计系统类即算包裹。修复旧版 500 字符窗口对长 radio 组（.seg-group/.gender-seg/
+// .mode-pills 容器在窗口外）后段项误判为裸的问题。
+const VOID_TAGS = new Set(['input', 'br', 'hr', 'img', 'meta', 'link', 'area', 'base', 'col', 'embed', 'source', 'track', 'wbr']);
+const TOK_RE = /<(\/?)([a-zA-Z][\w-]*)\b([^>]*)>/g;
+
 function countBare(files) {
   let bare = 0;
   let total = 0;
   for (const f of files) {
     const html = readFileSync(f, 'utf8');
+    const stack = [];
     let m;
-    INPUT_RE.lastIndex = 0;
-    while ((m = INPUT_RE.exec(html))) {
-      total++;
-      const before = html.slice(Math.max(0, m.index - 500), m.index);
-      const opens = before.match(/<(div|label|fieldset|li|span)\b[^>]*>/g) || [];
-      const last = opens[opens.length - 1] || '';
-      const cls = (last.match(/class="([^"]*)"/) || [])[1] || '';
-      const wrapped = WRAP_CLASSES.some((c) => cls.split(/\s+/).includes(c));
-      if (!wrapped) bare++;
+    TOK_RE.lastIndex = 0;
+    while ((m = TOK_RE.exec(html))) {
+      const closing = m[1] === '/';
+      const name = m[2].toLowerCase();
+      const attrs = m[3] || '';
+      if (name === 'input') {
+        const type = (attrs.match(/\btype="([^"]*)"/) || [])[1] || 'text';
+        if (type === 'checkbox' || type === 'radio') {
+          total++;
+          let wrapped = false;
+          for (let i = stack.length - 1; i >= Math.max(0, stack.length - 4); i--) {
+            const cls = (stack[i].attrs.match(/class="([^"]*)"/) || [])[1] || '';
+            if (WRAP_CLASSES.some((c) => cls.split(/\s+/).includes(c))) { wrapped = true; break; }
+          }
+          if (!wrapped) bare++;
+        }
+        continue; // input 为 void，不入栈
+      }
+      if (closing) {
+        for (let i = stack.length - 1; i >= 0; i--) {
+          if (stack[i].name === name) { stack.length = i; break; }
+        }
+      } else {
+        const selfClosed = /\/\s*>$/.test(attrs) || VOID_TAGS.has(name);
+        if (!selfClosed) stack.push({ name, attrs });
+      }
     }
   }
   return { bare, total };

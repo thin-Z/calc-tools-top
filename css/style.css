@@ -4474,6 +4474,11 @@ mark {
     font-size: 0.95rem;
     font-weight: normal;
 }
+.control-group .check-card {
+    display: flex;
+    font-size: 0.95rem;
+    font-weight: normal;
+}
 
 .pg-count { margin-bottom: 22px; }
 .pg-count .seg-group { margin-top: 0; }
