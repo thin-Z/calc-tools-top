@@ -2206,11 +2206,14 @@ svg.ic {
     margin-bottom: 10px;
 }
 .hot-tool-card .tool-tags { padding: 12px 24px 16px; }
-/* Hot card like-btn: 文档流右对齐（与 tag 同在底部行，但避免 absolute 覆盖标签）。
-   选择 align-self 而非 absolute：保留与 .tool-card-wrap .like-btn 不同的视觉层级。 */
+/* Hot card like-btn: 右上角绝对定位，与普通工具卡 .tool-card-wrap .like-btn 位置完全一致
+   （top:10px / right:10px / z-index:2）。热度分徽章 .hot-score 已移至左上角排名徽章
+   .hot-badge 右侧（top:8px / left:44px），避免与点赞按钮、排名徽章重叠。 */
 .hot-tool-card .like-btn {
-    align-self: flex-end;
-    margin: 4px 12px 12px auto;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -2258,7 +2261,7 @@ svg.ic {
     position: absolute;
     z-index: 2;
     top: 8px;
-    right: 8px;
+    left: 44px;   /* 排在左上角排名徽章 .hot-badge 右侧，避免与右上角点赞按钮重叠 */
     font-size: var(--fs-xs);
     color: var(--danger-strong);
     font-weight: 700;

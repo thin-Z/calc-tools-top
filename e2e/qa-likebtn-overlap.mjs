@@ -1,95 +1,138 @@
-// QA regression assertion: .hot-tool-card .like-btn must NOT overlap .tool-tags
-// Renders the local built site and asserts like-btn.top >= tool-tags.bottom.
+// QA regression assertion: .hot-tool-card .like-btn is anchored to the card's
+// TOP-RIGHT corner (position:absolute; top:10px; right:10px; z-index:2) and does
+// NOT overlap .hot-score / .hot-badge. Renders the local built site and asserts,
+// for every .hot-tool-card, on desktop (1280x900) and mobile (390x844):
+//   - .like-btn computed position === 'absolute'
+//   - btnTop - cardTop  ∈ [9.5, 12.5]   (expected ~11px: 10px CSS + ~1px card border)
+//   - cardRight - btnRight ∈ [9.5, 12.5]
+//   - .like-btn fully inside the card rect
+//   - .like-btn / .hot-score / .hot-badge pairwise non-overlapping (open-interval AABB)
+//   - .hot-score.left >= .hot-badge.right (score badge sits right of the rank badge, positive gap)
+// Exit code: 0 = ASSERTION PASSED, 2 = ASSERTION FAILED (including missing elements / nav errors).
 import { chromium } from 'playwright';
 
 const URL = process.env.QA_URL || 'http://127.0.0.1:4173/';
+const LO = 9.5;   // lower bound of offsets (px, incl. 1.5px card border tolerance)
+const HI = 12.5;  // upper bound of offsets
+
+// Open-interval AABB intersection: touching edges (gap === 0) => NOT overlapping.
+function overlaps(a, b) {
+  return a.left < b.right - 1e-6 && a.right > b.left + 1e-6 &&
+         a.top < b.bottom - 1e-6 && a.bottom > b.top + 1e-6;
+}
 
 async function measure(page) {
   await page.goto(URL, { waitUntil: 'load', timeout: 30000 });
-  await page.waitForSelector('.hot-tool-card .like-btn', { timeout: 15000 });
-  await page.waitForTimeout(2000); // allow JS render to settle
-  await page.waitForSelector('.hot-tool-card .tool-tags', { timeout: 10000 });
-  await page.waitForSelector('.hot-tool-card .like-btn', { timeout: 10000 });
+  // Soft-wait: a missing card is an assertion failure (exit 2), not a thrown timeout.
+  await page.waitForSelector('.hot-tool-card', { timeout: 15000 }).catch(() => {});
+  await page.waitForTimeout(1000); // allow JS render to settle
 
   return page.evaluate(() => {
-    const card = document.querySelector('.hot-tool-card');
-    const tags = card.querySelector('.tool-tags');
-    const btn = card.querySelector('.like-btn');
-    if (!card || !tags || !btn) {
-      return { error: 'missing elements', card: !!card, tags: !!tags, btn: !!btn };
-    }
-    const cr = card.getBoundingClientRect();
-    const tr = tags.getBoundingClientRect();
-    const br = btn.getBoundingClientRect();
-    const cs = getComputedStyle(btn);
+    const rect = (el) => {
+      const r = el.getBoundingClientRect();
+      return { left: r.left, right: r.right, top: r.top, bottom: r.bottom, width: r.width, height: r.height };
+    };
+    const cards = [...document.querySelectorAll('.hot-tool-card')];
+    if (!cards.length) return { error: 'no .hot-tool-card found (page rendered without hot cards?)' };
     return {
-      cardTop: +cr.top.toFixed(2),
-      cardBottom: +cr.bottom.toFixed(2),
-      cardLeft: +cr.left.toFixed(2),
-      cardRight: +cr.right.toFixed(2),
-      cardHeight: +cr.height.toFixed(2),
-      tagsTop: +tr.top.toFixed(2),
-      tagsBottom: +tr.bottom.toFixed(2),
-      btnTop: +br.top.toFixed(2),
-      btnBottom: +br.bottom.toFixed(2),
-      btnLeft: +br.left.toFixed(2),
-      btnRight: +br.right.toFixed(2),
-      btnWidth: +br.width.toFixed(2),
-      computedMarginTop: cs.marginTop,
-      computedMarginRight: cs.marginRight,
-      computedMarginBottom: cs.marginBottom,
-      computedMarginLeft: cs.marginLeft,
+      count: cards.length,
+      cards: cards.map((card, i) => {
+        const btn = card.querySelector('.like-btn');
+        const score = card.querySelector('.hot-score');
+        const badge = card.querySelector('.hot-badge');
+        return {
+          index: i + 1,
+          card: rect(card),
+          btn: btn ? rect(btn) : null,
+          score: score ? rect(score) : null,
+          badge: badge ? rect(badge) : null,
+          btnPosition: btn ? getComputedStyle(btn).position : null,
+        };
+      }),
     };
   });
 }
 
-const browser = await chromium.launch({ channel: 'msedge' });
-const results = [];
+const failures = [];
+const logs = [];
+let browser;
 
 try {
-  // Desktop viewport
-  const pageD = await browser.newPage({ viewport: { width: 1280, height: 900 } });
-  const d = await measure(pageD);
-  const gapD = +(d.btnTop - d.tagsBottom).toFixed(2);
-  const noOverlapD = d.btnTop >= d.tagsBottom - 0.5;
-  const insideD = d.btnTop >= d.cardTop && d.btnBottom <= d.cardBottom + 0.5;
-  const rightAlignedD = Math.abs(d.cardRight - d.btnRight) <= 4;
-  results.push({ viewport: 'desktop(1280)', data: d, gap: gapD, noOverlap: noOverlapD, insideCard: insideD, rightAligned: rightAlignedD });
-  await pageD.close();
+  browser = await chromium.launch({ channel: 'msedge' });
 
-  // Mobile viewport — also guards against any @media margin override
-  const pageM = await browser.newPage({ viewport: { width: 390, height: 844 } });
-  const m = await measure(pageM);
-  const gapM = +(m.btnTop - m.tagsBottom).toFixed(2);
-  const noOverlapM = m.btnTop >= m.tagsBottom - 0.5;
-  const insideM = m.btnTop >= m.cardTop && m.btnBottom <= m.cardBottom + 0.5;
-  results.push({ viewport: 'mobile(390)', data: m, gap: gapM, noOverlap: noOverlapM, insideCard: insideM, rightAligned: null });
-  await pageM.close();
-} finally {
-  await browser.close();
-}
+  for (const vp of [{ name: 'desktop(1280x900)', width: 1280, height: 900 }, { name: 'mobile(390x844)', width: 390, height: 844 }]) {
+    const page = await browser.newPage({ viewport: { width: vp.width, height: vp.height } });
+    try {
+      const res = await measure(page);
 
-let allPass = true;
-for (const r of results) {
-  const d = r.data;
-  console.log(`\n===== Viewport: ${r.viewport} =====`);
-  if (d.error) {
-    console.log('  ERROR:', d.error);
-    allPass = false;
-    continue;
+      logs.push(`\n===== Viewport: ${vp.name} =====`);
+      if (res.error) {
+        logs.push(`  ERROR: ${res.error}`);
+        failures.push(`${vp.name}: ${res.error}`);
+        continue;
+      }
+      logs.push(`  hot cards found: ${res.count}`);
+
+      res.cards.forEach((c) => {
+        const tag = `#${c.index}`;
+        const r2 = (n) => (Number.isFinite(n) ? +n.toFixed(2) : n);
+        const offTop = c.btn ? c.btn.top - c.card.top : NaN;
+        const offRight = c.btn ? c.card.right - c.btn.right : NaN;
+
+        // 1. absolute positioning
+        if (c.btnPosition !== 'absolute') failures.push(`${vp.name} ${tag}: like-btn position=${c.btnPosition} (expected absolute)`);
+
+        // 2. TOP-RIGHT anchoring offsets
+        if (!(offTop >= LO && offTop <= HI)) failures.push(`${vp.name} ${tag}: btnTop-cardTop=${r2(offTop)} not in [${LO}, ${HI}]`);
+        if (!(offRight >= LO && offRight <= HI)) failures.push(`${vp.name} ${tag}: cardRight-btnRight=${r2(offRight)} not in [${LO}, ${HI}]`);
+
+        // 3. like-btn fully inside card rect (allow tiny epsilon)
+        if (c.btn && (c.btn.top < c.card.top - 0.5 || c.btn.bottom > c.card.bottom + 0.5 ||
+                      c.btn.left < c.card.left - 0.5 || c.btn.right > c.card.right + 0.5)) {
+          failures.push(`${vp.name} ${tag}: like-btn not fully inside card rect`);
+        }
+
+        // 4. pairwise non-overlap among like-btn / hot-score / hot-badge
+        const parts = [['like-btn', c.btn], ['hot-score', c.score], ['hot-badge', c.badge]].filter(([, v]) => v);
+        for (let i = 0; i < parts.length; i++) {
+          for (let j = i + 1; j < parts.length; j++) {
+            if (overlaps(parts[i][1], parts[j][1])) {
+              failures.push(`${vp.name} ${tag}: OVERLAP ${parts[i][0]} x ${parts[j][0]}`);
+            }
+          }
+        }
+
+        // 5. hot-score right of hot-badge (positive gap)
+        if (c.score && c.badge && (c.score.left - c.badge.right) < 0) {
+          failures.push(`${vp.name} ${tag}: hot-score.left - hot-badge.right = ${r2(c.score.left - c.badge.right)} (expected >= 0)`);
+        }
+
+        logs.push(`  ${tag}: offTop=${r2(offTop)} offRight=${r2(offRight)} pos=${c.btnPosition}` +
+          (c.score && c.badge ? ` score-badge-gap=${r2(c.score.left - c.badge.right)}` : ''));
+      });
+    } catch (e) {
+      logs.push(`\n===== Viewport: ${vp.name} =====`);
+      logs.push(`  ERROR: ${e.message}`);
+      failures.push(`${vp.name}: unexpected error: ${e.message}`);
+    } finally {
+      await page.close().catch(() => {});
+    }
   }
-  console.log(`  card height        = ${d.cardHeight}px  (top ${d.cardTop}, bottom ${d.cardBottom})`);
-  console.log(`  .tool-tags bottom  = ${d.tagsBottom}`);
-  console.log(`  .like-btn  top     = ${d.btnTop}`);
-  console.log(`  gap (btnTop - tagsBottom) = ${r.gap}  (>=0 => NO overlap)`);
-  console.log(`  computed margin    = ${d.computedMarginTop} ${d.computedMarginRight} ${d.computedMarginBottom} ${d.computedMarginLeft}`);
-  console.log(`  btnRight vs cardRight gap = ${(d.cardRight - d.btnRight).toFixed(2)}  (<=4 => right aligned)`);
-  console.log(`  btnInsideCard      = ${r.insideCard}`);
-  console.log(`  noOverlap          = ${r.noOverlap}`);
-  if (!r.noOverlap || !r.insideCard) allPass = false;
+} catch (e) {
+  failures.push(`fatal: ${e.message}`);
+} finally {
+  if (browser) await browser.close().catch(() => {});
 }
 
+logs.forEach((l) => console.log(l));
 console.log('\n========================================');
-console.log(allPass ? 'ASSERTION PASSED: like-btn does not overlap tool-tags' : 'ASSERTION FAILED: overlap detected');
-console.log('========================================');
-process.exit(allPass ? 0 : 2);
+if (failures.length) {
+  console.log(`ASSERTION FAILED (${failures.length}):`);
+  failures.forEach((f) => console.log(`  - ${f}`));
+  console.log('========================================');
+  process.exit(2);
+} else {
+  console.log('ASSERTION PASSED: hot-card like-btn anchored TOP-RIGHT, no score/badge overlap');
+  console.log('========================================');
+  process.exit(0);
+}
