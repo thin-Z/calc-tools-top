@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/theme-toggle.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Badge Maker Online - Turn Photos into Tinplate Button Badges with A4 Print Sheet</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="Free online badge (tinplate button) maker: upload an image, crop it into a circle, preview a realistic badge, or export a 300 DPI print sheet with bleed lines. Supports 32/44/58/75mm sizes and A4 nesting. Nothing is uploaded - everything runs locally in your browser.">
+    <meta property="og:title" content="Badge Maker Online - Turn Photos into Tinplate Button Badges with A4 Print Sheet">
+    <meta property="og:description" content="Free online badge (tinplate button) maker: upload an image, crop it into a circle, preview a realistic badge, or export a 300 DPI print sheet with bleed lines. Supports 32/44/58/75mm sizes and A4 nesting. Nothing is uploaded - everything runs locally in your browser.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.calc-tools.top/en/image/badge-maker">
+    <meta property="og:image" content="https://www.calc-tools.top/assets/og-image.png">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Badge Maker Online - Turn Photos into Tinplate Button Badges with A4 Print Sheet">
+    <meta name="twitter:description" content="Free online badge (tinplate button) maker: upload an image, crop it into a circle, preview a realistic badge, or export a 300 DPI print sheet with bleed lines. Supports 32/44/58/75mm sizes and A4 nesting. Nothing is uploaded - everything runs locally in your browser.">
+
+    <link rel="canonical" href="https://www.calc-tools.top/en/image/badge-maker">
+    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/image/badge-maker">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/image/badge-maker">
+    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/zh/image/badge-maker">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/badge-maker.css">
+
+    <script src="/js/i18n.js" defer></script>
+    <script src="/js/like.js" defer></script>
+    <script src="/js/image-tools/badge-maker.js" defer></script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Online Tools", "item": "https://www.calc-tools.top/" },
+            { "@type": "ListItem", "position": 2, "name": "Badge Maker", "item": "https://www.calc-tools.top/en/image/badge-maker" }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What is a badge (baji)?",
+                "acceptedAnswer": { "@type": "Answer", "text": "In Chinese fandom slang, \"baji\" comes from the Japanese \"bajji\" (badge) and refers to a round tinplate button badge. Common sizes are 32mm, 44mm, 58mm and 75mm. A badge machine presses your artwork, a metal shell and a pin back together." }
+            },
+            {
+                "@type": "Question",
+                "name": "How much bleed do I need?",
+                "acceptedAnswer": { "@type": "Answer", "text": "The rim wraps around 2-3mm of the artwork, so the printed image must be larger than the finished badge. This tool adds bleed automatically: 2mm for 32/44mm and 3mm for 58/75mm, exported at an exact 300 DPI physical size." }
+            },
+            {
+                "@type": "Question",
+                "name": "Why must I print at 100% scale?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Choosing \"Fit to page\" scales the layout and breaks the physical size, so your badge ends up larger or smaller than intended. Always choose \"Actual size / 100%\", and print a test sheet on plain paper first to measure the cut circle with a ruler." }
+            },
+            {
+                "@type": "Question",
+                "name": "Is my image uploaded anywhere?",
+                "acceptedAnswer": { "@type": "Answer", "text": "No. Everything runs in your browser using Canvas. Your image never leaves your device and no network connection is needed." }
+            },
+            {
+                "@type": "Question",
+                "name": "How many badges fit on one A4 sheet?",
+                "acceptedAnswer": { "@type": "Answer", "text": "With a 3mm gap and 8mm margins: 35 badges at 32mm, 15 at 44mm, 8 at 58mm and 6 at 75mm. The gap is adjustable from 0 to 30mm, and counts above the limit are automatically clamped to what actually fits." }
+            }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Badge Maker",
+        "url": "https://www.calc-tools.top/en/image/badge-maker",
+        "description": "Free online badge (tinplate button) maker: upload an image, crop it into a circle, preview a realistic badge, or export a 300 DPI print sheet with bleed lines. Supports 32/44/58/75mm sizes and A4 nesting. Nothing is uploaded - everything runs locally in your browser.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "en"
+    }
+    </script>
+</head>
+<body>
+<header>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <a href="/en/" class="logo"><img src="/assets/logo-h.svg" alt="ToolBox" class="site-logo" width="180" height="45"></a>
+    <nav>
+        <a href="/en/"><span>Home</span></a>
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="Switch language">
+            <option value="zh">中文</option>
+            <option value="en" selected>English</option>
+        </select>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-sun"></use></svg></span></button>
+    </nav>
+</header>
+    <main id="main">
+        <div class="tool-page">
+            <div class="tool-header">
+                <span class="tool-privacy-badge">No upload - processed locally in your browser</span>
+                <h1><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-image"></use></svg> Badge Maker</h1>
+                <p>Upload an image and crop it into a round badge. Export a realistic preview to share, or a 300 DPI A4 print sheet with bleed lines to press your own badges at home.</p>
+            </div>
+            <div class="detail-like-wrap">
+                <button class="like-btn detail-like" data-like-id="badge-maker">
+                    <span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span>
+                    <span class="count">0</span>
+                </button>
+            </div>
+            <div class="related-tools">
+                <h3>Related tools</h3>
+                <ul>
+                <li><a href="/en/image/image-crop">Image Cropper</a></li>
+                <li><a href="/en/image/resize">Image Resizer</a></li>
+                <li><a href="/en/image/compress">Image Compressor</a></li>
+                <li><a href="/en/image/convert">Image Converter</a></li>
+                </ul>
+            </div>
+
+            <div class="badge-maker-root">
+
+<!-- ============================ Top bar ============================ -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9.2" stroke="#007AFF" stroke-width="1.8"/>
+          <circle cx="12" cy="12" r="6" stroke="#007AFF" stroke-width="1.2" stroke-dasharray="2.4 2.4" opacity="0.65"/>
+          <circle cx="12" cy="12" r="1.7" fill="#007AFF"/>
+        </svg>
+      </span>
+      <span class="brand-text">
+        <strong>Badge Maker</strong>
+        <small>Tinplate badges · circular crop · A4 layout</small>
+      </span>
+    </div>
+
+    <div class="segmented" id="modeSwitch">
+      <button type="button" data-mode="preview" class="active">Preview</button>
+      <button type="button" data-mode="print">Print</button>
+    </div>
+
+    <div class="topbar-actions">
+      <button type="button" class="btn btn-ghost btn-sm" id="btnUndo" disabled>Undo</button>
+      <button type="button" class="btn btn-ghost btn-sm" id="btnRedo" disabled>Redo</button>
+      <button type="button" class="btn btn-ghost btn-sm" id="btnShortcutOpen">Shortcuts</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============================ Main ============================ -->
+<main class="layout">
+
+  <!-- ------------------------ Left control panel ------------------------ -->
+  <aside class="panel">
+
+    <!-- 1 Import -->
+    <section class="card">
+      <h2 class="card-title">1 · Import image</h2>
+      <div class="import-row">
+        <button type="button" class="btn btn-primary" id="btnPick">Choose image</button>
+        <button type="button" class="btn btn-ghost" id="btnClear">Clear</button>
+      </div>
+      <input type="file" id="fileInput" class="file-input-hidden" accept="image/jpeg,image/png,image/webp,image/gif,image/*" aria-label="Choose image file" />
+      <p class="hint">
+        Supports <strong>drag onto the canvas</strong> · <strong>click to choose</strong> · <strong>Ctrl + V</strong> paste from the clipboard<br />
+        Formats: JPG / PNG / WebP / GIF (first frame); any side over 4000px is downsampled automatically
+      </p>
+    </section>
+
+    <!-- 2 Crop -->
+    <section class="card">
+      <h2 class="card-title">2 · Crop</h2>
+
+      <div class="slider-row">
+        <label for="zoomSlider">Zoom</label>
+        <span class="value" id="zoomVal">1.00×</span>
+      </div>
+      <input type="range" id="zoomSlider" min="0.1" max="5" step="0.01" value="1" />
+
+      <div class="slider-row">
+        <label for="rotSlider">Rotate</label>
+        <span class="value" id="rotVal">0°</span>
+      </div>
+      <input type="range" id="rotSlider" min="0" max="360" step="1" value="0" />
+
+      <div class="tool-grid">
+        <button type="button" class="btn btn-ghost btn-sm" id="btnReset">Reset</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="btnCenter">Center</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="btnCover">Fill</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="btnContain">Fit</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="btnFlipH">Flip horizontal</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="btnFlipV">Flip vertical</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="btnRot90">Rotate 90°</button>
+      </div>
+
+      <p class="hint">
+        Drag to pan · wheel zooms at the cursor · <strong>Shift + drag</strong>Rotate · arrow keys nudge (Shift ×10)<br />
+        Mobile: one finger to pan / pinch to zoom / two fingers to rotate
+      </p>
+    </section>
+
+    <!-- 3 Size -->
+    <section class="card">
+      <h2 class="card-title">3 · Size</h2>
+      <div class="pill-grid pill-grid-4" id="specGroup">
+        <button type="button" class="pill" data-spec="32">32mm</button>
+        <button type="button" class="pill" data-spec="44">44mm</button>
+        <button type="button" class="pill active" data-spec="58">58mm</button>
+        <button type="button" class="pill" data-spec="75">75mm</button>
+      </div>
+      <p class="spec-info" id="specInfo">Finish 58mm · bleed 3mm · with bleed 64mm</p>
+      <div class="spec-table" id="specTable"></div>
+      <p class="hint">Switching size fully preserves position / zoom / rotation.</p>
+    </section>
+
+    <!-- 4 Adjustments -->
+    <section class="card">
+      <h2 class="card-title">4 · Adjustments</h2>
+
+      <div class="slider-row">
+        <label for="briSlider">Brightness</label>
+        <span class="value" id="briVal">0</span>
+      </div>
+      <input type="range" id="briSlider" min="-100" max="100" step="1" value="0" />
+
+      <div class="slider-row">
+        <label for="conSlider">Contrast</label>
+        <span class="value" id="conVal">0</span>
+      </div>
+      <input type="range" id="conSlider" min="-100" max="100" step="1" value="0" />
+
+      <div class="slider-row">
+        <label for="satSlider">Saturation</label>
+        <span class="value" id="satVal">0</span>
+      </div>
+      <input type="range" id="satSlider" min="-100" max="100" step="1" value="0" />
+    </section>
+
+    <!-- 5 Export -->
+    <section class="card">
+      <h2 class="card-title">5 · Export</h2>
+
+      <!-- ---- Mode A: preview ---- -->
+      <div id="exportPreview">
+        <div class="row check-card">
+          <span>Realistic badge effect</span>
+          <input type="checkbox" class="switch" id="swRealistic" checked aria-label="Realistic badge effect" />
+        </div>
+        <div class="row check-card">
+          <span>Transparent background</span>
+          <input type="checkbox" class="switch" id="swTransparent" aria-label="Transparent background" />
+        </div>
+
+        <div class="sub-label">Surface finish</div>
+        <div class="segmented segmented-sm" id="surfaceSwitch">
+          <button type="button" data-surface="glossy" class="active">Glossy</button>
+          <button type="button" data-surface="matte">Matte</button>
+        </div>
+
+        <div class="sub-label">Export edge length</div>
+        <div class="segmented segmented-sm" id="sizeSwitch">
+          <button type="button" data-size="512">512</button>
+          <button type="button" data-size="1024" class="active">1024</button>
+          <button type="button" data-size="2048">2048</button>
+        </div>
+
+        <p class="hint" id="previewPixelHint">—</p>
+        <button type="button" class="btn btn-primary btn-block" id="btnExportPreview">Export preview PNG</button>
+      </div>
+
+      <!-- ---- Mode B: print ---- -->
+      <div id="exportPrint" class="hidden">
+        <div class="row check-card">
+          <span>Show guides</span>
+          <input type="checkbox" class="switch" id="swGuides" checked aria-label="Show guides" />
+        </div>
+        <div class="row check-card">
+          <span>Show text labels</span>
+          <input type="checkbox" class="switch" id="swLabels" checked aria-label="Show text labels" />
+        </div>
+
+        <div class="sub-label">Badges per A4 sheet</div>
+        <div class="pill-grid pill-grid-5" id="countGroup">
+          <button type="button" class="pill" data-count="1">1</button>
+          <button type="button" class="pill" data-count="2">2</button>
+          <button type="button" class="pill" data-count="4">4</button>
+          <button type="button" class="pill" data-count="6">6</button>
+          <button type="button" class="pill" data-count="8">8</button>
+          <button type="button" class="pill" data-count="9">9</button>
+          <button type="button" class="pill" data-count="12">12</button>
+          <button type="button" class="pill" data-count="16">16</button>
+          <button type="button" class="pill active" data-count="20">20</button>
+        </div>
+
+        <div class="row row-field">
+          <span>Gap</span>
+          <div class="field">
+            <input type="number" id="gapInput" min="0" max="30" step="0.5" value="3" aria-label="Gap in millimetres" />
+            <span class="unit">mm</span>
+          </div>
+        </div>
+
+        <p class="hint" id="printPixelHint">—</p>
+        <p class="hint hint-strong" id="countHint">—</p>
+        <p class="hint hint-warn hidden" id="countLimit">—</p>
+
+        <button type="button" class="btn btn-primary btn-block" id="btnExportA4">Export A4 sheet PNG</button>
+        <button type="button" class="btn btn-ghost btn-block" id="btnExportSingle">Export single exact-size PNG</button>
+        <button type="button" class="btn btn-ghost btn-block" id="btnPrint">Print (sheet only)</button>
+      </div>
+    </section>
+
+    <!-- Shortcuts (collapsible) -->
+    <section class="card card-collapse" id="shortcutCard">
+      <button type="button" class="collapse-head" id="btnShortcutToggle" aria-expanded="false">
+        <span>Shortcuts / gestures</span>
+        <span class="caret">▼</span>
+      </button>
+      <div class="collapse-body" id="shortcutBody">
+        <div class="collapse-body-inner">
+          <dl class="shortcut-list">
+            <div class="shortcut-item"><dt>Import image</dt><dd>drag onto the canvas / click to choose / <kbd>Ctrl</kbd>+<kbd>V</kbd></dd></div>
+            <div class="shortcut-item"><dt>Pan image</dt><dd>Left mouse button or one finger</dd></div>
+            <div class="shortcut-item"><dt>Zoom</dt><dd>Wheel (anchored at cursor) / pinch</dd></div>
+            <div class="shortcut-item"><dt>Rotate</dt><dd><kbd>Shift</kbd>+drag / two-finger rotate / slider</dd></div>
+            <div class="shortcut-item"><dt>Nudge</dt><dd><kbd>←</kbd><kbd>↑</kbd><kbd>→</kbd><kbd>↓</kbd>，hold <kbd>Shift</kbd> step ×10</dd></div>
+            <div class="shortcut-item"><dt>Undo</dt><dd><kbd>Ctrl</kbd>+<kbd>Z</kbd></dd></div>
+            <div class="shortcut-item"><dt>Redo</dt><dd><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> or <kbd>Ctrl</kbd>+<kbd>Y</kbd></dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+  </aside>
+
+  <!-- ------------------------ Right workspace ------------------------ -->
+  <section class="workspace">
+
+    <!-- Crop editor -->
+    <div class="card editor-card">
+      <div class="editor-head">
+        <h2 class="card-title">Crop editor</h2>
+        <span class="badge-live" id="editorBadge">58mm</span>
+      </div>
+      <div class="editor-stage" id="editorStage">
+        <canvas id="editorCanvas" class="editor-canvas"></canvas>
+        <div class="editor-empty" id="editorEmpty">
+          <svg width="42" height="42" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5" stroke="#7C879B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" stroke="#7C879B" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          <p><strong>Drop an image</strong> or <strong>click "Choose image"</strong></p>
+          <p class="dim">Or press Ctrl + V to paste from the clipboard</p>
+        </div>
+      </div>
+      <p class="hint" id="editorHint">—</p>
+    </div>
+
+    <!-- Preview -->
+    <div class="card preview-card">
+      <div class="preview-head">
+        <h2 class="card-title" id="previewTitle">Preview</h2>
+        <span class="hint" id="previewMeta">—</span>
+      </div>
+      <div class="preview-stage" id="previewStage">
+        <canvas id="previewCanvas" class="preview-canvas"></canvas>
+        <div class="preview-duo hidden" id="printDuo">
+          <canvas id="singleCanvas" class="preview-canvas-sm"></canvas>
+          <canvas id="a4Canvas" class="preview-canvas-a4"></canvas>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</main>
+
+<!-- ============================ Overlay ============================ -->
+<div class="drop-overlay" id="dropOverlay">
+  <div class="drop-box">Release to import</div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div id="printArea"><canvas id="printCanvas"></canvas></div>
+
+            </div>
+
+            <div class="tool-content">
+            <h2>What a badge is, and why it needs a dedicated tool</h2>
+            <p>A badge is a round tinplate button: your artwork on top, a metal shell in the middle and a pin at the back, pressed together in one go. The hard part is not the pressing, it is <strong>getting the artwork right</strong> - the result is circular, and 2-3mm around the edge gets wrapped by the rim. With a generic cropper it is easy to end up with a face cut in half or key text swallowed by the rim.</p>
+            <h2>Bleed, cut line and safe area</h2>
+            <p><strong>Bleed</strong> is the extra margin beyond the finished size that gets wrapped inside the rim, usually 2-3mm. It must be printed, otherwise a slightly off cut leaves a white edge. The <strong>cut line</strong> is the actual outline of the finished badge - everything inside it is what you see. The <strong>safe area</strong> sits another 2mm inward; faces and text belong there so the rim cannot eat them. This tool draws all three in different colours on the print sheet.</p>
+            <h2>Why print scale must be 100%</h2>
+            <p>The sheet is generated at an exact 300 DPI physical size - a 58mm badge has a 685px cut circle (58 / 25.4 x 300). If you print with "Fit to page", the browser scales the page to the printable area and the real size drifts to 55mm or 61mm, so the badge no longer matches its nominal size. This gets obvious when you mix several designs. Always start with "Actual size / 100%", print a test on plain paper, and measure the cut circle before using photo paper.</p>
+            <h2>Materials and pressing tips</h2>
+            <p>Use 120-200g coated or photo paper; thinner stock wrinkles while pressing. Cut along the blue cut line and keep the bleed ring intact. Pressing order: metal shell, clear film, your artwork, pin back - align the centre and press in one stroke. Screens are RGB while printers are CMYK, so prints usually look slightly darker and less saturated; test print anything that matters.</p>
+            </div>
+        </div>
+    </main>
+<footer>
+    <div class="footer-links">
+        <a href="/en/">Home</a>
+        <a href="/en/help">Help</a>
+        <a href="/about">About</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/contact">Contact</a>
+        <a href="/blog/en/">Blog</a>
+    </div>
+    <p>© 2026 Online Calculators | Free Online Calculators</p>
+</footer>
+</body>
+</html>

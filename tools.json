@@ -527,6 +527,24 @@
     }
   },
   {
+    "slug": "badge-maker",
+    "icon": "image",
+    "dir": "image",
+    "categories": [
+      "image"
+    ],
+    "zh": {
+      "name": "吧唧制作",
+      "desc": "上传图片裁剪成圆形吧唧，拟真预览，300 DPI 打印稿支持 A4 拼版",
+      "kw": "吧唧制作,吧唧,马口铁徽章,徽章制作,吧唧打印,badge"
+    },
+    "en": {
+      "name": "Badge Maker",
+      "desc": "Crop photos into round badges, realistic preview, 300 DPI A4 print sheet",
+      "kw": "badge maker,tinplate badge,button badge,badge print sheet"
+    }
+  },
+  {
     "slug": "color-contrast",
     "icon": "contrast",
     "dir": "calculators",

@@ -1,0 +1,515 @@
+/* =========================================================================
+   吧唧（马口铁徽章）制作工具 —— 站点内样式
+   作用域：.badge-maker-root（所有规则已限定，:root 变量与 body 重置均已作用域化）
+   主色 #007AFF / 浅色主题 / 玻璃拟态 / 8pt 栅格
+   ========================================================================= */
+
+/* =========================================================================
+   吧唧制作工具 —— 单文件离线工具
+   设计规范：主色 #007AFF / 浅色主题 / 玻璃拟态 / 8pt 栅格
+   ========================================================================= */
+
+.badge-maker-root{
+  --blue:#007AFF;
+  --blue-dark:#0062CC;
+  --blue-soft:rgba(0,122,255,.10);
+  --bg-1:#F7F9FC;
+  --bg-2:#EDF1F7;
+  --card:rgba(255,255,255,.74);
+  --card-border:rgba(255,255,255,.9);
+  --line:rgba(15,23,42,.09);
+  --text:#0F172A;
+  --text-2:#59637A;
+  --text-3:#8A93A3;
+  --warn:#D97706;
+  --warn-soft:rgba(217,119,6,.10);
+  --radius:16px;
+  --radius-sm:12px;
+  --radius-xs:10px;
+  --shadow:0 12px 32px rgba(15,23,42,.09), 0 2px 8px rgba(15,23,42,.05);
+  --shadow-sm:0 4px 16px rgba(15,23,42,.07);
+  --font:-apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+.badge-maker-root, .badge-maker-root *{ box-sizing:border-box; }
+
+/* [site-integration] 已移除全局 html,body 重置，避免影响站点布局 */
+
+.badge-maker-root{
+  font-family:var(--font);
+  color:var(--text);
+  background:linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%) fixed;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  min-height:0;
+  font-size:14px;
+  line-height:1.5;
+}
+
+.hidden{ display:none !important; }
+
+/* ------------------------------ 顶栏 ------------------------------ */
+.topbar{
+  position:sticky; top:0; z-index:60;
+  background:rgba(255,255,255,.72);
+  backdrop-filter:blur(20px) saturate(1.6);
+  -webkit-backdrop-filter:blur(20px) saturate(1.6);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  max-width:1440px; margin:0 auto;
+  padding:12px 24px;
+  display:flex; align-items:center; gap:24px;
+}
+.brand{ display:flex; align-items:center; gap:10px; min-width:0; }
+.brand-mark{
+  width:36px; height:36px; flex:none;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:11px;
+  background:var(--blue-soft);
+}
+.brand-text{ display:flex; flex-direction:column; line-height:1.2; min-width:0; }
+.brand-text strong{ font-size:15px; font-weight:700; letter-spacing:.2px; }
+.brand-text small{ font-size:11px; color:var(--text-3); white-space:nowrap; }
+.topbar-actions{ margin-left:auto; display:flex; gap:8px; align-items:center; }
+
+/* --------------------------- 分段控件 --------------------------- */
+.segmented{
+  display:inline-flex; padding:3px; gap:2px;
+  background:rgba(120,130,150,.15);
+  border-radius:12px;
+  flex:none;
+}
+.segmented button{
+  border:0; background:transparent; cursor:pointer;
+  font-family:inherit; font-size:14px; font-weight:600;
+  color:var(--text-2);
+  padding:8px 20px; border-radius:9px;
+  transition:background .2s ease, color .2s ease, box-shadow .2s ease;
+}
+.segmented button:hover{ color:var(--text); }
+.badge-maker-root .segmented button.active{
+  background:#fff; color:var(--text);
+  box-shadow:0 1px 4px rgba(15,23,42,.16);
+}
+.segmented-sm button{ padding:6px 12px; font-size:13px; border-radius:8px; }
+
+/* --------------------------- 布局 --------------------------- */
+.layout{
+  max-width:1440px; margin:0 auto;
+  padding:24px;
+  display:grid; grid-template-columns:384px minmax(0,1fr);
+  gap:24px; align-items:start;
+}
+.panel{
+  display:flex; flex-direction:column; gap:16px;
+  position:sticky; top:88px;
+  max-height:calc(100vh - 112px);
+  overflow-y:auto; overflow-x:hidden;
+  padding-right:4px;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(15,23,42,.2) transparent;
+}
+.panel::-webkit-scrollbar{ width:8px; }
+.panel::-webkit-scrollbar-thumb{ background:rgba(15,23,42,.16); border-radius:4px; }
+.panel::-webkit-scrollbar-track{ background:transparent; }
+
+.workspace{ display:flex; flex-direction:column; gap:20px; min-width:0; }
+
+/* --------------------------- 卡片 --------------------------- */
+.card{
+  background:var(--card);
+  backdrop-filter:blur(20px) saturate(1.5);
+  -webkit-backdrop-filter:blur(20px) saturate(1.5);
+  border:1px solid var(--card-border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);
+  padding:16px;
+}
+.card-title{
+  margin:0 0 12px;
+  font-size:13px; font-weight:700;
+  letter-spacing:.4px; color:var(--text-2);
+  text-transform:none;
+}
+.card-title:last-child{ margin-bottom:0; }
+
+/* --------------------------- 按钮 --------------------------- */
+.badge-maker-root .btn{
+  font-family:inherit; font-size:14px; font-weight:600;
+  border:0; border-radius:var(--radius-sm);
+  padding:11px 16px; cursor:pointer;
+  transition:background .18s ease, color .18s ease, border-color .18s ease, transform .12s ease, box-shadow .18s ease;
+  display:inline-flex; align-items:center; justify-content:center; gap:6px;
+}
+.badge-maker-root .btn:disabled{ opacity:.4; cursor:not-allowed; transform:none !important; }
+.badge-maker-root .btn-sm{ padding:8px 12px; font-size:13px; border-radius:var(--radius-xs); }
+.badge-maker-root .btn-block{ width:100%; margin-top:8px; }
+.badge-maker-root .btn-primary{
+  background:var(--blue); color:#fff;
+  box-shadow:0 6px 16px rgba(0,122,255,.28);
+}
+.badge-maker-root .btn-primary:hover:not(:disabled){ background:var(--blue-dark); transform:translateY(-1px); }
+.badge-maker-root .btn-primary:active:not(:disabled){ transform:translateY(0) scale(.985); }
+.badge-maker-root .btn-ghost{
+  background:rgba(255,255,255,.72);
+  border:1px solid var(--line);
+  color:var(--text);
+}
+.badge-maker-root .btn-ghost:hover:not(:disabled){ background:#fff; border-color:rgba(0,122,255,.45); color:var(--blue); }
+.badge-maker-root .btn-ghost:active:not(:disabled){ transform:scale(.985); }
+
+/* --------------------------- 表单控件 --------------------------- */
+.import-row{ display:grid; grid-template-columns:1fr auto; gap:8px; }
+.file-input-hidden{ display:none; }
+
+.badge-maker-root .tool-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-top:12px; }
+.badge-maker-root .tool-grid .btn{ padding:9px 8px; font-size:12.5px; }
+
+.slider-row{
+  display:flex; align-items:center; justify-content:space-between;
+  margin:12px 0 2px;
+}
+.slider-row:first-of-type{ margin-top:0; }
+.slider-row label{ font-size:13px; font-weight:600; color:var(--text-2); }
+.slider-row .value{ font-size:12.5px; font-weight:600; color:var(--blue); font-variant-numeric:tabular-nums; }
+
+.badge-maker-root input[type="range"]{
+  -webkit-appearance:none; appearance:none;
+  width:100%; height:24px; background:transparent; cursor:pointer; margin:0;
+}
+.badge-maker-root input[type="range"]::-webkit-slider-runnable-track{
+  height:4px; border-radius:2px;
+  background:linear-gradient(90deg, var(--blue) 0 var(--p,50%), rgba(15,23,42,.13) var(--p,50%) 100%);
+}
+.badge-maker-root input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none; appearance:none;
+  width:18px; height:18px; margin-top:-7px;
+  border-radius:50%; background:#fff; border:1px solid rgba(15,23,42,.08);
+  box-shadow:0 1px 4px rgba(15,23,42,.28);
+  transition:transform .15s ease;
+}
+.badge-maker-root input[type="range"]:active::-webkit-slider-thumb{ transform:scale(1.15); }
+.badge-maker-root input[type="range"]::-moz-range-track{
+  height:4px; border-radius:2px;
+  background:linear-gradient(90deg, var(--blue) 0 var(--p,50%), rgba(15,23,42,.13) var(--p,50%) 100%);
+}
+.badge-maker-root input[type="range"]::-moz-range-thumb{
+  width:16px; height:16px; border:none; border-radius:50%;
+  background:#fff; box-shadow:0 1px 4px rgba(15,23,42,.28);
+}
+.badge-maker-root input[type="range"]:focus-visible{ outline:2px solid rgba(0,122,255,.5); outline-offset:2px; border-radius:8px; }
+
+.row{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px; padding:9px 0;
+}
+.row > span{ font-size:13.5px; color:var(--text); }
+.row-field{ padding:8px 0; }
+
+.field{
+  display:flex; align-items:center; gap:6px;
+  background:rgba(255,255,255,.8);
+  border:1px solid var(--line);
+  border-radius:var(--radius-xs);
+  padding:0 12px; height:40px; min-width:112px;
+}
+.field input{
+  border:0; background:transparent; outline:none;
+  width:100%; font-family:inherit; font-size:14px;
+  font-weight:600; color:var(--text); text-align:right;
+  font-variant-numeric:tabular-nums;
+}
+.field input::-webkit-outer-spin-button,
+.field input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+.field input[type="number"]{ -moz-appearance:textfield; appearance:textfield; }
+.field .unit{ font-size:12.5px; color:var(--text-3); flex:none; }
+
+/* iOS 风格开关 */
+.switch{
+  -webkit-appearance:none; appearance:none;
+  width:48px; height:28px; border-radius:14px; flex:none;
+  background:rgba(120,130,150,.32);
+  position:relative; cursor:pointer; margin:0;
+  transition:background .25s ease;
+}
+.switch::after{
+  content:""; position:absolute; top:2px; left:2px;
+  width:24px; height:24px; border-radius:50%;
+  background:#fff; box-shadow:0 1px 3px rgba(15,23,42,.3);
+  transition:transform .25s cubic-bezier(.4,0,.2,1);
+}
+.switch:checked{ background:var(--blue); }
+.switch:checked::after{ transform:translateX(20px); }
+.switch:focus-visible{ outline:2px solid rgba(0,122,255,.5); outline-offset:2px; }
+
+/* 药丸按钮组 */
+.pill-grid{ display:grid; gap:8px; }
+.pill-grid-4{ grid-template-columns:repeat(4,1fr); }
+.pill-grid-5{ grid-template-columns:repeat(5,1fr); }
+.pill{
+  font-family:inherit; font-size:13px; font-weight:600;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.78);
+  color:var(--text-2);
+  border-radius:var(--radius-xs);
+  padding:9px 0; cursor:pointer; text-align:center;
+  transition:background .18s ease, color .18s ease, border-color .18s ease, box-shadow .18s ease, transform .12s ease;
+}
+.badge-maker-root .pill:hover:not(.active){ border-color:rgba(0,122,255,.45); color:var(--blue); }
+.badge-maker-root .pill:active:not(.active){ transform:scale(.97); }
+.badge-maker-root .pill.active{
+  background:var(--blue); border-color:var(--blue); color:#fff;
+  box-shadow:0 4px 12px rgba(0,122,255,.26);
+}
+
+/* 文本 */
+.hint{
+  margin:10px 0 0; font-size:12px; line-height:1.6; color:var(--text-3);
+}
+.hint-strong{ color:var(--text-2); font-weight:600; }
+.hint-warn{
+  color:var(--warn); background:var(--warn-soft);
+  padding:8px 10px; border-radius:var(--radius-xs); font-weight:600;
+}
+.hint-strong.warn{ color:var(--warn); background:var(--warn-soft); padding:8px 10px; border-radius:var(--radius-xs); }
+
+/* 超出当前规格 A4 上限的枚数选项：降权置灰，点击会自动夹取到上限 */
+.pill-over{
+  background:rgba(255,255,255,.42);
+  border-style:dashed;
+  border-color:rgba(15,23,42,.14);
+  color:var(--text-3);
+  opacity:.62;
+}
+.pill-over::after{
+  content:"↧";
+  font-size:10px; margin-left:3px; opacity:.75;
+}
+.badge-maker-root .pill-over:hover:not(.active){ border-color:rgba(15,23,42,.26); color:var(--text-2); }
+
+/* 动态枚数药丸：预设集合 {1,2,4,6,8,9,12,16,20} 装不下「实际生效枚数」时出现
+   （例：44mm@间距3mm → A4 容量 15，不在集合内）。点线边框表示该值由当前
+   规格 × 间距推导而来，不是预设选项。 */
+.pill-dyn{
+  border-style:dotted;
+  border-color:rgba(0,122,255,.55);
+}
+.spec-info{
+  margin:12px 0 0; font-size:12.5px; font-weight:600; color:var(--blue);
+  background:var(--blue-soft); padding:8px 10px; border-radius:var(--radius-xs);
+  font-variant-numeric:tabular-nums;
+}
+.sub-label{
+  margin:14px 0 8px; font-size:12px; font-weight:700;
+  color:var(--text-3); letter-spacing:.3px;
+}
+
+/* 规格速查表 */
+.spec-table{ margin-top:12px; font-variant-numeric:tabular-nums; }
+.spec-tr{
+  display:grid; grid-template-columns:repeat(4,1fr);
+  font-size:11.5px; padding:6px 4px;
+  border-radius:6px; color:var(--text-2); text-align:center;
+}
+.spec-th{ color:var(--text-3); font-weight:700; }
+.badge-maker-root .spec-tr.active{ background:var(--blue-soft); color:var(--blue); font-weight:700; }
+
+/* 折叠卡 */
+.card-collapse{ padding:0; overflow:hidden; }
+.collapse-head{
+  width:100%; border:0; background:transparent; cursor:pointer;
+  font-family:inherit; font-size:13px; font-weight:700; color:var(--text-2);
+  padding:16px; display:flex; align-items:center; justify-content:space-between;
+  transition:color .18s ease;
+}
+.collapse-head:hover{ color:var(--blue); }
+.collapse-head .caret{ transition:transform .25s ease; font-size:11px; }
+.collapse-head[aria-expanded="true"] .caret{ transform:rotate(180deg); }
+.collapse-body{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+.badge-maker-root .collapse-body.open{ max-height:520px; }
+.collapse-body-inner{ padding:0 16px 16px; }
+.shortcut-list{ margin:0; font-size:12.5px; }
+.shortcut-item{
+  display:flex; align-items:baseline; justify-content:space-between;
+  gap:12px; padding:6px 0; border-bottom:1px dashed var(--line);
+}
+.shortcut-item:last-child{ border-bottom:0; }
+.shortcut-item dt{ color:var(--text-3); flex:none; font-size:11.5px; }
+.shortcut-item dd{ margin:0; color:var(--text-2); text-align:right; }
+kbd{
+  font-family:var(--font); font-size:11px; font-weight:700;
+  background:rgba(15,23,42,.07); color:var(--text-2);
+  border-radius:5px; padding:2px 6px; white-space:nowrap;
+}
+
+/* --------------------------- 编辑器 --------------------------- */
+.editor-card{ padding:16px; }
+.editor-head{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:12px; gap:12px; flex-wrap:wrap;
+}
+.editor-head .card-title{ margin:0; }
+.badge-live{
+  font-size:12px; font-weight:700; color:var(--blue);
+  background:var(--blue-soft); border-radius:999px; padding:4px 12px;
+  font-variant-numeric:tabular-nums;
+}
+.editor-stage{
+  position:relative;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:var(--radius);
+  overflow:hidden;
+  min-height:240px;
+}
+.editor-canvas{
+  display:block; width:100%; max-width:620px;
+  aspect-ratio:1 / 1; height:auto;
+  border-radius:var(--radius);
+  touch-action:none;
+  cursor:grab;
+  background-color:#171A21;
+  background-image:
+    linear-gradient(45deg, rgba(255,255,255,.045) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.045) 75%),
+    linear-gradient(45deg, rgba(255,255,255,.045) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.045) 75%);
+  background-size:24px 24px;
+  background-position:0 0, 12px 12px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.05);
+}
+.editor-canvas.dragging{ cursor:grabbing; }
+.editor-empty{
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:4px; pointer-events:none; text-align:center; padding:24px;
+  color:#9AA4B6;
+}
+.editor-empty p{ margin:0; font-size:13px; }
+.editor-empty p.dim{ font-size:11.5px; color:#6C7689; }
+.editor-empty strong{ color:#C8D1E0; }
+
+/* --------------------------- 预览区 --------------------------- */
+.badge-maker-root .preview-card{ padding:16px; }
+.preview-head{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px; margin-bottom:12px; flex-wrap:wrap;
+}
+.preview-head .card-title{ margin:0; }
+.preview-head .hint{ margin:0; }
+.preview-stage{
+  display:flex; align-items:center; justify-content:center;
+  padding:16px 8px;
+  border-radius:var(--radius);
+  background:linear-gradient(180deg, #1B1F27 0%, #12151B 100%);
+}
+.preview-canvas{
+  display:block; width:min(100%, 320px); aspect-ratio:1 / 1; height:auto;
+}
+.preview-duo{
+  display:flex; align-items:flex-start; justify-content:center;
+  gap:24px; flex-wrap:wrap; width:100%;
+}
+.preview-canvas-sm{
+  display:block; width:min(100%, 200px); aspect-ratio:1 / 1; height:auto;
+  border-radius:var(--radius-sm);
+  background:rgba(255,255,255,.04);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+}
+.preview-canvas-a4{
+  display:block; width:min(100%, 160px); aspect-ratio:210 / 297; height:auto;
+  border-radius:8px;
+  box-shadow:0 8px 24px rgba(0,0,0,.45);
+}
+
+/* --------------------------- 拖拽覆盖层 --------------------------- */
+.drop-overlay{
+  position:fixed; inset:0; z-index:200;
+  display:none; align-items:center; justify-content:center;
+  background:rgba(15,23,42,.42);
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+}
+.drop-overlay.show{ display:flex; }
+.drop-box{
+  background:rgba(255,255,255,.94);
+  border:2px dashed var(--blue);
+  border-radius:20px;
+  padding:32px 48px;
+  font-size:16px; font-weight:700; color:var(--blue);
+  box-shadow:var(--shadow);
+}
+
+/* --------------------------- Toast --------------------------- */
+.toast{
+  position:fixed; left:50%; bottom:32px; transform:translate(-50%, 16px);
+  z-index:300;
+  background:rgba(20,26,36,.92); color:#fff;
+  font-size:13px; font-weight:600;
+  padding:11px 20px; border-radius:999px;
+  box-shadow:0 10px 32px rgba(0,0,0,.3);
+  opacity:0; pointer-events:none;
+  transition:opacity .25s ease, transform .25s ease;
+  max-width:80vw; text-align:center;
+}
+.toast.show{ opacity:1; transform:translate(-50%, 0); }
+
+/* --------------------------- 打印区 --------------------------- */
+#printArea{ display:none; }
+
+@media print{
+  @page{ size:A4 portrait; margin:0; }
+  html, body{
+    background:#fff !important;
+    margin:0 !important; padding:0 !important;
+    width:210mm; height:297mm;
+  }
+  body > *:not(:has(#printArea)){ display:none !important; }
+  #printArea{ display:block !important; }
+  #printCanvas{
+    display:block !important;
+    width:210mm !important; height:297mm !important;
+    margin:0 !important; padding:0 !important;
+  }
+}
+
+/* --------------------------- 响应式 --------------------------- */
+@media (max-width:1023px){
+  .layout{ grid-template-columns:1fr; gap:16px; padding:16px; }
+  .panel{
+    position:static; max-height:none; overflow:visible;
+    padding-right:0;
+    order:2;
+  }
+  .workspace{ order:1; }
+  .topbar-inner{ padding:12px 16px; gap:12px; flex-wrap:wrap; }
+  .topbar-actions{ width:100%; margin-left:0; }
+  .segmented{ margin-left:auto; }
+  .editor-canvas{ max-width:100%; }
+}
+@media (max-width:520px){
+  .brand-text small{ display:none; }
+  .segmented button{ padding:7px 14px; font-size:13px; }
+  .badge-maker-root .topbar-actions .btn{ flex:1; }
+  .preview-duo{ gap:16px; }
+  .preview-canvas-sm{ width:min(100%, 160px); }
+  .preview-canvas-a4{ width:min(100%, 130px); }
+}
+
+/* =========================================================================
+   站点集成适配
+   设计系统门禁要求 checkbox 的祖先（4 层内）含 .check-card 等包裹类，
+   否则判定为「裸控件」并阻断构建。但站点 .check-card 会把 checkbox 压成
+   1px 并套上卡片边框，会毁掉本工具的 iOS toggle 外观 —— 因此这里覆盖回原样。
+   ========================================================================= */
+.badge-maker-root .row.check-card{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px; padding:9px 0; margin:0;
+  border:0; border-radius:0; background:transparent;
+  cursor:default; transition:none;
+}
+.badge-maker-root .row.check-card:hover{ border-color:transparent; }
+.badge-maker-root .check-card input[type="checkbox"].switch{
+  position:relative; width:48px; height:28px; opacity:1;
+}
+
+/* 站点顶栏是 sticky，工具自带顶栏不再 sticky，避免两者叠加遮挡 */
+.badge-maker-root .topbar{ position:static; }

@@ -116,6 +116,10 @@ window.TOOL_PINYIN_ZH = {
     "py": "tupiancaijian tupiancaijian,caijiantupian,tupianbianji,jianqietupian,crop,tupiancaijiangongju",
     "ini": "tpcj tpcj,cjtp,tpbj,jqtp,crop,tpcjgj"
   },
+  "badge-maker": {
+    "py": "bajizhizuo bajizhizuo,baji,makoutiehuizhang,huizhangzhizuo,bajidayin,badge",
+    "ini": "bjzz bjzz,bj,mkthz,hzzz,bjdy,badge"
+  },
   "color-contrast": {
     "py": "yanseduibidujianchaqi yanseduibidu,duibidujiancha,wcag,wuzhangai,aa,aaa,peise,qianjingse,beijingse",
     "ini": "ysdbdjcq ysdbd,dbdjc,wcag,wza,aa,aaa,ps,qjs,bjs"

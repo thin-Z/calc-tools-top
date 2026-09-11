@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="/js/theme-init.js"></script>
+    <script src="/js/theme-toggle.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在线吧唧制作工具 - 上传图片做马口铁徽章，支持A4拼版打印</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+    <meta name="description" content="免费在线吧唧（马口铁徽章）制作工具：上传图片拖拽裁剪成圆形，实时预览拟真徽章效果，或按 300 DPI 输出含出血线的精确打印稿，支持 32/44/58/75mm 规格与 A4 拼版，图片不上传、全程浏览器本地处理。">
+    <meta property="og:title" content="在线吧唧制作工具 - 上传图片做马口铁徽章，支持A4拼版打印">
+    <meta property="og:description" content="免费在线吧唧（马口铁徽章）制作工具：上传图片拖拽裁剪成圆形，实时预览拟真徽章效果，或按 300 DPI 输出含出血线的精确打印稿，支持 32/44/58/75mm 规格与 A4 拼版，图片不上传、全程浏览器本地处理。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.calc-tools.top/zh/image/badge-maker">
+    <meta property="og:image" content="https://www.calc-tools.top/assets/og-image.png">
+    <meta property="og:locale" content="zh_CN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="在线吧唧制作工具 - 上传图片做马口铁徽章，支持A4拼版打印">
+    <meta name="twitter:description" content="免费在线吧唧（马口铁徽章）制作工具：上传图片拖拽裁剪成圆形，实时预览拟真徽章效果，或按 300 DPI 输出含出血线的精确打印稿，支持 32/44/58/75mm 规格与 A4 拼版，图片不上传、全程浏览器本地处理。">
+
+    <link rel="canonical" href="https://www.calc-tools.top/zh/image/badge-maker">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.calc-tools.top/zh/image/badge-maker">
+    <link rel="alternate" hreflang="en" href="https://www.calc-tools.top/en/image/badge-maker">
+    <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/zh/image/badge-maker">
+
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/badge-maker.css">
+
+    <script src="/js/i18n.js" defer></script>
+    <script src="/js/like.js" defer></script>
+    <script src="/js/image-tools/badge-maker.js" defer></script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "在线工具", "item": "https://www.calc-tools.top/" },
+            { "@type": "ListItem", "position": 2, "name": "在线吧唧制作", "item": "https://www.calc-tools.top/zh/image/badge-maker" }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "吧唧是什么？",
+                "acceptedAnswer": { "@type": "Answer", "text": "吧唧是「徽章」的日语音译（バッジ），在二次元圈特指马口铁材质的圆形胸章，直径常见 32mm、44mm、58mm、75mm，用吧唧机把图片、金属底盖和别针压合制成。" }
+            },
+            {
+                "@type": "Question",
+                "name": "做吧唧需要留多少出血？",
+                "acceptedAnswer": { "@type": "Answer", "text": "吧唧的包边会卷进去 2–3mm，所以图片要做得比成品大一圈。本工具按规格自动加出血：32/44mm 加 2mm，58/75mm 加 3mm，并按 300 DPI 输出精确物理尺寸。" }
+            },
+            {
+                "@type": "Question",
+                "name": "打印时为什么必须选 100% 比例？",
+                "acceptedAnswer": { "@type": "Answer", "text": "一旦选择「适应页面」「缩放以适合」，浏览器会按比例缩放版面，物理尺寸就错了，压出来的吧唧会偏大或偏小。请务必选「实际大小 / 100%」，并先打一张普通纸用尺子量裁切圆确认。" }
+            },
+            {
+                "@type": "Question",
+                "name": "我的图片会被上传吗？",
+                "acceptedAnswer": { "@type": "Answer", "text": "不会。所有处理都在你的浏览器里用 Canvas 完成，图片不会离开你的设备，也不需要联网。" }
+            },
+            {
+                "@type": "Question",
+                "name": "A4 一张纸能排多少枚？",
+                "acceptedAnswer": { "@type": "Answer", "text": "按间距 3mm、四周留白 8mm 计算：32mm 可排 35 枚，44mm 可排 15 枚，58mm 可排 8 枚，75mm 可排 6 枚。枚间距可在 0–30mm 调整，超过上限会自动夹取到可排的最大值。" }
+            }
+        ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "在线吧唧制作",
+        "url": "https://www.calc-tools.top/zh/image/badge-maker",
+        "description": "免费在线吧唧（马口铁徽章）制作工具：上传图片拖拽裁剪成圆形，实时预览拟真徽章效果，或按 300 DPI 输出含出血线的精确打印稿，支持 32/44/58/75mm 规格与 A4 拼版，图片不上传、全程浏览器本地处理。",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Web",
+        "inLanguage": "zh-CN"
+    }
+    </script>
+</head>
+<body>
+<header>
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <a href="/" class="logo"><img src="/assets/logo-h.svg" alt="工具箱里" class="site-logo" width="180" height="45"></a>
+    <nav>
+        <a href="/"><span>首页</span></a>
+        <select class="lang-switch" data-csp-change="switchLang" aria-label="语言切换">
+            <option value="zh" selected>中文</option>
+            <option value="en">English</option>
+        </select>
+        <button id="theme-toggle" class="theme-toggle" aria-label="切换暗黑模式"><span class="theme-icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-sun"></use></svg></span></button>
+    </nav>
+</header>
+    <main id="main">
+        <div class="tool-page">
+            <div class="tool-header">
+                <span class="tool-privacy-badge">图片不上传 · 浏览器本地处理</span>
+                <h1><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-image"></use></svg> 在线吧唧制作</h1>
+                <p>上传图片，拖拽裁剪成圆形吧唧。可导出拟真马口铁效果预览图发图交流，也可按 300 DPI 输出含出血线的 A4 打印稿，自己压制成实物。</p>
+            </div>
+            <div class="detail-like-wrap">
+                <button class="like-btn detail-like" data-like-id="badge-maker">
+                    <span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span>
+                    <span class="count">0</span>
+                </button>
+            </div>
+            <div class="related-tools">
+                <h3>相关工具</h3>
+                <ul>
+                <li><a href="/zh/image/image-crop">图片裁剪</a></li>
+                <li><a href="/zh/image/resize">图片改尺寸</a></li>
+                <li><a href="/zh/image/compress">图片压缩</a></li>
+                <li><a href="/zh/image/convert">图片格式转换</a></li>
+                </ul>
+            </div>
+
+            <div class="badge-maker-root">
+
+<!-- ============================ 顶栏 ============================ -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9.2" stroke="#007AFF" stroke-width="1.8"/>
+          <circle cx="12" cy="12" r="6" stroke="#007AFF" stroke-width="1.2" stroke-dasharray="2.4 2.4" opacity="0.65"/>
+          <circle cx="12" cy="12" r="1.7" fill="#007AFF"/>
+        </svg>
+      </span>
+      <span class="brand-text">
+        <strong>吧唧制作工具</strong>
+        <small>马口铁徽章 · 圆形裁剪与 A4 排版</small>
+      </span>
+    </div>
+
+    <div class="segmented" id="modeSwitch">
+      <button type="button" data-mode="preview" class="active">预览</button>
+      <button type="button" data-mode="print">打印</button>
+    </div>
+
+    <div class="topbar-actions">
+      <button type="button" class="btn btn-ghost btn-sm" id="btnUndo" disabled>撤销</button>
+      <button type="button" class="btn btn-ghost btn-sm" id="btnRedo" disabled>重做</button>
+      <button type="button" class="btn btn-ghost btn-sm" id="btnShortcutOpen">快捷键</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============================ 主体 ============================ -->
+<main class="layout">
+
+  <!-- ------------------------ 左侧控制面板 ------------------------ -->
+  <aside class="panel">
+
+    <!-- 1 导入 -->
+    <section class="card">
+      <h2 class="card-title">1 · 导入图片</h2>
+      <div class="import-row">
+        <button type="button" class="btn btn-primary" id="btnPick">选择图片</button>
+        <button type="button" class="btn btn-ghost" id="btnClear">清除</button>
+      </div>
+      <input type="file" id="fileInput" class="file-input-hidden" accept="image/jpeg,image/png,image/webp,image/gif,image/*" aria-label="选择图片文件" />
+      <p class="hint">
+        支持 <strong>拖拽到画布</strong> · <strong>点击选择</strong> · <strong>Ctrl + V</strong> 粘贴剪贴板图片<br />
+        格式：JPG / PNG / WebP / GIF（取首帧）；任一边超过 4000px 自动降采样
+      </p>
+    </section>
+
+    <!-- 2 裁剪 -->
+    <section class="card">
+      <h2 class="card-title">2 · 裁剪</h2>
+
+      <div class="slider-row">
+        <label for="zoomSlider">缩放</label>
+        <span class="value" id="zoomVal">1.00×</span>
+      </div>
+      <input type="range" id="zoomSlider" min="0.1" max="5" step="0.01" value="1" />
+
+      <div class="slider-row">
+        <label for="rotSlider">旋转</label>
+        <span class="value" id="rotVal">0°</span>
+      </div>
+      <input type="range" id="rotSlider" min="0" max="360" step="1" value="0" />
+
+      <div class="tool-grid">
+        <button type="button" class="btn btn-ghost btn-sm" id="btnReset">重置</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="btnCenter">居中</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="btnCover">填充</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="btnContain">适应</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="btnFlipH">水平翻转</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="btnFlipV">垂直翻转</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="btnRot90">旋转 90°</button>
+      </div>
+
+      <p class="hint">
+        拖拽平移 · 滚轮以光标为锚点缩放 · <strong>Shift + 拖拽</strong>旋转 · 方向键微调（Shift ×10）<br />
+        移动端：单指平移 / 双指捏合缩放 / 双指旋转
+      </p>
+    </section>
+
+    <!-- 3 规格 -->
+    <section class="card">
+      <h2 class="card-title">3 · 规格</h2>
+      <div class="pill-grid pill-grid-4" id="specGroup">
+        <button type="button" class="pill" data-spec="32">32mm</button>
+        <button type="button" class="pill" data-spec="44">44mm</button>
+        <button type="button" class="pill active" data-spec="58">58mm</button>
+        <button type="button" class="pill" data-spec="75">75mm</button>
+      </div>
+      <p class="spec-info" id="specInfo">成品 58mm · 出血 3mm · 含出血 64mm</p>
+      <div class="spec-table" id="specTable"></div>
+      <p class="hint">切换规格时，图片位置 / 缩放 / 旋转 会完整保留。</p>
+    </section>
+
+    <!-- 4 图像调整 -->
+    <section class="card">
+      <h2 class="card-title">4 · 图像调整</h2>
+
+      <div class="slider-row">
+        <label for="briSlider">亮度</label>
+        <span class="value" id="briVal">0</span>
+      </div>
+      <input type="range" id="briSlider" min="-100" max="100" step="1" value="0" />
+
+      <div class="slider-row">
+        <label for="conSlider">对比度</label>
+        <span class="value" id="conVal">0</span>
+      </div>
+      <input type="range" id="conSlider" min="-100" max="100" step="1" value="0" />
+
+      <div class="slider-row">
+        <label for="satSlider">饱和度</label>
+        <span class="value" id="satVal">0</span>
+      </div>
+      <input type="range" id="satSlider" min="-100" max="100" step="1" value="0" />
+    </section>
+
+    <!-- 5 导出 -->
+    <section class="card">
+      <h2 class="card-title">5 · 导出</h2>
+
+      <!-- ---- 模式 A：预览 ---- -->
+      <div id="exportPreview">
+        <div class="row check-card">
+          <span>拟真徽章效果</span>
+          <input type="checkbox" class="switch" id="swRealistic" checked aria-label="拟真徽章效果" />
+        </div>
+        <div class="row check-card">
+          <span>导出透明背景</span>
+          <input type="checkbox" class="switch" id="swTransparent" aria-label="导出透明背景" />
+        </div>
+
+        <div class="sub-label">表面质感</div>
+        <div class="segmented segmented-sm" id="surfaceSwitch">
+          <button type="button" data-surface="glossy" class="active">亮面</button>
+          <button type="button" data-surface="matte">亚光</button>
+        </div>
+
+        <div class="sub-label">导出边长</div>
+        <div class="segmented segmented-sm" id="sizeSwitch">
+          <button type="button" data-size="512">512</button>
+          <button type="button" data-size="1024" class="active">1024</button>
+          <button type="button" data-size="2048">2048</button>
+        </div>
+
+        <p class="hint" id="previewPixelHint">—</p>
+        <button type="button" class="btn btn-primary btn-block" id="btnExportPreview">导出预览 PNG</button>
+      </div>
+
+      <!-- ---- 模式 B：打印 ---- -->
+      <div id="exportPrint" class="hidden">
+        <div class="row check-card">
+          <span>显示辅助线</span>
+          <input type="checkbox" class="switch" id="swGuides" checked aria-label="显示辅助线" />
+        </div>
+        <div class="row check-card">
+          <span>显示文字标注</span>
+          <input type="checkbox" class="switch" id="swLabels" checked aria-label="显示文字标注" />
+        </div>
+
+        <div class="sub-label">A4 拼版枚数</div>
+        <div class="pill-grid pill-grid-5" id="countGroup">
+          <button type="button" class="pill" data-count="1">1</button>
+          <button type="button" class="pill" data-count="2">2</button>
+          <button type="button" class="pill" data-count="4">4</button>
+          <button type="button" class="pill" data-count="6">6</button>
+          <button type="button" class="pill" data-count="8">8</button>
+          <button type="button" class="pill" data-count="9">9</button>
+          <button type="button" class="pill" data-count="12">12</button>
+          <button type="button" class="pill" data-count="16">16</button>
+          <button type="button" class="pill active" data-count="20">20</button>
+        </div>
+
+        <div class="row row-field">
+          <span>枚间距</span>
+          <div class="field">
+            <input type="number" id="gapInput" min="0" max="30" step="0.5" value="3" aria-label="枚间距（毫米）" />
+            <span class="unit">mm</span>
+          </div>
+        </div>
+
+        <p class="hint" id="printPixelHint">—</p>
+        <p class="hint hint-strong" id="countHint">—</p>
+        <p class="hint hint-warn hidden" id="countLimit">—</p>
+
+        <button type="button" class="btn btn-primary btn-block" id="btnExportA4">导出 A4 拼版 PNG</button>
+        <button type="button" class="btn btn-ghost btn-block" id="btnExportSingle">导出单枚精确尺寸 PNG</button>
+        <button type="button" class="btn btn-ghost btn-block" id="btnPrint">直接打印（只输出拼版）</button>
+      </div>
+    </section>
+
+    <!-- 快捷键说明（可折叠） -->
+    <section class="card card-collapse" id="shortcutCard">
+      <button type="button" class="collapse-head" id="btnShortcutToggle" aria-expanded="false">
+        <span>快捷键 / 操作说明</span>
+        <span class="caret">▼</span>
+      </button>
+      <div class="collapse-body" id="shortcutBody">
+        <div class="collapse-body-inner">
+          <dl class="shortcut-list">
+            <div class="shortcut-item"><dt>导入图片</dt><dd>拖拽到画布 / 点击选择 / <kbd>Ctrl</kbd>+<kbd>V</kbd></dd></div>
+            <div class="shortcut-item"><dt>平移图片</dt><dd>鼠标左键或单指拖拽</dd></div>
+            <div class="shortcut-item"><dt>缩放</dt><dd>滚轮（以光标为锚点）/ 双指捏合</dd></div>
+            <div class="shortcut-item"><dt>旋转</dt><dd><kbd>Shift</kbd>+拖拽 / 双指旋转 / 滑杆</dd></div>
+            <div class="shortcut-item"><dt>微调平移</dt><dd><kbd>←</kbd><kbd>↑</kbd><kbd>→</kbd><kbd>↓</kbd>，按住 <kbd>Shift</kbd> 步长 ×10</dd></div>
+            <div class="shortcut-item"><dt>撤销</dt><dd><kbd>Ctrl</kbd>+<kbd>Z</kbd></dd></div>
+            <div class="shortcut-item"><dt>重做</dt><dd><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> 或 <kbd>Ctrl</kbd>+<kbd>Y</kbd></dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+  </aside>
+
+  <!-- ------------------------ 右侧工作区 ------------------------ -->
+  <section class="workspace">
+
+    <!-- 裁剪编辑器 -->
+    <div class="card editor-card">
+      <div class="editor-head">
+        <h2 class="card-title">裁剪编辑器</h2>
+        <span class="badge-live" id="editorBadge">58mm</span>
+      </div>
+      <div class="editor-stage" id="editorStage">
+        <canvas id="editorCanvas" class="editor-canvas"></canvas>
+        <div class="editor-empty" id="editorEmpty">
+          <svg width="42" height="42" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5" stroke="#7C879B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" stroke="#7C879B" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          <p><strong>拖入图片</strong> 或 <strong>点击「选择图片」</strong></p>
+          <p class="dim">也可以按 Ctrl + V 粘贴剪贴板图片</p>
+        </div>
+      </div>
+      <p class="hint" id="editorHint">—</p>
+    </div>
+
+    <!-- 效果预览 -->
+    <div class="card preview-card">
+      <div class="preview-head">
+        <h2 class="card-title" id="previewTitle">效果预览</h2>
+        <span class="hint" id="previewMeta">—</span>
+      </div>
+      <div class="preview-stage" id="previewStage">
+        <canvas id="previewCanvas" class="preview-canvas"></canvas>
+        <div class="preview-duo hidden" id="printDuo">
+          <canvas id="singleCanvas" class="preview-canvas-sm"></canvas>
+          <canvas id="a4Canvas" class="preview-canvas-a4"></canvas>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</main>
+
+<!-- ============================ 浮层 ============================ -->
+<div class="drop-overlay" id="dropOverlay">
+  <div class="drop-box">松开即可导入图片</div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div id="printArea"><canvas id="printCanvas"></canvas></div>
+
+            </div>
+
+            <div class="tool-content">
+            <h2>什么是吧唧，为什么需要专门的制作工具</h2>
+            <p>吧唧是马口铁徽章的俗称，源自日语「バッジ」。它的结构很简单：正面是你的图片，中间是金属底盖，背面是别针，用吧唧机一次压合。难点不在压制，而在<strong>图片要做对</strong>——因为成品是圆形，且边缘 2–3mm 会被包边卷进去。如果用普通裁剪工具，很容易做出「脸被切掉一半」或「重要文字被卷进包边」的成品。</p>
+            <h2>出血、裁切线、安全区分别是什么</h2>
+            <p><strong>出血</strong>是成品之外的余量，会被包边卷进内部，通常 2–3mm，打印时必须画出来，否则裁歪一点就露白边。<strong>裁切线</strong>是成品的实际轮廓，压制后你看到的就是这条线以内的部分。<strong>安全区</strong>是再往里缩 2mm 的范围，人脸、文字这类关键内容应放在安全区内，避免被包边吃掉。本工具在打印稿上把三条线分别用不同颜色标出，一目了然。</p>
+            <h2>为什么打印比例必须选 100%</h2>
+            <p>打印稿是按 300 DPI 生成的精确物理尺寸——58mm 规格的裁切圆就是 685 像素（58 ÷ 25.4 × 300）。如果打印时选了「适应页面」，浏览器会把整页缩放到纸张可用区域，实际尺寸可能变成 55mm 或 61mm，压出来的吧唧就和标称规格对不上，多个图案混排时尤其明显。因此第一步请永远选「实际大小 / 100%」，并建议先打一张普通纸，用尺子量裁切圆确认无误再上相纸。</p>
+            <h2>选材与压制建议</h2>
+            <p>纸张建议 120–200g 铜版纸或相纸，太薄压制时容易起皱。打印后沿蓝色裁切线剪下，圆圈外的出血区不要剪掉。压制顺序为：金属底盖 → 透明膜 → 你的图片 → 别针底，对齐中心后一次压到底。屏幕是 RGB、打印是 CMYK，成品颜色通常比屏幕稍暗、饱和度稍低，重要作品建议先试印一张。</p>
+            </div>
+        </div>
+    </main>
+<footer>
+    <div class="footer-links">
+        <a href="/">首页</a>
+        <a href="/help">帮助</a>
+        <a href="/about">关于</a>
+        <a href="/privacy">隐私政策</a>
+        <a href="/contact">联系</a>
+        <a href="/blog/zh/">博客</a>
+    </div>
+    <p>© 2026 工具箱里 | 免费在线工具</p>
+</footer>
+</body>
+</html>
