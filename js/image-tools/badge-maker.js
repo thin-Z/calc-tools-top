@@ -17,6 +17,10 @@
     "出血线 ": "Bleed line ",
     "裁切线 ": "Cut line ",
     "成品 ": "Finish ",
+    "规格": "Spec",
+    "成品": "Finish",
+    "出血": "Bleed",
+    "含出血": "With bleed",
     "mm · 出血 ": "mm · bleed ",
     "mm · 含出血 ": "mm · with bleed ",
     " · 裁切圆 ": " · cut circle ",
@@ -762,7 +766,7 @@
     var key = state.specId;
     if (!force && key === specTableCacheKey) { return; }
     specTableCacheKey = key;
-    var html = '<div class="spec-tr spec-th"><span>规格</span><span>成品</span><span>出血</span><span>含出血</span></div>';
+    var html = '<div class="spec-tr spec-th"><span>' + L('规格') + '</span><span>' + L('成品') + '</span><span>' + L('出血') + '</span><span>' + L('含出血') + '</span></div>';
     for (var i = 0; i < SPECS.length; i++) {
       var s = SPECS[i];
       html += '<div class="spec-tr' + (s.id === state.specId ? ' active' : '') + '">' +
