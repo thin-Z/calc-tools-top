@@ -2210,7 +2210,7 @@ svg.ic {
    选择 align-self 而非 absolute：保留与 .tool-card-wrap .like-btn 不同的视觉层级。 */
 .hot-tool-card .like-btn {
     align-self: flex-end;
-    margin: -8px 12px 12px auto;
+    margin: 4px 12px 12px auto;
     display: inline-flex;
     align-items: center;
     gap: 4px;
