@@ -37,7 +37,7 @@ node scripts/build.mjs
 node scripts/verify-site.mjs
 ```
 
-**集成校验 33 项断言**（`verify-site.mjs`）：header/footer 字节一致 / JSON-LD / AdSense 唯一性 / 断链 / 浮动控件 / GA4 不变量 / CSP 无内联脚本 / 无内联事件 / CSP 头 / 懒加载 / alt / SRI / a11y 结构 / SEO / 无 var / 首页三源同步 / 搜索升级 / P0 门禁 / canonical-hreflang / JS 语法 / a11y 全站扫描 / 工具页模板一致性(#23) / 重定向顺序(#24) / CSP 委托层可达性(#25) / 文档同步(#26) / embed 可嵌入性(#27) / sitemap×noindex 交叉(#28) / dist 卫生门禁(#29，防 P0-3 构建产物泄漏复发) / csp-events 解耦(#30，事件委托层与 AdSense 片段解耦 + 全页覆盖) / 设计系统门禁(#31，裸 checkbox/radio 只降不升，基线 scripts/design-baseline.json) / 全局契约门禁(#32，window.copyText+window.showError 契约完整 + runtime-head 注入 csp-events) / sitemap 反向覆盖门禁(#33，页面存在但漏收录 sitemap 检测 + 豁免清单 stale 检测，2026-09-10 新增)。
+**集成校验 34 项断言**（`verify-site.mjs`）：header/footer 字节一致 / JSON-LD / AdSense 唯一性 / 断链 / 浮动控件 / GA4 不变量 / CSP 无内联脚本 / 无内联事件 / CSP 头 / 懒加载 / alt / SRI / a11y 结构 / SEO / 无 var / 首页三源同步 / 搜索升级 / P0 门禁 / canonical-hreflang / JS 语法 / a11y 全站扫描 / 工具页模板一致性(#23) / 重定向顺序(#24) / CSP 委托层可达性(#25) / 文档同步(#26) / embed 可嵌入性(#27) / sitemap×noindex 交叉(#28) / dist 卫生门禁(#29，防 P0-3 构建产物泄漏复发) / csp-events 解耦(#30，事件委托层与 AdSense 片段解耦 + 全页覆盖) / 设计系统门禁(#31，裸 checkbox/radio 只降不升，基线 scripts/design-baseline.json) / 全局契约门禁(#32，window.copyText+window.showError 契约完整 + runtime-head 注入 csp-events) / sitemap 反向覆盖门禁(#33，页面存在但漏收录 sitemap 检测 + 豁免清单 stale 检测，2026-09-10 新增) / 资源版本戳门禁(#34，immutable 长缓存下所有本地资源引用必须带 `?v=`，2026-09-13 新增)。
 
 - **全绿（exit 0）才能提交**。这是项目硬规则。
 - a11y 全站扫描（#22）**默认跳过**（需浏览器），启用：`E2E_A11Y=1 node scripts/audit-a11y.mjs`（本地需 playwright + msedge）。

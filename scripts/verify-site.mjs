@@ -734,6 +734,20 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
   }
 }
 
+// ---------- 34. 资源版本戳门禁（2026-09-13「首次打开样式错乱」根因防回归） ----------
+// /js、/css、/assets 为 immutable 一年缓存，成立前提是每个资源 URL 都随构建带上 ?v=<构建戳>。
+// 漏戳的资源会被浏览器钉死一年（改后永不更新），线上表现为「首次打开样式错乱、Ctrl+F5 才恢复」。
+// 本门禁同时覆盖 HTML 属性引用与 JS 内动态加载字面量（home-loader/compress-decompress），
+// 并断言 /sw.js 未被长缓存（SW 脚本须可及时更新）。
+{
+  try {
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'check-asset-version.mjs')], { stdio: 'inherit', cwd: ROOT });
+    console.log('[34] 资源版本戳门禁 (check-asset-version): ✓');
+  } catch (e) {
+    fail('[asset-version] scripts/check-asset-version.mjs 未通过（存在未打 ?v= 版本戳的本地 css/js/静态资源，或 vercel.json 缺失 /sw.js 不强缓存规则；须重跑 npm run build 并检查 build.mjs 版本注入时序）');
+  }
+}
+
 // ---------- 汇总 ----------
 if (failures.length) {
   console.error(`\n❌ verify-site 失败 ${failures.length} 项：`);

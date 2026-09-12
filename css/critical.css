@@ -325,7 +325,10 @@ header nav a:hover { background: var(--primary-light); color: var(--primary); te
 svg.ic { width: 1em; height: 1em; flex-shrink: 0; vertical-align: middle; }
 
 /* ===== Main / Page Header ===== */
-main { flex: 1; max-width: 1100px; margin: 0 auto; padding: 48px 28px; width: 100%; }
+/* 注：max-width 必须与 css/style.css 的 main 规则保持一致（1280px）。
+   历史上 critical 写 1100px、style 写 1280px → 首屏按 1100 渲染、async style.css
+   到达后 main 外扩到 1280px 造成整页重排（CLS≈0.27，FOUC）。对齐后首帧=终态。 */
+main { flex: 1; max-width: 1280px; margin: 0 auto; padding: 48px 28px; width: 100%; }
 .page-header { text-align: center; margin-bottom: 44px; position: relative; }
 .page-header h1 {
     font-size: var(--fs-3xl);

@@ -430,14 +430,12 @@ const now = new Date();
 const pad2 = (n) => String(n).padStart(2, '0');
 const STAMP = `${now.getFullYear()}${pad2(now.getMonth() + 1)}${pad2(now.getDate())}${pad2(now.getHours())}${pad2(now.getMinutes())}`;
 const ASSET_RE = /(["'])((?:\.\.\/)*(?:\/)?(?:js|css|assets)\/[^\s"']*?\.(?:js|css|svg|png|jpe?g|gif|webp|ico|woff2?))((?:\?[^"'\s#]*)?)(#[^"']*)?\1/g;
-let versioned = 0;
-walkHtml(dist, (f) => {
-  const raw = readFileSync(f);
-  const hadBom = raw[0] === 0xef && raw[1] === 0xbb && raw[2] === 0xbf;
-  let text = raw.toString('utf8');
-  if (hadBom) text = text.slice(1);
 
-  const newText = text.replace(ASSET_RE, (m, q, path, query, frag) => {
+// 统一的版本戳写入函数：第 4 步（HTML 首轮）与第 8 步（兜底 + JS 内动态引用）共用，
+// 避免两处逻辑漂移（两条路径必须产出完全一致的 URL，否则同一资源会出现两个缓存键）。
+function applyStamp(text) {
+  ASSET_RE.lastIndex = 0; // 全局正则带 g：重复调用前重置，避免残留 lastIndex 造成漏匹配
+  return text.replace(ASSET_RE, (m, q, path, query, frag) => {
     let vq;
     if (query) {
       // 保留既有 query；若已有 v= 则覆盖其值，否则追加（L2）
@@ -448,6 +446,16 @@ walkHtml(dist, (f) => {
     }
     return `${q}${path}${vq}${frag || ''}${q}`;
   });
+}
+
+let versioned = 0;
+walkHtml(dist, (f) => {
+  const raw = readFileSync(f);
+  const hadBom = raw[0] === 0xef && raw[1] === 0xbb && raw[2] === 0xbf;
+  let text = raw.toString('utf8');
+  if (hadBom) text = text.slice(1);
+
+  const newText = applyStamp(text);
   if (newText !== text) {
     writeFileSync(f, newText, 'utf8');
     versioned++;
@@ -594,5 +602,44 @@ if (existsSync(spritePath)) {
 } else {
   console.warn('[build] Inline sprite: 跳过(assets/icons/icons.svg 不存在)');
 }
+
+// 8) 版本戳兜底补齐 + JS 内动态引用打戳（2026-09-13「首次打开样式错乱」根因修复 · 防回归）
+//    背景：/js/(.*) 与 /css/(.*) 是 immutable + max-age=31536000（一年不校验），
+//    因此「未带 ?v= 的本地资源引用」一旦上线就被浏览器钉住，改后一年内不会更新。
+//    第 4 步版本注入之后仍有代码往 dist 追加/改写引用，会漏出这类资源：
+//      · 第 6 步注入的 /js/cmp.js —— 220+ 页全部漏戳（实测线上确认）
+//      · JS 内的动态加载字面量 —— js/home-loader.js 注入 /js/site-home.js、
+//        js/text-tools/compress-decompress.js 懒加载 /js/vendor/brotli-*.min.js
+//    这些资源必须与 HTML 使用同一个 STAMP，否则「新页面 + 旧脚本」仍会错乱。
+//    ⚠️ sw.js 位于 dist 根、刻意不打戳：Service Worker 脚本必须保持稳定 URL，
+//       其更新依赖浏览器对 /sw.js 的校验（max-age=0 + updateViaCache:'none'）。
+function walkJs(dir, cb) {
+  for (const name of readdirSync(dir)) {
+    const full = join(dir, name);
+    const st = statSync(full);
+    if (st.isDirectory()) walkJs(full, cb);
+    else if (name.endsWith('.js')) cb(full);
+  }
+}
+
+function stampFile(f) {
+  const raw = readFileSync(f);
+  let text = raw.toString('utf8');
+  if (raw[0] === 0xef && raw[1] === 0xbb && raw[2] === 0xbf) text = text.slice(1);
+  const newText = applyStamp(text);
+  if (newText === text) return false;
+  writeFileSync(f, newText, 'utf8');
+  return true;
+}
+
+let restampedHtml = 0;
+walkHtml(dist, (f) => { if (stampFile(f)) restampedHtml++; });
+
+let stampedJs = 0;
+const distJs = join(dist, 'js');
+if (existsSync(distJs)) {
+  walkJs(distJs, (f) => { if (stampFile(f)) stampedJs++; });
+}
+console.log(`[build] 版本戳兜底: HTML 补齐 ${restampedHtml} 页 | JS 动态引用补齐 ${stampedJs} 个文件`);
 
 process.exit(0);
