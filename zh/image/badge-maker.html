@@ -130,9 +130,23 @@
 
   <!-- ------------------------ 左侧控制面板 ------------------------ -->
   <aside class="panel">
+    <!-- dock tabs: one click per category, replaces the long vertical scroll -->
+    <nav class="dock-tabs" id="dockTabs" aria-label="参数分类">
+      <button type="button" data-cat="import">导入</button>
+      <button type="button" data-cat="crop">裁剪</button>
+      <button type="button" data-cat="spec">规格</button>
+      <button type="button" data-cat="adjust">调整</button>
+      <button type="button" data-cat="color">颜色</button>
+      <button type="button" data-cat="text">文字</button>
+      <button type="button" data-cat="border">边框</button>
+      <button type="button" data-cat="queue">队列</button>
+      <button type="button" data-cat="export">导出</button>
+      <button type="button" data-cat="project">工程</button>
+      <button type="button" data-cat="shortcut">快捷键</button>
+    </nav>
 
     <!-- 1 导入 -->
-    <section class="card">
+    <section class="card" data-cat="import">
       <h2 class="card-title">1 · 导入图片</h2>
       <div class="import-row">
         <button type="button" class="btn btn-primary" id="btnPick">选择图片</button>
@@ -146,7 +160,7 @@
     </section>
 
     <!-- 2 裁剪 -->
-    <section class="card">
+    <section class="card" data-cat="crop">
       <h2 class="card-title">2 · 裁剪</h2>
 
       <div class="slider-row">
@@ -178,7 +192,7 @@
     </section>
 
     <!-- 3 规格 -->
-    <section class="card">
+    <section class="card" data-cat="spec">
       <h2 class="card-title">3 · 规格</h2>
       <div class="pill-grid pill-grid-4" id="specGroup">
         <button type="button" class="pill" data-spec="32">32mm</button>
@@ -200,7 +214,7 @@
     </section>
 
     <!-- 4 图像调整 -->
-    <section class="card">
+    <section class="card" data-cat="adjust">
       <h2 class="card-title">4 · 图像调整</h2>
 
       <div class="slider-row">
@@ -230,7 +244,7 @@
     </section>
 
     <!-- 徽章颜色（并入站点版能力：底色 + 金属包边基色） -->
-    <section class="card">
+    <section class="card" data-cat="color">
       <h2 class="card-title">徽章颜色</h2>
       <div class="row">
         <span>徽章底色</span>
@@ -244,7 +258,7 @@
     </section>
 
     <!-- 文字（新增 · BM-1 P0-1） -->
-    <section class="card">
+    <section class="card" data-cat="text">
       <h2 class="card-title">文字</h2>
       <div class="row check-card">
         <span>启用文字层</span>
@@ -288,7 +302,7 @@
     </section>
 
     <!-- 边框素材（新增 · BM-2 #4） -->
-    <section class="card">
+    <section class="card" data-cat="border">
       <h2 class="card-title">边框素材</h2>
       <div class="pill-grid pill-grid-3" id="borderGroup">
         <button type="button" class="pill active" data-border="none">无</button>
@@ -306,7 +320,7 @@
     </section>
 
     <!-- 换图队列（新增 · BM-2 #5） -->
-    <section class="card">
+    <section class="card" data-cat="queue">
       <h2 class="card-title">换图队列（多图拼版）</h2>
       <div class="row check-card">
         <span>启用多图拼版</span>
@@ -322,7 +336,7 @@
     </section>
 
     <!-- 5 导出 -->
-    <section class="card">
+    <section class="card" data-cat="export">
       <h2 class="card-title">5 · 导出</h2>
 
       <div class="row check-card">
@@ -428,7 +442,7 @@
     </section>
 
     <!-- 工程（新增 · BM-1 P0-3） -->
-    <section class="card">
+    <section class="card" data-cat="project">
       <h2 class="card-title">工程</h2>
       <div class="import-row">
         <button type="button" class="btn btn-primary" id="btnSaveProject">保存工程</button>
@@ -439,7 +453,7 @@
     </section>
 
     <!-- 快捷键说明（可折叠） -->
-    <section class="card card-collapse" id="shortcutCard">
+    <section class="card card-collapse" id="shortcutCard" data-cat="shortcut">
       <button type="button" class="collapse-head" id="btnShortcutToggle" aria-expanded="false">
         <span>快捷键 / 操作说明</span>
         <span class="caret">▼</span>

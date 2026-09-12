@@ -71,7 +71,8 @@
 .brand-text{ display:flex; flex-direction:column; line-height:1.2; min-width:0; }
 .brand-text strong{ font-size:15px; font-weight:700; letter-spacing:.2px; }
 .brand-text small{ font-size:11px; color:var(--text-3); white-space:nowrap; }
-.topbar-actions{ margin-left:auto; display:flex; gap:8px; align-items:center; }
+.topbar-actions{ margin-left:auto; display:flex; gap:8px; align-items:center; white-space:nowrap; }
+.badge-maker-root .topbar-actions .btn{ white-space:nowrap; }
 
 /* --------------------------- 分段控件 --------------------------- */
 .segmented{
@@ -95,26 +96,84 @@
 .segmented-sm button{ padding:6px 12px; font-size:13px; border-radius:8px; }
 
 /* --------------------------- 布局 --------------------------- */
+/* 工作台（2026-09-12 改版）：顶条 + 中区(编辑器|预览) + 底部参数坞。
+   参数坞用「分类标签直达 + 当前分类横向平铺」，取代原先 3800px 的纵向堆叠与下拉滚动。 */
 .layout{
   max-width:1440px; margin:0 auto;
-  padding:24px;
-  display:grid; grid-template-columns:384px minmax(0,1fr);
-  gap:24px; align-items:start;
+  padding:20px 24px 14px;
+  display:flex; flex-direction:column; gap:14px; align-items:stretch;
 }
+.workspace{
+  order:1;
+  display:flex; flex-direction:row; flex-wrap:wrap; gap:16px; align-items:stretch; min-width:0;
+}
+.workspace > *{ flex:1 1 420px; min-width:0; }
 .panel{
-  display:flex; flex-direction:column; gap:16px;
-  position:sticky; top:88px;
-  max-height:calc(100vh - 112px);
-  overflow-y:auto; overflow-x:hidden;
-  padding-right:4px;
-  scrollbar-width:thin;
-  scrollbar-color:rgba(15,23,42,.2) transparent;
+  order:2;
+  display:flex; flex-direction:column; gap:10px;
+  padding:0; min-width:0;
 }
-.panel::-webkit-scrollbar{ width:8px; }
-.panel::-webkit-scrollbar-thumb{ background:rgba(15,23,42,.16); border-radius:4px; }
-.panel::-webkit-scrollbar-track{ background:transparent; }
 
-.workspace{ display:flex; flex-direction:column; gap:20px; min-width:0; }
+/* 参数坞 · 分类标签 */
+.dock-tabs{ display:flex; flex-wrap:wrap; gap:6px; }
+.dock-tabs button{
+  border:1px solid var(--line); background:rgba(255,255,255,.72); color:var(--text-2);
+  border-radius:999px; padding:6px 14px; font-size:13px; font-weight:600;
+  font-family:inherit; cursor:pointer;
+}
+.dock-tabs button:hover{ color:var(--blue); border-color:var(--blue); }
+.dock-tabs button:focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
+.badge-maker-root .dock-tabs button.active{ background:var(--blue); color:#fff; border-color:var(--blue); }
+
+/* 参数坞 · 只显示当前分类，内容横向平铺（换行而不是纵向堆叠） */
+.panel .card{ display:none; }
+.panel .card.is-active{
+  display:flex; flex-wrap:wrap; align-items:center; gap:10px 18px;
+  padding:14px 16px; margin:0;
+  max-height:min(230px, 32vh); overflow-y:auto; overflow-x:hidden;
+  scrollbar-width:thin; scrollbar-color:rgba(15,23,42,.2) transparent;
+}
+.panel .card.is-active > *{
+  display:flex; align-items:center; gap:8px; flex:0 0 auto; margin:0; flex-wrap:wrap;
+}
+.panel .card.is-active .sub-label{ white-space:nowrap; }
+.panel .card.is-active .badge-live{ white-space:nowrap; }
+.panel .card.is-active .hint{ flex:1 1 100%; white-space:normal; }
+.panel .card.is-active .text-field input,
+.panel .card.is-active .color-input{ min-width:120px; }
+.panel .card .card-title{ display:none; }
+.panel .card.is-active > .hint,
+.panel .card.is-active > .spec-table,
+.panel .card.is-active > .queue-list,
+.panel .card.is-active > .collapse-body,
+.panel .card.is-active > .editor-head{ flex:1 1 100%; }
+.panel .card.is-active > .spec-table{ display:block; }
+.panel .card.is-active > .hint{ display:block; font-size:12px; color:var(--text-3); line-height:1.5; }
+.panel .card .collapse-head{ display:none; }
+.panel .card.is-active .collapse-body{ max-height:none; overflow:visible; }
+.panel .card.is-active .collapse-body-inner{ padding:0; }
+.panel .card.is-active .sub-label{ font-size:11px; color:var(--text-3); }
+.panel .text-field{ margin-top:0; }
+.panel .text-field label{ white-space:nowrap; }
+.panel .card.is-active .text-field input{ min-width:150px; }
+.panel .card.is-active .row > span{ white-space:nowrap; }
+.panel .card.is-active .slider-row{ gap:8px; }
+.panel .card.is-active .slider-row input[type=range]{ width:130px; }
+
+/* 桌面端（≥1024px）：整页零滚动 —— 顶条 + 画布区(内部滚动) + 参数坞常驻底部。
+   画布始终可见，调参不再需要滚动页面（改版前需滚 3000px+）。 */
+@media (min-width:1024px){
+/* [site-integration] 已移除桌面端 body app-shell：站点 body 含整站 header/footer，强制 100vh+overflow:hidden 会把画布区压到 ~165px（实测），故站点保留流式布局 */
+  .topbar{ flex:0 0 auto; position:static; }
+  .layout{
+    flex:1 1 auto; min-height:0; height:auto;
+    padding:16px 24px; gap:12px;
+  }
+  .workspace{ flex:1 1 auto; min-height:0; overflow:auto; align-items:flex-start; }
+  .panel{ flex:0 0 auto; }
+  .editor-canvas{ max-width:min(620px, 60vh); }
+  .badge-maker-root .preview-card{ max-height:100%; overflow:auto; }
+}
 
 /* --------------------------- 卡片 --------------------------- */
 .card{
@@ -363,7 +422,7 @@ kbd{
   min-height:240px;
 }
 .editor-canvas{
-  display:block; width:100%; max-width:620px;
+  display:block; width:100%; max-width:min(620px, 56vh);
   aspect-ratio:1 / 1; height:auto;
   border-radius:var(--radius);
   touch-action:none;
@@ -508,29 +567,28 @@ kbd{
 .fs-exit:hover{ background:rgba(15,23,42,.78); }
 .fs-exit svg{ flex:none; }
 
-/* 全屏开启：隐藏顶栏与侧栏，画布占满整屏 */
+/* 全屏开启：三段式工作台全部保留（顶条 / 画布区 / 底部参数坞）
+   不再隐藏顶栏与参数面板 —— 旧版会把 92 个控件全部藏掉，全屏反而比普通模式更弱。 */
+body.is-fullscreen:has(.badge-maker-root){ display:flex; flex-direction:column; height:100vh; overflow:hidden; }
 body.is-fullscreen .fs-exit{ display:inline-flex; }
-body.is-fullscreen .topbar{ display:none; }
-body.is-fullscreen .panel{ display:none; }
+body.is-fullscreen .topbar{ flex:0 0 auto; }
+body.is-fullscreen .topbar .brand-text{ display:none; }
+body.is-fullscreen .topbar-inner{ padding:8px 128px 8px 16px; gap:12px; }
 body.is-fullscreen .layout{
-  max-width:none; margin:0; padding:0;
-  height:100vh; grid-template-columns:minmax(0,1fr);
-  gap:0; align-items:stretch;
+  flex:1 1 auto; height:0; min-height:0;
+  max-width:none; margin:0; padding:0 16px; gap:0;
 }
 body.is-fullscreen .workspace{
-  height:100vh; justify-content:center; align-items:center;
-  padding:24px; gap:0;
+  flex:1 1 auto; min-height:0; overflow:auto;
+  justify-content:center; align-items:flex-start; padding:14px 0; gap:16px;
 }
-body.is-fullscreen .workspace > *:not(.editor-card){ display:none; }
-body.is-fullscreen .editor-card{
-  height:100%; width:100%; max-width:1100px;
-  display:flex; flex-direction:column;
-}
+body.is-fullscreen .workspace > *{ flex:1 1 420px; }
+body.is-fullscreen .panel{ flex:0 0 auto; padding:10px 0 12px; }
+body.is-fullscreen .panel .card.is-active{ padding:12px 14px; }
+body.is-fullscreen .editor-card{ display:flex; flex-direction:column; min-height:0; }
 body.is-fullscreen .editor-stage{ flex:1; min-height:0; }
-body.is-fullscreen .editor-canvas{
-  width:min(90vmin, 940px); height:min(90vmin, 940px);
-  max-width:none; aspect-ratio:1 / 1;
-}
+body.is-fullscreen .editor-canvas{ max-width:min(620px, 52vh); }
+body.is-fullscreen .preview-card{ display:flex; flex-direction:column; min-height:0; }
 
 @media (max-width:720px){
   .fs-exit span{ display:none; }
@@ -612,3 +670,15 @@ body:has(.badge-maker-root) .site-logo{ height:26px; width:auto; vertical-align:
   background:var(--bg-card,#fff); }
 .bm-faq-item summary{ cursor:pointer; font-weight:600; font-size:14px; color:var(--text,#111827); }
 .bm-faq-item p{ margin:10px 0 2px; font-size:14px; line-height:1.75; color:var(--text-secondary,#4b5563); }
+
+/* -------------------------------------------------------------------------
+   2026-09-12 工作台改版：flex 链桥接（站点专属）
+   工具根 .badge-maker-root 嵌在站点 <main> 内，全屏三段式需要由
+   body → main → 工具根 逐层传递可伸缩高度，否则 .layout 的 flex:1 无效。
+   普通模式不桥接（实测强制 100vh 会把画布区压到 165px），仅全屏生效。
+   单文件版没有 .badge-maker-root，以下规则仅在站点页生效。
+   ------------------------------------------------------------------------- */
+body.is-fullscreen:has(.badge-maker-root) > header,
+body.is-fullscreen:has(.badge-maker-root) > footer{ display:none; }
+body.is-fullscreen:has(.badge-maker-root) > main{ flex:1 1 0; min-height:0; display:flex; flex-direction:column; }
+body.is-fullscreen:has(.badge-maker-root) > main > .badge-maker-root{ flex:1 1 0; min-height:0; display:flex; flex-direction:column; }

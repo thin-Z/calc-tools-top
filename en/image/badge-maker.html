@@ -130,9 +130,23 @@
 
   <!-- ------------------------ Left control panel ------------------------ -->
   <aside class="panel">
+    <!-- dock tabs: one click per category, replaces the long vertical scroll -->
+    <nav class="dock-tabs" id="dockTabs" aria-label="Parameter categories">
+      <button type="button" data-cat="import">Import</button>
+      <button type="button" data-cat="crop">Crop</button>
+      <button type="button" data-cat="spec">Size</button>
+      <button type="button" data-cat="adjust">Adjust</button>
+      <button type="button" data-cat="color">Colour</button>
+      <button type="button" data-cat="text">Text</button>
+      <button type="button" data-cat="border">Border</button>
+      <button type="button" data-cat="queue">Queue</button>
+      <button type="button" data-cat="export">Export</button>
+      <button type="button" data-cat="project">Project</button>
+      <button type="button" data-cat="shortcut">Shortcuts</button>
+    </nav>
 
     <!-- 1 Import -->
-    <section class="card">
+    <section class="card" data-cat="import">
       <h2 class="card-title">1 · Import image</h2>
       <div class="import-row">
         <button type="button" class="btn btn-primary" id="btnPick">Choose image</button>
@@ -146,7 +160,7 @@
     </section>
 
     <!-- 2 Crop -->
-    <section class="card">
+    <section class="card" data-cat="crop">
       <h2 class="card-title">2 · Crop</h2>
 
       <div class="slider-row">
@@ -178,7 +192,7 @@
     </section>
 
     <!-- 3 Size -->
-    <section class="card">
+    <section class="card" data-cat="spec">
       <h2 class="card-title">3 · Size</h2>
       <div class="pill-grid pill-grid-4" id="specGroup">
         <button type="button" class="pill" data-spec="32">32mm</button>
@@ -200,7 +214,7 @@
     </section>
 
     <!-- 4 Adjustments -->
-    <section class="card">
+    <section class="card" data-cat="adjust">
       <h2 class="card-title">4 · Adjustments</h2>
 
       <div class="slider-row">
@@ -230,7 +244,7 @@
     </section>
 
     <!-- Badge colours (merged from the site version: background + metal rim colours) -->
-    <section class="card">
+    <section class="card" data-cat="color">
       <h2 class="card-title">Badge colours</h2>
       <div class="row">
         <span>Badge background colour</span>
@@ -244,7 +258,7 @@
     </section>
 
     <!-- Text (added · BM-1 P0-1) -->
-    <section class="card">
+    <section class="card" data-cat="text">
       <h2 class="card-title">Text</h2>
       <div class="row check-card">
         <span>Enable text layer</span>
@@ -288,7 +302,7 @@
     </section>
 
     <!-- Border assets (added · BM-2 #4) -->
-    <section class="card">
+    <section class="card" data-cat="border">
       <h2 class="card-title">Border assets</h2>
       <div class="pill-grid pill-grid-3" id="borderGroup">
         <button type="button" class="pill active" data-border="none">None</button>
@@ -306,7 +320,7 @@
     </section>
 
     <!-- Image queue (added · BM-2 #5) -->
-    <section class="card">
+    <section class="card" data-cat="queue">
       <h2 class="card-title">Image queue (multi-image sheet)</h2>
       <div class="row check-card">
         <span>Enable multi-image sheet</span>
@@ -322,7 +336,7 @@
     </section>
 
     <!-- 5 Export -->
-    <section class="card">
+    <section class="card" data-cat="export">
       <h2 class="card-title">5 · Export</h2>
 
       <div class="row check-card">
@@ -428,7 +442,7 @@
     </section>
 
     <!-- Project (added · BM-1 P0-3) -->
-    <section class="card">
+    <section class="card" data-cat="project">
       <h2 class="card-title">Project</h2>
       <div class="import-row">
         <button type="button" class="btn btn-primary" id="btnSaveProject">Save project</button>
@@ -439,7 +453,7 @@
     </section>
 
     <!-- Shortcuts (collapsible) -->
-    <section class="card card-collapse" id="shortcutCard">
+    <section class="card card-collapse" id="shortcutCard" data-cat="shortcut">
       <button type="button" class="collapse-head" id="btnShortcutToggle" aria-expanded="false">
         <span>Shortcuts / gestures</span>
         <span class="caret">▼</span>

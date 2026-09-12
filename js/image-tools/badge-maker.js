@@ -2587,6 +2587,28 @@
     } catch (e) { toast(L('复制失败，请手动选择文本')); }
   }
 
+  /* =====================================================================
+   * 参数坞分类切换（2026-09-12 改版）
+   * 一组卡片只显示当前分类，内容横向平铺换行；取代原先 3789px 的纵向下拉滚动。
+   * =================================================================== */
+  var DOCK_DEFAULT = 'spec';
+
+  function setDockCat(cat) {
+    var panel = document.querySelector('.panel');
+    if (!panel) { return; }
+    var cards = panel.querySelectorAll('.card[data-cat]');
+    for (var i = 0; i < cards.length; i++) {
+      cards[i].classList.toggle('is-active', cards[i].getAttribute('data-cat') === cat);
+    }
+    var tabs = $('dockTabs');
+    var btns = tabs ? tabs.querySelectorAll('button') : [];
+    for (var b = 0; b < btns.length; b++) {
+      var on = btns[b].getAttribute('data-cat') === cat;
+      btns[b].classList.toggle('active', on);
+      btns[b].setAttribute('aria-selected', on ? 'true' : 'false');
+    }
+  }
+
   function bindUI() {
     /* ---------- 文件导入 ---------- */
     $('btnPick').addEventListener('click', function () { $('fileInput').click(); });
@@ -2654,6 +2676,16 @@
         loadFile(cd.files[0]);
       }
     });
+
+    /* ---------- 参数坞分类切换 ---------- */
+    if ($('dockTabs')) {
+      $('dockTabs').addEventListener('click', function (e) {
+        var t = e.target;
+        if (t && t.tagName === 'BUTTON' && t.getAttribute('data-cat')) {
+          setDockCat(t.getAttribute('data-cat'));
+        }
+      });
+    }
 
     /* ---------- 模式切换 ---------- */
     $('modeSwitch').addEventListener('click', function (e) {
@@ -2900,12 +2932,11 @@
       $('btnShortcutToggle').setAttribute('aria-expanded', open ? 'true' : 'false');
     });
     $('btnShortcutOpen').addEventListener('click', function () {
-      var body = $('shortcutBody');
-      if (!body.classList.contains('open')) {
-        body.classList.add('open');
-        $('btnShortcutToggle').setAttribute('aria-expanded', 'true');
+      setDockCat('shortcut');                       // 参数坞切到「快捷键」分类
+      var card = $('shortcutCard');
+      if (card && card.scrollIntoView) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
-      $('shortcutCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
 
     /* ---------- 全屏切换 ---------- */
@@ -3116,6 +3147,7 @@
     syncUIFromState();
     updateUndoRedoUI();
     switchMode('preview');
+    setDockCat(DOCK_DEFAULT);   // 参数坞默认展开「规格」分类
     renderAll();
     restoreDraft();         // 自动恢复本地草稿（若有）
   }
