@@ -197,9 +197,9 @@
       </p>
     </section>
 
-    <!-- 3 规格 -->
+    <!-- 3 规格与形状 -->
     <section class="card">
-      <h2 class="card-title">3 · 规格</h2>
+      <h2 class="card-title">3 · 规格与形状</h2>
       <div class="pill-grid pill-grid-4" id="specGroup">
         <button type="button" class="pill" data-spec="32">32mm</button>
         <button type="button" class="pill" data-spec="44">44mm</button>
@@ -208,12 +208,71 @@
       </div>
       <p class="spec-info" id="specInfo">成品 58mm · 出血 3mm · 含出血 64mm</p>
       <div class="spec-table" id="specTable"></div>
-      <p class="hint">切换规格时，图片位置 / 缩放 / 旋转 会完整保留。</p>
+
+      <div class="sub-label">形状</div>
+      <div class="pill-grid pill-grid-3" id="shapeGroup">
+        <button type="button" class="pill active" data-shape="circle">圆形</button>
+        <button type="button" class="pill" data-shape="rounded">圆角方</button>
+        <button type="button" class="pill" data-shape="square">方形</button>
+      </div>
+      <p class="hint">切换规格 / 形状时，图片位置 / 缩放 / 旋转 会完整保留。</p>
     </section>
 
-    <!-- 4 图像调整 -->
+    <!-- 4 文字 -->
     <section class="card">
-      <h2 class="card-title">4 · 图像调整</h2>
+      <h2 class="card-title">4 · 文字</h2>
+      <div class="row check-card">
+        <span>在徽章上添加文字</span>
+        <input type="checkbox" class="switch" id="swText" aria-label="在徽章上添加文字" />
+      </div>
+      <div id="textBody" class="hidden">
+        <div class="field field-text">
+          <input type="text" id="textInput" maxlength="24" placeholder="输入文字内容" aria-label="文字内容" />
+        </div>
+        <div class="row row-field">
+          <span>文字颜色</span>
+          <input type="color" id="textColor" value="#111111" aria-label="文字颜色" />
+        </div>
+        <div class="slider-row">
+          <label for="textSize">文字大小</label>
+          <span class="value" id="textSizeVal">12%</span>
+        </div>
+        <input type="range" id="textSize" min="4" max="20" step="0.5" value="12" />
+        <div class="sub-label">位置</div>
+        <div class="segmented segmented-sm" id="textPosGroup">
+          <button type="button" data-pos="top">上</button>
+          <button type="button" data-pos="center">中</button>
+          <button type="button" data-pos="bottom" class="active">下</button>
+        </div>
+        <div class="row check-card">
+          <span>文字描边</span>
+          <input type="checkbox" class="switch" id="swTextStroke" aria-label="文字描边" />
+        </div>
+        <div class="row row-field">
+          <span>描边颜色</span>
+          <input type="color" id="textStrokeColor" value="#FFFFFF" aria-label="描边颜色" />
+        </div>
+      </div>
+      <p class="hint">文字始终裁切在成品轮廓内，实时预览与所有导出同步生效。</p>
+    </section>
+
+    <!-- 5 颜色 -->
+    <section class="card">
+      <h2 class="card-title">5 · 颜色</h2>
+      <div class="row row-field">
+        <span>徽章底色</span>
+        <input type="color" id="bgColor" value="#FFFFFF" aria-label="徽章底色" />
+      </div>
+      <div class="row row-field">
+        <span>金属包边</span>
+        <input type="color" id="rimColor" value="#C8D0DA" aria-label="金属包边颜色" />
+      </div>
+      <p class="hint">底色填充图片未覆盖的区域；包边颜色仅作用于拟真徽章效果。</p>
+    </section>
+
+    <!-- 6 图像调整 -->
+    <section class="card">
+      <h2 class="card-title">6 · 图像调整</h2>
 
       <div class="slider-row">
         <label for="briSlider">亮度</label>
@@ -234,9 +293,9 @@
       <input type="range" id="satSlider" min="-100" max="100" step="1" value="0" />
     </section>
 
-    <!-- 5 导出 -->
+    <!-- 7 导出 -->
     <section class="card">
-      <h2 class="card-title">5 · 导出</h2>
+      <h2 class="card-title">7 · 导出</h2>
 
       <!-- ---- 模式 A：预览 ---- -->
       <div id="exportPreview">

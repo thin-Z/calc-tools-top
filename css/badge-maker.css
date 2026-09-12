@@ -225,6 +225,28 @@
 .field input[type="number"]{ -moz-appearance:textfield; appearance:textfield; }
 .field .unit{ font-size:12.5px; color:var(--text-3); flex:none; }
 
+/* 文本输入（文字层内容） */
+.field-text{ margin-top:4px; min-width:0; }
+.field-text input{
+  border:0; background:transparent; outline:none;
+  width:100%; font-family:inherit; font-size:14px;
+  font-weight:600; color:var(--text); text-align:left;
+}
+.field-text input::placeholder{ color:var(--text-3); font-weight:500; }
+
+/* 颜色选择器（色块 + 圆角外观） */
+.badge-maker-root input[type="color"]{
+  width:44px; height:30px; flex:none;
+  padding:0; border:1px solid var(--line); border-radius:9px;
+  background:#fff; cursor:pointer;
+  transition:border-color .15s ease, box-shadow .15s ease;
+}
+.badge-maker-root input[type="color"]:hover{ border-color:rgba(0,122,255,.45); }
+.badge-maker-root input[type="color"]:focus-visible{ outline:2px solid rgba(0,122,255,.5); outline-offset:2px; }
+.badge-maker-root input[type="color"]::-webkit-color-swatch-wrapper{ padding:3px; }
+.badge-maker-root input[type="color"]::-webkit-color-swatch{ border:none; border-radius:6px; }
+.badge-maker-root input[type="color"]::-moz-color-swatch{ border:none; border-radius:6px; }
+
 /* iOS 风格开关 */
 .switch{
   -webkit-appearance:none; appearance:none;
@@ -245,6 +267,7 @@
 
 /* 药丸按钮组 */
 .pill-grid{ display:grid; gap:8px; }
+.pill-grid-3{ grid-template-columns:repeat(3,1fr); }
 .pill-grid-4{ grid-template-columns:repeat(4,1fr); }
 .pill-grid-5{ grid-template-columns:repeat(5,1fr); }
 .pill{

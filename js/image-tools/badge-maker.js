@@ -23,7 +23,7 @@
     "含出血": "With bleed",
     "mm · 出血 ": "mm · bleed ",
     "mm · 含出血 ": "mm · with bleed ",
-    " · 裁切圆 ": " · cut circle ",
+    " · 裁切 ": " · cut ",
     " · 含出血 ": " · with bleed ",
     "原图 ": "Original ",
     "（已自动降采样）": " (auto downsampled)",
@@ -96,6 +96,9 @@
   var HISTORY_LIMIT = 60;
   var PREVIEW_SIZES = [512, 1024, 2048];
 
+  /** 形状：circle=圆形（成品默认）；rounded=圆角方形（圆角 22%）；square=方形 */
+  var ROUNDED_RADIUS_RATIO = 0.22;
+
   /** 规格表：diameter=成品直径(mm)，bleed=单边出血(mm)，total=含出血直径(mm) */
   var SPECS = [
     { id: '32', label: '32mm', diameter: 32, bleed: 2, total: 36 },
@@ -124,7 +127,18 @@
     brightness: 0,
     contrast: 0,
     saturation: 0,
-    specId: DEFAULT_SPEC_ID
+    specId: DEFAULT_SPEC_ID,
+    // ---- 设计参数（形状 / 颜色 / 文字）----
+    shape: 'circle',            // circle | rounded | square
+    bgColor: '#FFFFFF',         // 徽章底色（填充图片未覆盖区域）
+    rimColor: '#C8D0DA',        // 拟真效果金属包边基色
+    textOn: false,              // 是否叠加文字
+    textContent: '',
+    textColor: '#111111',
+    textSize: 12,               // 相对成品边长（直径）的百分比
+    textPos: 'bottom',          // top | center | bottom
+    textStroke: false,
+    textStrokeColor: '#FFFFFF'
   };
 
   var opts = {
@@ -177,6 +191,83 @@
     var val = parseFloat(el.value);
     var p = (max === min) ? 0 : (val - min) / (max - min) * 100;
     el.style.setProperty('--p', p.toFixed(2) + '%');
+  }
+
+  /* =====================================================================
+   * 形状与颜色工具
+   * =================================================================== */
+
+  /** 圆角矩形路径（不 beginPath，由调用方控制路径生命周期） */
+  function roundRectPath(ctx, x, y, w, h, r) {
+    if (r <= 0) {
+      ctx.rect(x, y, w, h);
+      return;
+    }
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  /**
+   * 构建成品轮廓路径（圆 / 圆角方 / 方），size 为完整边长（直径）。
+   * 调用方式：ctx.beginPath(); facePath(ctx, cx, cy, size, shape); …clip()/fill()/stroke()
+   */
+  function facePath(ctx, cx, cy, size, shape) {
+    var half = size / 2;
+    if (shape === 'rounded') {
+      roundRectPath(ctx, cx - half, cy - half, size, size, size * ROUNDED_RADIUS_RATIO);
+    } else if (shape === 'square') {
+      roundRectPath(ctx, cx - half, cy - half, size, size, 0);
+    } else {
+      // moveTo 防止与既有子路径（如 evenodd 遮罩矩形）之间产生连接线
+      ctx.moveTo(cx + half, cy);
+      ctx.arc(cx, cy, half, 0, Math.PI * 2);
+    }
+  }
+
+  function hexToRgb(hex) {
+    var h = String(hex || '').replace('#', '');
+    if (h.length === 3) {
+      h = h.charAt(0) + h.charAt(0) + h.charAt(1) + h.charAt(1) + h.charAt(2) + h.charAt(2);
+    }
+    var n = parseInt(h, 16);
+    if (isNaN(n) || h.length !== 6) { return { r: 200, g: 208, b: 218 }; }
+    return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+  }
+
+  /** 颜色明暗派生：f>1 提亮，f<1 压暗 */
+  function shade(hex, f) {
+    var c = hexToRgb(hex);
+    var r = Math.round(clamp(c.r * f, 0, 255));
+    var g = Math.round(clamp(c.g * f, 0, 255));
+    var b = Math.round(clamp(c.b * f, 0, 255));
+    return 'rgb(' + r + ',' + g + ',' + b + ')';
+  }
+
+  /* =====================================================================
+   * 文字层：绘制在成品轮廓内（调用方需已 clip），所有导出共享同一渲染
+   * =================================================================== */
+
+  function drawTextLayer(ctx, cx, cy, faceD) {
+    if (!state.textOn || !state.textContent) { return; }
+    var fs = Math.max(2, faceD * (state.textSize / 100));
+    var y = cy + (state.textPos === 'top' ? -faceD * 0.30 : (state.textPos === 'center' ? 0 : faceD * 0.30));
+    ctx.save();
+    ctx.font = '700 ' + fs + 'px ' + getComputedStyle(document.body).fontFamily;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    if (state.textStroke) {
+      ctx.lineJoin = 'round';
+      ctx.lineWidth = Math.max(1, fs * 0.16);
+      ctx.strokeStyle = state.textStrokeColor;
+      ctx.strokeText(state.textContent, cx, y);
+    }
+    ctx.fillStyle = state.textColor;
+    ctx.fillText(state.textContent, cx, y);
+    ctx.restore();
   }
 
   /* =====================================================================
@@ -249,12 +340,12 @@
    * 拟真马口铁徽章绘制
    * =================================================================== */
 
-  /** 表面光效：顶部柔光 + 底部暗角（+ 亮面镜面反射） */
+  /** 表面光效：顶部柔光 + 底部暗角（+ 亮面镜面反射）；裁剪跟随当前形状 */
   function drawSurfaceLight(ctx, cx, cy, faceD, glossy) {
     var r = faceD / 2;
     ctx.save();
     ctx.beginPath();
-    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    facePath(ctx, cx, cy, faceD, state.shape);
     ctx.clip();
 
     // 顶部柔光
@@ -301,48 +392,56 @@
     ctx.restore();
   }
 
-  /** 拟真徽章：金属包边 + 高光 + 投影 */
+  /** 拟真徽章：金属包边 + 高光 + 投影（形状感知：圆 / 圆角方 / 方） */
   function drawRealisticBadge(ctx, cx, cy, faceD) {
     var glossy = opts.surface === 'glossy';
+    var shape = state.shape;
     var rimW = faceD * 0.045;
-    var outerR = faceD / 2 + rimW;
+    var outerS = faceD + rimW * 2;               // 含包边的完整外轮廓边长
 
     // 1) 投影 + 底色
     ctx.save();
     ctx.beginPath();
-    ctx.arc(cx, cy, outerR, 0, Math.PI * 2);
+    facePath(ctx, cx, cy, outerS, shape);
     ctx.shadowColor = 'rgba(9,14,24,0.38)';
     ctx.shadowBlur = faceD * 0.10;
     ctx.shadowOffsetY = faceD * 0.035;
-    ctx.fillStyle = '#B9C2CC';
+    ctx.fillStyle = shade(state.rimColor, 0.92);
     ctx.fill();
     ctx.restore();
 
     // 2) 底色 + 图像（裁到外圈）
     ctx.save();
     ctx.beginPath();
-    ctx.arc(cx, cy, outerR, 0, Math.PI * 2);
+    facePath(ctx, cx, cy, outerS, shape);
     ctx.clip();
-    ctx.fillStyle = '#FFFFFF';
-    ctx.fillRect(cx - outerR, cy - outerR, outerR * 2, outerR * 2);
+    ctx.fillStyle = state.bgColor;
+    ctx.fillRect(cx - outerS, cy - outerS, outerS * 2, outerS * 2);
     renderImageTo(ctx, cx, cy, faceD);
     ctx.restore();
 
-    // 3) 表面光效
-    drawSurfaceLight(ctx, cx, cy, faceD, glossy);
-
-    // 4) 金属包边（渐变描边，模拟马口铁卷边）
-    var g = ctx.createLinearGradient(cx - outerR * 0.75, cy - outerR, cx + outerR * 0.75, cy + outerR);
-    g.addColorStop(0.00, '#FDFEFE');
-    g.addColorStop(0.16, '#D9DFE6');
-    g.addColorStop(0.38, '#9AA4B0');
-    g.addColorStop(0.54, '#E9EEF3');
-    g.addColorStop(0.74, '#8B95A1');
-    g.addColorStop(0.90, '#C9D1DA');
-    g.addColorStop(1.00, '#EEF2F6');
+    // 3) 表面光效（裁到成品轮廓）
     ctx.save();
     ctx.beginPath();
-    ctx.arc(cx, cy, faceD / 2 + rimW / 2, 0, Math.PI * 2);
+    facePath(ctx, cx, cy, faceD, shape);
+    ctx.clip();
+    drawSurfaceLight(ctx, cx, cy, faceD, glossy);
+    drawTextLayer(ctx, cx, cy, faceD);
+    ctx.restore();
+
+    // 4) 金属包边（由包边基色派生的渐变描边，模拟马口铁卷边）
+    var base = state.rimColor;
+    var g = ctx.createLinearGradient(cx - outerS * 0.38, cy - outerS / 2, cx + outerS * 0.38, cy + outerS / 2);
+    g.addColorStop(0.00, shade(base, 1.18));
+    g.addColorStop(0.16, shade(base, 1.05));
+    g.addColorStop(0.38, shade(base, 0.72));
+    g.addColorStop(0.54, shade(base, 1.12));
+    g.addColorStop(0.74, shade(base, 0.68));
+    g.addColorStop(0.90, shade(base, 0.96));
+    g.addColorStop(1.00, shade(base, 1.15));
+    ctx.save();
+    ctx.beginPath();
+    facePath(ctx, cx, cy, faceD + rimW, shape);
     ctx.lineWidth = rimW;
     ctx.strokeStyle = g;
     ctx.stroke();
@@ -351,8 +450,8 @@
     // 5) 包边顶侧高光细线
     ctx.save();
     ctx.beginPath();
-    ctx.arc(cx, cy, outerR - rimW * 0.30, Math.PI * 1.03, Math.PI * 1.97);
-    ctx.strokeStyle = 'rgba(255,255,255,0.78)';
+    facePath(ctx, cx, cy, outerS - rimW * 0.30, shape);
+    ctx.strokeStyle = 'rgba(255,255,255,0.45)';
     ctx.lineWidth = Math.max(1, rimW * 0.17);
     ctx.stroke();
     ctx.restore();
@@ -360,7 +459,7 @@
     // 6) 内圈压痕（图像与包边分界）
     ctx.save();
     ctx.beginPath();
-    ctx.arc(cx, cy, faceD / 2, 0, Math.PI * 2);
+    facePath(ctx, cx, cy, faceD, shape);
     ctx.strokeStyle = 'rgba(20,26,36,0.20)';
     ctx.lineWidth = Math.max(1, faceD * 0.005);
     ctx.stroke();
@@ -369,23 +468,23 @@
     // 7) 外缘描边
     ctx.save();
     ctx.beginPath();
-    ctx.arc(cx, cy, outerR - Math.max(0.5, faceD * 0.0025), 0, Math.PI * 2);
+    facePath(ctx, cx, cy, outerS - Math.max(0.5, faceD * 0.0025), shape);
     ctx.strokeStyle = 'rgba(20,26,36,0.28)';
     ctx.lineWidth = Math.max(1, faceD * 0.006);
     ctx.stroke();
     ctx.restore();
   }
 
-  /** 纯圆形裁剪（关闭拟真效果时） */
+  /** 纯轮廓裁剪（关闭拟真效果时） */
   function drawPlainBadge(ctx, cx, cy, faceD) {
-    var r = faceD / 2;
     ctx.save();
     ctx.beginPath();
-    ctx.arc(cx, cy, r, 0, Math.PI * 2);
-    ctx.fillStyle = '#FFFFFF';
+    facePath(ctx, cx, cy, faceD, state.shape);
+    ctx.fillStyle = state.bgColor;
     ctx.fill();
     ctx.clip();
     renderImageTo(ctx, cx, cy, faceD);
+    drawTextLayer(ctx, cx, cy, faceD);
     ctx.restore();
   }
 
@@ -415,7 +514,7 @@
       ctx.strokeStyle = 'rgba(255,255,255,0.16)';
       ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.arc(cx, cy, faceR, 0, Math.PI * 2);
+      facePath(ctx, cx, cy, faceD, state.shape);
       ctx.stroke();
       ctx.restore();
       return;
@@ -424,33 +523,40 @@
     // 1) 图片
     renderImageTo(ctx, cx, cy, faceD);
 
-    // 2) 圆外暗化遮罩（evenodd：矩形 + 圆）
+    // 1.5) 文字层（裁到成品轮廓内）
+    ctx.save();
+    ctx.beginPath();
+    facePath(ctx, cx, cy, faceD, state.shape);
+    ctx.clip();
+    drawTextLayer(ctx, cx, cy, faceD);
+    ctx.restore();
+
+    // 2) 轮廓外暗化遮罩（evenodd：矩形 + 成品轮廓）
     ctx.save();
     ctx.beginPath();
     ctx.rect(0, 0, p.w, p.h);
-    ctx.moveTo(cx + faceR, cy);
-    ctx.arc(cx, cy, faceR, 0, Math.PI * 2);
+    facePath(ctx, cx, cy, faceD, state.shape);
     ctx.fillStyle = 'rgba(13,16,22,0.62)';
     ctx.fill('evenodd');
     ctx.restore();
 
-    // 3) 出血圈虚线（外侧，含出血直径）
-    var bleedR = faceR * (spec.total / spec.diameter);
+    // 3) 出血轮廓虚线（外侧，含出血尺寸）
+    var bleedS = faceD * (spec.total / spec.diameter);
     ctx.save();
     ctx.setLineDash([5, 6]);
     ctx.strokeStyle = 'rgba(255,255,255,0.32)';
     ctx.lineWidth = 1.5;
     ctx.beginPath();
-    ctx.arc(cx, cy, bleedR, 0, Math.PI * 2);
+    facePath(ctx, cx, cy, bleedS, state.shape);
     ctx.stroke();
     ctx.restore();
 
-    // 4) 裁切圈（成品圆，蓝色实线）
+    // 4) 裁切轮廓（成品轮廓，蓝色实线）
     ctx.save();
     ctx.strokeStyle = 'rgba(0,122,255,0.95)';
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.arc(cx, cy, faceR, 0, Math.PI * 2);
+    facePath(ctx, cx, cy, faceD, state.shape);
     ctx.stroke();
     ctx.restore();
 
@@ -472,37 +578,46 @@
    * =================================================================== */
 
   /**
-   * 绘制一枚打印徽章。
+   * 绘制一枚打印徽章（形状感知）。
    * @param {CanvasRenderingContext2D} ctx
-   * @param {number} cx 圆心 X（像素，含出血圆）
-   * @param {number} cy 圆心 Y
-   * @param {number} cellPx 含出血圆直径（像素）
+   * @param {number} cx 圆心/中心 X（像素，含出血尺寸）
+   * @param {number} cy 圆心/中心 Y
+   * @param {number} cellPx 含出血的完整边长（像素）
    */
   function drawPrintBadge(ctx, cx, cy, cellPx) {
     var spec = getSpec(state.specId);
+    var shape = state.shape;
     var ratio = spec.diameter / spec.total;
-    var bleedR = cellPx / 2;
-    var cutR = bleedR * ratio;
-    var safeR = Math.max(2, cutR - mmToPx(SAFE_INSET_MM));
+    var bleedS = cellPx;                      // 含出血完整边长
+    var cutS = cellPx * ratio;                // 成品完整边长
+    var safeS = Math.max(4, cutS - mmToPx(SAFE_INSET_MM) * 2);
 
-    // 1) 白底圆（保证打印不透明，图片未覆盖处为白）
+    // 1) 底色（保证打印不透明，图片未覆盖处为底色）
     ctx.save();
     ctx.beginPath();
-    ctx.arc(cx, cy, bleedR, 0, Math.PI * 2);
+    facePath(ctx, cx, cy, bleedS, shape);
     ctx.clip();
-    ctx.fillStyle = '#FFFFFF';
-    ctx.fillRect(cx - bleedR, cy - bleedR, cellPx, cellPx);
+    ctx.fillStyle = state.bgColor;
+    ctx.fillRect(cx - bleedS, cy - bleedS, bleedS * 2, bleedS * 2);
     ctx.restore();
 
-    // 2) 图像（裁到出血圆）
+    // 2) 图像（裁到出血轮廓）
     if (state.hasImage) {
       ctx.save();
       ctx.beginPath();
-      ctx.arc(cx, cy, bleedR, 0, Math.PI * 2);
+      facePath(ctx, cx, cy, bleedS, shape);
       ctx.clip();
-      renderImageTo(ctx, cx, cy, cellPx * ratio);
+      renderImageTo(ctx, cx, cy, cutS);
       ctx.restore();
     }
+
+    // 2.5) 文字层（始终裁到成品轮廓内）
+    ctx.save();
+    ctx.beginPath();
+    facePath(ctx, cx, cy, cutS, shape);
+    ctx.clip();
+    drawTextLayer(ctx, cx, cy, cutS);
+    ctx.restore();
 
     var lw = Math.max(1, cellPx * 0.0028);
     var font = Math.max(9, cellPx * 0.027);
@@ -511,30 +626,30 @@
     if (opts.showGuides) {
       // 出血线（最外，红色虚线）
       ctx.save();
-      ctx.setLineDash([bleedR * 0.10, bleedR * 0.07]);
+      ctx.setLineDash([bleedS * 0.06, bleedS * 0.045]);
       ctx.strokeStyle = 'rgba(214,60,60,0.85)';
       ctx.lineWidth = lw;
       ctx.beginPath();
-      ctx.arc(cx, cy, bleedR - lw, 0, Math.PI * 2);
+      facePath(ctx, cx, cy, bleedS - lw, shape);
       ctx.stroke();
       ctx.restore();
 
-      // 裁切线（成品圈，蓝色细实线）
+      // 裁切线（成品轮廓，蓝色细实线）
       ctx.save();
       ctx.strokeStyle = 'rgba(0,110,235,0.9)';
       ctx.lineWidth = lw;
       ctx.beginPath();
-      ctx.arc(cx, cy, cutR, 0, Math.PI * 2);
+      facePath(ctx, cx, cy, cutS, shape);
       ctx.stroke();
       ctx.restore();
 
-      // 安全区圈（浅绿虚线）
+      // 安全区轮廓（浅绿虚线）
       ctx.save();
-      ctx.setLineDash([bleedR * 0.07, bleedR * 0.06]);
+      ctx.setLineDash([bleedS * 0.042, bleedS * 0.036]);
       ctx.strokeStyle = 'rgba(60,170,110,0.75)';
       ctx.lineWidth = lw;
       ctx.beginPath();
-      ctx.arc(cx, cy, safeR, 0, Math.PI * 2);
+      facePath(ctx, cx, cy, safeS, shape);
       ctx.stroke();
       ctx.restore();
     }
@@ -548,25 +663,25 @@
       ctx.strokeStyle = 'rgba(255,255,255,0.9)';
       ctx.lineJoin = 'round';
 
-      // 出血线标注（出血圈内侧顶部）
+      // 出血线标注（出血轮廓内侧顶部）
       var bleedText = L('出血线 ') + spec.total + 'mm';
       ctx.textBaseline = 'top';
-      ctx.strokeText(bleedText, cx, cy - bleedR + font * 0.35);
+      ctx.strokeText(bleedText, cx, cy - bleedS / 2 + font * 0.35);
       ctx.fillStyle = 'rgba(200,45,45,0.95)';
-      ctx.fillText(bleedText, cx, cy - bleedR + font * 0.35);
+      ctx.fillText(bleedText, cx, cy - bleedS / 2 + font * 0.35);
 
-      // 裁切线标注（裁切圈外侧顶部）
+      // 裁切线标注（裁切轮廓外侧顶部）
       var cutText = L('裁切线 ') + spec.diameter + 'mm';
       ctx.textBaseline = 'bottom';
-      ctx.strokeText(cutText, cx, cy - cutR - font * 0.28);
+      ctx.strokeText(cutText, cx, cy - cutS / 2 - font * 0.28);
       ctx.fillStyle = 'rgba(0,100,220,0.95)';
-      ctx.fillText(cutText, cx, cy - cutR - font * 0.28);
+      ctx.fillText(cutText, cx, cy - cutS / 2 - font * 0.28);
 
-      // 安全区标注（安全圈外侧底部）
+      // 安全区标注（安全轮廓外侧底部）
       ctx.textBaseline = 'top';
-      ctx.strokeText(L('安全区'), cx, cy + safeR + font * 0.28);
+      ctx.strokeText(L('安全区'), cx, cy + safeS / 2 + font * 0.28);
       ctx.fillStyle = 'rgba(45,150,95,0.95)';
-      ctx.fillText(L('安全区'), cx, cy + safeR + font * 0.28);
+      ctx.fillText(L('安全区'), cx, cy + safeS / 2 + font * 0.28);
 
       ctx.restore();
     }
@@ -784,7 +899,7 @@
 
     $('specInfo').textContent =
       L('成品 ') + spec.diameter + L('mm · 出血 ') + spec.bleed + L('mm · 含出血 ') + spec.total + 'mm' +
-      L(' · 裁切圆 ') + Math.round(mmToPx(spec.diameter)) + 'px';
+      L(' · 裁切 ') + Math.round(mmToPx(spec.diameter)) + 'px';
 
     $('editorBadge').textContent = spec.label + L(' · 含出血 ') + spec.total + 'mm';
 
@@ -873,7 +988,13 @@
       tx: state.tx, ty: state.ty, zoom: state.zoom, rot: state.rot,
       flipH: state.flipH, flipV: state.flipV,
       brightness: state.brightness, contrast: state.contrast, saturation: state.saturation,
-      specId: state.specId
+      specId: state.specId,
+      shape: state.shape,
+      bgColor: state.bgColor, rimColor: state.rimColor,
+      textOn: state.textOn, textContent: state.textContent,
+      textColor: state.textColor, textSize: state.textSize,
+      textPos: state.textPos, textStroke: state.textStroke,
+      textStrokeColor: state.textStrokeColor
     };
   }
 
@@ -908,6 +1029,17 @@
     state.contrast = snap.contrast;
     state.saturation = snap.saturation;
     state.specId = snap.specId;
+    // 设计参数（旧快照缺省时回落当前值，保证向前兼容）
+    if (snap.shape !== undefined) { state.shape = snap.shape; }
+    if (snap.bgColor !== undefined) { state.bgColor = snap.bgColor; }
+    if (snap.rimColor !== undefined) { state.rimColor = snap.rimColor; }
+    if (snap.textOn !== undefined) { state.textOn = snap.textOn; }
+    if (snap.textContent !== undefined) { state.textContent = snap.textContent; }
+    if (snap.textColor !== undefined) { state.textColor = snap.textColor; }
+    if (snap.textSize !== undefined) { state.textSize = snap.textSize; }
+    if (snap.textPos !== undefined) { state.textPos = snap.textPos; }
+    if (snap.textStroke !== undefined) { state.textStroke = snap.textStroke; }
+    if (snap.textStrokeColor !== undefined) { state.textStrokeColor = snap.textStrokeColor; }
     syncUIFromState();
     syncCountPills();                 // 撤销回更小规格时同样需要重新夹取枚数
     renderAll();
@@ -958,6 +1090,51 @@
 
     updateSpecTable();
     $('editorEmpty').style.display = state.hasImage ? 'none' : 'flex';
+    syncDesignUI();
+  }
+
+  /** 把设计参数（形状 / 颜色 / 文字）同步到控件；正在输入的控件不回写 */
+  function syncDesignUI() {
+    var shapeBtns = $('shapeGroup').querySelectorAll('.pill');
+    for (var i = 0; i < shapeBtns.length; i++) {
+      shapeBtns[i].classList.toggle('active', shapeBtns[i].getAttribute('data-shape') === state.shape);
+    }
+
+    $('bgColor').value = state.bgColor;
+    $('rimColor').value = state.rimColor;
+
+    $('swText').checked = state.textOn;
+    $('textBody').classList.toggle('hidden', !state.textOn);
+    var ti = $('textInput');
+    if (document.activeElement !== ti) { ti.value = state.textContent; }
+    $('textColor').value = state.textColor;
+
+    var ts = $('textSize');
+    ts.value = String(state.textSize);
+    $('textSizeVal').textContent = state.textSize + '%';
+    paintRange(ts);
+
+    var posBtns = $('textPosGroup').querySelectorAll('button');
+    for (var j = 0; j < posBtns.length; j++) {
+      posBtns[j].classList.toggle('active', posBtns[j].getAttribute('data-pos') === state.textPos);
+    }
+
+    $('swTextStroke').checked = state.textStroke;
+    $('textStrokeColor').value = state.textStrokeColor;
+  }
+
+  /** 设计参数默认值（重置 / 清除图片时调用） */
+  function resetDesignState() {
+    state.shape = 'circle';
+    state.bgColor = '#FFFFFF';
+    state.rimColor = '#C8D0DA';
+    state.textOn = false;
+    state.textContent = '';
+    state.textColor = '#111111';
+    state.textSize = 12;
+    state.textPos = 'bottom';
+    state.textStroke = false;
+    state.textStrokeColor = '#FFFFFF';
   }
 
   /* =====================================================================
@@ -1068,6 +1245,7 @@
     state.tx = 0; state.ty = 0; state.zoom = 1; state.rot = 0;
     state.flipH = false; state.flipV = false;
     state.brightness = 0; state.contrast = 0; state.saturation = 0;
+    resetDesignState();
     history = [];
     histIndex = -1;
     syncUIFromState();
@@ -1287,6 +1465,7 @@
     state.tx = 0; state.ty = 0; state.zoom = 1; state.rot = 0;
     state.flipH = false; state.flipV = false;
     state.brightness = 0; state.contrast = 0; state.saturation = 0;
+    resetDesignState();
   }
 
   function doReset() {
@@ -1738,6 +1917,75 @@
       $('shortcutCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
 
+    /* ---------- 形状选择 ---------- */
+    $('shapeGroup').addEventListener('click', function (e) {
+      var t = e.target;
+      if (t && t.tagName === 'BUTTON' && t.getAttribute('data-shape')) {
+        var s = t.getAttribute('data-shape');
+        if (s === state.shape) { return; }
+        state.shape = s;
+        syncDesignUI();
+        pushHistory(false);
+        renderAll();
+      }
+    });
+
+    /* ---------- 文字层 ---------- */
+    $('swText').addEventListener('change', function (e) {
+      state.textOn = e.target.checked;
+      $('textBody').classList.toggle('hidden', !state.textOn);
+      pushHistory(false);
+      renderAll();
+    });
+    $('textInput').addEventListener('input', function (e) {
+      state.textContent = e.target.value;
+      renderAll();                       // 输入过程实时预览，不推历史
+    });
+    $('textInput').addEventListener('change', function () { pushHistory(false); });
+    $('textColor').addEventListener('input', function (e) {
+      state.textColor = e.target.value;
+      renderAll();
+    });
+    var textSizeEl = $('textSize');
+    textSizeEl.addEventListener('input', function () {
+      state.textSize = clamp(parseFloat(textSizeEl.value) || 12, 4, 20);
+      $('textSizeVal').textContent = state.textSize + '%';
+      paintRange(textSizeEl);
+      renderAll();
+    });
+    textSizeEl.addEventListener('change', function () { pushHistory(false); });
+    $('textPosGroup').addEventListener('click', function (e) {
+      var t = e.target;
+      if (t && t.tagName === 'BUTTON' && t.getAttribute('data-pos')) {
+        state.textPos = t.getAttribute('data-pos');
+        var btns = $('textPosGroup').querySelectorAll('button');
+        for (var i = 0; i < btns.length; i++) {
+          btns[i].classList.toggle('active', btns[i] === t);
+        }
+        pushHistory(false);
+        renderAll();
+      }
+    });
+    $('swTextStroke').addEventListener('change', function (e) {
+      state.textStroke = e.target.checked;
+      pushHistory(false);
+      renderAll();
+    });
+    $('textStrokeColor').addEventListener('input', function (e) {
+      state.textStrokeColor = e.target.value;
+      renderAll();
+    });
+
+    /* ---------- 颜色 ---------- */
+    $('bgColor').addEventListener('input', function (e) {
+      state.bgColor = e.target.value;
+      renderAll();
+    });
+    $('rimColor').addEventListener('input', function (e) {
+      state.rimColor = e.target.value;
+      renderAll();
+    });
+
     /* ---------- 导出（模式 A） ---------- */
     $('swRealistic').addEventListener('change', function (e) {
       opts.realistic = e.target.checked;
@@ -1895,6 +2143,7 @@
     paintRange($('briSlider'));
     paintRange($('conSlider'));
     paintRange($('satSlider'));
+    paintRange($('textSize'));
 
     syncCountPills();
     syncUIFromState();

@@ -197,9 +197,9 @@
       </p>
     </section>
 
-    <!-- 3 Size -->
+    <!-- 3 Size & shape -->
     <section class="card">
-      <h2 class="card-title">3 · Size</h2>
+      <h2 class="card-title">3 · Size &amp; shape</h2>
       <div class="pill-grid pill-grid-4" id="specGroup">
         <button type="button" class="pill" data-spec="32">32mm</button>
         <button type="button" class="pill" data-spec="44">44mm</button>
@@ -208,12 +208,71 @@
       </div>
       <p class="spec-info" id="specInfo">Finish 58mm · bleed 3mm · with bleed 64mm</p>
       <div class="spec-table" id="specTable"></div>
-      <p class="hint">Switching size fully preserves position / zoom / rotation.</p>
+
+      <div class="sub-label">Shape</div>
+      <div class="pill-grid pill-grid-3" id="shapeGroup">
+        <button type="button" class="pill active" data-shape="circle">Circle</button>
+        <button type="button" class="pill" data-shape="rounded">Rounded</button>
+        <button type="button" class="pill" data-shape="square">Square</button>
+      </div>
+      <p class="hint">Switching size / shape fully preserves position / zoom / rotation.</p>
     </section>
 
-    <!-- 4 Adjustments -->
+    <!-- 4 Text -->
     <section class="card">
-      <h2 class="card-title">4 · Adjustments</h2>
+      <h2 class="card-title">4 · Text</h2>
+      <div class="row check-card">
+        <span>Add text on the badge</span>
+        <input type="checkbox" class="switch" id="swText" aria-label="Add text on the badge" />
+      </div>
+      <div id="textBody" class="hidden">
+        <div class="field field-text">
+          <input type="text" id="textInput" maxlength="24" placeholder="Type your text" aria-label="Text content" />
+        </div>
+        <div class="row row-field">
+          <span>Text color</span>
+          <input type="color" id="textColor" value="#111111" aria-label="Text color" />
+        </div>
+        <div class="slider-row">
+          <label for="textSize">Text size</label>
+          <span class="value" id="textSizeVal">12%</span>
+        </div>
+        <input type="range" id="textSize" min="4" max="20" step="0.5" value="12" />
+        <div class="sub-label">Position</div>
+        <div class="segmented segmented-sm" id="textPosGroup">
+          <button type="button" data-pos="top">Top</button>
+          <button type="button" data-pos="center">Middle</button>
+          <button type="button" data-pos="bottom" class="active">Bottom</button>
+        </div>
+        <div class="row check-card">
+          <span>Text outline</span>
+          <input type="checkbox" class="switch" id="swTextStroke" aria-label="Text outline" />
+        </div>
+        <div class="row row-field">
+          <span>Outline color</span>
+          <input type="color" id="textStrokeColor" value="#FFFFFF" aria-label="Outline color" />
+        </div>
+      </div>
+      <p class="hint">Text is always clipped inside the finish outline and syncs live across preview and all exports.</p>
+    </section>
+
+    <!-- 5 Colors -->
+    <section class="card">
+      <h2 class="card-title">5 · Colors</h2>
+      <div class="row row-field">
+        <span>Badge base color</span>
+        <input type="color" id="bgColor" value="#FFFFFF" aria-label="Badge base color" />
+      </div>
+      <div class="row row-field">
+        <span>Metal rim</span>
+        <input type="color" id="rimColor" value="#C8D0DA" aria-label="Metal rim color" />
+      </div>
+      <p class="hint">Base color fills areas not covered by the image; rim color only applies to the realistic badge effect.</p>
+    </section>
+
+    <!-- 6 Adjustments -->
+    <section class="card">
+      <h2 class="card-title">6 · Adjustments</h2>
 
       <div class="slider-row">
         <label for="briSlider">Brightness</label>
@@ -234,9 +293,9 @@
       <input type="range" id="satSlider" min="-100" max="100" step="1" value="0" />
     </section>
 
-    <!-- 5 Export -->
+    <!-- 7 Export -->
     <section class="card">
-      <h2 class="card-title">5 · Export</h2>
+      <h2 class="card-title">7 · Export</h2>
 
       <!-- ---- Mode A: preview ---- -->
       <div id="exportPreview">
