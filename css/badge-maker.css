@@ -125,13 +125,18 @@
 .dock-tabs button:focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
 .badge-maker-root .dock-tabs button.active{ background:var(--blue); color:#fff; border-color:var(--blue); }
 
+/* 按钮 / 药丸文案一律不换行 —— 换行只发生在「控件之间」，不发生在控件内部 */
+.dock-tabs button,
+.panel .card.is-active .pill,
+.panel .card.is-active .btn,
+.panel .card.is-active .segmented button,
+.badge-maker-root .topbar-actions .btn{ white-space:nowrap; }
+
 /* 参数坞 · 只显示当前分类，内容横向平铺（换行而不是纵向堆叠） */
 .panel .card{ display:none; }
 .panel .card.is-active{
   display:flex; flex-wrap:wrap; align-items:center; gap:10px 18px;
   padding:14px 16px; margin:0;
-  max-height:min(230px, 32vh); overflow-y:auto; overflow-x:hidden;
-  scrollbar-width:thin; scrollbar-color:rgba(15,23,42,.2) transparent;
 }
 .panel .card.is-active > *{
   display:flex; align-items:center; gap:8px; flex:0 0 auto; margin:0; flex-wrap:wrap;
@@ -148,6 +153,9 @@
 .panel .card.is-active > .collapse-body,
 .panel .card.is-active > .editor-head{ flex:1 1 100%; }
 .panel .card.is-active > .spec-table{ display:block; }
+/* 坞内规格表压紧一档：为画布区腾出高度（规格是坞内最高的分类） */
+.panel .card.is-active .spec-table{ margin-top:6px; }
+.panel .card.is-active .spec-table .spec-tr{ padding:3px 4px; }
 .panel .card.is-active > .hint{ display:block; font-size:12px; color:var(--text-3); line-height:1.5; }
 .panel .card .collapse-head{ display:none; }
 .panel .card.is-active .collapse-body{ max-height:none; overflow:visible; }
@@ -159,21 +167,12 @@
 .panel .card.is-active .row > span{ white-space:nowrap; }
 .panel .card.is-active .slider-row{ gap:8px; }
 .panel .card.is-active .slider-row input[type=range]{ width:130px; }
+/* 滑块常是 .slider-row 的兄弟节点（不在其中）；输入框在坞内容易被拉高 */
+.panel .card.is-active > input[type=range]{ flex:0 1 220px; min-width:120px; }
+.panel .card.is-active .text-field input{ height:34px; min-height:34px; }
 
 /* 桌面端（≥1024px）：整页零滚动 —— 顶条 + 画布区(内部滚动) + 参数坞常驻底部。
    画布始终可见，调参不再需要滚动页面（改版前需滚 3000px+）。 */
-@media (min-width:1024px){
-/* [site-integration] 已移除桌面端 body app-shell：站点 body 含整站 header/footer，强制 100vh+overflow:hidden 会把画布区压到 ~165px（实测），故站点保留流式布局 */
-  .topbar{ flex:0 0 auto; position:static; }
-  .layout{
-    flex:1 1 auto; min-height:0; height:auto;
-    padding:16px 24px; gap:12px;
-  }
-  .workspace{ flex:1 1 auto; min-height:0; overflow:auto; align-items:flex-start; }
-  .panel{ flex:0 0 auto; }
-  .editor-canvas{ max-width:min(620px, 60vh); }
-  .badge-maker-root .preview-card{ max-height:100%; overflow:auto; }
-}
 
 /* --------------------------- 卡片 --------------------------- */
 .card{
@@ -587,7 +586,10 @@ body.is-fullscreen .panel{ flex:0 0 auto; padding:10px 0 12px; }
 body.is-fullscreen .panel .card.is-active{ padding:12px 14px; }
 body.is-fullscreen .editor-card{ display:flex; flex-direction:column; min-height:0; }
 body.is-fullscreen .editor-stage{ flex:1; min-height:0; }
-body.is-fullscreen .editor-canvas{ max-width:min(620px, 52vh); }
+body.is-fullscreen .editor-stage{ flex:1 1 0; min-height:220px; }
+body.is-fullscreen .editor-canvas{ height:100%; width:auto; max-width:100%; max-height:none; }
+body.is-fullscreen .preview-card > .preview-stage{ flex:1 1 0; min-height:0; }
+body.is-fullscreen .preview-card .preview-canvas{ height:100%; width:auto; max-width:100%; max-height:none; }
 body.is-fullscreen .preview-card{ display:flex; flex-direction:column; min-height:0; }
 
 @media (max-width:720px){
@@ -633,6 +635,31 @@ body.is-fullscreen .preview-card{ display:flex; flex-direction:column; min-heigh
 .guide-spec{ font-size:12.5px; color:var(--text-2); line-height:1.6; margin:0; padding:0; }
 .guide-steps{ margin:10px 0 12px; padding-left:18px; color:var(--text-2); font-size:12.5px; line-height:1.75; }
 .guide-steps b{ color:var(--text); }
+
+/* 桌面端应用式布局（置于样式表末尾：需覆盖上方基础画布/舞台规则，同优先级靠顺序取胜） */
+@media (min-width:1024px){
+/* [site-integration] 已移除桌面端 body app-shell：站点 body 含整站 header/footer，强制 100vh+overflow:hidden 会把画布区压到 ~165px（实测），故站点保留流式布局 */
+  .topbar{ flex:0 0 auto; position:static; }
+  .layout{
+    flex:1 1 auto; min-height:0; height:auto;
+    padding:16px 24px; gap:12px;
+  }
+  /* 工作区用 grid 让「行高 = 容器高」确定化，画布才能按可用高度自适应收缩
+     （flex + max-height 无法给子元素确定高度，height:100% 会失效 → 画布被裁切） */
+  .workspace{
+    display:grid; grid-template-columns:1fr 1fr;   /* 固定 2 列：避免 auto-fit 列数漂移导致行数变化 */
+    grid-auto-rows:minmax(0, 1fr); align-content:stretch; align-items:stretch;
+    flex:1 1 auto; min-height:0; overflow:auto; padding:16px 24px; gap:12px;
+  }
+  .workspace > *{ min-height:0; height:100%; }   /* 强制卡片 = 网格行高，内部舞台才能真正收缩 */
+  .badge-maker-root .editor-card, .preview-card{ display:flex; flex-direction:column; min-height:0; }
+  body:has(> .topbar) .editor-stage{ flex:1 1 0; min-height:220px; }
+  body:has(> .topbar) .editor-canvas{ height:100%; width:auto; max-width:100%; max-height:none; }
+  body:has(> .topbar) .preview-card > .preview-stage{ flex:1 1 0; min-height:0; }
+  body:has(> .topbar) .preview-card .preview-canvas{ height:100%; width:auto; max-width:100%; max-height:none; }
+  .badge-maker-root .preview-card .preview-duo{ height:100%; align-items:center; }
+  .badge-maker-root .preview-card .preview-canvas-sm{ height:100%; width:auto; max-width:100%; max-height:none; }
+}
 
 /* =========================================================================
    沉浸式工作台布局（页面级，bm-* 前缀全站唯一）
@@ -680,5 +707,11 @@ body:has(.badge-maker-root) .site-logo{ height:26px; width:auto; vertical-align:
    ------------------------------------------------------------------------- */
 body.is-fullscreen:has(.badge-maker-root) > header,
 body.is-fullscreen:has(.badge-maker-root) > footer{ display:none; }
+/* 全屏时工具页标题条与整站 header 重复，隐藏以给画布腾高度 */
+body.is-fullscreen:has(.badge-maker-root) .bm-hero-bar{ display:none; }
+/* 站点 <main> 的最大宽度会把参数坞压窄（实测 1192px vs 单文件 1408px）→ 换行翻倍、
+   坞高 404 vs 243、画布被挤到 144px。全屏放开宽度约束，坞变宽后高度回落。 */
+body.is-fullscreen:has(.badge-maker-root) > main{ max-width:none; width:100%; }
+body.is-fullscreen:has(.badge-maker-root) > main > .badge-maker-root{ max-width:none; width:100%; }
 body.is-fullscreen:has(.badge-maker-root) > main{ flex:1 1 0; min-height:0; display:flex; flex-direction:column; }
 body.is-fullscreen:has(.badge-maker-root) > main > .badge-maker-root{ flex:1 1 0; min-height:0; display:flex; flex-direction:column; }
