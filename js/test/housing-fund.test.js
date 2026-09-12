@@ -39,6 +39,19 @@ test('calculateHousingFund: totalInterest = totalPayment − 本金', () => {
   assert.ok(r.totalInterest > 0);
 });
 
+test('calculateHousingFund: 零利率边界不返回 NaN（无息均摊）', () => {
+  const r = calculateHousingFund(120000, 0, 2);
+  assert.strictEqual(r.monthlyPayment, 5000); // 120000/24
+  assert.strictEqual(r.totalPayment, 120000);
+  assert.strictEqual(r.totalInterest, 0);
+});
+
+test('calculateHousingFund: 极低利率（0.01）仍为正常数值', () => {
+  const r = calculateHousingFund(120000, 0.01, 2);
+  assert.ok(Number.isFinite(r.monthlyPayment) && r.monthlyPayment >= 5000,
+    '月供应 ≥ 无息均摊值，实际 ' + r.monthlyPayment);
+});
+
 test('calculateHousingFund: 与 mortgage 等额本息互为同一公式（交叉验证）', () => {
   const mctx = vm.createContext({ console });
   vm.runInContext(fs.readFileSync(path.join(__dirname, '../calculators/mortgage.js'), 'utf8'), mctx);

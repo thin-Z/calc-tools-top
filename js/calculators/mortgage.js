@@ -8,8 +8,11 @@ function calculateMortgage(amount, rate, years, method) {
     const months = years * 12;
 
     if (method === 'equal-payment') {
-        const payment = amount * monthlyRate * Math.pow(1 + monthlyRate, months) /
-                       (Math.pow(1 + monthlyRate, months) - 1);
+        // 零利率边界：公式在 r=0 时 0/0 除零，极限为无息均摊
+        const payment = monthlyRate === 0
+            ? amount / months
+            : amount * monthlyRate * Math.pow(1 + monthlyRate, months) /
+              (Math.pow(1 + monthlyRate, months) - 1);
         const totalPayment = payment * months;
         const totalInterest = totalPayment - amount;
         return { monthlyPayment: Math.round(payment), totalPayment: Math.round(totalPayment), totalInterest: Math.round(totalInterest), method: 'equal-payment' };

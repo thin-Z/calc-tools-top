@@ -47,6 +47,17 @@ test('equal-principal: 总利息 = 本金 × 月利率 × (期数+1) / 2', () =>
   assert.strictEqual(r.totalPayment, 1000000 + r.totalInterest);
 });
 
+test('零利率边界：两种方式都不返回 NaN（无息均摊）', () => {
+  const ei = calculateMortgage(120000, 0, 2, 'equal-payment');
+  assert.strictEqual(ei.monthlyPayment, 5000);
+  assert.strictEqual(ei.totalInterest, 0);
+  assert.strictEqual(ei.totalPayment, 120000);
+  const ep = calculateMortgage(120000, 0, 2, 'equal-principal');
+  assert.strictEqual(ep.firstPayment, 5000);
+  assert.strictEqual(ep.totalInterest, 0);
+  assert.strictEqual(ep.totalPayment, 120000);
+});
+
 test('同参数下等额本金总利息 < 等额本息总利息', () => {
   const ep = calculateMortgage(1000000, 4.0, 30, 'equal-principal');
   const ei = calculateMortgage(1000000, 4.0, 30, 'equal-payment');
