@@ -46,7 +46,11 @@
                 var iframe = document.createElement('iframe');
                 iframe.src = '/' + lang + '/' + tool.dir + '/' + tool.slug;
                 iframe.className = 'embed-frame';
-                iframe.setAttribute('style', 'width:100%;height:' + height + 'px;border:0;');
+                // 用 CSSOM 而非 setAttribute('style')：本页 CSP style-src 无 'unsafe-inline'，
+                // 内联 style 属性会被静默拦截（宽高退化到默认 300×150）；CSSOM 赋值不受 style-src 限制。
+                iframe.style.width = '100%';
+                iframe.style.height = height + 'px';
+                iframe.style.border = '0';
                 iframe.setAttribute('loading', 'lazy');
                 iframe.setAttribute('allow', 'fullscreen');
                 container.appendChild(iframe);
