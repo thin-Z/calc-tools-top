@@ -495,21 +495,38 @@ kbd{
 }
 
 /* =========================================================================
-   站点集成适配
-   设计系统门禁要求 checkbox 的祖先（4 层内）含 .check-card 等包裹类，
-   否则判定为「裸控件」并阻断构建。但站点 .check-card 会把 checkbox 压成
-   1px 并套上卡片边框，会毁掉本工具的 iOS toggle 外观 —— 因此这里覆盖回原样。
+   沉浸式工作台布局（页面级，bm-* 前缀全站唯一）
+   站点 header 通过 body:has(.badge-maker-root) 压扁为细条（DOM 保留，保住
+   header 字节一致门禁与语言/主题切换功能）；旧浏览器不识别 :has 时仅不压扁。
    ========================================================================= */
-.badge-maker-root .row.check-card{
-  display:flex; align-items:center; justify-content:space-between;
-  gap:12px; padding:9px 0; margin:0;
-  border:0; border-radius:0; background:transparent;
-  cursor:default; transition:none;
-}
-.badge-maker-root .row.check-card:hover{ border-color:transparent; }
-.badge-maker-root .check-card input[type="checkbox"].switch{
-  position:relative; width:48px; height:28px; opacity:1;
-}
-
-/* 站点顶栏是 sticky，工具自带顶栏不再 sticky，避免两者叠加遮挡 */
-.badge-maker-root .topbar{ position:static; }
+body:has(.badge-maker-root) > header{ position:sticky; top:0; z-index:70; padding:4px 16px;
+  backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  background:color-mix(in srgb, var(--bg-card,#fff) 82%, transparent); border-bottom:1px solid var(--border,#e5e7eb); }
+body:has(.badge-maker-root) .site-logo{ height:26px; width:auto; vertical-align:middle; }
+.bm-hero-bar{ position:sticky; top:0; z-index:60; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  background:color-mix(in srgb, var(--bg-card,#fff) 82%, transparent); border-bottom:1px solid var(--border,#e5e7eb); }
+.bm-hero-inner{ max-width:1280px; margin:0 auto; display:flex; align-items:center; gap:12px; padding:10px 20px; }
+.bm-back{ display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary,#6b7280); text-decoration:none;
+  font-size:14px; font-weight:500; padding:6px 10px; border-radius:8px; transition:background .15s,color .15s; white-space:nowrap; }
+.bm-back:hover{ background:var(--bg-hover,rgba(0,122,255,.08)); color:var(--primary,#007AFF); }
+.bm-back-ic{ transform:rotate(180deg); width:15px; height:15px; }
+.bm-title{ margin:0; font-size:17px; font-weight:600; letter-spacing:-.01em; color:var(--text,#111827); white-space:nowrap; }
+.bm-privacy{ font-size:12px; color:var(--text-secondary,#6b7280); padding:4px 10px; border:1px solid var(--border,#e5e7eb);
+  border-radius:999px; white-space:nowrap; }
+@media (max-width:720px){ .bm-privacy{ display:none; } .bm-hero-inner{ padding:8px 12px; gap:8px; } }
+.bm-seo{ max-width:1080px; margin:28px auto 48px; padding:0 16px; }
+.bm-seo > summary{ list-style:none; cursor:pointer; user-select:none; display:flex; align-items:center; justify-content:space-between;
+  gap:12px; padding:14px 18px; border:1px solid var(--border,#e5e7eb); border-radius:12px; background:var(--bg-card,#fff);
+  font-weight:600; font-size:15px; color:var(--text,#111827); transition:border-color .15s; }
+.bm-seo > summary:hover{ border-color:color-mix(in srgb, var(--primary,#007AFF) 40%, var(--border,#e5e7eb)); }
+.bm-seo > summary::-webkit-details-marker{ display:none; }
+.bm-seo > summary::after{ content:'+'; font-size:20px; font-weight:500; color:var(--text-secondary,#6b7280);
+  transition:transform .18s; line-height:1; }
+.bm-seo[open] > summary::after{ transform:rotate(45deg); }
+.bm-seo-body{ padding-top:20px; }
+.bm-lead{ color:var(--text-secondary,#6b7280); font-size:15px; line-height:1.7; margin:0 0 18px; }
+.bm-faq-title{ font-size:20px; margin:26px 0 14px; }
+.bm-faq-item{ border:1px solid var(--border,#e5e7eb); border-radius:10px; margin-bottom:10px; padding:12px 16px;
+  background:var(--bg-card,#fff); }
+.bm-faq-item summary{ cursor:pointer; font-weight:600; font-size:14px; color:var(--text,#111827); }
+.bm-faq-item p{ margin:10px 0 2px; font-size:14px; line-height:1.75; color:var(--text-secondary,#4b5563); }

@@ -39,7 +39,8 @@
         "@type": "BreadcrumbList",
         "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "Online Tools", "item": "https://www.calc-tools.top/" },
-            { "@type": "ListItem", "position": 2, "name": "Badge Maker", "item": "https://www.calc-tools.top/en/image/badge-maker" }
+            { "@type": "ListItem", "position": 2, "name": "Image Tools", "item": "https://www.calc-tools.top/en/image/" },
+            { "@type": "ListItem", "position": 3, "name": "Badge Maker", "item": "https://www.calc-tools.top/en/image/badge-maker" }
         ]
     }
     </script>
@@ -102,30 +103,17 @@
         <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-sun"></use></svg></span></button>
     </nav>
 </header>
+    <header class="bm-hero-bar">
+        <div class="bm-hero-inner">
+            <a class="bm-back" href="/en/image/">
+                <svg class="ic bm-back-ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-arrow-right"></use></svg>Image Tools
+            </a>
+            <h1 class="bm-title">Badge Maker</h1>
+            <span class="bm-privacy">No upload - processed locally in your browser</span>
+        </div>
+    </header>
     <main id="main">
-        <div class="tool-page">
-            <div class="tool-header">
-                <span class="tool-privacy-badge">No upload - processed locally in your browser</span>
-                <h1><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-image"></use></svg> Badge Maker</h1>
-                <p>Upload an image and crop it into a round badge. Export a realistic preview to share, or a 300 DPI A4 print sheet with bleed lines to press your own badges at home.</p>
-            </div>
-            <div class="detail-like-wrap">
-                <button class="like-btn detail-like" data-like-id="badge-maker">
-                    <span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span>
-                    <span class="count">0</span>
-                </button>
-            </div>
-            <div class="related-tools">
-                <h3>Related tools</h3>
-                <ul>
-                <li><a href="/en/image/image-crop">Image Cropper</a></li>
-                <li><a href="/en/image/resize">Image Resizer</a></li>
-                <li><a href="/en/image/compress">Image Compressor</a></li>
-                <li><a href="/en/image/convert">Image Converter</a></li>
-                </ul>
-            </div>
-
-            <div class="badge-maker-root">
+        <div class="badge-maker-root">
 
 <!-- ============================ Top bar ============================ -->
 <header class="topbar">
@@ -393,9 +381,44 @@
 
 <div id="printArea"><canvas id="printCanvas"></canvas></div>
 
-            </div>
+        </div>
 
-            <div class="tool-content">
+        <details class="bm-seo">
+            <summary>About this tool · FAQ · Related tools</summary>
+            <div class="tool-page bm-seo-body">
+                <p class="bm-lead">Upload an image and crop it into a round badge. Export a realistic preview to share, or a 300 DPI A4 print sheet with bleed lines to press your own badges at home.</p>
+                <div class="detail-like-wrap">
+                    <button class="like-btn detail-like" data-like-id="badge-maker">
+                        <span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span>
+                        <span class="count">0</span>
+                    </button>
+                </div>
+
+                <h2 class="bm-faq-title">Frequently asked questions</h2>
+                <div class="bm-faq-list">
+            <details class="bm-faq-item">
+                <summary>What is a badge (baji)?</summary>
+                <p>In Chinese fandom slang, "baji" comes from the Japanese "bajji" (badge) and refers to a round tinplate button badge. Common sizes are 32mm, 44mm, 58mm and 75mm. A badge machine presses your artwork, a metal shell and a pin back together.</p>
+            </details>
+            <details class="bm-faq-item">
+                <summary>How much bleed do I need?</summary>
+                <p>The rim wraps around 2-3mm of the artwork, so the printed image must be larger than the finished badge. This tool adds bleed automatically: 2mm for 32/44mm and 3mm for 58/75mm, exported at an exact 300 DPI physical size.</p>
+            </details>
+            <details class="bm-faq-item">
+                <summary>Why must I print at 100% scale?</summary>
+                <p>Choosing "Fit to page" scales the layout and breaks the physical size, so your badge ends up larger or smaller than intended. Always choose "Actual size / 100%", and print a test sheet on plain paper first to measure the cut circle with a ruler.</p>
+            </details>
+            <details class="bm-faq-item">
+                <summary>Is my image uploaded anywhere?</summary>
+                <p>No. Everything runs in your browser using Canvas. Your image never leaves your device and no network connection is needed.</p>
+            </details>
+            <details class="bm-faq-item">
+                <summary>How many badges fit on one A4 sheet?</summary>
+                <p>With a 3mm gap and 8mm margins: 35 badges at 32mm, 15 at 44mm, 8 at 58mm and 6 at 75mm. The gap is adjustable from 0 to 30mm, and counts above the limit are automatically clamped to what actually fits.</p>
+            </details>
+                </div>
+
+                <div class="tool-content">
             <h2>What a badge is, and why it needs a dedicated tool</h2>
             <p>A badge is a round tinplate button: your artwork on top, a metal shell in the middle and a pin at the back, pressed together in one go. The hard part is not the pressing, it is <strong>getting the artwork right</strong> - the result is circular, and 2-3mm around the edge gets wrapped by the rim. With a generic cropper it is easy to end up with a face cut in half or key text swallowed by the rim.</p>
             <h2>Bleed, cut line and safe area</h2>
@@ -404,8 +427,19 @@
             <p>The sheet is generated at an exact 300 DPI physical size - a 58mm badge has a 685px cut circle (58 / 25.4 x 300). If you print with "Fit to page", the browser scales the page to the printable area and the real size drifts to 55mm or 61mm, so the badge no longer matches its nominal size. This gets obvious when you mix several designs. Always start with "Actual size / 100%", print a test on plain paper, and measure the cut circle before using photo paper.</p>
             <h2>Materials and pressing tips</h2>
             <p>Use 120-200g coated or photo paper; thinner stock wrinkles while pressing. Cut along the blue cut line and keep the bleed ring intact. Pressing order: metal shell, clear film, your artwork, pin back - align the centre and press in one stroke. Screens are RGB while printers are CMYK, so prints usually look slightly darker and less saturated; test print anything that matters.</p>
+                </div>
+
+                <div class="related-tools">
+                    <h3>Related tools</h3>
+                    <ul>
+                <li><a href="/en/image/image-crop">Image Cropper</a></li>
+                <li><a href="/en/image/resize">Image Resizer</a></li>
+                <li><a href="/en/image/compress">Image Compressor</a></li>
+                <li><a href="/en/image/convert">Image Converter</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
+        </details>
     </main>
 <footer>
     <div class="footer-links">

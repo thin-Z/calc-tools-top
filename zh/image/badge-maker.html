@@ -39,7 +39,8 @@
         "@type": "BreadcrumbList",
         "itemListElement": [
             { "@type": "ListItem", "position": 1, "name": "在线工具", "item": "https://www.calc-tools.top/" },
-            { "@type": "ListItem", "position": 2, "name": "在线吧唧制作", "item": "https://www.calc-tools.top/zh/image/badge-maker" }
+            { "@type": "ListItem", "position": 2, "name": "图片工具", "item": "https://www.calc-tools.top/zh/image/" },
+            { "@type": "ListItem", "position": 3, "name": "在线吧唧制作", "item": "https://www.calc-tools.top/zh/image/badge-maker" }
         ]
     }
     </script>
@@ -102,30 +103,17 @@
         <button id="theme-toggle" class="theme-toggle" aria-label="切换暗黑模式"><span class="theme-icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-sun"></use></svg></span></button>
     </nav>
 </header>
+    <header class="bm-hero-bar">
+        <div class="bm-hero-inner">
+            <a class="bm-back" href="/zh/image/">
+                <svg class="ic bm-back-ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-arrow-right"></use></svg>图片工具
+            </a>
+            <h1 class="bm-title">在线吧唧制作</h1>
+            <span class="bm-privacy">图片不上传 · 浏览器本地处理</span>
+        </div>
+    </header>
     <main id="main">
-        <div class="tool-page">
-            <div class="tool-header">
-                <span class="tool-privacy-badge">图片不上传 · 浏览器本地处理</span>
-                <h1><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-image"></use></svg> 在线吧唧制作</h1>
-                <p>上传图片，拖拽裁剪成圆形吧唧。可导出拟真马口铁效果预览图发图交流，也可按 300 DPI 输出含出血线的 A4 打印稿，自己压制成实物。</p>
-            </div>
-            <div class="detail-like-wrap">
-                <button class="like-btn detail-like" data-like-id="badge-maker">
-                    <span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span>
-                    <span class="count">0</span>
-                </button>
-            </div>
-            <div class="related-tools">
-                <h3>相关工具</h3>
-                <ul>
-                <li><a href="/zh/image/image-crop">图片裁剪</a></li>
-                <li><a href="/zh/image/resize">图片改尺寸</a></li>
-                <li><a href="/zh/image/compress">图片压缩</a></li>
-                <li><a href="/zh/image/convert">图片格式转换</a></li>
-                </ul>
-            </div>
-
-            <div class="badge-maker-root">
+        <div class="badge-maker-root">
 
 <!-- ============================ 顶栏 ============================ -->
 <header class="topbar">
@@ -393,9 +381,44 @@
 
 <div id="printArea"><canvas id="printCanvas"></canvas></div>
 
-            </div>
+        </div>
 
-            <div class="tool-content">
+        <details class="bm-seo">
+            <summary>了解吧唧制作 · 常见问题 · 相关工具</summary>
+            <div class="tool-page bm-seo-body">
+                <p class="bm-lead">上传图片，拖拽裁剪成圆形吧唧。可导出拟真马口铁效果预览图发图交流，也可按 300 DPI 输出含出血线的 A4 打印稿，自己压制成实物。</p>
+                <div class="detail-like-wrap">
+                    <button class="like-btn detail-like" data-like-id="badge-maker">
+                        <span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span>
+                        <span class="count">0</span>
+                    </button>
+                </div>
+
+                <h2 class="bm-faq-title">常见问题</h2>
+                <div class="bm-faq-list">
+            <details class="bm-faq-item">
+                <summary>吧唧是什么？</summary>
+                <p>吧唧是「徽章」的日语音译（バッジ），在二次元圈特指马口铁材质的圆形胸章，直径常见 32mm、44mm、58mm、75mm，用吧唧机把图片、金属底盖和别针压合制成。</p>
+            </details>
+            <details class="bm-faq-item">
+                <summary>做吧唧需要留多少出血？</summary>
+                <p>吧唧的包边会卷进去 2–3mm，所以图片要做得比成品大一圈。本工具按规格自动加出血：32/44mm 加 2mm，58/75mm 加 3mm，并按 300 DPI 输出精确物理尺寸。</p>
+            </details>
+            <details class="bm-faq-item">
+                <summary>打印时为什么必须选 100% 比例？</summary>
+                <p>一旦选择「适应页面」「缩放以适合」，浏览器会按比例缩放版面，物理尺寸就错了，压出来的吧唧会偏大或偏小。请务必选「实际大小 / 100%」，并先打一张普通纸用尺子量裁切圆确认。</p>
+            </details>
+            <details class="bm-faq-item">
+                <summary>我的图片会被上传吗？</summary>
+                <p>不会。所有处理都在你的浏览器里用 Canvas 完成，图片不会离开你的设备，也不需要联网。</p>
+            </details>
+            <details class="bm-faq-item">
+                <summary>A4 一张纸能排多少枚？</summary>
+                <p>按间距 3mm、四周留白 8mm 计算：32mm 可排 35 枚，44mm 可排 15 枚，58mm 可排 8 枚，75mm 可排 6 枚。枚间距可在 0–30mm 调整，超过上限会自动夹取到可排的最大值。</p>
+            </details>
+                </div>
+
+                <div class="tool-content">
             <h2>什么是吧唧，为什么需要专门的制作工具</h2>
             <p>吧唧是马口铁徽章的俗称，源自日语「バッジ」。它的结构很简单：正面是你的图片，中间是金属底盖，背面是别针，用吧唧机一次压合。难点不在压制，而在<strong>图片要做对</strong>——因为成品是圆形，且边缘 2–3mm 会被包边卷进去。如果用普通裁剪工具，很容易做出「脸被切掉一半」或「重要文字被卷进包边」的成品。</p>
             <h2>出血、裁切线、安全区分别是什么</h2>
@@ -404,8 +427,19 @@
             <p>打印稿是按 300 DPI 生成的精确物理尺寸——58mm 规格的裁切圆就是 685 像素（58 ÷ 25.4 × 300）。如果打印时选了「适应页面」，浏览器会把整页缩放到纸张可用区域，实际尺寸可能变成 55mm 或 61mm，压出来的吧唧就和标称规格对不上，多个图案混排时尤其明显。因此第一步请永远选「实际大小 / 100%」，并建议先打一张普通纸，用尺子量裁切圆确认无误再上相纸。</p>
             <h2>选材与压制建议</h2>
             <p>纸张建议 120–200g 铜版纸或相纸，太薄压制时容易起皱。打印后沿蓝色裁切线剪下，圆圈外的出血区不要剪掉。压制顺序为：金属底盖 → 透明膜 → 你的图片 → 别针底，对齐中心后一次压到底。屏幕是 RGB、打印是 CMYK，成品颜色通常比屏幕稍暗、饱和度稍低，重要作品建议先试印一张。</p>
+                </div>
+
+                <div class="related-tools">
+                    <h3>相关工具</h3>
+                    <ul>
+                <li><a href="/zh/image/image-crop">图片裁剪</a></li>
+                <li><a href="/zh/image/resize">图片改尺寸</a></li>
+                <li><a href="/zh/image/compress">图片压缩</a></li>
+                <li><a href="/zh/image/convert">图片格式转换</a></li>
+                    </ul>
+                </div>
             </div>
-        </div>
+        </details>
     </main>
 <footer>
     <div class="footer-links">
