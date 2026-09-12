@@ -4464,6 +4464,15 @@ mark {
 .check-card:has(input:checked) .check-box::after {
     transform: rotate(45deg) scale(1);
 }
+/* T-8 :has() fallback：旧浏览器（如 Firefox ESR）不支持 :has()，勾选框会不可见。
+   用兄弟选择器兜底勾选态（卡片边框高亮无法用兄弟选择器表达，仅降级不做）。 */
+.check-card input:checked + .check-box {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+.check-card input:checked + .check-box::after {
+    transform: rotate(45deg) scale(1);
+}
 .check-card input:focus-visible + .check-box {
     outline: 2px solid var(--primary);
     outline-offset: 2px;

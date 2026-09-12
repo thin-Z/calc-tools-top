@@ -68,3 +68,27 @@ test.describe('R-3 brand consistency regression (D7)', () => {
     expect(tagColor).not.toBe('rgb(196, 181, 253)');
   });
 });
+
+test.describe('T-8 check-card :has() fallback (勾选可见性)', () => {
+  test('checked .check-box renders primary background (via :has() or sibling fallback)', async ({ page }) => {
+    await page.goto('/zh/calculators/password-gen.html', { waitUntil: 'domcontentloaded' });
+    await dismissCmp(page);
+    const states = await page.evaluate(() => {
+      // 固定观察第一个字符集的 check-box，避免动态查询选中其他仍勾选的项
+      const input = document.querySelector('.check-card input[type="checkbox"]');
+      const cb = input.nextElementSibling; // <span class="check-box">
+      cb.style.transition = 'none'; // .check-box 有 0.15s background 过渡，同步读会拿到过渡中间值
+      const read = () => getComputedStyle(cb).backgroundColor;
+      const checkedBg = read();
+      input.checked = false; // 取消勾选，背景必须变化（:has() 与兄弟 fallback 任一生效都应如此）
+      const uncheckedBg = read();
+      input.checked = true;
+      const recheckedBg = read();
+      return { checkedBg, uncheckedBg, recheckedBg };
+    });
+    expect(states.checkedBg, '勾选态应有主色背景').toBeTruthy();
+    expect(states.checkedBg, '勾选态背景不应为透明').not.toBe('rgba(0, 0, 0, 0)');
+    expect(states.uncheckedBg, '取消勾选后背景必须变化（勾选可见性的行为证据）').not.toBe(states.checkedBg);
+    expect(states.recheckedBg, '重新勾选后背景恢复').toBe(states.checkedBg);
+  });
+});
