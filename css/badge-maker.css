@@ -225,28 +225,6 @@
 .field input[type="number"]{ -moz-appearance:textfield; appearance:textfield; }
 .field .unit{ font-size:12.5px; color:var(--text-3); flex:none; }
 
-/* 文本输入（文字层内容） */
-.field-text{ margin-top:4px; min-width:0; }
-.field-text input{
-  border:0; background:transparent; outline:none;
-  width:100%; font-family:inherit; font-size:14px;
-  font-weight:600; color:var(--text); text-align:left;
-}
-.field-text input::placeholder{ color:var(--text-3); font-weight:500; }
-
-/* 颜色选择器（色块 + 圆角外观） */
-.badge-maker-root input[type="color"]{
-  width:44px; height:30px; flex:none;
-  padding:0; border:1px solid var(--line); border-radius:9px;
-  background:#fff; cursor:pointer;
-  transition:border-color .15s ease, box-shadow .15s ease;
-}
-.badge-maker-root input[type="color"]:hover{ border-color:rgba(0,122,255,.45); }
-.badge-maker-root input[type="color"]:focus-visible{ outline:2px solid rgba(0,122,255,.5); outline-offset:2px; }
-.badge-maker-root input[type="color"]::-webkit-color-swatch-wrapper{ padding:3px; }
-.badge-maker-root input[type="color"]::-webkit-color-swatch{ border:none; border-radius:6px; }
-.badge-maker-root input[type="color"]::-moz-color-swatch{ border:none; border-radius:6px; }
-
 /* iOS 风格开关 */
 .switch{
   -webkit-appearance:none; appearance:none;
@@ -267,7 +245,6 @@
 
 /* 药丸按钮组 */
 .pill-grid{ display:grid; gap:8px; }
-.pill-grid-3{ grid-template-columns:repeat(3,1fr); }
 .pill-grid-4{ grid-template-columns:repeat(4,1fr); }
 .pill-grid-5{ grid-template-columns:repeat(5,1fr); }
 .pill{
@@ -516,6 +493,88 @@ kbd{
   .preview-canvas-sm{ width:min(100%, 160px); }
   .preview-canvas-a4{ width:min(100%, 130px); }
 }
+/* --------------------------- 全屏模式 --------------------------- */
+#btnFullscreen .fs-ico{ flex:none; }
+.fs-exit{
+  position:fixed; top:16px; right:16px; z-index:200;
+  display:none; align-items:center; gap:6px;
+  font-family:inherit; font-size:13px; font-weight:600;
+  color:#fff; background:rgba(15,23,42,.62);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:999px; padding:9px 14px; cursor:pointer;
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  box-shadow:0 6px 20px rgba(0,0,0,.28);
+}
+.fs-exit:hover{ background:rgba(15,23,42,.78); }
+.fs-exit svg{ flex:none; }
+
+/* 全屏开启：隐藏顶栏与侧栏，画布占满整屏 */
+body.is-fullscreen .fs-exit{ display:inline-flex; }
+body.is-fullscreen .topbar{ display:none; }
+body.is-fullscreen .panel{ display:none; }
+body.is-fullscreen .layout{
+  max-width:none; margin:0; padding:0;
+  height:100vh; grid-template-columns:minmax(0,1fr);
+  gap:0; align-items:stretch;
+}
+body.is-fullscreen .workspace{
+  height:100vh; justify-content:center; align-items:center;
+  padding:24px; gap:0;
+}
+body.is-fullscreen .workspace > *:not(.editor-card){ display:none; }
+body.is-fullscreen .editor-card{
+  height:100%; width:100%; max-width:1100px;
+  display:flex; flex-direction:column;
+}
+body.is-fullscreen .editor-stage{ flex:1; min-height:0; }
+body.is-fullscreen .editor-canvas{
+  width:min(90vmin, 940px); height:min(90vmin, 940px);
+  max-width:none; aspect-ratio:1 / 1;
+}
+
+@media (max-width:720px){
+  .fs-exit span{ display:none; }
+  .fs-exit{ padding:9px; }
+}
+
+/* --------------------------- 文字 / 工程 控件 --------------------------- */
+.text-field{ display:flex; flex-direction:column; gap:6px; margin-top:12px; }
+.text-field label{ font-size:12px; color:var(--text-2); font-weight:600; }
+.text-input{
+  font-family:inherit; font-size:14px; color:var(--text);
+  border:1px solid var(--line); border-radius:var(--radius-sm);
+  padding:9px 11px; background:rgba(255,255,255,.72); width:100%;
+  transition:border-color .18s ease, box-shadow .18s ease;
+}
+.text-input:focus{ outline:none; border-color:var(--blue); box-shadow:0 0 0 3px rgba(0,122,255,.16); }
+.text-field-inline{ flex-direction:row; align-items:center; justify-content:space-between; margin-top:10px; }
+.text-field-inline label{ margin:0; }
+.color-input{
+  width:34px; height:28px; padding:0; border:1px solid var(--line);
+  border-radius:8px; background:none; cursor:pointer;
+}
+.color-input::-webkit-color-swatch-wrapper{ padding:2px; }
+.color-input::-webkit-color-swatch{ border:none; border-radius:6px; }
+.muted{ color:var(--text-3); font-size:12px; font-weight:600; }
+
+/* --------------------------- 换图队列（BM-2 #5） --------------------------- */
+.queue-list{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+.queue-item{
+  position:relative; width:48px; height:48px; border-radius:10px; overflow:hidden;
+  border:1px solid var(--line); background:rgba(0,0,0,.04);
+}
+.queue-item img{ width:100%; height:100%; object-fit:cover; display:block; }
+.queue-item .q-remove{
+  position:absolute; top:1px; right:1px; width:18px; height:18px; line-height:16px; text-align:center;
+  border:none; border-radius:50%; background:rgba(20,24,33,.72); color:#fff; font-size:12px; cursor:pointer; padding:0;
+}
+.queue-empty{ font-size:12px; color:var(--text-3); margin-top:10px; }
+
+/* --------------------------- 工厂规范 / 下单指引（BM-2 #6） --------------------------- */
+.guide-box{ margin-top:14px; border:1px solid var(--line); border-radius:var(--radius-sm); overflow:hidden; }
+.guide-spec{ font-size:12.5px; color:var(--text-2); line-height:1.6; margin:0; padding:0; }
+.guide-steps{ margin:10px 0 12px; padding-left:18px; color:var(--text-2); font-size:12.5px; line-height:1.75; }
+.guide-steps b{ color:var(--text); }
 
 /* =========================================================================
    沉浸式工作台布局（页面级，bm-* 前缀全站唯一）
@@ -537,3 +596,19 @@ body:has(.badge-maker-root) .site-logo{ height:26px; width:auto; vertical-align:
 .bm-privacy{ font-size:12px; color:var(--text-secondary,#6b7280); padding:4px 10px; border:1px solid var(--border,#e5e7eb);
   border-radius:999px; white-space:nowrap; }
 @media (max-width:720px){ .bm-privacy{ display:none; } .bm-hero-inner{ padding:8px 12px; gap:8px; } }
+.bm-seo{ max-width:1080px; margin:28px auto 48px; padding:0 16px; }
+.bm-seo > summary{ list-style:none; cursor:pointer; user-select:none; display:flex; align-items:center; justify-content:space-between;
+  gap:12px; padding:14px 18px; border:1px solid var(--border,#e5e7eb); border-radius:12px; background:var(--bg-card,#fff);
+  font-weight:600; font-size:15px; color:var(--text,#111827); transition:border-color .15s; }
+.bm-seo > summary:hover{ border-color:color-mix(in srgb, var(--primary,#007AFF) 40%, var(--border,#e5e7eb)); }
+.bm-seo > summary::-webkit-details-marker{ display:none; }
+.bm-seo > summary::after{ content:'+'; font-size:20px; font-weight:500; color:var(--text-secondary,#6b7280);
+  transition:transform .18s; line-height:1; }
+.bm-seo[open] > summary::after{ transform:rotate(45deg); }
+.bm-seo-body{ padding-top:20px; }
+.bm-lead{ color:var(--text-secondary,#6b7280); font-size:15px; line-height:1.7; margin:0 0 18px; }
+.bm-faq-title{ font-size:20px; margin:26px 0 14px; }
+.bm-faq-item{ border:1px solid var(--border,#e5e7eb); border-radius:10px; margin-bottom:10px; padding:12px 16px;
+  background:var(--bg-card,#fff); }
+.bm-faq-item summary{ cursor:pointer; font-weight:600; font-size:14px; color:var(--text,#111827); }
+.bm-faq-item p{ margin:10px 0 2px; font-size:14px; line-height:1.75; color:var(--text-secondary,#4b5563); }

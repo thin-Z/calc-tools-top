@@ -23,7 +23,7 @@
     "含出血": "With bleed",
     "mm · 出血 ": "mm · bleed ",
     "mm · 含出血 ": "mm · with bleed ",
-    " · 裁切 ": " · cut ",
+    " · 裁切圆 ": " · cut circle ",
     " · 含出血 ": " · with bleed ",
     "原图 ": "Original ",
     "（已自动降采样）": " (auto downsampled)",
@@ -64,7 +64,52 @@
     " 枚（由规格与枚间距推导）": " pcs (derived from spec and gap)",
     " 枚（当前实际生效枚数，由规格与枚间距推导）": " pcs (actual active count, derived from spec and gap)",
     "，超出上限：A4 上最多可排 ": ", over the limit: A4 fits up to ",
-    " 枚，已自动夹取为 ": " pcs, automatically clamped to "
+    " 枚，已自动夹取为 ": " pcs, automatically clamped to ",
+    "无": "None",
+    "双线": "Double line",
+    "虚线": "Dashed",
+    "波浪": "Wave",
+    "星点": "Star dots",
+    "纯色环": "Solid ring",
+    "已去背景（移除 ": "Background removed (removed ",
+    " 像素）": " px)",
+    "未检测到可去除的背景": "No removable background found",
+    "已智能增强（锐化 + 对比度）": "Enhanced (sharpen + contrast)",
+    "calc-tools.top 免费制作": "Made with calc-tools.top",
+    "请先导入图片或添加换图队列": "Please import an image or add a queue first",
+    "当前环境不支持导出 PDF，请改用 PNG": "PDF export is not supported in this environment, please use PNG",
+    "PDF 导出需要 JPEG 编码，请改用 PNG": "PDF export needs JPEG encoding, please use PNG",
+    "图": "Image ",
+    "尚未添加图片": "No images added yet",
+    "移除": "Remove",
+    " 张": " pcs",
+    "当前 A4 拼版将循环填入 ": "A4 sheet will cycle through ",
+    " 张不同图案": " different designs",
+    "未启用队列：A4 拼版使用同一图案阵列": "Queue off: A4 sheet repeats the same design",
+    "工程文件格式不正确": "Invalid project file format",
+    "已载入工程": "Project loaded",
+    "（无图片）": " (no image)",
+    "工程内图片解码失败": "Failed to decode the image in the project",
+    "请先导入图片或添加换图队列再保存工程": "Please import an image or add a queue before saving",
+    "已保存工程文件": "Project file saved",
+    "工程文件解析失败": "Failed to parse the project file",
+    "工程文件读取失败": "Failed to read the project file",
+    "队列图片加载失败": "Failed to load the queue image",
+    "规格：成品 ": "Spec: finish ",
+    "【badge-maker 工厂规范导出说明】": "[badge-maker factory-spec export notes]",
+    "mm，出血 ": "mm, bleed ",
+    "mm，含出血 ": "mm, with bleed ",
+    "分辨率：300 DPI（A4 拼版 ": "Resolution: 300 DPI (A4 sheet ",
+    "px）": "px)",
+    "下单步骤：": "Order steps:",
+    "1. 导出 PNG / PDF 印刷稿（已含出血 / 裁切 / 安全区辅助线）": "1. Export the PNG / PDF print sheet (bleed / cut / safe-area guides included)",
+    "2. 确认出血线外无重要内容、文字在安全区内": "2. Make sure nothing important falls outside the bleed line and text stays inside the safe area",
+    "3. 去柔造 / 1688「哇噢定制」等平台上传，选对应规格与工艺（亮面 / 哑膜）": "3. Upload to platforms such as Rouzao / 1688 \"Wao Custom\", then pick the matching spec and finish (glossy / matte)",
+    "4. 无设备可直接平台打样邮寄；有设备自印": "4. No press? Order a sample from the platform. Have a press? Print it yourself.",
+    "已复制下单指引": "Order guide copied",
+    "复制失败，请手动选择文本": "Copy failed, please select the text manually",
+    "退出全屏": "Exit full screen",
+    "全屏": "Full screen"
   };
   var BM_LANG = (function () {
     try {
@@ -86,6 +131,7 @@
   var MM_PER_INCH = 25.4;
   var DPI = 300;                                   // 打印输出分辨率
   var A4_MM = { w: 210, h: 297 };                  // A4 物理尺寸
+  var A4_PT = { w: 595.28, h: 841.89 };            // A4 物理尺寸（PostScript 点，72pt/inch）
   var A4_MARGIN_MM = 8;                            // A4 四周打印安全边距
   var SAFE_INSET_MM = 2;                           // 安全区距裁切线内缩量
   var MAX_IMAGE_SIDE = 4000;                       // 超大图降采样阈值
@@ -95,9 +141,6 @@
   var PREVIEW_FACE_RATIO = 0.74;                   // 预览图中成品圆占输出边长的比例（预留投影空间）
   var HISTORY_LIMIT = 60;
   var PREVIEW_SIZES = [512, 1024, 2048];
-
-  /** 形状：circle=圆形（成品默认）；rounded=圆角方形（圆角 22%）；square=方形 */
-  var ROUNDED_RADIUS_RATIO = 0.22;
 
   /** 规格表：diameter=成品直径(mm)，bleed=单边出血(mm)，total=含出血直径(mm) */
   var SPECS = [
@@ -128,17 +171,12 @@
     contrast: 0,
     saturation: 0,
     specId: DEFAULT_SPEC_ID,
-    // ---- 设计参数（形状 / 颜色 / 文字）----
-    shape: 'circle',            // circle | rounded | square
-    bgColor: '#FFFFFF',         // 徽章底色（填充图片未覆盖区域）
-    rimColor: '#C8D0DA',        // 拟真效果金属包边基色
-    textOn: false,              // 是否叠加文字
-    textContent: '',
-    textColor: '#111111',
-    textSize: 12,               // 相对成品边长（直径）的百分比
-    textPos: 'bottom',          // top | center | bottom
-    textStroke: false,
-    textStrokeColor: '#FFFFFF'
+    text: makeDefaultText(),
+    border: makeDefaultBorder(),
+    shape: 'circle',          // 形状/版型：circle | square | heart | card
+    bgColor: '#FFFFFF',       // 徽章底色（图片未覆盖处 / 纯圆底）
+    rimColor: '#C8D0DA',      // 拟真效果金属包边基色（派生 7 档明暗渐变）
+    queue: []                // 多图拼版队列：[{image, imgW, imgH, name}]
   };
 
   var opts = {
@@ -150,7 +188,10 @@
     showGuides: true,
     showLabels: true,
     count: 20,
-    gap: 3                    // mm
+    gap: 3,                   // mm
+    special: 'none',          // 底纹工艺：none | star | holographic | brushed
+    useQueue: false,          // 启用换图队列多图拼版
+    shareBadge: false        // 导出图带「calc-tools.top 制作」角标
   };
 
   var history = [];
@@ -166,6 +207,23 @@
   function clamp(v, a, b) { return v < a ? a : (v > b ? b : v); }
 
   function norm360(deg) { var d = deg % 360; return d < 0 ? d + 360 : d; }
+
+  /** #RRGGBB → {r,g,b}；非法输入回落中性灰，避免 NaN 污染渲染 */
+  function hexToRgb(hex) {
+    var s = String(hex || '').replace('#', '');
+    if (s.length === 3) { s = s[0] + s[0] + s[1] + s[1] + s[2] + s[2]; }
+    var n = parseInt(s, 16);
+    if (!isFinite(n) || s.length !== 6) { return { r: 200, g: 208, b: 218 }; }
+    return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+  }
+
+  /** 颜色明暗派生：RGB × f（截断到 0-255），用于由「包边基色」派生金属渐变 */
+  function shade(hex, f) {
+    var c = hexToRgb(hex);
+    return 'rgb(' + Math.round(clamp(c.r * f, 0, 255)) + ',' +
+      Math.round(clamp(c.g * f, 0, 255)) + ',' +
+      Math.round(clamp(c.b * f, 0, 255)) + ')';
+  }
 
   function mmToPx(mm) { return mm * DPI / MM_PER_INCH; }
 
@@ -194,83 +252,6 @@
   }
 
   /* =====================================================================
-   * 形状与颜色工具
-   * =================================================================== */
-
-  /** 圆角矩形路径（不 beginPath，由调用方控制路径生命周期） */
-  function roundRectPath(ctx, x, y, w, h, r) {
-    if (r <= 0) {
-      ctx.rect(x, y, w, h);
-      return;
-    }
-    ctx.moveTo(x + r, y);
-    ctx.arcTo(x + w, y, x + w, y + h, r);
-    ctx.arcTo(x + w, y + h, x, y + h, r);
-    ctx.arcTo(x, y + h, x, y, r);
-    ctx.arcTo(x, y, x + w, y, r);
-    ctx.closePath();
-  }
-
-  /**
-   * 构建成品轮廓路径（圆 / 圆角方 / 方），size 为完整边长（直径）。
-   * 调用方式：ctx.beginPath(); facePath(ctx, cx, cy, size, shape); …clip()/fill()/stroke()
-   */
-  function facePath(ctx, cx, cy, size, shape) {
-    var half = size / 2;
-    if (shape === 'rounded') {
-      roundRectPath(ctx, cx - half, cy - half, size, size, size * ROUNDED_RADIUS_RATIO);
-    } else if (shape === 'square') {
-      roundRectPath(ctx, cx - half, cy - half, size, size, 0);
-    } else {
-      // moveTo 防止与既有子路径（如 evenodd 遮罩矩形）之间产生连接线
-      ctx.moveTo(cx + half, cy);
-      ctx.arc(cx, cy, half, 0, Math.PI * 2);
-    }
-  }
-
-  function hexToRgb(hex) {
-    var h = String(hex || '').replace('#', '');
-    if (h.length === 3) {
-      h = h.charAt(0) + h.charAt(0) + h.charAt(1) + h.charAt(1) + h.charAt(2) + h.charAt(2);
-    }
-    var n = parseInt(h, 16);
-    if (isNaN(n) || h.length !== 6) { return { r: 200, g: 208, b: 218 }; }
-    return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
-  }
-
-  /** 颜色明暗派生：f>1 提亮，f<1 压暗 */
-  function shade(hex, f) {
-    var c = hexToRgb(hex);
-    var r = Math.round(clamp(c.r * f, 0, 255));
-    var g = Math.round(clamp(c.g * f, 0, 255));
-    var b = Math.round(clamp(c.b * f, 0, 255));
-    return 'rgb(' + r + ',' + g + ',' + b + ')';
-  }
-
-  /* =====================================================================
-   * 文字层：绘制在成品轮廓内（调用方需已 clip），所有导出共享同一渲染
-   * =================================================================== */
-
-  function drawTextLayer(ctx, cx, cy, faceD) {
-    if (!state.textOn || !state.textContent) { return; }
-    var fs = Math.max(2, faceD * (state.textSize / 100));
-    var y = cy + (state.textPos === 'top' ? -faceD * 0.30 : (state.textPos === 'center' ? 0 : faceD * 0.30));
-    ctx.save();
-    ctx.font = '700 ' + fs + 'px ' + getComputedStyle(document.body).fontFamily;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    if (state.textStroke) {
-      ctx.lineJoin = 'round';
-      ctx.lineWidth = Math.max(1, fs * 0.16);
-      ctx.strokeStyle = state.textStrokeColor;
-      ctx.strokeText(state.textContent, cx, y);
-    }
-    ctx.fillStyle = state.textColor;
-    ctx.fillText(state.textContent, cx, y);
-    ctx.restore();
-  }
-
-  /* =====================================================================
    * 渲染核心：把图片按当前变换绘制到指定画布坐标
    * ---------------------------------------------------------------------
    * 变换归一化策略：tx/ty 以「成品圆直径」为单位，zoom 相对于「含出血圆 cover」，
@@ -278,10 +259,12 @@
    * 实现真正的所见即所得（WYSIWYG）。
    * =================================================================== */
 
-  function baseFitFor(faceD, specId) {
+  function baseFitFor(faceD, specId, src) {
     var spec = getSpec(specId);
     var bleedD = faceD * (spec.total / spec.diameter);
-    return Math.max(bleedD / state.imgW, bleedD / state.imgH);
+    var iw = src ? src.imgW : state.imgW;
+    var ih = src ? src.imgH : state.imgH;
+    return Math.max(bleedD / iw, bleedD / ih);
   }
 
   function filterString(st) {
@@ -300,18 +283,21 @@
    * 注意：平移必须在 rotate / scale **之前**叠加，因为手势求解把手势位移
    * 定义在画布空间（未旋转）上。
    */
-  function renderImageTo(ctx, cx, cy, faceD, st) {
+  function renderImageTo(ctx, cx, cy, faceD, st, src) {
     var s = st || state;
-    if (!state.image) { return; }
-    var fit = baseFitFor(faceD, s.specId) * s.zoom;
-    var w = state.imgW * fit;
-    var h = state.imgH * fit;
+    var im = src ? src.image : state.image;
+    if (!im) { return; }
+    var iw = src ? src.imgW : state.imgW;
+    var ih = src ? src.imgH : state.imgH;
+    var fit = baseFitFor(faceD, s.specId, src) * s.zoom;
+    var w = iw * fit;
+    var h = ih * fit;
     ctx.save();
     ctx.translate(cx + s.tx * faceD, cy + s.ty * faceD);
     ctx.rotate(s.rot * Math.PI / 180);
     ctx.scale(s.flipH ? -1 : 1, s.flipV ? -1 : 1);
     ctx.filter = filterString(s);
-    ctx.drawImage(state.image, -w / 2, -h / 2, w, h);
+    ctx.drawImage(im, -w / 2, -h / 2, w, h);
     ctx.filter = 'none';
     ctx.restore();
   }
@@ -340,12 +326,11 @@
    * 拟真马口铁徽章绘制
    * =================================================================== */
 
-  /** 表面光效：顶部柔光 + 底部暗角（+ 亮面镜面反射）；裁剪跟随当前形状 */
-  function drawSurfaceLight(ctx, cx, cy, faceD, glossy) {
+  /** 表面光效：顶部柔光 + 底部暗角（+ 亮面镜面反射） */
+  function drawSurfaceLight(ctx, cx, cy, faceD, glossy, shape) {
     var r = faceD / 2;
     ctx.save();
-    ctx.beginPath();
-    facePath(ctx, cx, cy, faceD, state.shape);
+    tracePath(ctx, cx, cy, r, shape);
     ctx.clip();
 
     // 顶部柔光
@@ -392,17 +377,15 @@
     ctx.restore();
   }
 
-  /** 拟真徽章：金属包边 + 高光 + 投影（形状感知：圆 / 圆角方 / 方） */
+  /** 拟真徽章：金属包边 + 高光 + 投影 */
   function drawRealisticBadge(ctx, cx, cy, faceD) {
     var glossy = opts.surface === 'glossy';
-    var shape = state.shape;
     var rimW = faceD * 0.045;
-    var outerS = faceD + rimW * 2;               // 含包边的完整外轮廓边长
+    var outerR = faceD / 2 + rimW;
 
     // 1) 投影 + 底色
     ctx.save();
-    ctx.beginPath();
-    facePath(ctx, cx, cy, outerS, shape);
+    tracePath(ctx, cx, cy, outerR, state.shape);
     ctx.shadowColor = 'rgba(9,14,24,0.38)';
     ctx.shadowBlur = faceD * 0.10;
     ctx.shadowOffsetY = faceD * 0.035;
@@ -410,81 +393,362 @@
     ctx.fill();
     ctx.restore();
 
-    // 2) 底色 + 图像（裁到外圈）
+    // 2) 底色 + 图像（裁到外形）
     ctx.save();
-    ctx.beginPath();
-    facePath(ctx, cx, cy, outerS, shape);
+    tracePath(ctx, cx, cy, outerR, state.shape);
     ctx.clip();
     ctx.fillStyle = state.bgColor;
-    ctx.fillRect(cx - outerS, cy - outerS, outerS * 2, outerS * 2);
+    ctx.fillRect(cx - outerR, cy - outerR, outerR * 2, outerR * 2);
     renderImageTo(ctx, cx, cy, faceD);
     ctx.restore();
 
-    // 3) 表面光效（裁到成品轮廓）
-    ctx.save();
-    ctx.beginPath();
-    facePath(ctx, cx, cy, faceD, shape);
-    ctx.clip();
-    drawSurfaceLight(ctx, cx, cy, faceD, glossy);
-    drawTextLayer(ctx, cx, cy, faceD);
-    ctx.restore();
+    // 3) 表面光效（按形状裁切）
+    drawSurfaceLight(ctx, cx, cy, faceD, glossy, state.shape);
 
-    // 4) 金属包边（由包边基色派生的渐变描边，模拟马口铁卷边）
-    var base = state.rimColor;
-    var g = ctx.createLinearGradient(cx - outerS * 0.38, cy - outerS / 2, cx + outerS * 0.38, cy + outerS / 2);
-    g.addColorStop(0.00, shade(base, 1.18));
-    g.addColorStop(0.16, shade(base, 1.05));
-    g.addColorStop(0.38, shade(base, 0.72));
-    g.addColorStop(0.54, shade(base, 1.12));
-    g.addColorStop(0.74, shade(base, 0.68));
-    g.addColorStop(0.90, shade(base, 0.96));
-    g.addColorStop(1.00, shade(base, 1.15));
+    // 4) 金属包边（形状描边，模拟马口铁卷边）
+    var rimBase = state.rimColor;
+    var g = ctx.createLinearGradient(cx - outerR * 0.75, cy - outerR, cx + outerR * 0.75, cy + outerR);
+    g.addColorStop(0.00, shade(rimBase, 1.18));
+    g.addColorStop(0.16, shade(rimBase, 1.05));
+    g.addColorStop(0.38, shade(rimBase, 0.72));
+    g.addColorStop(0.54, shade(rimBase, 1.12));
+    g.addColorStop(0.74, shade(rimBase, 0.68));
+    g.addColorStop(0.90, shade(rimBase, 0.96));
+    g.addColorStop(1.00, shade(rimBase, 1.15));
     ctx.save();
-    ctx.beginPath();
-    facePath(ctx, cx, cy, faceD + rimW, shape);
+    tracePath(ctx, cx, cy, faceD / 2 + rimW / 2, state.shape);
     ctx.lineWidth = rimW;
     ctx.strokeStyle = g;
     ctx.stroke();
     ctx.restore();
 
-    // 5) 包边顶侧高光细线
-    ctx.save();
-    ctx.beginPath();
-    facePath(ctx, cx, cy, outerS - rimW * 0.30, shape);
-    ctx.strokeStyle = 'rgba(255,255,255,0.45)';
-    ctx.lineWidth = Math.max(1, rimW * 0.17);
-    ctx.stroke();
-    ctx.restore();
+    if (state.shape === 'circle') {
+      // 5) 包边顶侧高光细线
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, outerR - rimW * 0.30, Math.PI * 1.03, Math.PI * 1.97);
+      ctx.strokeStyle = 'rgba(255,255,255,0.78)';
+      ctx.lineWidth = Math.max(1, rimW * 0.17);
+      ctx.stroke();
+      ctx.restore();
 
-    // 6) 内圈压痕（图像与包边分界）
-    ctx.save();
-    ctx.beginPath();
-    facePath(ctx, cx, cy, faceD, shape);
-    ctx.strokeStyle = 'rgba(20,26,36,0.20)';
-    ctx.lineWidth = Math.max(1, faceD * 0.005);
-    ctx.stroke();
-    ctx.restore();
+      // 6) 内圈压痕（图像与包边分界）
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, faceD / 2, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(20,26,36,0.20)';
+      ctx.lineWidth = Math.max(1, faceD * 0.005);
+      ctx.stroke();
+      ctx.restore();
 
-    // 7) 外缘描边
-    ctx.save();
-    ctx.beginPath();
-    facePath(ctx, cx, cy, outerS - Math.max(0.5, faceD * 0.0025), shape);
-    ctx.strokeStyle = 'rgba(20,26,36,0.28)';
-    ctx.lineWidth = Math.max(1, faceD * 0.006);
-    ctx.stroke();
-    ctx.restore();
+      // 7) 外缘描边
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, outerR - Math.max(0.5, faceD * 0.0025), 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(20,26,36,0.28)';
+      ctx.lineWidth = Math.max(1, faceD * 0.006);
+      ctx.stroke();
+      ctx.restore();
+    } else {
+      // 7) 外缘描边（沿形状）
+      ctx.save();
+      tracePath(ctx, cx, cy, outerR - Math.max(0.5, faceD * 0.0025), state.shape);
+      ctx.strokeStyle = 'rgba(20,26,36,0.28)';
+      ctx.lineWidth = Math.max(1, faceD * 0.006);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // 8) 底纹工艺（仅拟真预览）
+    drawSpecial(ctx, cx, cy, faceD);
+
+    // 9) 文字层
+    drawBadgeText(ctx, cx, cy, faceD);
+
+    // 10) 边框素材
+    drawBorder(ctx, cx, cy, faceD, state.border.id, state.border.color);
   }
 
-  /** 纯轮廓裁剪（关闭拟真效果时） */
+  /** 纯圆形裁剪（关闭拟真效果时） */
   function drawPlainBadge(ctx, cx, cy, faceD) {
+    var r = faceD / 2;
     ctx.save();
-    ctx.beginPath();
-    facePath(ctx, cx, cy, faceD, state.shape);
+    tracePath(ctx, cx, cy, r, state.shape);
     ctx.fillStyle = state.bgColor;
     ctx.fill();
     ctx.clip();
     renderImageTo(ctx, cx, cy, faceD);
-    drawTextLayer(ctx, cx, cy, faceD);
+    ctx.restore();
+    drawBadgeText(ctx, cx, cy, faceD);
+    drawBorder(ctx, cx, cy, faceD, state.border.id, state.border.color);
+  }
+
+  /* =====================================================================
+   * 文字层（BM-1 P0-1）：成品层叠加，不参与图片裁剪变换
+   * ---------------------------------------------------------------------
+   * 顶部/底部弧形排字（角色名 / 日期经典布局）+ 中央直排；
+   * 在编辑器、拟真预览、纯圆预览、单枚 / 拼版打印中保持一致（WYSIWYG）。
+   * =================================================================== */
+
+  function makeDefaultText() {
+    return {
+      enabled: false,
+      top: '', bottom: '', center: '',
+      sizeRatio: 0.11,        // 字号 = 成品直径 × 该比例
+      color: '#1A1A1A',
+      stroke: true,
+      strokeColor: '#FFFFFF',
+      strokeRatio: 0.08       // 描边宽 = 字号 × 该比例
+    };
+  }
+
+  function makeDefaultBorder() {
+    return {
+      id: 'none',              // none | double | dashed | wave | star | solid
+      color: '#FFFFFF'         // 边框强调色
+    };
+  }
+
+  var BORDER_LIST = [
+    { id: 'none', label: L('无') },
+    { id: 'double', label: L('双线') },
+    { id: 'dashed', label: L('虚线') },
+    { id: 'wave', label: L('波浪') },
+    { id: 'star', label: L('星点') },
+    { id: 'solid', label: L('纯色环') }
+  ];
+
+  /* =====================================================================
+   * 形状 / 版型路径抽象（BM-3 #8）：圆 / 方 / 心形 / 卡片 共用同一渲染管线
+   * ---------------------------------------------------------------------
+   * addShapePath：仅追加子路径（不含 beginPath），用于 evenodd 遮罩合成；
+   * tracePath：beginPath + addShapePath，用于独立裁切 / 描边。
+   * =================================================================== */
+
+  function roundRectPath(ctx, x, y, w, h, r) {
+    r = Math.min(r, w / 2, h / 2);
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  function heartPath(ctx, cx, cy, r) {
+    var s = r * 1.18;
+    ctx.moveTo(cx, cy + s * 0.72);
+    ctx.bezierCurveTo(cx - s, cy - s * 0.20, cx - s * 0.55, cy - s * 0.95, cx, cy - s * 0.38);
+    ctx.bezierCurveTo(cx + s * 0.55, cy - s * 0.95, cx + s, cy - s * 0.20, cx, cy + s * 0.72);
+    ctx.closePath();
+  }
+
+  function addShapePath(ctx, cx, cy, r, shape) {
+    if (shape === 'square' || shape === 'card') {
+      var rr = (shape === 'card') ? r * 0.06 : r * 0.14;
+      roundRectPath(ctx, cx - r, cy - r, r * 2, r * 2, rr);
+    } else if (shape === 'heart') {
+      heartPath(ctx, cx, cy, r);
+    } else {
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    }
+  }
+
+  function tracePath(ctx, cx, cy, r, shape) {
+    ctx.beginPath();
+    addShapePath(ctx, cx, cy, r, shape);
+  }
+
+  var TEXT_FONT_STACK = '"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,-apple-system,sans-serif';
+
+  function drawArcText(ctx, cx, cy, radius, text, isTop) {
+    var widths = [];
+    var total = 0;
+    var i;
+    for (i = 0; i < text.length; i++) {
+      var w = ctx.measureText(text[i]).width;
+      widths.push(w); total += w;
+    }
+    if (total <= 0) { return; }
+    var totalAngle = total / radius;
+    var angle = isTop ? (-Math.PI / 2 - totalAngle / 2) : (Math.PI / 2 - totalAngle / 2);
+    var dir = 1;
+    for (i = 0; i < text.length; i++) {
+      var ww = widths[i];
+      var a = angle + dir * (ww / 2) / radius;
+      ctx.save();
+      ctx.translate(cx + radius * Math.cos(a), cy + radius * Math.sin(a));
+      ctx.rotate(a + (isTop ? Math.PI / 2 : -Math.PI / 2));
+      ctx.strokeText(text[i], 0, 0);
+      ctx.fillText(text[i], 0, 0);
+      ctx.restore();
+      angle += dir * ww / radius;
+    }
+  }
+
+  function drawBadgeText(ctx, cx, cy, faceD) {
+    var t = state.text;
+    if (!t || !t.enabled) { return; }
+    var hasAny = (t.top && t.top.length) || (t.bottom && t.bottom.length) || (t.center && t.center.length);
+    if (!hasAny) { return; }
+    var r = faceD / 2;
+    var fontSize = Math.max(6, faceD * t.sizeRatio);
+    ctx.save();
+    tracePath(ctx, cx, cy, r, state.shape);
+    ctx.clip();
+    ctx.font = '700 ' + fontSize + 'px ' + TEXT_FONT_STACK;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.lineJoin = 'round';
+    if (t.stroke) {
+      ctx.lineWidth = Math.max(1, fontSize * t.strokeRatio);
+      ctx.strokeStyle = t.strokeColor;
+    } else {
+      ctx.lineWidth = 0;
+    }
+    ctx.fillStyle = t.color;
+
+    var ringR = r * 0.80;   // 弧形排字半径（贴近上/下缘）
+    if (t.top) { drawArcText(ctx, cx, cy, ringR, t.top, true); }
+    if (t.bottom) { drawArcText(ctx, cx, cy, ringR, t.bottom, false); }
+    if (t.center) {
+      ctx.save();
+      ctx.strokeText(t.center, cx, cy);
+      ctx.fillText(t.center, cx, cy);
+      ctx.restore();
+    }
+    ctx.restore();
+  }
+
+  /* =====================================================================
+   * 底纹工艺拟真（BM-1 P0-2）：仅作用于拟真预览，不污染打印 / 透明导出
+   * =================================================================== */
+
+  var sparklePts = [];
+  (function () {
+    for (var i = 0; i < 16; i++) {
+      sparklePts.push({ a: Math.random() * Math.PI * 2, r: 0.25 + Math.random() * 0.6, s: 0.5 + Math.random() * 1 });
+    }
+  })();
+  var brushedPts = [];
+  (function () {
+    for (var j = 0; j < 60; j++) { brushedPts.push((Math.random() - 0.5) * 2); }
+  })();
+
+  function drawSparkle(ctx, x, y, s) {
+    ctx.beginPath();
+    ctx.moveTo(x, y - s);
+    ctx.lineTo(x + s * 0.22, y - s * 0.22);
+    ctx.lineTo(x + s, y);
+    ctx.lineTo(x + s * 0.22, y + s * 0.22);
+    ctx.lineTo(x, y + s);
+    ctx.lineTo(x - s * 0.22, y + s * 0.22);
+    ctx.lineTo(x - s, y);
+    ctx.lineTo(x - s * 0.22, y - s * 0.22);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function drawSpecial(ctx, cx, cy, faceD) {
+    var kind = opts.special;
+    if (!kind || kind === 'none') { return; }
+    var r = faceD / 2;
+    ctx.save();
+    tracePath(ctx, cx, cy, r, state.shape);
+    ctx.clip();
+    if (kind === 'holographic') {
+      ctx.globalCompositeOperation = 'screen';
+      var g = ctx.createLinearGradient(cx - r, cy - r, cx + r, cy + r);
+      g.addColorStop(0.00, 'rgba(255,40,140,0.22)');
+      g.addColorStop(0.20, 'rgba(150,40,255,0.22)');
+      g.addColorStop(0.40, 'rgba(40,140,255,0.22)');
+      g.addColorStop(0.60, 'rgba(40,255,200,0.22)');
+      g.addColorStop(0.80, 'rgba(255,220,40,0.22)');
+      g.addColorStop(1.00, 'rgba(255,40,140,0.22)');
+      ctx.fillStyle = g;
+      ctx.fillRect(cx - r, cy - r, faceD, faceD);
+      ctx.globalCompositeOperation = 'source-over';
+    } else if (kind === 'star') {
+      var g2 = ctx.createRadialGradient(cx, cy, r * 0.05, cx, cy, r);
+      g2.addColorStop(0, 'rgba(255,255,255,0.12)');
+      g2.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = g2;
+      ctx.fillRect(cx - r, cy - r, faceD, faceD);
+      ctx.fillStyle = 'rgba(255,255,255,0.9)';
+      for (var i = 0; i < sparklePts.length; i++) {
+        var p = sparklePts[i];
+        drawSparkle(ctx, cx + Math.cos(p.a) * (p.r * r), cy + Math.sin(p.a) * (p.r * r), r * 0.018 * p.s);
+      }
+    } else if (kind === 'brushed') {
+      ctx.globalAlpha = 0.10;
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = Math.max(1, faceD * 0.004);
+      for (var y = 0; y < brushedPts.length; y++) {
+        var yy = -r + (y + 0.5) * (faceD / brushedPts.length);
+        ctx.beginPath();
+        ctx.moveTo(cx - r, cy + yy);
+        ctx.lineTo(cx + r, cy + yy + brushedPts[y] * faceD * 0.01);
+        ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+    }
+    ctx.restore();
+  }
+
+  /* =====================================================================
+   * 边框素材（BM-2 #4）：本地程序化生成，无需外部资源，可商用
+   * =================================================================== */
+
+  function drawBorder(ctx, cx, cy, faceD, id, color) {
+    if (!id || id === 'none') { return; }
+    var r = faceD / 2;
+    var shape = state.shape;
+    ctx.save();
+    tracePath(ctx, cx, cy, r, shape);
+    ctx.clip();
+    ctx.strokeStyle = color || '#FFFFFF';
+    ctx.fillStyle = color || '#FFFFFF';
+    ctx.lineJoin = 'round';
+    if (shape !== 'circle') {
+      // 非圆形状：沿形状描一条同色边框，保证版型一致
+      ctx.lineWidth = Math.max(1, faceD * (id === 'solid' ? 0.06 : 0.03));
+      tracePath(ctx, cx, cy, r * 0.92, shape);
+      ctx.stroke();
+      ctx.restore();
+      return;
+    }
+    var i, a;
+    if (id === 'double') {
+      ctx.lineWidth = Math.max(1, faceD * 0.012);
+      ctx.beginPath(); ctx.arc(cx, cy, r * 0.93, 0, Math.PI * 2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(cx, cy, r * 0.86, 0, Math.PI * 2); ctx.stroke();
+    } else if (id === 'dashed') {
+      ctx.lineWidth = Math.max(1, faceD * 0.02);
+      ctx.setLineDash([r * 0.06, r * 0.05]);
+      ctx.beginPath(); ctx.arc(cx, cy, r * 0.9, 0, Math.PI * 2); ctx.stroke();
+      ctx.setLineDash([]);
+    } else if (id === 'solid') {
+      ctx.lineWidth = Math.max(1, faceD * 0.06);
+      ctx.beginPath(); ctx.arc(cx, cy, r * 0.94, 0, Math.PI * 2); ctx.stroke();
+    } else if (id === 'wave') {
+      ctx.lineWidth = Math.max(1, faceD * 0.014);
+      var seg = 120, baseR = r * 0.9, amp = r * 0.03, waves = 24;
+      ctx.beginPath();
+      for (i = 0; i <= seg; i++) {
+        a = i / seg * Math.PI * 2;
+        var rr = baseR + Math.sin(a * waves) * amp;
+        var x = cx + Math.cos(a) * rr, y = cy + Math.sin(a) * rr;
+        if (i === 0) { ctx.moveTo(x, y); } else { ctx.lineTo(x, y); }
+      }
+      ctx.closePath();
+      ctx.stroke();
+    } else if (id === 'star') {
+      var n = 24, rr2 = r * 0.9, ss = r * 0.022;
+      for (i = 0; i < n; i++) {
+        a = i / n * Math.PI * 2;
+        drawSparkle(ctx, cx + Math.cos(a) * rr2, cy + Math.sin(a) * rr2, ss);
+      }
+    }
     ctx.restore();
   }
 
@@ -513,8 +777,7 @@
       ctx.setLineDash([7, 7]);
       ctx.strokeStyle = 'rgba(255,255,255,0.16)';
       ctx.lineWidth = 2;
-      ctx.beginPath();
-      facePath(ctx, cx, cy, faceD, state.shape);
+      tracePath(ctx, cx, cy, faceR, state.shape);
       ctx.stroke();
       ctx.restore();
       return;
@@ -523,40 +786,30 @@
     // 1) 图片
     renderImageTo(ctx, cx, cy, faceD);
 
-    // 1.5) 文字层（裁到成品轮廓内）
-    ctx.save();
-    ctx.beginPath();
-    facePath(ctx, cx, cy, faceD, state.shape);
-    ctx.clip();
-    drawTextLayer(ctx, cx, cy, faceD);
-    ctx.restore();
-
-    // 2) 轮廓外暗化遮罩（evenodd：矩形 + 成品轮廓）
+    // 2) 形状外暗化遮罩（evenodd：矩形 + 形状）
     ctx.save();
     ctx.beginPath();
     ctx.rect(0, 0, p.w, p.h);
-    facePath(ctx, cx, cy, faceD, state.shape);
+    addShapePath(ctx, cx, cy, faceR, state.shape);
     ctx.fillStyle = 'rgba(13,16,22,0.62)';
     ctx.fill('evenodd');
     ctx.restore();
 
-    // 3) 出血轮廓虚线（外侧，含出血尺寸）
-    var bleedS = faceD * (spec.total / spec.diameter);
+    // 3) 出血圈虚线（外侧，含出血直径）
+    var bleedR = faceR * (spec.total / spec.diameter);
     ctx.save();
     ctx.setLineDash([5, 6]);
     ctx.strokeStyle = 'rgba(255,255,255,0.32)';
     ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    facePath(ctx, cx, cy, bleedS, state.shape);
+    tracePath(ctx, cx, cy, bleedR, state.shape);
     ctx.stroke();
     ctx.restore();
 
-    // 4) 裁切轮廓（成品轮廓，蓝色实线）
+    // 4) 裁切圈（成品形状，蓝色实线）
     ctx.save();
     ctx.strokeStyle = 'rgba(0,122,255,0.95)';
     ctx.lineWidth = 2;
-    ctx.beginPath();
-    facePath(ctx, cx, cy, faceD, state.shape);
+    tracePath(ctx, cx, cy, faceR, state.shape);
     ctx.stroke();
     ctx.restore();
 
@@ -571,6 +824,14 @@
     ctx.fillStyle = 'rgba(0,122,255,0.9)';
     ctx.fillText(L('裁切 ') + spec.diameter + 'mm', p.w - 10, p.h - 10);
     ctx.restore();
+
+    // 6) 文字层（仅在有图时叠加于成品圆内）
+    if (state.hasImage) {
+      drawBadgeText(ctx, cx, cy, faceD);
+    }
+
+    // 7) 边框素材
+    drawBorder(ctx, cx, cy, faceD, state.border.id, state.border.color);
   }
 
   /* =====================================================================
@@ -578,46 +839,47 @@
    * =================================================================== */
 
   /**
-   * 绘制一枚打印徽章（形状感知）。
+   * 绘制一枚打印徽章。
    * @param {CanvasRenderingContext2D} ctx
-   * @param {number} cx 圆心/中心 X（像素，含出血尺寸）
-   * @param {number} cy 圆心/中心 Y
-   * @param {number} cellPx 含出血的完整边长（像素）
+   * @param {number} cx 圆心 X（像素，含出血圆）
+   * @param {number} cy 圆心 Y
+   * @param {number} cellPx 含出血圆直径（像素）
    */
-  function drawPrintBadge(ctx, cx, cy, cellPx) {
+  function drawPrintBadge(ctx, cx, cy, cellPx, item) {
     var spec = getSpec(state.specId);
-    var shape = state.shape;
     var ratio = spec.diameter / spec.total;
-    var bleedS = cellPx;                      // 含出血完整边长
-    var cutS = cellPx * ratio;                // 成品完整边长
-    var safeS = Math.max(4, cutS - mmToPx(SAFE_INSET_MM) * 2);
+    var bleedR = cellPx / 2;
+    var cutR = bleedR * ratio;
+    var safeR = Math.max(2, cutR - mmToPx(SAFE_INSET_MM));
 
-    // 1) 底色（保证打印不透明，图片未覆盖处为底色）
+    // 1) 底色（保证打印不透明，图片未覆盖处为徽章底色，默认纯白）
     ctx.save();
-    ctx.beginPath();
-    facePath(ctx, cx, cy, bleedS, shape);
+    tracePath(ctx, cx, cy, bleedR, state.shape);
     ctx.clip();
     ctx.fillStyle = state.bgColor;
-    ctx.fillRect(cx - bleedS, cy - bleedS, bleedS * 2, bleedS * 2);
+    ctx.fillRect(cx - bleedR, cy - bleedR, cellPx, cellPx);
     ctx.restore();
 
-    // 2) 图像（裁到出血轮廓）
-    if (state.hasImage) {
+    // 2) 图像（裁到出血外形；多图拼版时每格使用各自的队列图）
+    if ((item && item.image) || state.hasImage) {
       ctx.save();
-      ctx.beginPath();
-      facePath(ctx, cx, cy, bleedS, shape);
+      tracePath(ctx, cx, cy, bleedR, state.shape);
       ctx.clip();
-      renderImageTo(ctx, cx, cy, cutS);
+      renderImageTo(ctx, cx, cy, cellPx * ratio, state, item);
       ctx.restore();
     }
 
-    // 2.5) 文字层（始终裁到成品轮廓内）
-    ctx.save();
-    ctx.beginPath();
-    facePath(ctx, cx, cy, cutS, shape);
-    ctx.clip();
-    drawTextLayer(ctx, cx, cy, cutS);
-    ctx.restore();
+    // 2.5) 文字层（裁到成品外形内，避免出血区出现文字）
+    if ((item && item.image) || state.hasImage) {
+      ctx.save();
+      tracePath(ctx, cx, cy, cutR, state.shape);
+      ctx.clip();
+      drawBadgeText(ctx, cx, cy, cellPx * ratio);
+      ctx.restore();
+    }
+
+    // 2.6) 边框素材
+    drawBorder(ctx, cx, cy, cellPx * ratio, state.border.id, state.border.color);
 
     var lw = Math.max(1, cellPx * 0.0028);
     var font = Math.max(9, cellPx * 0.027);
@@ -626,30 +888,27 @@
     if (opts.showGuides) {
       // 出血线（最外，红色虚线）
       ctx.save();
-      ctx.setLineDash([bleedS * 0.06, bleedS * 0.045]);
+      ctx.setLineDash([bleedR * 0.10, bleedR * 0.07]);
       ctx.strokeStyle = 'rgba(214,60,60,0.85)';
       ctx.lineWidth = lw;
-      ctx.beginPath();
-      facePath(ctx, cx, cy, bleedS - lw, shape);
+      tracePath(ctx, cx, cy, bleedR - lw, state.shape);
       ctx.stroke();
       ctx.restore();
 
-      // 裁切线（成品轮廓，蓝色细实线）
+      // 裁切线（成品圈，蓝色细实线）
       ctx.save();
       ctx.strokeStyle = 'rgba(0,110,235,0.9)';
       ctx.lineWidth = lw;
-      ctx.beginPath();
-      facePath(ctx, cx, cy, cutS, shape);
+      tracePath(ctx, cx, cy, cutR, state.shape);
       ctx.stroke();
       ctx.restore();
 
-      // 安全区轮廓（浅绿虚线）
+      // 安全区圈（浅绿虚线）
       ctx.save();
-      ctx.setLineDash([bleedS * 0.042, bleedS * 0.036]);
+      ctx.setLineDash([bleedR * 0.07, bleedR * 0.06]);
       ctx.strokeStyle = 'rgba(60,170,110,0.75)';
       ctx.lineWidth = lw;
-      ctx.beginPath();
-      facePath(ctx, cx, cy, safeS, shape);
+      tracePath(ctx, cx, cy, safeR, state.shape);
       ctx.stroke();
       ctx.restore();
     }
@@ -663,25 +922,25 @@
       ctx.strokeStyle = 'rgba(255,255,255,0.9)';
       ctx.lineJoin = 'round';
 
-      // 出血线标注（出血轮廓内侧顶部）
+      // 出血线标注（出血圈内侧顶部）
       var bleedText = L('出血线 ') + spec.total + 'mm';
       ctx.textBaseline = 'top';
-      ctx.strokeText(bleedText, cx, cy - bleedS / 2 + font * 0.35);
+      ctx.strokeText(bleedText, cx, cy - bleedR + font * 0.35);
       ctx.fillStyle = 'rgba(200,45,45,0.95)';
-      ctx.fillText(bleedText, cx, cy - bleedS / 2 + font * 0.35);
+      ctx.fillText(bleedText, cx, cy - bleedR + font * 0.35);
 
-      // 裁切线标注（裁切轮廓外侧顶部）
+      // 裁切线标注（裁切圈外侧顶部）
       var cutText = L('裁切线 ') + spec.diameter + 'mm';
       ctx.textBaseline = 'bottom';
-      ctx.strokeText(cutText, cx, cy - cutS / 2 - font * 0.28);
+      ctx.strokeText(cutText, cx, cy - cutR - font * 0.28);
       ctx.fillStyle = 'rgba(0,100,220,0.95)';
-      ctx.fillText(cutText, cx, cy - cutS / 2 - font * 0.28);
+      ctx.fillText(cutText, cx, cy - cutR - font * 0.28);
 
-      // 安全区标注（安全轮廓外侧底部）
+      // 安全区标注（安全圈外侧底部）
       ctx.textBaseline = 'top';
-      ctx.strokeText(L('安全区'), cx, cy + safeS / 2 + font * 0.28);
+      ctx.strokeText(L('安全区'), cx, cy + safeR + font * 0.28);
       ctx.fillStyle = 'rgba(45,150,95,0.95)';
-      ctx.fillText(L('安全区'), cx, cy + safeS / 2 + font * 0.28);
+      ctx.fillText(L('安全区'), cx, cy + safeR + font * 0.28);
 
       ctx.restore();
     }
@@ -777,6 +1036,15 @@
     var w = layout.pageW * k;
     var h = layout.pageH * k;
 
+    // 多图拼版：启用队列且队列非空时，每格循环使用各自的队列图
+    var sources = null;
+    if (opts.useQueue && state.queue.length) {
+      sources = [];
+      for (var q = 0; q < state.queue.length; q++) {
+        sources.push({ image: state.queue[q].image, imgW: state.queue[q].imgW, imgH: state.queue[q].imgH });
+      }
+    }
+
     ctx.save();
     ctx.fillStyle = '#FFFFFF';
     ctx.fillRect(0, 0, w, h);
@@ -784,7 +1052,8 @@
 
     for (var i = 0; i < layout.cells.length; i++) {
       var cellData = layout.cells[i];
-      drawPrintBadge(ctx, cellData.x + cellData.size / 2, cellData.y + cellData.size / 2, cellData.size);
+      var item = sources ? sources[i % sources.length] : null;
+      drawPrintBadge(ctx, cellData.x + cellData.size / 2, cellData.y + cellData.size / 2, cellData.size, item);
     }
 
     // 版面参考：可打印区域边框（极淡），随「显示辅助线」开关一起隐藏
@@ -899,7 +1168,7 @@
 
     $('specInfo').textContent =
       L('成品 ') + spec.diameter + L('mm · 出血 ') + spec.bleed + L('mm · 含出血 ') + spec.total + 'mm' +
-      L(' · 裁切 ') + Math.round(mmToPx(spec.diameter)) + 'px';
+      L(' · 裁切圆 ') + Math.round(mmToPx(spec.diameter)) + 'px';
 
     $('editorBadge').textContent = spec.label + L(' · 含出血 ') + spec.total + 'mm';
 
@@ -966,6 +1235,9 @@
         spec.label + ' × ' + lay.count + L(' 枚 · 300 DPI · ') +
         Math.round(mmToPx(spec.total)) + L('px/枚');
     }
+
+    updateQueueHint();
+    updateGuideSpec();
   }
 
   function updateUndoRedoUI() {
@@ -988,13 +1260,7 @@
       tx: state.tx, ty: state.ty, zoom: state.zoom, rot: state.rot,
       flipH: state.flipH, flipV: state.flipV,
       brightness: state.brightness, contrast: state.contrast, saturation: state.saturation,
-      specId: state.specId,
-      shape: state.shape,
-      bgColor: state.bgColor, rimColor: state.rimColor,
-      textOn: state.textOn, textContent: state.textContent,
-      textColor: state.textColor, textSize: state.textSize,
-      textPos: state.textPos, textStroke: state.textStroke,
-      textStrokeColor: state.textStrokeColor
+      specId: state.specId
     };
   }
 
@@ -1014,6 +1280,7 @@
       if (history.length > HISTORY_LIMIT) { history.shift(); }
       histIndex = history.length - 1;
     }
+    scheduleDraftSave();
     updateUndoRedoUI();
   }
 
@@ -1029,17 +1296,6 @@
     state.contrast = snap.contrast;
     state.saturation = snap.saturation;
     state.specId = snap.specId;
-    // 设计参数（旧快照缺省时回落当前值，保证向前兼容）
-    if (snap.shape !== undefined) { state.shape = snap.shape; }
-    if (snap.bgColor !== undefined) { state.bgColor = snap.bgColor; }
-    if (snap.rimColor !== undefined) { state.rimColor = snap.rimColor; }
-    if (snap.textOn !== undefined) { state.textOn = snap.textOn; }
-    if (snap.textContent !== undefined) { state.textContent = snap.textContent; }
-    if (snap.textColor !== undefined) { state.textColor = snap.textColor; }
-    if (snap.textSize !== undefined) { state.textSize = snap.textSize; }
-    if (snap.textPos !== undefined) { state.textPos = snap.textPos; }
-    if (snap.textStroke !== undefined) { state.textStroke = snap.textStroke; }
-    if (snap.textStrokeColor !== undefined) { state.textStrokeColor = snap.textStrokeColor; }
     syncUIFromState();
     syncCountPills();                 // 撤销回更小规格时同样需要重新夹取枚数
     renderAll();
@@ -1090,51 +1346,60 @@
 
     updateSpecTable();
     $('editorEmpty').style.display = state.hasImage ? 'none' : 'flex';
-    syncDesignUI();
-  }
 
-  /** 把设计参数（形状 / 颜色 / 文字）同步到控件；正在输入的控件不回写 */
-  function syncDesignUI() {
-    var shapeBtns = $('shapeGroup').querySelectorAll('.pill');
-    for (var i = 0; i < shapeBtns.length; i++) {
-      shapeBtns[i].classList.toggle('active', shapeBtns[i].getAttribute('data-shape') === state.shape);
+    // 文字层控件
+    if ($('swText')) { $('swText').checked = !!state.text.enabled; }
+    if ($('txtTop')) { $('txtTop').value = state.text.top || ''; }
+    if ($('txtBottom')) { $('txtBottom').value = state.text.bottom || ''; }
+    if ($('txtCenter')) { $('txtCenter').value = state.text.center || ''; }
+    if ($('txtSize')) {
+      $('txtSize').value = String(Math.round(state.text.sizeRatio * 100));
+      $('txtSizeVal').textContent = Math.round(state.text.sizeRatio * 100) + '%';
+      paintRange($('txtSize'));
+    }
+    if ($('txtColor')) { $('txtColor').value = state.text.color; }
+    if ($('swStroke')) { $('swStroke').checked = !!state.text.stroke; }
+    if ($('txtStrokeColor')) { $('txtStrokeColor').value = state.text.strokeColor; }
+    if ($('txtStrokeW')) {
+      $('txtStrokeW').value = String(Math.round(state.text.strokeRatio * 100));
+      $('txtStrokeWVal').textContent = Math.round(state.text.strokeRatio * 100) + '%';
+      paintRange($('txtStrokeW'));
+    }
+    // 底纹工艺高亮
+    if ($('specialSwitch')) {
+      var spBtns = $('specialSwitch').querySelectorAll('button');
+      for (var si = 0; si < spBtns.length; si++) {
+        spBtns[si].classList.toggle('active', spBtns[si].getAttribute('data-special') === opts.special);
+      }
     }
 
-    $('bgColor').value = state.bgColor;
-    $('rimColor').value = state.rimColor;
-
-    $('swText').checked = state.textOn;
-    $('textBody').classList.toggle('hidden', !state.textOn);
-    var ti = $('textInput');
-    if (document.activeElement !== ti) { ti.value = state.textContent; }
-    $('textColor').value = state.textColor;
-
-    var ts = $('textSize');
-    ts.value = String(state.textSize);
-    $('textSizeVal').textContent = state.textSize + '%';
-    paintRange(ts);
-
-    var posBtns = $('textPosGroup').querySelectorAll('button');
-    for (var j = 0; j < posBtns.length; j++) {
-      posBtns[j].classList.toggle('active', posBtns[j].getAttribute('data-pos') === state.textPos);
+    // 边框控件高亮
+    if ($('borderGroup')) {
+      var bBtns = $('borderGroup').querySelectorAll('.pill');
+      for (var bi = 0; bi < bBtns.length; bi++) {
+        bBtns[bi].classList.toggle('active', bBtns[bi].getAttribute('data-border') === state.border.id);
+      }
     }
+    if ($('borderColor')) { $('borderColor').value = state.border.color; }
 
-    $('swTextStroke').checked = state.textStroke;
-    $('textStrokeColor').value = state.textStrokeColor;
-  }
+    // 徽章颜色（并入站点版能力）
+    if ($('bgColor')) { $('bgColor').value = state.bgColor; }
+    if ($('rimColor')) { $('rimColor').value = state.rimColor; }
 
-  /** 设计参数默认值（重置 / 清除图片时调用） */
-  function resetDesignState() {
-    state.shape = 'circle';
-    state.bgColor = '#FFFFFF';
-    state.rimColor = '#C8D0DA';
-    state.textOn = false;
-    state.textContent = '';
-    state.textColor = '#111111';
-    state.textSize = 12;
-    state.textPos = 'bottom';
-    state.textStroke = false;
-    state.textStrokeColor = '#FFFFFF';
+    // 形状 / 版型 高亮
+    if ($('shapeGroup')) {
+      var shBtns = $('shapeGroup').querySelectorAll('.pill');
+      for (var shi = 0; shi < shBtns.length; shi++) {
+        shBtns[shi].classList.toggle('active', shBtns[shi].getAttribute('data-shape') === state.shape);
+      }
+    }
+    if ($('swShare')) { $('swShare').checked = !!opts.shareBadge; }
+
+    // 队列 / 下单指引控件
+    if ($('swQueue')) { $('swQueue').checked = !!opts.useQueue; }
+    renderQueueList();
+    updateQueueHint();
+    updateGuideSpec();
   }
 
   /* =====================================================================
@@ -1245,13 +1510,151 @@
     state.tx = 0; state.ty = 0; state.zoom = 1; state.rot = 0;
     state.flipH = false; state.flipV = false;
     state.brightness = 0; state.contrast = 0; state.saturation = 0;
-    resetDesignState();
     history = [];
     histIndex = -1;
+    try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
     syncUIFromState();
     updateUndoRedoUI();
     renderAll();
     toast(L('已清除图片'));
+  }
+
+  /* =====================================================================
+   * 本地 AI 辅助（BM-3 #9）：去背景 / 智能增强，零依赖、不联网
+   * =================================================================== */
+
+  function getImageCanvas() {
+    if (!state.image) { return null; }
+    var w = state.imgW || state.image.width || 1;
+    var h = state.imgH || state.image.height || 1;
+    var c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    c.getContext('2d').drawImage(state.image, 0, 0, w, h);
+    return c;
+  }
+
+  function setImageFromCanvas(c) {
+    state.image = c;
+    state.imgW = c.width;
+    state.imgH = c.height;
+    state.hasImage = true;
+    state.downsampled = false;
+    syncUIFromState();
+    pushHistory(false);
+    renderAll();
+    scheduleDraftSave();
+  }
+
+  /** 一键去背景：从四边漫水填充，移除与边缘近似的纯色背景（仅透明化连通区域，保留主体） */
+  function removeBackground(tol) {
+    if (!requireImage()) { return; }
+    var c = getImageCanvas();
+    if (!c) { return; }
+    var w = c.width, h = c.height;
+    var ctx = c.getContext('2d');
+    var img = ctx.getImageData(0, 0, w, h);
+    var d = img.data;
+    // 采样四角平均作为背景色
+    function px(x, y) { var p = (y * w + x) * 4; return [d[p], d[p + 1], d[p + 2]]; }
+    var corners = [px(0, 0), px(w - 1, 0), px(0, h - 1), px(w - 1, h - 1)];
+    var bg = [0, 0, 0];
+    for (var ci = 0; ci < corners.length; ci++) { bg[0] += corners[ci][0]; bg[1] += corners[ci][1]; bg[2] += corners[ci][2]; }
+    bg[0] = Math.round(bg[0] / 4); bg[1] = Math.round(bg[1] / 4); bg[2] = Math.round(bg[2] / 4);
+
+    var visited = new Uint8Array(w * h);
+    var stack = [];
+    function tryPush(x, y) {
+      if (x < 0 || y < 0 || x >= w || y >= h) { return; }
+      var idx = y * w + x;
+      if (visited[idx]) { return; }
+      visited[idx] = 1;
+      stack.push(idx);
+    }
+    for (var x = 0; x < w; x++) { tryPush(x, 0); tryPush(x, h - 1); }
+    for (var y = 0; y < h; y++) { tryPush(0, y); tryPush(w - 1, y); }
+
+    var t = (typeof tol === 'number') ? tol : 40;
+    var removed = 0;
+    while (stack.length) {
+      var idx = stack.pop();
+      var p = idx * 4;
+      var dr = Math.abs(d[p] - bg[0]);
+      var dg = Math.abs(d[p + 1] - bg[1]);
+      var db = Math.abs(d[p + 2] - bg[2]);
+      if (dr + dg + db <= t) {
+        d[p + 3] = 0;
+        removed++;
+        var xx = idx % w, yy = (idx - xx) / w;
+        tryPush(xx + 1, yy); tryPush(xx - 1, yy); tryPush(xx, yy + 1); tryPush(xx, yy - 1);
+      }
+    }
+    ctx.putImageData(img, 0, 0);
+    setImageFromCanvas(c);
+    toast(removed ? (L('已去背景（移除 ') + removed + L(' 像素）')) : L('未检测到可去除的背景'));
+  }
+
+  /** 智能增强：锐化（unsharp mask）+ 自适应对比度，纯 canvas 像素运算 */
+  function enhanceImage() {
+    if (!requireImage()) { return; }
+    var c = getImageCanvas();
+    if (!c) { return; }
+    var w = c.width, h = c.height;
+    var ctx = c.getContext('2d');
+    var img = ctx.getImageData(0, 0, w, h);
+    var d = img.data;
+    var n = w * h;
+    var orig = new Float32Array(n * 3);
+    for (var i = 0; i < n; i++) {
+      orig[i * 3] = d[i * 4];
+      orig[i * 3 + 1] = d[i * 4 + 1];
+      orig[i * 3 + 2] = d[i * 4 + 2];
+    }
+    // 可分离盒式模糊（半径 1）用于 unsharp
+    var blur = new Float32Array(n * 3);
+    var tmp = new Float32Array(n * 3);
+    function boxPass(src, dst) {
+      var x, y, ch, dx, dy, nx, ny, sum, cnt;
+      for (y = 0; y < h; y++) {
+        for (x = 0; x < w; x++) {
+          for (ch = 0; ch < 3; ch++) {
+            sum = 0; cnt = 0;
+            for (dx = -1; dx <= 1; dx++) {
+              nx = x + dx; if (nx < 0 || nx >= w) { continue; }
+              sum += src[(y * w + nx) * 3 + ch]; cnt++;
+            }
+            dst[(y * w + x) * 3 + ch] = sum / cnt;
+          }
+        }
+      }
+      for (x = 0; x < w; x++) {
+        for (y = 0; y < h; y++) {
+          for (ch = 0; ch < 3; ch++) {
+            sum = 0; cnt = 0;
+            for (dy = -1; dy <= 1; dy++) {
+              ny = y + dy; if (ny < 0 || ny >= h) { continue; }
+              sum += src[(ny * w + x) * 3 + ch]; cnt++;
+            }
+            dst[(y * w + x) * 3 + ch] = sum / cnt;
+          }
+        }
+      }
+    }
+    boxPass(orig, tmp);
+    boxPass(tmp, blur);
+
+    var amount = 0.6, contrast = 1.12, o, sharp, v;
+    for (var j = 0; j < n; j++) {
+      for (var c3 = 0; c3 < 3; c3++) {
+        o = orig[j * 3 + c3];
+        sharp = o + (o - blur[j * 3 + c3]) * amount;
+        v = (sharp - 128) * contrast + 128;
+        if (v < 0) { v = 0; } else if (v > 255) { v = 255; }
+        d[j * 4 + c3] = v;
+      }
+    }
+    ctx.putImageData(img, 0, 0);
+    setImageFromCanvas(c);
+    toast(L('已智能增强（锐化 + 对比度）'));
   }
 
   /* =====================================================================
@@ -1465,7 +1868,6 @@
     state.tx = 0; state.ty = 0; state.zoom = 1; state.rot = 0;
     state.flipH = false; state.flipV = false;
     state.brightness = 0; state.contrast = 0; state.saturation = 0;
-    resetDesignState();
   }
 
   function doReset() {
@@ -1567,6 +1969,37 @@
     setTimeout(function () { URL.revokeObjectURL(url); }, 3000);
   }
 
+  function fillRoundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    roundRectPath(ctx, x, y, w, h, r);
+    ctx.fill();
+  }
+
+  /** 分享角标（BM-3 #10）：导出图右下角叠加「calc-tools.top 制作」水印，可关 */
+  function drawShareBadge(ctx, w, h) {
+    if (!opts.shareBadge) { return; }
+    var fs = Math.max(11, Math.min(w, h) * 0.028);
+    ctx.save();
+    ctx.font = '600 ' + fs + 'px ' + TEXT_FONT_STACK;
+    var t1 = L('calc-tools.top 免费制作');
+    var t2 = 'https://calc-tools.top';
+    var textW = Math.max(ctx.measureText(t1).width, ctx.measureText(t2).width);
+    var padX = fs * 0.6, padY = fs * 0.45;
+    var boxW = textW + padX * 2;
+    var boxH = fs * 1.2 * 2 + padY * 2;
+    var x = w - boxW - fs * 0.5;
+    var y = h - boxH - fs * 0.5;
+    ctx.fillStyle = 'rgba(17,20,28,0.82)';
+    fillRoundRect(ctx, x, y, boxW, boxH, fs * 0.3);
+    ctx.textBaseline = 'top';
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillText(t1, x + padX, y + padY);
+    ctx.fillStyle = 'rgba(180,210,255,0.95)';
+    ctx.fillText(t2, x + padX, y + padY + fs * 1.2);
+    ctx.restore();
+  }
+
   function exportPreview() {
     if (!state.hasImage) { toast(L('请先导入图片')); return; }
     var size = opts.previewSize;
@@ -1591,6 +2024,8 @@
       drawPlainBadge(ctx, cx, cy, faceD);
     }
 
+    drawShareBadge(ctx, size, size);
+
     var name = 'badge-' + getSpec(state.specId).id + 'mm-preview.png';
     cv.toBlob(function (blob) {
       downloadBlob(blob, name);
@@ -1608,11 +2043,12 @@
     var ctx = cv.getContext('2d');
     ctx.clearRect(0, 0, side, side);
     drawPrintBadge(ctx, side / 2, side / 2, side);
+    drawShareBadge(ctx, side, side);
 
     var name = 'badge-' + spec.id + 'mm-print-300dpi.png';
     cv.toBlob(function (blob) {
       downloadBlob(blob, name);
-      toast(L('已导出 ') + name + '（' + side + '×' + side + 'px）');
+      toast(L('已导出 ') + name + '（' + side + '×' + side + L('px）'));
     }, 'image/png');
   }
 
@@ -1629,11 +2065,12 @@
     ctx.clearRect(0, 0, w, h);
     var layout = currentLayout();
     drawA4Sheet(ctx, layout, DPI / MM_PER_INCH);
+    drawShareBadge(ctx, w, h);
     return layout;
   }
 
   function exportA4() {
-    if (!state.hasImage) { toast(L('请先导入图片')); return; }
+    if (!state.hasImage && !(opts.useQueue && state.queue.length)) { toast(L('请先导入图片或添加换图队列')); return; }
     var layout = renderA4ToCanvas();
     var spec = getSpec(state.specId);
     var w = Math.round(mmToPx(A4_MM.w));
@@ -1642,15 +2079,348 @@
     $('printCanvas').toBlob(function (blob) {
       var name = 'badge-a4-' + spec.id + 'mm-x' + layout.count + '-300dpi.png';
       downloadBlob(blob, name);
-      toast(L('已导出 ') + name + '（' + w + '×' + h + 'px）');
+      toast(L('已导出 ') + name + '（' + w + '×' + h + L('px）'));
     }, 'image/png');
   }
 
   function doPrint() {
-    if (!state.hasImage) { toast(L('请先导入图片')); return; }
+    if (!state.hasImage && !(opts.useQueue && state.queue.length)) { toast(L('请先导入图片或添加换图队列')); return; }
     renderA4ToCanvas();
     // 等待一帧确保画布内容已提交，再唤起打印
     setTimeout(function () { window.print(); }, 80);
+  }
+
+  /* =====================================================================
+   * PDF 导出（BM-2 #7）：零依赖自研，内嵌 A4 拼版 JPEG（DCTDecode）
+   * 不引入任何外部库，保证单文件 / 离线可用
+   * =================================================================== */
+
+  function strToBytes(s) {
+    var a = new Uint8Array(s.length);
+    for (var i = 0; i < s.length; i++) { a[i] = s.charCodeAt(i) & 0xff; }
+    return a;
+  }
+  function pad10(n) { var s = String(n); while (s.length < 10) { s = '0' + s; } return s; }
+
+  function buildPdfFromJpeg(jpegBytes, wPt, hPt) {
+    var chunks = [];
+    var offsets = {};
+    var pos = 0;
+    function push(b) { chunks.push(b); pos += b.length; }
+    push(strToBytes('%PDF-1.3\n'));
+    offsets[1] = pos; push(strToBytes('1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n'));
+    offsets[2] = pos; push(strToBytes('2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n'));
+    offsets[3] = pos; push(strToBytes('3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ' +
+      (+wPt.toFixed(2)) + ' ' + (+hPt.toFixed(2)) + '] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>\nendobj\n'));
+    offsets[4] = pos;
+    var head = '4 0 obj\n<< /Type /XObject /Subtype /Image /Width ' + jpegBytes.width +
+      ' /Height ' + jpegBytes.height + ' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ' +
+      jpegBytes.data.length + ' >>\nstream\n';
+    push(strToBytes(head));
+    push(jpegBytes.data);
+    push(strToBytes('\nendstream\nendobj\n'));
+    var content = 'q ' + (+wPt.toFixed(2)) + ' 0 0 ' + (+hPt.toFixed(2)) + ' 0 0 cm /Im0 Do Q\n';
+    offsets[5] = pos;
+    push(strToBytes('5 0 obj\n<< /Length ' + content.length + ' >>\nstream\n' + content + 'endstream\nendobj\n'));
+    var xrefStart = pos;
+    var xref = 'xref\n0 6\n0000000000 65535 f \n';
+    for (var i = 1; i <= 5; i++) { xref += pad10(offsets[i]) + ' 00000 n \n'; }
+    push(strToBytes(xref));
+    push(strToBytes('trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n' + xrefStart + '\n%%EOF'));
+    return new Blob(chunks, { type: 'application/pdf' });
+  }
+
+  function dataUrlToBytes(url) {
+    var b64 = url.split(',')[1] || '';
+    var bin = atob(b64);
+    var arr = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) { arr[i] = bin.charCodeAt(i); }
+    return arr;
+  }
+
+  function exportA4PDF() {
+    if (!state.hasImage && !(opts.useQueue && state.queue.length)) {
+      toast(L('请先导入图片或添加换图队列')); return;
+    }
+    var layout = renderA4ToCanvas();
+    var spec = getSpec(state.specId);
+    var w = Math.round(mmToPx(A4_MM.w));
+    var h = Math.round(mmToPx(A4_MM.h));
+    var cv = $('printCanvas');
+    var jpegUrl;
+    try { jpegUrl = cv.toDataURL('image/jpeg', 0.92); }
+    catch (e) { toast(L('当前环境不支持导出 PDF，请改用 PNG')); return; }
+    if (!jpegUrl || jpegUrl.indexOf('data:image/jpeg') !== 0) { toast(L('PDF 导出需要 JPEG 编码，请改用 PNG')); return; }
+    var bytes = dataUrlToBytes(jpegUrl);
+    var pdf = buildPdfFromJpeg({ data: bytes, width: w, height: h }, A4_PT.w, A4_PT.h);
+    var name = 'badge-a4-' + spec.id + 'mm-x' + layout.count + '-300dpi.pdf';
+    downloadBlob(pdf, name);
+    toast(L('已导出 ') + name);
+  }
+
+  /* =====================================================================
+   * 换图队列（BM-2 #5）：多图拼版
+   * =================================================================== */
+
+  function queueItemToDataURL(item) {
+    try {
+      var tmp = document.createElement('canvas');
+      tmp.width = item.imgW || 1;
+      tmp.height = item.imgH || 1;
+      tmp.getContext('2d').drawImage(item.image, 0, 0, tmp.width, tmp.height);
+      return tmp.toDataURL('image/png');
+    } catch (e) { return null; }
+  }
+
+  function addQueueItem(source, w, h, name) {
+    var item = { image: source, imgW: w, imgH: h, name: name || (L('图') + (state.queue.length + 1)) };
+    state.queue.push(item);
+    renderQueueList();
+    updateQueueHint();
+    scheduleDraftSave();
+  }
+
+  function removeQueueItem(idx) {
+    if (idx < 0 || idx >= state.queue.length) { return; }
+    var it = state.queue[idx];
+    try { if (it.image && it.image.close) { it.image.close(); } } catch (e) {}
+    state.queue.splice(idx, 1);
+    renderQueueList();
+    updateQueueHint();
+    scheduleDraftSave();
+  }
+
+  function renderQueueList() {
+    var box = $('queueList');
+    box.innerHTML = '';
+    if (!state.queue.length) {
+      var empty = document.createElement('div');
+      empty.className = 'queue-empty';
+      empty.textContent = L('尚未添加图片');
+      box.appendChild(empty);
+      return;
+    }
+    for (var i = 0; i < state.queue.length; i++) {
+      (function (idx) {
+        var wrap = document.createElement('div');
+        wrap.className = 'queue-item';
+        var thumb = document.createElement('img');
+        thumb.alt = state.queue[idx].name;
+        try {
+          var c = document.createElement('canvas');
+          c.width = state.queue[idx].imgW || 1; c.height = state.queue[idx].imgH || 1;
+          c.getContext('2d').drawImage(state.queue[idx].image, 0, 0, c.width, c.height);
+          thumb.src = c.toDataURL('image/png');
+        } catch (e) { thumb.src = ''; }
+        var rm = document.createElement('button');
+        rm.className = 'q-remove'; rm.type = 'button'; rm.textContent = '×';
+        rm.setAttribute('aria-label', L('移除'));
+        rm.addEventListener('click', function (e) { e.stopPropagation(); removeQueueItem(idx); });
+        wrap.appendChild(thumb); wrap.appendChild(rm);
+        box.appendChild(wrap);
+      })(i);
+    }
+  }
+
+  function updateQueueHint() {
+    $('queueCount').textContent = state.queue.length + L(' 张');
+    var btn = $('btnExportA4');
+    var pdf = $('btnExportA4PDF');
+    var info = state.queue.length
+      ? L('当前 A4 拼版将循环填入 ') + state.queue.length + L(' 张不同图案')
+      : L('未启用队列：A4 拼版使用同一图案阵列');
+    $('printPixelHint').textContent = info;
+  }
+
+  /* =====================================================================
+   * 工程保存 / 载入 + 本地自动草稿（BM-1 P0-3）
+   * =================================================================== */
+
+  var DRAFT_KEY = 'calcBadgeMakerDraft_v1';
+
+  function imageToDataURL() {
+    if (!state.hasImage) { return null; }
+    try {
+      var tmp = document.createElement('canvas');
+      tmp.width = state.imgW || 1;
+      tmp.height = state.imgH || 1;
+      tmp.getContext('2d').drawImage(state.image, 0, 0, tmp.width, tmp.height);
+      return tmp.toDataURL('image/png');
+    } catch (e) { return null; }
+  }
+
+  function serializeQueue() {
+    var items = [];
+    var omitted = false;
+    var total = 0;
+    for (var i = 0; i < state.queue.length; i++) {
+      var url = queueItemToDataURL(state.queue[i]);
+      if (!url || url.length > 1400000 || total + url.length > 4000000) { omitted = true; continue; }
+      total += url.length;
+      items.push({ name: state.queue[i].name, image: url });
+    }
+    return { items: items, omitted: omitted };
+  }
+
+  function serializeProject() {
+    var q = serializeQueue();
+    return {
+      app: 'calc-tools-badge-maker',
+      version: 1,
+      savedAt: Date.now(),
+      state: {
+        tx: state.tx, ty: state.ty, zoom: state.zoom, rot: state.rot,
+        flipH: state.flipH, flipV: state.flipV,
+        brightness: state.brightness, contrast: state.contrast, saturation: state.saturation,
+        specId: state.specId,
+        text: state.text,
+        border: state.border,
+        shape: state.shape,
+        bgColor: state.bgColor,
+        rimColor: state.rimColor,
+        image: imageToDataURL(),
+        queue: q.items,
+        queueOmitted: q.omitted
+      },
+      opts: {
+        realistic: opts.realistic, transparentBg: opts.transparentBg,
+        surface: opts.surface, previewSize: opts.previewSize,
+        showGuides: opts.showGuides, showLabels: opts.showLabels,
+        count: opts.count, gap: opts.gap, special: opts.special,
+        useQueue: !!opts.useQueue,
+        shareBadge: !!opts.shareBadge
+      }
+    };
+  }
+
+  function assignText(src) {
+    var d = makeDefaultText();
+    if (src && typeof src === 'object') {
+      for (var k in d) { if (src[k] !== undefined) { d[k] = src[k]; } }
+    }
+    return d;
+  }
+
+  function assignBorder(src) {
+    var d = makeDefaultBorder();
+    if (src && typeof src === 'object') {
+      if (src.id && BORDER_LIST.some(function (b) { return b.id === src.id; })) { d.id = src.id; }
+      if (typeof src.color === 'string') { d.color = src.color; }
+    }
+    return d;
+  }
+
+  function applyProjectData(data) {
+    if (!data || !data.state) { toast(L('工程文件格式不正确')); return; }
+    var s = data.state;
+    if (data.opts) {
+      opts.realistic = !!data.opts.realistic;
+      opts.transparentBg = !!data.opts.transparentBg;
+      opts.surface = data.opts.surface === 'matte' ? 'matte' : 'glossy';
+      opts.previewSize = data.opts.previewSize || 1024;
+      opts.showGuides = data.opts.showGuides !== false;
+      opts.showLabels = data.opts.showLabels !== false;
+      opts.count = data.opts.count || 20;
+      opts.gap = (typeof data.opts.gap === 'number') ? data.opts.gap : 3;
+      opts.special = data.opts.special || 'none';
+    }
+    state.tx = s.tx || 0; state.ty = s.ty || 0; state.zoom = s.zoom || 1;
+    state.rot = s.rot || 0; state.flipH = !!s.flipH; state.flipV = !!s.flipV;
+    state.brightness = s.brightness || 0; state.contrast = s.contrast || 0; state.saturation = s.saturation || 0;
+    state.specId = s.specId || DEFAULT_SPEC_ID;
+    state.text = assignText(s.text);
+    state.border = assignBorder(s.border);
+    state.shape = (s.shape === 'square' || s.shape === 'heart' || s.shape === 'card') ? s.shape : 'circle';
+    state.bgColor = (/^#[0-9a-fA-F]{6}$/.test(s.bgColor || '')) ? s.bgColor : '#FFFFFF';
+    state.rimColor = (/^#[0-9a-fA-F]{6}$/.test(s.rimColor || '')) ? s.rimColor : '#C8D0DA';
+    opts.useQueue = !!(data.opts && data.opts.useQueue);
+    opts.shareBadge = !!(data.opts && data.opts.shareBadge);
+
+    // 换图队列（异步重建位图）
+    state.queue = [];
+    if (s.queue && s.queue.length) {
+      var pending = s.queue.length;
+      for (var qi = 0; qi < s.queue.length; qi++) {
+        (function (entry) {
+          var qimg = new Image();
+          qimg.onload = function () {
+            state.queue.push({ image: qimg, imgW: qimg.naturalWidth, imgH: qimg.naturalHeight, name: entry.name || (L('图') + (state.queue.length + 1)) });
+            renderQueueList(); updateQueueHint();
+            pending--; if (pending === 0) { renderAll(); }
+          };
+          qimg.onerror = function () { pending--; if (pending === 0) { renderAll(); } };
+          qimg.src = entry.image;
+        })(s.queue[qi]);
+      }
+    }
+
+    function finish() {
+      syncUIFromState();
+      pushHistory(true);
+      renderAll();
+      toast(L('已载入工程') + (state.hasImage ? '' : L('（无图片）')));
+    }
+
+    if (s.image) {
+      var img = new Image();
+      img.onload = function () {
+        state.image = img;
+        state.imgW = img.naturalWidth; state.imgH = img.naturalHeight;
+        state.hasImage = true; state.downsampled = false;
+        finish();
+      };
+      img.onerror = function () { toast(L('工程内图片解码失败')); finish(); };
+      img.src = s.image;
+    } else {
+      state.image = null; state.imgW = 0; state.imgH = 0; state.hasImage = false;
+      finish();
+    }
+  }
+
+  function saveProject() {
+    if (!state.hasImage && !state.queue.length) { toast(L('请先导入图片或添加换图队列再保存工程')); return; }
+    var data = serializeProject();
+    var blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'badge-project-' + getSpec(state.specId).id + 'mm-' + Date.now() + '.json';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 100);
+    toast(L('已保存工程文件'));
+  }
+
+  function loadProjectFromFile(file) {
+    if (!file) { return; }
+    var reader = new FileReader();
+    reader.onload = function () {
+      try { applyProjectData(JSON.parse(reader.result)); }
+      catch (err) { toast(L('工程文件解析失败')); }
+    };
+    reader.onerror = function () { toast(L('工程文件读取失败')); };
+    reader.readAsText(file);
+  }
+
+  var draftTimer = null;
+  function scheduleDraftSave() {
+    if (draftTimer) { clearTimeout(draftTimer); }
+    draftTimer = setTimeout(saveDraft, 700);
+  }
+  function saveDraft() {
+    try {
+      var data = serializeProject();
+      // 图片过大时丢弃图片仅存参数，避免超出 localStorage 配额
+      if (data.state.image && data.state.image.length > 1600000) { data.state.image = null; }
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(data));
+    } catch (e) { /* 配额超限等，静默忽略 */ }
+  }
+  function restoreDraft() {
+    try {
+      var raw = localStorage.getItem(DRAFT_KEY);
+      if (!raw) { return; }
+      var data = JSON.parse(raw);
+      if (data && data.state) { applyProjectData(data); }
+    } catch (e) { /* 忽略损坏的草稿 */ }
   }
 
   /* =====================================================================
@@ -1760,6 +2530,61 @@
     $('exportPreview').classList.toggle('hidden', mode !== 'preview');
     $('exportPrint').classList.toggle('hidden', mode !== 'print');
     renderAll();
+  }
+
+  /* =====================================================================
+   * BM-2 辅助：换图队列加载、下单指引文本
+   * =================================================================== */
+
+  function fallbackImg(file, done) {
+    var url = URL.createObjectURL(file);
+    var img = new Image();
+    img.onload = function () { done(img, img.naturalWidth, img.naturalHeight); URL.revokeObjectURL(url); };
+    img.onerror = function () { URL.revokeObjectURL(url); toast(L('队列图片加载失败')); };
+    img.src = url;
+  }
+
+  function loadQueueFiles(files) {
+    for (var i = 0; i < files.length; i++) {
+      (function (file) {
+        if (!file || !file.type || file.type.indexOf('image/') !== 0) { return; }
+        function done(src, w, h) { addQueueItem(src, w, h, file.name || (L('图') + (state.queue.length + 1))); }
+        if (typeof createImageBitmap === 'function') {
+          createImageBitmap(file).then(function (bmp) { done(bmp, bmp.width, bmp.height); })['catch'](function () { fallbackImg(file, done); });
+        } else { fallbackImg(file, done); }
+      })(files[i]);
+    }
+  }
+
+  function updateGuideSpec() {
+    var spec = getSpec(state.specId);
+    var el = $('guideSpec');
+    if (el) { el.textContent = L('规格：成品 ') + spec.diameter + L('mm · 出血 ') + spec.bleed + L('mm · 含出血 ') + spec.total + 'mm · 300 DPI'; }
+  }
+
+  function guideText() {
+    var spec = getSpec(state.specId);
+    // 用数组 join 组织多行：避免中文字面量里出现 \n 转义（站点 i18n 生成器按「整串字面量」匹配，含转义序列会静默漏翻）
+    return [
+      L('【badge-maker 工厂规范导出说明】'),
+      L('规格：成品 ') + spec.diameter + L('mm，出血 ') + spec.bleed + L('mm，含出血 ') + spec.total + 'mm',
+      L('分辨率：300 DPI（A4 拼版 ') + Math.round(mmToPx(A4_MM.w)) + '×' + Math.round(mmToPx(A4_MM.h)) + L('px）'),
+      L('下单步骤：'),
+      L('1. 导出 PNG / PDF 印刷稿（已含出血 / 裁切 / 安全区辅助线）'),
+      L('2. 确认出血线外无重要内容、文字在安全区内'),
+      L('3. 去柔造 / 1688「哇噢定制」等平台上传，选对应规格与工艺（亮面 / 哑膜）'),
+      L('4. 无设备可直接平台打样邮寄；有设备自印')
+    ].join('\n');
+  }
+
+  function fallbackCopy(text) {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); ta.remove();
+      toast(L('已复制下单指引'));
+    } catch (e) { toast(L('复制失败，请手动选择文本')); }
   }
 
   function bindUI() {
@@ -1898,6 +2723,172 @@
       }
     });
 
+    /* ---------- 形状 / 版型（BM-3 #8） ---------- */
+    var shapeGroup = $('shapeGroup');
+    if (shapeGroup) {
+      shapeGroup.addEventListener('click', function (e) {
+        var t = e.target;
+        if (t && t.tagName === 'BUTTON' && t.getAttribute('data-shape')) {
+          var sh = t.getAttribute('data-shape');
+          if (sh === state.shape) { return; }
+          state.shape = sh;
+          var pills = shapeGroup.querySelectorAll('.pill');
+          for (var i = 0; i < pills.length; i++) { pills[i].classList.toggle('active', pills[i] === t); }
+          renderAll();
+          scheduleDraftSave();
+        }
+      });
+    }
+
+    /* ---------- 文字层（BM-1 P0-1） ---------- */
+    function applyTextChange() {
+      renderAll();
+      scheduleDraftSave();
+    }
+    if ($('swText')) {
+      $('swText').addEventListener('change', function (e) {
+        state.text.enabled = e.target.checked;
+        applyTextChange();
+      });
+    }
+    var textIds = ['txtTop', 'txtBottom', 'txtCenter'];
+    for (var ti = 0; ti < textIds.length; ti++) {
+      (function (id) {
+        var key = id === 'txtTop' ? 'top' : (id === 'txtBottom' ? 'bottom' : 'center');
+        $(id).addEventListener('input', function (e) {
+          state.text[key] = e.target.value;
+          applyTextChange();
+        });
+      })(textIds[ti]);
+    }
+    if ($('txtSize')) {
+      $('txtSize').addEventListener('input', function (e) {
+        state.text.sizeRatio = clamp(parseFloat(e.target.value) / 100, 0.04, 0.30);
+        $('txtSizeVal').textContent = Math.round(state.text.sizeRatio * 100) + '%';
+        paintRange($('txtSize'));
+        applyTextChange();
+      });
+    }
+    if ($('txtColor')) {
+      $('txtColor').addEventListener('input', function (e) { state.text.color = e.target.value; applyTextChange(); });
+    }
+    if ($('swStroke')) {
+      $('swStroke').addEventListener('change', function (e) { state.text.stroke = e.target.checked; applyTextChange(); });
+    }
+    if ($('txtStrokeColor')) {
+      $('txtStrokeColor').addEventListener('input', function (e) { state.text.strokeColor = e.target.value; applyTextChange(); });
+    }
+    if ($('txtStrokeW')) {
+      $('txtStrokeW').addEventListener('input', function (e) {
+        state.text.strokeRatio = clamp(parseFloat(e.target.value) / 100, 0, 0.30);
+        $('txtStrokeWVal').textContent = Math.round(state.text.strokeRatio * 100) + '%';
+        paintRange($('txtStrokeW'));
+        applyTextChange();
+      });
+    }
+
+    /* ---------- 底纹工艺（BM-1 P0-2） ---------- */
+    if ($('specialSwitch')) {
+      $('specialSwitch').addEventListener('click', function (e) {
+        var t = e.target;
+        if (t && t.tagName === 'BUTTON' && t.getAttribute('data-special')) {
+          opts.special = t.getAttribute('data-special');
+          var btns = $('specialSwitch').querySelectorAll('button');
+          for (var bi = 0; bi < btns.length; bi++) {
+            btns[bi].classList.toggle('active', btns[bi] === t);
+          }
+          renderAll();
+          scheduleDraftSave();
+        }
+      });
+    }
+
+    /* ---------- 工程 保存/载入（BM-1 P0-3） ---------- */
+    if ($('btnSaveProject')) { $('btnSaveProject').addEventListener('click', saveProject); }
+    if ($('btnLoadProject')) { $('btnLoadProject').addEventListener('click', function () { $('projInput').click(); }); }
+    if ($('projInput')) {
+      $('projInput').addEventListener('change', function (e) {
+        var f = e.target.files && e.target.files[0];
+        if (f) { loadProjectFromFile(f); }
+        e.target.value = '';
+      });
+    }
+
+    /* ---------- 边框素材（BM-2 #4） ---------- */
+    var borderGroup = $('borderGroup');
+    if (borderGroup) {
+      borderGroup.addEventListener('click', function (e) {
+        var t = e.target;
+        if (t && t.tagName === 'BUTTON' && t.getAttribute('data-border')) {
+          state.border.id = t.getAttribute('data-border');
+          var pills = borderGroup.querySelectorAll('.pill');
+          for (var i = 0; i < pills.length; i++) { pills[i].classList.toggle('active', pills[i] === t); }
+          renderAll();
+          scheduleDraftSave();
+        }
+      });
+    }
+    if ($('borderColor')) {
+      $('borderColor').addEventListener('input', function () {
+        state.border.color = this.value;
+        renderAll();
+        scheduleDraftSave();
+      });
+    }
+
+    /* ---------- 徽章颜色（并入站点版能力） ---------- */
+    if ($('bgColor')) {
+      $('bgColor').addEventListener('input', function () {
+        state.bgColor = this.value;
+        renderAll();
+        scheduleDraftSave();
+      });
+    }
+    if ($('rimColor')) {
+      $('rimColor').addEventListener('input', function () {
+        state.rimColor = this.value;
+        renderAll();
+        scheduleDraftSave();
+      });
+    }
+
+    /* ---------- 换图队列（BM-2 #5） ---------- */
+    if ($('swQueue')) {
+      $('swQueue').addEventListener('change', function () {
+        opts.useQueue = this.checked;
+        updateQueueHint();
+        renderAll();
+        scheduleDraftSave();
+      });
+    }
+    if ($('btnAddQueue')) { $('btnAddQueue').addEventListener('click', function () { $('queueInput').click(); }); }
+    if ($('queueInput')) {
+      $('queueInput').addEventListener('change', function (e) {
+        if (e.target.files && e.target.files.length) { loadQueueFiles(e.target.files); }
+        e.target.value = '';
+      });
+    }
+
+    /* ---------- PDF 导出（BM-2 #7） ---------- */
+    if ($('btnExportA4PDF')) { $('btnExportA4PDF').addEventListener('click', exportA4PDF); }
+
+    /* ---------- 工厂规范 & 下单指引（BM-2 #6） ---------- */
+    if ($('btnGuideToggle')) {
+      $('btnGuideToggle').addEventListener('click', function () {
+        var body = $('guideBody');
+        var open = body.classList.toggle('open');
+        $('btnGuideToggle').setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    }
+    if ($('btnCopyGuide')) {
+      $('btnCopyGuide').addEventListener('click', function () {
+        var text = guideText();
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(function () { toast(L('已复制下单指引')); }, function () { fallbackCopy(text); });
+        } else { fallbackCopy(text); }
+      });
+    }
+
     /* ---------- 撤销 / 重做 ---------- */
     $('btnUndo').addEventListener('click', undo);
     $('btnRedo').addEventListener('click', redo);
@@ -1917,74 +2908,51 @@
       $('shortcutCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
 
-    /* ---------- 形状选择 ---------- */
-    $('shapeGroup').addEventListener('click', function (e) {
-      var t = e.target;
-      if (t && t.tagName === 'BUTTON' && t.getAttribute('data-shape')) {
-        var s = t.getAttribute('data-shape');
-        if (s === state.shape) { return; }
-        state.shape = s;
-        syncDesignUI();
-        pushHistory(false);
-        renderAll();
+    /* ---------- 全屏切换 ---------- */
+    var fsBtn = $('btnFullscreen');
+    var fsExitBtn = $('fsExitBtn');
+    function fsCurrent() {
+      return document.fullscreenElement || document.webkitFullscreenElement || null;
+    }
+    function fsEnter() {
+      var el = document.documentElement;
+      var req = el.requestFullscreen || el.webkitRequestFullscreen;
+      if (!req) { return; }
+      try {
+        var p = req.call(el);
+        if (p && typeof p.catch === 'function') { p.catch(function () {}); }
+      } catch (e) { /* 忽略：可能被 iframe 策略拦截 */ }
+    }
+    function fsExit() {
+      var ex = document.exitFullscreen || document.webkitExitFullscreen;
+      if (ex) { try { ex.call(document); } catch (e) {} }
+    }
+    function fsToggle() { if (fsCurrent()) { fsExit(); } else { fsEnter(); } }
+    function fsSync() {
+      var on = !!fsCurrent();
+      document.body.classList.toggle('is-fullscreen', on);
+      if (fsBtn) {
+        fsBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        var lbl = fsBtn.querySelector('.fs-label');
+        if (lbl) { lbl.textContent = on ? L('退出全屏') : L('全屏'); }
       }
-    });
+      // 尺寸变化后重绘画布（兜底 resize 事件）
+      window.dispatchEvent(new Event('resize'));
+    }
+    if (fsBtn) { fsBtn.addEventListener('click', fsToggle); }
+    if (fsExitBtn) { fsExitBtn.addEventListener('click', fsExit); }
+    document.addEventListener('fullscreenchange', fsSync);
+    document.addEventListener('webkitfullscreenchange', fsSync);
 
-    /* ---------- 文字层 ---------- */
-    $('swText').addEventListener('change', function (e) {
-      state.textOn = e.target.checked;
-      $('textBody').classList.toggle('hidden', !state.textOn);
-      pushHistory(false);
-      renderAll();
-    });
-    $('textInput').addEventListener('input', function (e) {
-      state.textContent = e.target.value;
-      renderAll();                       // 输入过程实时预览，不推历史
-    });
-    $('textInput').addEventListener('change', function () { pushHistory(false); });
-    $('textColor').addEventListener('input', function (e) {
-      state.textColor = e.target.value;
-      renderAll();
-    });
-    var textSizeEl = $('textSize');
-    textSizeEl.addEventListener('input', function () {
-      state.textSize = clamp(parseFloat(textSizeEl.value) || 12, 4, 20);
-      $('textSizeVal').textContent = state.textSize + '%';
-      paintRange(textSizeEl);
-      renderAll();
-    });
-    textSizeEl.addEventListener('change', function () { pushHistory(false); });
-    $('textPosGroup').addEventListener('click', function (e) {
-      var t = e.target;
-      if (t && t.tagName === 'BUTTON' && t.getAttribute('data-pos')) {
-        state.textPos = t.getAttribute('data-pos');
-        var btns = $('textPosGroup').querySelectorAll('button');
-        for (var i = 0; i < btns.length; i++) {
-          btns[i].classList.toggle('active', btns[i] === t);
-        }
-        pushHistory(false);
-        renderAll();
-      }
-    });
-    $('swTextStroke').addEventListener('change', function (e) {
-      state.textStroke = e.target.checked;
-      pushHistory(false);
-      renderAll();
-    });
-    $('textStrokeColor').addEventListener('input', function (e) {
-      state.textStrokeColor = e.target.value;
-      renderAll();
-    });
-
-    /* ---------- 颜色 ---------- */
-    $('bgColor').addEventListener('input', function (e) {
-      state.bgColor = e.target.value;
-      renderAll();
-    });
-    $('rimColor').addEventListener('input', function (e) {
-      state.rimColor = e.target.value;
-      renderAll();
-    });
+    /* ---------- 分享角标 + 本地 AI 辅助（BM-3 #10 / #9） ---------- */
+    if ($('swShare')) {
+      $('swShare').addEventListener('change', function (e) {
+        opts.shareBadge = e.target.checked;
+        scheduleDraftSave();
+      });
+    }
+    if ($('btnRemoveBg')) { $('btnRemoveBg').addEventListener('click', function () { removeBackground(40); }); }
+    if ($('btnEnhance')) { $('btnEnhance').addEventListener('click', function () { enhanceImage(); }); }
 
     /* ---------- 导出（模式 A） ---------- */
     $('swRealistic').addEventListener('change', function (e) {
@@ -2143,13 +3111,13 @@
     paintRange($('briSlider'));
     paintRange($('conSlider'));
     paintRange($('satSlider'));
-    paintRange($('textSize'));
 
     syncCountPills();
     syncUIFromState();
     updateUndoRedoUI();
     switchMode('preview');
     renderAll();
+    restoreDraft();         // 自动恢复本地草稿（若有）
   }
 
   if (document.readyState === 'loading') {

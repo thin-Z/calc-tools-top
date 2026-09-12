@@ -107,9 +107,23 @@
       <button type="button" class="btn btn-ghost btn-sm" id="btnUndo" disabled>撤销</button>
       <button type="button" class="btn btn-ghost btn-sm" id="btnRedo" disabled>重做</button>
       <button type="button" class="btn btn-ghost btn-sm" id="btnShortcutOpen">快捷键</button>
+      <button type="button" class="btn btn-ghost btn-sm" id="btnFullscreen" aria-pressed="false" title="全屏显示（F11 / Esc 退出）">
+        <svg class="fs-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="fs-label">全屏</span>
+      </button>
     </div>
   </div>
 </header>
+
+<!-- 全屏退出浮动按钮（仅全屏时显示） -->
+<button type="button" class="fs-exit" id="fsExitBtn" title="退出全屏（Esc）">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <span>退出全屏</span>
+</button>
 
 <!-- ============================ 主体 ============================ -->
 <main class="layout">
@@ -163,9 +177,9 @@
       </p>
     </section>
 
-    <!-- 3 规格与形状 -->
+    <!-- 3 规格 -->
     <section class="card">
-      <h2 class="card-title">3 · 规格与形状</h2>
+      <h2 class="card-title">3 · 规格</h2>
       <div class="pill-grid pill-grid-4" id="specGroup">
         <button type="button" class="pill" data-spec="32">32mm</button>
         <button type="button" class="pill" data-spec="44">44mm</button>
@@ -174,71 +188,20 @@
       </div>
       <p class="spec-info" id="specInfo">成品 58mm · 出血 3mm · 含出血 64mm</p>
       <div class="spec-table" id="specTable"></div>
-
-      <div class="sub-label">形状</div>
-      <div class="pill-grid pill-grid-3" id="shapeGroup">
-        <button type="button" class="pill active" data-shape="circle">圆形</button>
-        <button type="button" class="pill" data-shape="rounded">圆角方</button>
-        <button type="button" class="pill" data-shape="square">方形</button>
+      <p class="hint">切换规格时，图片位置 / 缩放 / 旋转 会完整保留。</p>
+      <div class="sub-label">形状 / 版型</div>
+      <div class="pill-grid pill-grid-4" id="shapeGroup">
+        <button type="button" class="pill active" data-shape="circle">圆形吧唧</button>
+        <button type="button" class="pill" data-shape="square">方形吧唧</button>
+        <button type="button" class="pill" data-shape="heart">心形吧唧</button>
+        <button type="button" class="pill" data-shape="card">卡片版型</button>
       </div>
-      <p class="hint">切换规格 / 形状时，图片位置 / 缩放 / 旋转 会完整保留。</p>
+      <p class="hint">切换形状会同步改编辑器裁切框、预览与打印稿；A4 仍按方形单元格排布（卡片居中）。</p>
     </section>
 
-    <!-- 4 文字 -->
+    <!-- 4 图像调整 -->
     <section class="card">
-      <h2 class="card-title">4 · 文字</h2>
-      <div class="row check-card">
-        <span>在徽章上添加文字</span>
-        <input type="checkbox" class="switch" id="swText" aria-label="在徽章上添加文字" />
-      </div>
-      <div id="textBody" class="hidden">
-        <div class="field field-text">
-          <input type="text" id="textInput" maxlength="24" placeholder="输入文字内容" aria-label="文字内容" />
-        </div>
-        <div class="row row-field">
-          <span>文字颜色</span>
-          <input type="color" id="textColor" value="#111111" aria-label="文字颜色" />
-        </div>
-        <div class="slider-row">
-          <label for="textSize">文字大小</label>
-          <span class="value" id="textSizeVal">12%</span>
-        </div>
-        <input type="range" id="textSize" min="4" max="20" step="0.5" value="12" />
-        <div class="sub-label">位置</div>
-        <div class="segmented segmented-sm" id="textPosGroup">
-          <button type="button" data-pos="top">上</button>
-          <button type="button" data-pos="center">中</button>
-          <button type="button" data-pos="bottom" class="active">下</button>
-        </div>
-        <div class="row check-card">
-          <span>文字描边</span>
-          <input type="checkbox" class="switch" id="swTextStroke" aria-label="文字描边" />
-        </div>
-        <div class="row row-field">
-          <span>描边颜色</span>
-          <input type="color" id="textStrokeColor" value="#FFFFFF" aria-label="描边颜色" />
-        </div>
-      </div>
-      <p class="hint">文字始终裁切在成品轮廓内，实时预览与所有导出同步生效。</p>
-    </section>
-
-    <!-- 5 颜色 -->
-    <section class="card">
-      <h2 class="card-title">5 · 颜色</h2>
-      <div class="row row-field">
-        <span>徽章底色</span>
-        <input type="color" id="bgColor" value="#FFFFFF" aria-label="徽章底色" />
-      </div>
-      <div class="row row-field">
-        <span>金属包边</span>
-        <input type="color" id="rimColor" value="#C8D0DA" aria-label="金属包边颜色" />
-      </div>
-      <p class="hint">底色填充图片未覆盖的区域；包边颜色仅作用于拟真徽章效果。</p>
-    </section>
-
-    <!-- 6 图像调整 -->
-    <section class="card">
-      <h2 class="card-title">6 · 图像调整</h2>
+      <h2 class="card-title">4 · 图像调整</h2>
 
       <div class="slider-row">
         <label for="briSlider">亮度</label>
@@ -256,12 +219,116 @@
         <label for="satSlider">饱和度</label>
         <span class="value" id="satVal">0</span>
       </div>
-      <input type="range" id="satSlider" min="-100" max="100" step="1" value="0" />
+        <input type="range" id="satSlider" min="-100" max="100" step="1" value="0" />
+
+      <div class="sub-label">本地 AI 辅助（不联网 · 零依赖）</div>
+      <div class="tool-grid">
+        <button type="button" class="btn btn-ghost btn-sm" id="btnRemoveBg">一键去背景</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="btnEnhance">智能增强</button>
+      </div>
+      <p class="hint">去背景：从四边漫水填充移除近似纯色背景（仅透明化边缘连通区域，保留主体）。增强：锐化 + 自适应对比度。</p>
     </section>
 
-    <!-- 7 导出 -->
+    <!-- 徽章颜色（并入站点版能力：底色 + 金属包边基色） -->
     <section class="card">
-      <h2 class="card-title">7 · 导出</h2>
+      <h2 class="card-title">徽章颜色</h2>
+      <div class="row">
+        <span>徽章底色</span>
+        <input type="color" id="bgColor" value="#ffffff" class="color-input" aria-label="徽章底色" />
+      </div>
+      <div class="row">
+        <span>金属包边基色</span>
+        <input type="color" id="rimColor" value="#c8d0da" class="color-input" aria-label="金属包边基色" />
+      </div>
+      <p class="hint">底色用于图片未覆盖处（默认纯白）；包边基色用于拟真效果的金属卷边明暗渐变。</p>
+    </section>
+
+    <!-- 文字（新增 · BM-1 P0-1） -->
+    <section class="card">
+      <h2 class="card-title">文字</h2>
+      <div class="row check-card">
+        <span>启用文字层</span>
+        <input type="checkbox" class="switch" id="swText" aria-label="启用文字层" />
+      </div>
+      <div class="text-field">
+        <label for="txtTop">上方弧形文字</label>
+        <input type="text" id="txtTop" class="text-input" placeholder="如：角色名 / 团名" maxlength="24" />
+      </div>
+      <div class="text-field">
+        <label for="txtBottom">下方弧形文字</label>
+        <input type="text" id="txtBottom" class="text-input" placeholder="如：日期 / 口号" maxlength="24" />
+      </div>
+      <div class="text-field">
+        <label for="txtCenter">中央直排文字</label>
+        <input type="text" id="txtCenter" class="text-input" placeholder="如：CENTER" maxlength="16" />
+      </div>
+      <div class="slider-row">
+        <label for="txtSize">字号</label>
+        <span class="value" id="txtSizeVal">11%</span>
+      </div>
+      <input type="range" id="txtSize" min="6" max="20" step="0.5" value="11" />
+      <div class="row">
+        <span>文字颜色</span>
+        <input type="color" id="txtColor" value="#1a1a1a" class="color-input" />
+      </div>
+      <div class="row check-card">
+        <span>描边</span>
+        <input type="checkbox" class="switch" id="swStroke" checked />
+      </div>
+      <div class="text-field-inline">
+        <label for="txtStrokeColor">描边色</label>
+        <input type="color" id="txtStrokeColor" value="#ffffff" class="color-input" />
+      </div>
+      <div class="slider-row">
+        <label for="txtStrokeW">描边粗细</label>
+        <span class="value" id="txtStrokeWVal">8%</span>
+      </div>
+      <input type="range" id="txtStrokeW" min="0" max="18" step="1" value="8" />
+      <p class="hint">弧形文字沿成品圆上下缘排布，中央文字水平居中；预览 / 单枚 / 拼版导出均同步包含。</p>
+    </section>
+
+    <!-- 边框素材（新增 · BM-2 #4） -->
+    <section class="card">
+      <h2 class="card-title">边框素材</h2>
+      <div class="pill-grid pill-grid-3" id="borderGroup">
+        <button type="button" class="pill active" data-border="none">无</button>
+        <button type="button" class="pill" data-border="double">双线</button>
+        <button type="button" class="pill" data-border="dashed">虚线</button>
+        <button type="button" class="pill" data-border="wave">波浪</button>
+        <button type="button" class="pill" data-border="star">星点</button>
+        <button type="button" class="pill" data-border="solid">纯色环</button>
+      </div>
+      <div class="row">
+        <span>边框颜色</span>
+        <input type="color" id="borderColor" value="#ffffff" class="color-input" aria-label="边框颜色" />
+      </div>
+      <p class="hint">本地程序化生成，无需外部素材、可商用；预览 / 单枚 / 拼版导出均同步包含。</p>
+    </section>
+
+    <!-- 换图队列（新增 · BM-2 #5） -->
+    <section class="card">
+      <h2 class="card-title">换图队列（多图拼版）</h2>
+      <div class="row check-card">
+        <span>启用多图拼版</span>
+        <input type="checkbox" class="switch" id="swQueue" aria-label="启用多图拼版" />
+      </div>
+      <div class="import-row">
+        <button type="button" class="btn btn-primary" id="btnAddQueue">添加图片</button>
+        <span class="muted" id="queueCount">0 张</span>
+      </div>
+      <input type="file" id="queueInput" class="file-input-hidden" accept="image/jpeg,image/png,image/webp,image/gif,image/*" multiple aria-label="选择队列图片" />
+      <div class="queue-list" id="queueList"></div>
+      <p class="hint">启用后，A4 拼版按队列顺序循环填入不同图案（凑一套无料）；关闭则恢复同一图案阵列。队列图不参与编辑器单图裁剪。</p>
+    </section>
+
+    <!-- 5 导出 -->
+    <section class="card">
+      <h2 class="card-title">5 · 导出</h2>
+
+      <div class="row check-card">
+        <span>导出图带「calc-tools.top 制作」角标</span>
+        <input type="checkbox" class="switch" id="swShare" aria-label="导出图带角标" />
+      </div>
 
       <!-- ---- 模式 A：预览 ---- -->
       <div id="exportPreview">
@@ -285,6 +352,14 @@
           <button type="button" data-size="512">512</button>
           <button type="button" data-size="1024" class="active">1024</button>
           <button type="button" data-size="2048">2048</button>
+        </div>
+
+        <div class="sub-label">底纹工艺（仅拟真预览）</div>
+        <div class="segmented segmented-sm" id="specialSwitch">
+          <button type="button" data-special="none" class="active">无</button>
+          <button type="button" data-special="star">星闪</button>
+          <button type="button" data-special="holographic">镭射</button>
+          <button type="button" data-special="brushed">拉丝</button>
         </div>
 
         <p class="hint" id="previewPixelHint">—</p>
@@ -328,9 +403,39 @@
         <p class="hint hint-warn hidden" id="countLimit">—</p>
 
         <button type="button" class="btn btn-primary btn-block" id="btnExportA4">导出 A4 拼版 PNG</button>
+        <button type="button" class="btn btn-ghost btn-block" id="btnExportA4PDF">导出 A4 拼版 PDF（尺寸精确）</button>
         <button type="button" class="btn btn-ghost btn-block" id="btnExportSingle">导出单枚精确尺寸 PNG</button>
         <button type="button" class="btn btn-ghost btn-block" id="btnPrint">直接打印（只输出拼版）</button>
+
+        <div class="guide-box">
+          <button type="button" class="collapse-head" id="btnGuideToggle" aria-expanded="false">
+            <span>工厂规范 & 下单指引</span><span class="caret">▼</span>
+          </button>
+          <div class="collapse-body" id="guideBody">
+            <div class="collapse-body-inner">
+              <p class="guide-spec" id="guideSpec">—</p>
+              <ol class="guide-steps">
+                <li>本工具导出 <b>300 DPI、含出血</b> 的印刷稿（A4 拼版或单枚），尺寸与裁切 / 安全区辅助线已标注。</li>
+                <li>确认稿件：检查出血线外无重要内容、文字位于 <b>安全区</b> 内。</li>
+                <li>去定制平台下单：<b>柔造 / 1688「哇噢定制」</b> 等上传本 PNG / PDF，选对应规格（如 58mm），工艺选亮面 / 哑膜。</li>
+                <li>无打印机和吧唧机 → 直接在平台下单打样邮寄；有设备 → 用本稿自印。</li>
+              </ol>
+              <button type="button" class="btn btn-ghost btn-sm" id="btnCopyGuide">复制下单指引</button>
+            </div>
+          </div>
+        </div>
       </div>
+    </section>
+
+    <!-- 工程（新增 · BM-1 P0-3） -->
+    <section class="card">
+      <h2 class="card-title">工程</h2>
+      <div class="import-row">
+        <button type="button" class="btn btn-primary" id="btnSaveProject">保存工程</button>
+        <button type="button" class="btn btn-ghost" id="btnLoadProject">载入工程</button>
+      </div>
+      <input type="file" id="projInput" class="file-input-hidden" accept="application/json,.json" aria-label="选择工程文件" />
+      <p class="hint">保存为 .json 工程文件（含图片与全部参数），可长期归档或在其他设备继续编辑。本工具也会自动把当前进度存为本地草稿，刷新页面不丢失。</p>
     </section>
 
     <!-- 快捷键说明（可折叠） -->
@@ -407,7 +512,6 @@
 <div id="printArea"><canvas id="printCanvas"></canvas></div>
 
         </div>
-
     </main>
 <footer>
     <div class="footer-links">

@@ -107,9 +107,23 @@
       <button type="button" class="btn btn-ghost btn-sm" id="btnUndo" disabled>Undo</button>
       <button type="button" class="btn btn-ghost btn-sm" id="btnRedo" disabled>Redo</button>
       <button type="button" class="btn btn-ghost btn-sm" id="btnShortcutOpen">Shortcuts</button>
+      <button type="button" class="btn btn-ghost btn-sm" id="btnFullscreen" aria-pressed="false" title="Full screen (F11 / Esc to exit)">
+        <svg class="fs-ico" width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="fs-label">Full screen</span>
+      </button>
     </div>
   </div>
 </header>
+
+<!-- Full screen exit button (shown in full screen only) -->
+<button type="button" class="fs-exit" id="fsExitBtn" title="Exit full screen (Esc)">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <span>Exit full screen</span>
+</button>
 
 <!-- ============================ Main ============================ -->
 <main class="layout">
@@ -163,9 +177,9 @@
       </p>
     </section>
 
-    <!-- 3 Size & shape -->
+    <!-- 3 Size -->
     <section class="card">
-      <h2 class="card-title">3 · Size &amp; shape</h2>
+      <h2 class="card-title">3 · Size</h2>
       <div class="pill-grid pill-grid-4" id="specGroup">
         <button type="button" class="pill" data-spec="32">32mm</button>
         <button type="button" class="pill" data-spec="44">44mm</button>
@@ -174,71 +188,20 @@
       </div>
       <p class="spec-info" id="specInfo">Finish 58mm · bleed 3mm · with bleed 64mm</p>
       <div class="spec-table" id="specTable"></div>
-
-      <div class="sub-label">Shape</div>
-      <div class="pill-grid pill-grid-3" id="shapeGroup">
-        <button type="button" class="pill active" data-shape="circle">Circle</button>
-        <button type="button" class="pill" data-shape="rounded">Rounded</button>
-        <button type="button" class="pill" data-shape="square">Square</button>
+      <p class="hint">Switching size fully preserves position / zoom / rotation.</p>
+      <div class="sub-label">Shape / format</div>
+      <div class="pill-grid pill-grid-4" id="shapeGroup">
+        <button type="button" class="pill active" data-shape="circle">Round badge</button>
+        <button type="button" class="pill" data-shape="square">Square badge</button>
+        <button type="button" class="pill" data-shape="heart">Heart badge</button>
+        <button type="button" class="pill" data-shape="card">Card format</button>
       </div>
-      <p class="hint">Switching size / shape fully preserves position / zoom / rotation.</p>
+      <p class="hint">Switching the shape updates the editor crop frame, the preview and the print sheet; A4 still uses square cells (cards are centred).</p>
     </section>
 
-    <!-- 4 Text -->
+    <!-- 4 Adjustments -->
     <section class="card">
-      <h2 class="card-title">4 · Text</h2>
-      <div class="row check-card">
-        <span>Add text on the badge</span>
-        <input type="checkbox" class="switch" id="swText" aria-label="Add text on the badge" />
-      </div>
-      <div id="textBody" class="hidden">
-        <div class="field field-text">
-          <input type="text" id="textInput" maxlength="24" placeholder="Type your text" aria-label="Text content" />
-        </div>
-        <div class="row row-field">
-          <span>Text color</span>
-          <input type="color" id="textColor" value="#111111" aria-label="Text color" />
-        </div>
-        <div class="slider-row">
-          <label for="textSize">Text size</label>
-          <span class="value" id="textSizeVal">12%</span>
-        </div>
-        <input type="range" id="textSize" min="4" max="20" step="0.5" value="12" />
-        <div class="sub-label">Position</div>
-        <div class="segmented segmented-sm" id="textPosGroup">
-          <button type="button" data-pos="top">Top</button>
-          <button type="button" data-pos="center">Middle</button>
-          <button type="button" data-pos="bottom" class="active">Bottom</button>
-        </div>
-        <div class="row check-card">
-          <span>Text outline</span>
-          <input type="checkbox" class="switch" id="swTextStroke" aria-label="Text outline" />
-        </div>
-        <div class="row row-field">
-          <span>Outline color</span>
-          <input type="color" id="textStrokeColor" value="#FFFFFF" aria-label="Outline color" />
-        </div>
-      </div>
-      <p class="hint">Text is always clipped inside the finish outline and syncs live across preview and all exports.</p>
-    </section>
-
-    <!-- 5 Colors -->
-    <section class="card">
-      <h2 class="card-title">5 · Colors</h2>
-      <div class="row row-field">
-        <span>Badge base color</span>
-        <input type="color" id="bgColor" value="#FFFFFF" aria-label="Badge base color" />
-      </div>
-      <div class="row row-field">
-        <span>Metal rim</span>
-        <input type="color" id="rimColor" value="#C8D0DA" aria-label="Metal rim color" />
-      </div>
-      <p class="hint">Base color fills areas not covered by the image; rim color only applies to the realistic badge effect.</p>
-    </section>
-
-    <!-- 6 Adjustments -->
-    <section class="card">
-      <h2 class="card-title">6 · Adjustments</h2>
+      <h2 class="card-title">4 · Adjustments</h2>
 
       <div class="slider-row">
         <label for="briSlider">Brightness</label>
@@ -256,12 +219,116 @@
         <label for="satSlider">Saturation</label>
         <span class="value" id="satVal">0</span>
       </div>
-      <input type="range" id="satSlider" min="-100" max="100" step="1" value="0" />
+        <input type="range" id="satSlider" min="-100" max="100" step="1" value="0" />
+
+      <div class="sub-label">On-device AI help (offline · zero dependencies)</div>
+      <div class="tool-grid">
+        <button type="button" class="btn btn-ghost btn-sm" id="btnRemoveBg">Remove background</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="btnEnhance">Smart enhance</button>
+      </div>
+      <p class="hint">Remove background: flood-fills from the four edges to drop a near-solid colour (only edge-connected areas become transparent, the subject stays intact). Enhance: sharpening + adaptive contrast.</p>
     </section>
 
-    <!-- 7 Export -->
+    <!-- Badge colours (merged from the site version: background + metal rim colours) -->
     <section class="card">
-      <h2 class="card-title">7 · Export</h2>
+      <h2 class="card-title">Badge colours</h2>
+      <div class="row">
+        <span>Badge background colour</span>
+        <input type="color" id="bgColor" value="#ffffff" class="color-input" aria-label="Badge background colour" />
+      </div>
+      <div class="row">
+        <span>Metal rim base colour</span>
+        <input type="color" id="rimColor" value="#c8d0da" class="color-input" aria-label="Metal rim base colour" />
+      </div>
+      <p class="hint">The background colour fills areas the image does not cover (pure white by default); the rim colour drives the metallic curled-edge shading of the realistic effect.</p>
+    </section>
+
+    <!-- Text (added · BM-1 P0-1) -->
+    <section class="card">
+      <h2 class="card-title">Text</h2>
+      <div class="row check-card">
+        <span>Enable text layer</span>
+        <input type="checkbox" class="switch" id="swText" aria-label="Enable text layer" />
+      </div>
+      <div class="text-field">
+        <label for="txtTop">Top arc text</label>
+        <input type="text" id="txtTop" class="text-input" placeholder="e.g. character / group name" maxlength="24" />
+      </div>
+      <div class="text-field">
+        <label for="txtBottom">Bottom arc text</label>
+        <input type="text" id="txtBottom" class="text-input" placeholder="e.g. date / slogan" maxlength="24" />
+      </div>
+      <div class="text-field">
+        <label for="txtCenter">Centre text</label>
+        <input type="text" id="txtCenter" class="text-input" placeholder="e.g. CENTER" maxlength="16" />
+      </div>
+      <div class="slider-row">
+        <label for="txtSize">Font size</label>
+        <span class="value" id="txtSizeVal">11%</span>
+      </div>
+      <input type="range" id="txtSize" min="6" max="20" step="0.5" value="11" />
+      <div class="row">
+        <span>Text colour</span>
+        <input type="color" id="txtColor" value="#1a1a1a" class="color-input" />
+      </div>
+      <div class="row check-card">
+        <span>Outline</span>
+        <input type="checkbox" class="switch" id="swStroke" checked />
+      </div>
+      <div class="text-field-inline">
+        <label for="txtStrokeColor">Outline colour</label>
+        <input type="color" id="txtStrokeColor" value="#ffffff" class="color-input" />
+      </div>
+      <div class="slider-row">
+        <label for="txtStrokeW">Outline width</label>
+        <span class="value" id="txtStrokeWVal">8%</span>
+      </div>
+      <input type="range" id="txtStrokeW" min="0" max="18" step="1" value="8" />
+      <p class="hint">Arc text runs along the top and bottom edge of the finished circle and centre text is horizontally centred; preview / single / sheet exports all include it.</p>
+    </section>
+
+    <!-- Border assets (added · BM-2 #4) -->
+    <section class="card">
+      <h2 class="card-title">Border assets</h2>
+      <div class="pill-grid pill-grid-3" id="borderGroup">
+        <button type="button" class="pill active" data-border="none">None</button>
+        <button type="button" class="pill" data-border="double">Double line</button>
+        <button type="button" class="pill" data-border="dashed">Dashed</button>
+        <button type="button" class="pill" data-border="wave">Wave</button>
+        <button type="button" class="pill" data-border="star">Star dots</button>
+        <button type="button" class="pill" data-border="solid">Solid ring</button>
+      </div>
+      <div class="row">
+        <span>Border colour</span>
+        <input type="color" id="borderColor" value="#ffffff" class="color-input" aria-label="Border colour" />
+      </div>
+      <p class="hint">Generated procedurally on device, no external assets, free for commercial use; preview / single / sheet exports all include it.</p>
+    </section>
+
+    <!-- Image queue (added · BM-2 #5) -->
+    <section class="card">
+      <h2 class="card-title">Image queue (multi-image sheet)</h2>
+      <div class="row check-card">
+        <span>Enable multi-image sheet</span>
+        <input type="checkbox" class="switch" id="swQueue" aria-label="Enable multi-image sheet" />
+      </div>
+      <div class="import-row">
+        <button type="button" class="btn btn-primary" id="btnAddQueue">Add images</button>
+        <span class="muted" id="queueCount">0 pcs</span>
+      </div>
+      <input type="file" id="queueInput" class="file-input-hidden" accept="image/jpeg,image/png,image/webp,image/gif,image/*" multiple aria-label="Choose queue images" />
+      <div class="queue-list" id="queueList"></div>
+      <p class="hint">When on, the A4 sheet cycles through the queue in order (handy for a matching set); when off it repeats one design. Queue images are not used by the single-image editor.</p>
+    </section>
+
+    <!-- 5 Export -->
+    <section class="card">
+      <h2 class="card-title">5 · Export</h2>
+
+      <div class="row check-card">
+        <span>Add a "made with calc-tools.top" badge to exports</span>
+        <input type="checkbox" class="switch" id="swShare" aria-label="Add watermark to exports" />
+      </div>
 
       <!-- ---- Mode A: preview ---- -->
       <div id="exportPreview">
@@ -285,6 +352,14 @@
           <button type="button" data-size="512">512</button>
           <button type="button" data-size="1024" class="active">1024</button>
           <button type="button" data-size="2048">2048</button>
+        </div>
+
+        <div class="sub-label">Texture finish (realistic preview only)</div>
+        <div class="segmented segmented-sm" id="specialSwitch">
+          <button type="button" data-special="none" class="active">None</button>
+          <button type="button" data-special="star">Star sparkle</button>
+          <button type="button" data-special="holographic">Holographic</button>
+          <button type="button" data-special="brushed">Brushed</button>
         </div>
 
         <p class="hint" id="previewPixelHint">—</p>
@@ -328,9 +403,39 @@
         <p class="hint hint-warn hidden" id="countLimit">—</p>
 
         <button type="button" class="btn btn-primary btn-block" id="btnExportA4">Export A4 sheet PNG</button>
+        <button type="button" class="btn btn-ghost btn-block" id="btnExportA4PDF">Export A4 sheet PDF (exact size)</button>
         <button type="button" class="btn btn-ghost btn-block" id="btnExportSingle">Export single exact-size PNG</button>
         <button type="button" class="btn btn-ghost btn-block" id="btnPrint">Print (sheet only)</button>
+
+        <div class="guide-box">
+          <button type="button" class="collapse-head" id="btnGuideToggle" aria-expanded="false">
+            <span>Factory spec & ordering guide</span><span class="caret">▼</span>
+          </button>
+          <div class="collapse-body" id="guideBody">
+            <div class="collapse-body-inner">
+              <p class="guide-spec" id="guideSpec">—</p>
+              <ol class="guide-steps">
+                <li>This tool exports <b>300 DPI, with bleed</b>  print sheet (A4 layout or single), with exact size, cut and safe-area guides already marked.</li>
+                <li>Proof it: check nothing important sits outside the bleed line and that text is inside the  <b>safe area</b> .</li>
+                <li>To order from a platform:<b>Rouzao / 1688 "Wao Custom"</b>  and upload this PNG / PDF, pick the matching size (e.g. 58mm) and the finish (glossy / matte).</li>
+                <li>No printer or badge press? Order a sample from the platform. Have the gear? Print this file yourself.</li>
+              </ol>
+              <button type="button" class="btn btn-ghost btn-sm" id="btnCopyGuide">Copy ordering guide</button>
+            </div>
+          </div>
+        </div>
       </div>
+    </section>
+
+    <!-- Project (added · BM-1 P0-3) -->
+    <section class="card">
+      <h2 class="card-title">Project</h2>
+      <div class="import-row">
+        <button type="button" class="btn btn-primary" id="btnSaveProject">Save project</button>
+        <button type="button" class="btn btn-ghost" id="btnLoadProject">Load project</button>
+      </div>
+      <input type="file" id="projInput" class="file-input-hidden" accept="application/json,.json" aria-label="Choose project file" />
+      <p class="hint">Saved as a .json project file (image plus every setting) for long-term archiving or editing on another device. The tool also auto-saves progress as a local draft, so a refresh does not lose it.</p>
     </section>
 
     <!-- Shortcuts (collapsible) -->
@@ -407,7 +512,6 @@
 <div id="printArea"><canvas id="printCanvas"></canvas></div>
 
         </div>
-
     </main>
 <footer>
     <div class="footer-links">
