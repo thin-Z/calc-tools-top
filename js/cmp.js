@@ -8,11 +8,11 @@
     try {
         if (localStorage.getItem('cookie-consent')) { return; }
         var b = document.getElementById('cmp-banner');
-        if (b) b.hidden = false;
+        if (b) { b.hidden = false; document.body.classList.add('cmp-open'); }
         function done(v) {
             try { localStorage.setItem('cookie-consent', v); } catch (e) {}
             var x = document.getElementById('cmp-banner');
-            if (x) x.hidden = true;
+            if (x) { x.hidden = true; document.body.classList.remove('cmp-open'); }
             if (v === 'granted' && typeof gtag !== 'undefined') {
                 try { gtag('consent', 'update', { ad_storage: 'granted', analytics_storage: 'granted' }); } catch (e) {}
             }
