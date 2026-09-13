@@ -1132,9 +1132,9 @@
     var layout = currentLayout();
     var pxPerMm = p.w / A4_MM.w;
     drawA4Sheet(p.ctx, layout, pxPerMm);
-    // 纸张外描边，避免与深色背景糊在一起
+    // 纸张外描边：浅色舞台用中性灰，保持边缘可见
     p.ctx.save();
-    p.ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+    p.ctx.strokeStyle = 'rgba(120,130,150,0.35)';
     p.ctx.lineWidth = 1;
     p.ctx.strokeRect(0.5, 0.5, p.w - 1, p.h - 1);
     p.ctx.restore();

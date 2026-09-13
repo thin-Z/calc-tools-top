@@ -469,14 +469,17 @@ kbd{
 }
 .preview-canvas-sm{
   display:block; width:min(100%, 200px); aspect-ratio:1 / 1; height:auto;
+  min-width:0; max-width:100%;
   border-radius:var(--radius-sm);
-  background:rgba(255,255,255,.04);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+  background:rgba(17,24,39,.03);
+  box-shadow:inset 0 0 0 1px rgba(17,24,39,.08);
 }
 .preview-canvas-a4{
   display:block; width:min(100%, 160px); aspect-ratio:210 / 297; height:auto;
+  min-width:0; max-width:100%;
   border-radius:8px;
-  box-shadow:0 8px 24px rgba(0,0,0,.45);
+  background:#fff;
+  box-shadow:0 6px 18px rgba(17,24,39,.14);
 }
 
 /* --------------------------- 拖拽覆盖层 --------------------------- */
@@ -660,7 +663,6 @@ body.is-fullscreen .preview-card{ display:flex; flex-direction:column; min-heigh
   body:has(> .topbar) .preview-card > .preview-stage{ flex:1 1 0; min-height:0; }
   body:has(> .topbar) .preview-card .preview-canvas{ height:100%; width:auto; max-width:100%; max-height:none; }
   .badge-maker-root .preview-card .preview-duo{ height:100%; align-items:center; }
-  .badge-maker-root .preview-card .preview-canvas-sm{ height:100%; width:auto; max-width:100%; max-height:none; }
 }
 
 /* 站点 <main> 默认 1280px + 48px 内边距会挤压沉浸式工具，在此放开 */
