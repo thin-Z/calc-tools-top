@@ -521,6 +521,7 @@ kbd{
     width:210mm; height:297mm;
   }
   body > *:not(:has(#printArea)){ display:none !important; }
+  .badge-maker-root > *:not(#printArea){ display:none !important; }
   #printArea{ display:block !important; }
   #printCanvas{
     display:block !important;
@@ -660,6 +661,12 @@ body.is-fullscreen .preview-card{ display:flex; flex-direction:column; min-heigh
   .badge-maker-root .preview-card .preview-duo{ height:100%; align-items:center; }
   .badge-maker-root .preview-card .preview-canvas-sm{ height:100%; width:auto; max-width:100%; max-height:none; }
 }
+
+/* 站点 <main> 默认 1280px + 48px 内边距会挤压沉浸式工具，在此放开 */
+body:has(.badge-maker-root) > main{ max-width:none; padding:0; width:100%; }
+
+/* 颜色选择器在坞内被 .panel .card.is-active .color-input 的 min-width:120px 撑大，恢复小色块 */
+.panel .card.is-active .color-input{ min-width:0; width:34px; }
 
 /* =========================================================================
    沉浸式工作台布局（页面级，bm-* 前缀全站唯一）
