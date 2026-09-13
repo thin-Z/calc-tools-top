@@ -260,7 +260,7 @@
     <!-- Text (added · BM-1 P0-1) -->
     <section class="card" data-cat="text">
       <h2 class="card-title">Text</h2>
-      <div class="row bm-row-check">
+      <div class="row check-card">
         <span>Enable text layer</span>
         <input type="checkbox" class="switch" id="swText" aria-label="Enable text layer" />
       </div>
@@ -285,7 +285,7 @@
         <span>Text colour</span>
         <input type="color" id="txtColor" value="#1a1a1a" class="color-input" />
       </div>
-      <div class="row bm-row-check">
+      <div class="row check-card">
         <span>Outline</span>
         <input type="checkbox" class="switch" id="swStroke" checked />
       </div>
@@ -322,7 +322,7 @@
     <!-- Image queue (added · BM-2 #5) -->
     <section class="card" data-cat="queue">
       <h2 class="card-title">Image queue (multi-image sheet)</h2>
-      <div class="row bm-row-check">
+      <div class="row check-card">
         <span>Enable multi-image sheet</span>
         <input type="checkbox" class="switch" id="swQueue" aria-label="Enable multi-image sheet" />
       </div>
@@ -339,18 +339,18 @@
     <section class="card" data-cat="export">
       <h2 class="card-title">5 · Export</h2>
 
-      <div class="row bm-row-check">
+      <div class="row check-card">
         <span>Add a "made with calc-tools.top" badge to exports</span>
         <input type="checkbox" class="switch" id="swShare" aria-label="Add watermark to exports" />
       </div>
 
       <!-- ---- Mode A: preview ---- -->
       <div id="exportPreview">
-        <div class="row bm-row-check">
+        <div class="row check-card">
           <span>Realistic badge effect</span>
           <input type="checkbox" class="switch" id="swRealistic" checked aria-label="Realistic badge effect" />
         </div>
-        <div class="row bm-row-check">
+        <div class="row check-card">
           <span>Transparent background</span>
           <input type="checkbox" class="switch" id="swTransparent" aria-label="Transparent background" />
         </div>
@@ -382,11 +382,11 @@
 
       <!-- ---- Mode B: print ---- -->
       <div id="exportPrint" class="hidden">
-        <div class="row bm-row-check">
+        <div class="row check-card">
           <span>Show guides</span>
           <input type="checkbox" class="switch" id="swGuides" checked aria-label="Show guides" />
         </div>
-        <div class="row bm-row-check">
+        <div class="row check-card">
           <span>Show text labels</span>
           <input type="checkbox" class="switch" id="swLabels" checked aria-label="Show text labels" />
         </div>

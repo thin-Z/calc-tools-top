@@ -260,7 +260,7 @@
     <!-- 文字（新增 · BM-1 P0-1） -->
     <section class="card" data-cat="text">
       <h2 class="card-title">文字</h2>
-      <div class="row bm-row-check">
+      <div class="row check-card">
         <span>启用文字层</span>
         <input type="checkbox" class="switch" id="swText" aria-label="启用文字层" />
       </div>
@@ -285,7 +285,7 @@
         <span>文字颜色</span>
         <input type="color" id="txtColor" value="#1a1a1a" class="color-input" />
       </div>
-      <div class="row bm-row-check">
+      <div class="row check-card">
         <span>描边</span>
         <input type="checkbox" class="switch" id="swStroke" checked />
       </div>
@@ -322,7 +322,7 @@
     <!-- 换图队列（新增 · BM-2 #5） -->
     <section class="card" data-cat="queue">
       <h2 class="card-title">换图队列（多图拼版）</h2>
-      <div class="row bm-row-check">
+      <div class="row check-card">
         <span>启用多图拼版</span>
         <input type="checkbox" class="switch" id="swQueue" aria-label="启用多图拼版" />
       </div>
@@ -339,18 +339,18 @@
     <section class="card" data-cat="export">
       <h2 class="card-title">5 · 导出</h2>
 
-      <div class="row bm-row-check">
+      <div class="row check-card">
         <span>导出图带「calc-tools.top 制作」角标</span>
         <input type="checkbox" class="switch" id="swShare" aria-label="导出图带角标" />
       </div>
 
       <!-- ---- 模式 A：预览 ---- -->
       <div id="exportPreview">
-        <div class="row bm-row-check">
+        <div class="row check-card">
           <span>拟真徽章效果</span>
           <input type="checkbox" class="switch" id="swRealistic" checked aria-label="拟真徽章效果" />
         </div>
-        <div class="row bm-row-check">
+        <div class="row check-card">
           <span>导出透明背景</span>
           <input type="checkbox" class="switch" id="swTransparent" aria-label="导出透明背景" />
         </div>
@@ -382,11 +382,11 @@
 
       <!-- ---- 模式 B：打印 ---- -->
       <div id="exportPrint" class="hidden">
-        <div class="row bm-row-check">
+        <div class="row check-card">
           <span>显示辅助线</span>
           <input type="checkbox" class="switch" id="swGuides" checked aria-label="显示辅助线" />
         </div>
-        <div class="row bm-row-check">
+        <div class="row check-card">
           <span>显示文字标注</span>
           <input type="checkbox" class="switch" id="swLabels" checked aria-label="显示文字标注" />
         </div>

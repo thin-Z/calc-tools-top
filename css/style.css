@@ -4423,7 +4423,9 @@ mark {
 .check-card:hover {
     border-color: color-mix(in srgb, var(--primary) 40%, var(--border));
 }
-.check-card input[type="checkbox"] {
+/* 放过 .switch（iOS 风格可见开关）：badge-maker 等工具在 .check-card 行内用可见 .switch，
+   不能按默认 check-card 规则把 checkbox 缩成 1px 隐藏，否则开关消失。 */
+.check-card input[type="checkbox"]:not(.switch) {
     position: absolute;
     width: 1px;
     height: 1px;
