@@ -771,6 +771,17 @@ footer .footer-links a:hover {
 .tool-content p:last-child,.seo-content p:last-child {
     margin-bottom: 0;
 }
+/* a11y: 正文内联链接必须可凭下划线区分（WCAG 1.4.1 / axe link-in-text-block）。
+   全局 a 默认无下划线(Apple 风)，但段内链接仅靠品牌蓝与次级灰文字区分、对比不足，
+   故对正文 prose 链接强制下划线；导航/卡片/按钮/related-posts 链接不在此列。 */
+.tool-content p a,
+.tool-content li a,
+.seo-content p a,
+.seo-content li a {
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    text-decoration-thickness: 1px;
+}
 .tool-content ul,.seo-content ul {
     margin: 0.5rem 0 1rem;
     padding-left: 0;
