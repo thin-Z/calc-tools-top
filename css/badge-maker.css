@@ -134,49 +134,108 @@
 .panel .card.is-active .segmented button,
 .badge-maker-root .topbar-actions .btn{ white-space:nowrap; }
 
-/* 参数坞 · 只显示当前分类，内容横向平铺（换行而不是纵向堆叠） */
+/* 参数坞 · 只显示当前分类，内容横向平铺（换行而不是纵向堆叠）
+
+   布局模型（2026-09-14 根因重构）
+   ------------------------------------------------------------------
+   `.card.is-active` 是 wrap 型 flex 行，其「直接子元素」= 一个个控件单元，横向平铺。
+   旧实现用 `> *{display:flex;align-items:center;gap:8px;flex:0 0 auto;margin:0}` 一刀切，
+   把每个单元自身的 display / gap / align-items 静默覆盖，累计引发四类缺陷：
+     ① `.tool-grid` / `.pill-grid` 的 `display:grid` 被覆盖 → 按钮排成单行长条、不能折行；
+     ② `flex:0 0 auto` 使分组撑到 max-content 宽且不可收缩 → 窄屏横向溢出
+        （实测 390px：边框组 616px、裁剪工具栏 524px → 整页出现横向滚动条、末尾按钮被裁掉）；
+     ③ `align-items:center` 覆盖 `.text-field`（纵向容器）的 `stretch` → 其 label 居中，
+        与坞内其它一律左对齐的 label 不一致；
+     ④ `display:flex` 使 `.file-input-hidden` 外露（原生 file 控件露出 253px），
+        并让 `input[type=range]` 拿到非标准的 `display:flex`（Safari/Firefox 轨道渲染不一致）。
+   现改为「白名单 + 分桶」：只对真正需要横排的单元施加行布局，其余一律保留/恢复自身 display。
+   新增子容器时**只需判断它属于哪一桶**，不会再被无差别覆盖。 */
+
 .panel .card{ display:none; }
 .panel .card.is-active{
   display:flex; flex-wrap:wrap; align-items:center; gap:10px 18px;
   padding:14px 16px; margin:0;
 }
-.panel .card.is-active > *{
-  display:flex; align-items:center; gap:8px; flex:0 0 auto; margin:0; flex-wrap:wrap;
+/* 单元间距统一由容器的 row-gap 提供，单元自身外边距归零。
+   这是唯一保留的「一刀切」属性 —— margin 不参与布局类型判定，无覆盖副作用。 */
+.panel .card.is-active > *{ margin:0; }
+
+/* ── 桶 A · 横排单元（标签 + 控件同一行，宽度随内容） ── */
+.panel .card.is-active > .row,
+.panel .card.is-active > .slider-row,
+.panel .card.is-active > .sub-label,
+.panel .card.is-active > .badge-live{
+  display:flex; align-items:center; gap:8px; flex:0 1 auto; min-width:0; flex-wrap:wrap;
 }
-.panel .card.is-active .sub-label{ white-space:nowrap; }
-.panel .card.is-active .badge-live{ white-space:nowrap; }
-.panel .card.is-active .hint{ flex:1 1 100%; white-space:normal; }
-.panel .card.is-active .text-field input,
-.panel .card.is-active .color-input{ min-width:120px; }
-.panel .card .card-title{ display:none; }
+/* `.spec-info`（规格摘要条，如「成品 58mm · 出血 3mm · 含裁剪圆 685px」）文案较长：
+   允许收缩以免在窄屏把卡片撑破（360px 实测溢出 13px），并在手机端独占整行以便阅读。 */
+.panel .card.is-active > .spec-info{
+  display:flex; align-items:center; flex:0 1 auto; min-width:0;
+}
+/* 手机端（≤600px）让规格摘要独占整行：与尺寸 pill 组同一行会挤成两行小字 */
+@media (max-width:600px){
+  .panel .card.is-active > .spec-info{ flex:1 1 100%; }
+}
+/* `.text-field` 属于纵向堆叠单元：只接管尺寸与间距，**刻意不设 align-items**，
+   让它自身的 `flex-direction:column` + `align-items:stretch` 生效 → label 左对齐（修缺陷 ③） */
+.panel .card.is-active > .text-field,
+.panel .card.is-active > .text-field-inline{
+  display:flex; gap:8px; flex:0 0 auto; flex-wrap:wrap;
+}
+/* 独立滑块（`.slider-row` 的兄弟节点，如 #zoomSlider/#briSlider）：
+   display 用 block 而非 flex —— `display:flex` 落在 input[type=range] 上属非标准用法 */
+.panel .card.is-active > input[type=range]{
+  display:block; flex:0 1 220px; min-width:120px;
+}
+
+/* ── 桶 B · 撑满整行的结构块（表格 / 列表 / 提示 / 折叠体） ── */
 .panel .card.is-active > .hint,
 .panel .card.is-active > .spec-table,
 .panel .card.is-active > .queue-list,
-.panel .card.is-active > .collapse-body,
-.panel .card.is-active > .editor-head{ flex:1 1 100%; }
-.panel .card.is-active > .spec-table{ display:block; }
-/* 「导出」分组的两个模式容器（#exportPreview 预览 / #exportPrint 打印）也是 .card 的直接
-   子元素，被上面的 `> *{display:flex}` 强制成 flex 行 → 内部 .btn-block 的 width:100% 失效、
-   4 个导出按钮被压缩成并排（实测），.row.check-card 也随之收缩。恢复 block 纵向堆叠。 */
+.panel .card.is-active > .collapse-body{ flex:1 1 100%; min-width:0; }
+.panel .card.is-active .hint{ flex:1 1 100%; white-space:normal; }
+.panel .card.is-active > .hint{ display:block; font-size:12px; color:var(--text-3); line-height:1.5; }
+/* 说明：移除 `> *` 后，`.spec-table` / `.collapse-body` 自动恢复自身 block，
+   `.queue-list` 恢复自身 `display:flex;flex-wrap:wrap` —— 原先的三个 display 补丁已删除。 */
+
+/* ── 桶 C · 分组控件（等宽 pill / 工具按钮）：可折行，杜绝窄屏溢出 ──
+   两个要点：
+   (1) 用 wrap 型 flex 而非 grid：`.pill-grid` 的 `repeat(N,1fr)` 与 `.tool-grid` 的
+       `repeat(2,1fr)` 都是给 210–260px 窄侧栏设计的 —— 放进 1358px 全宽坞会把每列拉成
+       300–680px 的巨块。
+   (2) 容器用 `flex:0 1 auto`（**可收缩**）而非 `0 0 auto`：这样宽屏下宽度 = 内容 max-content
+       （与重构前完全一致），窄屏下自动收缩 → 靠 `flex-wrap` 折行，不再横向溢出。
+   注：`min-width` 保持默认 `auto`，即「至少容得下最宽的一个单元」，避免被压扁。 */
+.panel .card.is-active > .pill-grid,
+.panel .card.is-active > .tool-grid{
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px;
+  flex:0 1 auto;
+}
+/* 工具按钮宽度归零弹性伸缩：站点全局 `.btn{ flex:1 }`（css/style.css:481）会被工具按钮继承，
+   在有剩余空间时把每个按钮撑满整行（实测 68px → 187px）。坞内要的是「等宽 68px + 折行」。
+   注意不能笼统地给 `.badge-maker-root .btn` 归零 —— 顶栏按钮正是靠 `flex:1` 才等宽（69.5×4）。 */
+.panel .card.is-active > .tool-grid > .btn{ flex:0 0 auto; min-width:68px; }
+
+/* ── 桶 D · 结构容器（保留各自 display，只补宽度约束） ── */
+.panel .card.is-active > .import-row{ display:grid; grid-template-columns:1fr auto; flex:0 1 320px; }
 .panel .card.is-active > #exportPreview,
-.panel .card.is-active > #exportPrint{ display:block; flex:1 1 100%; }
+.panel .card.is-active > #exportPrint{ flex:1 1 100%; min-width:0; }
+/* 隐藏的文件输入框：`display:none` 语义正确、且不参与 Tab 焦点。
+   移除 `> *` 后不再需要「高特异性 display:none + 视觉隐藏」双保险 */
+.panel .card.is-active > .file-input-hidden{ display:none; }
+
+/* ── 坞内微调 ── */
+.panel .card.is-active .sub-label{ white-space:nowrap; }
+.panel .card.is-active .badge-live{ white-space:nowrap; }
+.panel .card.is-active .text-field input,
+.panel .card.is-active .color-input{ min-width:120px; }
+.panel .card .card-title{ display:none; }
 /* 参数坞内的 .row.check-card 去掉站点 .check-card 的卡片外观（白底 + 1px 边框 + 12px 圆角），
    与坞内其它无边框行控件保持一致；.row 自带的 padding/gap 保留。 */
 .panel .card.is-active .row.check-card{ background:transparent; border:0; border-radius:0; }
-/* 快捷键卡片的 .collapse-body 同理被置为 flex → 其唯一子层 .collapse-body-inner 宽度收缩到
-   内容宽（实测 ~267px），列表挤在左侧一小块、右侧大片空白。恢复 block 让内层撑满。 */
-.panel .card.is-active > .collapse-body{ display:block; }
-/* 「导入」分组的 .import-row（`grid-template-columns:1fr auto`，意图是「主按钮占主体 +
-   次按钮自适应」）同样被 `> *{display:flex}` 覆盖成 flex → grid 列定义失效、两个按钮
-   只按内容宽度排。恢复 grid，并给一个紧凑上限宽度以贴合参数坞的横向平铺风格。 */
-.panel .card.is-active > .import-row{ display:grid; grid-template-columns:1fr auto; flex:0 1 320px; }
-/* 隐藏的文件输入框：以 display:none 为主（语义正确、且不参与 Tab 焦点，避免键盘用户
-   停在一个不可见元素上）；上方 .file-input-hidden 的视觉隐藏属性作兜底。 */
-.panel .card.is-active > .file-input-hidden{ display:none; }
 /* 坞内规格表压紧一档：为画布区腾出高度（规格是坞内最高的分类） */
 .panel .card.is-active .spec-table{ margin-top:6px; }
 .panel .card.is-active .spec-table .spec-tr{ padding:3px 4px; }
-.panel .card.is-active > .hint{ display:block; font-size:12px; color:var(--text-3); line-height:1.5; }
 .panel .card .collapse-head{ display:none; }
 .panel .card.is-active .collapse-body{ max-height:none; overflow:visible; }
 .panel .card.is-active .collapse-body-inner{ padding:0; }
@@ -187,8 +246,7 @@
 .panel .card.is-active .row > span{ white-space:nowrap; }
 .panel .card.is-active .slider-row{ gap:8px; }
 .panel .card.is-active .slider-row input[type=range]{ width:130px; }
-/* 滑块常是 .slider-row 的兄弟节点（不在其中）；输入框在坞内容易被拉高 */
-.panel .card.is-active > input[type=range]{ flex:0 1 220px; min-width:120px; }
+/* 注：独立滑块（.slider-row 的兄弟节点）的尺寸规则已上移至「桶 A」，此处不再重复。 */
 .panel .card.is-active .text-field input{ height:34px; min-height:34px; }
 
 /* 桌面端（≥1024px）：整页零滚动 —— 顶条 + 画布区(内部滚动) + 参数坞常驻底部。
@@ -243,18 +301,14 @@
 
 /* --------------------------- 表单控件 --------------------------- */
 .import-row{ display:grid; grid-template-columns:1fr auto; gap:8px; }
-/* 文件输入框：视觉隐藏（不依赖 display，任何 display 覆盖都无法让它显形）——
-   配合下方「参数坞布局补丁」段的 `display:none` 双保险（后者语义更正确：不参与 Tab 焦点）。
-   起因：`.file-input-hidden{display:none}`(0,1,0) 曾被告参数坞的
-   `.panel .card.is-active > *{display:flex}`(0,3,0) 覆盖 —— 三个 file input
-   （#fileInput/#queueInput/#projInput）都是 .card 的直接子元素 → 原生 file 控件
-   直接露在参数坞里（实测 253px 宽，与整体样式完全不搭）。
-   视觉隐藏属性同时保留 JS 可编程的 `.click()` 行为（btnPick 等靠它唤起系统文件选择器）。 */
-.file-input-hidden{
-  position:absolute; width:1px; height:1px;
-  padding:0; margin:-1px; border:0;
-  overflow:hidden; clip-path:inset(50%); white-space:nowrap;
-}
+/* 文件输入框：直接 `display:none`。
+   历史：`.file-input-hidden{display:none}` 曾被参数坞的 `.card.is-active > *{display:flex}`
+   覆盖 —— 三个 file input（#fileInput/#queueInput/#projInput）都是 `.card` 的直接子元素
+   → 浏览器原生「选择文件 | 未选择文件」控件露在参数坞里（实测 253px 宽）。
+   当时改用「视觉隐藏 + 高特异性 display:none」双保险绕过；2026-09-14 根因重构删除了那条
+   一刀切规则（改为白名单分桶）后，本处直接 `display:none` 即可生效，语义也更正确
+   （不参与 Tab 焦点）。JS 仍可编程调用 `.click()` 唤起系统文件选择器。 */
+.file-input-hidden{ display:none; }
 
 .badge-maker-root .tool-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-top:12px; }
 .badge-maker-root .tool-grid .btn{ padding:9px 8px; font-size:12.5px; }
@@ -346,9 +400,9 @@
   background:rgba(255,255,255,.78);
   color:var(--text-2);
   border-radius:var(--radius-xs);
-  /* min-width 统一：参数坞的「.card.is-active > *{display:flex}」会覆盖 .pill-grid 的
-     grid（列定义失效），pill 退化为按内容宽度排列 → 参差（无 15px / 纯色环 41px）。
-     给统一最小宽度使各分组内按钮等宽；不恢复 grid 以免分组独占整行撑高参数坞。 */
+  /* 统一最小宽度：坞内 pill 组（桶 C）是 wrap 型 flex 行，pill 宽度由 min-width 决定 ——
+     各分组内按钮因此等宽（否则按内容宽度参差，实测「无」15px vs「纯色环」41px）。
+     带图标的分组另由 `.pill:has(.bd-ico)` 提到 96px。 */
   padding:8px 0; min-height:34px; min-width:56px; cursor:pointer; text-align:center;
   transition:background .18s ease, color .18s ease, border-color .18s ease, box-shadow .18s ease, transform .12s ease;
 }
@@ -431,8 +485,12 @@
 .collapse-body-inner{ padding:0 16px 16px; }
 .shortcut-list{ margin:0; font-size:12.5px; }
 /* 快捷键列表：坞内是横向平铺布局 → 用 3 列网格让 7 条说明紧凑铺开
-   （原来被 `.card.is-active > *` 的 flex 收缩成单窄列 ~267px，右侧大片留白） */
+   （根因重构前 `.collapse-body` 被 `> *` 置成 flex，列表被收缩成单窄列 ~267px、右侧大片留白） */
 .panel .card.is-active .shortcut-list{ display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:0 28px; }
+/* 窄屏（≤720px）改为单列：3 列在 390px 下每列仅 ~110px，dt/dd 两端对齐会挤在一起 */
+@media (max-width:720px){
+  .panel .card.is-active .shortcut-list{ grid-template-columns:1fr; gap:0; }
+}
 .shortcut-item{
   display:flex; align-items:baseline; justify-content:space-between;
   gap:12px; padding:6px 0; border-bottom:1px dashed var(--line);
@@ -603,6 +661,24 @@ kbd{
   .preview-duo{ gap:16px; }
   .preview-canvas-sm{ width:min(100%, 160px); }
   .preview-canvas-a4{ width:min(100%, 130px); }
+}
+/* ≤420px：顶栏第一行「品牌名 + 预览/打印分段」放不下 ——
+   英文标签比中文长（"Full screen"/"Shortcuts" vs「全屏」「快捷键」），
+   实测英文页在 390px 溢出 10px、360px 溢出 40px（中文页因标签短未触发）。
+   隐去品牌文字只留标记（产品名在站点 header 与 bm-hero-bar 均已出现），并收紧分段按钮内边距。 */
+@media (max-width:420px){
+  .brand-text{ display:none; }
+  .segmented button{ padding:7px 11px; }
+  /* 分段控件允许折行并限制在父容器宽度内：
+     英文标签更长（如「None / Star sparkle / …」实测 322px > 容器 294px）会撑破行 */
+  .segmented{ flex-wrap:wrap; max-width:100%; }
+  /* 小标题 / 行标签允许换行：坞内二者默认 nowrap（避免轴标签中途折行），
+     但英文文案更长（"Texture finish (realistic preview only)"、
+     "Add a "made with calc-tools" badge"）在 ≤320px 会撑破容器 */
+  .panel .card.is-active .sub-label{ white-space:normal; }
+  .panel .card.is-active .row > span{ white-space:normal; }
+  .badge-maker-root .topbar-actions{ width:auto; flex:1 1 100%; flex-wrap:wrap; justify-content:flex-start; }
+  .badge-maker-root .topbar-actions .btn{ padding:8px 10px; }
 }
 /* --------------------------- 全屏模式 --------------------------- */
 #btnFullscreen .fs-ico{ flex:none; }
