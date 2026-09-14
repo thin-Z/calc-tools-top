@@ -329,6 +329,10 @@
   background:var(--blue); border-color:var(--blue); color:#fff;
   box-shadow:0 4px 12px rgba(0,122,255,.26);
 }
+/* 药丸内的小图标（边框样式预览用）：带图标的药丸转 inline-flex 并加宽，
+   使 6 个边框选项等宽；stroke=currentColor 让图标自动跟随选中态（active 时变白）。 */
+.pill:has(.bd-ico){ display:inline-flex; align-items:center; justify-content:center; gap:5px; min-width:96px; }
+.pill .bd-ico{ width:16px; height:16px; flex:none; }
 
 /* 文本 */
 .hint{
@@ -676,6 +680,16 @@ body.is-fullscreen .preview-card{ display:flex; flex-direction:column; min-heigh
 
 /* 站点 <main> 默认 1280px + 48px 内边距会挤压沉浸式工具，在此放开 */
 body:has(.badge-maker-root) > main{ max-width:none; padding:0; width:100%; }
+
+/* 站点集成：工具顶栏（.topbar）一律不做 sticky。
+   站点环境已有两层 sticky 条 —— site header(top:0,z70) 与 bm-hero-bar(top:64,z60)；
+   而 .topbar 基础规则是 `position:sticky; top:0; z-index:60`（单文件版设计），
+   在 `@media (min-width:1024px)` 里才被改成 static。于是**窄屏(<1024px)** 下
+   .topbar 与 bm-hero-bar **同 z-index 60**、且 .topbar 在 DOM 中更靠后 → 层叠在上，
+   向上滚动时 "撤销/重做/快捷键/全屏" 按钮组会盖住上方的工具页标题条
+   （Playwright 命中测试：重叠点 elementFromPoint 返回 topbar 的 button.btn）。
+   此处全局置 static（含窄屏），与桌面端行为一致，随文档流滚动、不再与标题条争层。 */
+body:has(.badge-maker-root) .badge-maker-root .topbar{ position:static; }
 
 /* 颜色选择器在坞内被 .panel .card.is-active .color-input 的 min-width:120px 撑大，恢复小色块 */
 .panel .card.is-active .color-input{ min-width:0; width:34px; }
