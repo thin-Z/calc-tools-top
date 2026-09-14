@@ -155,6 +155,17 @@
 .panel .card.is-active > .collapse-body,
 .panel .card.is-active > .editor-head{ flex:1 1 100%; }
 .panel .card.is-active > .spec-table{ display:block; }
+/* 「导出」分组的两个模式容器（#exportPreview 预览 / #exportPrint 打印）也是 .card 的直接
+   子元素，被上面的 `> *{display:flex}` 强制成 flex 行 → 内部 .btn-block 的 width:100% 失效、
+   4 个导出按钮被压缩成并排（实测），.row.check-card 也随之收缩。恢复 block 纵向堆叠。 */
+.panel .card.is-active > #exportPreview,
+.panel .card.is-active > #exportPrint{ display:block; flex:1 1 100%; }
+/* 参数坞内的 .row.check-card 去掉站点 .check-card 的卡片外观（白底 + 1px 边框 + 12px 圆角），
+   与坞内其它无边框行控件保持一致；.row 自带的 padding/gap 保留。 */
+.panel .card.is-active .row.check-card{ background:transparent; border:0; border-radius:0; }
+/* 快捷键卡片的 .collapse-body 同理被置为 flex → 其唯一子层 .collapse-body-inner 宽度收缩到
+   内容宽（实测 ~267px），列表挤在左侧一小块、右侧大片空白。恢复 block 让内层撑满。 */
+.panel .card.is-active > .collapse-body{ display:block; }
 /* 坞内规格表压紧一档：为画布区腾出高度（规格是坞内最高的分类） */
 .panel .card.is-active .spec-table{ margin-top:6px; }
 .panel .card.is-active .spec-table .spec-tr{ padding:3px 4px; }
@@ -401,17 +412,23 @@
 .badge-maker-root .collapse-body.open{ max-height:520px; }
 .collapse-body-inner{ padding:0 16px 16px; }
 .shortcut-list{ margin:0; font-size:12.5px; }
+/* 快捷键列表：坞内是横向平铺布局 → 用 3 列网格让 7 条说明紧凑铺开
+   （原来被 `.card.is-active > *` 的 flex 收缩成单窄列 ~267px，右侧大片留白） */
+.panel .card.is-active .shortcut-list{ display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:0 28px; }
 .shortcut-item{
   display:flex; align-items:baseline; justify-content:space-between;
   gap:12px; padding:6px 0; border-bottom:1px dashed var(--line);
 }
 .shortcut-item:last-child{ border-bottom:0; }
-.shortcut-item dt{ color:var(--text-3); flex:none; font-size:11.5px; }
+.shortcut-item dt{ color:var(--text-2); flex:none; font-size:11.5px; font-weight:600; }
 .shortcut-item dd{ margin:0; color:var(--text-2); text-align:right; }
 kbd{
   font-family:var(--font); font-size:11px; font-weight:700;
-  background:rgba(15,23,42,.07); color:var(--text-2);
+  background:#fff; color:var(--text);
+  border:1px solid rgba(15,23,42,.16);
+  border-bottom-width:2px;
   border-radius:5px; padding:2px 6px; white-space:nowrap;
+  box-shadow:0 1px 1px rgba(15,23,42,.06);
 }
 
 /* --------------------------- 编辑器 --------------------------- */
@@ -803,7 +820,11 @@ body.is-fullscreen:has(.badge-maker-root) > main > .badge-maker-root{ flex:1 1 0
 /* 输入容器 / 文本框 / kbd */
 [data-theme="dark"] .badge-maker-root .field{ background:rgba(255,255,255,.07); }
 [data-theme="dark"] .badge-maker-root .text-input{ background:rgba(255,255,255,.07); }
-[data-theme="dark"] .badge-maker-root kbd{ background:rgba(255,255,255,.10); color:var(--text-2); }
+[data-theme="dark"] .badge-maker-root kbd{
+  background:rgba(255,255,255,.09); color:var(--text);
+  border-color:rgba(255,255,255,.16); border-bottom-color:rgba(255,255,255,.28);
+  box-shadow:0 1px 1px rgba(0,0,0,.25);
+}
 /* 滑杆未填充段（原 rgba(15,23,42,.13) 在暗底不可见） */
 [data-theme="dark"] .badge-maker-root input[type="range"]::-webkit-slider-runnable-track{
   background:linear-gradient(90deg, var(--blue) 0 var(--p,50%), rgba(255,255,255,.18) var(--p,50%) 100%);
