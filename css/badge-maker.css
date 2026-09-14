@@ -737,3 +737,83 @@ body.is-fullscreen:has(.badge-maker-root) > main{ max-width:none; width:100%; }
 body.is-fullscreen:has(.badge-maker-root) > main > .badge-maker-root{ max-width:none; width:100%; }
 body.is-fullscreen:has(.badge-maker-root) > main{ flex:1 1 0; min-height:0; display:flex; flex-direction:column; }
 body.is-fullscreen:has(.badge-maker-root) > main > .badge-maker-root{ flex:1 1 0; min-height:0; display:flex; flex-direction:column; }
+
+/* =========================================================================
+   暗色主题适配（2026-09-14）
+   背景：.badge-maker-root 原为**固定浅色作用域**（自带 --text/--card/--bg-1 等硬编码
+   变量，不随站点主题切换），暗色模式下工具区仍是亮白，与站点深色 header/footer
+   形成「白纸夹心」。此处用 [data-theme="dark"] 前缀集中覆盖（特异性高于原规则）：
+   ① 变量层重定 → 所有 var() 消费点自动适配；② 无法变量化的硬编码浅色逐条覆盖。
+   保持原样、不随主题变化的：.editor-canvas（深色工作台本身）、.preview-canvas-a4
+   （A4 纸模拟）、#printArea 与 @media print（打印必须是白纸）、.toast/.fs-exit
+   （本就是深色浮层）、.bm-* 站点集成段（已用站点变量）。
+   ========================================================================= */
+[data-theme="dark"] .badge-maker-root{
+  --blue:#0a84ff;                          /* 站点 accent 蓝（暗底更亮） */
+  --blue-dark:#3395ff;                     /* 暗色下 hover 提亮而非压暗 */
+  --blue-soft:rgba(10,132,255,.16);
+  --bg-1:#1c1c1e;                          /* surface-darker */
+  --bg-2:#000;                             /* black */
+  --card:rgba(44,44,46,.62);
+  --card-border:rgba(255,255,255,.08);
+  --line:rgba(255,255,255,.12);
+  --text:#F5F5F7;                          /* text-on-dark */
+  --text-2:#B4BCC9;
+  --text-3:#8E96A3;
+  --warn:#FBBF24;
+  --warn-soft:rgba(251,191,36,.14);
+  --shadow:0 12px 32px rgba(0,0,0,.5), 0 2px 8px rgba(0,0,0,.35);
+  --shadow-sm:0 4px 16px rgba(0,0,0,.4);
+}
+/* 顶栏玻璃 */
+[data-theme="dark"] .badge-maker-root .topbar{ background:rgba(28,28,30,.72); }
+/* 分段控件：容器压深、选中块由「白块」改浅灰卡（白块在暗底会过曝） */
+[data-theme="dark"] .badge-maker-root .segmented{ background:rgba(120,130,150,.22); }
+[data-theme="dark"] .badge-maker-root .segmented button:hover:not(.active){ background:rgba(255,255,255,.08); }
+[data-theme="dark"] .badge-maker-root .segmented button.active{
+  background:#3a3a3c; color:var(--text);
+  box-shadow:0 1px 4px rgba(0,0,0,.45);
+}
+/* 次级按钮 / 分类标签 / 药丸：白底 → 白 7% 玻璃；hover 提到 13% */
+[data-theme="dark"] .badge-maker-root .dock-tabs button,
+[data-theme="dark"] .badge-maker-root .btn-ghost,
+[data-theme="dark"] .badge-maker-root .pill{ background:rgba(255,255,255,.07); }
+[data-theme="dark"] .badge-maker-root .dock-tabs button:hover:not(.active),
+[data-theme="dark"] .badge-maker-root .btn-ghost:hover:not(:disabled),
+[data-theme="dark"] .badge-maker-root .pill:hover:not(.active){ background:rgba(255,255,255,.13); }
+[data-theme="dark"] .badge-maker-root .pill-over{ background:rgba(255,255,255,.04); border-color:rgba(255,255,255,.16); }
+[data-theme="dark"] .badge-maker-root .pill-over:hover:not(.active){ border-color:rgba(255,255,255,.32); }
+/* 输入容器 / 文本框 / kbd */
+[data-theme="dark"] .badge-maker-root .field{ background:rgba(255,255,255,.07); }
+[data-theme="dark"] .badge-maker-root .text-input{ background:rgba(255,255,255,.07); }
+[data-theme="dark"] .badge-maker-root kbd{ background:rgba(255,255,255,.10); color:var(--text-2); }
+/* 滑杆未填充段（原 rgba(15,23,42,.13) 在暗底不可见） */
+[data-theme="dark"] .badge-maker-root input[type="range"]::-webkit-slider-runnable-track{
+  background:linear-gradient(90deg, var(--blue) 0 var(--p,50%), rgba(255,255,255,.18) var(--p,50%) 100%);
+}
+[data-theme="dark"] .badge-maker-root input[type="range"]::-moz-range-track{
+  background:linear-gradient(90deg, var(--blue) 0 var(--p,50%), rgba(255,255,255,.18) var(--p,50%) 100%);
+}
+/* 预览台 / 小预览底（.preview-canvas-a4 是 A4 纸模拟，保持白） */
+[data-theme="dark"] .badge-maker-root .preview-stage{
+  background:linear-gradient(180deg,#242427 0%, #1c1c1e 100%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+}
+[data-theme="dark"] .badge-maker-root .preview-canvas-sm{
+  background:rgba(255,255,255,.04);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+}
+/* 拖拽覆盖层 */
+[data-theme="dark"] .badge-maker-root .drop-overlay{ background:rgba(0,0,0,.62); }
+[data-theme="dark"] .badge-maker-root .drop-box{ background:rgba(44,44,46,.96); }
+/* 打印保护：暗色主题下打印时强制回到浅色变量（否则 #printArea 内若含文字，
+   会是浅字印在白纸上而不可见）。与上面的暗色块同特异性，靠后出现取胜。 */
+@media print{
+  [data-theme="dark"] .badge-maker-root{
+    --text:#0F172A; --text-2:#59637A; --text-3:#8A93A3;
+    --card:#fff; --card-border:rgba(255,255,255,.9);
+    --line:rgba(15,23,42,.09);
+    --bg-1:#fff; --bg-2:#fff;
+    --shadow:none; --shadow-sm:none;
+  }
+}
