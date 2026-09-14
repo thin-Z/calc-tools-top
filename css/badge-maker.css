@@ -83,12 +83,13 @@
 }
 .segmented button{
   border:0; background:transparent; cursor:pointer;
-  font-family:inherit; font-size:14px; font-weight:600;
+  font-family:inherit; font-size:13px; font-weight:600;
   color:var(--text-2);
-  padding:8px 20px; border-radius:9px;
+  padding:8px 18px; border-radius:9px;
   transition:background .2s ease, color .2s ease, box-shadow .2s ease;
 }
-.segmented button:hover{ color:var(--text); }
+.segmented button:hover:not(.active){ color:var(--text); background:rgba(255,255,255,.5); }
+.badge-maker-root .segmented button:focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
 .badge-maker-root .segmented button.active{
   background:#fff; color:var(--text);
   box-shadow:0 1px 4px rgba(15,23,42,.16);
@@ -117,11 +118,12 @@
 /* 参数坞 · 分类标签 */
 .dock-tabs{ display:flex; flex-wrap:wrap; gap:6px; }
 .dock-tabs button{
-  border:1px solid var(--line); background:rgba(255,255,255,.72); color:var(--text-2);
-  border-radius:999px; padding:6px 14px; font-size:13px; font-weight:600;
-  font-family:inherit; cursor:pointer;
+  border:1px solid var(--line); background:rgba(255,255,255,.78); color:var(--text-2);
+  border-radius:var(--radius-xs); padding:7px 14px; font-size:13px; font-weight:600;
+  font-family:inherit; cursor:pointer; min-height:34px;
+  transition:background .18s ease, color .18s ease, border-color .18s ease, box-shadow .18s ease;
 }
-.dock-tabs button:hover{ color:var(--blue); border-color:var(--blue); }
+.dock-tabs button:hover:not(.active){ color:var(--blue); border-color:rgba(0,122,255,.45); background:#fff; }
 .dock-tabs button:focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
 .badge-maker-root .dock-tabs button.active{ background:var(--blue); color:#fff; border-color:var(--blue); }
 
@@ -200,9 +202,9 @@
   transition:background .18s ease, color .18s ease, border-color .18s ease, transform .12s ease, box-shadow .18s ease;
   display:inline-flex; align-items:center; justify-content:center; gap:6px;
 }
-.badge-maker-root .btn:disabled{ opacity:.4; cursor:not-allowed; transform:none !important; }
-.badge-maker-root .btn-sm{ padding:8px 12px; font-size:13px; border-radius:var(--radius-xs); }
-.badge-maker-root .btn-block{ width:100%; margin-top:8px; }
+.badge-maker-root .btn:disabled{ opacity:.5; cursor:not-allowed; transform:none !important; }
+.badge-maker-root .btn-sm{ padding:8px 12px; font-size:13px; border-radius:var(--radius-xs); min-width:68px; }
+.badge-maker-root .btn-block{ width:100%; margin-top:8px; min-width:0; }
 .badge-maker-root .btn-primary{
   background:var(--blue); color:#fff;
   box-shadow:0 6px 16px rgba(0,122,255,.28);
@@ -210,9 +212,13 @@
 .badge-maker-root .btn-primary:hover:not(:disabled){ background:var(--blue-dark); transform:translateY(-1px); }
 .badge-maker-root .btn-primary:active:not(:disabled){ transform:translateY(0) scale(.985); }
 .badge-maker-root .btn-ghost{
-  background:rgba(255,255,255,.72);
+  background:rgba(255,255,255,.78);
   border:1px solid var(--line);
   color:var(--text);
+}
+.badge-maker-root .btn:focus-visible,
+.badge-maker-root .pill:focus-visible{
+  outline:2px solid var(--blue); outline-offset:2px;
 }
 .badge-maker-root .btn-ghost:hover:not(:disabled){ background:#fff; border-color:rgba(0,122,255,.45); color:var(--blue); }
 .badge-maker-root .btn-ghost:active:not(:disabled){ transform:scale(.985); }
@@ -311,7 +317,7 @@
   background:rgba(255,255,255,.78);
   color:var(--text-2);
   border-radius:var(--radius-xs);
-  padding:9px 0; cursor:pointer; text-align:center;
+  padding:8px 0; min-height:34px; cursor:pointer; text-align:center;
   transition:background .18s ease, color .18s ease, border-color .18s ease, box-shadow .18s ease, transform .12s ease;
 }
 .badge-maker-root .pill:hover:not(.active){ border-color:rgba(0,122,255,.45); color:var(--blue); }
