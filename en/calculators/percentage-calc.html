@@ -52,18 +52,50 @@
     "mainEntity": [
         {
             "@type": "Question",
-            "name": "How do you calculate a percentage?",
+            "name": "What is the difference between a percentage and a percentage point?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Percentage formula: (Part ÷ Whole) × 100%. For example, 20 is 40% of 50 because 20 ÷ 50 × 100% = 40%."
+                "text": "A percentage is a relative quantity; a percentage point is an absolute one. If a rate moves from 40% to 45%, it has risen by 5 percentage points (45 minus 40), but the relative change is (45 minus 40) divided by 40 = 12.5%. Saying up 5% and up 5 percentage points mean very different things."
             }
         },
         {
             "@type": "Question",
-            "name": "How to calculate percentage increase?",
+            "name": "How do you calculate year-over-year and month-over-month growth?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Percentage increase formula: (New Value - Original Value) ÷ Original Value × 100%. A positive result means increase, negative means decrease. For example, from 50 to 75 is a (75-50)÷50×100% = 50% increase."
+                "text": "Year-over-year growth = (this period minus same period last year) divided by same period last year times 100%, which removes seasonal effects. Month-over-month growth = (this period minus previous period) divided by previous period times 100%. If this year's revenue is 1.2 million against 1 million last year, YoY is +20%."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do you convert a discount into a percentage calculation?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "X% off means you pay (100 minus X)%. A 20% off price is the original times 0.80; 15% off is times 0.85. A 350 item at 15% off costs 350 times 0.85 = 297.50, saving 52.50. Stacked discounts apply to the already-reduced price."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do you calculate profit margin as a percentage?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Margin on the selling price = (price minus cost) divided by price times 100%. Markup on cost = (price minus cost) divided by cost times 100%. With a cost of 80 and a price of 120, the margin is 40 divided by 120 = 33.33% while the markup is 40 divided by 80 = 50%."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is percentage change the same as percentage difference?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Percentage change uses the original value as its base: (new minus original) divided by original times 100%, and it is asymmetric - 40 to 60 is +50%, but 60 to 40 is -33.33%. Percentage difference uses the average of the two numbers as its base and is symmetric - the difference between 40 and 60 is 40% either way."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Why doesn't a rise and a fall of the same percentage cancel out?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Because the base changes between the two steps. Starting at 100, a 20% rise gives 120; a subsequent 20% fall is 20% of 120, leaving 96 - four below the original. The same asymmetry means a 50% loss needs a 100% gain to recover."
             }
         }
     ]
@@ -125,7 +157,47 @@
 
         
 
-        <div class="tool-content"><h2>Percentage Calculator Guide</h2><p>This calculator supports multiple percentage calculation modes: what percent one number is of another, percentage of a number, adding/subtracting percentage, and percentage change. Perfect for shopping, financial calculations, and data analysis.</p><h3>Percentage Formulas</h3><p>Percentage = (Part ÷ Whole) × 100%. Percentage increase = (New - Original) ÷ Original × 100%. Percentage decrease = (Original - New) ÷ Original × 100%.</p></div>
+        <div class="tool-content">
+    <h2>Percentage Calculator Guide</h2>
+    <p>This calculator handles the percentage questions people ask most often: what percent one number is of another, a percentage of a number, adding or subtracting a percentage, the percentage change between two numbers, and discounts. It is useful for shopping, pricing, finance, statistics and everyday maths. Everything is computed in your browser, so nothing you type leaves your device. If you are working out how a deposit or an interest rate turns into a monthly loan payment, the figures here pair naturally with the <a href="/en/calculators/mortgage.html">mortgage calculator</a>.</p>
+
+    <h3>The four core formulas</h3>
+    <p>Every mode on this page is built from four formulas. "What percent is A of B?" uses <strong>A ÷ B × 100%</strong>. "What is A% of B?" uses <strong>B × A ÷ 100</strong>. Percentage change uses <strong>(new − original) ÷ original × 100%</strong> — a positive result is an increase, a negative one a decrease. A discount uses <strong>price × discount rate</strong>, and the amount saved is <strong>price × (1 − rate)</strong>. Once you know these four, you can sanity-check any result the tool returns.</p>
+
+    <h3>A reference table of common percentage problems</h3>
+    <p>The table shows real worked values across every mode, using the same formulas as the calculator:</p>
+    <table class="ref-table">
+        <thead><tr><th>Question</th><th>Calculation</th><th>Answer</th></tr></thead>
+        <tbody>
+            <tr><td>What percent is 30 of 120?</td><td>30 ÷ 120 × 100%</td><td>25%</td></tr>
+            <tr><td>What percent is 45 of 300?</td><td>45 ÷ 300 × 100%</td><td>15%</td></tr>
+            <tr><td>What is 15% of 240?</td><td>240 × 0.15</td><td>36</td></tr>
+            <tr><td>What is 8% of 1,250?</td><td>1,250 × 0.08</td><td>100</td></tr>
+            <tr><td>Increase 200 by 30%</td><td>200 × 1.30</td><td>260</td></tr>
+            <tr><td>Decrease 80 by 25%</td><td>80 × 0.75</td><td>60</td></tr>
+            <tr><td>Change from 50 to 75</td><td>(75 − 50) ÷ 50 × 100%</td><td>+50%</td></tr>
+            <tr><td>Change from 60 to 40</td><td>(40 − 60) ÷ 60 × 100%</td><td>−33.33%</td></tr>
+            <tr><td>350 at 85% (15% off)</td><td>350 × 0.85</td><td>297.50 (save 52.50)</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Three worked examples</h3>
+    <ol>
+        <li><strong>A pay rise from 8,000 to 10,000 a month</strong>: change = (10,000 − 8,000) ÷ 8,000 × 100% = <strong>+25%</strong>. Check the reverse: going from 10,000 down to 8,000 is a 20% cut, not 25%, because the base changed.</li>
+        <li><strong>A jacket priced at 350 with a 15% discount</strong>: you pay 350 × 0.85 = <strong>297.50</strong> and save 350 × 0.15 = <strong>52.50</strong>.</li>
+        <li><strong>An interest rate moving from 4.0% to 4.5%</strong>: that is <strong>+0.5 percentage points</strong>, but the relative change is (4.5 − 4.0) ÷ 4.0 × 100% = <strong>+12.5%</strong>. Headlines often say "0.5" and mean points, not percent.</li>
+    </ol>
+
+    <h3>Common myth: "up 20% then down 20% gets you back to where you started"</h3>
+    <p>It does not. Start at 100: up 20% gives 120, then down 20% of 120 gives 96 — you are 4 short of the original. The base for the fall is larger, so the two moves are not symmetric. Likewise a 50% loss needs a 100% gain to recover. When you want to compare two numbers without a natural base, use the percentage difference |A − B| ÷ ((A + B) ÷ 2) × 100%, which is symmetric — the difference between 40 and 60 is 40% either way. To see how a losing streak compounds, try the <a href="/en/calculators/compound-interest.html">compound interest calculator</a>; to count the days between two dates for a promotion or deadline, use the <a href="/en/calculators/date-calc.html">date calculator</a>.</p>
+
+    <h3>Where percentages show up in daily life</h3>
+    <p>Percentages are everywhere once you start noticing them. A shop's "30% off" is a discount; a bank's "4.5% annual rate" is interest; a report's "up 12% year over year" is growth; a test score of "85%" is a proportion; a phone battery at "20%" is a share of capacity. Because one symbol covers all of these, the trick is always to ask "percentage of what?" — the base is what makes the number meaningful, and most percentage arguments are really arguments about which base is correct.</p>
+    <p>In finance, percentages describe returns, interest and tax rates; in retail they describe margins and markdowns; in statistics they describe proportions and probabilities. Moving fluently between a fraction, a decimal and a percentage makes all of them easier: 1/4 = 0.25 = 25%, 3/5 = 0.6 = 60%, 7/8 = 0.875 = 87.5%. To convert a fraction to a percentage, divide the top by the bottom and multiply by 100; to convert a percentage to a decimal, divide by 100. Once you can do that in your head, you can sanity-check any calculator result at a glance.</p>
+
+    <h3>A quick mental-maths toolkit</h3>
+    <p>Three shortcuts cover most everyday cases. First, 10% is easy — just move the decimal point one place left, so 10% of 240 is 24. Second, build other rates from 10%: 5% is half of it, 20% is double, 15% is 10% plus 5%. Third, for a percentage change, compare the difference to the original: if a price rises from 80 to 100, the difference is 20 and 20 ÷ 80 = 25%. These checks do not replace the calculator — they let you catch a mistyped input before it misleads you.</p>
+</div>
 
 <section class="related-posts">
         <h3>Related Reading</h3>
@@ -145,10 +217,12 @@
     <li>View the result with a brief explanation.</li>
 </ol>
 <h2>Percentage Calculator FAQ</h2>
-<h3>Is Percentage Calculator free to use?</h3><p>Yes, Percentage Calculator is completely free. There are no hidden fees, no account registration and no download required.</p>
-<h3>How accurate are the results?</h3><p>All calculations are performed locally in your browser using well-established formulas, so the results are accurate and consistent.</p>
-<h3>Is my data private?</h3><p>Your privacy is a priority. Everything you enter is processed directly on your device and is never uploaded to any server.</p>
-<h3>Does Percentage Calculator work on mobile?</h3><p>Yes. The page is fully responsive and works smoothly on phones, tablets and desktop browsers.</p>
+<h3>What is the difference between a percentage and a percentage point?</h3><p>A percentage is a relative quantity; a percentage point is an absolute one. If a rate moves from 40% to 45%, it has risen by <strong>5 percentage points</strong> (45 − 40), but if you ask "how much did it rise relatively?" the answer is (45 − 40) ÷ 40 = <strong>12.5%</strong>. Saying "up 5%" and "up 5 percentage points" mean very different things, which is why news reports use points to avoid ambiguity. To see how such a rate change affects a loan payment, try the <a href="/en/calculators/mortgage.html">mortgage calculator</a>.</p>
+<h3>How do you calculate year-over-year and month-over-month growth?</h3><p>Year-over-year (YoY) growth = (this period − same period last year) ÷ same period last year × 100%, which removes seasonal effects. Month-over-month (MoM) growth = (this period − previous period) ÷ previous period × 100%, which captures the change between adjacent periods. If this year's revenue is 1.2 million against 1 million last year, YoY is +20%; if last month was 1.1 million, MoM is +9.09%.</p>
+<h3>How do you convert a discount like "20% off" into a calculation?</h3><p>"X% off" means you pay (100 − X)%. A "20% off" price is the original × 0.80; "15% off" is × 0.85. So a 350 item at 15% off costs 350 × 0.85 = 297.50, and the saving is 350 × 0.15 = 52.50. Watch for stacked discounts: "extra 10% off the sale price" applies to the already-reduced price, so 350 with 15% then 10% off is 350 × 0.85 × 0.90 = 267.75, not 350 × 0.75.</p>
+<h3>How do you calculate profit margin as a percentage?</h3><p>Margin on the selling price = (price − cost) ÷ price × 100%. Markup on cost = (price − cost) ÷ cost × 100%. With a cost of 80 and a price of 120, the margin is 40 ÷ 120 ≈ 33.33% while the markup is 40 ÷ 80 = 50%. The two use different bases and therefore give very different numbers, so always state which one you mean in a quote or report.</p>
+<h3>Is percentage change the same as percentage difference?</h3><p>No. Percentage change uses the original value as its base: (new − original) ÷ original × 100%, and it is directionally asymmetric — 40 to 60 is +50%, but 60 to 40 is −33.33%. Percentage difference uses the average of the two numbers as its base: |A − B| ÷ ((A + B) ÷ 2) × 100%, and it is symmetric — the difference between 40 and 60 is 40% either way. Use change to describe a rise or fall, and difference to compare two quantities without a natural starting point.</p>
+<h3>Why doesn't a rise and a fall of the same percentage cancel out?</h3><p>Because the base changes between the two steps. Starting at 100, a 20% rise gives 120; a subsequent 20% fall is 20% of 120, leaving 96 — four below the original. The fall acts on a larger base, so it removes more than the rise added. The same asymmetry means a 50% loss needs a 100% gain to recover. To model how such swings compound over many periods, use the <a href="/en/calculators/compound-interest.html">compound interest calculator</a>.</p>
 </section>
     </main>
 

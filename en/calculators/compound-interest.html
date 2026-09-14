@@ -47,8 +47,12 @@
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
-        { "@type": "Question", "name": "Compound vs simple interest?", "acceptedAnswer": { "@type": "Answer", "text": "Simple interest pays on principal only. Compound interest pays on principal + accumulated interest." } },
-        { "@type": "Question", "name": "Why is compound interest powerful?", "acceptedAnswer": { "@type": "Answer", "text": "At 10% annual return: 10yr = 2.6x, 20yr = 6.7x, 30yr = 17x your principal." } }
+        { "@type": "Question", "name": "What exactly is the difference between compound and simple interest?", "acceptedAnswer": { "@type": "Answer", "text": "Simple interest is paid only on the principal, so each period's interest is fixed. Compound interest adds the previous period's interest to the principal so it earns next period. 100,000 at 5% for 10 years: simple gives a fixed $150,000 while monthly compounding reaches about $164,701, roughly $14.7K more. At 30 years and 8%, simple is $340,000 but annual compounding is about $1,006,266, nearly triple." } },
+        { "@type": "Question", "name": "How much does compounding frequency (yearly / monthly / daily) affect the result?", "acceptedAnswer": { "@type": "Answer", "text": "At the same nominal rate, more frequent compounding yields a slightly higher value but marginal gains fall off fast. 100,000 at 5% for 10 years: yearly $162,889, monthly $164,701, daily $164,866 — yearly to monthly adds $1,812, monthly to daily only $165. A nominal 5% monthly compounded gives an EAR of just 5.12%." } },
+        { "@type": "Question", "name": "Why do nominal and effective annual rates (APY / EAR) differ?", "acceptedAnswer": { "@type": "Answer", "text": "Banks usually advertise the nominal annual rate; what you keep is the effective annual rate after compounding: EAR = (1+r/n)^n − 1. A nominal 5% compounded monthly gives EAR ≈ 5.12%, quarterly ≈ 5.09%. Compare products by EAR, and remember interest income is also taxed." } },
+        { "@type": "Question", "name": "How does the Rule of 72 estimate doubling time?", "acceptedAnswer": { "@type": "Answer", "text": "Divide 72 by the annual return percentage to get approximate years to double: 5% ≈ 14.4y, 6% ≈ 12y, 8% ≈ 9y, 10% ≈ 7.2y, 12% ≈ 6y. The exact value is ln2 ÷ ln(1+r); at 5% it is 14.21 years, so the Rule of 72 is a handy mental shortcut." } },
+        { "@type": "Question", "name": "Does inflation eat compound returns? How do I compute real purchasing power?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Discount the nominal future value by inflation. 100,000 at 5%, monthly compounding, 10 years reaches $164,701; at 2% inflation its real purchasing power is only about $135,112 (164,701 ÷ 1.02^10). For long-term planning, subtract expected inflation and look at real growth." } },
+        { "@type": "Question", "name": "Why is the compounding effect of dollar-cost averaging more useful for ordinary people?", "acceptedAnswer": { "@type": "Answer", "text": "A lump sum has a high barrier and is hard to time; recurring investing uses staggered entry plus compounding to smooth cost, suiting salaried savers. At 1,000/month and 6%: 20 years about $462K, 30 years about $1,004K — just $120K more principal produces roughly $540K more. The key is consistency and starting early." } }
     ]
 }</script>
 
@@ -93,7 +97,42 @@
         <div class="tool-form"><div class="form-group"><label>Principal ($)</label><input type="number" id="principal" value="10000" min="1" step="100"></div><div class="form-group"><label>Annual Rate (%)</label><input type="number" id="annualRate" value="5" min="0" step="0.1"></div><div class="form-group"><label>Years</label><input type="number" id="years" value="10" min="1" max="50" step="1"></div><div class="form-group"><label>Compound</label><select id="compoundFreq"><option value="1">Yearly</option><option value="4">Quarterly</option><option value="12" selected>Monthly</option></select></div><div class="form-actions"><button type="button" class="btn btn-primary" data-csp-click="doCalculate">Calculate</button><button type="reset" class="btn btn-secondary" data-csp-click="resetForm">Reset</button></div></div>
         <div class="result-card hidden" id="resultArea" tabindex="0"><div class="st-2"><p class="st-4">Future Value</p><p class="st-23">$<span id="finalAmount"></span></p><hr><p>Return: $<span id="totalInterest"></span></p><p>Rate: <span id="interestRate"></span>%</p></div></div>
         
-        <div class='tool-content'><h2>Compound Interest Calculator Guide</h2><p>Calculate the future value of your investment with compound interest. See how your money grows over time.</p></div>
+        <div class="tool-content">
+    <h2>Compound Interest Calculator Guide</h2>
+    <p>The compound interest calculator uses the standard formula A = P(1 + r/n)^(nt) to project how your money grows under "interest on interest": P is the principal, r is the annual rate (as a decimal), n is how many times interest compounds per year, and t is the number of years. Enter your principal, annual rate, investment years and compounding frequency (yearly, quarterly, monthly, weekly or daily), and you instantly see the future value, total interest earned and the return rate. All calculations run locally in your browser, so your principal and rate never leave your device. The key idea is that each period's interest is added back to the principal and earns interest in the next period — the longer the time horizon and the higher the rate, the steeper the curve.</p>
+    <h3>How much does compounding frequency matter?</h3>
+    <p>Take a 100,000 principal at 5% annual rate over 10 years. The more frequently interest compounds, the slightly higher the final amount (because interest starts earning sooner). Here is the comparison using A = P(1 + r/n)^(nt):</p>
+    <table class="ref-table">
+        <thead><tr><th>Frequency</th><th>n / year</th><th>Future Value</th><th>Total Interest</th></tr></thead>
+        <tbody>
+            <tr><td>Yearly</td><td>1</td><td>$162,889</td><td>$62,889</td></tr>
+            <tr><td>Quarterly</td><td>4</td><td>$164,362</td><td>$64,362</td></tr>
+            <tr><td>Monthly</td><td>12</td><td>$164,701</td><td>$64,701</td></tr>
+            <tr><td>Weekly</td><td>52</td><td>$164,833</td><td>$64,833</td></tr>
+            <tr><td>Daily</td><td>365</td><td>$164,866</td><td>$64,866</td></tr>
+        </tbody>
+    </table>
+    <p>Notice the diminishing returns: moving from yearly to monthly compounding adds about $1,812 over 10 years, but moving from monthly to daily adds only $165. More frequent compounding is not a free lever — switching a nominal 5% to monthly compounding yields an effective annual rate (EAR) of just about 5.12%.</p>
+    <h3>Compound vs simple interest: where does the gap come from?</h3>
+    <p>Again with 100,000 at 5% for 10 years: simple interest pays only on the principal, so total interest is fixed at 100,000 × 5% × 10 = $50,000 and the final value is $150,000. Monthly compounding instead reaches about $164,701 — roughly $14,701 more. The gap looks small here only because the horizon is just 10 years at a modest 5%; stretch the time or raise the rate and the difference explodes.</p>
+    <h3>The "magnifier" effect of rate and time</h3>
+    <p>Invest 100,000 once, future value at different annual rates and horizons (yearly compounding):</p>
+    <table class="ref-table">
+        <thead><tr><th>Annual Rate</th><th>10 Years</th><th>20 Years</th><th>30 Years</th></tr></thead>
+        <tbody>
+            <tr><td>5%</td><td>$162,889</td><td>$265,330</td><td>$432,194</td></tr>
+            <tr><td>8%</td><td>$215,893</td><td>$466,096</td><td>$1,006,266</td></tr>
+        </tbody>
+    </table>
+    <p>At 8%, the 30-year value (about $1.01M) is roughly 2.3× the 5% value (about $432K). That is the compound curve at work: flat early, steep late. When planning retirement or education funds, starting five years earlier or lifting the rate by one point makes a huge long-run difference.</p>
+    <h3>3 worked examples</h3>
+    <ol>
+        <li><strong>Lump sum 100,000 at 5%, monthly compounding, 10 years</strong>: A = 100,000 × (1 + 0.05/12)^120 ≈ <strong>$164,701</strong>, total interest $64,701; the same terms under simple interest give only $150,000, so compounding earns about $14.7K more.</li>
+        <li><strong>Recurring 1,000/month at 6%, 20 years vs 30 years</strong>: over 20 years you contribute $240,000 and reach about $462,041 (interest ~$222K); over 30 years you contribute $360,000 and reach about $1,004,515 (interest ~$645K). Ten more years of contributions (just $120K extra) produces roughly $540K more — waiting costs far more than people expect.</li>
+        <li><strong>Frequency contrast</strong>: same 100,000 at 5% for 10 years, yearly compounding gives $162,889 while daily gives $164,866 — a gap of about $1,977, or roughly 2% of principal. Frequency gains are tiny, so don't overpay for a "daily compounding" label.</li>
+    </ol>
+    <p>To see the flip side of compounding on debt, compare the interest structure in your payments with the <a href="/en/calculators/mortgage.html">Mortgage Calculator</a>; to break down percentage moves in a return, use the <a href="/en/calculators/percentage-calc.html">Percentage Calculator</a>; and to count the exact days an investment spans, try the <a href="/en/calculators/date-calc.html">Date Calculator</a>.</p>
+</div>
 <section class="related-posts">
         <h3>Related Reading</h3>
         <ul>
@@ -111,11 +150,20 @@
     <li>Choose the compounding frequency (yearly, monthly, daily, etc.).</li>
     <li>Click "Calculate" to see the future value, total interest, and growth rate.</li>
 </ol>
-<h2>Compound Interest FAQ</h2>
-<h3>Is Compound Interest free to use?</h3><p>Yes, Compound Interest is completely free. There are no hidden fees, no account registration and no download required.</p>
-<h3>How accurate are the results?</h3><p>All calculations are performed locally in your browser using well-established formulas, so the results are accurate and consistent.</p>
-<h3>Is my data private?</h3><p>Your privacy is a priority. Everything you enter is processed directly on your device and is never uploaded to any server.</p>
-<h3>Does Compound Interest work on mobile?</h3><p>Yes. The page is fully responsive and works smoothly on phones, tablets and desktop browsers.</p>
+<h2>Compound Interest FAQ (specific)</h2>
+<h3>What exactly is the difference between compound and simple interest?</h3><p>Simple interest is paid only on the principal, so each period's interest is fixed. Compound interest adds the previous period's interest to the principal, so it earns interest next period. With 100,000 at 5% for 10 years: simple interest gives a fixed $150,000, while monthly compounding reaches about $164,701 — about $14.7K more. The gap widens with time and rate: at 30 years and 8%, simple interest is $340,000 but annual compounding is about $1,006,266, nearly triple. The power of "interest on interest" is not in year one but over a long enough horizon.</p>
+<h3>How much does compounding frequency (yearly / monthly / daily) affect the result?</h3><p>At the same nominal rate, more frequent compounding yields a slightly higher final value, but the marginal gain falls off fast. 100,000 at 5% for 10 years: yearly $162,889, monthly $164,701, daily $164,866 — moving from yearly to monthly adds $1,812, but monthly to daily adds only $165. Switching a nominal 5% to monthly compounding gives an effective annual rate (EAR) of just 5.12%. So there is no reason to pay a premium for a "daily compounding" product.</p>
+<h3>Why do nominal and effective annual rates (APY / EAR) differ?</h3><p>What banks advertise is usually the "nominal annual rate"; what you actually keep depends on compounding, the effective annual rate: EAR = (1 + r/n)^n − 1. At a nominal 5% compounded monthly, EAR ≈ 5.12%; compounded quarterly it is ≈ 5.09%. When comparing two products, standardize on EAR rather than the nominal rate, or you will be misled by "frequency packaging". For the tax treatment of interest income, check the <a href="/en/calculators/tax2026.html">2026 Tax Calculator</a> to estimate your after-tax return.</p>
+<h3>How does the Rule of 72 estimate doubling time?</h3><p>Divide 72 by the annual return (as a percentage) to get the approximate years to double: 5% ≈ 14.4 years, 6% ≈ 12 years, 8% ≈ 9 years, 10% ≈ 7.2 years, 12% ≈ 6 years. Its precise counterpart is ln2 ÷ ln(1+r); for example at 5% the exact figure is 14.21 years, so the Rule of 72 is a handy mental shortcut. You can also invert it to find the rate needed to double within a target number of years.</p>
+<h3>Does inflation eat compound returns? How do I compute real purchasing power?</h3><p>Yes. The nominal future value must be discounted by inflation to get "real" purchasing power. 100,000 at 5%, monthly compounding, 10 years reaches $164,701; at 2% average inflation its real purchasing power is only about $135,112 (164,701 ÷ 1.02^10). So of the "64.7% paper gain", roughly 3 points were swallowed by inflation. For long-term planning, subtract expected inflation from your target return and look at real growth.</p>
+<h3>Why is the compounding effect of dollar-cost averaging more useful for ordinary people?</h3><p>A lump sum has a high barrier and is hard to time; recurring investing (fixed amount each month) uses "staggered entry + compounding" to smooth costs and suits salaried savers. At 1,000/month and 6%: 20 years gives about $462K, 30 years about $1,004K — the latter contributes just $120K more principal yet produces roughly $540K more. The key to recurring investing is not any single return but "consistency" and "starting early". Compounding planning is part of financial health; if you also track long-term physical metrics, the <a href="/en/calculators/bmi.html">BMI Calculator</a> can help with overall wellness.</p>
+<h2>Three common compound interest myths</h2>
+<h3>Myth 1: Chasing a "12% compound return" headline</h3>
+<p>High-yield pitches usually quote gross return; what you keep is net of management fees, subscription and redemption fees, and interest tax. Suppose the pitch is 12% but total annual costs are 2% — your net rate is about 9.8% ((1.12)×(1−0.02)−1 approx), and over 30 years that gap compounds into a large shortfall. Enter the "fee-adjusted net rate" into this calculator for a realistic result, and verify the relevant rates with the <a href="/en/calculators/tax2026.html">2026 Tax Calculator</a>.</p>
+<h3>Myth 2: Treating the nominal rate as the real return, ignoring inflation</h3>
+<p>At a nominal 5% with 3% inflation, real purchasing power grows only about 1.9% per year ((1.05÷1.03)−1), far less rosy than "5%" sounds. Long-term savings that fail to beat inflation are quietly shrinking in real terms. When planning retirement or education, first ask "how much real growth remains after inflation", then allocate assets.</p>
+<h3>Myth 3: Believing "daily compounding" gives a huge extra boost</h3>
+<p>As the data table above shows, moving from yearly to daily compounding on 100,000 at 5% over 10 years adds only about $1,977 (2% of principal). The real levers of compounding are time and net return rate, not compounding frequency. Rather than hunting daily-compounding products, start earlier, control costs, and keep investing steadily.</p>
 
 <h2>Why Use compound-interest</h2>
 <p>Unlike desktop applications or complicated spreadsheets, compound-interest works instantly in your browser with zero setup. You get the same reliable results whether you are on a computer, tablet or phone, and there is nothing to download, register or pay for. The tool is updated regularly and designed with a clean, distraction-free interface so you can focus on the task instead of figuring out the software.</p>

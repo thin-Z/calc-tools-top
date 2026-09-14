@@ -53,26 +53,50 @@
     "mainEntity": [
         {
             "@type": "Question",
-            "name": "What is the personal income tax threshold in 2026?",
+            "name": "What is the difference between the 5,000 yuan threshold, \"special deductions\" and \"special additional deductions\"?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "The monthly tax threshold is 5,000 yuan (60,000 yuan annual). Income above this amount is taxed using progressive rates."
+                "text": "They stack in layers. The threshold (basic deduction) is a flat 5,000 yuan subtracted every month for everyone. Special deductions are the social insurance (pension 8%, medical 2%, unemployment 0.5%, and so on) and housing fund (5%-12%) you pay personally, which are deducted pre-tax. Special additional deductions cover seven categories of livelihood expenses such as children's education, mortgage interest and elderly care. All three come off your income before tax is worked out."
             }
         },
         {
             "@type": "Question",
-            "name": "What are the 2026 tax brackets?",
+            "name": "Can my personal social insurance and housing fund contributions really be deducted pre-tax?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "2026 uses a 7-level progressive tax system: 3% (0-36K), 10% (36-144K), 20% (144-300K), 25% (300-420K), 30% (420-660K), 35% (660-960K), 45% (960K+)."
+                "text": "Yes. The law states that the basic pension, basic medical insurance, unemployment insurance and housing fund you pay (up to the local ceiling) qualify as special deductions and are subtracted in full when computing taxable income. The housing fund portion of your pay both lands in your own account and stays out of your taxable income, a genuine double benefit."
             }
         },
         {
             "@type": "Question",
-            "name": "What tax deductions are available?",
+            "name": "Is separate taxation of the year-end bonus better than combining it into comprehensive income?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "2026 deductions include: children education (2,000/month per child), continuing education, medical expenses, housing loan interest (1,000/month), rent (800-1,500/month), elderly care (3,000/month), and infant care (2,000/month under age 3)."
+                "text": "It depends on your salary band. Separate taxation divides the bonus by 12 to locate a rate and taxes it alone, which suits people whose bonus is large relative to salary. Combining it treats the bonus as part of annual comprehensive income at the yearly table, which suits people whose salary is already high. The 2026 filing still allows either option; the separate option can be used only once a year."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What special additional deductions exist, and how much can each save in 2026?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "There are seven: children's education (2,000/month per child); infant care under age 3 (2,000/month per child); continuing education (400/month academic or 3,600/year professional qualification); housing loan interest (1,000/month, first home); housing rent (800-1,500/month by city); elderly care (3,000/month only child or shared); and major medical expenses (deductible above 15,000/year out-of-pocket, capped at 80,000/year). Several can be combined."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Why do comprehensive income, labour remuneration and business income use different rates?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Comprehensive income uses the 3%-45% seven-band annual table. Labour remuneration is withheld at 20%-40% on three tiers, then merged into comprehensive income at filing. Business income uses a separate 5%-35% five-band table and may deduct costs. The same money can attract different rates depending on its category."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Why does my take-home pay differ between January and December under the cumulative withholding method?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Salaries use cumulative withholding: each month's withholding = (cumulative income - cumulative deductions) x rate - quick deduction - tax already withheld. Early in the year the cumulative income is low, so you withhold less and take home more; later the band rises and withholding grows. Total annual tax is unchanged; the difference is settled at the annual reconciliation in March-June."
             }
         }
     ]
@@ -178,9 +202,53 @@
 
 <div class="tool-content">
     <h2>Tax Calculator Guide</h2>
-    <p>Calculate your 2026 personal income tax and after-tax salary instantly. Enter your monthly income and special deductions for accurate results.</p>
-    <h3>How to Reduce Your Tax</h3>
-    <p>Maximize your special deductions to legally reduce tax burden. With the 5,000 yuan threshold plus deductions, taxpayers earning under 10,000 yuan monthly pay minimal tax.</p>
+    <p>The Tax Calculator 2026 applies China's current Individual Income Tax Law to your pay. Enter your pre-tax monthly salary, the social insurance and housing fund you pay personally, and any special additional deductions; the tool then applies the seven-bracket progressive table to return your monthly taxable income, applicable rate, tax payable and take-home (after-tax) monthly salary. Everything runs locally in your browser, so your income figures are never uploaded. If you are also planning a home purchase, the after-tax salary this page produces is exactly what you should carry into our <a href="/en/calculators/mortgage.html">mortgage calculator</a> when estimating the monthly payment you can afford.</p>
+
+    <h3>How the tax is calculated (four steps)</h3>
+    <p>Step 1: subtract the <strong>5,000 yuan monthly threshold</strong>. Step 2: subtract the <strong>social insurance and housing fund</strong> you pay personally — the law calls this "special deductions". Step 3: subtract your <strong>special additional deductions</strong> (children's education, housing loan interest, rent, elderly care and more). What remains is your taxable income. Step 4: annualise it (× 12) and apply the progressive brackets below. Because the system is progressive, only the slice of income that crosses into a higher band is taxed at that band's rate — a 20% top band never means your whole salary is taxed at 20%. To see how a nominal raise converts into real money, pair this page with the <a href="/en/calculators/percentage-calc.html">percentage calculator</a>.</p>
+
+    <h3>Tax burden at different salaries (insurance &amp; fund at ~17.5%, special deductions 2,000/month)</h3>
+    <p>The table below uses the same formula as the tool (monthly taxable = salary − 5,000 − insurance/fund − 2,000; annual taxable = monthly taxable × 12, then the bracket rate). Social insurance rates vary by city, so 17.5% is a common illustrative figure — enter your own numbers in the tool for a precise result.</p>
+    <table class="ref-table">
+        <thead><tr><th>Pre-tax monthly</th><th>Insurance &amp; fund<br>(~17.5%)</th><th>Monthly taxable</th><th>Rate</th><th>Annual tax</th><th>Monthly tax</th><th>Take-home</th></tr></thead>
+        <tbody>
+            <tr><td>8,000</td><td>1,400</td><td>none (≤0)</td><td>0%</td><td>0</td><td>0</td><td>6,600</td></tr>
+            <tr><td>12,000</td><td>2,100</td><td>2,900</td><td>3%</td><td>1,044</td><td>87</td><td>9,813</td></tr>
+            <tr><td>15,000</td><td>2,625</td><td>5,375</td><td>10%</td><td>3,930</td><td>328</td><td>12,048</td></tr>
+            <tr><td>20,000</td><td>3,500</td><td>9,500</td><td>10%</td><td>8,880</td><td>740</td><td>15,760</td></tr>
+            <tr><td>30,000</td><td>5,250</td><td>17,750</td><td>20%</td><td>25,680</td><td>2,140</td><td>22,610</td></tr>
+            <tr><td>50,000</td><td>8,750</td><td>34,250</td><td>25%</td><td>70,830</td><td>5,902</td><td>35,348</td></tr>
+            <tr><td>100,000</td><td>17,500</td><td>75,500</td><td>35%</td><td>231,180</td><td>19,265</td><td>63,235</td></tr>
+        </tbody>
+    </table>
+    <p>Notice how a salary rising from 12,000 to 30,000 lifts take-home only from 9,813 to 22,610: more than half of the increase is absorbed by insurance/fund and tax, and the band jumps from 3% to 20%. A nominal raise therefore overstates your real gain — the after-tax figure from this tool is the honest one. To project how that surplus could compound over time, use the <a href="/en/calculators/compound-interest.html">compound interest calculator</a>.</p>
+
+    <h3>The seven brackets and your real effective rate</h3>
+    <p>The table lists the nominal rate for each annual taxable band alongside the "effective rate" (total tax ÷ total taxable income). Thanks to progressive bands plus a quick-deduction figure, the real burden is always lower than the top band suggests:</p>
+    <table class="ref-table">
+        <thead><tr><th>Annual taxable income</th><th>Rate</th><th>Quick deduction</th><th>Tax at band top</th><th>Effective rate</th></tr></thead>
+        <tbody>
+            <tr><td>≤ 36,000</td><td>3%</td><td>0</td><td>1,080</td><td>3.00%</td></tr>
+            <tr><td>36,000–144,000</td><td>10%</td><td>2,520</td><td>11,880</td><td>8.25%</td></tr>
+            <tr><td>144,000–300,000</td><td>20%</td><td>16,920</td><td>43,080</td><td>14.36%</td></tr>
+            <tr><td>300,000–420,000</td><td>25%</td><td>31,920</td><td>73,080</td><td>17.40%</td></tr>
+            <tr><td>420,000–660,000</td><td>30%</td><td>52,920</td><td>145,080</td><td>21.98%</td></tr>
+            <tr><td>660,000–960,000</td><td>35%</td><td>85,920</td><td>250,080</td><td>26.05%</td></tr>
+            <tr><td>&gt; 960,000</td><td>45%</td><td>181,920</td><td>358,080</td><td>29.84%</td></tr>
+        </tbody>
+    </table>
+    <p>Watch the "effective rate" column: even at an annual taxable income of 960,000 yuan with a nominal 35% band, the overall effective rate is only 26.05%; you need taxable income above one million yuan to approach 30%. Each bracket applies only to the amount above its lower bound, not to the entire income.</p>
+
+    <h3>Three worked examples (identical to the tool's output)</h3>
+    <ol>
+        <li><strong>Salary 15,000, insurance/fund 2,000, special deductions 2,000</strong>: monthly taxable = 15,000 − 5,000 − 2,000 − 2,000 = <strong>6,000</strong>; annual taxable 72,000 falls in the 10% band, so annual tax = 72,000 × 10% − 2,520 = 4,680; monthly tax <strong>390</strong>; take-home = 15,000 − 2,000 − 390 = <strong>12,610</strong>.</li>
+        <li><strong>Salary 30,000, insurance/fund 4,500, special deductions 4,000</strong>: monthly taxable = 30,000 − 5,000 − 4,500 − 4,000 = <strong>16,500</strong>; annual taxable 198,000 falls in the 20% band, so annual tax = 198,000 × 20% − 16,920 = 22,680; monthly tax <strong>1,890</strong>; take-home = 30,000 − 4,500 − 1,890 = <strong>23,610</strong>.</li>
+        <li><strong>Salary 50,000, insurance/fund 8,000, special deductions 2,000</strong>: monthly taxable = 50,000 − 5,000 − 8,000 − 2,000 = <strong>35,000</strong>; annual taxable 420,000 sits exactly at the 25% band top, so annual tax = 420,000 × 25% − 31,920 = 73,080; monthly tax <strong>6,090</strong>; take-home = 50,000 − 8,000 − 6,090 = <strong>35,910</strong>.</li>
+    </ol>
+    <p>Two boundary cases build intuition: at a salary of 8,000 with insurance/fund 1,400 and special deductions 1,000, monthly taxable is only 600, annual taxable 7,200 sits in the 3% band, so the whole year's tax is 216 — just 18 a month — leaving 6,582 take-home. At a salary of 100,000 with insurance/fund 18,000 and special deductions 4,000, monthly taxable is 73,000 and annual taxable 876,000 falls in the 35% band, giving 220,680 annual tax, 18,390 monthly tax and 63,610 take-home. To model that money growing at different rates, compare scenarios in the <a href="/en/calculators/compound-interest.html">compound interest calculator</a>.</p>
+
+    <h3>Common myth: is separate taxation of the year-end bonus always better?</h3>
+    <p>Not always. Separate taxation divides the bonus by 12 to find a rate and taxes the bonus on its own; combining it with comprehensive income adds the bonus to your salary and applies the annual table. When your salary alone already reaches a 20%–45% marginal band, folding the bonus in can push it into a higher rate; when your salary is modest and the bonus is your main income, separate taxation usually wins. The 2026 filing still lets you choose one of the two, so try both and keep the cheaper one. Bear in mind that the "separate" option can be used only once per year across all bonuses. A nominal "20% raise" is easy to over-read too — the <a href="/en/calculators/percentage-calc.html">percentage calculator</a> turns that ratio into a concrete amount.</p>
 </div>
 <section class="related-posts">
         <h3>Related Reading</h3>
@@ -200,10 +268,12 @@
     <li>View taxable income, tax due, and after-tax income.</li>
 </ol>
 <h2>Tax Calculator 2026 FAQ</h2>
-<h3>Is Tax Calculator 2026 free to use?</h3><p>Yes, Tax Calculator 2026 is completely free. There are no hidden fees, no account registration and no download required.</p>
-<h3>How accurate are the results?</h3><p>All calculations are performed locally in your browser using well-established formulas, so the results are accurate and consistent.</p>
-<h3>Is my data private?</h3><p>Your privacy is a priority. Everything you enter is processed directly on your device and is never uploaded to any server.</p>
-<h3>Does Tax Calculator 2026 work on mobile?</h3><p>Yes. The page is fully responsive and works smoothly on phones, tablets and desktop browsers.</p>
+<h3>What is the difference between the 5,000 yuan threshold, "special deductions" and "special additional deductions"?</h3><p>They stack in layers. The <strong>threshold (basic deduction)</strong> is a flat 5,000 yuan subtracted every month for everyone. <strong>Special deductions</strong> are the social insurance (pension 8%, medical 2%, unemployment 0.5%, and so on) and housing fund (5%–12%) you pay personally, which are deducted pre-tax. <strong>Special additional deductions</strong> cover seven categories of livelihood expenses such as children's education, mortgage interest and elderly care, and you claim them yourself in the official tax app. All three come off your income before tax is worked out — which is why take-home falls by more than the tax alone, since insurance and fund come off too.</p>
+<h3>Can my personal social insurance and housing fund contributions really be deducted pre-tax?</h3><p>Yes. The law states that the basic pension, basic medical insurance, unemployment insurance and housing fund you pay (up to the local ceiling) qualify as "special deductions" and are subtracted in full when computing taxable income — they are not treated as taxable income. That means the housing fund portion of your pay both lands in your own account and stays out of your taxable income, a genuine double benefit. It is also why people in high-contribution cities can show a high pre-tax salary yet a comparatively low tax burden.</p>
+<h3>Is separate taxation of the year-end bonus better than combining it into comprehensive income?</h3><p>There is no single answer — it depends on your salary band. Separate taxation divides the bonus by 12 to locate a rate and taxes it alone, which suits people whose bonus is large relative to salary. Combining it treats the bonus as part of annual comprehensive income at the yearly table, which suits people whose salary is already high enough that folding the bonus in would push it into a higher marginal rate. The 2026 filing still allows either option, so compare both and pick the lower tax. Remember the "separate" option can only be used once a year across all bonuses.</p>
+<h3>What special additional deductions exist, and how much can each save in 2026?</h3><p>There are seven: children's education at 2,000 yuan per child per month; infant and toddler care under age 3 at 2,000 yuan per child per month; continuing education at 400 yuan per month (academic) or 3,600 yuan per year (professional qualification); housing loan interest at 1,000 yuan per month (first home); housing rent at 800–1,500 yuan per month depending on city; elderly care at 3,000 yuan per month (only child) or shared among siblings; and major medical expenses, deductible on the portion above 15,000 yuan of out-of-pocket cost last year, capped at 80,000 yuan per year. Several can be combined and split between spouses, so filing them properly can meaningfully lower your tax.</p>
+<h3>Why do comprehensive income, labour remuneration and business income use different rates?</h3><p>Comprehensive income (salaries and wages plus labour remuneration, author's remuneration and royalties combined) uses the 3%–45% seven-band annual table. Labour remuneration is withheld separately at 20%–40% on three tiers and then merged into comprehensive income at filing. Business income (sole proprietors, contractors) uses a separate 5%–35% five-band table and may deduct costs. The same money can attract quite different rates and deductions depending on which category it falls into — which is why freelancers and part-timers must know their status. This tool targets the most common case: salaried comprehensive income.</p>
+<h3>Why does my take-home pay differ between January and December under the cumulative withholding method?</h3><p>Salaries and wages use the "cumulative withholding method": each month's withholding = (cumulative income − cumulative deductions) × rate − quick deduction − tax already withheld. Early in the year cumulative income is low, so you sit in a low band, withhold less and take home more. As income accumulates the band may rise, so from mid-year onward the monthly withholding grows and take-home falls. Your total tax for the year does not change — the difference is settled with a refund or top-up during the annual reconciliation in March–June of the following year. Use the <a href="/en/calculators/date-calc.html">date calculator</a> to count the days until the filing deadline.</p>
 </section>
     </main>
 

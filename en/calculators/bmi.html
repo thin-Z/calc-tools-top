@@ -53,26 +53,50 @@
     "mainEntity": [
         {
             "@type": "Question",
-            "name": "What is a normal BMI range?",
+            "name": "Which standard should I use, China or WHO?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "A BMI between 18.5-24.9 is considered normal. 25-29.9 is overweight, and 30+ is obese."
+                "text": "For adults in mainland China, prefer the WS/T 428—2013 thresholds: normal 18.5–23.9, overweight 24.0–27.9, obese ≥ 28.0. They are stricter than the WHO international cut-offs (normal up to 24.9, obese from 30.0) because the same BMI carries more risk in Asian bodies. This tool reports the Chinese category by default."
             }
         },
         {
             "@type": "Question",
-            "name": "How is BMI calculated?",
+            "name": "Does a normal BMI mean I am healthy?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "BMI = weight(kg) / height(m)2. For example, 60kg at 1.7m: BMI = 60 / (1.7 × 1.7) = 20.76."
+                "text": "Not necessarily. BMI only compares weight to height; it says nothing about fat distribution. Even with a normal BMI, if your waistline is large (China's cut-offs: men ≥ 90 cm, women ≥ 85 cm) you are still in the central-obesity risk group with higher cardiovascular and metabolic risk. A normal BMI plus a normal waist is the safer combination."
             }
         },
         {
             "@type": "Question",
-            "name": "When is BMI inaccurate?",
+            "name": "Why do fit, muscular people show a high BMI?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Athletes, pregnant women, elderly, and muscular individuals may have misleading BMI readings. Combine with body fat percentage and waist circumference for better assessment."
+                "text": "Muscle is denser than fat, so a strength-trained athlete can weigh more for the same height and post an overweight or even obese BMI while carrying very little fat. For these people, body-fat percentage (roughly above 25% for men, 30% for women) and girth measurements are far more meaningful than BMI."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can pregnant women and children use this BMI?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Not directly. Pregnant women should use their pre-pregnancy BMI to guide healthy weight gain. Children and teens must use age- and sex-specific BMI percentiles (such as China's 7–18 screening standard or the WHO growth standard); applying the adult 18.5 / 24 / 28 lines would give wrong answers."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do I measure waist circumference correctly?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Stand naturally and exhale gently; wrap a tape horizontally about 1 cm above the navel (or at the midpoint between the lower rib and the hip bone). Do not suck in your stomach and do not pull the tape tight; read to 0.1 cm. Measure at the same time of day and in the same posture each time so readings are comparable."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Why does my BMI seem to change during the day?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Body weight can swing 0.5–1 kg in a day from food, drink, and sweat, which translates to roughly 0.2–0.4 BMI points. Weigh yourself first thing in the morning, after using the bathroom and before eating, and watch the long-term trend rather than any single reading."
             }
         }
     ]
@@ -171,10 +195,64 @@
 
 <div class="tool-content">
     <h2>BMI Calculator Guide</h2>
-    <p>BMI (Body Mass Index) is an internationally recognized measure of body fat based on height and weight. It applies to most adults aged 18-65.</p>
-    <h3>BMI Reference Range</h3>
-    <p>Underweight: < 18.5 | Normal: 18.5-24.9 | Overweight: 25-29.9 | Obese: ≥ 30</p>
-    <p>Note: BMI is a screening tool, not a diagnostic test. Combine with other metrics for a complete health assessment.</p>
+    <p>BMI (Body Mass Index) is a simple screening number that estimates whether your weight is in a healthy range for your height. The formula is weight in kilograms divided by height in meters squared: <strong>BMI = kg ÷ m²</strong>. It is used worldwide for adults roughly aged 18 to 65, with well-known exceptions covered later (pregnant women, children, and very muscular athletes). You enter your height and weight, the calculator does the division locally in your browser, and nothing you type is ever uploaded to a server.</p>
+
+    <h3>Two Classification Standards You Should Know</h3>
+    <p>One number can land in different categories depending on which standard you apply. The WHO international standard is the most widely cited, but for adults of Asian descent many health authorities — including China's WS/T 428—2013 — use slightly stricter cut-offs, because the same BMI tends to carry more metabolic risk in Asian populations. The table below summarizes the key thresholds.</p>
+    <table class="ref-table">
+        <thead>
+            <tr><th>Category</th><th>WHO International</th><th>China (WS/T 428)</th><th>Difference</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Underweight</td><td>&lt; 18.5</td><td>&lt; 18.5</td><td>Same lower bound</td></tr>
+            <tr><td>Normal</td><td>18.5 – 24.9</td><td>18.5 – 23.9</td><td>China is stricter by 1.0</td></tr>
+            <tr><td>Overweight</td><td>25.0 – 29.9</td><td>24.0 – 27.9</td><td>China starts at 24.0</td></tr>
+            <tr><td>Obese</td><td>≥ 30.0</td><td>≥ 28.0</td><td>China starts at 28.0</td></tr>
+        </tbody>
+    </table>
+    <p>Two practical takeaways: if your BMI is around 24 to 25, you may be "normal" by the WHO chart but already "overweight" by the Chinese chart; and "obese" begins at 28 in China versus 30 internationally. Do not rely on a single remembered threshold — know which standard applies to you.</p>
+
+    <h3>At What Weight Do You Cross Each Line?</h3>
+    <p>Using the Chinese thresholds (normal 18.5–23.9, overweight 24.0–27.9, obese ≥ 28.0), here are the exact crossing weights for common heights. The weight for a given BMI equals BMI × height² (height in meters), rounded to one decimal.</p>
+    <table class="ref-table">
+        <thead>
+            <tr><th>Height</th><th>Normal floor<br>(BMI 18.5)</th><th>Overweight starts<br>(BMI 24.0)</th><th>Obese starts<br>(BMI 28.0)</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>160 cm</td><td>47.4 kg</td><td>61.4 kg</td><td>71.7 kg</td></tr>
+            <tr><td>165 cm</td><td>50.4 kg</td><td>65.3 kg</td><td>76.2 kg</td></tr>
+            <tr><td>170 cm</td><td>53.5 kg</td><td>69.4 kg</td><td>80.9 kg</td></tr>
+            <tr><td>175 cm</td><td>56.7 kg</td><td>73.5 kg</td><td>85.8 kg</td></tr>
+            <tr><td>180 cm</td><td>59.9 kg</td><td>77.8 kg</td><td>90.7 kg</td></tr>
+        </tbody>
+    </table>
+    <p>So a 170 cm adult crosses into "overweight" at about 69.4 kg and into "obese" at about 80.9 kg. These boundaries move with the square of height, which is why a few centimeters of extra height shifts the weights noticeably.</p>
+
+    <h3>BMI for Common Height-and-Weight Combos</h3>
+    <p>The next table shows the BMI for a spread of realistic inputs, so you can see roughly where you sit before even opening the calculator.</p>
+    <table class="ref-table">
+        <thead>
+            <tr><th>Height</th><th>Weight</th><th>BMI</th><th>China category</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>160 cm</td><td>55 kg</td><td>21.48</td><td>Normal</td></tr>
+            <tr><td>165 cm</td><td>60 kg</td><td>22.04</td><td>Normal</td></tr>
+            <tr><td>170 cm</td><td>65 kg</td><td>22.49</td><td>Normal</td></tr>
+            <tr><td>175 cm</td><td>70 kg</td><td>22.86</td><td>Normal</td></tr>
+            <tr><td>180 cm</td><td>75 kg</td><td>23.15</td><td>Normal</td></tr>
+            <tr><td>170 cm</td><td>75 kg</td><td>25.95</td><td>Overweight</td></tr>
+            <tr><td>175 cm</td><td>90 kg</td><td>29.39</td><td>Obese</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Three Worked Examples</h3>
+    <p>Walk through the formula yourself to double-check the calculator. Remember: BMI = weight ÷ (height in meters)².</p>
+    <ol>
+        <li><strong>175 cm, 70 kg</strong>: 70 ÷ (1.75 × 1.75) = 70 ÷ 3.0625 = <strong>22.86</strong> → Normal (comfortably inside the healthy band on both standards).</li>
+        <li><strong>170 cm, 75 kg</strong>: 75 ÷ (1.70 × 1.70) = 75 ÷ 2.89 = <strong>25.95</strong> → Overweight (24.0–27.9 on the Chinese chart, and also 25–29.9 on WHO).</li>
+        <li><strong>180 cm, 95 kg</strong>: 95 ÷ (1.80 × 1.80) = 95 ÷ 3.24 = <strong>29.32</strong> → Obese (≥ 28.0 in China; WHO would still call this overweight, just under 30).</li>
+    </ol>
+    <p>Notice the same 95 kg is "obese" in China but only "overweight" by WHO — a good reminder that the standard matters. BMI is only a starting point: it does not tell muscle from fat, nor where fat is stored. Pair it with waist circumference and body-fat percentage for a fuller picture, and if you are mapping a long-term goal, the <a href="/en/calculators/date-calc.html">date calculator</a> can help you lay out a weekly or monthly timeline.</p>
 </div>
 <section class="related-posts">
         <h3>Related Reading</h3>
@@ -184,21 +262,45 @@
     </section>
 <section class="tool-content">
 <h2>About BMI Calculator</h2>
-<p>BMI Calculator is a completely free online tool that helps you Calculate BMI from height and weight. Whether you are a casual user or a professional, you can use it instantly without installing any software.</p>
-<p>Whether you are managing your weight, following a fitness plan, or simply checking your health metrics, you can get an instant BMI reference.</p>
+<p>BMI Calculator is a completely free online tool. Enter your height and weight and it returns your Body Mass Index plus a category and a short health note based on the standard you care about. No installation, no registration, no app to download — open the page and use it.</p>
+<p>Whether you are watching your weight, following a fitness or fat-loss plan, or just checking a health metric at a check-up, you get a number you can compare against the tables above. Long-term money habits and long-term health habits both compound: our <a href="/en/calculators/compound-interest.html">compound interest calculator</a> shows how small monthly savings add up, while the <a href="/en/calculators/date-calc.html">date calculator</a> helps you lay out a weekly or monthly timeline toward a target weight.</p>
 <h2>How to Use</h2>
 <ol>
     <li>Enter your height in centimeters in the "Height" field.</li>
     <li>Enter your weight in kilograms in the "Weight" field.</li>
     <li>Click the "Calculate" button to get your BMI instantly.</li>
-    <li>Review your weight category and the health advice provided.</li>
+    <li>Read the category and the health advice, then compare against the tables above.</li>
 </ol>
 <h2>BMI Calculator FAQ</h2>
-<h3>Is BMI Calculator free to use?</h3><p>Yes, BMI Calculator is completely free. There are no hidden fees, no account registration and no download required.</p>
-<h3>How accurate are the results?</h3><p>All calculations are performed locally in your browser using well-established formulas, so the results are accurate and consistent.</p>
-<h3>Is my data private?</h3><p>Your privacy is a priority. Everything you enter is processed directly on your device and is never uploaded to any server.</p>
-<h3>Does BMI Calculator work on mobile?</h3><p>Yes. The page is fully responsive and works smoothly on phones, tablets and desktop browsers.</p>
-<h3>What are the BMI categories and limits?</h3><p>Underweight is below 18.5, normal range is 18.5–24.9, overweight is 25–29.9 and obesity starts at 30. For adults of Asian descent, some health organizations recommend slightly lower cut-offs (23 for overweight) because the same BMI can carry more health risk.</p>
+<h3>Which standard should I use, China or WHO?</h3><p>For adults in mainland China, prefer the WS/T 428—2013 thresholds: normal 18.5–23.9, overweight 24.0–27.9, obese ≥ 28.0. They are stricter than the WHO international cut-offs (normal up to 24.9, obese from 30.0) because the same BMI carries more risk in Asian bodies. This tool reports the Chinese category by default so you are not misled by a single threshold.</p>
+<h3>Does a normal BMI mean I am healthy?</h3><p>Not necessarily. BMI only compares weight to height; it says nothing about fat distribution. Even with a normal BMI, if your waistline is large (China's cut-offs: men ≥ 90 cm, women ≥ 85 cm) you are still in the "central obesity" risk group with higher cardiovascular and metabolic risk. A normal BMI plus a normal waist is the safer combination.</p>
+<h3>Why do fit, muscular people show a high BMI?</h3><p>Muscle is denser than fat, so a strength-trained athlete can weigh more for the same height and post an "overweight" or even "obese" BMI while carrying very little fat. For these people, body-fat percentage (roughly above 25% for men, 30% for women) and girth measurements are far more meaningful than BMI.</p>
+<h3>Can pregnant women and children use this BMI?</h3><p>Not directly. Pregnant women should use their pre-pregnancy BMI to guide healthy weight gain, since adult thresholds do not apply during pregnancy. Children and teens must use age- and sex-specific BMI percentiles (such as China's 7–18 screening standard or the WHO growth standard); applying the adult 18.5 / 24 / 28 lines would give wrong answers.</p>
+<h3>How do I measure waist circumference correctly?</h3><p>Stand naturally and exhale gently; wrap a tape horizontally about 1 cm above the navel (or at the midpoint between the lower rib and the hip bone). Do not suck in your stomach and do not pull the tape tight; read to 0.1 cm. Measure at the same time of day and in the same posture each time so readings are comparable.</p>
+<h3>Why does my BMI seem to change during the day?</h3><p>Body weight can swing 0.5–1 kg in a day from food, drink, and sweat, which translates to roughly 0.2–0.4 BMI points. Weigh yourself first thing in the morning, after using the bathroom and before eating, and watch the long-term trend rather than any single reading. If you want to express a change as a share of your starting weight, the <a href="/en/calculators/percentage-calc.html">percentage calculator</a> does that quickly.</p>
+
+<h2>BMI Is Not the Only Number: Which Metric Answers What?</h2>
+<p>Different metrics answer different questions, and they work best together:</p>
+<table class="ref-table">
+    <thead><tr><th>Metric</th><th>What it answers</th><th>Best for</th><th>Main limit</th></tr></thead>
+    <tbody>
+        <tr><td>BMI</td><td>Is weight reasonable for height?</td><td>Quick screen for everyone</td><td>No muscle/fat split, no fat location</td></tr>
+        <tr><td>Waist</td><td>Is fat stored around the belly?</td><td>All adults, especially middle-aged</td><td>Measurement technique varies</td></tr>
+        <tr><td>Body-fat %</td><td>What share of weight is fat?</td><td>Fitness, fat-loss tracking</td><td>Home devices less precise</td></tr>
+        <tr><td>Waist-hip ratio</td><td>What is the fat shape?</td><td>Cardiovascular risk</td><td>Depends on measurement points</td></tr>
+    </tbody>
+</table>
+
+<h2>Three Common BMI Myths</h2>
+<h3>Myth 1: Same BMI means same health risk</h3>
+<p>Two people can both have a BMI of 24 — one sedentary with a 95 cm waist, the other training regularly with a 78 cm waist — yet face very different metabolic risk. BMI is just weight ÷ height²; it cannot see where fat sits or how much muscle you carry. Always read BMI together with waist size, body fat, and activity level.</p>
+<h3>Myth 2: Getting BMI "back to normal" solves everything</h3>
+<p>Losing weight is not the same as getting healthier. Crash diets shed mostly water and muscle, rebound easily, and can lower your resting metabolism. A better goal is slow loss (about 0.5–1 kg per week), keeping muscle, and improving waist size and fitness — not just the number on the scale.</p>
+<h3>Myth 3: A high BMI means you must diet immediately</h3>
+<p>Someone just over the normal line (say BMI 24–27, "overweight") with no other risk factors may not need strict dieting. Compared with harsh restriction, more daily activity and smarter eating (less sugary drink, more protein and vegetables) is usually more sustainable. If high blood pressure, high blood sugar, or a large waist are also present, then a more active plan makes sense. Big financial life steps — like buying a home — are a separate kind of planning you can model with our <a href="/en/calculators/mortgage.html">mortgage calculator</a>.</p>
+
+<h2>How Should You Read Your Result?</h2>
+<p>Once you have your BMI, match it to the table above to see which band you fall in, then confirm fat distribution with your waistline. If you are underweight or overweight, adjust diet and activity: balanced nutrition, more strength training, and fewer high-calorie foods. If you are managing weight, pair this tool with a target-weight goal and track progress as a percentage of your starting point using the <a href="/en/calculators/percentage-calc.html">percentage calculator</a>. Scientific weight management is long-term and combined, so do not let a single number run your life.</p>
 </section>
     </main>
 

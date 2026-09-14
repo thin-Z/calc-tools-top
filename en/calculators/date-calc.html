@@ -59,26 +59,50 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "How many days between two dates?",
+      "name": "How do you count the days between two dates - inclusive or exclusive?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Enter start and end dates, select \"Date Difference\" mode to get the exact number of days. Customize whether to include the start or end date."
+        "text": "By default the tool returns the exclusive count: the number of whole days from the start date up to, but not including, the end date. From 2026-01-01 to 2026-12-31 that is 364 days. For the inclusive count, add one, giving 365. Pick the convention that matches your purpose, such as hotel nights versus interest periods."
       }
     },
     {
       "@type": "Question",
-      "name": "How to calculate a date N days from now?",
+      "name": "How do I add or subtract days from a date?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Select \"Date Calculation\" mode, enter a start date and the number of days to add or subtract. Supports positive (future) and negative (past) values."
+        "text": "Use Date Arithmetic mode: choose a start date and enter the number of days. A positive number moves forward (2026-06-01 plus 100 days = 2026-09-09) and a negative number moves backward (2026-03-15 minus 30 days = 2026-02-13). The tool also shows the day of the week."
       }
     },
     {
       "@type": "Question",
-      "name": "Does the business days calculation include holidays?",
+      "name": "Are business days the same as calendar days?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "The basic version counts Monday to Friday as business days without holiday adjustments. For precise calculations, refer to official holiday schedules."
+        "text": "No. Calendar days count every day, while business days usually count Monday to Friday only. January 2026 has 31 calendar days but 22 business days. The tool does not know public holidays, so subtract national and regional holidays yourself for a precise working-day count."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is age calculated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Age is counted in completed years, the same rule as the 周岁 convention: you are 36 from your 36th birthday until the day before your 37th. The tool also shows total days lived (1990-06-15 to 2026-09-14 is 13,240 days) and the days until the next birthday."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do time zones or daylight saving time affect the result?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For whole-day differences, no. The tool works with calendar dates, so a day is a day regardless of the hours. Time zones and daylight saving only matter when you need hour-level precision, such as the exact moment a contract expires."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does adding one month differ from adding 30 days?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because months have different lengths. Adding 30 days to 2026-01-31 gives 2026-03-02, but adding one calendar month gives 2026-02-28 under the month-end rule. When a contract says 30 days versus one month, the two are not interchangeable across month boundaries."
       }
     }
   ]
@@ -243,9 +267,40 @@
 
 <div class="tool-content">
     <h2>Date Calculator Guide</h2>
-    <p>Calculate the difference between two dates or add/subtract days from a date. Useful for project planning, contract management, and travel arrangements.</p>
-    <h3>Use Cases</h3>
-    <p>Calculate intervals between dates, find future or past dates, count business days. Perfect for contract management, project planning, and travel scheduling.</p>
+    <p>The Date Calculator does three jobs: it adds or subtracts days from a start date (Date Arithmetic), counts the days between two dates (Date Difference), and works out an exact age from a birth date (Age Calculator). It is built for project planning, contract and deadline management, travel arrangements and personal anniversaries, and every calculation runs locally in your browser. If you are dating a payment or a loan payoff, pair this with the <a href="/en/calculators/mortgage.html">mortgage calculator</a>; if you are counting working days toward a target, the result feeds neatly into a growth or percentage calculation too.</p>
+
+    <h3>How to use it</h3>
+    <p>Pick a mode. In <strong>Date Arithmetic</strong>, choose a start date and enter the days to add — a negative number counts backwards. In <strong>Date Difference</strong>, enter a start and end date to get the interval. In <strong>Age Calculator</strong>, enter a birth date to see the exact age, total days lived and the days until the next birthday. Note that 2026 is not a leap year, so February has 28 days and the year has 365 — worth remembering whenever you count across February.</p>
+
+    <h3>A reference table of real date calculations (2026 calendar)</h3>
+    <p>Every row below was computed with the same rules as the tool:</p>
+    <table class="ref-table">
+        <thead><tr><th>Task</th><th>Input</th><th>Result</th></tr></thead>
+        <tbody>
+            <tr><td>Days between two dates</td><td>2026-01-01 to 2026-12-31</td><td>364 days exclusive, 365 inclusive</td></tr>
+            <tr><td>Add days to a date</td><td>2026-06-01 + 100 days</td><td>2026-09-09 (Wednesday)</td></tr>
+            <tr><td>Add days to a date</td><td>2026-02-01 + 45 days</td><td>2026-03-18 (Wednesday)</td></tr>
+            <tr><td>Subtract days</td><td>2026-03-15 minus 30 days</td><td>2026-02-13 (Friday)</td></tr>
+            <tr><td>Day of week</td><td>2026-01-01</td><td>Thursday</td></tr>
+            <tr><td>Day of week</td><td>2026-12-25</td><td>Friday</td></tr>
+            <tr><td>Business days (Mon–Fri)</td><td>January 2026</td><td>22 of 31 days</td></tr>
+            <tr><td>Age</td><td>Born 1990-06-15, on 2026-09-14</td><td>36 years, 13,240 days</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Three worked examples</h3>
+    <ol>
+        <li><strong>Days between 2026-01-01 and 2026-12-31</strong>: the tool returns <strong>364 days</strong> if you exclude the start date, or <strong>365 days</strong> if you include both ends. The full year is 365 days, so the inclusive/exclusive choice shifts the answer by exactly one day.</li>
+        <li><strong>100 days after 2026-06-01</strong>: adding 100 days lands on <strong>2026-09-09</strong>, a <strong>Wednesday</strong> — handy for setting a 100-day project deadline.</li>
+        <li><strong>Age from 1990-06-15 to 2026-09-14</strong>: the exact age is <strong>36 years</strong>, or <strong>13,240 days</strong> lived, with <strong>274 days</strong> until the next birthday. Age is counted in completed years (the same rule as the 周岁 convention), not by adding one each January.</li>
+    </ol>
+
+    <h3>Common myth: adding days and adding months are not the same</h3>
+    <p>Adding 30 days is not the same as adding one month. From 2026-01-31, plus 30 days is 2026-03-02, whereas plus one calendar month is 2026-02-28 under the month-end rule. The same trap appears when you add "3 months" to a pay date or a contract renewal — decide whether you mean calendar months or a fixed day count before you commit. For counting weekdays only, the tool treats Monday–Friday as business days, but it does not know public holidays, so subtract those separately if you need an exact working-day figure. To project how a date-driven payment schedule grows, use the <a href="/en/calculators/compound-interest.html">compound interest calculator</a>; to work out what share of a year a period represents, use the <a href="/en/calculators/percentage-calc.html">percentage calculator</a>.</p>
+
+    <h3>Planning with dates: a few practical rules</h3>
+    <p>When you use dates for planning, a handful of rules prevent most mistakes. Count your unit precisely: "within 14 days" and "within two weeks" can differ when a month boundary falls in between. Beware of month-end dates — adding a month to the 31st can roll into the next month if the target month is shorter, which is why 2026-01-31 plus one month lands on 2026-02-28. And remember that weekends and holidays are not the same thing: a deadline falling on a Saturday may effectively move to the following Monday in many jurisdictions, so build in a buffer deliberately rather than by accident.</p>
+    <p>It also helps to keep the two common date questions separate. "How long until X?" is a difference — a count of days between two points. "What date is X days from now?" is arithmetic — a move along the calendar. Mixing them up is the most common source of off-by-one errors, especially when one convention counts both endpoints and the other does not. State the convention explicitly whenever a date matters — in contracts, refund windows and project plans alike — and the ambiguity disappears. For longer horizons that span several years, the percentage calculator helps you express the interval as a fraction of a year.</p>
 </div>
 <section class="related-posts">
         <h3>Related Reading</h3>
@@ -265,10 +320,12 @@
     <li>View the target date, day difference, or workday count.</li>
 </ol>
 <h2>Date Calculator FAQ</h2>
-<h3>Is Date Calculator free to use?</h3><p>Yes, Date Calculator is completely free. There are no hidden fees, no account registration and no download required.</p>
-<h3>How accurate are the results?</h3><p>All calculations are performed locally in your browser using well-established formulas, so the results are accurate and consistent.</p>
-<h3>Is my data private?</h3><p>Your privacy is a priority. Everything you enter is processed directly on your device and is never uploaded to any server.</p>
-<h3>Does Date Calculator work on mobile?</h3><p>Yes. The page is fully responsive and works smoothly on phones, tablets and desktop browsers.</p>
+<h3>How do you count the days between two dates — inclusive or exclusive?</h3><p>It depends on the convention. By default the tool returns the <strong>exclusive</strong> count: the number of whole days from the start date up to, but not including, the end date. From 2026-01-01 to 2026-12-31 that is 364 days. If you want the <strong>inclusive</strong> count — treating both the first and last day as part of the period — add one, giving 365. Pick the convention that matches your purpose: a hotel stay counts nights (exclusive of checkout day), whereas an interest period may count both ends.</p>
+<h3>How do I add or subtract days from a date?</h3><p>Use <strong>Date Arithmetic</strong> mode: choose a start date and enter the number of days. A positive number moves forward (2026-06-01 + 100 days = 2026-09-09) and a negative number moves backward (2026-03-15 − 30 days = 2026-02-13). The tool returns both the resulting date and its day of the week, which is useful for checking that a deadline does not fall on a weekend.</p>
+<h3>Are business days the same as calendar days?</h3><p>No. Calendar days count every day, while business (working) days usually count Monday to Friday only. January 2026 has 31 calendar days but 22 business days. Note that the tool does not know public holidays — it only excludes weekends — so for a precise working-day count you must subtract national and regional holidays yourself. If you need that level of accuracy around Chinese New Year or other long holidays, adjust the result manually.</p>
+<h3>How is age calculated?</h3><p>Age is counted in <strong>completed years</strong>, the same rule as the 周岁 convention: you are 36 from your 36th birthday until the day before your 37th, regardless of the calendar year. The tool also shows total days lived (1990-06-15 to 2026-09-14 is 13,240 days) and the days remaining until the next birthday (274 in that example), which is handy for planning celebrations or eligibility cut-offs.</p>
+<h3>Do time zones or daylight saving time affect the result?</h3><p>For whole-day differences, no. The tool works with calendar dates, so a day is a day regardless of the hours. Time zones and daylight saving only matter when you need hour-level precision — for example, the moment a contract expires or a flight departs. If your deadline is defined to the hour, convert both ends to the same time zone before comparing.</p>
+<h3>Why does adding one month differ from adding 30 days?</h3><p>Because months have different lengths. Adding 30 days to 2026-01-31 gives 2026-03-02, but adding one calendar month gives 2026-02-28 (the month-end rule, since February 2026 has only 28 days). The gap grows in February. When a contract says "30 days" versus "one month", the two are not interchangeable across month boundaries, so always check which one is meant. For compounding timelines, carry the date into the <a href="/en/calculators/compound-interest.html">compound interest calculator</a>.</p>
 </section>
     </main>
 
