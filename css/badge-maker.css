@@ -317,7 +317,10 @@
   background:rgba(255,255,255,.78);
   color:var(--text-2);
   border-radius:var(--radius-xs);
-  padding:8px 0; min-height:34px; cursor:pointer; text-align:center;
+  /* min-width 统一：参数坞的「.card.is-active > *{display:flex}」会覆盖 .pill-grid 的
+     grid（列定义失效），pill 退化为按内容宽度排列 → 参差（无 15px / 纯色环 41px）。
+     给统一最小宽度使各分组内按钮等宽；不恢复 grid 以免分组独占整行撑高参数坞。 */
+  padding:8px 0; min-height:34px; min-width:56px; cursor:pointer; text-align:center;
   transition:background .18s ease, color .18s ease, border-color .18s ease, box-shadow .18s ease, transform .12s ease;
 }
 .badge-maker-root .pill:hover:not(.active){ border-color:rgba(0,122,255,.45); color:var(--blue); }
