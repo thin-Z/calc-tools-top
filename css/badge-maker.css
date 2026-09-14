@@ -166,6 +166,13 @@
 /* 快捷键卡片的 .collapse-body 同理被置为 flex → 其唯一子层 .collapse-body-inner 宽度收缩到
    内容宽（实测 ~267px），列表挤在左侧一小块、右侧大片空白。恢复 block 让内层撑满。 */
 .panel .card.is-active > .collapse-body{ display:block; }
+/* 「导入」分组的 .import-row（`grid-template-columns:1fr auto`，意图是「主按钮占主体 +
+   次按钮自适应」）同样被 `> *{display:flex}` 覆盖成 flex → grid 列定义失效、两个按钮
+   只按内容宽度排。恢复 grid，并给一个紧凑上限宽度以贴合参数坞的横向平铺风格。 */
+.panel .card.is-active > .import-row{ display:grid; grid-template-columns:1fr auto; flex:0 1 320px; }
+/* 隐藏的文件输入框：以 display:none 为主（语义正确、且不参与 Tab 焦点，避免键盘用户
+   停在一个不可见元素上）；上方 .file-input-hidden 的视觉隐藏属性作兜底。 */
+.panel .card.is-active > .file-input-hidden{ display:none; }
 /* 坞内规格表压紧一档：为画布区腾出高度（规格是坞内最高的分类） */
 .panel .card.is-active .spec-table{ margin-top:6px; }
 .panel .card.is-active .spec-table .spec-tr{ padding:3px 4px; }
@@ -236,7 +243,18 @@
 
 /* --------------------------- 表单控件 --------------------------- */
 .import-row{ display:grid; grid-template-columns:1fr auto; gap:8px; }
-.file-input-hidden{ display:none; }
+/* 文件输入框：视觉隐藏（不依赖 display，任何 display 覆盖都无法让它显形）——
+   配合下方「参数坞布局补丁」段的 `display:none` 双保险（后者语义更正确：不参与 Tab 焦点）。
+   起因：`.file-input-hidden{display:none}`(0,1,0) 曾被告参数坞的
+   `.panel .card.is-active > *{display:flex}`(0,3,0) 覆盖 —— 三个 file input
+   （#fileInput/#queueInput/#projInput）都是 .card 的直接子元素 → 原生 file 控件
+   直接露在参数坞里（实测 253px 宽，与整体样式完全不搭）。
+   视觉隐藏属性同时保留 JS 可编程的 `.click()` 行为（btnPick 等靠它唤起系统文件选择器）。 */
+.file-input-hidden{
+  position:absolute; width:1px; height:1px;
+  padding:0; margin:-1px; border:0;
+  overflow:hidden; clip-path:inset(50%); white-space:nowrap;
+}
 
 .badge-maker-root .tool-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-top:12px; }
 .badge-maker-root .tool-grid .btn{ padding:9px 8px; font-size:12.5px; }
