@@ -958,32 +958,32 @@
     },
     {
       "source": "/zh/color-contrast",
-      "destination": "/zh/calculators/color-contrast",
+      "destination": "/zh/image/color-contrast",
       "permanent": true
     },
     {
       "source": "/en/color-contrast",
-      "destination": "/en/calculators/color-contrast",
+      "destination": "/en/image/color-contrast",
       "permanent": true
     },
     {
       "source": "/zh/regex-tester",
-      "destination": "/zh/calculators/regex-tester",
+      "destination": "/zh/text/regex-tester",
       "permanent": true
     },
     {
       "source": "/en/regex-tester",
-      "destination": "/en/calculators/regex-tester",
+      "destination": "/en/text/regex-tester",
       "permanent": true
     },
     {
       "source": "/zh/markdown-preview",
-      "destination": "/zh/calculators/markdown-preview",
+      "destination": "/zh/text/markdown-preview",
       "permanent": true
     },
     {
       "source": "/en/markdown-preview",
-      "destination": "/en/calculators/markdown-preview",
+      "destination": "/en/text/markdown-preview",
       "permanent": true
     },
     {
@@ -1038,12 +1038,12 @@
     },
     {
       "source": "/zh/simplified-traditional",
-      "destination": "/zh/calculators/simplified-traditional",
+      "destination": "/zh/text/simplified-traditional",
       "permanent": true
     },
     {
       "source": "/en/simplified-traditional",
-      "destination": "/en/calculators/simplified-traditional",
+      "destination": "/en/text/simplified-traditional",
       "permanent": true
     },
     {
@@ -1054,6 +1054,46 @@
     {
       "source": "/en/compress-decompress",
       "destination": "/en/text/compress-decompress",
+      "permanent": true
+    },
+    {
+      "source": "/zh/calculators/color-contrast",
+      "destination": "/zh/image/color-contrast",
+      "permanent": true
+    },
+    {
+      "source": "/en/calculators/color-contrast",
+      "destination": "/en/image/color-contrast",
+      "permanent": true
+    },
+    {
+      "source": "/zh/calculators/regex-tester",
+      "destination": "/zh/text/regex-tester",
+      "permanent": true
+    },
+    {
+      "source": "/en/calculators/regex-tester",
+      "destination": "/en/text/regex-tester",
+      "permanent": true
+    },
+    {
+      "source": "/zh/calculators/markdown-preview",
+      "destination": "/zh/text/markdown-preview",
+      "permanent": true
+    },
+    {
+      "source": "/en/calculators/markdown-preview",
+      "destination": "/en/text/markdown-preview",
+      "permanent": true
+    },
+    {
+      "source": "/zh/calculators/simplified-traditional",
+      "destination": "/zh/text/simplified-traditional",
+      "permanent": true
+    },
+    {
+      "source": "/en/calculators/simplified-traditional",
+      "destination": "/en/text/simplified-traditional",
       "permanent": true
     },
     {

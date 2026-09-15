@@ -72,11 +72,11 @@ function postCspReport(extraHeaders, body) {
 function validReport() {
   return JSON.stringify({
     'csp-report': {
-      'document-uri': 'https://www.calc-tools.top/zh/calculators/color-contrast',
+      'document-uri': 'https://www.calc-tools.top/zh/image/color-contrast',
       'violated-directive': 'script-src',
       'effective-directive': 'script-src',
       'blocked-uri': 'inline',
-      'source-file': 'https://www.calc-tools.top/zh/calculators/color-contrast',
+      'source-file': 'https://www.calc-tools.top/zh/image/color-contrast',
       'line-number': 12,
       'column-number': 3,
       'disposition': 'enforce'

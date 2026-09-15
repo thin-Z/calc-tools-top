@@ -103,12 +103,31 @@ test.describe('R-4 首页「查看全部」分类筛选回归 (2026-09-15)', () 
     // life 区块 = life + travel 两个 tag（首页实为 7 个），只按 life 单 tag 筛会漏 2 个
     { cat: 'life', zh: '生活 · 出行', allow: ['life', 'travel'], expectCount: 7 },
     { cat: 'utility', zh: '实用工具', allow: ['utility'], expectCount: 7 },
-    // tools.json 的 dir 与 categories 并非严格对齐：calculators 页里还有 image 标签的
-    // color-contrast 与 text 标签的 regex-tester / markdown-preview / simplified-traditional。
-    // 硬编码区块名单会漏掉它们 → 在任何子分类下都筛不出来（只有「全部」可见）形成死角。
-    { cat: 'image', zh: '图片工具', allow: ['image'], expectCount: 1 },
-    { cat: 'text', zh: '文字工具', allow: ['text'], expectCount: 3 },
   ];
+
+  // dir 归位回归（2026-09-16）：color-contrast/regex-tester/markdown-preview/simplified-traditional
+  // 曾目录属 calculators、标签属 image/text，造成「图片工具筛选只剩 1 个」的困惑与筛选死角。
+  // 归位后：/zh|en/image = 8（与首页图片工具区块一致）、/zh|en/text = 15（与文字工具区块一致），
+  // calculators 页 28 个工具全部属于四个子区块，不再出现 image/text chip。
+  for (const lang of ['zh', 'en']) {
+    test('[' + lang + '] 图片/文字工具目录归位：栏目页数量与首页区块一致', async ({ page }) => {
+      await page.goto('/' + lang + '/image/', { waitUntil: 'load' });
+      await dismissCmp(page);
+      await expect(page.locator('.tool-grid .tool-card-wrap')).toHaveCount(8);
+      await expect(page.locator('.tool-grid .tool-card[href*="/color-contrast"]')).toHaveCount(1);
+
+      await page.goto('/' + lang + '/text/', { waitUntil: 'load' });
+      await dismissCmp(page);
+      await expect(page.locator('.tool-grid .tool-card-wrap')).toHaveCount(15);
+
+      await page.goto('/' + lang + '/calculators/', { waitUntil: 'load' });
+      await dismissCmp(page);
+      await expect(page.locator('.tool-grid .tool-card-wrap')).toHaveCount(28);
+      const strayChips = await page.$$eval('.category-chip', (els) =>
+        els.filter((c) => ['image', 'text'].indexOf(c.getAttribute('data-cat-key')) !== -1).length);
+      expect(strayChips, 'calculators 页不应再出现图片/文字筛选 chip').toBe(0);
+    });
+  }
 
   // 死角回归：本页每个工具都至少能被一个子分类 chip 筛出来（不得只有「全部」可见）
   for (const lang of ['zh', 'en']) {

@@ -37,28 +37,45 @@ const redirects = Array.isArray(vc.redirects) ? vc.redirects : [];
 
 const sources = new Set(redirects.map((r) => r.source));
 const missing = [];
+// dir 变更迁移（2026-09-16）：tools.json 的 dir 修正后，已登记扁平规则的目的地可能过期
+// （例：color-contrast 从 calculators 归位到 image）。SSOT 原则：以 tools.json 为准就地修正，
+// 避免旧扁平 URL 把访客重定向到已不存在的旧深链。
+const staleFixed = [];
 for (const t of tools) {
   if (!t.slug || !t.dir) continue;
   for (const lang of ['zh', 'en']) {
     const source = `/${lang}/${t.slug}`;
-    // cleanUrls:true 下 .html 会被先行剥离，只需登记无扩展名规则（与较新条目一致）
-    if (!sources.has(source)) {
-      missing.push({ source, destination: `/${lang}/${t.dir}/${t.slug}`, permanent: true });
+    const idx = redirects.findIndex((r) => r.source === source);
+    const want = `/${lang}/${t.dir}/${t.slug}`;
+    if (idx === -1) {
+      // cleanUrls:true 下 .html 会被先行剥离，只需登记无扩展名规则（与较新条目一致）
+      missing.push({ source, destination: want, permanent: true });
       sources.add(source);
+    } else if (redirects[idx].destination !== want && !String(redirects[idx].destination).includes('*')) {
+      staleFixed.push(`${source}: ${redirects[idx].destination} → ${want}`);
+      redirects[idx].destination = want;
     }
   }
 }
 
-if (missing.length === 0) {
-  console.log('[generate-redirects] 无需变更：全部工具扁平重定向已登记');
+if (missing.length === 0 && staleFixed.length === 0) {
+  console.log('[generate-redirects] 无需变更：全部工具扁平重定向已登记且目的地最新');
 } else {
+  if (staleFixed.length) {
+    console.log(`[generate-redirects] 修正 ${staleFixed.length} 条过期目的地（dir 归位迁移）：`);
+    for (const s of staleFixed) console.log('  ~ ' + s);
+  }
   // 通配规则必须置于末尾：插到它前面；无通配规则则直接追加
   const wildIdx = redirects.findIndex((r) => r.source === WILDCARD);
-  if (wildIdx === -1) redirects.push(...missing);
-  else redirects.splice(wildIdx, 0, ...missing);
+  if (missing.length) {
+    if (wildIdx === -1) redirects.push(...missing);
+    else redirects.splice(wildIdx, 0, ...missing);
+  }
 
-  console.log(`[generate-redirects] 待补 ${missing.length} 条扁平重定向：`);
-  for (const m of missing) console.log(`  + ${m.source} -> ${m.destination}`);
+  if (missing.length) {
+    console.log(`[generate-redirects] 待补 ${missing.length} 条扁平重定向：`);
+    for (const m of missing) console.log(`  + ${m.source} -> ${m.destination}`);
+  }
 
   if (DRY) {
     console.log('[generate-redirects] --dry-run：未写盘');

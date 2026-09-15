@@ -547,7 +547,7 @@
   {
     "slug": "color-contrast",
     "icon": "contrast",
-    "dir": "calculators",
+    "dir": "image",
     "categories": [
       "image"
     ],
@@ -763,7 +763,7 @@
   {
     "slug": "regex-tester",
     "icon": "regex",
-    "dir": "calculators",
+    "dir": "text",
     "categories": [
       "text"
     ],
@@ -781,7 +781,7 @@
   {
     "slug": "markdown-preview",
     "icon": "file-text",
-    "dir": "calculators",
+    "dir": "text",
     "categories": [
       "text"
     ],
@@ -890,7 +890,7 @@
   {
     "slug": "simplified-traditional",
     "icon": "languages",
-    "dir": "calculators",
+    "dir": "text",
     "categories": [
       "text"
     ],
