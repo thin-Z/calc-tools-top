@@ -92,3 +92,61 @@ test.describe('T-8 check-card :has() fallback (勾选可见性)', () => {
     expect(states.recheckedBg, '重新勾选后背景恢复').toBe(states.checkedBg);
   });
 });
+
+test.describe('R-4 首页「查看全部」分类筛选回归 (2026-09-15)', () => {
+  // 背景：finance/health/life/utility 四区块同属 calculators 目录，「查看全部」曾统一跳
+  // /zh/calculators（全量 32 个），点了「财务计算」却看到健康/实用等其它分类。
+  // 修法：首页链接带 ?cat=<区块>，calculators 页按该区块的 tag 集合筛选（非单 tag）。
+  const CASES = [
+    { cat: 'finance', zh: '财务计算', allow: ['finance', 'shopping'], expectCount: 13 },
+    { cat: 'health', zh: '健康计算', allow: ['health'], expectCount: 5 },
+    // life 区块 = life + travel 两个 tag（首页实为 7 个），只按 life 单 tag 筛会漏 2 个
+    { cat: 'life', zh: '生活 · 出行', allow: ['life', 'travel'], expectCount: 7 },
+    { cat: 'utility', zh: '实用工具', allow: ['utility'], expectCount: 7 },
+  ];
+
+  for (const lang of ['zh', 'en']) {
+    for (const c of CASES) {
+      test('[' + lang + '] ?cat=' + c.cat + ' 只展示该分类工具（' + c.expectCount + ' 个）', async ({ page }) => {
+        await page.goto('/' + lang + '/calculators?cat=' + c.cat, { waitUntil: 'load' });
+        await dismissCmp(page);
+
+        const visible = page.locator('.tool-grid .tool-card-wrap:not(.filtered-out)');
+        await expect(visible).toHaveCount(c.expectCount);
+
+        // 可见卡片必须全部属于该分类的 tag 集合，不得混入其它分类（health/utility/image/text 等）
+        const foreign = await page.evaluate((allow) => {
+          return Array.from(document.querySelectorAll('.tool-grid .tool-card-wrap:not(.filtered-out)'))
+            .map((w) => {
+              const card = w.querySelector('.tool-card');
+              return card ? card.getAttribute('data-category') || '' : '';
+            })
+            .filter((cats) => !cats.split(',').some((x) => allow.indexOf(x) !== -1));
+        }, c.allow);
+        expect(foreign, '不得出现非「' + c.zh + '」分类的工具').toEqual([]);
+
+        // 分类 chip 唯一高亮 + 计数文案与数量同步
+        await expect(page.locator('.category-chip.active')).toHaveCount(1);
+        await expect(page.locator('.tool-count')).toContainText(String(c.expectCount));
+      });
+    }
+
+    test('[' + lang + '] 首页「财务计算 · 查看全部」链接携带 ?cat=finance', async ({ page }) => {
+      await page.goto(lang === 'zh' ? '/' : '/en/', { waitUntil: 'load' });
+      await dismissCmp(page);
+      const href = await page.getAttribute('#sec-finance .section-more', 'href');
+      expect(href).toBe((lang === 'zh' ? '/zh' : '/en') + '/calculators?cat=finance');
+    });
+
+    test('[' + lang + '] 无 cat 参数 / 非法 cat 回落为全量', async ({ page }) => {
+      await page.goto('/' + lang + '/calculators', { waitUntil: 'load' });
+      await dismissCmp(page);
+      const all = await page.locator('.tool-grid .tool-card-wrap:not(.filtered-out)').count();
+      expect(all, '无参数应展示全量').toBeGreaterThan(13);
+
+      await page.goto('/' + lang + '/calculators?cat=__invalid__', { waitUntil: 'load' });
+      await dismissCmp(page);
+      expect(await page.locator('.tool-grid .tool-card-wrap:not(.filtered-out)').count()).toBe(all);
+    });
+  }
+});

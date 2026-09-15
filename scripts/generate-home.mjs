@@ -33,20 +33,9 @@ if (!Array.isArray(tools) || tools.length === 0) {
 console.log(`[generate-home] 读取 tools.json: ${tools.length} 个工具`);
 
 // ── 2. 区块定义（一级，无二级）──────────────────────────────
-// categories → 区块归属映射（一个分类可映射到一个区块）
-const CATEGORY_SECTION = {
-  finance: 'finance',
-  shopping: 'finance',
-  health: 'health',
-  life: 'life',
-  travel: 'life',
-  utility: 'utility',
-  image: 'image',
-  text: 'text',
-};
-
-// 区块显示顺序（3.1: 调整此数组即可改变全站区块顺序）
-const SECTION_ORDER = ['finance', 'health', 'life', 'utility', 'image', 'text'];
+// categories → 区块归属映射 / 区块顺序 / 区块标题 已收敛到 lib/tool-card.mjs
+// （首页与栏目页共用同一份，杜绝「首页区块集合」与「查看全部落点页筛选集合」漂移）
+import { CATEGORY_SECTION, SECTION_ORDER, SECTION_TITLES, toolInSection } from './lib/tool-card.mjs';
 
 const sectionHeaders = {
   finance: { zh: '财务计算', en: 'Finance', id: 'sec-finance' },
@@ -58,15 +47,17 @@ const sectionHeaders = {
 };
 
 // 区块 → 栏目索引页入口（2026-09-15 修复：栏目页此前零站内入链，属完全孤岛页）。
-// finance/health/life/utility 四个区块在站内没有各自独立栏目页，统一落到 calculators 总集。
-const SECTION_LINKS = {
-  finance: { zh: '/zh/calculators', en: '/en/calculators' },
-  health:  { zh: '/zh/calculators', en: '/en/calculators' },
-  life:    { zh: '/zh/calculators', en: '/en/calculators' },
-  utility: { zh: '/zh/calculators', en: '/en/calculators' },
-  image:   { zh: '/zh/image', en: '/en/image' },
-  text:    { zh: '/zh/text', en: '/en/text' },
-};
+// 2026-09-15 二次修复：finance/health/life/utility 四个子区块同属 calculators 目录，
+// 直接跳 /zh/calculators 会把全部 32 个工具（含健康/生活/实用）一起展示 —— 与用户点击
+// 「财务计算 · 查看全部」的预期不符。现改为携带 ?cat=<区块> 参数，由 calculators 栏目页
+// 的 js/category-filter.js 消费并按该区块的 tag 集合筛选（与首页区块集合严格一致）。
+const SECTION_LINKS = {};
+for (const sec of SECTION_ORDER) {
+  // image / text 区块各自独占一个目录，整页即该分类，无需筛选参数
+  const dir = sec === 'image' ? 'image' : sec === 'text' ? 'text' : 'calculators';
+  const suffix = dir === 'calculators' ? `?cat=${sec}` : '';
+  SECTION_LINKS[sec] = { zh: `/zh/${dir}${suffix}`, en: `/en/${dir}${suffix}` };
+}
 
 // ── 3. 生成 JS 配置 ──────────────────────────────────────────
 function generateSiteConfigTools() {
@@ -128,8 +119,7 @@ function toolSections(t) {
   // 由 categories 派生区块归属（去重、保持 SECTION_ORDER 顺序）
   const sections = [];
   for (const sec of SECTION_ORDER) {
-    const hit = t.categories.some(c => CATEGORY_SECTION[c] === sec);
-    if (hit) sections.push(sec);
+    if (toolInSection(t, sec)) sections.push(sec);
   }
   return sections;
 }

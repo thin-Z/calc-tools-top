@@ -15,6 +15,51 @@
  * 共用同一份实现，杜绝再次漂移。
  */
 
+/**
+ * 分类（tag）→ 首页区块 归属映射（一个分类映射到一个区块）。
+ * 2026-09-15 收敛到本模块：首页（generate-home）与栏目页（generate-category-pages）
+ * 必须共用同一份映射，否则「首页某区块的工具集合」与「该区块『查看全部』落点页筛选出的
+ * 工具集合」会漂移（已发生：四个子区块按钮统一跳 calculators 全量页，展示全部 32 个工具）。
+ */
+export const CATEGORY_SECTION = {
+  finance: 'finance',
+  shopping: 'finance',
+  health: 'health',
+  life: 'life',
+  travel: 'life',
+  utility: 'utility',
+  image: 'image',
+  text: 'text',
+};
+
+/** 区块显示顺序（调整此数组即可改变全站区块顺序） */
+export const SECTION_ORDER = ['finance', 'health', 'life', 'utility', 'image', 'text'];
+
+/** 区块标题（栏目页筛选 chip 与首页共用措辞） */
+export const SECTION_TITLES = {
+  finance: { zh: '财务计算', en: 'Finance' },
+  health: { zh: '健康计算', en: 'Health' },
+  life: { zh: '生活 · 出行', en: 'Lifestyle' },
+  utility: { zh: '实用工具', en: 'Utility Tools' },
+  image: { zh: '图片工具', en: 'Image Tools' },
+  text: { zh: '文字工具', en: 'Text Tools' },
+};
+
+/**
+ * 区块 → 该区块涵盖的【原始分类 tag 集合】。
+ * 注意多对一：finance 区块 = finance + shopping；life 区块 = life + travel。
+ * 「查看全部」落点页必须按此集合筛选，才能与首页区块展示的工具集合完全一致
+ * （只按单 tag 筛会漏：life 只筛 life 会得到 5 个，而首页区块实为 7 个）。
+ */
+export function sectionTags(section) {
+  return Object.keys(CATEGORY_SECTION).filter((c) => CATEGORY_SECTION[c] === section);
+}
+
+/** 工具是否属于某区块（用于首页分区与落点页筛选，判定逻辑同源） */
+export function toolInSection(tool, section) {
+  return tool.categories.some((c) => CATEGORY_SECTION[c] === section);
+}
+
 /** 分类中文/英文显示名（tag 徽章用） */
 export const TAG_LABELS = {
   finance: { zh: '财务', en: 'Finance' },

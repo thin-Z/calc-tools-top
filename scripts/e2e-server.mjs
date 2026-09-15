@@ -55,8 +55,13 @@ const server = http.createServer((req, res) => {
       return res.end('Forbidden');
     }
     if (!fs.existsSync(file) || fs.statSync(file).isDirectory()) {
+      // 目录 → 先试 <dir>/index.html（对齐 Vercel cleanUrls 行为），再退回 <path>.html
+      // 缺这一步时 /zh/calculators（无尾斜杠）会 404，导致带 ?cat= 的清洁 URL 无法本地验证
+      const dirIndex = path.join(file, 'index.html');
       const withHtml = file + '.html';
-      if (fs.existsSync(withHtml)) {
+      if (fs.existsSync(dirIndex)) {
+        file = dirIndex;
+      } else if (fs.existsSync(withHtml)) {
         file = withHtml;
       } else {
         res.writeHead(404, { 'Content-Type': MIME['.html'], 'Cache-Control': 'no-store' });

@@ -59,6 +59,14 @@
 <!-- __GENERATED_CATEGORY_CARDS_START__ -->
         <div class="tool-count">共 32 款计算工具</div>
 
+        <div class="category-filters" id="categoryFilters" role="group" aria-label="按分类筛选">
+            <button type="button" class="category-chip active" data-cat-key="all" data-category="all">全部</button>
+            <button type="button" class="category-chip" data-cat-key="finance" data-category="finance,shopping">财务计算</button>
+            <button type="button" class="category-chip" data-cat-key="health" data-category="health">健康计算</button>
+            <button type="button" class="category-chip" data-cat-key="life" data-category="life,travel">生活 · 出行</button>
+            <button type="button" class="category-chip" data-cat-key="utility" data-category="utility">实用工具</button>
+        </div>
+
         <div class="tool-grid">
             <div class="tool-card-wrap"><a href="/zh/calculators/mortgage" class="tool-card" data-category="finance" data-keywords-zh="房贷,贷款,按揭,买房,月供,利息,商业贷款,公积金贷款" data-keywords-en="mortgage,home loan,house loan,monthly payment,interest,amortization"><div class="icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-home"></use></svg></div><h3>房贷计算器</h3><p>等额本息+等额本金，支持商业/公积金组合贷款</p></a><div class="tool-tags"><a href="/tags/finance.html" class="tag tag-finance" data-tag="finance">财务</a></div><button class="like-btn" data-like-id="mortgage"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span><span class="count">0</span></button></div>
             <div class="tool-card-wrap"><a href="/zh/calculators/tax2026" class="tool-card" data-category="finance" data-keywords-zh="个税,个人所得税,税率,工资,扣税,2026" data-keywords-en="tax,income tax,tax calculator,payroll tax,2026 tax,after tax"><div class="icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-receipt-text"></use></svg></div><h3>个税计算器</h3><p>2026最新个税税率，一键计算税后收入</p></a><div class="tool-tags"><a href="/tags/finance.html" class="tag tag-finance" data-tag="finance">财务</a></div><button class="like-btn" data-like-id="tax2026"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span><span class="count">0</span></button></div>
@@ -117,5 +125,6 @@
 </footer>
 
     <script src="/js/like.js" defer></script>
+    <script src="/js/category-filter.js" defer></script>
 </body>
 </html>
