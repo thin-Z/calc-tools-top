@@ -6,7 +6,7 @@
 
 | 部分 | 说明 |
 |------|------|
-| 前端 | 纯静态 HTML/CSS/JS（无框架），`zh/`、`en/` 双语，`blog/` 博客（**源码 225 HTML（另含 5 includes 模板）/ dist 220 页**（实测 2026-09-07）：50 工具×2 语言（92 真实 + 8 noindex 存根）+ 80 博客（zh40+en40）+ 16 标签聚合页（zh/en 各 8）+ 结构页/语言层首页） |
+| 前端 | 纯静态 HTML/CSS/JS（无框架），`zh/`、`en/` 双语，`blog/` 博客（**dist 222 页**（实测 2026-09-16）；**51 工具 ×2 语言 = 102 工具页**，栏目分布 `calculators 28 / image 8 / text 15`（`tools.json` 的 `dir` 已与语义分类对齐），其中 4 个 stub 存根工具（discount / age-calc / password-strength / keyword-density）共 8 页 noindex → sitemap 工具 URL 94；+ 80 博客 + 16 标签聚合页 + 结构页/首页；sitemap 总 210 条。**滚动数字以 vault `.workbuddy/memory/todo-list.md` 基准行为唯一事实源**） |
 | 构建 | Vercel `buildCommand = node scripts/build.mjs`，`outputDirectory = dist`（复制站点 → GA4/AdSense 注入 → 版本号 → 卫生转换 → CSS 压缩 → CMP 横幅） |
 | API | `api/likes.js`（点赞）、`api/clicks.js`（点击），Node Serverless Function |
 | 存储 | **Vercel KV（Upstash Redis）**，点赞/点击计数 + 限速/防刷均存于此 |
@@ -14,6 +14,7 @@
 | 分析 | GA4 `G-B61D908J5F`（`includes/adsense-head.html` 单一来源，构建期剥离占位符守卫） |
 | 安全 | **CSP 全站硬化**：script-src / style-src 无 `unsafe-inline`（`js/csp-events.js` 委托层 + `js/inline/*.js` 外链化），img-src 白名单化；`verify-site.mjs` 34 项断言守护 |
 | 竞品迭代（08-25） | **URL 参数预填**（`js/url-state.js`，计算器工具页带参直达/刷新保留/输入同步）、**打印样式**（`@media print` 隐藏导航广告）、**mortgage 输入扩展**（房产税/保险/PMI/额外还款）、**相关工具强化**（`scripts/strengthen-related-links.mjs`）、**标签聚合落地页**（`scripts/generate-tag-pages.mjs`，8 分类 × zh/en = 16 页，工具+文章聚合 + JSON-LD + hreflang） |
+| 首页区块与栏目页筛选（09-16） | 首页 6 区块（财务计算 / 健康计算 / 生活·出行 / 实用工具 / 图片工具 / 文字工具）的「查看全部」跳栏目页并携带 **`?cat=<区块>`**（image / text 整页即该分类，不带参），由 `js/category-filter.js` 消费：按 chip 上 `data-category` 声明的**区块 tag 集合**过滤（life 区块 = `life,travel`、finance = `finance,shopping`，**不可只按单 tag 筛**），同步 chip 高亮 / 计数文案 / URL。⚠️ **区块↔分类映射的单一数据源 = `scripts/lib/tool-card.mjs`（`CATEGORY_SECTION` / `SECTION_ORDER` / `SECTION_TITLES` / `sectionTags()` / `toolInSection()`），首页与栏目页共用，禁止各写一份**；⚠️ 工具的 `dir`（URL 栏目）与 `categories`（语义标签）必须对齐，错位会让同批工具被拆到两个栏目页（09-16 已归位 4 个工具） |
 
 ## 环境变量（Vercel 项目 Settings → Environment Variables）
 
@@ -80,8 +81,8 @@ KV_URL / KV_REDIS_URL
 | `generate-blog-posts.py` / `generate-sitemap.ps1` | 博客生成 / sitemap 生成（**ps1 须排除 dist/docs/deliverables/includes**，见记忆） | 见脚本头注释 |
 | `generate-tag-pages.mjs` | 标签聚合落地页生成（8 分类 × zh/en = 16 页，解析首页工具卡 + 博客归档聚合，含 JSON-LD/hreflang/交叉导航；build.mjs 顶部自动调用） | `node scripts/generate-tag-pages.mjs` |
 | `generate-home.mjs` | 首页 6 语义区块 + 热门/最近工具卡从 `tools.json` 单一权威数据源生成 | `node scripts/generate-home.mjs` |
-| `generate-category-pages.mjs` | 栏目索引页卡片生成（zh/en 的 calculators·image·text 三个 index.html，从 `tools.json` 重建「计数 + 工具网格」；卡片模板由 scripts/lib/tool-card.mjs 提供，与首页同构；仅替换标记区间，保留各页原创正文；build.mjs 顶部自动调用） | `node scripts/generate-category-pages.mjs [--dry-run]` |
-| `generate-redirects.mjs` | 工具扁平 URL 重定向生成（从 `tools.json` 补齐 `/zh` 或 `/en` 前缀的旧扁平 URL → 三层新路径，幂等追加、通配规则保持在末尾；后加工具漏登记曾致旧 URL 404——badge-maker 为首个暴露案例；build.mjs 顶部自动调用，**严禁在本脚本 process.exit()**） | `node scripts/generate-redirects.mjs [--dry-run]` |
+| `generate-category-pages.mjs` | 栏目索引页生成（zh/en 的 calculators·image·text 三个 index.html，从 `tools.json` 重建「计数 + 工具网格」，卡片模板由 scripts/lib/tool-card.mjs 提供，与首页同构；仅替换标记区间，保留各页原创正文；**并在栏目页生成分类筛选 chip（chip 的 `data-category` = 该区块涵盖的原始 tag 集合，如 life 区块为 `life,travel`）供首页「查看全部」的 `?cat=<区块>` 消费**，chip 列表按本页实际工具派生、区块数 ≤1 的页面不生成；build.mjs 顶部自动调用） | `node scripts/generate-category-pages.mjs [--dry-run]` |
+| `generate-redirects.mjs` | 工具扁平 URL 重定向生成（从 `tools.json` 补齐 `/zh` 或 `/en` 前缀的旧扁平 URL → 三层新路径，幂等追加、通配规则保持在末尾；**dir 变更时自动修正已登记规则的过期目的地**（2026-09-16 目录归位迁移即靠此自动修 8 条）；后加工具漏登记曾致旧 URL 404——badge-maker 为首个暴露案例；build.mjs 顶部自动调用，**严禁在本脚本 process.exit()**） | `node scripts/generate-redirects.mjs [--dry-run]` |
 | `audit-narrow-overflow.mjs` | 窄屏（390px）全站审计：文档横向溢出 + 卡片结构缺陷（裸 `.tool-card` 缺 `.tool-card-wrap` / 空 `.icon` 无 SVG）；默认报告模式，加 `--strict` 可作门禁（R19 多视口验证工具） | `node scripts/audit-narrow-overflow.mjs [--strict]` |
 | `gen-pinyin-index.py` | 生成搜索拼音/首字母索引（49 slug） | `python scripts/gen-pinyin-index.py` |
 | `extract-critical.mjs` | 构建期按页提取 critical CSS 到 `critical.css` / `critical-tool.css` | `node scripts/extract-critical.mjs` |

@@ -111,6 +111,8 @@ test.describe('R-4 首页「查看全部」分类筛选回归 (2026-09-15)', () 
   // calculators 页 28 个工具全部属于四个子区块，不再出现 image/text chip。
   for (const lang of ['zh', 'en']) {
     test('[' + lang + '] 图片/文字工具目录归位：栏目页数量与首页区块一致', async ({ page }) => {
+      // 本用例含 3 次页面导航，8 并行 + 全量套件时易触 45s 默认超时（09-16 CI 抖动实测），标记 slow
+      test.slow();
       await page.goto('/' + lang + '/image/', { waitUntil: 'load' });
       await dismissCmp(page);
       await expect(page.locator('.tool-grid .tool-card-wrap')).toHaveCount(8);

@@ -10,7 +10,7 @@ import { dismissCmp, trackPageErrors } from './helpers.mjs';
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 const TOOLS = JSON.parse(readFileSync(path.join(ROOT, 'tools.json'), 'utf8'));
 
-test.describe('50 tools x zh/en load smoke', () => {
+test.describe('51 tools x zh/en load smoke', () => {
   for (const t of TOOLS) {
     for (const lang of ['zh', 'en']) {
       test(`[${t.slug}/${lang}] loads + controls present + no errors`, async ({ page }) => {
