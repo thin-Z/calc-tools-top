@@ -1,0 +1,81 @@
+/* css/admin.css — 运营统计仪表盘（内部视图，不进首页/SEO 索引）
+ * 仅被 admin/badge-stats.html 引用；使用站点全局设计令牌变量。 */
+
+.admin-dash {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.admin-dash h1 {
+  font-size: 1.6rem;
+  margin-bottom: 4px;
+}
+
+.admin-sub {
+  color: var(--text-tertiary);
+  margin-bottom: 20px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+}
+
+.stat-num {
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-label {
+  margin-top: 8px;
+  color: var(--text-tertiary);
+  font-size: 0.95rem;
+}
+
+.stat-card.is-likes .stat-num {
+  color: var(--like);
+}
+
+.admin-actions {
+  margin: 18px 0 8px;
+}
+
+.admin-meta {
+  color: var(--text-tertiary);
+  font-size: 0.85rem;
+  margin-top: 6px;
+}
+
+.admin-note {
+  color: var(--text-tertiary);
+  font-size: 0.85rem;
+  margin-top: 18px;
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+  line-height: 1.6;
+}
+
+.admin-note code {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1px 6px;
+  font-size: 0.82rem;
+}
+
+@media (max-width: 480px) {
+  .stat-grid { grid-template-columns: 1fr; }
+}
