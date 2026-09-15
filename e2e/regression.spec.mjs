@@ -103,7 +103,33 @@ test.describe('R-4 首页「查看全部」分类筛选回归 (2026-09-15)', () 
     // life 区块 = life + travel 两个 tag（首页实为 7 个），只按 life 单 tag 筛会漏 2 个
     { cat: 'life', zh: '生活 · 出行', allow: ['life', 'travel'], expectCount: 7 },
     { cat: 'utility', zh: '实用工具', allow: ['utility'], expectCount: 7 },
+    // tools.json 的 dir 与 categories 并非严格对齐：calculators 页里还有 image 标签的
+    // color-contrast 与 text 标签的 regex-tester / markdown-preview / simplified-traditional。
+    // 硬编码区块名单会漏掉它们 → 在任何子分类下都筛不出来（只有「全部」可见）形成死角。
+    { cat: 'image', zh: '图片工具', allow: ['image'], expectCount: 1 },
+    { cat: 'text', zh: '文字工具', allow: ['text'], expectCount: 3 },
   ];
+
+  // 死角回归：本页每个工具都至少能被一个子分类 chip 筛出来（不得只有「全部」可见）
+  for (const lang of ['zh', 'en']) {
+    test('[' + lang + '] calculators 页无筛选死角：每个工具都归属某个子分类 chip', async ({ page }) => {
+      await page.goto('/' + lang + '/calculators', { waitUntil: 'load' });
+      await dismissCmp(page);
+      const orphans = await page.evaluate(() => {
+        const chips = Array.from(document.querySelectorAll('.category-chip'))
+          .filter((c) => c.getAttribute('data-cat-key') !== 'all');
+        const sets = chips.map((c) => (c.getAttribute('data-category') || '').split(','));
+        return Array.from(document.querySelectorAll('.tool-grid .tool-card'))
+          .map((card) => ({
+            slug: (card.getAttribute('href') || '').split('/').pop(),
+            cats: (card.getAttribute('data-category') || '').split(','),
+          }))
+          .filter((t) => !sets.some((s) => t.cats.some((c) => s.indexOf(c) !== -1)))
+          .map((t) => t.slug + '(' + t.cats.join('/') + ')');
+      });
+      expect(orphans, '这些工具在任何子分类下都不可见（筛选死角）').toEqual([]);
+    });
+  }
 
   for (const lang of ['zh', 'en']) {
     for (const c of CASES) {

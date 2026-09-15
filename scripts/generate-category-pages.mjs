@@ -25,7 +25,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
-import { generateCardHTML, SECTION_ORDER, SECTION_TITLES, sectionTags } from './lib/tool-card.mjs';
+import { generateCardHTML, SECTION_ORDER, SECTION_TITLES, sectionTags, toolInSection } from './lib/tool-card.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dryRun = process.argv.includes('--dry-run');
@@ -60,21 +60,31 @@ if (existsSync(ICON_SPRITE)) {
 }
 
 /**
- * 栏目页分类筛选 chip（仅 calculators 目录需要）。
+ * 栏目页分类筛选 chip（数据驱动：按该栏目页【实际涉及的区块】派生）。
  * ------------------------------------------------------------------
  * 背景（2026-09-15）：calculators 目录一页装 32 个工具，横跨财务/健康/生活·出行/实用
  * 四个区块；首页「财务计算 · 查看全部」跳过来时展示的是全部 32 个，与用户预期不符。
- * 此处生成 chip 行，并把【区块 → 原始 tag 集合】写进 data-category（如 life 区块为
- * "life,travel"），由 js/category-filter.js 按 ?cat=<区块> 消费、与首页区块集合严格一致。
- * image / text 目录各自独占一个分类，整页即该分类，无需筛选器。
+ * 此处生成 chip 行，每个 chip 的 data-category 写【区块涵盖的原始 tag 集合】
+ * （如 life 区块 = "life,travel"），由 js/category-filter.js 按 ?cat=<区块> 消费。
+ *
+ * ⚠️ 必须【按页面实际工具派生】而不是硬编码区块名单：
+ *    calculators 目录里还有被打成 image / text 标签的工具（color-contrast 属 image；
+ *    regex-tester / markdown-preview / simplified-traditional 属 text）——tools.json 的
+ *    `dir` 与 `categories` 并非严格对齐。若只列 calculators 专属的四个区块，这几个工具
+ *    在任何子分类下都筛不出来（只有「全部」可见），等于制造了死角。
+ *    因此：区块数 ≤ 1 的栏目页（image / text 各自独占一个分类）不生成 chip。
  */
-function renderFilters(dir, lang) {
-  if (dir !== 'calculators') return '';
-  const dirSections = SECTION_ORDER.filter((s) => s !== 'image' && s !== 'text');
+function renderFilters(dir, lang, list) {
+  const present = [];
+  for (const sec of SECTION_ORDER) {
+    if (list.some((t) => toolInSection(t, sec))) present.push(sec);
+  }
+  if (present.length <= 1) return ''; // 整页即单一分类，无需筛选器
+
   const allLabel = lang === 'zh' ? '全部' : 'All';
   const chips = [
     `            <button type="button" class="category-chip active" data-cat-key="all" data-category="all">${allLabel}</button>`,
-    ...dirSections.map((sec) => {
+    ...present.map((sec) => {
       const label = SECTION_TITLES[sec][lang];
       return `            <button type="button" class="category-chip" data-cat-key="${sec}" data-category="${sectionTags(sec).join(',')}">${label}</button>`;
     }),
@@ -91,7 +101,7 @@ function renderBlock(dir, lang, list) {
     : `${list.length} ${COUNT_NOUN.en[dir]}`;
   return `${START}
         <div class="tool-count">${count}</div>
-${renderFilters(dir, lang)}
+${renderFilters(dir, lang, list)}
         <div class="tool-grid">
 ${cards}
         </div>
