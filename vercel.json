@@ -937,6 +937,126 @@
       "permanent": true
     },
     {
+      "source": "/zh/password-strength",
+      "destination": "/zh/calculators/password-strength",
+      "permanent": true
+    },
+    {
+      "source": "/en/password-strength",
+      "destination": "/en/calculators/password-strength",
+      "permanent": true
+    },
+    {
+      "source": "/zh/badge-maker",
+      "destination": "/zh/image/badge-maker",
+      "permanent": true
+    },
+    {
+      "source": "/en/badge-maker",
+      "destination": "/en/image/badge-maker",
+      "permanent": true
+    },
+    {
+      "source": "/zh/color-contrast",
+      "destination": "/zh/calculators/color-contrast",
+      "permanent": true
+    },
+    {
+      "source": "/en/color-contrast",
+      "destination": "/en/calculators/color-contrast",
+      "permanent": true
+    },
+    {
+      "source": "/zh/regex-tester",
+      "destination": "/zh/calculators/regex-tester",
+      "permanent": true
+    },
+    {
+      "source": "/en/regex-tester",
+      "destination": "/en/calculators/regex-tester",
+      "permanent": true
+    },
+    {
+      "source": "/zh/markdown-preview",
+      "destination": "/zh/calculators/markdown-preview",
+      "permanent": true
+    },
+    {
+      "source": "/en/markdown-preview",
+      "destination": "/en/calculators/markdown-preview",
+      "permanent": true
+    },
+    {
+      "source": "/zh/timestamp",
+      "destination": "/zh/calculators/timestamp",
+      "permanent": true
+    },
+    {
+      "source": "/en/timestamp",
+      "destination": "/en/calculators/timestamp",
+      "permanent": true
+    },
+    {
+      "source": "/zh/pregnancy",
+      "destination": "/zh/calculators/pregnancy",
+      "permanent": true
+    },
+    {
+      "source": "/en/pregnancy",
+      "destination": "/en/calculators/pregnancy",
+      "permanent": true
+    },
+    {
+      "source": "/zh/dca-calculator",
+      "destination": "/zh/calculators/dca-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/en/dca-calculator",
+      "destination": "/en/calculators/dca-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/zh/fraction-calculator",
+      "destination": "/zh/calculators/fraction-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/en/fraction-calculator",
+      "destination": "/en/calculators/fraction-calculator",
+      "permanent": true
+    },
+    {
+      "source": "/zh/currency-converter",
+      "destination": "/zh/calculators/currency-converter",
+      "permanent": true
+    },
+    {
+      "source": "/en/currency-converter",
+      "destination": "/en/calculators/currency-converter",
+      "permanent": true
+    },
+    {
+      "source": "/zh/simplified-traditional",
+      "destination": "/zh/calculators/simplified-traditional",
+      "permanent": true
+    },
+    {
+      "source": "/en/simplified-traditional",
+      "destination": "/en/calculators/simplified-traditional",
+      "permanent": true
+    },
+    {
+      "source": "/zh/compress-decompress",
+      "destination": "/zh/text/compress-decompress",
+      "permanent": true
+    },
+    {
+      "source": "/en/compress-decompress",
+      "destination": "/en/text/compress-decompress",
+      "permanent": true
+    },
+    {
       "source": "/(.*).html",
       "destination": "/$1",
       "permanent": true

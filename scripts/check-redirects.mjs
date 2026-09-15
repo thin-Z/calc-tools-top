@@ -14,6 +14,9 @@
  *      规则】（source 去掉 .html、destination 去掉 .html），否则 cleanUrls 剥离后
  *      该旧 URL 将 404。
  *   3. 所有 .html 源规则的 destination 必须为合法绝对路径（以 / 开头）。
+ *   4. 【R20 新增】tools.json 的每个工具都必须登记 zh/en 扁平重定向
+ *      （/{zh,en}/<slug> → /{zh,en}/<dir>/<slug>），否则旧扁平 URL 线上 404。
+ *      缺失时请先跑 `node scripts/generate-redirects.mjs` 自动补齐。
  *
  * 用法：node scripts/check-redirects.mjs
  * 退出码：0 = 通过；非 0 = 失败（供 CI/verify-site 调用）。
@@ -75,6 +78,27 @@ redirects.forEach((r, i) => {
   }
 });
 
+// 4) R20 工具扁平重定向覆盖率：tools.json 全量工具 × zh/en 都必须有 /<lang>/<slug> 规则
+//    （后加工具手工漏登记 → 旧 URL 线上 404；由 scripts/generate-redirects.mjs 自动补齐）
+try {
+  const tools = JSON.parse(fs.readFileSync(path.join(ROOT, 'tools.json'), 'utf8'));
+  const missingFlat = [];
+  for (const t of tools) {
+    if (!t.slug || !t.dir) continue;
+    for (const lang of ['zh', 'en']) {
+      if (!sources.has(`/${lang}/${t.slug}`)) missingFlat.push(`/${lang}/${t.slug} → /${lang}/${t.dir}/${t.slug}`);
+    }
+  }
+  if (missingFlat.length) {
+    errors.push(
+      `tools.json 有 ${missingFlat.length} 个工具缺扁平重定向（旧 URL 将 404），` +
+      `请跑 node scripts/generate-redirects.mjs 补齐:\n      ` + missingFlat.join('\n      ')
+    );
+  }
+} catch (e) {
+  errors.push(`断言 4 无法执行：读取 tools.json 失败: ${e.message}`);
+}
+
 if (errors.length) {
   console.error('❌ check-redirects 失败:');
   for (const e of errors) console.error(`  ✗ ${e}`);
@@ -83,5 +107,6 @@ if (errors.length) {
 
 console.log(
   `✅ check-redirects: 通配位置合规 (索引 ${wildIdx}/${redirects.length - 1})，` +
-  `全部 ${redirects.length} 条重定向均有无 .html companion 覆盖，destination 合法`
+  `全部 ${redirects.length} 条重定向均有无 .html companion 覆盖，destination 合法，` +
+  `tools.json 扁平重定向覆盖完整`
 );

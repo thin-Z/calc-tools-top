@@ -21,6 +21,9 @@ import './generate-home.mjs';
 import './generate-category-pages.mjs';
 // P1：构建前自动生成标签聚合落地页（/tags/<cat>.html + /en/tags/<cat>.html）
 import './generate-tag-pages.mjs';
+// R20：构建前从 tools.json 补齐工具扁平 URL 重定向（/zh|en/<slug> → /zh|en/<dir>/<slug>）
+// 取代历史上手工登记（12 个后加工具漏登记 → 旧 URL 线上 404，badge-maker 为首个暴露案例）
+import './generate-redirects.mjs';
 // M2：构建期按页抽取关键 CSS（工具页 critical-tool.css）
 import { buildToolCriticalCss, isToolPagePath } from './extract-critical.mjs';
 

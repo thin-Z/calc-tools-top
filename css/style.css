@@ -2926,18 +2926,86 @@ svg.ic {
 .policy-page strong { color: var(--text-primary); font-weight: 600; }
 .policy-page .highlight-box { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; margin: 1.5rem 0; }
 
-/* 404 */
-.error-page { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; text-align: center; padding: 2rem; }
-.error-icon { font-size: var(--fs-4xl); margin-bottom: 1rem; }
-.error-code { font-size: 6rem; font-weight: 700; background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.2; margin-bottom: 0.5rem; }
-.error-title { font-size: var(--fs-2xl); color: var(--text-primary); margin-bottom: 1rem; }
-.error-desc { color: var(--text-secondary); margin-bottom: 2rem; max-width: 400px; }
-.error-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
-.error-actions .btn { padding: 0.75rem 1.5rem; border-radius: var(--radius-md); text-decoration: none; font-weight: 600; transition: all 0.2s ease; }
+/* 404 —— 注意：404.html 被 Vercel 在【任意路径深度】返回，其资源引用必须全为绝对路径
+   （见 404.html 的 /css/style.css；相对写法会在深层 URL 下解析失败导致整页裸奔）。
+   版式：与 .page-header 同一套「品牌渐变标题」语言（主色走 --brand-blue），窄屏用 clamp 自适应。 */
+.error-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 52vh;
+    text-align: center;
+    /* main 已有 48px 28px（窄屏 28/20px）内边距，此处只补纵向，避免窄屏左右被双重挤压 */
+    padding: 1rem 0 2rem;
+}
+.error-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--fs-3xl);
+    color: var(--brand-blue);
+    margin-bottom: 0.75rem;
+}
+.error-code {
+    /* 6rem 固定值在 ≤390px 窄屏占比过大 → 改 clamp 随视口缩放 */
+    font-size: clamp(4.5rem, 16vw, 7rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    line-height: 1.05;
+    margin-bottom: 0.75rem;
+}
+.error-title {
+    font-size: var(--fs-2xl);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 0.75rem;
+}
+.error-desc {
+    color: var(--text-secondary);
+    font-size: var(--fs-md);
+    line-height: 1.7;
+    margin: 0 auto 2rem;
+    max-width: 36rem;
+}
+.error-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 26rem;
+}
+/* .btn 基类带 flex:1（表单场景等分），404 场景需按内容宽 + 等宽底线，否则两按钮被拉满整行 */
+.error-actions .btn {
+    flex: 0 1 auto;
+    min-width: 9rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
 .btn-primary-404 { background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark)); color: var(--white); }
 .btn-primary-404:hover { transform: translateY(-2px); box-shadow: 0 4px 20px var(--primary-glow); }
 .btn-secondary-404 { background: var(--glass-bg); color: var(--text-primary); border: 1px solid var(--glass-border); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 .btn-secondary-404:hover { background: var(--bg-elevated); transform: translateY(-2px); }
+@media (max-width: 480px) {
+    .error-page { min-height: 44vh; padding-bottom: 1.5rem; }
+    .error-code { font-size: clamp(3.5rem, 24vw, 5rem); margin-bottom: 0.5rem; }
+    .error-title { font-size: var(--fs-xl); }
+    .error-icon { font-size: var(--fs-2xl); }
+    .error-actions { flex-direction: column; max-width: 18rem; }
+    .error-actions .btn { width: 100%; min-width: 0; }
+}
 
 /* Category Index Pages (calculators / image / text index)*/
 .category-header { text-align: center; padding: 2rem 1rem; }

@@ -28,7 +28,10 @@
     <link rel="canonical" href="https://www.calc-tools.top/404">
 <link rel="alternate" hreflang="x-default" href="https://www.calc-tools.top/404">
 
-    <link rel="stylesheet" href="css/style.css">
+    <!-- R20：404.html 由 Vercel 在【任意路径深度】返回（/zh/badge-maker、/zh/image/xxx …），
+         故本页所有资源引用必须使用【绝对路径】。历史上此处写相对 css/style.css，深层 URL
+         下解析成 /zh/css/style.css → 404 → 整页零样式（裸 HTML）。 -->
+    <link rel="stylesheet" href="/css/style.css">
 
 
         <script src="/js/i18n.js" defer></script>

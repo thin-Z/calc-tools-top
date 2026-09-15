@@ -39,6 +39,7 @@
 | `check-doc-sync.mjs` | — | 文档-代码同步检查（README ↔ scripts ↔ archive ↔ 配置） | 手动 |
 | `generate-home.mjs` | build | 首页生成（读源码） | 自动 |
 | `generate-tag-pages.mjs` | build | 标签聚合页生成 | 自动 |
+| `generate-redirects.mjs` | build | 工具扁平 URL 重定向生成（tools.json 单一数据源补齐 zh/en 扁平旧 URL，幂等；**严禁 process.exit()**——被 build.mjs import，exit 会终止整个构建） | 自动 |
 | `extract-critical.mjs` | build | 关键 CSS 抽取 | 自动 |
 | `generate-blog-posts.py` | 内容 | 博客生成（内容维护用） | 手动 |
 | `generate-sitemap.ps1` | 内容 | sitemap 生成 | 手动 |

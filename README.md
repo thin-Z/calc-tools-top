@@ -81,6 +81,7 @@ KV_URL / KV_REDIS_URL
 | `generate-tag-pages.mjs` | 标签聚合落地页生成（8 分类 × zh/en = 16 页，解析首页工具卡 + 博客归档聚合，含 JSON-LD/hreflang/交叉导航；build.mjs 顶部自动调用） | `node scripts/generate-tag-pages.mjs` |
 | `generate-home.mjs` | 首页 6 语义区块 + 热门/最近工具卡从 `tools.json` 单一权威数据源生成 | `node scripts/generate-home.mjs` |
 | `generate-category-pages.mjs` | 栏目索引页卡片生成（zh/en 的 calculators·image·text 三个 index.html，从 `tools.json` 重建「计数 + 工具网格」；卡片模板由 scripts/lib/tool-card.mjs 提供，与首页同构；仅替换标记区间，保留各页原创正文；build.mjs 顶部自动调用） | `node scripts/generate-category-pages.mjs [--dry-run]` |
+| `generate-redirects.mjs` | 工具扁平 URL 重定向生成（从 `tools.json` 补齐 `/zh` 或 `/en` 前缀的旧扁平 URL → 三层新路径，幂等追加、通配规则保持在末尾；后加工具漏登记曾致旧 URL 404——badge-maker 为首个暴露案例；build.mjs 顶部自动调用，**严禁在本脚本 process.exit()**） | `node scripts/generate-redirects.mjs [--dry-run]` |
 | `audit-narrow-overflow.mjs` | 窄屏（390px）全站审计：文档横向溢出 + 卡片结构缺陷（裸 `.tool-card` 缺 `.tool-card-wrap` / 空 `.icon` 无 SVG）；默认报告模式，加 `--strict` 可作门禁（R19 多视口验证工具） | `node scripts/audit-narrow-overflow.mjs [--strict]` |
 | `gen-pinyin-index.py` | 生成搜索拼音/首字母索引（49 slug） | `python scripts/gen-pinyin-index.py` |
 | `extract-critical.mjs` | 构建期按页提取 critical CSS 到 `critical.css` / `critical-tool.css` | `node scripts/extract-critical.mjs` |
