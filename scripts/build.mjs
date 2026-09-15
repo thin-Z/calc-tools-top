@@ -16,6 +16,9 @@ import { fileURLToPath } from 'url';
 
 // P0：构建前从 tools.json 单一数据源生成首页卡片 + JS 配置（3.4 单数据源）
 import './generate-home.mjs';
+// P0：构建前从 tools.json 生成栏目索引页卡片（zh|en/{calculators,image,text}/index.html）
+// 取代历史上手工维护的裸 .tool-card 网格（缺 .tool-card-wrap → 无卡片外观；icon 空 div → 无图标）
+import './generate-category-pages.mjs';
 // P1：构建前自动生成标签聚合落地页（/tags/<cat>.html + /en/tags/<cat>.html）
 import './generate-tag-pages.mjs';
 // M2：构建期按页抽取关键 CSS（工具页 critical-tool.css）

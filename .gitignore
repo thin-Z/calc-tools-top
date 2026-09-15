@@ -54,3 +54,6 @@ __pycache__/
 scripts/*_report.txt
 
 snapshots/
+
+# 审计临时目录（诊断脚本/截图/日志，build.mjs 亦已排除出 dist）
+.audit_tmp/

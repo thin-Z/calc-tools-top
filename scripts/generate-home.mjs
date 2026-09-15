@@ -18,6 +18,8 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
+// 卡片模板与栏目页生成器共用（scripts/lib/tool-card.mjs），杜绝再次漂移
+import { TAG_LABELS, generateCardHTML } from './lib/tool-card.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dryRun = process.argv.includes('--dry-run');
@@ -55,6 +57,17 @@ const sectionHeaders = {
   text:    { zh: '文字工具', en: 'Text Tools', id: 'sec-text' },
 };
 
+// 区块 → 栏目索引页入口（2026-09-15 修复：栏目页此前零站内入链，属完全孤岛页）。
+// finance/health/life/utility 四个区块在站内没有各自独立栏目页，统一落到 calculators 总集。
+const SECTION_LINKS = {
+  finance: { zh: '/zh/calculators', en: '/en/calculators' },
+  health:  { zh: '/zh/calculators', en: '/en/calculators' },
+  life:    { zh: '/zh/calculators', en: '/en/calculators' },
+  utility: { zh: '/zh/calculators', en: '/en/calculators' },
+  image:   { zh: '/zh/image', en: '/en/image' },
+  text:    { zh: '/zh/text', en: '/en/text' },
+};
+
 // ── 3. 生成 JS 配置 ──────────────────────────────────────────
 function generateSiteConfigTools() {
   const lines = tools.map(t => {
@@ -82,29 +95,9 @@ function generateToolKeywords() {
 }
 
 // ── 4. 生成首页卡片 HTML（按区块分组，多标签工具多区块显示）──
-const TAG_LABELS = {
-  finance: { zh: '财务', en: 'Finance' },
-  health: { zh: '健康', en: 'Health' },
-  life: { zh: '生活', en: 'Lifestyle' },
-  shopping: { zh: '购物', en: 'Shopping' },
-  travel: { zh: '出行', en: 'Travel' },
-  utility: { zh: '工具', en: 'Utility' },
-  image: { zh: '图片', en: 'Image' },
-  text: { zh: '文字', en: 'Text' },
-};
+// TAG_LABELS / generateCardHTML 已抽到 scripts/lib/tool-card.mjs（与栏目页生成器共用，防漂移）
 
-function generateCardHTML(t, lang) {
-  const prefix = lang === 'zh' ? '/zh' : '/en';
-  const text = t[lang];
-  const cats = t.categories.join(',');
-  const tagPrefix = lang === 'zh' ? '/tags/' : '/en/tags/';
-  const tagsHTML = t.categories.map(c => {
-    const label = (TAG_LABELS[c] && TAG_LABELS[c][lang]) || c;
-    return `<a href="${tagPrefix}${c}.html" class="tag tag-${c}" data-tag="${c}">${label}</a>`;
-  }).join('');
-
-  return `            <div class="tool-card-wrap"><a href="${prefix}/${t.dir}/${t.slug}" class="tool-card" data-category="${cats}" data-keywords-zh="${t.zh.kw}" data-keywords-en="${t.en.kw || ''}"><div class="icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-${t.icon}"></use></svg></div><h3>${text.name}</h3><p>${text.desc}</p></a><div class="tool-tags">${tagsHTML}</div><button class="like-btn" data-like-id="${t.slug}"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span><span class="count">0</span></button></div>`;
-}
+// generateCardHTML 见 scripts/lib/tool-card.mjs（与栏目页生成器共用同一模板）
 
 // ── P1-2：静态预渲染「热门工具」卡（消除 JS 填充缺口，降 CLS）──────────────
 // 默认热门工具集（与 site-home.js 的 DEFAULT_HOT_TOOLS 保持一致）
@@ -149,8 +142,13 @@ function generateSectionHTML(section, lang) {
   const badge = header.privacy
     ? `<span class="privacy-badge-sm"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-lock"></use></svg> ${lang === 'zh' ? '本地处理 · 不上传' : 'Local processing · No upload'}</span>`
     : '';
+  // 栏目页入口「查看全部」：补上此前完全缺失的站内导航（栏目页曾是零入链孤岛页）
+  const link = SECTION_LINKS[section];
+  const more = link
+    ? `<a class="section-more" href="${link[lang]}">${lang === 'zh' ? '查看全部' : 'View all'}<svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-arrow-right"></use></svg></a>`
+    : '';
   const lines = [];
-  lines.push(`        <div class="section-divider" id="${header.id}"><h2>${header[lang]}${badge}</h2></div><div class="tool-grid">`);
+  lines.push(`        <div class="section-divider${more ? ' has-more' : ''}" id="${header.id}"><h2>${header[lang]}${badge}</h2>${more}</div><div class="tool-grid">`);
   for (const t of sectionTools) {
     lines.push(generateCardHTML(t, lang));
   }

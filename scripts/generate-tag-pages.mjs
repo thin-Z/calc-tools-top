@@ -29,19 +29,21 @@ const EMOJI = {}; // 图标已迁移至自托管 Lucide sprite (assets/icons/ico
 
 function stripTags(s) { return s.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim(); }
 
-// 解析首页工具卡（index.html / en/index.html）：返回 [{url, cats:[], title, desc}]
-// 注：首页仅展示 26 个精选工具，标签页据此聚合（与站方主发现面一致）。
-// 完整 43 工具目录需解析 site-home.js 的 SITE_CONFIG.tools（含 categories），因依赖 eval 暂未纳入，列为后续增强。
+// 解析首页工具卡（index.html / en/index.html）：返回 [{url, cats:[], icon, title, desc}]
+// 注：标签页按首页「精选工具」聚合（与站方主发现面一致）。
+// 2026-09-15 修复：原正则丢弃了卡片的 .icon（SVG sprite 引用），导致全部标签页
+// 卡片无任何图标；现捕获 icon id 并在模板回填，与首页卡片视觉对齐。
 function parseTools(html) {
   const out = [];
-  const re = /<div class="tool-card-wrap">\s*<a href="([^"]+)" class="tool-card" data-category="([^"]*)"[^>]*>[\s\S]*?<h3[^>]*>([\s\S]*?)<\/h3>\s*<p[^>]*>([\s\S]*?)<\/p>/g;
+  const re = /<div class="tool-card-wrap">\s*<a href="([^"]+)" class="tool-card" data-category="([^"]*)"[^>]*>(?:<div class="icon[^"]*"><svg[^>]*><use href="[^"]*#icon-([^"]+)"><\/use><\/svg><\/div>)?[\s\S]*?<h3[^>]*>([\s\S]*?)<\/h3>\s*<p[^>]*>([\s\S]*?)<\/p>/g;
   let m;
   while ((m = re.exec(html))) {
     out.push({
       url: m[1],
       cats: m[2].split(',').map((c) => c.trim()).filter(Boolean),
-      title: stripTags(m[3]),
-      desc: stripTags(m[4]),
+      icon: m[3] || '',
+      title: stripTags(m[4]),
+      desc: stripTags(m[5]),
     });
   }
   return out;
@@ -67,8 +69,12 @@ function toolCardHtml(t, lang, cat) {
     const href = lang === 'zh' ? `/tags/${c}.html` : `/en/tags/${c}.html`;
     return `<a href="${href}" class="tag tag-${c}" data-tag="${c}">${esc(lbl)}</a>`;
   }).join('');
+  // 图标与首页卡片同构：sprite 引用 + .icon 容器（缺失 icon 时优雅降级为无图标）
+  const iconHtml = t.icon
+    ? `\n            <div class="icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-${escAttr(t.icon)}"></use></svg></div>`
+    : '';
   return `        <div class="tool-card-wrap">
-          <a href="${escAttr(t.url)}" class="tool-card" data-category="${escAttr(t.cats.join(','))}">
+          <a href="${escAttr(t.url)}" class="tool-card" data-category="${escAttr(t.cats.join(','))}">${iconHtml}
             <h3>${esc(t.title)}</h3>
             <p>${esc(t.desc)}</p>
           </a>

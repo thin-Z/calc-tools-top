@@ -520,8 +520,19 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
   const css = fs.readFileSync(path.join(ROOT, 'css', 'style.css'), 'utf8');
   if (!/\.sr-only\s*\{/.test(css)) issues.push('[search-c] css/style.css 缺 .sr-only 视觉隐藏类');
   if (!/data-keywords-en|keywordsEn/.test(homeJs)) issues.push('[search-c] site-home.js 未消费 data-keywords-en');
+  // 首页卡片模板自 2026-09-15 起抽到 scripts/lib/tool-card.mjs（generate-home 与
+  // generate-category-pages 共用同一份实现，防栏目页再次漂移成裸 .tool-card）。
+  // 因此 data-keywords-en 可能只出现在模板文件里：两者任一命中即通过，
+  // 并额外断言 generate-home 确实引用了该共享模板。
   const genHome = fs.readFileSync(path.join(ROOT, 'scripts', 'generate-home.mjs'), 'utf8');
-  if (!/data-keywords-en/.test(genHome)) issues.push('[search-c] generate-home.mjs 未注入 data-keywords-en');
+  const cardTplPath = path.join(ROOT, 'scripts', 'lib', 'tool-card.mjs');
+  const cardTpl = fs.existsSync(cardTplPath) ? fs.readFileSync(cardTplPath, 'utf8') : '';
+  if (!/data-keywords-en/.test(genHome) && !/data-keywords-en/.test(cardTpl)) {
+    issues.push('[search-c] 首页卡片模板未注入 data-keywords-en（generate-home.mjs 与 scripts/lib/tool-card.mjs 均未见）');
+  }
+  if (!/tool-card\.mjs/.test(genHome)) {
+    issues.push('[search-c] generate-home.mjs 未引用共享卡片模板 scripts/lib/tool-card.mjs');
+  }
 
   if (issues.length) {
     issues.forEach((f) => fail(f));
