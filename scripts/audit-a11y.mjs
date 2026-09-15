@@ -42,6 +42,13 @@ const PAGES = [
   '/zh/image/compress.html',
   '/en/image/compress.html',
   '/zh/image/color-picker.html',
+  // 栏目索引页（2026-09-15 补入：此前是 a11y 覆盖盲区，正文区 .seo-content 样式即为本次修复项）
+  '/zh/calculators/index.html',
+  '/en/calculators/index.html',
+  '/zh/image/index.html',
+  '/en/image/index.html',
+  '/zh/text/index.html',
+  '/en/text/index.html',
   '/tags/finance.html',
   '/en/tags/finance.html',
   '/blog/zh/password-security-guide.html',
