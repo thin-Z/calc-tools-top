@@ -117,7 +117,14 @@ KV_URL / KV_REDIS_URL
 
 ## 构建 + 验证
 
-本地全量验证（与 Vercel 构建一致，零第三方依赖）：
+本地全量验证（与 Vercel 构建一致，零第三方依赖）。
+
+> **一条命令等价 CI**：`npm run ci`（build → verify → 覆盖率 → e2e → a11y → 窄屏溢出）。
+> ⚠️ CI 实际有 **3 个作业**（`verify` / `e2e` / `a11y`，见 `.github/workflows/ci.yml`），其中
+> **e2e 与 a11y 不在 `npm run verify` 里**（verify 的 #22 对 a11y 全站扫描默认跳过）——
+> 只跑 `verify` 会导致「本地全绿、CI 红」。日常快检用 `npm run ci:quick`（跳过 e2e，省约 4 分钟）。
+
+### 分步执行
 
 ```bash
 # 1) 本地构建：复制到 dist/ → GA4/AdSense 注入 → 版本号 ?v=
@@ -137,10 +144,10 @@ node scripts/check-links.js
 ```
 
 期望结果：
-- `build.mjs`：`AdSense 注入: 更新 220 | ...` + `版本号注入: <STAMP> | 220 个文件` + `CMP 横幅注入: 220 个文件`；
+- `build.mjs`：`AdSense 注入: 更新 221 | ...` + `版本号注入: <STAMP> | 221 个文件` + `CMP 横幅注入: 221 个文件`；
 - dist 内每页**恰好 1 个** adsbygoogle 标签（与 `includes/adsense-head.html` 字节一致）且含 `?v=`；
 - 源码内 **0 个**静态 adsbygoogle 标签、**0 个** `#gw-theme`/`.gw-lang`/内联 `switchLang`；
-- `verify-site.mjs` 输出 `✅ verify-site 全绿`（30/30 断言）。
+- `verify-site.mjs` 输出 `✅ verify-site 全绿`（**34/34** 断言）。
 
 > 模板统一说明：全站 header/footer 以 `includes/header-{zh,en}.html`、`includes/footer-{zh,en}.html` 为字节基准；
 > 改导航/页脚只需改这 4 个文件，然后跑 `node scripts/normalize-template.mjs` 重新落盘全站 HTML。

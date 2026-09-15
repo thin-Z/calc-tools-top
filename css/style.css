@@ -971,6 +971,14 @@ footer .footer-links a:hover {
 .blog-post tr:last-child td {
     border-bottom: none;
 }
+/* 宽表窄屏横向滚动（2026-09-15）。个税「边际税率」表共 9 列，单列内边距 2rem 合计已占 288px，
+   压缩内边距无法塞进 362px 内容区（实测表宽 380px、文档 418>390）。改 block + overflow-x:auto
+   让表格可横向滚动，保住列语义与可读性。必须写在本区块 table 定义之后 —— 否则
+   .blog-post table 那行的 overflow:hidden（为圆角裁剪而设）会把 overflow-x 一并重置，
+   结果是右侧列被裁掉且无法滚动（比溢出更难发现）。 */
+@media (max-width: 480px){
+    .blog-post table,.ref-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
 .blog-post tr:nth-child(even)td {
     background: var(--bg-muted);
 }
@@ -1475,12 +1483,18 @@ svg.ic {
     flex-shrink: 0;
     font-size: var(--fs-sm);
     font-weight: 600;
-    color: var(--brand-blue);
+    /* 对比度（WCAG AA 需 ≥4.5:1）：品牌蓝直用在浅色页底上仅 3.69，不达标；
+     * 浅色改用 brand-blue-dark token（实测 6.02），暗色下品牌蓝配深底本就达标（见下方覆盖）。
+     * 2026-09-15 修 CI a11y color-contrast 门禁。 */
+    color: var(--brand-blue-dark);
     text-decoration: none;
     padding: 4px 10px;
     border-radius: var(--radius-full);
     white-space: nowrap;
     transition: background-color 0.2s ease;
+}
+[data-theme="dark"] .section-more {
+    color: var(--brand-blue);
 }
 .section-more:hover {
     background: var(--accent-08);
@@ -3536,6 +3550,14 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--primary); }
 .mode-pill.is-active { background:var(--primary-hover);color:var(--white);font-weight:600; }
 .mode-pill { background:transparent;color:var(--text);font-weight:500; }
 .mode-pills label:has(input:focus-visible){outline:2px solid var(--primary);outline-offset:-2px;}
+/* 窄屏压缩分段控件（2026-09-15）。两条约束叠加：① 连体样式（overflow:hidden + 相邻 label 的
+   border-left）经不起换行，只能缩内边距；② 必须紧跟在上面 .mode-pill 定义之后 ——
+   同特异性下后来者胜，写在前面的媒体查询会被这几行 padding 顶掉（曾因此修复不生效）。
+   实测 /en/calculators/{age-calc,date-calc} 三枚英文标签（Date Arithmetic / Date Difference /
+   Age Calculator）在 390px 实宽 364.8px > 内容区 362px，文档溢出 6px。 */
+@media (max-width: 480px){
+    .mode-pill,.mode-pill.is-active { padding: .5rem .9rem; font-size: .875rem; }
+}
 .st-49 { margin-top:8px; }
 .st-50 { font-size:1.5rem;font-weight:bold;color:var(--strength-fair); }
 .st-51 { padding:1rem; }
