@@ -72,10 +72,13 @@ function isNoindex(file) {
     || /<meta[^>]*content="[^"]*noindex[^"]*"[^>]*name="robots"/i.test(raw);
 }
 
-/** 文件路径 → sitemap URL，规则与 generate-sitemap.ps1:84-87 逐字对齐。 */
+/** 文件路径 → sitemap URL，规则与 generate-sitemap.ps1 逐字对齐。
+ *  ⚠️ trailingSlash:false ⇒ 目录页规范形式**不带**尾斜杠（2026-09-16 修复：
+ *  此前生成侧输出 /zh/text/ 而线上 308 到 /zh/text，门禁与生成侧必须同步改，否则双向漂移）。 */
 function toUrl(relPath) {
   let cleanPath = `/${relPath.replace(/\.html$/, '')}`;
-  if (/\/index$/.test(cleanPath)) cleanPath = cleanPath.replace(/\/index$/, '/');
+  if (/\/index$/.test(cleanPath)) cleanPath = cleanPath.replace(/\/index$/, '');
+  if (cleanPath === '') cleanPath = '/';
   return `${BASE}${cleanPath}`;
 }
 

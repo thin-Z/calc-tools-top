@@ -1,24 +1,37 @@
-﻿# Generate correct sitemap.xml based on actual file structure
-# 默认以脚本所在目录的上一级（仓库根）为 Root，避免从其他目录调用时扫到空目录、生成 0 条脏 sitemap。
+# Generate sitemap.xml from the actual file structure.
+#
+# NOTE (2026-09-16): This file is intentionally kept PURE ASCII.
+#   Windows PowerShell 5.1 reads UTF-8 files WITHOUT a BOM as the system ANSI
+#   codepage (GBK on this machine), which garbles non-ASCII comments/strings and
+#   makes the parser fail with "Unexpected token". Editing tools tend to drop the
+#   BOM, which silently broke this script twice. Keeping it ASCII-only removes the
+#   whole failure mode. If you must add non-ASCII text, save as UTF-8 *with BOM*.
+#   This machine has no PowerShell 7 (pwsh); run with powershell.exe 5.1.
+#
+# Root defaults to the parent of this script's directory (repo root) so invoking
+# it from elsewhere cannot scan an empty dir and emit a 0-entry dirty sitemap.
 param(
     [string]$Root = (Get-Location).Path,
     [string]$BaseUrl = "https://www.calc-tools.top"
 )
 
-# 始终以脚本所在目录的上一级（仓库根）为 Root，避免从其他目录调用时扫到空目录生成脏 sitemap。
+# Always anchor Root to the repo root (parent of scripts/).
 $Root = (Split-Path $PSScriptRoot)
 
 $exclude = @("404.html", "zh/index.html", "embed.html")
 
-# noindex 页不得进 sitemap（GSC 报 "Submitted URL marked noindex"，削弱 sitemap 有效性并拖累索引率）
-# 门禁：scripts/check-sitemap.mjs（verify #28）交叉校验，防止此处过滤逻辑被绕过。
+# Pages carrying "noindex" must never enter the sitemap (GSC reports
+# "Submitted URL marked noindex", which weakens sitemap trust and hurts index rate).
+# Gate: scripts/check-sitemap.mjs (verify #28) cross-checks this filter.
 $noindexSkipped = 0
 
 # Collect all HTML files.
-# 排除集必须与 verify #33 门禁 check-sitemap-coverage.mjs 的 EXCLUDE_DIRS 严格对齐，
-# 否则重跑会把 e2e/test-results/snapshots/api/scripts/css/js/assets/.workbuddy 等工程/测试产物的
-# .html 扫进 sitemap 造成死链（历史上曾产出 328 条脏 sitemap）。改这里须同步改门禁，反之亦然。
-$excludeDirRe = '\\(node_modules|dist|docs|deliverables|includes|api|scripts|css|js|assets|snapshots|e2e|test-results|playwright-report|\.workbuddy|\.git|\.githooks)\\'
+# This exclude list MUST stay aligned with EXCLUDE_DIRS in the verify #33 gate
+# scripts/check-sitemap-coverage.mjs. Otherwise a re-run pulls engineering/test
+# artifacts (e2e, test-results, snapshots, api, scripts, css, js, assets, .workbuddy,
+# .audit_tmp, ...) into the sitemap and produces dead links - historically this
+# emitted a 328-entry dirty sitemap. Changing one side requires changing the other.
+$excludeDirRe = '\\(node_modules|dist|docs|deliverables|includes|api|scripts|css|js|assets|snapshots|e2e|test-results|playwright-report|\.workbuddy|\.audit_tmp|\.git|\.githooks)\\'
 $files = Get-ChildItem -Recurse -Filter "*.html" $Root | Where-Object { $_.FullName -notmatch $excludeDirRe }
 
 $pages = @()
@@ -27,7 +40,7 @@ foreach ($f in $files) {
     $name = $relPath.TrimStart("/")
     if ($exclude -contains $name) { continue }
 
-    # 读取内容判定 noindex（meta robots 两种属性顺序都覆盖）
+    # Detect noindex (covers both attribute orders of the meta robots tag).
     $raw = [System.IO.File]::ReadAllText($f.FullName)
     if ($raw -match '<meta[^>]*name="robots"[^>]*noindex' -or $raw -match '<meta[^>]*content="[^"]*noindex[^"]*"[^>]*name="robots"') {
         $noindexSkipped++
@@ -90,41 +103,50 @@ $xml = New-Object System.Text.StringBuilder
 
 foreach ($p in $pages) {
     $cleanPath = "/" + ($p.Path -replace '\.html$', '')
+    # The site is trailingSlash:false + cleanUrls:true, so directory pages have a
+    # canonical form WITHOUT a trailing slash (each page's own canonical tag and the
+    # live 308 target are both slash-less). The old code did
+    #     $cleanPath = $cleanPath -replace '/index$', '/'
+    # which emitted /zh/text/ style URLs while the live site 308-redirects them to
+    # /zh/text. Submitting redirect URLs that contradict the pages' own canonical
+    # tags is the direct cause of the GSC "Page with redirect" bucket and of several
+    # directory hubs never being indexed (fixed 2026-09-16).
     if ($cleanPath -match '/index$') {
-        $cleanPath = $cleanPath -replace '/index$', '/'
+        $cleanPath = $cleanPath -replace '/index$'
     }
+    if ([string]::IsNullOrEmpty($cleanPath)) { $cleanPath = '/' }   # homepage form
     $url = "$BaseUrl$cleanPath"
     [void]$xml.AppendLine('  <url>')
     [void]$xml.AppendLine("    <loc>$url</loc>")
 
     # hreflang alternates (blog paths handled first)
     if ($p.Path -match '^blog/zh/') {
-        $enClean = ($p.Path -replace '^blog/zh/', 'blog/en/') -replace '\.html$', '' -replace '/index$', '/'
+        $enClean = ($p.Path -replace '^blog/zh/', 'blog/en/') -replace '\.html$', '' -replace '/index$'
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='zh-CN' href='$BaseUrl$cleanPath'/>")
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='en' href='$BaseUrl/$enClean'/>")
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='x-default' href='$BaseUrl/$enClean'/>")
     } elseif ($p.Path -match '^blog/en/') {
-        $zhClean = ($p.Path -replace '^blog/en/', 'blog/zh/') -replace '\.html$', '' -replace '/index$', '/'
+        $zhClean = ($p.Path -replace '^blog/en/', 'blog/zh/') -replace '\.html$', '' -replace '/index$'
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='en' href='$BaseUrl$cleanPath'/>")
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='zh-CN' href='$BaseUrl/$zhClean'/>")
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='x-default' href='$BaseUrl$cleanPath'/>")
     } elseif ($p.Path -match '^tags/') {
-        $enClean = ($p.Path -replace '^tags/', 'en/tags/') -replace '\.html$', '' -replace '/index$', '/'
+        $enClean = ($p.Path -replace '^tags/', 'en/tags/') -replace '\.html$', '' -replace '/index$'
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='zh-CN' href='$BaseUrl$cleanPath'/>")
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='en' href='$BaseUrl/$enClean'/>")
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='x-default' href='$BaseUrl$cleanPath'/>")
     } elseif ($p.Lang -eq 'zh-CN') {
-        $enClean = ($p.Path -replace '^zh/', 'en/') -replace '\.html$', '' -replace '/index$', '/'
+        $enClean = ($p.Path -replace '^zh/', 'en/') -replace '\.html$', '' -replace '/index$'
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='zh-CN' href='$BaseUrl$cleanPath'/>")
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='en' href='$BaseUrl/$enClean'/>")
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='x-default' href='$BaseUrl/$enClean'/>")
     } elseif ($p.Path -match '^en/tags/') {
-        $zhClean = ($p.Path -replace '^en/', '') -replace '\.html$', '' -replace '/index$', '/'
+        $zhClean = ($p.Path -replace '^en/', '') -replace '\.html$', '' -replace '/index$'
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='en' href='$BaseUrl$cleanPath'/>")
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='zh-CN' href='$BaseUrl/$zhClean'/>")
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='x-default' href='$BaseUrl$cleanPath'/>")
     } elseif ($p.Lang -eq 'en') {
-        $zhClean = ($p.Path -replace '^en/', 'zh/') -replace '\.html$', '' -replace '/index$', '/'
+        $zhClean = ($p.Path -replace '^en/', 'zh/') -replace '\.html$', '' -replace '/index$'
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='en' href='$BaseUrl$cleanPath'/>")
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='zh-CN' href='$BaseUrl/$zhClean'/>")
         [void]$xml.AppendLine("    <xhtml:link rel='alternate' hreflang='x-default' href='$BaseUrl$cleanPath'/>")
@@ -145,3 +167,4 @@ $utf8NoBom = New-Object System.Text.UTF8Encoding $false
 Write-Host "Done! Generated sitemap with $($pages.Count) URLs"
 Write-Host "Skipped noindex pages: $noindexSkipped"
 Write-Host "Saved to: $Root\sitemap.xml"
+Write-Host "Node note: this script is ASCII-only on purpose - see header comment."
