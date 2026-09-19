@@ -125,6 +125,69 @@
             <p><strong>Are these live exchange rates?</strong> No. This is a fully static site; it uses fixed reference rates (approximate 2026-08 baseline) for quick estimation. It is not guaranteed to match live bank or market rates — always use the bank's quoted rate for real transactions.</p>
             <p><strong>Why are the rates fixed?</strong> To keep the site purely static with zero external dependencies, the tool embeds a reference rate table updated periodically, avoiding runtime third-party API latency and instability.</p>
             <p><strong>Is my data uploaded to a server?</strong> No. Everything runs locally in your browser; your input never leaves your device.</p>
+
+            <h3>Why exchange rates keep moving</h3>
+            <p>An exchange rate is the relative price of two currencies, set by both economic fundamentals and market supply and demand. In the short run, interest-rate differentials, inflation, trade flows, capital movements, geopolitics and market sentiment all push rates around; over the long run, relative growth and monetary policy dominate. That is why the rate you see today is rarely the rate you get next month — and why an estimate made before a trip can differ from the price you actually pay.</p>
+
+            <h3>Whose rate should you trust when you actually convert?</h3>
+            <p>Almost never the mid-market rate. What you receive is priced off a <strong>buy/sell spread</strong>: banks and payment platforms add a margin on top of the benchmark and may stack on service or handling fees. At any given moment, the rate you looked up and the amount that lands in your account can easily differ by <strong>1%-3%</strong>. Some providers quote a selling rate, others a buying rate, and the direction changes the number. For real transactions, always use the live quote from your bank, payment app, or exchange counter — treat this tool as an estimate.</p>
+
+            <h2>Reference rate table</h2>
+            <p>The figures below use the tool's built-in <strong>reference rates (approximate 2026-08 baseline)</strong> so you can gauge order of magnitude quickly. This is <strong>not a live quote</strong> — always check the rate your bank or provider offers before transacting.</p>
+            <table class="ref-table">
+                <thead><tr><th>Currency</th><th>1 unit ≈ CNY</th><th>100 units ≈ CNY</th></tr></thead>
+                <tbody>
+                    <tr><td>USD (US dollar)</td><td>7.2464</td><td>724.64</td></tr>
+                    <tr><td>EUR (euro)</td><td>7.8986</td><td>789.86</td></tr>
+                    <tr><td>GBP (pound)</td><td>9.2754</td><td>927.54</td></tr>
+                    <tr><td>CHF (Swiss franc)</td><td>8.1884</td><td>818.84</td></tr>
+                    <tr><td>SGD (Singapore dollar)</td><td>5.4348</td><td>543.48</td></tr>
+                    <tr><td>CAD (Canadian dollar)</td><td>5.2899</td><td>528.99</td></tr>
+                    <tr><td>AUD (Australian dollar)</td><td>4.7826</td><td>478.26</td></tr>
+                    <tr><td>HKD (Hong Kong dollar)</td><td>0.9275</td><td>92.75</td></tr>
+                    <tr><td>THB (baht)</td><td>0.1957</td><td>19.57</td></tr>
+                    <tr><td>JPY (yen)</td><td>0.0493</td><td>4.93</td></tr>
+                    <tr><td>KRW (won)</td><td>0.0053</td><td>0.53</td></tr>
+                </tbody>
+            </table>
+            <p><strong>How to use it</strong>: for large-denomination currencies such as the yen and the won, read the 100-unit column — 100 JPY is about 4.93 CNY and 100 KRW about 0.53 CNY. Memorising those two approximations while travelling gives you an instant sense of local prices.</p>
+
+            <h2>Cost differences between exchange channels</h2>
+            <p>Exchanging the equivalent of 1,000 USD costs about <strong>7,246.38 CNY</strong> at the mid rate, but the amount you actually pay depends on where you do it. The markups below are typical ranges shown for illustration; actual quotes vary by provider.</p>
+            <table class="ref-table">
+                <thead><tr><th>Channel</th><th>Typical markup</th><th>Extra vs mid rate</th><th>You pay about</th></tr></thead>
+                <tbody>
+                    <tr><td>Bank telegraphic transfer</td><td>≈ +0.3%</td><td>21.74 CNY</td><td>7,268.12 CNY</td></tr>
+                    <tr><td>Bank cash</td><td>≈ +1.0%</td><td>72.46 CNY</td><td>7,318.84 CNY</td></tr>
+                    <tr><td>Payment platform</td><td>≈ +1.5%</td><td>108.70 CNY</td><td>7,355.07 CNY</td></tr>
+                    <tr><td>Airport / tourist-area kiosk</td><td>≈ +4%</td><td>289.86 CNY</td><td>7,536.23 CNY</td></tr>
+                </tbody>
+            </table>
+            <p><strong>How to use it</strong>: the gap between the cheapest and most expensive channel is about 268 CNY — roughly 3.7% of the amount. The takeaway is blunt: <strong>avoid exchanging at airports or tourist kiosks</strong>. Arranging it through your bank or a reliable payment platform beforehand saves real money. Note also that cash is usually priced worse than a telegraphic transfer, because physical notes carry shipping, storage and insurance costs.</p>
+
+            <h2>How rate moves change what you actually pay</h2>
+            <p>If you have a 10,000 USD cross-border payment or tuition bill, every 1% move in the rate shifts the cost by roughly 725 CNY. The table below shows the CNY cost of a 10,000 USD payment as the rate moves by ±1% and ±3%.</p>
+            <table class="ref-table">
+                <thead><tr><th>Scenario</th><th>1 USD ≈ CNY</th><th>Cost of 10,000 USD</th><th>Difference vs baseline</th></tr></thead>
+                <tbody>
+                    <tr><td>Favourable move −3%</td><td>7.0290</td><td>70,290.08 CNY</td><td>save 2,173.92</td></tr>
+                    <tr><td>Favourable move −1%</td><td>7.1739</td><td>71,739.36 CNY</td><td>save 724.64</td></tr>
+                    <tr><td>Reference baseline</td><td>7.2464</td><td>72,464.00 CNY</td><td>—</td></tr>
+                    <tr><td>Adverse move +1%</td><td>7.3189</td><td>73,188.64 CNY</td><td>+724.64</td></tr>
+                    <tr><td>Adverse move +3%</td><td>7.4638</td><td>74,637.92 CNY</td><td>+2,173.92</td></tr>
+                </tbody>
+            </table>
+            <p><strong>How to use it</strong>: the larger the amount, the more a given percentage move costs in absolute terms — on 10,000 USD, a 3% swing is 2,174 CNY. For large cross-border commitments such as tuition, supplier invoices or rent, either <strong>budget a 3%-5% FX buffer</strong> or lock the rate close to the payment date so you are not passively exposed.</p>
+
+            <h2>Three worked examples</h2>
+            <p><strong>Example 1 (holiday cash)</strong>: you want 1,000 USD in cash. Through your bank (≈ +1%) that costs about <strong>7,318.84 CNY</strong>; at an airport kiosk (≈ +4%) it costs about <strong>7,536.23 CNY</strong>. The difference is <strong>217.39 CNY</strong> — roughly two meals at your destination.</p>
+            <p><strong>Example 2 (overseas shopping)</strong>: an item priced at 200 EUR converts to about <strong>1,579.72 CNY</strong> at the reference rate. If your payment platform adds 1.5%, the real cost is about <strong>1,603.42 CNY</strong> — 23.70 CNY more than the sticker conversion. Fold that markup in when comparing prices.</p>
+            <p><strong>Example 3 (cross-border invoice)</strong>: you owe 10,000 USD. If the rate moves 3% against you between budgeting and payment, the cost rises from 72,464 to <strong>74,637.92 CNY</strong> — 2,173.92 CNY more. This is exactly why large cross-border contracts should state who bears FX movement.</p>
+
+            <h2>More questions: cash, transfers and spreads</h2>
+            <p><strong>What is the difference between cash and telegraphic transfer rates?</strong> A telegraphic transfer (TT) is book-entry foreign currency — wires and remittances — while cash means physical banknotes. Handling notes involves shipping, storage and insurance, so <strong>the cash rate is normally worse than the TT rate</strong>. If you do not need banknotes in hand, a transfer is usually the cheaper route.</p>
+            <p><strong>Why do banks charge a spread?</strong> The gap between the buying and selling rate is how banks are paid for providing the service, and it also covers clearing costs and the FX risk they carry while the trade settles. Spreads differ by currency: majors such as USD and EUR are tight, while exotic currencies are markedly wider — which is why converting a minor currency often costs more than you expect.</p>
+            <p><strong>What rate applies when I pay by card abroad?</strong> Card networks (Visa, Mastercard and similar) convert at the rate on the <strong>settlement date</strong> and typically add a 1%-1.5% currency conversion fee, though some multi-currency or fee-free cards waive it. Paying by card is usually better value than withdrawing cash overseas, but check whether your issuer adds its own cross-border fee.</p>
         </section>
 
 </main>
