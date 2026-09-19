@@ -57,11 +57,30 @@ function walkHtml(dir, out = []) {
   }
   return out;
 }
-function textOf(rel) {
+function textOf(rel, bodyOnly) {
   const raw = fs.readFileSync(path.join(ROOT, rel), 'utf8').replace(/^\uFEFF/, '');
   // 去 <style>/<script>/<head> 内非正文，保留 body 文本
   const body = (raw.match(/<body[^>]*>([\s\S]*?)<\/body>/i) || [null, raw])[1];
-  return body.replace(TAG_RE, ' ').replace(WS_RE, ' ').trim();
+  let s = body;
+  // 剔除 HTML 注释（2026-09-19 修复度量污染）：
+  //   站点每个页面都带 SVG sprite 说明 + R1/R25 CSP 规则注释（约 37 个 2-gram），
+  //   注释**不是可见文本**，却会被 shingle 计入 → 把重叠率整体虚高。
+  //   实测证据：housing-fund ↔ car-loan 的 180 个公共 shingle 中，37 个来自注释、
+  //   140+ 来自模板 FAQ/引言（真实内容仅约 14 个）。
+  s = s.replace(/<!--[\s\S]*?-->/g, ' ');
+  if (bodyOnly) {
+    // 正文口径（2026-09-19 新增，用于熔断线判定）：
+    //   剔除「UI 骨架」与「表单控件文案」——导航/页头/页脚/脚本样式，
+    //   以及 label/button/select/option/textarea/legend/fieldset 等控件文本。
+    //   理由：熔断线的原意是判「AI 是否在复制内容模板」，而工具页天然同构
+    //   （都有表单+结果+FAQ），其 UI 文案是**功能性必需**、不构成内容冗余。
+    //   全文本口径会把 UI 文案算进重叠率，高估同构性、易误触发熔断。
+    s = s
+      .replace(/<(script|style|noscript|nav|header|footer)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
+      .replace(/<(label|button|select|option|textarea|legend|fieldset|datalist|output|optgroup)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ')
+      .replace(/<\/?(input|button|select|option|textarea|label)\b[^>]*>/gi, ' ');
+  }
+  return s.replace(TAG_RE, ' ').replace(WS_RE, ' ').trim();
 }
 // 英文内容分布在 dist/en/ 与 dist/blog/en/（含 calculators/text/image/tags 子目录），
 // 统一用「路径含 /en/ 段」判定，避免 dist/blog/en/* 被误判为 zh 导致 shingle 空集→假 100% 重叠。
@@ -99,10 +118,20 @@ const pages = rels.map((rel) => {
   const hanzi = (t.match(HANZI) || []).length;
   const words = (t.match(EN_WORD) || []).length;
   const sh = shingles(t, lang);
-  return { rel, lang, category: categoryOf(rel), hanzi, words, _sh: sh };
+  // 正文口径 shingle（剔除 UI 骨架）：仅用于熔断线判定与 --focus 对比
+  const tb = textOf(rel, true);
+  const shBody = shingles(tb, lang);
+  return {
+    rel, lang, category: categoryOf(rel), hanzi, words, _sh: sh, _shBody: shBody,
+    // noindex 存根页（stub 重定向）内容天然高度雷同，会污染重叠率读数 —— 标记以便排除
+    noindex: /<meta[^>]+name=["']robots["'][^>]*content=["'][^"']*noindex/i.test(
+      fs.readFileSync(path.join(ROOT, rel), 'utf8')
+    ),
+  };
 });
 
 // 两两重叠（同语言，降成本）+ 找最相似 topN 对
+// 说明：pairs/siteAvg 沿用**全文本口径**（历史可比），正文口径只在 --focus 与 summary 另外给出。
 const pairs = [];
 for (let i = 0; i < pages.length; i++) {
   for (let j = i + 1; j < pages.length; j++) {
@@ -113,6 +142,19 @@ for (let i = 0; i < pages.length; i++) {
 }
 pairs.sort((x, y) => y.jaccard - x.jaccard);
 const siteAvg = pairs.length ? pairs.reduce((s, p) => s + p.jaccard, 0) / pairs.length : 0;
+
+// 正文口径 + 排除 noindex 的同类均值（熔断线判定应参考这一口径）
+const bodyPairs = [];
+for (let i = 0; i < pages.length; i++) {
+  if (pages[i].noindex) continue;
+  for (let j = i + 1; j < pages.length; j++) {
+    if (pages[j].noindex) continue;
+    if (pages[i].lang !== pages[j].lang) continue;
+    const jac = jaccard(pages[i]._shBody, pages[j]._shBody);
+    if (jac > 0.05) bodyPairs.push({ a: pages[i].rel, b: pages[j].rel, jaccard: +jac.toFixed(4) });
+  }
+}
+const siteAvgBody = bodyPairs.length ? bodyPairs.reduce((s, p) => s + p.jaccard, 0) / bodyPairs.length : 0;
 
 function summarize(cat, lang) {
   const xs = pages.filter((p) => p.category === cat && (lang ? p.lang === lang : true));
@@ -133,43 +175,63 @@ console.log(`zh 工具页  纯汉字: 均值 ${zhTool?.mean} / 中位数 ${zhToo
 console.log(`en 工具页  词数:   均值 ${enTool?.mean} / 中位数 ${enTool?.median}（${enTool?.n} 页）`);
 console.log(`zh 博客页  纯汉字: 均值 ${zhBlog?.mean} / 中位数 ${zhBlog?.median}（${zhBlog?.n} 页）`);
 console.log(`en 博客页  词数:   均值 ${enBlog?.mean} / 中位数 ${enBlog?.median}（${enBlog?.n} 页）`);
-console.log(`\n全站平均跨页重叠率(近似): ${(siteAvg * 100).toFixed(2)}%`);
+console.log(`\n全站平均跨页重叠率(近似): ${(siteAvg * 100).toFixed(2)}%   ← 全文本口径（含 UI 骨架）`);
+console.log(`全站平均跨页重叠率(正文口径): ${(siteAvgBody * 100).toFixed(2)}%   ← 剔除 UI 骨架 + 排除 ${pages.filter((p) => p.noindex).length} 个 noindex stub（熔断线判定基准）`);
 console.log(`最相似 top ${topN} 对（同语言 Jaccard）:`);
 for (const p of pairs.slice(0, topN)) console.log(`  ${(p.jaccard * 100).toFixed(1)}%  ${p.a}  ↔  ${p.b}`);
 
 // ── --focus 聚焦分析：精确回答「指定页面子集是否存在 >15% 重叠」──
+// 两种口径并列输出：①全文本（含 UI 骨架）②正文（剔除 UI 骨架 + 排除 noindex stub）。
+// 熔断线判定以②为准（理由见 textOf 内注释）。
+const FUSE_THRESHOLD = 0.15;
 let focusReport = null;
 if (focusKeys.length) {
   const hit = (rel) => focusKeys.some((k) => rel.includes(k));
   const idxs = pages.map((p, i) => ({ p, i })).filter((x) => hit(x.p.rel));
-  const best = [];
-  for (const { i } of idxs) {
-    for (let j = 0; j < pages.length; j++) {
-      if (i === j || pages[i].lang !== pages[j].lang) continue;
-      const jac = jaccard(pages[i]._sh, pages[j]._sh);
-      best.push({ a: pages[i].rel, b: pages[j].rel, jaccard: jac });
+
+  const collect = (shKey, skipNoindex) => {
+    const out = [];
+    for (const { i } of idxs) {
+      if (skipNoindex && pages[i].noindex) continue;
+      for (let j = 0; j < pages.length; j++) {
+        if (i === j || pages[i].lang !== pages[j].lang) continue;
+        if (skipNoindex && pages[j].noindex) continue;
+        const jac = jaccard(pages[i][shKey], pages[j][shKey]);
+        out.push({ a: pages[i].rel, b: pages[j].rel, jaccard: jac });
+      }
     }
-  }
-  best.sort((x, y) => y.jaccard - x.jaccard);
-  const maxJ = best.length ? best[0].jaccard : 0;
-  const over = best.filter((p) => p.jaccard > 0.15).length;
+    out.sort((x, y) => y.jaccard - x.jaccard);
+    return out;
+  };
+
+  const bestFull = collect('_sh', false);
+  const bestBody = collect('_shBody', true);
+  const maxFull = bestFull.length ? bestFull[0].jaccard : 0;
+  const maxBody = bestBody.length ? bestBody[0].jaccard : 0;
+  const overBody = bestBody.filter((p) => p.jaccard > FUSE_THRESHOLD).length;
+
   console.log(`\n=== --focus 分析（关键词: ${focusKeys.join(', ')}）===`);
-  console.log(`命中页面: ${idxs.length} 个`);
-  console.log(`这些页面参与的最相似 ${Math.min(topN, best.length)} 对（同语言，无 5% 门槛）:`);
-  for (const p of best.slice(0, topN)) console.log(`  ${(p.jaccard * 100).toFixed(1)}%  ${p.a}  ↔  ${p.b}`);
-  console.log(`最高重叠率: ${(maxJ * 100).toFixed(2)}%`);
-  console.log(`超过 15% 熔断阈值的对数: ${over} / ${best.length}`);
+  console.log(`命中页面: ${idxs.length} 个（其中 noindex stub: ${idxs.filter((x) => x.p.noindex).length} 个）`);
+  console.log(`\n【口径①】全文本（含 UI 骨架，历史可比）`);
+  console.log(`  最高重叠率: ${(maxFull * 100).toFixed(2)}%   超 15% 对数: ${bestFull.filter((p) => p.jaccard > FUSE_THRESHOLD).length} / ${bestFull.length}`);
+  for (const p of bestFull.slice(0, Math.min(5, topN))) console.log(`    ${(p.jaccard * 100).toFixed(1)}%  ${p.a}  ↔  ${p.b}`);
+  console.log(`\n【口径②】正文（剔除 UI 骨架 + 排除 noindex stub）← 熔断线判定基准`);
+  console.log(`  最高重叠率: ${(maxBody * 100).toFixed(2)}%   超 15% 对数: ${overBody} / ${bestBody.length}`);
+  for (const p of bestBody.slice(0, Math.min(5, topN))) console.log(`    ${(p.jaccard * 100).toFixed(1)}%  ${p.a}  ↔  ${p.b}`);
   console.log(
-    maxJ > 0.15
-      ? '⚠️ 存在超过 15% 的对 —— 按熔断线 1 判据应暂停 B 批，先解决生成方式'
-      : '✅ 全部低于 15% 熔断阈值 —— 熔断线 1 未触发'
+    `\n判定（口径②）: ${maxBody > FUSE_THRESHOLD ? '⚠️ 超过 15% —— 按熔断线 1 应暂停 B 批' : '✅ 未超 15% —— 熔断线 1 未触发'}`
   );
+  console.log(`口径差异: UI 骨架贡献了约 ${((maxFull - maxBody) * 100).toFixed(2)} 个百分点的重叠`);
+
   focusReport = {
     keys: focusKeys,
     matched: idxs.length,
-    maxJaccard: +maxJ.toFixed(4),
-    pairsOver15pct: over,
-    topPairs: best.slice(0, topN).map((p) => ({ ...p, jaccard: +p.jaccard.toFixed(4) })),
+    noindexStubs: idxs.filter((x) => x.p.noindex).length,
+    fulltext: { maxJaccard: +maxFull.toFixed(4), pairsOver15pct: bestFull.filter((p) => p.jaccard > FUSE_THRESHOLD).length, totalPairs: bestFull.length },
+    body: { maxJaccard: +maxBody.toFixed(4), pairsOver15pct: overBody, totalPairs: bestBody.length },
+    fuseThreshold: FUSE_THRESHOLD,
+    fuseTriggered: maxBody > FUSE_THRESHOLD,
+    topPairsBody: bestBody.slice(0, topN).map((p) => ({ ...p, jaccard: +p.jaccard.toFixed(4) })),
   };
 }
 
@@ -182,6 +244,9 @@ const out = {
   summary: {
     zhToolHanzi: zhTool, enToolWords: enTool, zhBlogHanzi: zhBlog,
     siteAvgOverlap: +siteAvg.toFixed(4),
+    // 正文口径 + 排除 noindex stub 的均值（熔断线判定基准）
+    siteAvgOverlapBody: +siteAvgBody.toFixed(4),
+    noindexPages: pages.filter((p) => p.noindex).length,
   },
   pages: pages.map(({ _sh, ...rest }) => rest),
   topPairs: pairs.slice(0, topN),

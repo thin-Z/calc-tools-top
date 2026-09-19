@@ -46,6 +46,7 @@
 | `gen-pinyin-index.py` | 搜索 | 拼音索引生成 | 手动 |
 | `gen-allowed-ids.js` | API | API 白名单生成（API 变更时） | 手动 |
 | `strengthen-related-links.mjs` | 内链 | 相关工具内链强化 | 手动 |
+| `sync-includes.mjs` | 布局 | header/footer 死副本同步（includes 权威版本 → 全站页面；`--check` 自检、`--dry-run` 预览、`--lang` 限语言） | 手动 |
 | `inject-url-state.mjs` | 工具页 | URL 参数预填注入（**默认 dry-run，须 `--write` 才真实写入**） | 手动 |
 | `e2e-server.mjs` | 测试 | Playwright 本地预览服务器 | 手动 |
 | `pre-work-check.ps1/.sh` | 会话 | 开工前基线防护 | 手动 |
