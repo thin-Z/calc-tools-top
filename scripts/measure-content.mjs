@@ -8,7 +8,17 @@
  * 此前「96 页 ≥1200 字」口径含英文/标点，偏松导致误判；本脚本按
  * 「纯汉字（zh）/ 词数（en）」精确统计，并引入 shingle + Jaccard 跨页重叠率。
  *
- * 输出：人类可读摘要（stdout）+ 机器可读 dist/measure-content.json（CI/批次用）。
+ * 输出：人类可读摘要（stdout）+ 机器可读 JSON 产物。
+ *
+ * 产物位置（2026-09-19 修正）：
+ *   原先写 `dist/measure-content.json` —— 有两个问题：
+ *     ① dist 是**要部署上线**的目录，把度量产物写进去等于产物泄漏（且会被上传统计）；
+ *     ② 与 dist 卫生门禁（check-dist-hygiene 禁 dist 根级 .json）冲突：
+ *        「build 后手跑度量 → 再 verify」必然假失败（实测踩到）。
+ *   现改为写 `reports/measure-content.json`（仓库根，**入库**）——
+ *   既脱离部署目录，又让每次度量都留下可追溯历史，
+ *   避免重演「批次 0 基线文件 content-baseline.json 丢失、无法计算降幅」的教训。
+ *   可用 `--out <path>` 覆盖。
  * 用法：node scripts/measure-content.mjs [--dir <dist>] [--top <N>]
  * 退出码：0（只度量不门禁；异常才非 0）。
  */
@@ -22,6 +32,16 @@ const args = process.argv.slice(2);
 const dirAt = args.indexOf('--dir');
 const TARGET = dirAt >= 0 ? path.resolve(args[dirAt + 1]) : path.join(ROOT, 'dist');
 const topN = (() => { const i = args.indexOf('--top'); return i >= 0 ? Number(args[i + 1]) || 10 : 10; })();
+// --focus：聚焦分析指定页面（逗号分隔的路径关键词），用于批次退出标准 / 熔断线判定。
+// 背景（2026-09-19）：熔断线 1 判的是「A 批 12 页跨页重叠率是否 >15%」，
+// 而 summary.siteAvgOverlap 是全站 222 页所有 >5% 页面对的平均值 —— 口径不同，
+// 无法直接回答熔断线问题。此参数按页面子集精确计算（不设 5% 门槛，取真实最大值）。
+// 用法：node scripts/measure-content.mjs --focus tax2026,compound-interest,housing-fund
+const focusKeys = (() => {
+  const i = args.indexOf('--focus');
+  if (i < 0) return [];
+  return String(args[i + 1] || '').split(',').map((s) => s.trim()).filter(Boolean);
+})();
 
 const HANZI = /[一-鿿]/g;
 const EN_WORD = /[A-Za-z]+(?:'[A-Za-z]+)?/g;
@@ -117,7 +137,45 @@ console.log(`\n全站平均跨页重叠率(近似): ${(siteAvg * 100).toFixed(2)
 console.log(`最相似 top ${topN} 对（同语言 Jaccard）:`);
 for (const p of pairs.slice(0, topN)) console.log(`  ${(p.jaccard * 100).toFixed(1)}%  ${p.a}  ↔  ${p.b}`);
 
-// JSON 产物（落在 dist，供 CI/后续批次读取；脚本自带，非临时草稿）
+// ── --focus 聚焦分析：精确回答「指定页面子集是否存在 >15% 重叠」──
+let focusReport = null;
+if (focusKeys.length) {
+  const hit = (rel) => focusKeys.some((k) => rel.includes(k));
+  const idxs = pages.map((p, i) => ({ p, i })).filter((x) => hit(x.p.rel));
+  const best = [];
+  for (const { i } of idxs) {
+    for (let j = 0; j < pages.length; j++) {
+      if (i === j || pages[i].lang !== pages[j].lang) continue;
+      const jac = jaccard(pages[i]._sh, pages[j]._sh);
+      best.push({ a: pages[i].rel, b: pages[j].rel, jaccard: jac });
+    }
+  }
+  best.sort((x, y) => y.jaccard - x.jaccard);
+  const maxJ = best.length ? best[0].jaccard : 0;
+  const over = best.filter((p) => p.jaccard > 0.15).length;
+  console.log(`\n=== --focus 分析（关键词: ${focusKeys.join(', ')}）===`);
+  console.log(`命中页面: ${idxs.length} 个`);
+  console.log(`这些页面参与的最相似 ${Math.min(topN, best.length)} 对（同语言，无 5% 门槛）:`);
+  for (const p of best.slice(0, topN)) console.log(`  ${(p.jaccard * 100).toFixed(1)}%  ${p.a}  ↔  ${p.b}`);
+  console.log(`最高重叠率: ${(maxJ * 100).toFixed(2)}%`);
+  console.log(`超过 15% 熔断阈值的对数: ${over} / ${best.length}`);
+  console.log(
+    maxJ > 0.15
+      ? '⚠️ 存在超过 15% 的对 —— 按熔断线 1 判据应暂停 B 批，先解决生成方式'
+      : '✅ 全部低于 15% 熔断阈值 —— 熔断线 1 未触发'
+  );
+  focusReport = {
+    keys: focusKeys,
+    matched: idxs.length,
+    maxJaccard: +maxJ.toFixed(4),
+    pairsOver15pct: over,
+    topPairs: best.slice(0, topN).map((p) => ({ ...p, jaccard: +p.jaccard.toFixed(4) })),
+  };
+}
+
+// JSON 产物：落在仓库根 reports/（入库可追溯），**不放 dist**（dist 会部署上线，且与 dist 卫生门禁冲突）
+const outArg = (() => { const i = args.indexOf('--out'); return i >= 0 ? args[i + 1] : null; })();
+const OUT_FILE = outArg ? path.resolve(outArg) : path.join(ROOT, 'reports', 'measure-content.json');
 const out = {
   generatedAt: new Date().toISOString(),
   total: pages.length,
@@ -127,6 +185,8 @@ const out = {
   },
   pages: pages.map(({ _sh, ...rest }) => rest),
   topPairs: pairs.slice(0, topN),
+  ...(focusReport ? { focus: focusReport } : {}),
 };
-fs.writeFileSync(path.join(TARGET, 'measure-content.json'), JSON.stringify(out, null, 2), 'utf8');
-console.log(`\n✅ 已写出 ${path.join(TARGET, 'measure-content.json')}（${pages.length} 页度量 + top${topN} 相似对）`);
+fs.mkdirSync(path.dirname(OUT_FILE), { recursive: true });
+fs.writeFileSync(OUT_FILE, JSON.stringify(out, null, 2), 'utf8');
+console.log(`\n✅ 已写出 ${OUT_FILE}（${pages.length} 页度量 + top${topN} 相似对）`);

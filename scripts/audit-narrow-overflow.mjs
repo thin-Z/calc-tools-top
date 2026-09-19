@@ -32,6 +32,9 @@ const PORT = Number(process.env.SCAN_PORT || 4188);
 const BASE = `http://127.0.0.1:${PORT}`;
 const STRICT = process.argv.includes('--strict');
 const VIEW = { width: 390, height: 844 };
+// 导航超时与重试（可用 env 覆盖，便于 CI 调参）
+const NAV_TIMEOUT = Number(process.env.SCAN_TIMEOUT || 30000);
+const NAV_RETRIES = Number(process.env.SCAN_RETRIES || 2);
 
 if (!fs.existsSync(DIST)) {
   console.error('[narrow-overflow] 未找到 dist/，请先执行 `npm run build`');
@@ -84,8 +87,29 @@ try {
 
   for (const abs of files) {
     const url = urlOf(abs);
+    // 导航重试（2026-09-19 修复 flaky）：
+    //   实测 ci 全量负载下 /404.html 偶发 `page.goto Timeout 20000ms`，单独重跑 0 缺陷——
+    //   属资源争用导致的偶发加载超时，**不是页面缺陷**。原先「单次 goto 失败即记缺陷」
+    //   会把 flaky 误报成真缺陷，故改为「超时 30s + 最多 2 次尝试」，
+    //   两次都失败才判定为缺陷（真失败仍会被抓到，不掩盖问题）。
+    let navErr = null;
+    let navOk = false;
+    for (let attempt = 1; attempt <= NAV_RETRIES && !navOk; attempt++) {
+      try {
+        await page.goto(BASE + url, { waitUntil: 'load', timeout: NAV_TIMEOUT });
+        navOk = true;
+        navErr = null;
+      } catch (e) {
+        navErr = e;
+        if (attempt < NAV_RETRIES) await page.waitForTimeout(1200); // 退避后重试
+      }
+    }
+    if (!navOk) {
+      defects.push({ url, kind: 'ERROR: ' + (navErr ? navErr.message.slice(0, 60) : 'unknown') });
+      if (++n % 50 === 0) console.log(`  ...${n}/${files.length}`);
+      continue;
+    }
     try {
-      await page.goto(BASE + url, { waitUntil: 'load', timeout: 20000 });
       await page.waitForTimeout(250);
       const r = await page.evaluate(() => {
         const iw = window.innerWidth;

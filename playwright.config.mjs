@@ -19,7 +19,12 @@ export default defineConfig({
   timeout: 45_000,
   expect: { timeout: 7_000 },
   fullyParallel: true,
-  retries: process.env.CI ? 1 : 0,
+  // 重试：CI 与本地一致取 1（2026-09-19 修复 E9 flaky）
+  //   此前本地 retries=0、CI retries=1 —— 这正是「SW 注册用例只在本地偶发失败」的原因：
+  //   本地无重试兜底，并行(workers 不限)下 sw.js 激活受网络/CPU 争用偶发超时即报红。
+  //   本地保留 retries=1 与 CI 对齐；Playwright 仍会把重试通过的用例标记为 flaky（黄字），
+  //   不掩盖问题、只消除假红。
+  retries: 1,
   workers: process.env.CI ? 2 : undefined,
   reporter: process.env.CI ? [['list'], ['html', { open: 'never' }]] : [['list']],
   use: {

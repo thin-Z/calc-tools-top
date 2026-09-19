@@ -1,0 +1,1645 @@
+{
+  "generatedAt": "2026-09-19T06:16:36.540Z",
+  "total": 222,
+  "summary": {
+    "zhToolHanzi": {
+      "n": 64,
+      "mean": 1140,
+      "median": 1084
+    },
+    "enToolWords": {
+      "n": 55,
+      "mean": 515,
+      "median": 390
+    },
+    "zhBlogHanzi": {
+      "n": 40,
+      "mean": 999,
+      "median": 746
+    },
+    "siteAvgOverlap": 0.0955
+  },
+  "pages": [
+    {
+      "rel": "dist/404.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 102,
+      "words": 40
+    },
+    {
+      "rel": "dist/about.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 564,
+      "words": 52
+    },
+    {
+      "rel": "dist/admin/badge-stats.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 152,
+      "words": 52
+    },
+    {
+      "rel": "dist/blog/en/age-calc-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 411
+    },
+    {
+      "rel": "dist/blog/en/base64-encode-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 537
+    },
+    {
+      "rel": "dist/blog/en/bmi-normal-range-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 1693
+    },
+    {
+      "rel": "dist/blog/en/car-loan-calculator-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 423
+    },
+    {
+      "rel": "dist/blog/en/case-converter-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 443
+    },
+    {
+      "rel": "dist/blog/en/color-picker-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 443
+    },
+    {
+      "rel": "dist/blog/en/compound-interest-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 1677
+    },
+    {
+      "rel": "dist/blog/en/date-calculation-tips.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 434
+    },
+    {
+      "rel": "dist/blog/en/discount-calculation-tips.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 423
+    },
+    {
+      "rel": "dist/blog/en/electricity-cost-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 418
+    },
+    {
+      "rel": "dist/blog/en/equal-installment-vs-equal-principal.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 44,
+      "words": 466
+    },
+    {
+      "rel": "dist/blog/en/fuel-cost-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 426
+    },
+    {
+      "rel": "dist/blog/en/housing-fund-loan-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 35,
+      "words": 1671
+    },
+    {
+      "rel": "dist/blog/en/html-stripper-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 442
+    },
+    {
+      "rel": "dist/blog/en/image-compression-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 428
+    },
+    {
+      "rel": "dist/blog/en/image-format-converter-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 442
+    },
+    {
+      "rel": "dist/blog/en/image-resize-crop-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 440
+    },
+    {
+      "rel": "dist/blog/en/image-to-base64-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 440
+    },
+    {
+      "rel": "dist/blog/en/index.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 999
+    },
+    {
+      "rel": "dist/blog/en/json-formatter-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 435
+    },
+    {
+      "rel": "dist/blog/en/keyword-density-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 437
+    },
+    {
+      "rel": "dist/blog/en/loan-comparison-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 411
+    },
+    {
+      "rel": "dist/blog/en/mortgage-rate-trend-2026.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 423
+    },
+    {
+      "rel": "dist/blog/en/overtime-pay-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 415
+    },
+    {
+      "rel": "dist/blog/en/ovulation-calculator-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 412
+    },
+    {
+      "rel": "dist/blog/en/password-security-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 697
+    },
+    {
+      "rel": "dist/blog/en/percentage-calculation-tips.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 603
+    },
+    {
+      "rel": "dist/blog/en/qr-generator-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 716
+    },
+    {
+      "rel": "dist/blog/en/random-number-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 569
+    },
+    {
+      "rel": "dist/blog/en/reading-time-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 445
+    },
+    {
+      "rel": "dist/blog/en/standard-weight-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 415
+    },
+    {
+      "rel": "dist/blog/en/tax-deduction-guide-2026.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 1583
+    },
+    {
+      "rel": "dist/blog/en/tax2026-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 555
+    },
+    {
+      "rel": "dist/blog/en/text-cleaner-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 462
+    },
+    {
+      "rel": "dist/blog/en/text-diff-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 444
+    },
+    {
+      "rel": "dist/blog/en/unit-converter-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 420
+    },
+    {
+      "rel": "dist/blog/en/url-encode-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 30,
+      "words": 632
+    },
+    {
+      "rel": "dist/blog/en/uuid-generator-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 442
+    },
+    {
+      "rel": "dist/blog/en/word-counter-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 439
+    },
+    {
+      "rel": "dist/blog/en/workday-calculator-guide.html",
+      "lang": "en",
+      "category": "blog",
+      "hanzi": 28,
+      "words": 636
+    },
+    {
+      "rel": "dist/blog/zh/age-calc-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 461,
+      "words": 45
+    },
+    {
+      "rel": "dist/blog/zh/base64-encode-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 696,
+      "words": 99
+    },
+    {
+      "rel": "dist/blog/zh/bmi-normal-range-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 2593,
+      "words": 148
+    },
+    {
+      "rel": "dist/blog/zh/car-loan-calculator-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 534,
+      "words": 46
+    },
+    {
+      "rel": "dist/blog/zh/case-converter-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 731,
+      "words": 72
+    },
+    {
+      "rel": "dist/blog/zh/color-picker-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 726,
+      "words": 73
+    },
+    {
+      "rel": "dist/blog/zh/compound-interest-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 2752,
+      "words": 78
+    },
+    {
+      "rel": "dist/blog/zh/date-calculation-tips.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 789,
+      "words": 46
+    },
+    {
+      "rel": "dist/blog/zh/discount-calculation-tips.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 513,
+      "words": 45
+    },
+    {
+      "rel": "dist/blog/zh/electricity-cost-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 758,
+      "words": 49
+    },
+    {
+      "rel": "dist/blog/zh/equal-installment-vs-equal-principal.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 760,
+      "words": 47
+    },
+    {
+      "rel": "dist/blog/zh/fuel-cost-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 741,
+      "words": 52
+    },
+    {
+      "rel": "dist/blog/zh/housing-fund-loan-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 2930,
+      "words": 52
+    },
+    {
+      "rel": "dist/blog/zh/html-stripper-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 718,
+      "words": 88
+    },
+    {
+      "rel": "dist/blog/zh/image-compression-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 587,
+      "words": 68
+    },
+    {
+      "rel": "dist/blog/zh/image-format-converter-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 713,
+      "words": 88
+    },
+    {
+      "rel": "dist/blog/zh/image-resize-crop-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 734,
+      "words": 66
+    },
+    {
+      "rel": "dist/blog/zh/image-to-base64-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 660,
+      "words": 111
+    },
+    {
+      "rel": "dist/blog/zh/index.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 2128,
+      "words": 79
+    },
+    {
+      "rel": "dist/blog/zh/json-formatter-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 746,
+      "words": 82
+    },
+    {
+      "rel": "dist/blog/zh/keyword-density-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 782,
+      "words": 61
+    },
+    {
+      "rel": "dist/blog/zh/loan-comparison-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 463,
+      "words": 46
+    },
+    {
+      "rel": "dist/blog/zh/mortgage-rate-trend-2026.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 539,
+      "words": 50
+    },
+    {
+      "rel": "dist/blog/zh/overtime-pay-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 554,
+      "words": 46
+    },
+    {
+      "rel": "dist/blog/zh/ovulation-calculator-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 730,
+      "words": 47
+    },
+    {
+      "rel": "dist/blog/zh/password-security-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 1241,
+      "words": 59
+    },
+    {
+      "rel": "dist/blog/zh/percentage-calculation-tips.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 1093,
+      "words": 56
+    },
+    {
+      "rel": "dist/blog/zh/qr-generator-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 1263,
+      "words": 58
+    },
+    {
+      "rel": "dist/blog/zh/random-number-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 1046,
+      "words": 47
+    },
+    {
+      "rel": "dist/blog/zh/reading-time-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 754,
+      "words": 54
+    },
+    {
+      "rel": "dist/blog/zh/standard-weight-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 751,
+      "words": 61
+    },
+    {
+      "rel": "dist/blog/zh/tax-deduction-guide-2026.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 3089,
+      "words": 50
+    },
+    {
+      "rel": "dist/blog/zh/tax2026-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 1041,
+      "words": 52
+    },
+    {
+      "rel": "dist/blog/zh/text-cleaner-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 758,
+      "words": 58
+    },
+    {
+      "rel": "dist/blog/zh/text-diff-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 746,
+      "words": 55
+    },
+    {
+      "rel": "dist/blog/zh/unit-converter-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 696,
+      "words": 58
+    },
+    {
+      "rel": "dist/blog/zh/url-encode-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 686,
+      "words": 96
+    },
+    {
+      "rel": "dist/blog/zh/uuid-generator-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 699,
+      "words": 106
+    },
+    {
+      "rel": "dist/blog/zh/word-counter-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 748,
+      "words": 58
+    },
+    {
+      "rel": "dist/blog/zh/workday-calculator-guide.html",
+      "lang": "zh",
+      "category": "blog",
+      "hanzi": 1025,
+      "words": 83
+    },
+    {
+      "rel": "dist/contact.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 371,
+      "words": 44
+    },
+    {
+      "rel": "dist/embed.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 101,
+      "words": 44
+    },
+    {
+      "rel": "dist/en/about.html",
+      "lang": "en",
+      "category": "static",
+      "hanzi": 28,
+      "words": 328
+    },
+    {
+      "rel": "dist/en/calculators/age-calc.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 81
+    },
+    {
+      "rel": "dist/en/calculators/bmi.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 1579
+    },
+    {
+      "rel": "dist/en/calculators/calorie-calculator.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 584
+    },
+    {
+      "rel": "dist/en/calculators/car-loan.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 400
+    },
+    {
+      "rel": "dist/en/calculators/compound-interest.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 1489
+    },
+    {
+      "rel": "dist/en/calculators/currency-converter.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 311
+    },
+    {
+      "rel": "dist/en/calculators/date-calc.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 32,
+      "words": 1356
+    },
+    {
+      "rel": "dist/en/calculators/dca-calculator.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 380
+    },
+    {
+      "rel": "dist/en/calculators/discount.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 81
+    },
+    {
+      "rel": "dist/en/calculators/electricity.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 350
+    },
+    {
+      "rel": "dist/en/calculators/fraction-calculator.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 341
+    },
+    {
+      "rel": "dist/en/calculators/fuel-cost.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 361
+    },
+    {
+      "rel": "dist/en/calculators/housing-fund.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 374
+    },
+    {
+      "rel": "dist/en/calculators/ideal-weight.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 355
+    },
+    {
+      "rel": "dist/en/calculators/index.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 30,
+      "words": 528
+    },
+    {
+      "rel": "dist/en/calculators/loan-compare.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 404
+    },
+    {
+      "rel": "dist/en/calculators/mortgage.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 1587
+    },
+    {
+      "rel": "dist/en/calculators/overtime.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 359
+    },
+    {
+      "rel": "dist/en/calculators/ovulation.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 390
+    },
+    {
+      "rel": "dist/en/calculators/password-gen.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 397
+    },
+    {
+      "rel": "dist/en/calculators/password-strength.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 84
+    },
+    {
+      "rel": "dist/en/calculators/percentage-calc.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 1281
+    },
+    {
+      "rel": "dist/en/calculators/pregnancy.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 338
+    },
+    {
+      "rel": "dist/en/calculators/qr-generator.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 418
+    },
+    {
+      "rel": "dist/en/calculators/random-gen.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 402
+    },
+    {
+      "rel": "dist/en/calculators/tax2026.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 1642
+    },
+    {
+      "rel": "dist/en/calculators/timestamp.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 369
+    },
+    {
+      "rel": "dist/en/calculators/unit-converter.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 393
+    },
+    {
+      "rel": "dist/en/calculators/workday-calculator.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 496
+    },
+    {
+      "rel": "dist/en/contact.html",
+      "lang": "en",
+      "category": "static",
+      "hanzi": 28,
+      "words": 220
+    },
+    {
+      "rel": "dist/en/fraction-decimal-table.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 245
+    },
+    {
+      "rel": "dist/en/help.html",
+      "lang": "en",
+      "category": "static",
+      "hanzi": 28,
+      "words": 564
+    },
+    {
+      "rel": "dist/en/image/badge-maker.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 687
+    },
+    {
+      "rel": "dist/en/image/base64.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 513
+    },
+    {
+      "rel": "dist/en/image/color-contrast.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 368
+    },
+    {
+      "rel": "dist/en/image/color-picker.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 1043
+    },
+    {
+      "rel": "dist/en/image/compress.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 499
+    },
+    {
+      "rel": "dist/en/image/convert.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 562
+    },
+    {
+      "rel": "dist/en/image/image-crop.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 560
+    },
+    {
+      "rel": "dist/en/image/index.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 387
+    },
+    {
+      "rel": "dist/en/image/resize.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 608
+    },
+    {
+      "rel": "dist/en/index.html",
+      "lang": "en",
+      "category": "static",
+      "hanzi": 28,
+      "words": 1677
+    },
+    {
+      "rel": "dist/en/methodology.html",
+      "lang": "en",
+      "category": "static",
+      "hanzi": 28,
+      "words": 458
+    },
+    {
+      "rel": "dist/en/privacy.html",
+      "lang": "en",
+      "category": "static",
+      "hanzi": 28,
+      "words": 485
+    },
+    {
+      "rel": "dist/en/tags/finance.html",
+      "lang": "en",
+      "category": "tag",
+      "hanzi": 36,
+      "words": 546
+    },
+    {
+      "rel": "dist/en/tags/health.html",
+      "lang": "en",
+      "category": "tag",
+      "hanzi": 36,
+      "words": 350
+    },
+    {
+      "rel": "dist/en/tags/image.html",
+      "lang": "en",
+      "category": "tag",
+      "hanzi": 36,
+      "words": 291
+    },
+    {
+      "rel": "dist/en/tags/life.html",
+      "lang": "en",
+      "category": "tag",
+      "hanzi": 36,
+      "words": 342
+    },
+    {
+      "rel": "dist/en/tags/shopping.html",
+      "lang": "en",
+      "category": "tag",
+      "hanzi": 36,
+      "words": 249
+    },
+    {
+      "rel": "dist/en/tags/text.html",
+      "lang": "en",
+      "category": "tag",
+      "hanzi": 32,
+      "words": 314
+    },
+    {
+      "rel": "dist/en/tags/travel.html",
+      "lang": "en",
+      "category": "tag",
+      "hanzi": 32,
+      "words": 232
+    },
+    {
+      "rel": "dist/en/tags/utility.html",
+      "lang": "en",
+      "category": "tag",
+      "hanzi": 36,
+      "words": 741
+    },
+    {
+      "rel": "dist/en/text/base64-encode.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 318
+    },
+    {
+      "rel": "dist/en/text/case-converter.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 305
+    },
+    {
+      "rel": "dist/en/text/compress-decompress.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 523
+    },
+    {
+      "rel": "dist/en/text/html-stripper.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 589
+    },
+    {
+      "rel": "dist/en/text/index.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 380
+    },
+    {
+      "rel": "dist/en/text/json-formatter.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 319
+    },
+    {
+      "rel": "dist/en/text/keyword-density.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 77
+    },
+    {
+      "rel": "dist/en/text/markdown-preview.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 407
+    },
+    {
+      "rel": "dist/en/text/reading-time.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 264
+    },
+    {
+      "rel": "dist/en/text/regex-tester.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 367
+    },
+    {
+      "rel": "dist/en/text/simplified-traditional.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 39,
+      "words": 276
+    },
+    {
+      "rel": "dist/en/text/text-cleaner.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 333
+    },
+    {
+      "rel": "dist/en/text/text-diff.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 534
+    },
+    {
+      "rel": "dist/en/text/url-encode.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 320
+    },
+    {
+      "rel": "dist/en/text/uuid-generator.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 393
+    },
+    {
+      "rel": "dist/en/text/word-counter.html",
+      "lang": "en",
+      "category": "tool",
+      "hanzi": 28,
+      "words": 311
+    },
+    {
+      "rel": "dist/fraction-decimal-table.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 366,
+      "words": 40
+    },
+    {
+      "rel": "dist/help.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1049,
+      "words": 70
+    },
+    {
+      "rel": "dist/index.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 3349,
+      "words": 115
+    },
+    {
+      "rel": "dist/methodology.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 751,
+      "words": 64
+    },
+    {
+      "rel": "dist/privacy.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 975,
+      "words": 81
+    },
+    {
+      "rel": "dist/tags/finance.html",
+      "lang": "zh",
+      "category": "tag",
+      "hanzi": 1184,
+      "words": 103
+    },
+    {
+      "rel": "dist/tags/health.html",
+      "lang": "zh",
+      "category": "tag",
+      "hanzi": 611,
+      "words": 106
+    },
+    {
+      "rel": "dist/tags/image.html",
+      "lang": "zh",
+      "category": "tag",
+      "hanzi": 491,
+      "words": 116
+    },
+    {
+      "rel": "dist/tags/life.html",
+      "lang": "zh",
+      "category": "tag",
+      "hanzi": 646,
+      "words": 101
+    },
+    {
+      "rel": "dist/tags/shopping.html",
+      "lang": "zh",
+      "category": "tag",
+      "hanzi": 394,
+      "words": 101
+    },
+    {
+      "rel": "dist/tags/text.html",
+      "lang": "zh",
+      "category": "tag",
+      "hanzi": 504,
+      "words": 117
+    },
+    {
+      "rel": "dist/tags/travel.html",
+      "lang": "zh",
+      "category": "tag",
+      "hanzi": 378,
+      "words": 101
+    },
+    {
+      "rel": "dist/tags/utility.html",
+      "lang": "zh",
+      "category": "tag",
+      "hanzi": 1396,
+      "words": 135
+    },
+    {
+      "rel": "dist/zh/calculators/age-calc.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 115,
+      "words": 40
+    },
+    {
+      "rel": "dist/zh/calculators/bmi.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 2209,
+      "words": 158
+    },
+    {
+      "rel": "dist/zh/calculators/calorie-calculator.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 893,
+      "words": 96
+    },
+    {
+      "rel": "dist/zh/calculators/car-loan.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1359,
+      "words": 40
+    },
+    {
+      "rel": "dist/zh/calculators/compound-interest.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 2666,
+      "words": 77
+    },
+    {
+      "rel": "dist/zh/calculators/currency-converter.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1244,
+      "words": 43
+    },
+    {
+      "rel": "dist/zh/calculators/date-calc.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 3170,
+      "words": 47
+    },
+    {
+      "rel": "dist/zh/calculators/dca-calculator.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1163,
+      "words": 44
+    },
+    {
+      "rel": "dist/zh/calculators/discount.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 117,
+      "words": 40
+    },
+    {
+      "rel": "dist/zh/calculators/electricity.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1103,
+      "words": 41
+    },
+    {
+      "rel": "dist/zh/calculators/fraction-calculator.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1031,
+      "words": 40
+    },
+    {
+      "rel": "dist/zh/calculators/fuel-cost.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1188,
+      "words": 41
+    },
+    {
+      "rel": "dist/zh/calculators/housing-fund.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1174,
+      "words": 41
+    },
+    {
+      "rel": "dist/zh/calculators/ideal-weight.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1235,
+      "words": 60
+    },
+    {
+      "rel": "dist/zh/calculators/index.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1261,
+      "words": 48
+    },
+    {
+      "rel": "dist/zh/calculators/loan-compare.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1146,
+      "words": 44
+    },
+    {
+      "rel": "dist/zh/calculators/mortgage.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 2141,
+      "words": 44
+    },
+    {
+      "rel": "dist/zh/calculators/overtime.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1175,
+      "words": 41
+    },
+    {
+      "rel": "dist/zh/calculators/ovulation.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1125,
+      "words": 40
+    },
+    {
+      "rel": "dist/zh/calculators/password-gen.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1336,
+      "words": 46
+    },
+    {
+      "rel": "dist/zh/calculators/password-strength.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 121,
+      "words": 40
+    },
+    {
+      "rel": "dist/zh/calculators/percentage-calc.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 2434,
+      "words": 84
+    },
+    {
+      "rel": "dist/zh/calculators/pregnancy.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1297,
+      "words": 43
+    },
+    {
+      "rel": "dist/zh/calculators/qr-generator.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1243,
+      "words": 56
+    },
+    {
+      "rel": "dist/zh/calculators/random-gen.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1213,
+      "words": 40
+    },
+    {
+      "rel": "dist/zh/calculators/tax2026.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 3116,
+      "words": 42
+    },
+    {
+      "rel": "dist/zh/calculators/timestamp.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1128,
+      "words": 59
+    },
+    {
+      "rel": "dist/zh/calculators/unit-converter.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1085,
+      "words": 42
+    },
+    {
+      "rel": "dist/zh/calculators/workday-calculator.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1446,
+      "words": 46
+    },
+    {
+      "rel": "dist/zh/image/badge-maker.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1036,
+      "words": 91
+    },
+    {
+      "rel": "dist/zh/image/base64.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 998,
+      "words": 131
+    },
+    {
+      "rel": "dist/zh/image/color-contrast.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1103,
+      "words": 69
+    },
+    {
+      "rel": "dist/zh/image/color-picker.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1653,
+      "words": 120
+    },
+    {
+      "rel": "dist/zh/image/compress.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1081,
+      "words": 70
+    },
+    {
+      "rel": "dist/zh/image/convert.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1053,
+      "words": 107
+    },
+    {
+      "rel": "dist/zh/image/image-crop.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1058,
+      "words": 63
+    },
+    {
+      "rel": "dist/zh/image/index.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1117,
+      "words": 63
+    },
+    {
+      "rel": "dist/zh/image/resize.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1042,
+      "words": 64
+    },
+    {
+      "rel": "dist/zh/index.html",
+      "lang": "zh",
+      "category": "static",
+      "hanzi": 44,
+      "words": 39
+    },
+    {
+      "rel": "dist/zh/text/base64-encode.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 901,
+      "words": 109
+    },
+    {
+      "rel": "dist/zh/text/case-converter.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 986,
+      "words": 100
+    },
+    {
+      "rel": "dist/zh/text/compress-decompress.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 806,
+      "words": 114
+    },
+    {
+      "rel": "dist/zh/text/html-stripper.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1084,
+      "words": 130
+    },
+    {
+      "rel": "dist/zh/text/index.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1077,
+      "words": 69
+    },
+    {
+      "rel": "dist/zh/text/json-formatter.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 975,
+      "words": 92
+    },
+    {
+      "rel": "dist/zh/text/keyword-density.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 105,
+      "words": 40
+    },
+    {
+      "rel": "dist/zh/text/markdown-preview.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1037,
+      "words": 64
+    },
+    {
+      "rel": "dist/zh/text/reading-time.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1078,
+      "words": 40
+    },
+    {
+      "rel": "dist/zh/text/regex-tester.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1038,
+      "words": 86
+    },
+    {
+      "rel": "dist/zh/text/simplified-traditional.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1274,
+      "words": 46
+    },
+    {
+      "rel": "dist/zh/text/text-cleaner.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1107,
+      "words": 44
+    },
+    {
+      "rel": "dist/zh/text/text-diff.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1085,
+      "words": 54
+    },
+    {
+      "rel": "dist/zh/text/url-encode.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 881,
+      "words": 118
+    },
+    {
+      "rel": "dist/zh/text/uuid-generator.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 567,
+      "words": 81
+    },
+    {
+      "rel": "dist/zh/text/word-counter.html",
+      "lang": "zh",
+      "category": "tool",
+      "hanzi": 1084,
+      "words": 44
+    }
+  ],
+  "topPairs": [
+    {
+      "a": "dist/en/calculators/age-calc.html",
+      "b": "dist/en/calculators/discount.html",
+      "jaccard": 0.8313
+    },
+    {
+      "a": "dist/zh/calculators/age-calc.html",
+      "b": "dist/zh/calculators/discount.html",
+      "jaccard": 0.7652
+    },
+    {
+      "a": "dist/en/calculators/age-calc.html",
+      "b": "dist/en/calculators/password-strength.html",
+      "jaccard": 0.75
+    },
+    {
+      "a": "dist/en/calculators/discount.html",
+      "b": "dist/en/calculators/password-strength.html",
+      "jaccard": 0.75
+    },
+    {
+      "a": "dist/zh/calculators/age-calc.html",
+      "b": "dist/zh/calculators/password-strength.html",
+      "jaccard": 0.6667
+    }
+  ],
+  "focus": {
+    "keys": [
+      "tax2026",
+      "housing-fund",
+      "compound-interest",
+      "percentage-calc",
+      "date-calc",
+      "bmi"
+    ],
+    "matched": 24,
+    "maxJaccard": 0.4529,
+    "pairsOver15pct": 25,
+    "topPairs": [
+      {
+        "a": "dist/en/calculators/housing-fund.html",
+        "b": "dist/en/calculators/car-loan.html",
+        "jaccard": 0.4529
+      },
+      {
+        "a": "dist/en/calculators/housing-fund.html",
+        "b": "dist/en/calculators/fuel-cost.html",
+        "jaccard": 0.4051
+      },
+      {
+        "a": "dist/en/calculators/housing-fund.html",
+        "b": "dist/en/calculators/loan-compare.html",
+        "jaccard": 0.4034
+      },
+      {
+        "a": "dist/en/calculators/housing-fund.html",
+        "b": "dist/en/calculators/overtime.html",
+        "jaccard": 0.3964
+      },
+      {
+        "a": "dist/en/calculators/housing-fund.html",
+        "b": "dist/en/calculators/electricity.html",
+        "jaccard": 0.3929
+      }
+    ]
+  }
+}
