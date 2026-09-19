@@ -54,6 +54,7 @@
 | `scan-csp-inline.py` | verify 口径 | 扫描内联脚本/事件（verify #7/8 口径依赖，保留） | 手动 |
 | `deploy-like-system.ps1` | 部署 | 点赞系统部署 | 手动 |
 | `validate-encoding.ps1` | 工具 | 编码验证 | 手动 |
+| `gsc-submit-daily.sh` | GSC | 索引批量提交（bsk 原生 click 真实点击）：逐条查 URL Inspection，已收录自动跳过（不耗配额）、未收录点 Request indexing；**内置官方配额检测**（页面弹 "Quota exceeded" 即中断本批、队列原样保留，可跨天续跑）。队列 `reports/gsc-pending.txt` + 日志 `reports/gsc-submit-log.md`。⚠️ 前置：VPN 须开启 + Edge+bsk 扩展常驻；bash 直接跑，**命令输出勿接管道** | 手动 |
 
 ## 归档清单（scripts/archive/，一次性 / 旧审计，非 verify 引用）
 

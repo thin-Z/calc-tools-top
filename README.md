@@ -107,6 +107,7 @@ KV_URL / KV_REDIS_URL
 | `check-design-system.mjs` | 设计系统门禁：统计全站裸 checkbox/radio，阈值只降不升（基线写在 `scripts/design-baseline.json`，由 verkify 当前扫描结果锁定），防 UX 控件回归（verify-site [31] 调用） | `node scripts/check-design-system.mjs` |
 | `check-global-contract.mjs` | 全局契约门禁：校验 `window.copyText`+`window.showError` 契约完整且 `runtime-head` 注入 `csp-events`（防删 csp-events 或重命名 break 全站事件委托），硬门禁（verify-site [32] 调用） | `node scripts/check-global-contract.mjs` |
 | `check-innerhtml-escape.mjs` | innerHTML 趋势指标（非阻断）：扫描 `.innerHTML` 赋值，提示疑似未转义拼接供 review；不阻断构建/verify | `node scripts/check-innerhtml-escape.mjs` |
+| `gsc-submit-daily.sh` | GSC 每日索引提交（2026-09-19 新增，非门禁）：bsk 原生 click 真实点击「Request indexing」；逐条先查 URL Inspection，**已收录自动跳过**（不消耗配额）、未收录才提交；**内置官方配额检测**（页面弹 "Quota exceeded" 即中断本批、队列原样保留，可跨天续跑）。队列 `reports/gsc-pending.txt`、日志 `reports/gsc-submit-log.md`。⚠️ 前置：VPN 须开启 + Edge+bsk 扩展常驻；bash 直接运行，**输出勿接管道** | `bash scripts/gsc-submit-daily.sh 60`（可选 `--dry` 冒烟、`--stop-on-throttle` 限流即停） |
 | `scan-csp-inline.py` | 扫描全站内联脚本/事件/样式 | `python scripts/scan-csp-inline.py` |
 | ~~`analyze_sitemap.py`~~ | ~~分析 sitemap 结构~~（归档） | `python scripts/archive/analyze_sitemap.py` |
 | ~~`full_seo_audit.py`~~ | ~~全维度 SEO 审计~~（归档，被 `seo-batch-audit.mjs` 取代） | `python scripts/archive/full_seo_audit.py` |

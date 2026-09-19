@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-19T09:17:47.372Z",
+  "generatedAt": "2026-09-19T09:22:22.014Z",
   "total": 222,
   "summary": {
     "zhToolHanzi": {
@@ -2036,6 +2036,214 @@
       "a": "dist/zh/calculators/age-calc.html",
       "b": "dist/zh/calculators/password-strength.html",
       "jaccard": 0.6555
+    },
+    {
+      "a": "dist/zh/calculators/discount.html",
+      "b": "dist/zh/calculators/password-strength.html",
+      "jaccard": 0.65
+    },
+    {
+      "a": "dist/blog/zh/index.html",
+      "b": "dist/index.html",
+      "jaccard": 0.6106
+    },
+    {
+      "a": "dist/en/calculators/age-calc.html",
+      "b": "dist/en/calculators/password-strength.html",
+      "jaccard": 0.56
+    },
+    {
+      "a": "dist/en/calculators/discount.html",
+      "b": "dist/en/calculators/password-strength.html",
+      "jaccard": 0.56
+    },
+    {
+      "a": "dist/en/calculators/loan-compare.html",
+      "b": "dist/en/calculators/ovulation.html",
+      "jaccard": 0.4864
+    },
+    {
+      "a": "dist/tags/shopping.html",
+      "b": "dist/tags/travel.html",
+      "jaccard": 0.4848
+    },
+    {
+      "a": "dist/en/calculators/ovulation.html",
+      "b": "dist/en/calculators/unit-converter.html",
+      "jaccard": 0.4759
+    },
+    {
+      "a": "dist/zh/calculators/age-calc.html",
+      "b": "dist/zh/text/keyword-density.html",
+      "jaccard": 0.4597
+    },
+    {
+      "a": "dist/zh/calculators/discount.html",
+      "b": "dist/zh/text/keyword-density.html",
+      "jaccard": 0.456
+    },
+    {
+      "a": "dist/en/calculators/loan-compare.html",
+      "b": "dist/en/calculators/unit-converter.html",
+      "jaccard": 0.4528
+    },
+    {
+      "a": "dist/en/tags/shopping.html",
+      "b": "dist/en/tags/travel.html",
+      "jaccard": 0.4505
+    },
+    {
+      "a": "dist/zh/calculators/password-strength.html",
+      "b": "dist/zh/text/keyword-density.html",
+      "jaccard": 0.4488
+    },
+    {
+      "a": "dist/embed.html",
+      "b": "dist/zh/text/keyword-density.html",
+      "jaccard": 0.4298
+    },
+    {
+      "a": "dist/blog/zh/index.html",
+      "b": "dist/tags/utility.html",
+      "jaccard": 0.422
+    },
+    {
+      "a": "dist/404.html",
+      "b": "dist/zh/text/keyword-density.html",
+      "jaccard": 0.4032
+    },
+    {
+      "a": "dist/blog/en/index.html",
+      "b": "dist/en/tags/utility.html",
+      "jaccard": 0.4025
+    },
+    {
+      "a": "dist/en/calculators/age-calc.html",
+      "b": "dist/en/text/keyword-density.html",
+      "jaccard": 0.4
     }
-  ]
+  ],
+  "focus": {
+    "keys": [
+      "housing-fund",
+      "car-loan",
+      "loan-compare"
+    ],
+    "matched": 10,
+    "noindexStubs": 0,
+    "fulltext": {
+      "maxJaccard": 0.4864,
+      "pairsOver15pct": 35,
+      "totalPairs": 1100
+    },
+    "body": {
+      "maxJaccard": 0.4919,
+      "pairsOver15pct": 25,
+      "totalPairs": 1040
+    },
+    "fuseThreshold": 0.15,
+    "fuseTriggered": true,
+    "topPairsBody": [
+      {
+        "a": "dist/en/calculators/loan-compare.html",
+        "b": "dist/en/calculators/ovulation.html",
+        "jaccard": 0.4919
+      },
+      {
+        "a": "dist/en/calculators/loan-compare.html",
+        "b": "dist/en/calculators/unit-converter.html",
+        "jaccard": 0.4529
+      },
+      {
+        "a": "dist/en/calculators/car-loan.html",
+        "b": "dist/en/calculators/electricity.html",
+        "jaccard": 0.3239
+      },
+      {
+        "a": "dist/en/calculators/car-loan.html",
+        "b": "dist/en/calculators/overtime.html",
+        "jaccard": 0.3238
+      },
+      {
+        "a": "dist/en/calculators/car-loan.html",
+        "b": "dist/en/calculators/loan-compare.html",
+        "jaccard": 0.3181
+      },
+      {
+        "a": "dist/en/calculators/loan-compare.html",
+        "b": "dist/en/calculators/car-loan.html",
+        "jaccard": 0.3181
+      },
+      {
+        "a": "dist/en/calculators/car-loan.html",
+        "b": "dist/en/calculators/fuel-cost.html",
+        "jaccard": 0.3133
+      },
+      {
+        "a": "dist/en/calculators/car-loan.html",
+        "b": "dist/en/calculators/ideal-weight.html",
+        "jaccard": 0.3083
+      },
+      {
+        "a": "dist/en/calculators/loan-compare.html",
+        "b": "dist/en/calculators/overtime.html",
+        "jaccard": 0.3052
+      },
+      {
+        "a": "dist/en/calculators/car-loan.html",
+        "b": "dist/en/calculators/ovulation.html",
+        "jaccard": 0.3032
+      },
+      {
+        "a": "dist/en/calculators/loan-compare.html",
+        "b": "dist/en/calculators/fuel-cost.html",
+        "jaccard": 0.2889
+      },
+      {
+        "a": "dist/en/calculators/loan-compare.html",
+        "b": "dist/en/calculators/electricity.html",
+        "jaccard": 0.2837
+      },
+      {
+        "a": "dist/en/calculators/loan-compare.html",
+        "b": "dist/en/calculators/ideal-weight.html",
+        "jaccard": 0.2812
+      },
+      {
+        "a": "dist/en/calculators/car-loan.html",
+        "b": "dist/en/calculators/unit-converter.html",
+        "jaccard": 0.2671
+      },
+      {
+        "a": "dist/en/calculators/car-loan.html",
+        "b": "dist/en/calculators/password-gen.html",
+        "jaccard": 0.26
+      },
+      {
+        "a": "dist/en/calculators/car-loan.html",
+        "b": "dist/en/calculators/qr-generator.html",
+        "jaccard": 0.2581
+      },
+      {
+        "a": "dist/en/calculators/car-loan.html",
+        "b": "dist/en/calculators/random-gen.html",
+        "jaccard": 0.2558
+      },
+      {
+        "a": "dist/en/calculators/loan-compare.html",
+        "b": "dist/en/calculators/password-gen.html",
+        "jaccard": 0.2517
+      },
+      {
+        "a": "dist/en/calculators/loan-compare.html",
+        "b": "dist/en/calculators/random-gen.html",
+        "jaccard": 0.2506
+      },
+      {
+        "a": "dist/en/calculators/loan-compare.html",
+        "b": "dist/en/calculators/qr-generator.html",
+        "jaccard": 0.25
+      }
+    ]
+  }
 }

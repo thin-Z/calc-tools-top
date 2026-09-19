@@ -57,3 +57,6 @@ snapshots/
 
 # 审计临时目录（诊断脚本/截图/日志，build.mjs 亦已排除出 dist）
 .audit_tmp/
+
+# GSC 批提交器临时快照（scripts/gsc-submit-daily.sh 每次运行覆盖，勿入库）
+snap_t.txt
