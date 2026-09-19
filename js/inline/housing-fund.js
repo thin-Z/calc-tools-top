@@ -57,7 +57,7 @@ let chartInstance = null;
 
         function resetForm() {
             document.getElementById('fundAmount').value = 800000;
-            document.getElementById('fundRate').value = 2.85;
+            document.getElementById('fundRate').value = 2.6;
             document.getElementById('fundYears').value = 30;
             document.getElementById('resultArea').classList.add('hidden');
             document.getElementById('chartContainer').classList.add('hidden');

@@ -64,7 +64,7 @@
             "name": "What is the housing fund loan rate?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "In 2026, the first-home housing fund rate is 2.85% (5+ years), and the second-home rate is 3.325% (5+ years). These rates are significantly lower than commercial loans."
+                "text": "Since 8 May 2025 individual housing fund loan rates have been cut by 0.25 percentage points. For terms over 5 years the first-home rate is 2.6% and the second-home rate is 3.075%; for terms of 5 years or less they are 2.1% and 2.525%. Existing loans were automatically repriced on 1 January 2026."
             }
         },
         {
@@ -134,7 +134,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="fundRate" data-i18n="fundRate">Annual Rate (%)</label>
-                        <input type="number" id="fundRate" value="2.85" min="0.1" step="0.01">
+                        <input type="number" id="fundRate" value="2.6" min="0.1" step="0.01">
                     </div>
                     <div class="form-group">
                         <label for="fundYears" data-i18n="loanYears">Loan Term (Years)</label>
@@ -176,10 +176,50 @@
         
 
 <div class="tool-content">
-    <h2>Housing Fund Calculator Guide</h2>
-    <p>The housing fund loan offers lower interest rates, making it the preferred choice for home buyers. This calculator helps you estimate monthly payments and total interest quickly.</p>
-    <h3>Equal Installment vs Equal Principal</h3>
-    <p>Equal installment: fixed monthly payment, suitable for stable income. Equal principal: decreasing monthly payment, lower total interest, suitable for those with higher early-stage repayment capacity.</p>
+    <h2>Housing Fund Loan Calculator Guide</h2>
+    <p>The housing fund (gongjijin) loan is normally the cheapest mortgage available to employees in China. This calculator estimates the monthly payment, total repayment and total interest for a housing fund loan, and the sections below explain how the rate and the borrowing limit are actually determined.</p>
+    <h3>What is the current housing fund loan rate?</h3>
+    <p>On 8 May 2025 the People's Bank of China lowered individual housing fund loan rates by 0.25 percentage points. Loans granted before that date were automatically repriced on 1 January 2026 — no application was required. The rates now in force are:</p>
+    <table class="ref-table">
+        <thead><tr><th>Loan term</th><th>First home</th><th>Second home</th></tr></thead>
+        <tbody>
+            <tr><td>5 years or less</td><td>2.1%</td><td>2.525%</td></tr>
+            <tr><td>Over 5 years</td><td>2.6%</td><td>3.075%</td></tr>
+        </tbody>
+    </table>
+    <p>For comparison, the 5-year-plus LPR stands at 3.5%, and first-home commercial mortgages are actually written at roughly 2.95%–3.1% after bank discounts. The housing fund still holds a lead of about 0.4–0.5 percentage points. The rate field in this calculator defaults to <strong>2.6%</strong> (first home, over 5 years); for a second home, change it to 3.075%.</p>
+    <h3>How much can you borrow? The lowest of four limits</h3>
+    <p>Borrowers often assume the loan size is driven by the property price. In practice the housing fund limit is <strong>the lowest of four ceilings</strong>:</p>
+    <ol>
+        <li><strong>Account balance ceiling</strong> — your average account balance multiplied by a local multiple, commonly 12× to 20×, and usually higher for a first home.</li>
+        <li><strong>Repayment capacity ceiling</strong> — the equal-installment payment may not exceed a set share, often 50%, of your contribution base.</li>
+        <li><strong>Property value ceiling</strong> — capped at the purchase price minus your down payment, subject to local minimum down-payment rules.</li>
+        <li><strong>Local maximum ceiling</strong> — a hard limit that differs for single applicants and couples, with uplifts for families with children, green buildings and recognised talent.</li>
+    </ol>
+    <p>The account balance ceiling is the one that most often binds. For example:</p>
+    <table class="ref-table">
+        <thead><tr><th>Average account balance</th><th>12×</th><th>16×</th><th>20×</th></tr></thead>
+        <tbody>
+            <tr><td>CNY 30,000</td><td>CNY 360,000</td><td>CNY 480,000</td><td>CNY 600,000</td></tr>
+            <tr><td>CNY 50,000</td><td>CNY 600,000</td><td>CNY 800,000</td><td>CNY 1,000,000</td></tr>
+            <tr><td>CNY 80,000</td><td>CNY 960,000</td><td>CNY 1,280,000</td><td>CNY 1,600,000</td></tr>
+        </tbody>
+    </table>
+    <p>The average balance is normally measured over the 12 months before you apply, excluding the application month, and one-off top-ups are usually ignored. If you have contributed for less than 12 months, the actual number of months is used, and many cities require six consecutive months of contributions before you can apply at all. Because multiples and caps vary by city, <strong>check the figure published by your local housing fund centre first, then use this calculator to convert it into a monthly payment</strong>.</p>
+    <h3>Housing fund loan vs commercial loan: the 30-year gap</h3>
+    <p>Take CNY 800,000 over 30 years with equal instalments:</p>
+    <table class="ref-table">
+        <thead><tr><th>Loan type</th><th>Rate</th><th>Monthly payment</th><th>Total interest</th></tr></thead>
+        <tbody>
+            <tr><td>Housing fund</td><td>2.6%</td><td>CNY 3,203</td><td>CNY 353,000</td></tr>
+            <tr><td>Commercial</td><td>3.0%</td><td>CNY 3,373</td><td>CNY 414,000</td></tr>
+        </tbody>
+    </table>
+    <p>The monthly difference is about <strong>CNY 170</strong>, and over the full term the interest gap reaches roughly <strong>CNY 61,000</strong>. A small rate difference compounds over 30 years, which is why it pays to use the housing fund allowance in full. Note that commercial rates float with the LPR and vary by city, so 3.0% here is only an illustration.</p>
+    <h3>Three worked examples</h3>
+    <p><strong>Example 1 — first home, borrowing CNY 800,000.</strong> At a 2.6% rate over 30 years the equal-installment payment is <strong>CNY 3,203</strong>, with roughly CNY 353,000 of interest in total. That stays affordable for most dual-income households as long as the payment is kept within 30%–40% of monthly income.</p>
+    <p><strong>Example 2 — CNY 600,000 over 20 years versus 30 years.</strong> At 2.6%: a 20-year term gives a payment of CNY 3,209 and about CNY 170,000 of interest; a 30-year term gives CNY 2,402 and about CNY 265,000. The longer term saves roughly CNY 807 per month but costs about <strong>CNY 95,000</strong> more in interest overall — the classic trade of cash flow against total cost.</p>
+    <p><strong>Example 3 — a combined loan.</strong> For a CNY 2,000,000 property where the housing fund covers CNY 800,000 and a commercial loan covers the remaining CNY 600,000: the fund portion (2.6%) costs CNY 3,203 a month and the commercial portion (at 3.0%) costs CNY 2,530, for a combined payment of about <strong>CNY 5,732</strong>. The rule of thumb is to max out the cheap housing fund quota first and let the commercial loan fill the gap.</p>
 </div>
 <section class="related-posts">
         <h3>Related Reading</h3>
@@ -189,20 +229,21 @@
     </section>
 <section class="tool-content">
 <h2>About Housing Fund Calculator</h2>
-<p>Housing Fund Calculator is a completely free online tool that helps you Housing fund loan amount + rate calculation. Whether you are a casual user or a professional, you can use it instantly without installing any software.</p>
-<p>Whether you are applying for a housing fund loan, checking your loan limit, or comparing repayment plans, you can quickly estimate payments and interest.</p>
+<p>Housing Fund Calculator is a free online tool for estimating the monthly payment, total repayment and total interest of a Chinese housing fund (gongjijin) loan. Enter the loan amount, annual rate and term to get the result. All calculations run locally in your browser — nothing is uploaded and no account is needed.</p>
+<p>It is useful for three groups: buyers weighing a housing fund loan against a commercial mortgage, employees checking whether the projected payment fits their budget, and agents who need quick numbers for several options.</p>
 <h2>How to Use</h2>
 <ol>
-    <li>Enter the housing fund loan amount (in ten-thousands).</li>
-    <li>Enter the annual interest rate (%) and loan term (years).</li>
-    <li>Choose a repayment method (equal payment or equal principal).</li>
-    <li>Click "Calculate" to see monthly payment, total payment, and total interest.</li>
+    <li>Enter the loan amount in yuan (CNY 800,000 is written as 800000).</li>
+    <li>Enter the annual rate: 2.6% for a first home over 5 years, or 3.075% for a second home.</li>
+    <li>Enter the loan term in years. Housing fund loans usually run up to 30 years.</li>
+    <li>Click "Calculate" to see the monthly payment, total repayment and total interest.</li>
 </ol>
 <h2>Housing Fund Calculator FAQ</h2>
-<h3>Is Housing Fund Calculator free to use?</h3><p>Yes, Housing Fund Calculator is completely free. There are no hidden fees, no account registration and no download required.</p>
-<h3>How accurate are the results?</h3><p>All calculations are performed locally in your browser using well-established formulas, so the results are accurate and consistent.</p>
-<h3>Is my data private?</h3><p>Your privacy is a priority. Everything you enter is processed directly on your device and is never uploaded to any server.</p>
-<h3>Does Housing Fund Calculator work on mobile?</h3><p>Yes. The page is fully responsive and works smoothly on phones, tablets and desktop browsers.</p>
+<h3>The rate is 2.6%, so why does my payment differ from the bank's figure?</h3><p>Three usual causes. First the rate: a second home over 5 years is charged 3.075%, not 2.6%. Second the term: the same amount over 20 and 30 years produces very different payments. Third, timing: the bank applies the rate in force on the drawdown date, and housing fund rates are repriced with policy — existing loans normally move to the new rate on 1 January of the following year. Check the rate and term inputs before comparing.</p>
+<h3>My account balance is only CNY 50,000 — can I still borrow CNY 800,000?</h3><p>It depends on your city's multiple. At 16×, CNY 50,000 × 16 = CNY 800,000, so it just works; at 12× the ceiling is CNY 600,000. Multiples, caps and the definition of "average balance" — the mean of month-end balances over 12 months, excluding one-off top-ups — all vary locally, so confirm the published figure with your housing fund centre. If the balance is short, a co-applicant such as a spouse can often be added to combine quotas.</p>
+<h3>How long can the term be, and is there an age limit?</h3><p>Terms usually run up to 30 years and are also constrained by "borrower age plus term". Most cities require men to finish by 65 and women by 60, though some allow 70. A 45-year-old applicant under a 65 limit can therefore borrow for at most 20 years. For resale properties the age of the building matters too, with a common rule of "building age plus loan term ≤ 50 years".</p>
+<h3>What if the housing fund does not cover the whole purchase?</h3><p>You can take out a combined loan: a housing fund loan plus a commercial mortgage. The two are applied for separately, priced separately and repaid separately. Max out the cheaper housing fund quota first and let the commercial loan cover the shortfall. Combined loans take longer to process than a pure commercial mortgage, so allow extra time when choosing a property and signing the contract.</p>
+<h3>Can I repay a housing fund loan early, and does it pay off?</h3><p>Most cities allow early repayment, sometimes only after six to twelve months of normal repayments. Because the rate is already low at 2.6%, the interest saved is modest — if you have a stable investment returning more than 2.6%, investing may beat prepaying. If the money would otherwise sit idle, shortening the term (same payment, fewer instalments) usually saves more interest than reducing the instalment (same term, lower payment).</p>
 </section>
     </main>
 

@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-09-19T07:03:22.172Z",
+  "generatedAt": "2026-09-19T09:17:47.372Z",
   "total": 222,
   "summary": {
     "zhToolHanzi": {
       "n": 64,
-      "mean": 1136,
+      "mean": 1158,
       "median": 1080
     },
     "enToolWords": {
       "n": 55,
-      "mean": 477,
-      "median": 352
+      "mean": 493,
+      "median": 355
     },
     "zhBlogHanzi": {
       "n": 40,
       "mean": 995,
       "median": 742
     },
-    "siteAvgOverlap": 0.0872,
-    "siteAvgOverlapBody": 0.1154,
+    "siteAvgOverlap": 0.0864,
+    "siteAvgOverlapBody": 0.1123,
     "noindexPages": 12
   },
   "pages": [
@@ -909,7 +909,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 24,
-      "words": 336,
+      "words": 1243,
       "_shBody": {},
       "noindex": false
     },
@@ -1637,8 +1637,8 @@
       "rel": "dist/zh/calculators/housing-fund.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 1170,
-      "words": 3,
+      "hanzi": 2611,
+      "words": 5,
       "_shBody": {},
       "noindex": false
     },
@@ -2036,73 +2036,6 @@
       "a": "dist/zh/calculators/age-calc.html",
       "b": "dist/zh/calculators/password-strength.html",
       "jaccard": 0.6555
-    },
-    {
-      "a": "dist/zh/calculators/discount.html",
-      "b": "dist/zh/calculators/password-strength.html",
-      "jaccard": 0.65
-    },
-    {
-      "a": "dist/blog/zh/index.html",
-      "b": "dist/index.html",
-      "jaccard": 0.6106
     }
-  ],
-  "focus": {
-    "keys": [
-      "tax2026",
-      "compound-interest",
-      "housing-fund",
-      "percentage-calc",
-      "date-calc",
-      "bmi",
-      "ideal-weight",
-      "calorie-calculator",
-      "pregnancy",
-      "overtime",
-      "fraction-calculator",
-      "currency-converter"
-    ],
-    "matched": 38,
-    "noindexStubs": 0,
-    "fulltext": {
-      "maxJaccard": 0.4005,
-      "pairsOver15pct": 76,
-      "totalPairs": 4180
-    },
-    "body": {
-      "maxJaccard": 0.3865,
-      "pairsOver15pct": 51,
-      "totalPairs": 3952
-    },
-    "fuseThreshold": 0.15,
-    "fuseTriggered": true,
-    "topPairsBody": [
-      {
-        "a": "dist/en/calculators/housing-fund.html",
-        "b": "dist/en/calculators/car-loan.html",
-        "jaccard": 0.3865
-      },
-      {
-        "a": "dist/en/calculators/ideal-weight.html",
-        "b": "dist/en/calculators/overtime.html",
-        "jaccard": 0.3557
-      },
-      {
-        "a": "dist/en/calculators/overtime.html",
-        "b": "dist/en/calculators/ideal-weight.html",
-        "jaccard": 0.3557
-      },
-      {
-        "a": "dist/en/calculators/overtime.html",
-        "b": "dist/en/calculators/fuel-cost.html",
-        "jaccard": 0.3539
-      },
-      {
-        "a": "dist/en/calculators/overtime.html",
-        "b": "dist/en/calculators/ovulation.html",
-        "jaccard": 0.3474
-      }
-    ]
-  }
+  ]
 }
