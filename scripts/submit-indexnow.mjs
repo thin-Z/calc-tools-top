@@ -134,7 +134,14 @@ async function main() {
       } else {
         failed += batch.length;
         console.error(`  ❌ 批次 ${n}/${total}：HTTP ${status} ${text.slice(0, 200)}`);
-        if (status === 403) console.error('     ↳ 403＝key 无效：确认 dist/ 下能访问到 ' + found.file + '，且内容与文件名一致。');
+        // 403 有两种成因，按响应体区分（2026-09-20 实测首轮即遇到「验证未完成」而非 key 无效）
+        if (status === 403) {
+          if (/SiteVerificationNotCompleted/i.test(text)) {
+            console.error('     ↳ 归属验证尚未完成：搜索引擎正在回抓 ' + found.file + '，几分钟后重跑本脚本即可（已成功的批次不会重复提交）。');
+          } else {
+            console.error('     ↳ key 无效：确认能公开访问 ' + SITE_ORIGIN + '/' + found.file + '，且内容与文件名一致。');
+          }
+        }
         if (status === 429) console.error('     ↳ 429＝过于频繁：稍后重试，勿连续跑本脚本。');
       }
     } catch (e) {
@@ -149,7 +156,9 @@ async function main() {
 
   console.log(`\n📊 IndexNow 提交完成：成功 ${ok} 条 / 失败 ${failed} 条`);
   console.log(`   本地状态：${STATE_PATH.replace(ROOT, '.').replace(/\\/g, '/')}（累计已提交 ${new Set(state.submitted).size} 条）`);
-  if (failed > 0) process.exit(1);
+  // 用 exitCode 而非 process.exit()：后者会在 undici keep-alive socket 未关闭时
+  // 触发 libuv 断言崩溃（2026-09-20 实测 "Assertion failed ... src\win\async.c"）。
+  if (failed > 0) process.exitCode = 1;
 }
 
 main().catch(e => { console.error('❌ 未捕获异常：', e); process.exit(1); });
