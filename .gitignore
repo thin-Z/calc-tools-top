@@ -65,3 +65,7 @@ snap_t.txt
 scripts/.baidu-push-token
 scripts/.baidu-push-state.json
 scripts/.indexnow-state.json
+
+# GSC 批任务临时产物（2026-09-20）
+reports/gsc_*.out
+reports/gsc-fail/

@@ -341,3 +341,155 @@
 ── https://www.calc-tools.top/en/text/word-counter
    ⚠ 未找到 Request indexing 按钮，跳过
 ── https://www.calc-tools.top/tags/finance
+
+## 2026-09-20 批提交（cap=60 dry=0，含 session 自动重连）
+── https://www.calc-tools.top/blog/en/unit-converter-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/en/url-encode-guide
+   ⚠ 未找到 Request indexing 按钮，跳过（快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 L1 modal cover=100% ）
+── https://www.calc-tools.top/blog/en/uuid-generator-guide
+   ⚠ 未找到 Request indexing 按钮，跳过（快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 L1 modal cover=100% ）
+── https://www.calc-tools.top/blog/en/word-counter-guide
+   ⚠ 未找到 Request indexing 按钮，跳过（快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 L1 modal cover=100% ）
+── https://www.calc-tools.top/blog/en/workday-calculator-guide
+   ⚠ 未确认提交，快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 
+── https://www.calc-tools.top/blog/zh/age-calc-guide
+   ⚠ 未找到 Request indexing 按钮，跳过（快照首行: @vom 1 @view 1418x727 @layers 1 focus=L1 L1 page ）
+── https://www.calc-tools.top/blog/zh/base64-encode-guide
+   ⚠ 未找到 Request indexing 按钮，跳过（快照首行: @vom 1 @view 1418x727 @layers 1 focus=L1 L1 page ）
+── https://www.calc-tools.top/blog/zh/car-loan-calculator-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/case-converter-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/color-picker-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/date-calculation-tips
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/blog/zh/discount-calculation-tips
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/electricity-cost-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/equal-installment-vs-equal-principal
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/fuel-cost-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/html-stripper-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/image-compression-guide
+   ⚠ 未找到 Request indexing 按钮，跳过（快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 L1 modal cover=100% ）
+── https://www.calc-tools.top/blog/zh/image-format-converter-guide
+   ⚠ 未确认提交，快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 
+── https://www.calc-tools.top/blog/zh/image-resize-crop-guide
+   ⚠ 未确认提交，快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 
+── https://www.calc-tools.top/blog/zh/image-to-base64-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/json-formatter-guide
+   ⚠ 未找到 Request indexing 按钮，跳过（快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 L1 modal cover=100% ）
+── https://www.calc-tools.top/blog/zh/keyword-density-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/loan-comparison-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/mortgage-rate-trend-2026
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/overtime-pay-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/ovulation-calculator-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/password-security-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/percentage-calculation-tips
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/qr-generator-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/random-number-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/reading-time-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/standard-weight-guide
+   ⚠ 未确认提交，快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 
+── https://www.calc-tools.top/blog/zh/tax2026-guide
+   ⚠ 未确认提交，快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 
+── https://www.calc-tools.top/blog/zh/text-cleaner-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/text-diff-guide
+   ⚠ 未确认提交，快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 
+── https://www.calc-tools.top/blog/zh/unit-converter-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/url-encode-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/word-counter-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/workday-calculator-guide
+   ⚠ 未确认提交，快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 
+── https://www.calc-tools.top/en/about
+   ⚠ 未确认提交，快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 
+── https://www.calc-tools.top/en/contact
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/en/fraction-decimal-table
+   ⚠ 未找到 Request indexing 按钮，跳过（快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 L1 modal cover=100% ）
+── https://www.calc-tools.top/en/help
+   ⚠ 未确认提交，快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 
+── https://www.calc-tools.top/en/methodology
+   ⚠ 未找到 Request indexing 按钮，跳过（快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 L1 modal cover=100% ）
+── https://www.calc-tools.top/en/privacy
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/en/calculators/bmi
+   ⚠ 未确认提交，快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 
+── https://www.calc-tools.top/en/calculators/calorie-calculator
+   ⚠ 未找到 Request indexing 按钮，跳过（快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 L1 modal cover=100% ）
+── https://www.calc-tools.top/en/calculators/car-loan
+   ⚠ 未找到 Request indexing 按钮，跳过（快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 L1 modal cover=100% ）
+── https://www.calc-tools.top/en/calculators/currency-converter
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/en/calculators/dca-calculator
+   ⚠ 未找到 Request indexing 按钮，跳过（快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 L1 modal cover=100% ）
+── https://www.calc-tools.top/en/calculators/electricity
+   ⚠ 未找到 Request indexing 按钮，跳过（快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 L1 modal cover=100% ）
+── https://www.calc-tools.top/en/calculators/fraction-calculator
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/en/calculators/fuel-cost
+   ⚠ 未找到 Request indexing 按钮，跳过（快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 L1 modal cover=100% ）
+── https://www.calc-tools.top/en/calculators/ideal-weight
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/en/calculators/loan-compare
+   ⚠ 未找到 Request indexing 按钮，跳过（快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 L1 modal cover=100% ）
+── https://www.calc-tools.top/en/calculators/mortgage
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/en/calculators/overtime
+   ⚠ 未确认提交，快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 
+── https://www.calc-tools.top/en/calculators/ovulation
+   ⚠ 未找到 Request indexing 按钮，跳过（快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 L1 modal cover=100% ）
+── https://www.calc-tools.top/en/calculators/password-gen
+   ⚠ 未找到 Request indexing 按钮，跳过（快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 L1 modal cover=100% ）
+── https://www.calc-tools.top/en/calculators/pregnancy
+   ⚠ 未确认提交，快照首行: @vom 1 @view 1418x727 @layers 2 focus=L1 
+   汇总: 提交=1 已收录跳过=30 本批处理=60 剩余=113
+===== 完成 =====
+
+## 2026-09-20 批提交（cap=5 dry=0，含 session 自动重连）
+── https://www.calc-tools.top/blog/en/url-encode-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/en/uuid-generator-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/en/word-counter-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/en/workday-calculator-guide
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/blog/zh/age-calc-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+   汇总: 提交=1 已收录跳过=4 本批处理=5 剩余=108
+===== 完成 =====
+
+## 2026-09-20 批提交（cap=120 dry=0，含 session 自动重连）
+── https://www.calc-tools.top/blog/zh/base64-encode-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/image-compression-guide
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/blog/zh/image-format-converter-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/image-resize-crop-guide
+   ⛔ GSC 官方配额已耗尽（Quota exceeded），中断本批
+   ⛔ 因 GSC 官方配额耗尽（Quota exceeded）提前中断 —— 非脚本故障，Google 明示每日重置。
+      队列原样保留（未消耗），明日配额重置后直接续跑。
+   汇总: 提交=1 已收录跳过=2 本批处理=108 剩余=105
+===== 完成 =====

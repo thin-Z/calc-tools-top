@@ -20,6 +20,16 @@
 # 产物:
 #   reports/gsc-pending.txt  剩余待提交队列（成功/已收录项会被移除）
 #   reports/gsc-submit-log.md 追加式日志
+#   reports/gsc-fail/*.txt   失败证据快照（no-status / no-button / unconfirmed）
+#
+# 修订 2026-09-20（v2，本批实测触发）:
+#   现象：60 条里 17 条「未找到按钮」+ 12 条「未确认提交」= 48% 假阴性。
+#   实证：手动复现同一 URL（en/calculators/ovulation）等 30s 即正常出结果面板与按钮
+#         → 根因 = GSC 重型 SPA 在慢链路上渲染超时，固定 20s+15s 不够。
+#   修法：①wait_for_result() 轮询至状态文本出现（STEP 8s / 上限 88s）
+#         ②wait_for_confirm() 轮询至「Indexing requested」（上限 120s）
+#         ③失败一律存证据到 reports/gsc-fail/（此前被下一条覆盖、无法归因）
+#   失败项不移出队列 → 下一批自动补跑，不消耗提交配额。
 # ============================================================================
 set -u
 BSK="C:/Users/thinZ/.local/bin/bsk.exe"
@@ -27,12 +37,19 @@ REPO="D:/_Careate.Program/calculator-site"
 PENDING="$REPO/reports/gsc-pending.txt"
 LOG="$REPO/reports/gsc-submit-log.md"
 SNAP="$REPO/snap_t.txt"
+FAIL_DIR="$REPO/reports/gsc-fail"
 GSC_URL="https://search.google.com/search-console?resource_id=sc-domain%3Acalc-tools.top"
 SEL='input[aria-label="Inspect any URL in calc-tools.top"]'
 
 CAP=10
 DRY=0
 STOP_ON_THROTTLE=0
+# 结果面板自适应等待（2026-09-20 新增）：GSC 是重型 SPA，固定 20s+15s 在慢链路上
+# 会假阴性（页面 main 区尚未渲染 → 误报「未找到 Request indexing 按钮」）。
+# 实测：同一 URL 手动等 30s 即正常出现按钮 → 改为轮询直到状态文本出现。
+STEP_MS=8000      # 每轮等待毫秒
+STEP_S=8          # 每轮秒数（与 STEP_MS 对应）
+MAX_WAIT=88       # 单条最长等待秒数（约 11 轮）
 for a in "$@"; do
   case "$a" in
     --dry) DRY=1 ;;
@@ -125,6 +142,45 @@ is_quota_exceeded() {
   grep -qiE "Quota exceeded|URL inspection quota|Quota is renewed daily" "$SNAP" 2>/dev/null
 }
 
+# 失败留证据（2026-09-20 新增）：此前失败快照被下一条覆盖，无法事后归因。
+save_fail_snapshot() {
+  local tag="$1" slug
+  slug=$(echo "$2" | sed -E 's#^https?://[^/]+/##; s#[/?&=]+#_#g' | cut -c1-70)
+  mkdir -p "$FAIL_DIR" 2>/dev/null
+  cp "$SNAP" "$FAIL_DIR/$(date +%H%M%S)-${tag}-${slug}.txt" 2>/dev/null
+}
+
+# 结果面板自适应等待：轮询直到出现「URL is (not) on Google」
+#   返回 0=已就绪 / 1=超时未见 / 90=配额耗尽 / 91=session 失效
+wait_for_result() {
+  local waited=0
+  while [ "$waited" -lt "$MAX_WAIT" ]; do
+    timeout 60 "$BSK" wait-ms "$STEP_MS" >/dev/null 2>&1
+    waited=$((waited + STEP_S))
+    timeout 60 "$BSK" snapshot --session "$SESH" > "$SNAP" 2>&1
+    if is_quota_exceeded; then return 90; fi
+    if is_session_dead; then return 91; fi
+    if grep -qE "URL is (not )?on Google" "$SNAP"; then return 0; fi
+  done
+  return 1
+}
+
+# 提交后确认「Indexing requested」：GSC 进度条时长不定（10~90s+），
+# 固定等 80s 一次快照会假阴性 → 改为轮询，最长 120s。
+#   返回 0=已确认 / 1=超时 / 90=配额耗尽 / 91=session 失效
+wait_for_confirm() {
+  local waited=0
+  while [ "$waited" -lt 120 ]; do
+    timeout 90 "$BSK" wait-ms 15000 >/dev/null 2>&1
+    waited=$((waited + 15))
+    timeout 60 "$BSK" snapshot --session "$SESH" > "$SNAP" 2>&1
+    if is_quota_exceeded; then return 90; fi
+    if is_session_dead; then return 91; fi
+    if grep -q "Indexing requested" "$SNAP"; then return 0; fi
+  done
+  return 1
+}
+
 {
   echo ""
   echo "## $(date +%Y-%m-%d) 批提交（cap=$CAP dry=$DRY，含 session 自动重连）"
@@ -139,25 +195,26 @@ for URL in "${URLS[@]}"; do
 
   # 导航 + 回填（带 session 失效检测，最多重试 3 次；每次失效自动重建 session）
   OK=0
+  RC=0
   for attempt in 1 2 3; do
     timeout 60 "$BSK" navigate "$GSC_URL" --session "$SESH" >/dev/null 2>&1
-    timeout 20 "$BSK" wait-ms 6000 >/dev/null 2>&1
+    timeout 20 "$BSK" wait-ms 5000 >/dev/null 2>&1
     timeout 60 "$BSK" fill "$SEL" --value "$URL" --session "$SESH" >/dev/null 2>&1
     timeout 60 "$BSK" press Enter --session "$SESH" >/dev/null 2>&1
-    timeout 60 "$BSK" wait-ms 20000 >/dev/null 2>&1
-    timeout 60 "$BSK" snapshot --session "$SESH" > "$SNAP" 2>&1
-    if is_quota_exceeded; then
+    wait_for_result
+    RC=$?
+    if [ "$RC" = "90" ]; then
       log "   ⛔ GSC 官方配额已耗尽（Quota exceeded），中断本批"
       QUOTA_OUT=1
       break
     fi
-    if is_session_dead; then
+    if [ "$RC" = "91" ]; then
       log "   ⚠ session 失效（第 $attempt 次），重建后重试"
       renew_session || break 2
-    else
-      OK=1
-      break
+      continue
     fi
+    OK=1
+    break
   done
   if [ "${QUOTA_OUT:-0}" = "1" ]; then break; fi
   if [ "$OK" = "0" ]; then
@@ -165,19 +222,11 @@ for URL in "${URLS[@]}"; do
     break
   fi
 
+  # 自适应等待后仍未渲染状态面板 → 留证据、按失败跳过（不移出队列，可续跑补）
   if ! grep -qE "URL is (not )?on Google" "$SNAP"; then
-    timeout 60 "$BSK" wait-ms 15000 >/dev/null 2>&1
-    timeout 60 "$BSK" snapshot --session "$SESH" > "$SNAP" 2>&1
-    if is_quota_exceeded; then
-      log "   ⛔ GSC 官方配额已耗尽（Quota exceeded），中断本批"
-      QUOTA_OUT=1
-      break
-    fi
-    if is_session_dead; then
-      log "   ⚠ 二次快照 session 失效，重建后重试本 URL"
-      renew_session || break
-      continue
-    fi
+    save_fail_snapshot "no-status" "$URL"
+    log "   ⚠ 状态面板 ${MAX_WAIT}s 内未渲染，跳过（证据已存 reports/gsc-fail/）"
+    continue
   fi
 
   if grep -q "URL is on Google" "$SNAP"; then
@@ -200,12 +249,18 @@ for URL in "${URLS[@]}"; do
       QUOTA_OUT=1
       break
     fi
-    log "   ⚠ 未找到 Request indexing 按钮，跳过（快照首行: $(head -4 "$SNAP" | tr '\n' ' ')）"
+    save_fail_snapshot "no-button" "$URL"
+    log "   ⚠ 未找到 Request indexing 按钮，跳过（证据已存 reports/gsc-fail/）"
     continue
   fi
   timeout 60 "$BSK" click "$REF" --session "$SESH" >/dev/null 2>&1
-  timeout 90 "$BSK" wait-ms 80000 >/dev/null 2>&1
-  timeout 60 "$BSK" snapshot --session "$SESH" > "$SNAP" 2>&1
+  wait_for_confirm
+  RC=$?
+  if [ "$RC" = "90" ]; then
+    log "   ⛔ GSC 官方配额已耗尽（Quota exceeded），中断本批"
+    QUOTA_OUT=1
+    break
+  fi
   if grep -q "Indexing requested" "$SNAP"; then
     log "   ✅ 已提交（Indexing requested）"
     SUBMITTED=$((SUBMITTED+1))
@@ -213,7 +268,8 @@ for URL in "${URLS[@]}"; do
     DREF=$(grep -oE '@e[0-9]+ button "Dismiss"' "$SNAP" | grep -oE '@e[0-9]+' | head -1)
     [ -n "$DREF" ] && timeout 30 "$BSK" click "$DREF" --session "$SESH" >/dev/null 2>&1
   else
-    log "   ⚠ 未确认提交，快照首行: $(head -3 "$SNAP" | tr '\n' ' ')"
+    save_fail_snapshot "unconfirmed" "$URL"
+    log "   ⚠ 未确认提交（等待 120s），仍在队列（证据已存 reports/gsc-fail/）"
     if [ "$STOP_ON_THROTTLE" = "1" ]; then
       if grep -qiE "request ignored|ignored|daily limit|too many|rate.?limit|limit reached|exceed" "$SNAP"; then
         log "   ⛔ 检测到限流信号，按 --stop-on-throttle 中断本批"
