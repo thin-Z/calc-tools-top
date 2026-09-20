@@ -97,18 +97,23 @@ test.describe('R-4 首页「查看全部」分类筛选回归 (2026-09-15)', () 
   // 背景：finance/health/life/utility 四区块同属 calculators 目录，「查看全部」曾统一跳
   // /zh/calculators（全量 32 个），点了「财务计算」却看到健康/实用等其它分类。
   // 修法：首页链接带 ?cat=<区块>，calculators 页按该区块的 tag 集合筛选（非单 tag）。
+  // 计数口径（2026-09-20 更新）：展示面已排除 4 个已合并工具（discount / age-calc /
+  // password-strength / keyword-density —— 其落地页是 noindex 跳转壳页，见 tools.json 的 mergedInto），
+  // 故各分类计数相应 −1：finance 13→12、life 7→6、utility 7→6（health 无变化）。
   const CASES = [
-    { cat: 'finance', zh: '财务计算', allow: ['finance', 'shopping'], expectCount: 13 },
+    { cat: 'finance', zh: '财务计算', allow: ['finance', 'shopping'], expectCount: 12 },
     { cat: 'health', zh: '健康计算', allow: ['health'], expectCount: 5 },
-    // life 区块 = life + travel 两个 tag（首页实为 7 个），只按 life 单 tag 筛会漏 2 个
-    { cat: 'life', zh: '生活 · 出行', allow: ['life', 'travel'], expectCount: 7 },
-    { cat: 'utility', zh: '实用工具', allow: ['utility'], expectCount: 7 },
+    // life 区块 = life + travel 两个 tag（首页实为 6 个），只按 life 单 tag 筛会漏 2 个
+    { cat: 'life', zh: '生活 · 出行', allow: ['life', 'travel'], expectCount: 6 },
+    { cat: 'utility', zh: '实用工具', allow: ['utility'], expectCount: 6 },
   ];
 
   // dir 归位回归（2026-09-16）：color-contrast/regex-tester/markdown-preview/simplified-traditional
   // 曾目录属 calculators、标签属 image/text，造成「图片工具筛选只剩 1 个」的困惑与筛选死角。
-  // 归位后：/zh|en/image = 8（与首页图片工具区块一致）、/zh|en/text = 15（与文字工具区块一致），
-  // calculators 页 28 个工具全部属于四个子区块，不再出现 image/text chip。
+  // 归位后：/zh|en/image = 8（与首页图片工具区块一致）、/zh|en/text = 14（与文字工具区块一致），
+  // calculators 页 25 个工具全部属于四个子区块，不再出现 image/text chip。
+  // ⚠️ 2026-09-20：text 15→14（keyword-density 已合并）、calculators 28→25（discount / age-calc /
+  //    password-strength 已合并）；image 8 无变化。
   for (const lang of ['zh', 'en']) {
     test('[' + lang + '] 图片/文字工具目录归位：栏目页数量与首页区块一致', async ({ page }) => {
       // 本用例含 3 次页面导航，8 并行 + 全量套件时易触 45s 默认超时（09-16 CI 抖动实测），标记 slow
@@ -120,11 +125,11 @@ test.describe('R-4 首页「查看全部」分类筛选回归 (2026-09-15)', () 
 
       await page.goto('/' + lang + '/text/', { waitUntil: 'load' });
       await dismissCmp(page);
-      await expect(page.locator('.tool-grid .tool-card-wrap')).toHaveCount(15);
+      await expect(page.locator('.tool-grid .tool-card-wrap')).toHaveCount(14);
 
       await page.goto('/' + lang + '/calculators/', { waitUntil: 'load' });
       await dismissCmp(page);
-      await expect(page.locator('.tool-grid .tool-card-wrap')).toHaveCount(28);
+      await expect(page.locator('.tool-grid .tool-card-wrap')).toHaveCount(25);
       const strayChips = await page.$$eval('.category-chip', (els) =>
         els.filter((c) => ['image', 'text'].indexOf(c.getAttribute('data-cat-key')) !== -1).length);
       expect(strayChips, 'calculators 页不应再出现图片/文字筛选 chip').toBe(0);
