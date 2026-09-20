@@ -28,7 +28,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 
 const SITE = 'https://www.calc-tools.top';
-const ENDPOINT = `http://data.zz.baidu.com/urls?site=${encodeURIComponent(SITE)}`;
+// ⚠️ site 参数**不能**做 URL 编码（2026-09-20 实测）：
+//    用 encodeURIComponent(SITE) 时接口固定返回 400 {"error":400,"message":"site init fail"}；
+//    改为明文 site=https://www.calc-tools.top 后立即成功（remain/success 正常返回）。
+//    官方文档示例同样是明文写法。token 为纯字母数字，编码与否等价，保持不编码以求一致。
+const ENDPOINT = `http://data.zz.baidu.com/urls?site=${SITE}`;
 const STATE_PATH = join(__dirname, '.baidu-push-state.json');
 const TOKEN_PATH = join(__dirname, '.baidu-push-token');
 
