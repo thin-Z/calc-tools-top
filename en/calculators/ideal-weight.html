@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ideal Weight Calculator - Calculate Healthy Weight</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="Free online ideal weight calculator. Calculate your healthy weight range using multiple formulas including Broca, Devine, and BMI methods.">
+    <meta name="description" content="Free ideal weight calculator using Broca, BMI 22 and Devine formulas, with healthy weight ranges by height, BMI categories and waist circumference tables.">
     <meta property='og:title' content='Ideal Weight Calculator - Calculate Healthy Weight'/>
     <meta property='og:description' content='Free online ideal weight calculator. Calculate your healthy weight range using multiple formulas including Broca, Devine, and BMI methods.'/>
     <meta property='og:type' content='website'/>
@@ -55,15 +55,39 @@
             "name": "Which weight formula is most accurate?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Different formulas suit different populations. BMI range is most universal, Devine formula is used in medicine, Broca is simple. Use BMI 18.5-24.9 as primary reference."
+                "text": "None is definitive, because every formula reduces a person to their height. Use the healthy BMI range as the primary reference, with Broca and Devine as cross-checks. For clinical or medication-dosing purposes, use the formula your clinician applies rather than converting one yourself."
             }
         },
         {
             "@type": "Question",
-            "name": "Is normal weight always healthy?",
+            "name": "Is weight inside the healthy range the same as being healthy?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Normal weight doesn't guarantee health. Combine with body fat percentage, waist circumference, and muscle mass for a complete assessment."
+                "text": "No. BMI cannot tell muscle from fat and says nothing about where fat is stored. Normal weight with a high waist measurement or high body fat still carries risk, so assess BMI, waist circumference and body fat together."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Are BMI cut-offs the same in every country?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. WHO classes 18.5 to 24.9 as normal, 25.0 to 29.9 as overweight and 30.0 and above as obese. China's standard WS/T 428-2013 is stricter: normal weight up to 24.0, overweight from 24.0 and obesity from 28.0."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What waist measurement is considered a risk?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Under China's standard, 90 cm or more in men and 85 cm or more in women counts as central obesity, with 85 to 89.9 cm in men and 80 to 84.9 cm in women treated as the at-risk band."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How quickly should weight change?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No more than about 0.5 kg per week, aiming for a 5% to 10% reduction over 3 to 6 months. Faster loss is mostly water and muscle and tends to come back."
             }
         }
     ]
@@ -124,8 +148,6 @@
 
         
 
-        <div class="tool-content"><h2>Ideal Weight Calculator Guide</h2><p>Calculate your ideal weight using multiple internationally recognized formulas. Understanding your healthy weight range helps with fitness and diet planning.</p><h3>Note</h3><p>Ideal weight is a reference only. Actual healthy weight varies by body type, muscle mass, bone density, and other factors.</p></div>
-
 <section class="related-posts">
         <h3>Related Reading</h3>
         <ul>
@@ -133,21 +155,102 @@
         </ul>
     </section>
 <section class="tool-content">
-<h2>About Ideal Weight Calculator</h2>
-<p>Ideal Weight Calculator is a completely free online tool that helps you Standard weight reference + BMI guide. Whether you are a casual user or a professional, you can use it instantly without installing any software.</p>
-<p>Whether you are into fitness, setting health goals, or working in health guidance, you can get a healthy weight range based on internationally recognized formulas.</p>
-<h2>How to Use</h2>
-<ol>
-    <li>Enter your height in centimeters.</li>
-    <li>Enter your age if available.</li>
-    <li>Click the "Calculate" button.</li>
-    <li>Review healthy weight ranges from Broca, Devine, and other formulas.</li>
-</ol>
-<h2>Ideal Weight Calculator FAQ</h2>
-<h3>Is Ideal Weight Calculator free to use?</h3><p>Yes, Ideal Weight Calculator is completely free. There are no hidden fees, no account registration and no download required.</p>
-<h3>How accurate are the results?</h3><p>All calculations are performed locally in your browser using well-established formulas, so the results are accurate and consistent.</p>
-<h3>Is my data private?</h3><p>Your privacy is a priority. Everything you enter is processed directly on your device and is never uploaded to any server.</p>
-<h3>Does Ideal Weight Calculator work on mobile?</h3><p>Yes. The page is fully responsive and works smoothly on phones, tablets and desktop browsers.</p>
+<h2>Why "ideal weight" is a range, not a number</h2>
+<p>Two people of the same height can both be at a healthy weight 15 kg apart. That is not a formula getting it wrong - it is because ideal weight is a range rather than a value. It depends on which formula you use, which reference standard you follow, and your own muscle mass and frame. This calculator shows three widely used formulas plus the healthy BMI band, so you can see where your weight actually sits instead of chasing a single number.</p>
+
+<h3>The three formulas this calculator uses</h3>
+<table class="ref-table">
+<thead><tr><th>Formula</th><th>Calculation</th><th>Character</th><th>Typical use</th></tr></thead>
+<tbody>
+<tr><td>Broca</td><td>Men: height − 100; women: height − 105</td><td>Oldest and crudest; ignores build entirely</td><td>Quick self-check</td></tr>
+<tr><td>BMI 22 conversion</td><td>22 × height² (m)</td><td>Uses the midpoint of the healthy BMI band, so it lines up with BMI categories</td><td>Comparing with BMI guidance</td></tr>
+<tr><td>Devine</td><td>Men: 50 + 0.9 × (height − 152); women: 45.5 + 0.9 × (height − 152)</td><td>Published in 1974 for calculating drug doses; drifts further at extreme heights</td><td>Clinical and pharmacy reference</td></tr>
+</tbody>
+</table>
+<p><strong>How to use it</strong>: the three formulas disagreeing is normal. For a man of 170 cm they give 70.0 kg, 63.6 kg and 66.2 kg respectively - a 6.4 kg spread. Treat the BMI conversion as a sensible midpoint and the healthy range as the boundary, rather than treating any single formula as the answer. You may also see Robinson, Miller and Hamwi quoted elsewhere; they are further variants of the same idea and are not calculated here.</p>
+
+<h3>BMI categories</h3>
+<p>The healthy range in this calculator's result panel runs from 18.5 to 24.9, which follows the World Health Organization cut-offs:</p>
+<table class="ref-table">
+<thead><tr><th>Category</th><th>BMI</th></tr></thead>
+<tbody>
+<tr><td>Underweight</td><td>Below 18.5</td></tr>
+<tr><td>Normal weight</td><td>18.5 – 24.9</td></tr>
+<tr><td>Overweight</td><td>25.0 – 29.9</td></tr>
+<tr><td>Obese</td><td>30.0 and above</td></tr>
+</tbody>
+</table>
+<p>Cut-offs are not universal. China's national standard for adults (WS/T 428-2013) is stricter: normal weight runs to 24.0, overweight starts at 24.0, and obesity at 28.0. Several other countries apply their own thresholds for Asian populations on the grounds that health risk rises at a lower BMI. When you compare yourself against a country's health guidance, use that country's cut-offs - not the WHO table alone.</p>
+
+<h3>Waist circumference: the measurement BMI misses</h3>
+<p>Weight alone cannot tell you where fat sits, and fat stored around the abdomen carries more risk than fat stored elsewhere. China's standard uses waist circumference alongside BMI:</p>
+<table class="ref-table">
+<thead><tr><th>Measure</th><th>Men</th><th>Women</th></tr></thead>
+<tbody>
+<tr><td>Central obesity, at risk</td><td>85 – 89.9 cm</td><td>80 – 84.9 cm</td></tr>
+<tr><td>Central obesity</td><td>90 cm and above</td><td>85 cm and above</td></tr>
+</tbody>
+</table>
+<p><strong>How to use it</strong>: measure at the level of the navel, at the end of a normal breath out, without pulling the tape tight. If your BMI is inside the normal band but your waist crosses these thresholds, the weight figure is telling you less than the tape measure is - and losing a few centimetres of waist will do more for your risk profile than losing the same kilograms elsewhere.</p>
+
+<h3>Ideal weight and healthy range by height - men</h3>
+<p>Calculated with this tool's formulas, with the healthy range taken to the WHO ceiling of 24.9:</p>
+<table class="ref-table">
+<thead><tr><th>Height</th><th>Broca</th><th>BMI 22</th><th>Devine</th><th>Healthy range</th></tr></thead>
+<tbody>
+<tr><td>155 cm</td><td>55.0 kg</td><td>52.9 kg</td><td>52.7 kg</td><td>44.4 – 59.8 kg</td></tr>
+<tr><td>160 cm</td><td>60.0 kg</td><td>56.3 kg</td><td>57.2 kg</td><td>47.4 – 63.7 kg</td></tr>
+<tr><td>165 cm</td><td>65.0 kg</td><td>59.9 kg</td><td>61.7 kg</td><td>50.4 – 67.8 kg</td></tr>
+<tr><td>170 cm</td><td>70.0 kg</td><td>63.6 kg</td><td>66.2 kg</td><td>53.5 – 72.0 kg</td></tr>
+<tr><td>175 cm</td><td>75.0 kg</td><td>67.4 kg</td><td>70.7 kg</td><td>56.7 – 76.3 kg</td></tr>
+<tr><td>180 cm</td><td>80.0 kg</td><td>71.3 kg</td><td>75.2 kg</td><td>59.9 – 80.7 kg</td></tr>
+<tr><td>185 cm</td><td>85.0 kg</td><td>75.3 kg</td><td>79.7 kg</td><td>63.3 – 85.2 kg</td></tr>
+</tbody>
+</table>
+
+<h3>Ideal weight and healthy range by height - women</h3>
+<table class="ref-table">
+<thead><tr><th>Height</th><th>Broca</th><th>BMI 22</th><th>Devine</th><th>Healthy range</th></tr></thead>
+<tbody>
+<tr><td>155 cm</td><td>50.0 kg</td><td>52.9 kg</td><td>48.2 kg</td><td>44.4 – 59.8 kg</td></tr>
+<tr><td>160 cm</td><td>55.0 kg</td><td>56.3 kg</td><td>52.7 kg</td><td>47.4 – 63.7 kg</td></tr>
+<tr><td>165 cm</td><td>60.0 kg</td><td>59.9 kg</td><td>57.2 kg</td><td>50.4 – 67.8 kg</td></tr>
+<tr><td>170 cm</td><td>65.0 kg</td><td>63.6 kg</td><td>61.7 kg</td><td>53.5 – 72.0 kg</td></tr>
+<tr><td>175 cm</td><td>70.0 kg</td><td>67.4 kg</td><td>66.2 kg</td><td>56.7 – 76.3 kg</td></tr>
+<tr><td>180 cm</td><td>75.0 kg</td><td>71.3 kg</td><td>70.7 kg</td><td>59.9 – 80.7 kg</td></tr>
+<tr><td>185 cm</td><td>80.0 kg</td><td>75.3 kg</td><td>75.2 kg</td><td>63.3 – 85.2 kg</td></tr>
+</tbody>
+</table>
+<p><strong>How to use it</strong>: the BMI band is identical for both sexes, but the absolute kilogram figures are not, so never compare your weight directly with someone of the other sex. Compare your BMI position instead. Note also that Devine extrapolates linearly from a 152 cm reference point, so its figures drift most at the tall and short ends of the table.</p>
+
+<h3>Average is not ideal</h3>
+<p>Population averages are useful precisely because they show why "average" is a poor personal target. Measured data from the US CDC's National Health and Nutrition Examination Survey (NHANES) puts American adults at roughly:</p>
+<table class="ref-table">
+<thead><tr><th>Measure</th><th>Value</th><th>What it implies</th></tr></thead>
+<tbody>
+<tr><td>Average height, adult men</td><td>about 175.3 cm (5'9")</td><td>Reference point only</td></tr>
+<tr><td>Average weight, adult men</td><td>about 90.8 kg</td><td>BMI of roughly 29.6 - in the overweight band</td></tr>
+<tr><td>Average waist, adult men</td><td>about 103.9 cm</td><td>Well past the 90 cm risk threshold</td></tr>
+</tbody>
+</table>
+<p><strong>How to use it</strong>: the average adult man's weight works out to a BMI high in the overweight range, and his waist measurement is above the level associated with increased risk. Matching the average is therefore not a health goal. Set targets from BMI and waist thresholds, not from what other people weigh.</p>
+
+<h3>Turning the result into a target you can act on</h3>
+<p>Check things in this order. First, where does your BMI fall - under 18.5, 18.5 to 24.9, or 25 and above? Second, does your waist cross the threshold for your sex? Third, if your weight looks normal but your waist does not, look at body fat rather than the scale.</p>
+<p>The pace matters as much as the target. China's national health guidance recommends losing no more than about 0.5 kg per week and aiming to lose 5% to 10% of body weight over 3 to 6 months. For someone at 80 kg that means 4 to 8 kg over several months - slower than most crash diets promise, but far more likely to stay off. If you are underweight, rule out underlying illness first, then increase energy and protein intake gradually while adding resistance training, so that what you gain is muscle rather than fat.</p>
+<p>One practical detail: body weight fluctuates by 1 to 2 kg within a day because of food, fluid, salt and (for women) the menstrual cycle. Weigh yourself at the same time of day, under the same conditions, once a week, and judge the trend rather than any single reading.</p>
+
+<h3>Three worked examples</h3>
+<p><strong>Example 1 (defaults)</strong>: a man of 170 cm. The tool gives Broca 70.0 kg, BMI 22 conversion 63.6 kg and Devine 66.2 kg, with a healthy range of 53.5 – 72.0 kg.</p>
+<p><strong>Example 2 (a woman of 160 cm)</strong>: Broca 55.0 kg, BMI 22 conversion 56.3 kg, Devine 52.7 kg, healthy range 47.4 – 63.7 kg. Notice that Broca now gives a lower figure than the BMI conversion - the opposite of the pattern for men, because the formula subtracts 105 rather than 100 from a woman's height.</p>
+<p><strong>Example 3 (a tall man of 185 cm)</strong>: Broca 85.0 kg, BMI 22 conversion 75.3 kg, Devine 79.7 kg, healthy range 63.3 – 85.2 kg. Going from 170 cm to 185 cm adds 15.0 kg under Broca but only 11.7 kg under the BMI conversion, because Broca scales linearly while BMI scales with the square of height. That growing gap is exactly why Broca is treated as a rough check rather than a standard. For the BMI side of the picture use the <a href="/en/calculators/bmi">BMI calculator</a>, and to plan the calories behind a weight target use the <a href="/en/calculators/calorie-calculator">calorie calculator</a>. Height-and-weight charts for both sexes are in <a href="/blog/en/standard-weight-guide">the standard weight guide</a>.</p>
+
+<h3>More questions about ideal weight</h3>
+<p><strong>Which formula is the most accurate?</strong> None of them is definitive, because they all reduce a person to a height. For everyday use, work from the healthy BMI range and treat Broca and Devine as cross-checks. For anything clinical - medication dosing in particular - follow the formula your clinician uses rather than converting one yourself.</p>
+<p><strong>Is weight within the healthy range the same as being healthy?</strong> No. BMI cannot distinguish muscle from fat and says nothing about where fat is stored. Normal weight with a high waist measurement or high body fat carries real risk, which is why three measurements beat one.</p>
+<p><strong>What if I lift weights and my BMI says overweight?</strong> Muscle is denser than fat, so trained people often run a BMI above 25 without excess fat. In that case the BMI figure loses much of its meaning: judge by waist circumference and body fat percentage, and do not cut weight just to move a number.</p>
+<p><strong>Does age change the healthy weight?</strong> Yes. Muscle mass declines with age while fat proportion rises, so the same weight means something different at 50 than at 25. For older adults, an aggressive low weight is a worse goal than maintaining muscle and keeping the waist in check. The age field in this tool is recorded but does not enter any of the three formulas.</p>
+<p><strong>How fast should weight change?</strong> Slowly: about 0.5 kg a week at most, with a 5% to 10% reduction over 3 to 6 months. Faster loss is usually water and muscle, and it tends to come back.</p>
 </section>
     </main>
 

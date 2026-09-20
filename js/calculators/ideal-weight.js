@@ -34,7 +34,7 @@ function doCalculate() {
  * @returns {void} 无返回值。
  */
 function resetForm() {
-    document.getElementById('height').value = '';
+    document.getElementById('height').value = '170';
     document.getElementById('age').value = '30';
     document.querySelector('input[name="gender"][value="male"]').checked = true;
     document.getElementById('resultArea').classList.add('hidden');
