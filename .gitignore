@@ -60,3 +60,8 @@ snapshots/
 
 # GSC 批提交器临时快照（scripts/gsc-submit-daily.sh 每次运行覆盖，勿入库）
 snap_t.txt
+
+# 搜索引擎提交（Tier 1 · 2026-09-20）：token 与本地推送状态不入库
+scripts/.baidu-push-token
+scripts/.baidu-push-state.json
+scripts/.indexnow-state.json

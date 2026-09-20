@@ -2,7 +2,29 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-# AI 爬虫规则（P2-10）：允许主流 AI 检索爬虫索引站点内容
+# ── 中文搜索引擎与内容平台（Tier 1 · 2026-09-20）──
+# 背景：本站在 Google 侧已做索引优化，但大陆用户的搜索入口是百度/Bing/微信等。
+# 此处显式声明允许下列爬虫，避免未来收紧规则时被通配符误伤；Baiduspider 亦支持本文件的 Sitemap 声明。
+User-agent: Baiduspider
+Allow: /
+User-agent: Baiduspider-mobile
+Allow: /
+User-agent: Baiduspider-image
+Allow: /
+User-agent: Sogou web spider
+Allow: /
+User-agent: Sogou inst spider
+Allow: /
+User-agent: 360Spider
+Allow: /
+User-agent: HaosouSpider
+Allow: /
+User-agent: YisouSpider
+Allow: /
+User-agent: Bytespider
+Allow: /
+
+# ── AI 检索爬虫（P2-10）：允许主流 AI 检索爬虫索引站点内容 ──
 User-agent: GPTBot
 Allow: /
 User-agent: Google-Extended
