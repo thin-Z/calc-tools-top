@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Overtime Calculator - Calculate Overtime Pay Online</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="Free online overtime pay calculator. Calculate overtime wages for weekdays, weekends, and holidays based on standard labor law rates.">
+    <meta name="description" content="Free overtime calculator using China's statutory rates: 150% on working days, 200% on rest days, 300% on holidays, with 2026 holiday dates and FLSA comparison.">
     <meta property='og:title' content='Overtime Calculator - Calculate Overtime Pay Online'/>
     <meta property='og:description' content='Free online overtime pay calculator. Calculate overtime wages for weekdays, weekends, and holidays based on standard labor law rates.'/>
     <meta property='og:type' content='website'/>
@@ -55,15 +55,39 @@
             "name": "How is overtime calculated?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Weekday overtime: 1.5x hourly rate. Weekend: 2x. Holiday: 3x. Hourly rate = monthly salary / 21.75 / 8."
+                "text": "Weekday extension: 150% of the hourly rate. Rest day: 200%. Statutory holiday: 300%. Hourly rate = monthly salary / 21.75 / 8. These are the statutory rates that apply in mainland China."
             }
         },
         {
             "@type": "Question",
-            "name": "What is the standard work hours per month?",
+            "name": "Where does 21.75 come from?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "The standard is 21.75 working days per month or 174 hours, calculated as (365 - 104 weekends) / 12."
+                "text": "Statutory monthly paid days = (365 - 104 rest days) / 12 = 21.75. Statutory holidays are paid but not worked, so they are not deducted, which gives 174 paid hours per month."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can an employer give time off instead of overtime pay?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "For work on a rest day, yes, if equivalent time off in lieu is arranged. For statutory holiday work, no: the 300% rate is mandatory and time off cannot replace it."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Which days in 2026 qualify for the 300% rate?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "13 days in 2026: 1 January, 16-19 February (Spring Festival), 5 April, 1-2 May, 19 June, 25 September and 1-3 October."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is there a limit on overtime hours?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Under Article 41 of the Labour Law, overtime is generally limited to 1 hour per day, 3 hours in special circumstances, and 36 hours per month."
             }
         }
     ]
@@ -125,8 +149,6 @@
 
         
 
-        <div class="tool-content"><h2>Overtime Calculator Guide</h2><p>Calculate your overtime pay based on standard labor law rates. Enter your monthly salary and overtime hours to see what you should earn.</p><h3>Overtime Rates</h3><p>Weekday: 150% | Weekend (no comp time): 200% | Holiday: 300% of hourly rate</p></div>
-
 <section class="related-posts">
         <h3>Related Reading</h3>
         <ul>
@@ -134,21 +156,102 @@
         </ul>
     </section>
 <section class="tool-content">
-<h2>About Overtime Calculator</h2>
-<p>Overtime Calculator is a completely free online tool that helps you Overtime pay calculation per labor law. Whether you are a casual user or a professional, you can use it instantly without installing any software.</p>
-<p>Whether you are an employee checking overtime pay, an HR calculating labor costs, or a finance professional applying labor law rates, you can get an instant breakdown.</p>
-<h2>How to Use</h2>
-<ol>
-    <li>Enter your monthly salary (before tax) in the first field.</li>
-    <li>Enter overtime hours for weekdays, weekends, and public holidays.</li>
-    <li>Click the "Calculate" button.</li>
-    <li>View the 1.5x/2x/3x overtime pay breakdown and the total.</li>
-</ol>
-<h2>Overtime Calculator FAQ</h2>
-<h3>Is Overtime Calculator free to use?</h3><p>Yes, Overtime Calculator is completely free. There are no hidden fees, no account registration and no download required.</p>
-<h3>How accurate are the results?</h3><p>All calculations are performed locally in your browser using well-established formulas, so the results are accurate and consistent.</p>
-<h3>Is my data private?</h3><p>Your privacy is a priority. Everything you enter is processed directly on your device and is never uploaded to any server.</p>
-<h3>Does Overtime Calculator work on mobile?</h3><p>Yes. The page is fully responsive and works smoothly on phones, tablets and desktop browsers.</p>
+<h2>Which overtime rules this calculator applies</h2>
+<p>This calculator uses the statutory overtime rules of mainland China. A monthly-paid employee's hourly rate is derived as <strong>monthly salary ÷ 21.75 ÷ 8</strong>, and overtime is then paid at <strong>150%</strong> for work on a working day, <strong>200%</strong> for work on a rest day that is not compensated with time off, and <strong>300%</strong> for work on a statutory holiday. It is the right tool if you work in China, or manage payroll for staff in China, and want to check whether the overtime on a payslip meets the statutory minimum.</p>
+<p>The mechanics are different if you are paid under US federal rules, where overtime is triggered by hours beyond 40 in a workweek rather than by the type of day worked. The comparison table further down sets out both models side by side, so you can see which one applies to you.</p>
+
+<h3>The three rates and when each applies</h3>
+<table class="ref-table">
+<thead><tr><th>Type of overtime</th><th>Rate</th><th>Can time off replace it?</th><th>Legal basis</th></tr></thead>
+<tbody>
+<tr><td>Extension of a working day</td><td>150% of hourly rate</td><td>No, overtime pay is required</td><td>Labour Law, Article 44(1)</td></tr>
+<tr><td>Rest day (weekend or shifted day off)</td><td>200% of hourly rate</td><td>Yes, if equivalent time off is given first</td><td>Labour Law, Article 44(2)</td></tr>
+<tr><td>Statutory holiday</td><td>300% of hourly rate</td><td>No, time off cannot replace it</td><td>Labour Law, Article 44(3)</td></tr>
+</tbody>
+</table>
+<p><strong>How to use it</strong>: if your employer offers "time off instead" for weekend work, that is allowed for rest-day overtime. If the same work falls on a statutory holiday such as 1 October, time off cannot replace the 300% payment. That distinction is the single most common point of confusion when checking a payslip.</p>
+
+<h3>Where 21.75 days comes from</h3>
+<p>China's Ministry of Human Resources and Social Security sets the conversion in Circular Lao She Bu Fa [2008] No. 3. A year has 365 days, 104 of which are rest days. Statutory holidays must be paid even though no work is performed (Labour Law, Article 51), so they are not deducted from the paid-day count. That gives <strong>21.75 = (365 − 104) ÷ 12</strong> paid days per month, and 174 paid hours when multiplied by 8 hours a day.</p>
+<p>The same circular defines a second figure, 20.83 working days per month (250 ÷ 12), but that one measures <em>working time</em> — for example, when checking whether an employee on a consolidated working-hours system has exceeded the statutory total. Mixing the two up is a common error.</p>
+<table class="ref-table">
+<thead><tr><th>Figure</th><th>Meaning</th><th>Formula</th><th>Used for</th></tr></thead>
+<tbody>
+<tr><td>21.75 days</td><td>Monthly paid days</td><td>(365 − 104) ÷ 12</td><td>Converting salary into daily and hourly rates, overtime pay, unpaid-leave deductions</td></tr>
+<tr><td>20.83 days</td><td>Monthly working days (2008 basis)</td><td>(365 − 104 − 11) ÷ 12</td><td>Measuring working time and consolidated-hours compliance</td></tr>
+</tbody>
+</table>
+<p>Note that 20.83 was calculated when there were 11 statutory holidays. Since 2025 there are 13, which strictly gives (365 − 104 − 13) ÷ 12 or about 20.67 days, although the circular has not been updated. The 21.75 figure is unaffected, because its numerator only removes rest days.</p>
+
+<h3>The 13 statutory holidays in 2026 (300% rate)</h3>
+<p>The 300% rate applies to specific dates, not to the whole holiday period. In 2026, per the State Council's holiday schedule:</p>
+<table class="ref-table">
+<thead><tr><th>Holiday</th><th>Dates paid at 300%</th><th>Days</th></tr></thead>
+<tbody>
+<tr><td>New Year</td><td>1 January</td><td>1</td></tr>
+<tr><td>Spring Festival</td><td>16–19 February</td><td>4</td></tr>
+<tr><td>Qingming</td><td>5 April</td><td>1</td></tr>
+<tr><td>Labour Day</td><td>1–2 May</td><td>2</td></tr>
+<tr><td>Dragon Boat</td><td>19 June</td><td>1</td></tr>
+<tr><td>Mid-Autumn</td><td>25 September</td><td>1</td></tr>
+<tr><td>National Day</td><td>1–3 October</td><td>3</td></tr>
+<tr><td>Total</td><td>—</td><td>13</td></tr>
+</tbody>
+</table>
+<p><strong>How to use it</strong>: the 2026 holiday calendar covers 33 days off in total, but only the 13 dates above attract the 300% rate. The remaining days of each holiday period — for example 15 February and 20–23 February, or 4–7 October — are rest days: your employer may arrange time off, and if none is arranged the rate is 200%. Within a single holiday period, different dates therefore carry different rates.</p>
+
+<h3>Hourly rate and the three rates by monthly salary</h3>
+<p>The table below converts monthly salaries using this calculator's statutory basis (21.75 paid days, 8 hours a day):</p>
+<table class="ref-table">
+<thead><tr><th>Monthly salary</th><th>Daily rate</th><th>Hourly rate</th><th>Working day 150%</th><th>Rest day 200%</th><th>Statutory holiday 300%</th></tr></thead>
+<tbody>
+<tr><td>$4,000</td><td>183.91</td><td>22.99</td><td>34.48</td><td>45.98</td><td>68.97</td></tr>
+<tr><td>$5,000</td><td>229.89</td><td>28.74</td><td>43.10</td><td>57.47</td><td>86.21</td></tr>
+<tr><td>$8,000</td><td>367.82</td><td>45.98</td><td>68.97</td><td>91.95</td><td>137.93</td></tr>
+<tr><td>$12,000</td><td>551.72</td><td>68.97</td><td>103.45</td><td>137.93</td><td>206.90</td></tr>
+</tbody>
+</table>
+<p><strong>How to use it</strong>: these are per-hour figures rounded to the cent. Multiplying a rounded figure by a large number of hours can differ from the calculator by a few cents, so use the tool itself for exact amounts. The table is for a quick sanity check of whether the overtime on your payslip is in the right range.</p>
+
+<h3>How China's rules compare with US FLSA and California</h3>
+<table class="ref-table">
+<thead><tr><th>Feature</th><th>Mainland China</th><th>US federal (FLSA)</th><th>California</th></tr></thead>
+<tbody>
+<tr><td>What triggers overtime</td><td>Type of day worked</td><td>Hours beyond 40 in a workweek</td><td>Beyond 8 hours a day and beyond 40 a week</td></tr>
+<tr><td>Maximum rate</td><td>300% on statutory holidays</td><td>150%, no federal double time</td><td>200% after 12 hours in a day</td></tr>
+<tr><td>Daily overtime</td><td>Not applicable</td><td>Not required</td><td>150% after 8 hours, 200% after 12</td></tr>
+<tr><td>Time off in lieu</td><td>Allowed for rest-day work</td><td>Cash required; time off only for public sector</td><td>Not allowed for private employers</td></tr>
+<tr><td>Monthly cap</td><td>36 hours</td><td>None</td><td>None</td></tr>
+<tr><td>Salary floor for exemption</td><td>Contract-based, not below local minimum wage</td><td>$684 per week ($35,568 a year)</td><td>$1,352 per week ($70,304 a year)</td></tr>
+</tbody>
+</table>
+<p>The US federal figure is the 2019 threshold that the Department of Labor restored on 15 May 2026, after courts vacated the higher 2024 salary levels. Several states set their own, higher floors — California's is twice the state minimum wage. Where state and federal rules differ, the rule more favourable to the employee applies.</p>
+
+<h3>Overtime is capped at 36 hours a month</h3>
+<p>Article 41 of the Labour Law limits overtime to one hour a day, three hours in special circumstances, and 36 hours in any month. Put those 36 hours into different day types and the pay differs sharply — here at a $5,000 monthly salary:</p>
+<table class="ref-table">
+<thead><tr><th>How the 36 hours are used</th><th>Total overtime pay</th><th>Equivalent days of salary</th></tr></thead>
+<tbody>
+<tr><td>All on working days (150%)</td><td>$1,551.72</td><td>6.75 days</td></tr>
+<tr><td>All on rest days with no time off (200%)</td><td>$2,068.97</td><td>9.00 days</td></tr>
+<tr><td>12 hours each across the three types</td><td>$2,241.38</td><td>9.75 days</td></tr>
+<tr><td>All on statutory holidays (300%)</td><td>$3,103.45</td><td>13.50 days</td></tr>
+</tbody>
+</table>
+<p><strong>How to use it</strong>: the same number of hours can be worth twice as much depending on when they were worked. If the overtime on a payslip looks low, check first whether all hours were recorded (including remote and on-call work), then whether the hourly base was calculated from the contractual salary rather than the local minimum wage.</p>
+
+<h3>Three worked examples</h3>
+<p><strong>Example 1 (working-day overtime)</strong>: a $5,000 monthly salary with 10 hours of weekday overtime. The tool reports an hourly rate of $28.74 and overtime of <strong>$431.03</strong> (hourly rate × 1.5 × 10 hours), for total monthly pay of about $5,431.03.</p>
+<p><strong>Example 2 (National Day)</strong>: the same salary, with 8 hours worked on 1, 2 and 3 October — 24 hours in total, all statutory holidays. At the 300% rate the overtime comes to <strong>$2,068.97</strong>, equal to nine days of normal pay. Had the same 24 hours fallen on 4–7 October (rest days), the amount would be $1,379.31, a difference of about $689.66 — before any time off in lieu is considered.</p>
+<p><strong>Example 3 (mixed)</strong>: 10 hours on working days, 10 on rest days and 10 on a statutory holiday. The breakdown is $431.03 on working days, $574.71 on rest days and $862.07 on the statutory holiday, giving a total of <strong>$1,867.82</strong>. A third of the hours produce almost half the pay, which is why the dates matter more than the total hours. To see how overtime is taxed alongside the rest of your salary, use the <a href="/en/calculators/tax2026">tax calculator</a>; to count the working days in a given month, use the <a href="/en/calculators/workday-calculator">workday calculator</a>. The underlying rules are summarised in <a href="/blog/en/overtime-pay-guide">overtime pay calculation explained</a>.</p>
+<p>All figures come from the calculator's own algorithm. Rates in the tables are rounded to the cent, so multiplying a rounded figure may differ from the tool's output by a few cents; use the calculator itself for exact amounts.</p>
+
+<h3>More questions about overtime pay</h3>
+<p><strong>Can my employer give time off instead of paying for weekend work?</strong> For rest-day work, yes, provided equivalent time off is actually taken. For statutory holiday work, no — the 300% rate is mandatory and cannot be substituted.</p>
+<p><strong>My employer calculated overtime from the minimum wage. Is that allowed?</strong> The base should be the normal working-time wage agreed in the employment contract, and it cannot fall below the local minimum wage. If the contractual salary is higher than the minimum wage, using the minimum wage as the base understates the payment. Payslips, attendance records and bank statements are the evidence that matters in a dispute.</p>
+<p><strong>Does "voluntary" overtime have to be paid?</strong> It depends on who required it. If the employer asked, expected or effectively required the additional hours through workload, they count as overtime. If an employee stays late on their own to do unrelated work, they do not.</p>
+<p><strong>How does this work under a consolidated working-hours system?</strong> Working time is totalled over a month, quarter or year and compared with the statutory total for that period; hours above it are treated as extended working time and paid at 150%. Work on a statutory holiday still attracts 300% separately. The comparison uses 20.83 days a month (about 166.64 hours), not the 21.75 days used for pay conversion.</p>
+<p><strong>What isn't included here?</strong> The calculator covers the three statutory multipliers only. It excludes local allowances such as night-shift or heat allowances, unused annual leave payouts, social insurance and income tax, and minimum-wage compliance checks. Treat the result as a check on the statutory minimum rather than a final payroll figure.</p>
 </section>
     </main>
 

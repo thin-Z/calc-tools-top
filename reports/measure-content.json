@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-09-20T14:23:17.351Z",
+  "generatedAt": "2026-09-20T14:41:13.301Z",
   "total": 222,
   "summary": {
     "zhToolHanzi": {
       "n": 64,
-      "mean": 1242,
+      "mean": 1267,
       "median": 1080
     },
     "enToolWords": {
       "n": 55,
-      "mean": 564,
-      "median": 359
+      "mean": 586,
+      "median": 364
     },
     "zhBlogHanzi": {
       "n": 40,
       "mean": 995,
       "median": 742
     },
-    "siteAvgOverlap": 0.0853,
-    "siteAvgOverlapBody": 0.1073,
+    "siteAvgOverlap": 0.0848,
+    "siteAvgOverlapBody": 0.1047,
     "noindexPages": 12
   },
   "pages": [
@@ -954,7 +954,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 24,
-      "words": 321,
+      "words": 1531,
       "_shBody": {},
       "noindex": false
     },
@@ -1682,8 +1682,8 @@
       "rel": "dist/zh/calculators/overtime.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 1171,
-      "words": 3,
+      "hanzi": 2784,
+      "words": 2,
       "_shBody": {},
       "noindex": false
     },
@@ -2075,17 +2075,17 @@
   ],
   "focus": {
     "keys": [
-      "dca-calculator"
+      "calculators/overtime"
     ],
     "matched": 2,
     "noindexStubs": 0,
     "fulltext": {
-      "maxJaccard": 0.0669,
+      "maxJaccard": 0.0595,
       "pairsOver15pct": 0,
       "totalPairs": 220
     },
     "body": {
-      "maxJaccard": 0.0617,
+      "maxJaccard": 0.047,
       "pairsOver15pct": 0,
       "totalPairs": 208
     },
@@ -2093,54 +2093,54 @@
     "fuseTriggered": false,
     "topPairsBody": [
       {
-        "a": "dist/en/calculators/dca-calculator.html",
-        "b": "dist/en/calculators/compound-interest.html",
-        "jaccard": 0.0617
+        "a": "dist/zh/calculators/overtime.html",
+        "b": "dist/blog/zh/overtime-pay-guide.html",
+        "jaccard": 0.047
       },
       {
-        "a": "dist/en/calculators/dca-calculator.html",
-        "b": "dist/blog/en/compound-interest-guide.html",
-        "jaccard": 0.0567
+        "a": "dist/en/calculators/overtime.html",
+        "b": "dist/en/calculators/tax2026.html",
+        "jaccard": 0.0454
       },
       {
-        "a": "dist/en/calculators/dca-calculator.html",
-        "b": "dist/en/calculators/mortgage.html",
-        "jaccard": 0.0543
-      },
-      {
-        "a": "dist/en/calculators/dca-calculator.html",
-        "b": "dist/en/calculators/loan-compare.html",
-        "jaccard": 0.0459
-      },
-      {
-        "a": "dist/en/calculators/dca-calculator.html",
-        "b": "dist/en/calculators/percentage-calc.html",
-        "jaccard": 0.0438
-      },
-      {
-        "a": "dist/en/calculators/dca-calculator.html",
-        "b": "dist/blog/en/housing-fund-loan-guide.html",
-        "jaccard": 0.0423
-      },
-      {
-        "a": "dist/en/calculators/dca-calculator.html",
-        "b": "dist/en/calculators/currency-converter.html",
-        "jaccard": 0.0418
-      },
-      {
-        "a": "dist/en/calculators/dca-calculator.html",
-        "b": "dist/en/calculators/housing-fund.html",
-        "jaccard": 0.0418
-      },
-      {
-        "a": "dist/zh/calculators/dca-calculator.html",
-        "b": "dist/blog/zh/compound-interest-guide.html",
-        "jaccard": 0.0395
-      },
-      {
-        "a": "dist/en/calculators/dca-calculator.html",
+        "a": "dist/en/calculators/overtime.html",
         "b": "dist/en/calculators/date-calc.html",
-        "jaccard": 0.0383
+        "jaccard": 0.0405
+      },
+      {
+        "a": "dist/en/calculators/overtime.html",
+        "b": "dist/en/calculators/dca-calculator.html",
+        "jaccard": 0.0404
+      },
+      {
+        "a": "dist/en/calculators/overtime.html",
+        "b": "dist/en/calculators/housing-fund.html",
+        "jaccard": 0.0401
+      },
+      {
+        "a": "dist/en/calculators/overtime.html",
+        "b": "dist/en/calculators/percentage-calc.html",
+        "jaccard": 0.0367
+      },
+      {
+        "a": "dist/en/calculators/overtime.html",
+        "b": "dist/en/calculators/compound-interest.html",
+        "jaccard": 0.0364
+      },
+      {
+        "a": "dist/en/calculators/overtime.html",
+        "b": "dist/en/calculators/bmi.html",
+        "jaccard": 0.0361
+      },
+      {
+        "a": "dist/zh/calculators/overtime.html",
+        "b": "dist/blog/zh/workday-calculator-guide.html",
+        "jaccard": 0.0347
+      },
+      {
+        "a": "dist/en/calculators/overtime.html",
+        "b": "dist/en/calculators/mortgage.html",
+        "jaccard": 0.0341
       }
     ]
   }
