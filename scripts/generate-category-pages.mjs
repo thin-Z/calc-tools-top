@@ -25,7 +25,7 @@
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
-import { generateCardHTML, SECTION_ORDER, SECTION_TITLES, sectionTags, toolInSection } from './lib/tool-card.mjs';
+import { generateCardHTML, SECTION_ORDER, SECTION_TITLES, sectionTags, toolInSection, isVisibleTool } from './lib/tool-card.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const dryRun = process.argv.includes('--dry-run');
@@ -137,7 +137,8 @@ for (const dir of DIRS) {
       console.warn(`[generate-category] 跳过（文件不存在）: ${rel}`);
       continue;
     }
-    const list = tools.filter((t) => t.dir === dir);
+    // 展示面过滤：已合并（mergedInto）工具落地页是 noindex 壳页，不进网格与计数
+    const list = tools.filter((t) => isVisibleTool(t) && t.dir === dir);
     if (!list.length) {
       console.warn(`[generate-category] 跳过（无工具）: ${rel}`);
       continue;

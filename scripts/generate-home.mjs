@@ -35,7 +35,7 @@ console.log(`[generate-home] 读取 tools.json: ${tools.length} 个工具`);
 // ── 2. 区块定义（一级，无二级）──────────────────────────────
 // categories → 区块归属映射 / 区块顺序 / 区块标题 已收敛到 lib/tool-card.mjs
 // （首页与栏目页共用同一份，杜绝「首页区块集合」与「查看全部落点页筛选集合」漂移）
-import { CATEGORY_SECTION, SECTION_ORDER, SECTION_TITLES, toolInSection } from './lib/tool-card.mjs';
+import { CATEGORY_SECTION, SECTION_ORDER, SECTION_TITLES, toolInSection, isVisibleTool } from './lib/tool-card.mjs';
 
 const sectionHeaders = {
   finance: { zh: '财务计算', en: 'Finance', id: 'sec-finance' },
@@ -92,7 +92,9 @@ function generateToolKeywords() {
 
 // ── P1-2：静态预渲染「热门工具」卡（消除 JS 填充缺口，降 CLS）──────────────
 // 默认热门工具集（与 site-home.js 的 DEFAULT_HOT_TOOLS 保持一致）
-const DEFAULT_HOT_TOOLS = ['mortgage', 'bmi', 'tax2026', 'color-picker', 'discount', 'unit-converter', 'word-counter', 'json-formatter'];
+// ⚠️ 只能放**未合并**的可见工具（isVisibleTool）——#5 原为 discount（已合并到 percentage-calc，
+//    落地页是 noindex 跳转壳页），2026-09-20 换为 housing-fund（公积金计算器：中文民生刚需、内容已加密）。
+const DEFAULT_HOT_TOOLS = ['mortgage', 'bmi', 'tax2026', 'color-picker', 'housing-fund', 'unit-converter', 'word-counter', 'json-formatter'];
 
 // 按 site-home.js initHotTools 的 hot 卡结构生成：.hot-tool-card > hot-badge + hot-score + a.tool-card(.icon/.h3/.p) + tool-tags
 // score=0、无 trendBadge（新增用户默认态）；链接用 cleanUrl（与主卡片一致，initHotTools 重渲染时按用户数据覆盖）。
@@ -126,7 +128,7 @@ function toolSections(t) {
 
 function generateSectionHTML(section, lang) {
   const header = sectionHeaders[section];
-  const sectionTools = tools.filter(t => toolSections(t).includes(section));
+  const sectionTools = tools.filter(t => isVisibleTool(t) && toolSections(t).includes(section));
   if (sectionTools.length === 0) return '';
 
   const badge = header.privacy

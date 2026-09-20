@@ -1,7 +1,7 @@
 // Phase 1.4 + 3.4: 首页多源同步校验（tools.json 为权威数据源）
 // 断言：tools.json 集 == 首页卡片集(zh/en) == SITE_CONFIG.tools 集 == 磁盘页面集 == TOOLS_DATA 集 == TOOL_KEYWORDS_ZH 集
 // 任一源漂移即报错并退出码 1。
-import { readFileSync, readdirSync } from 'fs';
+import { readFileSync, readdirSync, existsSync } from 'fs';
 import { join, dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -98,10 +98,17 @@ function check(name, a, b) {
   }
 }
 
+// 「展示集」= 全量集 − 已合并工具。已合并工具（tools.json 里带 mergedInto）落地页是
+// noindex 跳转壳页：磁盘上存在、配置与数据层保留（旧 URL 重定向 + 「最近使用」按 id 取值），
+// 但**不得出现在首页卡片等展示面**（2026-09-20：原 discount/age-calc/password-strength/
+// keyword-density 4 条曾出现在首页热门位与分类网格中，导致内链权重导给 noindex 页）。
+const mergedSet = new Set(toolsJson.filter((t) => t.mergedInto).map((t) => t.slug));
+const visibleSet = new Set([...toolsJsonSet].filter((s) => !mergedSet.has(s)));
+
 check(`tools.json(${toolsJsonSet.size}) vs 磁盘zh(${diskZh.size})`, toolsJsonSet, diskZh);
 check(`tools.json(${toolsJsonSet.size}) vs 磁盘en(${diskEn.size})`, toolsJsonSet, diskEn);
-check(`tools.json(${toolsJsonSet.size}) vs 首页zh(${homeZh.size})`, toolsJsonSet, homeZh);
-check(`tools.json(${toolsJsonSet.size}) vs 首页en(${homeEn.size})`, toolsJsonSet, homeEn);
+check(`tools.json−已合并(${visibleSet.size}) vs 首页zh(${homeZh.size})`, visibleSet, homeZh);
+check(`tools.json−已合并(${visibleSet.size}) vs 首页en(${homeEn.size})`, visibleSet, homeEn);
 check(`tools.json(${toolsJsonSet.size}) vs 配置(${configSet.size})`, toolsJsonSet, configSet);
 check(`tools.json(${toolsJsonSet.size}) vs TOOLS_DATA(${toolsDataKeys.size})`, toolsJsonSet, toolsDataKeys);
 check(`tools.json(${toolsJsonSet.size}) vs TOOL_KEYWORDS_ZH(${kwKeys.size})`, toolsJsonSet, kwKeys);
@@ -122,9 +129,27 @@ function checkLikeIds(label, cards) {
 checkLikeIds('首页zh', homeZhCards);
 checkLikeIds('首页en', homeEnCards);
 
+// 7) 已合并工具的硬约束（2026-09-20 新增，防止修好又被回退）
+//    ① 展示面绝不能出现——独立反向断言，报错文案明确指向「落地页是 noindex 壳页」
+for (const s of mergedSet) {
+  if (homeZh.has(s) || homeEn.has(s)) {
+    errors.push(`已合并工具 "${s}" 出现在首页展示面（应过滤：其落地页为 noindex 跳转壳页）`);
+  }
+}
+//    ② 其壳页必须仍在磁盘——展示面已排除，但旧 URL 仍需承接页（否则 404）
+for (const s of mergedSet) {
+  const t = toolsJson.find((x) => x.slug === s);
+  for (const lang of ['zh', 'en']) {
+    const rel = `${lang}/${t.dir}/${s}.html`;
+    if (!existsSync(join(root, rel))) {
+      errors.push(`已合并工具壳页缺失: ${rel}（旧 URL 将 404，须保留承接页）`);
+    }
+  }
+}
+
 if (errors.length) {
   console.error('❌ 首页三源不一致：');
   for (const e of errors) console.error('  ✗ ' + e);
   process.exit(1);
 }
-console.log(`✅ 首页同步: tools.json(${toolsJsonSet.size}) == 磁盘 == 首页zh/en == 配置 == TOOLS_DATA == TOOL_KEYWORDS_ZH 全一致`);
+console.log(`✅ 首页同步: tools.json(${toolsJsonSet.size}，含已合并 ${mergedSet.size}) == 磁盘 == 配置 == TOOLS_DATA == TOOL_KEYWORDS_ZH 全一致 ｜ 展示面(${visibleSet.size}) == 首页zh/en ｜ 已合并壳页 ${mergedSet.size * 2} 个均在磁盘且不在展示面`);

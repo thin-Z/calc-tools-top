@@ -146,6 +146,7 @@
   },
   {
     "slug": "discount",
+    "mergedInto": "percentage-calc",
     "icon": "tag",
     "dir": "calculators",
     "categories": [
@@ -293,6 +294,7 @@
   },
   {
     "slug": "age-calc",
+    "mergedInto": "date-calc",
     "icon": "cake",
     "dir": "calculators",
     "categories": [
@@ -348,6 +350,7 @@
   },
   {
     "slug": "password-strength",
+    "mergedInto": "password-gen",
     "icon": "shield",
     "dir": "calculators",
     "categories": [
@@ -726,6 +729,7 @@
   },
   {
     "slug": "keyword-density",
+    "mergedInto": "word-counter",
     "icon": "hash",
     "dir": "text",
     "categories": [

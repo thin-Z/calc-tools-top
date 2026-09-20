@@ -625,7 +625,9 @@ const TOOL_KEYWORDS_ZH = {
 /* __GENERATED_TOOL_KEYWORDS_END__ */
 
 // Default hot tools for new visitors
-const DEFAULT_HOT_TOOLS = ['mortgage', 'bmi', 'tax2026', 'color-picker', 'discount', 'unit-converter', 'word-counter', 'json-formatter'];
+// ⚠️ 只能放「未合并」工具：已合并工具（tools.json 里带 mergedInto）落地页是 noindex 跳转壳页，
+//    2026-09-20 起展示面统一过滤（原 #5 为 discount → 已换为 housing-fund）。与 generate-home.mjs 保持一致。
+const DEFAULT_HOT_TOOLS = ['mortgage', 'bmi', 'tax2026', 'color-picker', 'housing-fund', 'unit-converter', 'word-counter', 'json-formatter'];
 
 const _globalClickTotals = {};
 // 全局点击量缓存：sessionStorage 10 分钟，避免每次刷新/bfcache 恢复都重新拉取

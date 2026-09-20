@@ -60,6 +60,20 @@ export function toolInSection(tool, section) {
   return tool.categories.some((c) => CATEGORY_SECTION[c] === section);
 }
 
+/**
+ * 工具是否应出现在站内「工具网格 / 分类卡 / 热门位」等**展示面**。
+ * 背景（2026-09-20）：4 个已合并工具（discount / age-calc / password-strength /
+ * keyword-density）在 tools.json 中保留条目——它们仍需要：
+ *   ① 旧扁平 URL 重定向（generate-redirects 按 slug 生成）；
+ *   ② SITE_CONFIG.tools 与 TOOLS_DATA 的数据层完整性（「最近使用」等按 id 取值）。
+ * 但它们的落地页是 `noindex` 跳转壳页，若出现在展示面上会导致：
+ *   · 内链权重导给 noindex 页；· 用户点开「折扣计算器」却被瞬移到另一页。
+ * 故展示面统一用本函数过滤（tools.json 里以 `mergedInto` 字段标记合并目标）。
+ */
+export function isVisibleTool(tool) {
+  return !tool.mergedInto;
+}
+
 /** 分类中文/英文显示名（tag 徽章用） */
 export const TAG_LABELS = {
   finance: { zh: '财务', en: 'Finance' },
