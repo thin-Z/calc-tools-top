@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DCA Calculator - Periodic Investment Future Value</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="Free online DCA (dollar-cost averaging) calculator. Enter monthly investment, annual return and years to compute future value, total invested and interest.">
+    <meta name="description" content="Free DCA (dollar-cost averaging) calculator: enter a monthly contribution, annual return and years to get future value, total invested and interest earned, plus reference tables for S&P 500 history, fund fees and inflation.">
     <meta property='og:title' content='DCA Calculator - Periodic Investment Growth'/>
     <meta property='og:description' content='Free online DCA calculator. Compute the future value, total invested and interest earned of a periodic investment, compounded monthly.'/>
     <meta property='og:type' content='website'/>
@@ -56,9 +56,11 @@
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": [
-            { "@type": "Question", "name": "Is the return compounded?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. This tool compounds monthly, rolling each month's gains into the next month's base, which is close to how funds and periodic investments accrue interest." } },
-            { "@type": "Question", "name": "How do I fill in the annual return?", "acceptedAnswer": { "@type": "Answer", "text": "Enter your expected long-term average annual return (%), e.g. 8 for 8%. Historical performance does not guarantee future results; the figure is an estimate only." } },
-            { "@type": "Question", "name": "Is my data uploaded to a server?", "acceptedAnswer": { "@type": "Answer", "text": "No. Everything runs locally in your browser; your input never leaves your device." } }
+            { "@type": "Question", "name": "Is the interest compounded monthly?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The calculator uses an end-of-period annuity model compounded monthly, so each month's gain is added to the base that earns the next month's return, which mirrors how fund NAVs compound." } },
+            { "@type": "Question", "name": "What annual return should I enter?", "acceptedAnswer": { "@type": "Answer", "text": "The S&P 500 and its predecessor returned about 11% a year in nominal terms since 1926, roughly 7% after inflation. For long-term planning, 6% to 8% is a defensible range; 10% assumes the historical best case continues." } },
+            { "@type": "Question", "name": "Should I stop contributing when the market falls?", "acceptedAnswer": { "@type": "Answer", "text": "Historically, no. 93% of rolling 10-year periods since 1928 were positive, but the average bear market still fell about 31.7%. Stopping contributions means giving up the cheapest purchases, which is precisely when DCA does its work." } },
+            { "@type": "Question", "name": "Is DCA better than investing a lump sum?", "acceptedAnswer": { "@type": "Answer", "text": "In a rising market a lump sum usually wins because the money is invested longer: $24,000 invested up front at 7% for 10 years grows to about $48,231.87, versus $34,616.96 for $200 a month. DCA trades some return for not having to time the market." } },
+            { "@type": "Question", "name": "Does the day of the month matter?", "acceptedAnswer": { "@type": "Answer", "text": "Very little over long periods, because monthly ups and downs offset each other. Fees and the number of years contributed matter far more. Automating the contribution right after payday is the most practical choice." } }
         ]
     }
     </script>
@@ -139,21 +141,106 @@
         </div>
 
         <section class="tool-content">
-            <h2>What is DCA (Dollar-Cost Averaging)?</h2>
-            <p>Dollar-cost averaging (DCA / periodic investment) means investing a fixed amount at regular intervals — usually monthly. By spreading your purchases over time it smooths the average cost and reduces the risk of mistiming the market, making it a popular strategy for long-term savings and index/fund investing.</p>
+            <h2>What Is Dollar-Cost Averaging?</h2>
+            <p>Dollar-cost averaging (DCA) means investing a fixed amount at fixed intervals - usually once a month - instead of trying to decide when to buy. Because the same dollar amount buys more shares when prices are low and fewer when prices are high, your average cost per share lands somewhere in the middle of the range rather than at whichever price you happened to pick. For anyone with a regular paycheck, the real benefit is that investing stops depending on your market opinion: the contribution goes out, the shares get bought, and the decision fatigue disappears.</p>
+            <p>The contrast is a lump sum: putting a large amount to work on one day. Neither approach is smarter in the abstract - they simply carry different risks. A lump sum is exposed to the single worst possible outcome, buying right before a decline. DCA gives up some upside in exchange for not having to guess. The tables below price that trade-off with actual numbers from the same formula this calculator uses.</p>
+
             <h3>How to Use This Tool</h3>
             <ol>
-                <li>Enter the amount you plan to invest each month in the "Monthly investment" box</li>
-                <li>Enter your expected annual return (%) in the "Annual return" box</li>
-                <li>Enter the number of years in the "Investment period" box — months auto-fill as years × 12, but you can override them</li>
-                <li>Optionally add an "Initial principal" if you already have a starting amount; the result panel updates in real time</li>
+                <li>Enter the amount you plan to contribute each month in "Monthly investment"</li>
+                <li>Enter your expected annual return (%) in "Annual return" - the S&P 500 reference table below helps you choose a defensible figure</li>
+                <li>Enter the number of years in "Investment period"; the month count fills in automatically as years x 12 and can be overridden</li>
+                <li>If you already hold a starting balance, put it in "Initial principal"; the result panel updates as you type</li>
             </ol>
+
             <h3>How the Calculation Works</h3>
-            <p>This tool uses the end-of-period annuity model with monthly compounding: future value = initial × (1 + monthly rate)^periods + monthly × [((1 + monthly rate)^periods - 1) / monthly rate], where monthly rate = annual return ÷ 12 ÷ 100. Interest earned = future value - total invested, and total invested = initial + monthly × periods.</p>
-            <h3>Frequently Asked Questions</h3>
-            <p><strong>Is the interest compounded?</strong>Yes. This calculator compounds monthly, so each month's return is added to the base for the next month, closely matching how fund and DCA accounts accrue.</p>
-            <p><strong>How do I enter the annual return?</strong>Enter your expected long-term average annual return as a percentage (for example, 8 means 8% per year). Past performance is no guarantee of future results — treat the output as an estimate.</p>
-            <p><strong>Is my data uploaded to a server?</strong>No. Everything runs locally in your browser; your input never leaves your device.</p>
+            <p>The tool uses an end-of-period annuity model with monthly compounding: future value = initial x (1 + monthly rate)^periods + monthly x [((1 + monthly rate)^periods - 1) / monthly rate], where monthly rate = annual return / 12 / 100. Interest earned = future value - total invested, and total invested = initial + monthly x periods.</p>
+            <p>Real funds do not compound smoothly - NAV moves up and down every day. What this model answers is narrower and still useful: if the long-run average annual return turns out to be x%, what does the account look like after n months of fixed contributions? Treat the output as a planning yardstick rather than a forecast. Fund fees are not deducted automatically either, so if you want a net figure you must subtract them from the annual return yourself - the fee table below shows how much that changes things.</p>
+
+            <h3>What Annual Return Should You Assume?</h3>
+            <p>This is where most estimates go wrong, because the number chosen does all the work. Here are the widely cited long-run figures for the U.S. market (all historical, none of them a promise):</p>
+            <table class="ref-table">
+                <thead><tr><th>Measure</th><th>Value</th><th>Window and basis</th></tr></thead>
+                <tbody>
+                    <tr><td>S&amp;P 500 average annual total return</td><td>about 11% (10.96%)</td><td>1926 to 2026, dividends reinvested</td></tr>
+                    <tr><td>Same figure, after inflation</td><td>about 7%</td><td>1926 to 2026, real return</td></tr>
+                    <tr><td>Best and worst 30-year windows</td><td>8% to 14%</td><td>Every 30-year period since 1926</td></tr>
+                    <tr><td>The 2000s "lost decade"</td><td>-0.9% a year</td><td>1999-12-31 to 2009-12-31</td></tr>
+                    <tr><td>2026 year to date</td><td>+12.71%</td><td>Through 2026-09-18, total return</td></tr>
+                </tbody>
+            </table>
+            <p><strong>How to use it</strong>: an 11% assumption is the historical best case, not a neutral one. For planning, 7% (the inflation-adjusted long-run figure) is the more honest default, and 5% to 6% is a reasonable stress test. If your money is in bond funds or cash instead, the relevant long-run numbers are far lower, and using 7% would badly overstate the outcome. The rule of thumb: use the historical return of the asset class you will actually hold, not the number you hope to earn.</p>
+
+            <h3>Why the Holding Period Matters More Than Timing</h3>
+            <p>For a DCA plan, the single biggest variable is not the return assumption - it is how long you keep contributing. The pattern in the U.S. data is stark:</p>
+            <table class="ref-table">
+                <thead><tr><th>Holding period</th><th>Share of periods with positive return</th><th>What it feels like</th></tr></thead>
+                <tbody>
+                    <tr><td>1 month</td><td>about 59%</td><td>Close to a coin toss</td></tr>
+                    <tr><td>10 years (rolling)</td><td>93%</td><td>Losses cluster in the 1930s and 2000s</td></tr>
+                    <tr><td>20 years (rolling)</td><td>100%</td><td>Every rolling 20-year window since 1928 was positive</td></tr>
+                </tbody>
+            </table>
+            <p><strong>How to use it</strong>: the same data set shows what you must be prepared to sit through. The average bear market lasted about 11 months and fell roughly 31.7%, while the average bull market ran about 4.4 years for a gain of about 152.8%. In other words, a DCA plan that is statistically likely to work over 20 years will still show frightening red numbers at some point. Knowing this in advance is what keeps the contributions going when it happens.</p>
+
+            <h3>What $200 a Month Builds Over Time</h3>
+            <p>The table below shows future value for a $200 monthly contribution at three different return assumptions, with the amount you actually paid in shown alongside:</p>
+            <table class="ref-table">
+                <thead><tr><th>Annual return</th><th>10 years</th><th>20 years</th><th>30 years</th></tr></thead>
+                <tbody>
+                    <tr><td>5%</td><td>$31,056.46 (in $24,000)</td><td>$82,206.73 (in $48,000)</td><td>$166,451.73 (in $72,000)</td></tr>
+                    <tr><td>7%</td><td>$34,616.96 (in $24,000)</td><td>$104,185.33 (in $48,000)</td><td>$243,994.20 (in $72,000)</td></tr>
+                    <tr><td>10%</td><td>$40,969.00 (in $24,000)</td><td>$151,873.77 (in $48,000)</td><td>$452,097.58 (in $72,000)</td></tr>
+                </tbody>
+            </table>
+            <p><strong>How to use it</strong>: look at how little of the 30-year figures came from your own deposits. At 7%, contributing $72,000 produces $243,994.20 - the extra $171,994.20 is compounding, and most of it arrives in the final decade. The 5% versus 10% gap also widens dramatically with time: $74,043 apart at 10 years, $285,646 apart at 30. Return assumptions look harmless in year one and enormous in year thirty.</p>
+
+            <h3>DCA Versus a Lump Sum</h3>
+            <p>Same total money, same return, same period - $24,000 at 7% over 10 years, contributed two different ways:</p>
+            <table class="ref-table">
+                <thead><tr><th>Approach</th><th>Future value</th><th>Interest earned</th><th>Difference</th></tr></thead>
+                <tbody>
+                    <tr><td>$200 a month for 120 months</td><td>$34,616.96</td><td>$10,616.96</td><td>-$13,614.91</td></tr>
+                    <tr><td>$24,000 invested at the start</td><td>$48,231.87</td><td>$24,231.87</td><td>baseline</td></tr>
+                </tbody>
+            </table>
+            <p><strong>How to use it</strong>: the lump sum wins on paper, and the reason is arithmetic rather than skill - its dollars are invested for the full 10 years while the average DCA dollar is invested for about half that. But the comparison assumes a rising market with no timing risk. Had that $24,000 gone in at a market peak in 1929, 2000 or 2007, the ranking would reverse for a long stretch. DCA is best understood as buying insurance against your own entry point, and like all insurance it has a premium. If you have a lump sum you will not need within your time horizon, most of the evidence favours investing it in stages you can tolerate rather than waiting indefinitely for a dip.</p>
+
+            <h3>What Fund Fees Cost You</h3>
+            <p>An annual return assumption is a gross figure unless you adjust it, and expense ratios are the one cost you can read in advance. The spread in U.S. funds is wide: broad index funds average roughly 0.07% (Vanguard's S&amp;P 500 ETF charges 0.03%), while the average actively managed U.S. equity fund charges about 0.60%:</p>
+            <table class="ref-table">
+                <thead><tr><th>Expense ratio</th><th>10 years</th><th>20 years</th><th>30 years</th></tr></thead>
+                <tbody>
+                    <tr><td>0.00% (no fee, 7.00% gross)</td><td>$34,616.96</td><td>$104,185.33</td><td>$243,994.20</td></tr>
+                    <tr><td>0.03% (VOO-class index ETF)</td><td>$34,559.87</td><td>$103,806.66</td><td>$242,554.80</td></tr>
+                    <tr><td>0.60% (average active equity fund)</td><td>$33,497.19</td><td>$96,916.03</td><td>$216,984.28</td></tr>
+                    <tr><td>Gap between the two funds</td><td>$1,062.68</td><td>$6,890.63</td><td>$25,570.52</td></tr>
+                </tbody>
+            </table>
+            <p><strong>How to use it</strong>: on a $200 monthly plan the fee difference looks trivial in the first decade and reaches $25,570.52 by year thirty. It is worth noting why this gap deserves attention: it is the only part of the calculation that is guaranteed. Market returns are uncertain, but the fee is written into the fund's prospectus. That is also why the SPIVA scorecard keeps finding that the large majority of large-cap active managers underperform the index over 15 years - they must beat the benchmark by their fee premium just to break even. Pick the fund on cost and tracking quality, not on last year's ranking.</p>
+
+            <h3>Inflation: Nominal Returns Versus Real Money</h3>
+            <p>The figures above are nominal. To see what the money would actually buy, discount them at an inflation assumption. Using a 10% nominal return (roughly the historical average) as the starting point:</p>
+            <table class="ref-table">
+                <thead><tr><th>Inflation assumption</th><th>10 years (nominal $40,969.00)</th><th>30 years (nominal $452,097.58)</th></tr></thead>
+                <tbody>
+                    <tr><td>2.5%</td><td>about $32,004.92</td><td>about $215,534.21</td></tr>
+                    <tr><td>3.0%</td><td>about $30,484.78</td><td>about $186,258.22</td></tr>
+                </tbody>
+            </table>
+            <p><strong>How to use it</strong>: the simpler route is to skip this table entirely and run the calculator with a real (inflation-adjusted) return - about 7% for U.S. equities - so that every number you see is already in today's purchasing power. That is the version worth using for goal planning, because a 30-year projection of $452,098 that is really worth $186,258 is a very different promise. If you prefer nominal figures, keep the inflation assumption in view; U.S. inflation has averaged roughly 3% over the past century, though it has been both much higher and much lower for long stretches.</p>
+
+            <h3>Three Worked Examples</h3>
+            <p><strong>Example 1 (defaults)</strong>: $200 a month, 7% a year, 10 years - 120 contributions. Future value <strong>$34,616.96</strong>, total invested $24,000.00, interest earned <strong>$10,616.96</strong>. Change only the contribution to $400 a month and the result doubles to <strong>$69,233.92</strong>, because the output scales linearly with the amount contributed.</p>
+            <p><strong>Example 2 (the cost of starting late)</strong>: the same $200 a month at 7% grows to $104,185.33 over 20 years, but to <strong>$243,994.20</strong> over 30 years. Contributing $24,000 more in years 21 to 30 adds about $139,808.87 to the final balance. The last decade does most of the heavy lifting, which is the argument for starting now with a small amount rather than waiting until you can afford a large one.</p>
+            <p><strong>Example 3 (an existing balance)</strong>: starting with $10,000 already invested and adding $200 a month at 7% for 10 years gives <strong>$54,713.58</strong>, on $34,000.00 of total capital (interest $20,713.58). The $10,000 on its own would have become $20,096.61 over the same period - the difference between the two results is exactly that amount, which is a useful way to verify the calculator's maths against a single lump-sum figure. For that calculation on its own, see the <a href="/en/calculators/compound-interest">compound interest calculator</a>, or read <a href="/blog/en/compound-interest-guide">how compounding differs from simple interest</a>.</p>
+
+            <h3>More Questions About DCA</h3>
+            <p><strong>Should I stop contributing during a crash?</strong> Historically that has been the wrong move. Every rolling 10-year period in the U.S. data was positive in 93% of cases, and the negative ones came from starting at extreme valuations. Contributions made during declines buy the cheapest shares of the whole plan; pausing them removes the mechanism that makes DCA work at all.</p>
+            <p><strong>How does DCA compare with prepaying a mortgage?</strong> It is a comparison of a certain return against an uncertain one. Prepaying a loan earns your mortgage rate with no market risk, while investing earns an unknown amount with real drawdown risk. If your loan rate is higher than the return you realistically expect, prepaying usually wins. Use the <a href="/en/calculators/loan-compare">loan comparison calculator</a> to get the exact interest difference first.</p>
+            <p><strong>Should I increase the contribution over time?</strong> Yes, whenever income rises. Contribution size is the one input fully under your control: at 7% over 10 years, $100 a month produces $17,308.48 and $500 a month produces $86,542.40. Raising contributions with each pay rise also hedges the risk that your chosen return assumption turns out to be too optimistic.</p>
+            <p><strong>Does the day of the month matter?</strong> Not meaningfully over decades - the monthly ups and downs cancel out. What matters is that the date you pick is one you will still be able to meet in five years' time, which is why payday-adjacent automation works best.</p>
+            <p><strong>Can I treat the result as a guarantee?</strong> No. Every figure on this page is a mathematical outcome of an assumed return, and markets do not follow assumptions. Use it to compare scenarios and set a realistic target, not as a prediction of what your account will be worth.</p>
         </section>
 
 </main>

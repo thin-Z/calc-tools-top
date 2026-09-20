@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-09-19T16:40:43.715Z",
+  "generatedAt": "2026-09-20T14:23:17.351Z",
   "total": 222,
   "summary": {
     "zhToolHanzi": {
       "n": 64,
-      "mean": 1216,
+      "mean": 1242,
       "median": 1080
     },
     "enToolWords": {
       "n": 55,
-      "mean": 538,
-      "median": 355
+      "mean": 564,
+      "median": 359
     },
     "zhBlogHanzi": {
       "n": 40,
       "mean": 995,
       "median": 742
     },
-    "siteAvgOverlap": 0.0851,
-    "siteAvgOverlapBody": 0.1072,
+    "siteAvgOverlap": 0.0853,
+    "siteAvgOverlapBody": 0.1073,
     "noindexPages": 12
   },
   "pages": [
@@ -864,7 +864,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 24,
-      "words": 342,
+      "words": 1832,
       "_shBody": {},
       "noindex": false
     },
@@ -927,7 +927,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 26,
-      "words": 490,
+      "words": 463,
       "_shBody": {},
       "noindex": false
     },
@@ -1170,7 +1170,7 @@
       "lang": "en",
       "category": "static",
       "hanzi": 24,
-      "words": 1639,
+      "words": 1605,
       "_shBody": {},
       "noindex": false
     },
@@ -1197,7 +1197,7 @@
       "lang": "en",
       "category": "tag",
       "hanzi": 32,
-      "words": 508,
+      "words": 499,
       "_shBody": {},
       "noindex": false
     },
@@ -1224,7 +1224,7 @@
       "lang": "en",
       "category": "tag",
       "hanzi": 32,
-      "words": 304,
+      "words": 296,
       "_shBody": {},
       "noindex": false
     },
@@ -1233,7 +1233,7 @@
       "lang": "en",
       "category": "tag",
       "hanzi": 32,
-      "words": 211,
+      "words": 202,
       "_shBody": {},
       "noindex": false
     },
@@ -1242,7 +1242,7 @@
       "lang": "en",
       "category": "tag",
       "hanzi": 28,
-      "words": 276,
+      "words": 268,
       "_shBody": {},
       "noindex": false
     },
@@ -1260,7 +1260,7 @@
       "lang": "en",
       "category": "tag",
       "hanzi": 32,
-      "words": 703,
+      "words": 693,
       "_shBody": {},
       "noindex": false
     },
@@ -1305,7 +1305,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 24,
-      "words": 342,
+      "words": 334,
       "_shBody": {},
       "noindex": false
     },
@@ -1430,7 +1430,7 @@
       "rel": "dist/index.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 3345,
+      "hanzi": 3271,
       "words": 77,
       "_shBody": {},
       "noindex": false
@@ -1457,7 +1457,7 @@
       "rel": "dist/tags/finance.html",
       "lang": "zh",
       "category": "tag",
-      "hanzi": 1180,
+      "hanzi": 1159,
       "words": 65,
       "_shBody": {},
       "noindex": false
@@ -1484,7 +1484,7 @@
       "rel": "dist/tags/life.html",
       "lang": "zh",
       "category": "tag",
-      "hanzi": 642,
+      "hanzi": 625,
       "words": 63,
       "_shBody": {},
       "noindex": false
@@ -1493,7 +1493,7 @@
       "rel": "dist/tags/shopping.html",
       "lang": "zh",
       "category": "tag",
-      "hanzi": 390,
+      "hanzi": 369,
       "words": 63,
       "_shBody": {},
       "noindex": false
@@ -1502,7 +1502,7 @@
       "rel": "dist/tags/text.html",
       "lang": "zh",
       "category": "tag",
-      "hanzi": 500,
+      "hanzi": 484,
       "words": 79,
       "_shBody": {},
       "noindex": false
@@ -1520,7 +1520,7 @@
       "rel": "dist/tags/utility.html",
       "lang": "zh",
       "category": "tag",
-      "hanzi": 1392,
+      "hanzi": 1367,
       "words": 97,
       "_shBody": {},
       "noindex": false
@@ -1574,7 +1574,7 @@
       "rel": "dist/zh/calculators/currency-converter.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 2320,
+      "hanzi": 2321,
       "words": 20,
       "_shBody": {},
       "noindex": false
@@ -1592,8 +1592,8 @@
       "rel": "dist/zh/calculators/dca-calculator.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 1159,
-      "words": 6,
+      "hanzi": 3002,
+      "words": 8,
       "_shBody": {},
       "noindex": false
     },
@@ -1655,7 +1655,7 @@
       "rel": "dist/zh/calculators/index.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 1257,
+      "hanzi": 1194,
       "words": 10,
       "_shBody": {},
       "noindex": false
@@ -1916,7 +1916,7 @@
       "rel": "dist/zh/text/index.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 1073,
+      "hanzi": 1057,
       "words": 31,
       "_shBody": {},
       "noindex": false
@@ -2045,7 +2045,7 @@
     {
       "a": "dist/blog/zh/index.html",
       "b": "dist/index.html",
-      "jaccard": 0.6106
+      "jaccard": 0.6229
     },
     {
       "a": "dist/en/calculators/age-calc.html",
@@ -2060,7 +2060,7 @@
     {
       "a": "dist/tags/shopping.html",
       "b": "dist/tags/travel.html",
-      "jaccard": 0.4848
+      "jaccard": 0.5047
     },
     {
       "a": "dist/en/calculators/ovulation.html",
@@ -2068,24 +2068,24 @@
       "jaccard": 0.4759
     },
     {
-      "a": "dist/zh/calculators/age-calc.html",
-      "b": "dist/zh/text/keyword-density.html",
-      "jaccard": 0.4597
+      "a": "dist/en/tags/shopping.html",
+      "b": "dist/en/tags/travel.html",
+      "jaccard": 0.4659
     }
   ],
   "focus": {
     "keys": [
-      "currency-converter"
+      "dca-calculator"
     ],
     "matched": 2,
     "noindexStubs": 0,
     "fulltext": {
-      "maxJaccard": 0.0561,
+      "maxJaccard": 0.0669,
       "pairsOver15pct": 0,
       "totalPairs": 220
     },
     "body": {
-      "maxJaccard": 0.0466,
+      "maxJaccard": 0.0617,
       "pairsOver15pct": 0,
       "totalPairs": 208
     },
@@ -2093,54 +2093,54 @@
     "fuseTriggered": false,
     "topPairsBody": [
       {
-        "a": "dist/en/calculators/currency-converter.html",
-        "b": "dist/en/calculators/mortgage.html",
-        "jaccard": 0.0466
-      },
-      {
-        "a": "dist/en/calculators/currency-converter.html",
-        "b": "dist/en/calculators/fraction-calculator.html",
-        "jaccard": 0.0451
-      },
-      {
-        "a": "dist/en/calculators/currency-converter.html",
-        "b": "dist/en/calculators/percentage-calc.html",
-        "jaccard": 0.0427
-      },
-      {
-        "a": "dist/en/calculators/currency-converter.html",
-        "b": "dist/en/calculators/dca-calculator.html",
-        "jaccard": 0.0425
-      },
-      {
-        "a": "dist/en/calculators/currency-converter.html",
-        "b": "dist/en/calculators/loan-compare.html",
-        "jaccard": 0.042
-      },
-      {
-        "a": "dist/en/calculators/currency-converter.html",
-        "b": "dist/en/calculators/timestamp.html",
-        "jaccard": 0.0415
-      },
-      {
-        "a": "dist/en/calculators/currency-converter.html",
-        "b": "dist/en/text/simplified-traditional.html",
-        "jaccard": 0.0399
-      },
-      {
-        "a": "dist/en/calculators/currency-converter.html",
-        "b": "dist/en/calculators/housing-fund.html",
-        "jaccard": 0.0396
-      },
-      {
-        "a": "dist/en/calculators/currency-converter.html",
-        "b": "dist/en/calculators/pregnancy.html",
-        "jaccard": 0.0364
-      },
-      {
-        "a": "dist/en/calculators/currency-converter.html",
+        "a": "dist/en/calculators/dca-calculator.html",
         "b": "dist/en/calculators/compound-interest.html",
-        "jaccard": 0.0361
+        "jaccard": 0.0617
+      },
+      {
+        "a": "dist/en/calculators/dca-calculator.html",
+        "b": "dist/blog/en/compound-interest-guide.html",
+        "jaccard": 0.0567
+      },
+      {
+        "a": "dist/en/calculators/dca-calculator.html",
+        "b": "dist/en/calculators/mortgage.html",
+        "jaccard": 0.0543
+      },
+      {
+        "a": "dist/en/calculators/dca-calculator.html",
+        "b": "dist/en/calculators/loan-compare.html",
+        "jaccard": 0.0459
+      },
+      {
+        "a": "dist/en/calculators/dca-calculator.html",
+        "b": "dist/en/calculators/percentage-calc.html",
+        "jaccard": 0.0438
+      },
+      {
+        "a": "dist/en/calculators/dca-calculator.html",
+        "b": "dist/blog/en/housing-fund-loan-guide.html",
+        "jaccard": 0.0423
+      },
+      {
+        "a": "dist/en/calculators/dca-calculator.html",
+        "b": "dist/en/calculators/currency-converter.html",
+        "jaccard": 0.0418
+      },
+      {
+        "a": "dist/en/calculators/dca-calculator.html",
+        "b": "dist/en/calculators/housing-fund.html",
+        "jaccard": 0.0418
+      },
+      {
+        "a": "dist/zh/calculators/dca-calculator.html",
+        "b": "dist/blog/zh/compound-interest-guide.html",
+        "jaccard": 0.0395
+      },
+      {
+        "a": "dist/en/calculators/dca-calculator.html",
+        "b": "dist/en/calculators/date-calc.html",
+        "jaccard": 0.0383
       }
     ]
   }
