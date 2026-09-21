@@ -51,26 +51,42 @@
     "mainEntity": [
         {
             "@type": "Question",
-            "name": "How many working days are there between two dates?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Enter a start date and an end date. The tool counts Monday to Friday in the range by default. For example, from 2026-08-03 (Monday) to 2026-08-07 (Friday) there are 5 working days."
-            }
-        },
-        {
-            "@type": "Question",
             "name": "Are the start and end dates included in the count?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes. The range includes both the start date and the end date. Any weekday inside the range is counted."
+                "text": "Yes. The range includes both the start date and the end date. Any weekday inside the range is counted. For example, from 2026-08-03 (Monday) to 2026-08-07 (Friday) there are 5 working days; if you want only the gap between them, shift the start or end by one day."
             }
         },
         {
             "@type": "Question",
-            "name": "How do I exclude public holidays?",
+            "name": "Which 2026 public holidays does the tool exclude?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Tick \"Exclude 2026 public holidays\" and preset dates for New Year, Spring Festival, Qingming, Labour Day, Dragon Boat, Mid-Autumn and National Day are filled into the text box. You can edit them freely, one date per line in YYYY-MM-DD format."
+                "text": "The tool's preset uses China's 2026 statutory holidays published by the State Council: New Year 3 days, Spring Festival 9 days, Qingming 3 days, Labour Day 5 days, Dragon Boat 3 days, Mid-Autumn 3 days, National Day 7 days — 33 days in total. Tick \"Exclude 2026 public holidays\" and weekdays falling on those dates are removed automatically; those falling on a weekend are already covered by the weekend exclusion and are not double-counted."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Does the tool count make-up workdays (weekend shifted to a workday)?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, not automatically. Make-up workdays (e.g. 2026-02-14, 5-9, 10-10, which are Saturdays) are still treated as weekends by the tool. The tool only supports excluding dates, not adding them back, so if your range crosses such a make-up workday it will undercount by one working day — verify against the official schedule manually."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How different are working days from calendar days, and why does it matter?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The gap comes mostly from weekends (about 2/7 of the total) plus public holidays. In May 2026, for example, there are 31 calendar days but only 18 working days — a 13-day difference. Contract clauses like \"pay within X business days\" or \"deliver in 30 business days\" badly overestimate progress if counted in calendar days."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do I use it for leave or annual-leave approval?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "5 days of annual leave that span a weekend actually occupy 7 calendar days but 5 working days. For a contract \"20 business days from today\", the end date from the tool minus one day is the final working day. Adjust by half-days or sick/personal leave rules per your company policy."
             }
         }
     ]
@@ -118,7 +134,7 @@
             <ul>
                 <li><a href="/en/calculators/date-calc">Date Calculator</a></li>
                 <li><a href="/en/calculators/overtime">Overtime Calculator</a></li>
-                <li><a href="/en/calculators/date-calc">Age Calculator</a></li>
+                <li><a href="/en/calculators/timestamp">Timestamp Converter</a></li>
             </ul>
         </div>
 
@@ -183,14 +199,6 @@
         <!-- Ad Slot B -->
         
 
-<div class="tool-content">
-    <h2>Workday Calculator Guide</h2>
-    <p>The Workday Calculator is a completely free, instant online tool that counts working days between two dates. It excludes Saturday and Sunday by default and only counts Monday to Friday. For more precise results, you can exclude 2026 public holidays in one click or manually add custom holiday dates.</p>
-    <h3>Use Cases</h3>
-    <p>Project scheduling and deadline estimation, leave and annual leave approval, contract delivery dates, payroll and attendance checks, event countdown planning — anywhere you need to count by business days.</p>
-    <h3>Counting Rules</h3>
-    <p>The range includes both the start date and the end date. Saturdays and Sundays are not counted. When holiday exclusion is enabled, public holidays that fall on weekdays are also removed. Statutory make-up workdays are not adjusted automatically, so verify against the official holiday schedule.</p>
-</div>
 <section class="related-posts">
         <h3>Related Reading</h3>
         <ul>
@@ -198,21 +206,56 @@
         </ul>
     </section>
 <section class="tool-content">
-<h2>About Workday Calculator</h2>
-<p>The Workday Calculator is a completely free online tool that helps you quickly count working days between two dates. Whether you are an HR manager, a project manager, a finance professional or an ordinary employee, you can use it instantly in your browser without installing any software.</p>
-<p>Unlike a general date calculator, the Workday Calculator focuses on the days people actually work. It excludes weekends by default and supports year-based public holiday exclusion, making scheduling, approval and attendance checks closer to reality.</p>
-<h2>How to Use Workday Calculator</h2>
+<h2>About the Workday Calculator</h2>
+<p>The Workday Calculator is a completely free online tool that counts the real "workable days" between two dates. Whether you are in HR, project management, finance or just an ordinary employee, you can run it instantly in your browser with no software install. Unlike a plain date calculator that only counts calendar difference, this tool strips out weekends and public holidays to give you an "effective working day" count that matches reality.</p>
+
+<h2>What exactly is a working day</h2>
+<p>When we casually say "how many days", we usually mean <strong>calendar days</strong> — every single day from start to end, weekends included. But for contract deadlines, leave approval, shipping windows and project milestones, what really matters is the <strong>working day</strong>: the days you can actually work after removing Saturdays, Sundays and public holidays. A project may look like 30 calendar days, but after about 8–9 weekend days plus holidays, the real working days are often only around 21 — a one-week gap that can push a delivery past its deadline.</p>
+
+<h2>2026 China public holidays (State Council, 33 days total)</h2>
+<p>The tool's built-in dates follow the official "Notice on the Arrangement of Some Holidays in 2026" issued by the General Office of the State Council. The table below lists each festival's holiday window and days; "make-up workday" means a shifted Saturday/Sunday that becomes a working day (the tool does not auto-include these — see notes below).</p>
+<table class="ref-table">
+  <thead><tr><th>Festival</th><th>Holiday window</th><th>Days</th><th>Make-up workday</th></tr></thead>
+  <tbody>
+    <tr><td>New Year</td><td>Jan 1 (Thu) – Jan 3 (Sat)</td><td>3</td><td>Jan 4 (Sun)</td></tr>
+    <tr><td>Spring Festival</td><td>Feb 15 (Sun) – Feb 23 (Mon)</td><td>9</td><td>Feb 14, Feb 28 (both Sat)</td></tr>
+    <tr><td>Qingming</td><td>Apr 4 (Sat) – Apr 6 (Mon)</td><td>3</td><td>none</td></tr>
+    <tr><td>Labour Day</td><td>May 1 (Fri) – May 5 (Tue)</td><td>5</td><td>May 9 (Sat)</td></tr>
+    <tr><td>Dragon Boat</td><td>Jun 19 (Fri) – Jun 21 (Sun)</td><td>3</td><td>none</td></tr>
+    <tr><td>Mid-Autumn</td><td>Sep 25 (Fri) – Sep 27 (Sun)</td><td>3</td><td>none</td></tr>
+    <tr><td>National Day</td><td>Oct 1 (Thu) – Oct 7 (Wed)</td><td>7</td><td>Sep 20, Oct 10 (both Sat)</td></tr>
+  </tbody>
+</table>
+<p>In 2026 there are <strong>33 official holiday days</strong> in total (5 more than the 28 in 2025). Of these, the "weekday holidays" that fall on Monday–Friday are auto-deducted by the tool; those that fall on a weekend are already covered by the regular weekend exclusion and are not double-counted.</p>
+
+<h2>Counting rules and conventions</h2>
+<table class="ref-table">
+  <thead><tr><th>Rule</th><th>This tool's convention</th><th>Note</th></tr></thead>
+  <tbody>
+    <tr><td>Range</td><td>inclusive of start and end</td><td>both end days count if they are working days</td></tr>
+    <tr><td>Weekends</td><td>Saturdays &amp; Sundays excluded by default</td><td>untick "exclude weekends" to include them</td></tr>
+    <tr><td>Public holidays</td><td>weekday holidays deducted when ticked</td><td>holidays on a weekend are already in the weekend exclusion, not double-deducted</td></tr>
+    <tr><td>Make-up workdays</td><td>not handled automatically</td><td>a Saturday/Sunday turned into a workday is still treated as a weekend; verify manually</td></tr>
+  </tbody>
+</table>
+
+<h2>Four real examples (matching the tool's default parameters)</h2>
 <ol>
-<li>Pick a start date and an end date. Today and one week later are pre-filled.</li>
-<li>Optionally tick "Exclude 2026 public holidays" or edit the date list manually.</li>
-<li>Click Calculate to get the working day count and a full breakdown.</li>
-<li>Change any input and the result refreshes automatically.</li>
+  <li><strong>Ordinary month (no holiday)</strong>: 2026-03-01 to 2026-03-31 is 31 days with 9 weekends, <strong>working days = 22</strong> (same whether or not holidays are excluded, since March has no public holiday).</li>
+  <li><strong>Spanning Qingming</strong>: 2026-04-01 to 2026-04-30 is 30 days with 8 weekends; without holiday exclusion you get 22 working days, with exclusion the 1 weekday holiday on Apr 6 (Mon) is removed, giving <strong>21 working days</strong>.</li>
+  <li><strong>Spanning the Labour Day long break</strong>: 2026-05-01 to 2026-05-31 is 31 days with 10 weekends; without exclusion 21 working days, with exclusion May 1, May 4 and May 5 (3 weekday holidays) are removed, giving <strong>18 working days</strong> — a "31-day" month with only 18 workable days.</li>
+  <li><strong>National Day golden week</strong>: 2026-10-01 to 2026-10-08 is 8 days, of which Oct 1–Oct 7 are the National Day holiday; without exclusion you get 6 working days, with exclusion only Oct 8 (Thu) remains, giving <strong>1 working day</strong> — almost no effective working days during the long break.</li>
 </ol>
+
 <h2>Workday Calculator FAQ</h2>
-<h3>Is Workday Calculator free to use?</h3><p>Yes, Workday Calculator is completely free. There are no hidden fees, no account registration and no download required.</p>
-<h3>How accurate are the results?</h3><p>All calculations are performed locally in your browser using straightforward logic, so the results are accurate and consistent.</p>
-<h3>Is my data private?</h3><p>Your privacy is a priority. Everything you enter is processed directly on your device and is never uploaded to any server.</p>
-<h3>Does Workday Calculator work on mobile?</h3><p>Yes. The page is fully responsive and works smoothly on phones, tablets and desktop browsers.</p>
+<h3>Does the count include both the start and end dates?</h3><p>Yes, both ends are included — any day that is a working day counts as 1. For example 2026-08-03 (Mon) to 2026-08-07 (Fri) is 5 working days; if you only want the gap between, shift the start or end by one day.</p>
+<h3>Which 2026 public holidays get deducted?</h3><p>The tool has New Year (3), Spring Festival (9), Qingming (3), Labour (5), Dragon Boat (3), Mid-Autumn (3) and National Day (7) built in — 33 days total per the State Council notice. Once "Exclude 2026 public holidays" is ticked, the weekday holidays among those 33 days are auto-removed from the working-day count; those on a weekend are already in the weekend exclusion and are not double-counted.</p>
+<h3>Are make-up workdays (Saturday shifts) counted?</h3><p>Not automatically. A make-up workday (e.g. Feb 14, May 9, Oct 10 in 2026, all Saturdays) is still treated as a weekend by the tool. The tool currently supports "exclude" but not "add back", so a range crossing such a day will be 1 working day short — check against the official holiday arrangement manually.</p>
+<h3>How big is the gap between working days and calendar days, and why does it matter?</h3><p>The gap comes mainly from weekends (about 2/7 of all days) plus holidays. In May 2026, for instance, there are 31 calendar days but only 18 working days — a 13-day difference. Contracts that say "arrives within X working days" or "deliver in 30 working days" will be badly overestimated and underestimate breach risk if you count calendar days — always use the working-day convention for scheduling and approval.</p>
+<h3>How do I use it for leave or annual-vacation approval?</h3><p>Five days of annual leave across a weekend actually occupies 7 calendar days but only 5 working days; a contract reading "20 working days from today" — the end date from this tool minus 1 day is the final working day. For half-day precision or sick/personal leave distinctions, fine-tune on top of the result per company policy.</p>
+
+<h2>How to read the result</h2>
+<p>The tool returns the working-day count after removing weekends (and optional holidays), plus three breakdowns: total calendar days, weekend days, and the number of holidays excluded. Use it to plan schedules, check attendance, and estimate approval and logistics time. For more complex date math (add N months, compute age), pair it with the <a href="/en/calculators/date-calc">Date Calculator</a>; for overtime pay conversion, see the <a href="/en/calculators/overtime">Overtime Calculator</a>.</p>
 </section>
     </main>
 

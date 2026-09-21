@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-09-21T13:52:19.070Z",
+  "generatedAt": "2026-09-21T15:38:17.507Z",
   "total": 222,
   "summary": {
     "zhToolHanzi": {
       "n": 64,
-      "mean": 1348,
+      "mean": 1351,
       "median": 1081
     },
     "enToolWords": {
       "n": 55,
-      "mean": 672,
-      "median": 458
+      "mean": 682,
+      "median": 461
     },
     "zhBlogHanzi": {
       "n": 40,
       "mean": 997,
       "median": 742
     },
-    "siteAvgOverlap": 0.0842,
-    "siteAvgOverlapBody": 0.0996,
+    "siteAvgOverlap": 0.084,
+    "siteAvgOverlapBody": 0.0988,
     "noindexPages": 12
   },
   "pages": [
@@ -1053,7 +1053,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 24,
-      "words": 458,
+      "words": 1037,
       "_shBody": {},
       "noindex": false
     },
@@ -1781,7 +1781,7 @@
       "rel": "dist/zh/calculators/workday-calculator.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 1442,
+      "hanzi": 1655,
       "words": 8,
       "_shBody": {},
       "noindex": false
@@ -2075,17 +2075,17 @@
   ],
   "focus": {
     "keys": [
-      "ovulation"
+      "workday-calculator"
     ],
     "matched": 4,
     "noindexStubs": 0,
     "fulltext": {
-      "maxJaccard": 0.1332,
+      "maxJaccard": 0.0902,
       "pairsOver15pct": 0,
       "totalPairs": 440
     },
     "body": {
-      "maxJaccard": 0.0876,
+      "maxJaccard": 0.0739,
       "pairsOver15pct": 0,
       "totalPairs": 416
     },
@@ -2093,54 +2093,54 @@
     "fuseTriggered": false,
     "topPairsBody": [
       {
-        "a": "dist/blog/zh/ovulation-calculator-guide.html",
-        "b": "dist/blog/zh/age-calc-guide.html",
-        "jaccard": 0.0876
+        "a": "dist/blog/zh/workday-calculator-guide.html",
+        "b": "dist/zh/calculators/workday-calculator.html",
+        "jaccard": 0.0739
       },
       {
-        "a": "dist/blog/zh/ovulation-calculator-guide.html",
-        "b": "dist/blog/zh/standard-weight-guide.html",
-        "jaccard": 0.0771
+        "a": "dist/zh/calculators/workday-calculator.html",
+        "b": "dist/blog/zh/workday-calculator-guide.html",
+        "jaccard": 0.0739
       },
       {
-        "a": "dist/blog/zh/ovulation-calculator-guide.html",
-        "b": "dist/tags/health.html",
-        "jaccard": 0.0734
+        "a": "dist/en/calculators/workday-calculator.html",
+        "b": "dist/en/calculators/date-calc.html",
+        "jaccard": 0.0633
       },
       {
-        "a": "dist/blog/en/ovulation-calculator-guide.html",
-        "b": "dist/blog/en/age-calc-guide.html",
-        "jaccard": 0.063
+        "a": "dist/blog/zh/workday-calculator-guide.html",
+        "b": "dist/blog/zh/date-calculation-tips.html",
+        "jaccard": 0.0557
       },
       {
-        "a": "dist/blog/en/ovulation-calculator-guide.html",
-        "b": "dist/blog/en/standard-weight-guide.html",
-        "jaccard": 0.0613
+        "a": "dist/zh/calculators/workday-calculator.html",
+        "b": "dist/zh/calculators/date-calc.html",
+        "jaccard": 0.0536
       },
       {
-        "a": "dist/blog/zh/ovulation-calculator-guide.html",
-        "b": "dist/zh/calculators/ovulation.html",
-        "jaccard": 0.0518
+        "a": "dist/blog/zh/workday-calculator-guide.html",
+        "b": "dist/tags/life.html",
+        "jaccard": 0.048
       },
       {
-        "a": "dist/zh/calculators/ovulation.html",
-        "b": "dist/blog/zh/ovulation-calculator-guide.html",
-        "jaccard": 0.0518
+        "a": "dist/blog/en/workday-calculator-guide.html",
+        "b": "dist/en/calculators/workday-calculator.html",
+        "jaccard": 0.0461
       },
       {
-        "a": "dist/en/calculators/ovulation.html",
-        "b": "dist/en/calculators/pregnancy.html",
-        "jaccard": 0.0517
+        "a": "dist/en/calculators/workday-calculator.html",
+        "b": "dist/blog/en/workday-calculator-guide.html",
+        "jaccard": 0.0461
       },
       {
-        "a": "dist/blog/zh/ovulation-calculator-guide.html",
-        "b": "dist/blog/zh/fuel-cost-guide.html",
-        "jaccard": 0.0517
+        "a": "dist/zh/calculators/workday-calculator.html",
+        "b": "dist/blog/zh/date-calculation-tips.html",
+        "jaccard": 0.0429
       },
       {
-        "a": "dist/blog/en/ovulation-calculator-guide.html",
-        "b": "dist/en/calculators/ovulation.html",
-        "jaccard": 0.0514
+        "a": "dist/en/calculators/workday-calculator.html",
+        "b": "dist/en/calculators/overtime.html",
+        "jaccard": 0.0409
       }
     ]
   }
