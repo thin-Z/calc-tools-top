@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-09-21T13:34:34.380Z",
+  "generatedAt": "2026-09-21T13:52:19.070Z",
   "total": 222,
   "summary": {
     "zhToolHanzi": {
       "n": 64,
-      "mean": 1326,
+      "mean": 1348,
       "median": 1081
     },
     "enToolWords": {
       "n": 55,
-      "mean": 647,
-      "median": 380
+      "mean": 672,
+      "median": 458
     },
     "zhBlogHanzi": {
       "n": 40,
       "mean": 997,
       "median": 742
     },
-    "siteAvgOverlap": 0.0845,
-    "siteAvgOverlapBody": 0.102,
+    "siteAvgOverlap": 0.0842,
+    "siteAvgOverlapBody": 0.0996,
     "noindexPages": 12
   },
   "pages": [
@@ -963,7 +963,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 24,
-      "words": 352,
+      "words": 1682,
       "_shBody": {},
       "noindex": false
     },
@@ -1691,8 +1691,8 @@
       "rel": "dist/zh/calculators/ovulation.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 1121,
-      "words": 2,
+      "hanzi": 2511,
+      "words": 27,
       "_shBody": {},
       "noindex": false
     },
@@ -2063,84 +2063,84 @@
       "jaccard": 0.5047
     },
     {
-      "a": "dist/en/calculators/ovulation.html",
-      "b": "dist/en/calculators/unit-converter.html",
-      "jaccard": 0.4759
-    },
-    {
       "a": "dist/en/tags/shopping.html",
       "b": "dist/en/tags/travel.html",
       "jaccard": 0.4659
+    },
+    {
+      "a": "dist/zh/calculators/age-calc.html",
+      "b": "dist/zh/text/keyword-density.html",
+      "jaccard": 0.4597
     }
   ],
   "focus": {
     "keys": [
-      "pregnancy"
+      "ovulation"
     ],
-    "matched": 2,
+    "matched": 4,
     "noindexStubs": 0,
     "fulltext": {
-      "maxJaccard": 0.0446,
+      "maxJaccard": 0.1332,
       "pairsOver15pct": 0,
-      "totalPairs": 220
+      "totalPairs": 440
     },
     "body": {
-      "maxJaccard": 0.0373,
+      "maxJaccard": 0.0876,
       "pairsOver15pct": 0,
-      "totalPairs": 208
+      "totalPairs": 416
     },
     "fuseThreshold": 0.15,
     "fuseTriggered": false,
     "topPairsBody": [
       {
-        "a": "dist/en/calculators/pregnancy.html",
-        "b": "dist/en/calculators/ideal-weight.html",
-        "jaccard": 0.0373
+        "a": "dist/blog/zh/ovulation-calculator-guide.html",
+        "b": "dist/blog/zh/age-calc-guide.html",
+        "jaccard": 0.0876
       },
       {
-        "a": "dist/en/calculators/pregnancy.html",
-        "b": "dist/blog/en/ovulation-calculator-guide.html",
-        "jaccard": 0.0344
+        "a": "dist/blog/zh/ovulation-calculator-guide.html",
+        "b": "dist/blog/zh/standard-weight-guide.html",
+        "jaccard": 0.0771
       },
       {
-        "a": "dist/en/calculators/pregnancy.html",
-        "b": "dist/en/calculators/bmi.html",
-        "jaccard": 0.0333
+        "a": "dist/blog/zh/ovulation-calculator-guide.html",
+        "b": "dist/tags/health.html",
+        "jaccard": 0.0734
       },
       {
-        "a": "dist/en/calculators/pregnancy.html",
-        "b": "dist/en/calculators/date-calc.html",
-        "jaccard": 0.0329
+        "a": "dist/blog/en/ovulation-calculator-guide.html",
+        "b": "dist/blog/en/age-calc-guide.html",
+        "jaccard": 0.063
       },
       {
-        "a": "dist/en/calculators/pregnancy.html",
-        "b": "dist/en/calculators/calorie-calculator.html",
-        "jaccard": 0.0329
+        "a": "dist/blog/en/ovulation-calculator-guide.html",
+        "b": "dist/blog/en/standard-weight-guide.html",
+        "jaccard": 0.0613
       },
       {
-        "a": "dist/en/calculators/pregnancy.html",
-        "b": "dist/en/calculators/compound-interest.html",
-        "jaccard": 0.0277
+        "a": "dist/blog/zh/ovulation-calculator-guide.html",
+        "b": "dist/zh/calculators/ovulation.html",
+        "jaccard": 0.0518
       },
       {
-        "a": "dist/en/calculators/pregnancy.html",
-        "b": "dist/en/calculators/dca-calculator.html",
-        "jaccard": 0.0274
+        "a": "dist/zh/calculators/ovulation.html",
+        "b": "dist/blog/zh/ovulation-calculator-guide.html",
+        "jaccard": 0.0518
       },
       {
-        "a": "dist/en/calculators/pregnancy.html",
-        "b": "dist/blog/en/bmi-normal-range-guide.html",
-        "jaccard": 0.0266
+        "a": "dist/en/calculators/ovulation.html",
+        "b": "dist/en/calculators/pregnancy.html",
+        "jaccard": 0.0517
       },
       {
-        "a": "dist/en/calculators/pregnancy.html",
-        "b": "dist/en/calculators/mortgage.html",
-        "jaccard": 0.0252
+        "a": "dist/blog/zh/ovulation-calculator-guide.html",
+        "b": "dist/blog/zh/fuel-cost-guide.html",
+        "jaccard": 0.0517
       },
       {
-        "a": "dist/en/calculators/pregnancy.html",
-        "b": "dist/en/calculators/currency-converter.html",
-        "jaccard": 0.0246
+        "a": "dist/blog/en/ovulation-calculator-guide.html",
+        "b": "dist/en/calculators/ovulation.html",
+        "jaccard": 0.0514
       }
     ]
   }
