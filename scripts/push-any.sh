@@ -70,6 +70,15 @@ echo "----------------------------------------------"
 echo " 逐通道探测（先只读 ls-remote，成功才 push）"
 echo "----------------------------------------------"
 
+# 幂等判定：远端是否已包含本地 HEAD。
+# 场景：remote-tracking 陈旧时 push 会报 cannot lock ref（远端已在目标提交上），
+# 此时推送其实已完成 —— 应视为成功，避免误判。
+remote_has_local_head() {
+    local head
+    head=$(git rev-parse HEAD 2>/dev/null) || return 1
+    git -c 'url.https://github.com/.insteadOf=git@github.com:' ls-remote origin "$BRANCH" 2>/dev/null | grep -q "$head"
+}
+
 SSH_BASE="-o ConnectTimeout=12 -o ServerAliveInterval=5 -o StrictHostKeyChecking=accept-new"
 
 # $1=通道名  $2=远端 URL  $3=额外 git -c core.sshCommand 配置（可空）
@@ -92,6 +101,10 @@ try_channel() {
         if [ "$DRY" = "1" ]; then echo "    ✓ 探测通过（DRY，未推送）"; return 0; fi
         git push "$url" "$BRANCH" && { echo "    ✅ 推送成功"; return 0; }
     fi
+    if remote_has_local_head; then
+        echo "    ✅ 远端已含本地 HEAD（推送实际已完成；仅本地 remote-tracking 陈旧）"
+        return 0
+    fi
     echo "    ✗ 推送失败"
     return 1
 }
@@ -104,6 +117,10 @@ try_https() {
         if [ "$DRY" = "1" ]; then echo "    ✓ 探测通过（DRY，未推送）"; return 0; fi
         if git -c 'url.https://github.com/.insteadOf=git@github.com:' push origin "$BRANCH"; then
             echo "    ✅ 推送成功"; return 0
+        fi
+        if remote_has_local_head; then
+            echo "    ✅ 远端已含本地 HEAD（推送实际已完成；仅本地 remote-tracking 陈旧）"
+            return 0
         fi
         echo "    ✗ push 失败（凭据须有 $REPO 写权限；本机实测用户名为 thin-Z，可用）"
     else
