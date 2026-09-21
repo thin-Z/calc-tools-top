@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-09-21T12:38:45.128Z",
+  "generatedAt": "2026-09-21T13:34:34.380Z",
   "total": 222,
   "summary": {
     "zhToolHanzi": {
       "n": 64,
-      "mean": 1311,
+      "mean": 1326,
       "median": 1081
     },
     "enToolWords": {
       "n": 55,
-      "mean": 629,
-      "median": 369
+      "mean": 647,
+      "median": 380
     },
     "zhBlogHanzi": {
       "n": 40,
       "mean": 997,
       "median": 742
     },
-    "siteAvgOverlap": 0.0842,
-    "siteAvgOverlapBody": 0.1017,
+    "siteAvgOverlap": 0.0845,
+    "siteAvgOverlapBody": 0.102,
     "noindexPages": 12
   },
   "pages": [
@@ -999,7 +999,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 24,
-      "words": 300,
+      "words": 1330,
       "_shBody": {},
       "noindex": false
     },
@@ -1727,8 +1727,8 @@
       "rel": "dist/zh/calculators/pregnancy.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 1293,
-      "words": 5,
+      "hanzi": 2258,
+      "words": 35,
       "_shBody": {},
       "noindex": false
     },
@@ -2075,17 +2075,17 @@
   ],
   "focus": {
     "keys": [
-      "calorie"
+      "pregnancy"
     ],
     "matched": 2,
     "noindexStubs": 0,
     "fulltext": {
-      "maxJaccard": 0.06,
+      "maxJaccard": 0.0446,
       "pairsOver15pct": 0,
       "totalPairs": 220
     },
     "body": {
-      "maxJaccard": 0.0535,
+      "maxJaccard": 0.0373,
       "pairsOver15pct": 0,
       "totalPairs": 208
     },
@@ -2093,54 +2093,54 @@
     "fuseTriggered": false,
     "topPairsBody": [
       {
-        "a": "dist/en/calculators/calorie-calculator.html",
-        "b": "dist/en/calculators/bmi.html",
-        "jaccard": 0.0535
-      },
-      {
-        "a": "dist/en/calculators/calorie-calculator.html",
+        "a": "dist/en/calculators/pregnancy.html",
         "b": "dist/en/calculators/ideal-weight.html",
-        "jaccard": 0.0486
+        "jaccard": 0.0373
       },
       {
-        "a": "dist/en/calculators/calorie-calculator.html",
-        "b": "dist/blog/en/bmi-normal-range-guide.html",
-        "jaccard": 0.0429
+        "a": "dist/en/calculators/pregnancy.html",
+        "b": "dist/blog/en/ovulation-calculator-guide.html",
+        "jaccard": 0.0344
       },
       {
-        "a": "dist/zh/calculators/calorie-calculator.html",
-        "b": "dist/zh/calculators/bmi.html",
-        "jaccard": 0.0361
+        "a": "dist/en/calculators/pregnancy.html",
+        "b": "dist/en/calculators/bmi.html",
+        "jaccard": 0.0333
       },
       {
-        "a": "dist/en/calculators/calorie-calculator.html",
-        "b": "dist/en/calculators/compound-interest.html",
-        "jaccard": 0.0351
-      },
-      {
-        "a": "dist/zh/calculators/calorie-calculator.html",
-        "b": "dist/zh/calculators/ideal-weight.html",
-        "jaccard": 0.0346
-      },
-      {
-        "a": "dist/en/calculators/calorie-calculator.html",
-        "b": "dist/en/calculators/mortgage.html",
-        "jaccard": 0.0336
-      },
-      {
-        "a": "dist/en/calculators/calorie-calculator.html",
+        "a": "dist/en/calculators/pregnancy.html",
         "b": "dist/en/calculators/date-calc.html",
         "jaccard": 0.0329
       },
       {
-        "a": "dist/en/calculators/calorie-calculator.html",
-        "b": "dist/en/calculators/percentage-calc.html",
-        "jaccard": 0.0321
+        "a": "dist/en/calculators/pregnancy.html",
+        "b": "dist/en/calculators/calorie-calculator.html",
+        "jaccard": 0.0329
       },
       {
-        "a": "dist/en/calculators/calorie-calculator.html",
-        "b": "dist/en/calculators/overtime.html",
-        "jaccard": 0.0317
+        "a": "dist/en/calculators/pregnancy.html",
+        "b": "dist/en/calculators/compound-interest.html",
+        "jaccard": 0.0277
+      },
+      {
+        "a": "dist/en/calculators/pregnancy.html",
+        "b": "dist/en/calculators/dca-calculator.html",
+        "jaccard": 0.0274
+      },
+      {
+        "a": "dist/en/calculators/pregnancy.html",
+        "b": "dist/blog/en/bmi-normal-range-guide.html",
+        "jaccard": 0.0266
+      },
+      {
+        "a": "dist/en/calculators/pregnancy.html",
+        "b": "dist/en/calculators/mortgage.html",
+        "jaccard": 0.0252
+      },
+      {
+        "a": "dist/en/calculators/pregnancy.html",
+        "b": "dist/en/calculators/currency-converter.html",
+        "jaccard": 0.0246
       }
     ]
   }

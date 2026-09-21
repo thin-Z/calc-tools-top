@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pregnancy Calculator - Due Date &amp; Gestational Age</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="Free online pregnancy calculator. Enter your last menstrual period to estimate your due date, current gestational age, and days left until delivery.">
+    <meta name="description" content="Free pregnancy calculator: estimate your due date and gestational age from your last menstrual period using Naegele's rule, with cycle-length correction, a week-by-week prenatal testing calendar, IOM weight-gain ranges and calorie needs by trimester.">
     <meta property='og:title' content='Pregnancy Calculator - Due Date &amp; Gestational Age'/>
     <meta property='og:description' content='Free online pregnancy calculator. Enter your last menstrual period to estimate your due date, current week of pregnancy, and days left until delivery. Runs in your browser.'/>
     <meta property='og:type' content='website'/>
@@ -126,19 +126,101 @@
         </div>
 
         <section class="tool-content">
-            <h2>What is a Pregnancy Calculator?</h2>
-            <p>A pregnancy calculator estimates your due date and current gestational age from your last menstrual period (LMP), helping expectant parents track how far along they are. The due date is typically estimated as LMP + 280 days (about 40 weeks), counting from the first day of your last period.</p>
-            <h3>How to Use This Tool</h3>
-            <ol>
-                <li>Enter the first day of your last menstrual period (LMP)</li>
-                <li>Optionally set your menstrual cycle length (defaults to 28 days, used only when estimating from a conception date)</li>
-                <li>Optionally tick "Use conception date" and enter a conception date for a closer estimate</li>
-                <li>The result panel shows your due date, current gestational age, days pregnant, and days left until due</li>
-            </ol>
+            <h2>How this calculator works: three ways to estimate a due date</h2>
+            <p>Enter the first day of your last menstrual period (LMP). The tool applies <strong>Naegele's rule</strong> (LMP + 280 days ≈ 40 weeks) to give your due date, then converts that into your current gestational age, days pregnant and days remaining. If you know your conception date, switch on "use conception date" for a closer personal estimate — medical dating counts from the LMP, which runs about two weeks ahead of actual conception.</p>
+            <table class="ref-table">
+                <thead><tr><th>Method</th><th>Formula</th><th>When it fits</th><th>Notes</th></tr></thead>
+                <tbody>
+                    <tr><td>Naegele's rule (tool default)</td><td>First day of LMP + 280 days (40 weeks)</td><td>Regular cycles, around 28 days</td><td>Most widely used; no conception date needed</td></tr>
+                    <tr><td>Conception date</td><td>Conception date + 266 days (38 weeks)</td><td>Conception date known, e.g. fertility treatment</td><td>Closer to the individual timeline</td></tr>
+                    <tr><td>First-trimester ultrasound</td><td>From crown-rump length (CRL)</td><td>Irregular cycles, uncertain LMP</td><td>Most accurate before 14 weeks; clinicians defer to it</td></tr>
+                </tbody>
+            </table>
+            <p><strong>Worked example</strong>: LMP of 1 January 2026 plus 280 days gives a due date of <strong>8 October 2026</strong>. If the conception date is known to be 15 April 2026, the due date becomes <strong>6 January 2027</strong> (conception + 266 days).</p>
+
+            <h3>If your cycle is not 28 days</h3>
+            <p>Naegele's rule assumes a 28-day cycle with ovulation on day 14. With a longer cycle, ovulation shifts later and applying 280 days outright understates gestational age. The practical correction: <strong>add (your average cycle length − 28) days</strong> to the due date.</p>
+            <table class="ref-table">
+                <thead><tr><th>Average cycle</th><th>Ovulation (approx.)</th><th>Due-date adjustment</th><th>Example (LMP 1 Jan 2026)</th></tr></thead>
+                <tbody>
+                    <tr><td>21 days</td><td>Day 7</td><td>−7 days</td><td>1 Oct 2026</td></tr>
+                    <tr><td>25 days</td><td>Day 11</td><td>−3 days</td><td>5 Oct 2026</td></tr>
+                    <tr><td>28 days (standard)</td><td>Day 14</td><td>0 (baseline)</td><td>8 Oct 2026</td></tr>
+                    <tr><td>30 days</td><td>Day 16</td><td>+2 days</td><td>10 Oct 2026</td></tr>
+                    <tr><td>32 days</td><td>Day 18</td><td>+4 days</td><td>12 Oct 2026</td></tr>
+                    <tr><td>35 days</td><td>Day 21</td><td>+7 days</td><td>15 Oct 2026</td></tr>
+                </tbody>
+            </table>
+            <p>With highly irregular cycles (varying by more than a week) or PCOS, this correction also drifts — in those cases the <strong>first-trimester ultrasound</strong> is the reference standard.</p>
+
+            <h3>Counting gestational age: why the weeks matter</h3>
+            <p>Gestational age counts from the first day of your LMP, seven days per week, written as "X weeks + Y days". Prenatal visits follow a predictable cadence — every 4 weeks up to 28 weeks, every 2 weeks from 28 to 36 weeks, then weekly until delivery — and the key screening tests sit inside narrow windows:</p>
+            <table class="ref-table">
+                <thead><tr><th>Gestational age</th><th>Visit cadence</th><th>Key tests and checks</th></tr></thead>
+                <tbody>
+                    <tr><td>6-13+6 weeks</td><td>First visit</td><td>Dating scan, blood and urine tests, blood type, blood pressure and weight; confirm intrauterine pregnancy</td></tr>
+                    <tr><td>11-13+6 weeks</td><td>—</td><td>Nuchal translucency (NT) scan for chromosomal risk</td></tr>
+                    <tr><td>14-19+6 weeks</td><td>Every 4 weeks</td><td>Second-trimester serum screening / NIPT, fundal height, fetal heart rate</td></tr>
+                    <tr><td>18-22 weeks</td><td>Every 4 weeks</td><td>Fetal anatomy scan (the detailed structural survey)</td></tr>
+                    <tr><td>24-28 weeks</td><td>Every 4 weeks</td><td>75 g oral glucose tolerance test (gestational diabetes screening)</td></tr>
+                    <tr><td>28-36 weeks</td><td>Every 2 weeks</td><td>Growth and amniotic fluid assessment, blood counts, position check</td></tr>
+                    <tr><td>37 weeks onwards</td><td>Weekly</td><td>Electronic fetal monitoring, ultrasound for fetal size, fluid, placental maturity, position</td></tr>
+                </tbody>
+            </table>
+            <p>Map your current gestational age onto this table and you can see which window you are in — and what your next visit is likely to cover.</p>
+
+            <h3>How much weight should you gain?</h3>
+            <p>Gestational weight gain is not "the more the better". The widely used reference (Institute of Medicine, 2009) sets ranges by <strong>pre-pregnancy BMI</strong>:</p>
+            <table class="ref-table">
+                <thead><tr><th>Pre-pregnancy BMI</th><th>Category</th><th>Total gain</th><th>Weekly gain, 2nd-3rd trimester</th></tr></thead>
+                <tbody>
+                    <tr><td>Below 18.5</td><td>Underweight</td><td>12.5-18 kg</td><td>0.44-0.58 kg</td></tr>
+                    <tr><td>18.5-24.9</td><td>Normal weight</td><td>11.5-16 kg</td><td>0.35-0.50 kg</td></tr>
+                    <tr><td>25.0-29.9</td><td>Overweight</td><td>7-11.5 kg</td><td>0.23-0.33 kg</td></tr>
+                    <tr><td>30.0 and above</td><td>Obese</td><td>5-9 kg</td><td>0.17-0.27 kg</td></tr>
+                </tbody>
+            </table>
+            <p>Two pacing notes: <strong>first-trimester gain should stay within 0.5-2 kg</strong>, and the weekly rate above should hold steady rather than arriving in sudden jumps. Work from your weight <em>before</em> pregnancy, not today's reading — the <a href="/en/calculators/bmi">BMI Calculator</a> will do the arithmetic.</p>
+            <p><strong>Worked example</strong>: 1.65 m tall and 55 kg before pregnancy → BMI ≈ <strong>20.2</strong>, normal weight → recommended total gain <strong>11.5-16 kg</strong> at 0.35-0.50 kg per week through the second and third trimesters.</p>
+
+            <h3>How much more energy do you actually need?</h3>
+            <p>Pregnancy raises energy needs, but by less than most people assume. Against a pre-pregnancy baseline, the standard increments are <strong>+340 kcal/day in the second trimester</strong> and <strong>+452 kcal/day in the third</strong> — roughly one glass of milk plus an egg. There is no extra requirement in the first trimester.</p>
+            <table class="ref-table">
+                <thead><tr><th>Stage</th><th>Change vs. pre-pregnancy</th><th>In practice</th></tr></thead>
+                <tbody>
+                    <tr><td>First trimester (1-13 weeks)</td><td>No additional calories needed</td><td>Focus on folate, avoid alcohol and smoking</td></tr>
+                    <tr><td>Second trimester (14-27 weeks)</td><td>+340 kcal/day</td><td>One extra snack; prioritise protein, calcium, iron</td></tr>
+                    <tr><td>Third trimester (28 weeks on)</td><td>+452 kcal/day</td><td>Iron and calcium needs peak; watch sodium and swelling</td></tr>
+                </tbody>
+            </table>
+            <p>To size those additions against your own metabolic rate, use the <a href="/en/calculators/calorie-calculator">Calorie Calculator</a> — but note that pregnancy is not a time to run a calorie deficit, and intake should not fall below your non-pregnant requirement.</p>
+
+            <h3>Foetal development milestones by week</h3>
+            <p>Translating weeks into what is developing makes the screening calendar easier to follow (individual babies vary; these are common milestones):</p>
+            <table class="ref-table">
+                <thead><tr><th>Gestational age</th><th>Foetal development</th><th>What you may notice</th></tr></thead>
+                <tbody>
+                    <tr><td>8 weeks</td><td>Major organs begin to form; the heart is already beating</td><td>Morning sickness often peaks; keep up folic acid</td></tr>
+                    <tr><td>12 weeks</td><td>Face and limbs formed; embryo becomes foetus</td><td>Uterus rises out of the pelvis; nausea often eases</td></tr>
+                    <tr><td>16 weeks</td><td>Bones continue to harden; sucking motions appear</td><td>Bump starts to show</td></tr>
+                    <tr><td>20 weeks</td><td>Hearing develops; most parents feel first movements</td><td>Anatomy scan window</td></tr>
+                    <tr><td>24 weeks</td><td>Lungs developing; a key threshold for premature survival</td><td>Glucose tolerance test window</td></tr>
+                    <tr><td>28 weeks</td><td>Eyes open; sleep-wake cycles emerge</td><td>Third trimester; visits move to every 2 weeks</td></tr>
+                    <tr><td>36 weeks</td><td>Position usually settles; body prepares for birth</td><td>Breathing eases, urinary frequency increases</td></tr>
+                    <tr><td>37 weeks</td><td>Full term; organ maturity is sufficient</td><td>Weekly visits plus fetal monitoring</td></tr>
+                </tbody>
+            </table>
+
             <h3>Frequently Asked Questions</h3>
-            <p><strong>Is the due date exact?</strong> No. The due date is an estimate — only about 5% of babies are born on their due date, and most arrive within two weeks either side. Always follow your doctor's assessment and prenatal checkups.</p>
-            <p><strong>How are days and gestational weeks calculated?</strong> Days pregnant is the number of whole days from the first day of your LMP to today; gestational age counts 7 days per week, so weeks = days ÷ 7, plus the remaining days.</p>
-            <p><strong>Is my data uploaded to a server?</strong> No. Everything runs locally in your browser; your input never leaves your device.</p>
+            <p><strong>My cycle is 35 days — is this tool's due date still right?</strong>The tool assumes a 28-day cycle. With a 35-day cycle, ovulation is roughly a week later, so add 7 days (LMP of 1 Jan 2026 shifts the due date from 8 October to 15 October). Safer still: tell your clinician your cycle length and let the first-trimester scan confirm the dates.</p>
+            <p><strong>The scan says a different gestational age than the calculator. Which wins?</strong>Before 14 weeks, the <strong>ultrasound</strong> wins. A first-trimester scan dates the pregnancy from crown-rump length with an accuracy of roughly ±5 days, whereas LMP dating depends on cycle regularity and how well the date was remembered. If the two differ by more than a week, clinicians usually revise the due date to match the scan.</p>
+            <p><strong>I have passed my due date and nothing is happening. Should I worry?</strong>Not immediately. The due date marks 40 weeks, and delivery anywhere from 37 to 42 weeks is normal. After 41 weeks, however, placental function can decline, so monitoring usually increases and induction may be discussed between 41 and 42 weeks. Follow your obstetrician's plan.</p>
+            <p><strong>Why is gestational age counted from my period rather than conception?</strong>Because the exact conception date is rarely known, while the first day of the last period is a reliable, memorable anchor. Counting from the LMP puts gestational age about two weeks ahead of actual conception (ovulation typically falls near day 14), and this convention is used consistently in obstetric practice worldwide.</p>
+            <p><strong>If I am planning a caesarean, is the date set by the due date?</strong>No. Planned caesareans are generally scheduled <strong>after 39 weeks</strong>, with the date decided by your obstetrician based on position, foetal growth, previous uterine surgery and your own health — delivering too early raises the risk of newborn respiratory complications.</p>
+
+            <h3>What to use the result for</h3>
+            <p>The most practical value of this calculator is anchoring your pregnancy to a timeline: knowing your gestational age tells you which screening window you are in, roughly when the next visit falls, and how to plan leave and preparation. If you are still trying to conceive, pair it with the <a href="/en/calculators/ovulation">Ovulation Calculator</a>.</p>
+            <p>Remember that this is a statistical estimate, not a clinical judgement. With irregular cycles, PCOS, fertility treatment or twins, dating and the due date must be confirmed by your obstetrician using ultrasound and clinical assessment.</p>
         </section>
 
 </main>
