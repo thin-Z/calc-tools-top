@@ -48,8 +48,8 @@
     "mainEntity": [
         { "@type": "Question", "name": "利率差 0.35% 影响到底有多大？", "acceptedAnswer": { "@type": "Answer", "text": "以贷款 100 万元、30 年、等额本息计算：利率 3.85% 月供 4688.08 元、总利息 687709.64 元；利率 4.20% 月供 4890.17 元、总利息 760461.83 元。看似只差 0.35 个百分点，30 年下来总利息相差 72752.19 元，月供每月多 202.09 元。期限越长，同样的利率差被放大的总利息差距越明显。" } },
         { "@type": "Question", "name": "固定利率和浮动利率怎么选？", "acceptedAnswer": { "@type": "Answer", "text": "固定利率在合同期内利率不变，好处是月供确定、便于长期预算，适合风险偏好低、希望锁定成本的人；浮动利率随 LPR 等基准调整，市场利率下行时月供会减少，但上行时也会增加。判断依据是：若你预期未来利率下行、且能承受月供波动，浮动更可能省钱；若你更看重确定性、贷款期限长且金额大，固定利率的「安心溢价」通常值得。" } },
-        { "@type": "Question", "name": "只看月供够吗？为什么更应该看总利息？", "acceptedAnswer": { "@type": "Answer", "text": "不够。月供只反映每月现金流压力，总利息才反映你为这笔钱付出的真实代价。以 100 万元、3.85% 为例：贷 30 年月供 4688.08 元但总利息 687709.64 元；贷 20 年月供 5981.06 元、总利息只有 435453.40 元。前者每月少还 1292.98 元，代价是总利息多付 252256.24 元。若只盯月供，很容易低估长周期的真实成本。" } },
-        { "@type": "Question", "name": "贷款期限选 20 年还是 30 年？", "acceptedAnswer": { "@type": "Answer", "text": "取决于你的现金流与资金用途。以 100 万元、3.85% 计算：30 年月供 4688.08 元、总利息 687709.64 元；20 年月供 5981.06 元、总利息 435453.40 元。选 30 年可让每月少还 1292.98 元，但总利息多付 252256.24 元。如果省下的月供能稳定获得高于贷款利率的收益，或你当前现金流紧张，长周期更合适；反之则应尽量缩短期限。" } },
+        { "@type": "Question", "name": "只看月供够吗？为什么更应该看总利息？", "acceptedAnswer": { "@type": "Answer", "text": "不够。月供只反映每月现金流压力，总利息才反映你为这笔钱付出的真实代价。以 100 万元、3.5% 为例：贷 30 年月供 4490.45 元但总利息 616561.13 元；贷 20 年月供 5800.44 元、总利息只有 391903.20 元。前者每月少还 1309.99 元，代价是总利息多付 224657.93 元。若只盯月供，很容易低估长周期的真实成本。" } },
+        { "@type": "Question", "name": "贷款期限选 20 年还是 30 年？", "acceptedAnswer": { "@type": "Answer", "text": "取决于你的现金流与资金用途。以 100 万元、3.5% 计算：30 年月供 4490.45 元、总利息 616561.13 元；20 年月供 5800.44 元、总利息 391903.20 元。选 30 年可让每月少还 1309.99 元，但总利息多付 224657.93 元。如果省下的月供能稳定获得高于贷款利率的收益，或你当前现金流紧张，长周期更合适；反之则应尽量缩短期限。" } },
         { "@type": "Question", "name": "低利率但收手续费的贷款，怎么比才公平？", "acceptedAnswer": { "@type": "Answer", "text": "把所有成本折算成同一个口径再比。做法是：把手续费、评估费、担保费等一次性支出直接加进总成本，与利息相加得到「综合借款成本」，再与无手续费但利率较高的方案对比。例如 A 方案利率低 0.2% 但要收 1% 手续费，在 100 万元、30 年贷款上，0.2% 的利率差大约相当于 4 万元左右总利息，若手续费超过这个数，A 方案反而更贵。" } },
         { "@type": "Question", "name": "提前还款划算吗？和直接缩短期限比呢？", "acceptedAnswer": { "@type": "Answer", "text": "要分情况。等额本息前期偿还的利息占比高，若已在还款后期，提前还款能省的利息有限，还需留意是否有 1%-5% 的违约金。相比之下，一开始就选择较短期限，通常比「先借长的再提前还」更省利息，因为本金从一开始就在更快减少。决策前可用本工具把「提前还款方案」与「直接短期限方案」分别算出总利息再比较。" } }
     ]
@@ -94,7 +94,7 @@
     </ul>
 </div>
 
-        <div class="tool-form"><div class="form-group"><label>贷款金额（万元）</label><input type="number" id="loanAmount" value="100" min="1" step="1"></div><div class="form-group"><label>方案 A 利率（%）</label><input type="number" id="rate1" value="3.85" min="0" step="0.01"></div><div class="form-group"><label>方案 B 利率（%）</label><input type="number" id="rate2" value="4.2" min="0" step="0.01"></div><div class="form-group"><label>贷款年限</label><input type="number" id="loanYears" value="30" min="1" max="30" step="1"></div><div class="form-actions"><button type="button" class="btn btn-primary" data-csp-click="doCalculate">对比</button><button type="reset" class="btn btn-secondary" data-csp-click="resetForm">重置</button></div></div>
+        <div class="tool-form"><div class="form-group"><label>贷款金额（万元）</label><input type="number" id="loanAmount" value="100" min="1" step="1"></div><div class="form-group"><label>方案 A 利率（%）</label><input type="number" id="rate1" value="3.5" min="0" step="0.01"></div><div class="form-group"><label>方案 B 利率（%）</label><input type="number" id="rate2" value="4.2" min="0" step="0.01"></div><div class="form-group"><label>贷款年限</label><input type="number" id="loanYears" value="30" min="1" max="30" step="1"></div><div class="form-actions"><button type="button" class="btn btn-primary" data-csp-click="doCalculate">对比</button><button type="reset" class="btn btn-secondary" data-csp-click="resetForm">重置</button></div></div>
         <div class="result-card hidden" id="resultArea" tabindex="0"><div class="st-51"><table class="st-52"><tr class="st-53"><th></th><th>方案 A</th><th>方案 B</th></tr><tr><td>月供</td><td class="st-54"><span id="plan1Monthly"></span></td><td class="st-29"><span id="plan2Monthly"></span></td></tr><tr><td>总还款</td><td><span id="plan1Total"></span></td><td><span id="plan2Total"></span></td></tr><tr><td>总利息</td><td><span id="plan1Interest"></span></td><td><span id="plan2Interest"></span></td></tr></table><hr><p>月供差：<span id="diffMonthly" class="st-30"></span> 元</p><p>利息差：<span id="diffInterest" class="st-30"></span> 元</p></div></div>
         
         <div class='tool-content'><h2>贷款对比计算器 - 在线比较不同利率 使用说明</h2><p>在线贷款对比计算器，输入金额、两种利率和年限，直观对比两种方案的月供和总利息差异。</p></div>
@@ -123,10 +123,10 @@
 <p>固定利率在合同期内锁死，月供完全确定，便于做长期家庭预算，适合风险偏好低、不希望月供波动的人；浮动利率跟随 LPR 等基准定期重定价，市场利率下行时月供会跟着降，但上行时也会增加。判断方法是：如果你<strong>预期未来利率下行</strong>、且能承受月供上涨的风险，浮动利率长期更可能省钱；如果你更看重确定性、贷款金额大且期限长，固定利率多付的那部分"安心溢价"通常是值得的。用本工具把两种假设利率分别代入，可以直观看到极端情形下月供的波动区间。</p>
 
 <h3>只看月供够吗？为什么更应该看总利息？</h3>
-<p>不够。月供只衡量<strong>每月现金流压力</strong>，总利息才衡量你<strong>为这笔钱付出的真实代价</strong>。以 100 万元、3.85% 为例：贷 30 年月供 4688.08 元，但总利息高达 687709.64 元；贷 20 年月供 5981.06 元，总利息只有 435453.40 元。前者每月少还 1292.98 元，代价是总利息多付 <strong>252256.24 元</strong>。只看月供很容易低估长周期的真实成本，因此对比方案时建议<strong>月供与总利息一起看</strong>。</p>
+<p>不够。月供只衡量<strong>每月现金流压力</strong>，总利息才衡量你<strong>为这笔钱付出的真实代价</strong>。以 100 万元、3.5% 为例：贷 30 年月供 4490.45 元，但总利息高达 616561.13 元；贷 20 年月供 5800.44 元，总利息只有 391903.20 元。前者每月少还 1309.99 元，代价是总利息多付 <strong>224657.93 元</strong>。只看月供很容易低估长周期的真实成本，因此对比方案时建议<strong>月供与总利息一起看</strong>。</p>
 
 <h3>贷款期限选 20 年还是 30 年？</h3>
-<p>取决于现金流与资金用途。以 100 万元、3.85% 计算：30 年月供 4688.08 元、总利息 687709.64 元；20 年月供 5981.06 元、总利息 435453.40 元。选 30 年每月可少还 1292.98 元，但总利息多付 252256.24 元。若你当前现金流紧张，或省下的月供能稳定获得高于 3.85% 的收益，长周期更合理；若你收入稳定、想尽量减少利息支出，则应尽量缩短期限。</p>
+<p>取决于现金流与资金用途。以 100 万元、3.5% 计算：30 年月供 4490.45 元、总利息 616561.13 元；20 年月供 5800.44 元、总利息 391903.20 元。选 30 年每月可少还 1309.99 元，但总利息多付 224657.93 元。若你当前现金流紧张，或省下的月供能稳定获得高于 3.5% 的收益，长周期更合理；若你收入稳定、想尽量减少利息支出，则应尽量缩短期限。</p>
 
 <h3>低利率但收手续费的贷款，怎么比才公平？</h3>
 <p>把所有成本折算到同一个口径再比。做法是：把手续费、评估费、担保费等<strong>一次性支出直接加进总成本</strong>，与利息相加得到「综合借款成本」，再和无手续费但利率较高的方案对比。举例：A 方案利率低 0.2% 但要收 1% 手续费，在 100 万元、30 年贷款上，0.2% 的利率差大致相当于 4 万元左右的总利息差；若 A 的手续费超过这个数，那么它反而更贵。签合同前务必把<strong>所有费用明列出来</strong>再比。</p>
@@ -134,6 +134,7 @@
 <h3>提前还款划算吗？和直接缩短期限比呢？</h3>
 <p>要分情况。等额本息<strong>前期偿还的利息占比很高</strong>，如果还款已过半，此时提前还款能省下的利息相当有限，还要留意是否有 1%-5% 的违约金。相比之下，一开始就选较短期限，通常比「先借长的再提前还」更省利息——因为本金从一开始就在更快减少。决策前可用本工具把「提前还款方案」与「直接短期限方案」各自的总利息算出来，比较后再决定。</p>
 
+<p>注：3.5% 为当前 5 年期 LPR（2026 年 9 月）；3.85% / 4.2% / 4.5% 为历史较高利率，仅作对比参考。</p>
 <h2>贷款对比速查表（等额本息，本金 100 万元）</h2>
 <p>以下三张表都以 <strong>100 万元本金</strong>为基准，方便你先看数量级，再用上方计算器填入自己的真实金额与利率。</p>
 

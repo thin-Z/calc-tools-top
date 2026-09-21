@@ -56,7 +56,7 @@
             "name": "Equal installment vs equal principal — how much total interest differs?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "For ¥1,000,000 at 3.85% over 30 years: equal installment fixes the monthly payment at ¥4,688 with ¥687,710 of total interest; equal principal starts at ¥5,986 and steps down, with ¥579,104 of total interest. The gap is about ¥108,600, bought by carrying roughly ¥1,300 more per month in the first five years."
+                "text": "For ¥1,000,000 at 3.5% over 30 years: equal installment fixes the monthly payment at ¥4,490 with ¥616,561 of total interest; equal principal starts at ¥5,694 and steps down, with ¥526,458 of total interest. The gap is about ¥90,100, bought by carrying roughly ¥1,200 more per month in the first five years."
             }
         },
         {
@@ -64,7 +64,7 @@
             "name": "How much does each 0.25% rate cut save on the monthly payment?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "On a ¥1,000,000 loan over 30 years, the payment is ¥4,270 at 3.1% and ¥4,688 at 3.85%. Each 0.25-point rise adds roughly ¥120–¥140 to the monthly payment and about ¥40,000–¥50,000 of extra total interest over the full term."
+                "text": "On a ¥1,000,000 loan over 30 years, the current 5-year LPR of 3.5% gives a ¥4,490 monthly payment and about ¥616,561 of total interest; if the rate rose to 3.85% (a recent high), the payment climbs to ¥4,688 and total interest to ¥687,710. That 0.35-point gap alone adds roughly ¥71,000 of interest over 30 years."
             }
         },
         {
@@ -72,7 +72,7 @@
             "name": "Is a 30-year loan really better than a 20-year loan?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Not always. Thirty years eases the monthly load (¥1,000,000 at 3.85%: ¥4,688 over 30 years versus ¥5,981 over 20), but total interest jumps from ¥435,453 to ¥687,710 — an extra ¥252,257. If the freed-up money earns more than your mortgage rate, the longer term can make sense; if not, a shorter term saves real money."
+                "text": "Not always. Thirty years eases the monthly load (¥1,000,000 at 3.5%: ¥4,490 over 30 years versus ¥5,800 over 20), but total interest jumps from ¥391,903 to ¥616,561 — an extra ¥224,658. If the freed-up money earns more than your mortgage rate, the longer term can make sense; if not, a shorter term saves real money."
             }
         },
         {
@@ -96,7 +96,7 @@
             "name": "How does the down-payment ratio affect the monthly payment?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "A higher down payment lowers the principal, so both the monthly payment and total interest shrink. On a ¥3,000,000 home: a 30% down payment (¥2,100,000 loan) costs about ¥9,854 per month at 3.85% over 30 years, while a 40% down payment (¥1,800,000 loan) costs about ¥8,446 — about ¥1,400 less each month and roughly ¥300,000 less total interest."
+                "text": "A higher down payment lowers the principal, so both the monthly payment and total interest shrink. On a ¥3,000,000 home: a 30% down payment (¥2,100,000 loan) costs about ¥9,430 per month at 3.5% over 30 years, while a 40% down payment (¥1,800,000 loan) costs about ¥8,083 — about ¥1,347 less each month and roughly ¥185,000 less total interest."
             }
         }
     ]
@@ -159,7 +159,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="annualRate" data-i18n="annualRate">Annual Rate (%)</label>
-                        <input type="number" id="annualRate" value="3.85" min="0.1" step="0.01">
+                        <input type="number" id="annualRate" value="3.5" min="0.1" step="0.01">
                     </div>
                     <div class="form-group">
                         <label for="loanYears" data-i18n="loanYears">Loan Term (Years)</label>
@@ -239,6 +239,7 @@
     <h3>The Four Factors That Move Your Payment</h3>
     <p>Your monthly payment is set by <strong>loan amount, interest rate, loan term, and repayment method</strong>. Bigger loans, higher rates, and longer terms all raise both the monthly payment and the total interest. With the same principal, equal-principal costs less total interest than equal-installment, but its early payments are higher. Within your means, a larger down payment and a shorter term are the two levers that cut the most cost — use the calculator to line up several scenarios side by side.</p>
     <h3>Monthly Payment by Loan Size and Rate (30-Year Equal Installment)</h3>
+    <p>Note: 3.5% is the current 5-year LPR (Sep 2026); 3.85% / 4.2% are historical high rates, shown for comparison only.</p>
     <p>The table below is computed from the standard amortization formula (monthly rate = annual rate ÷ 12; payment = principal × rate × (1 + rate)^n ÷ [(1 + rate)^n − 1]) so you can locate your own range at a glance.</p>
     <table class="ref-table">
         <thead>
@@ -265,15 +266,15 @@
             <tr><td>4.2%</td><td>¥4,890</td><td>¥6,278</td><td>¥6,268</td><td>¥631,750</td></tr>
         </tbody>
     </table>
-    <p>At 3.85%, equal-principal saves about ¥108,600 in total interest versus equal-installment (¥579,104 vs ¥687,710), but its first five years cost roughly ¥1,300 more per month. That is the core trade-off: "less interest" versus "lighter early load."</p>
+    <p>At 3.5%, equal-principal saves about ¥90,100 in total interest versus equal-installment (¥526,458 vs ¥616,561), but its first five years cost roughly ¥1,200 more per month. That is the core trade-off: "less interest" versus "lighter early load."</p>
 
     <h3>Three Worked Examples</h3>
     <ol>
-        <li><strong>¥1,000,000, 3.85%, 30 years, equal installment</strong>: monthly payment ¥4,688, total interest about ¥687,710, total paid ¥1,687,710.</li>
+        <li><strong>¥1,000,000, 3.5%, 30 years, equal installment</strong>: monthly payment ¥4,490, total interest about ¥616,561, total paid ¥1,616,561.</li>
         <li><strong>¥2,000,000, 3.5%, 30 years, equal principal</strong>: first month ¥11,389, last month about ¥11,373 (principal portion ¥5,555.56, shrinking by roughly ¥15.4 per month), total interest about ¥1,052,917.</li>
-        <li><strong>¥1,000,000, 3.85%, 20 vs 30 years</strong>: at 20 years the monthly payment is ¥5,981 with total interest ¥435,453; stretch to 30 years and the payment drops to ¥4,688 but total interest rises to ¥687,710 — ten extra years cut the monthly bill by ¥1,293 yet cost ¥252,257 more in interest.</li>
+        <li><strong>¥1,000,000, 3.5%, 20 vs 30 years</strong>: at 20 years the monthly payment is ¥5,800 with total interest ¥391,903; stretch to 30 years and the payment drops to ¥4,490 but total interest rises to ¥616,561 — ten extra years cut the monthly bill by ¥1,310 yet cost ¥224,658 more in interest.</li>
     </ol>
-    <p>If you plan to prepay, the interest can fall further: on the ¥1,000,000 / 3.85% / 30-year loan above, a one-time ¥500,000 payoff at the end of year 5 leaves a balance of about ¥902,266; after the payoff the remaining ¥402,266 refinanced over 25 years drops the monthly payment to about ¥2,090. Extra payments compound into real savings, which you can explore with our <a href="/en/calculators/compound-interest.html">compound interest calculator</a>.</p>
+    <p>If you plan to prepay, the interest can fall further: on the ¥1,000,000 / 3.5% / 30-year loan above, a one-time ¥500,000 payoff at the end of year 5 leaves a balance of about ¥896,971; after the payoff the remaining ¥396,971 refinanced over 25 years drops the monthly payment to about ¥1,987. Extra payments compound into real savings, which you can explore with our <a href="/en/calculators/compound-interest.html">compound interest calculator</a>.</p>
 </div>
 <section class="related-posts">
         <h3>Related Reading</h3>
@@ -294,12 +295,12 @@
     <li>Click "Calculate" to see monthly payment, total interest, and a principal-interest chart.</li>
 </ol>
 <h2>Mortgage Calculator FAQ</h2>
-<h3>Equal installment vs equal principal — how much total interest differs?</h3><p>For ¥1,000,000 at 3.85% over 30 years: equal installment fixes the monthly payment at ¥4,688 with ¥687,710 of total interest; equal principal starts at ¥5,986 and steps down, with ¥579,104 of total interest. The gap is about ¥108,600, bought by carrying roughly ¥1,300 more per month in the first five years. Which you pick depends on whether you can absorb the heavier early load.</p>
-<h3>How much does each 0.25% rate cut save on the monthly payment?</h3><p>On a ¥1,000,000 loan over 30 years, the payment is ¥4,270 at 3.1% and ¥4,688 at 3.85%. Each 0.25-point rise adds roughly ¥120–¥140 to the monthly payment and about ¥40,000–¥50,000 of extra total interest over the full term. Improving your credit to qualify for a lower rate, or choosing a lower rate quote, has a large effect on lifetime cost — convert the change with the <a href="/en/calculators/percentage-calc.html">percentage calculator</a> if you want it as basis points.</p>
-<h3>Is a 30-year loan really better than a 20-year loan?</h3><p>Not always. Thirty years eases the monthly load (¥1,000,000 at 3.85%: ¥4,688 over 30 years versus ¥5,981 over 20), but total interest jumps from ¥435,453 to ¥687,710 — an extra ¥252,257. If the money you free up earns more than your mortgage rate, the longer term can make sense; if not, a shorter term saves real money. Match the term to your cash flow and your other returns.</p>
+<h3>Equal installment vs equal principal — how much total interest differs?</h3><p>For ¥1,000,000 at 3.5% over 30 years: equal installment fixes the monthly payment at ¥4,490 with ¥616,561 of total interest; equal principal starts at ¥5,694 and steps down, with ¥526,458 of total interest. The gap is about ¥90,100, bought by carrying roughly ¥1,200 more per month in the first five years. Which you pick depends on whether you can absorb the heavier early load.</p>
+<h3>How much does each 0.25% rate cut save on the monthly payment?</h3><p>On a ¥1,000,000 loan over 30 years, the current 5-year LPR of 3.5% gives a ¥4,490 monthly payment and about ¥616,561 of total interest; if the rate rose to 3.85% (a recent high), the payment climbs to ¥4,688 and total interest to ¥687,710. That 0.35-point gap alone adds roughly ¥71,000 of interest over 30 years — improving your credit to qualify for a lower rate, or choosing a lower rate quote, has a large effect on lifetime cost — convert the change with the <a href="/en/calculators/percentage-calc.html">percentage calculator</a> if you want it as basis points.</p>
+<h3>Is a 30-year loan really better than a 20-year loan?</h3><p>Not always. Thirty years eases the monthly load (¥1,000,000 at 3.5%: ¥4,490 over 30 years versus ¥5,800 over 20), but total interest jumps from ¥391,903 to ¥616,561 — an extra ¥224,658. If the money you free up earns more than your mortgage rate, the longer term can make sense; if not, a shorter term saves real money. Match the term to your cash flow and your other returns.</p>
 <h3>Prepayment: shorten the term or reduce the payment?</h3><p>For the same lump sum, shortening the term saves more interest than reducing the monthly payment, because the principal drops earlier and the interest base falls faster. If your monthly load is comfortable, choose "shorten term"; if you need immediate relief on the bill, choose "reduce payment." Use the <a href="/en/calculators/date-calc.html">date calculator</a> to count down to your target prepayment date.</p>
 <h3>Can housing-fund and commercial loans be combined?</h3><p>Yes — that is a "combination loan." The housing-fund portion has a capped limit and a lower rate, and the remainder is covered by a commercial loan, so the blended rate is below a pure commercial loan. Compute the housing-fund part first, then run the commercial portion at the commercial rate here; add the two monthly payments for the total.</p>
-<h3>How does the down-payment ratio affect the monthly payment?</h3><p>A higher down payment lowers the principal, so both the monthly payment and total interest shrink. On a ¥3,000,000 home: a 30% down payment (¥2,100,000 loan) costs about ¥9,854 per month at 3.85% over 30 years, while a 40% down payment (¥1,800,000 loan) costs about ¥8,446 — about ¥1,400 less each month and roughly ¥300,000 less total interest. Raising the down payment is the most direct way to cut the monthly bill.</p>
+<h3>How does the down-payment ratio affect the monthly payment?</h3><p>A higher down payment lowers the principal, so both the monthly payment and total interest shrink. On a ¥3,000,000 home: a 30% down payment (¥2,100,000 loan) costs about ¥9,430 per month at 3.5% over 30 years, while a 40% down payment (¥1,800,000 loan) costs about ¥8,083 — about ¥1,347 less each month and roughly ¥185,000 less total interest. Raising the down payment is the most direct way to cut the monthly bill.</p>
 
 <h2>Equal Installment vs Equal Principal — Which Saves More Interest?</h2>
 <p>The two mainstream repayment methods suit different people. <strong>Equal installment</strong> keeps the monthly amount fixed: you pay more interest and less principal early on, but the payment is predictable and easy to budget, which fits stable salaries. <strong>Equal principal</strong> repays the same principal slice every month, so the interest shrinks and the payment falls over time; total interest is lower, but the early payments are heavier, which suits borrowers with stronger upfront cash flow who want to minimize total cost. The difference is purely the pace at which you repay principal early — and that pace decides the final interest bill.</p>
