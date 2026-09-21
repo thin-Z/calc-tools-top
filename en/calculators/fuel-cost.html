@@ -52,18 +52,42 @@
     "mainEntity": [
         {
             "@type": "Question",
-            "name": "How to calculate fuel consumption?",
+            "name": "How is cost per kilometer calculated?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Fill the tank, drive a distance, refill. Fuel consumption = (liters refilled / km driven) × 100."
+                "text": "Cost per km = fuel per 100 km × price per liter ÷ 100 — and it does not depend on distance traveled. For example, 8 L/100 km at $1.00 per liter gives 8 × 1.00 ÷ 100 = $0.08 per km. Multiply that by your actual distance to get the total fuel bill."
             }
         },
         {
             "@type": "Question",
-            "name": "What affects fuel consumption?",
+            "name": "How do I measure my car's real fuel consumption?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Driving habits, road conditions, vehicle load, tire pressure, AC usage, and engine condition all affect fuel consumption."
+                "text": "Use the fill-to-click method: fill the tank until the pump nozzle clicks off, reset the trip meter, drive normally for at least 300 km, then fill again until it clicks off. Fuel per 100 km = liters refilled ÷ km driven × 100. Repeat two or three times and average the results — a single measurement carries a large error."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Fuel prices keep changing — will the result still be accurate?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The tool calculates statically from the price you enter; it does not fetch live prices. Pump prices vary widely by region and change frequently, so enter the current price at your local station. The formula itself is exact — only the price input is an estimate."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Why is my real consumption higher than the official figure?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Official figures are measured on a laboratory test cycle. Real driving adds congestion, stop-and-go traffic, air conditioning, short cold-start trips, low tire pressure and extra load, so actual consumption commonly runs 1–3 L/100 km higher. To judge whether your car's condition has changed, measure the same commute repeatedly rather than comparing against the official number."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do I convert L/100km to MPG?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "US MPG = 235.215 ÷ (L/100 km); UK (imperial) MPG = 282.481 ÷ (L/100 km). For example, 8 L/100 km equals about 29.4 US MPG or 35.3 UK MPG. This calculator works in liters per 100 km, so convert first if your car's spec sheet quotes MPG."
             }
         }
     ]
@@ -125,8 +149,6 @@
 
         
 
-        <div class="tool-content"><h2>Fuel Cost Calculator Guide</h2><p>Calculate fuel costs for your trip. Enter distance, fuel consumption rate, and fuel price for accurate cost estimation.</p><h3>Fuel Saving Tips</h3><p>Maintain steady speed, avoid rapid acceleration, keep tires properly inflated, and service your vehicle regularly.</p></div>
-
 <section class="related-posts">
         <h3>Related Reading</h3>
         <ul>
@@ -134,21 +156,106 @@
         </ul>
     </section>
 <section class="tool-content">
-<h2>About Fuel Cost Calculator</h2>
-<p>Fuel Cost Calculator is a completely free online tool that helps you Fuel cost per kilometer calculation. Whether you are a casual user or a professional, you can use it instantly without installing any software.</p>
-<p>Whether you are a daily driver, a long-haul trucker, or managing fleet costs, you can quickly calculate fuel expenses and cost per kilometer.</p>
-<h2>How to Use</h2>
+<h2>About the Fuel Cost Calculator</h2>
+<p>The Fuel Cost Calculator is a completely free online tool that turns "distance driven" into "fuel money spent". Enter distance, fuel consumption per 100 km and the pump price, and you get total fuel used, total cost and cost per kilometer — all computed locally in your browser, with no network request and nothing uploaded. Daily drivers, long-haul truckers and anyone costing a single vehicle can use it for a quick estimate.</p>
+
+<h2>How the fuel cost is calculated</h2>
+<p>The core idea is to convert distance into fuel volume first, then multiply by price:</p>
+<ul>
+  <li>Total fuel used = distance ÷ 100 × fuel per 100 km</li>
+  <li>Total cost = total fuel used × price per liter</li>
+  <li>Cost per km = total cost ÷ distance</li>
+</ul>
+<p><strong>One point that is easy to miss</strong>: combining the three formulas gives <strong>cost per km = fuel per 100 km × price per liter ÷ 100 — independent of the distance driven</strong>. For the same car at the same price, driving 100 km or 1,000 km gives exactly the same cost per kilometer; only the total bill changes. So when judging whether a car is expensive to run, the cost per kilometer is the only number you need to compare — distance just decides how much you pay in total.</p>
+
+<h2>Cost per kilometer lookup table (USD per km)</h2>
+<p>The table below gives the cost per kilometer directly from <strong>fuel per 100 km × price per liter</strong>: price runs across the top, consumption down the side. Pump prices vary a lot by region and move frequently, so just use the column closest to your local price.</p>
+<table class="ref-table">
+  <thead><tr><th>L / 100 km</th><th>$0.80/L</th><th>$0.90/L</th><th>$1.00/L</th><th>$1.10/L</th><th>$1.20/L</th></tr></thead>
+  <tbody>
+    <tr><td>6 L</td><td>0.048</td><td>0.054</td><td>0.060</td><td>0.066</td><td>0.072</td></tr>
+    <tr><td>7 L</td><td>0.056</td><td>0.063</td><td>0.070</td><td>0.077</td><td>0.084</td></tr>
+    <tr><td>8 L</td><td>0.064</td><td>0.072</td><td><strong>0.080</strong></td><td>0.088</td><td>0.096</td></tr>
+    <tr><td>9 L</td><td>0.072</td><td>0.081</td><td>0.090</td><td>0.099</td><td>0.108</td></tr>
+    <tr><td>10 L</td><td>0.080</td><td>0.090</td><td>0.100</td><td>0.110</td><td>0.120</td></tr>
+  </tbody>
+</table>
+
+<h2>What a year of fuel costs</h2>
+<p>Estimate with <strong>annual cost = annual distance × fuel per 100 km ÷ 100 × price per liter</strong>. The table uses $1.00 per liter (scale proportionally for other prices):</p>
+<table class="ref-table">
+  <thead><tr><th>L / 100 km</th><th>10,000 km/yr</th><th>15,000 km/yr</th><th>20,000 km/yr</th></tr></thead>
+  <tbody>
+    <tr><td>6 L</td><td>$600</td><td>$900</td><td>$1,200</td></tr>
+    <tr><td>8 L</td><td>$800</td><td>$1,200</td><td>$1,600</td></tr>
+    <tr><td>10 L</td><td>$1,000</td><td>$1,500</td><td>$2,000</td></tr>
+  </tbody>
+</table>
+<p>Dropping consumption from 8 L to 6 L saves about <strong>$400 a year</strong> at 20,000 km — which is why long-term running cost is so sensitive to small changes in fuel economy.</p>
+
+<h2>L/100km to MPG conversion</h2>
+<p>Spec sheets in the US and UK usually quote MPG rather than liters per 100 km. Convert before you use this calculator:</p>
+<ul>
+  <li>US MPG = 235.215 ÷ (L/100 km)</li>
+  <li>UK (imperial) MPG = 282.481 ÷ (L/100 km)</li>
+</ul>
+<table class="ref-table">
+  <thead><tr><th>L / 100 km</th><th>US MPG</th><th>UK MPG</th><th>Typical class</th></tr></thead>
+  <tbody>
+    <tr><td>5 L</td><td>47.0</td><td>56.5</td><td>hybrid / small diesel</td></tr>
+    <tr><td>6 L</td><td>39.2</td><td>47.1</td><td>compact petrol</td></tr>
+    <tr><td>7 L</td><td>33.6</td><td>40.4</td><td>mid-size petrol</td></tr>
+    <tr><td>8 L</td><td>29.4</td><td>35.3</td><td>mid-size / small SUV</td></tr>
+    <tr><td>9 L</td><td>26.1</td><td>31.4</td><td>SUV</td></tr>
+    <tr><td>10 L</td><td>23.5</td><td>28.2</td><td>large SUV / pickup</td></tr>
+    <tr><td>12 L</td><td>19.6</td><td>23.5</td><td>heavy SUV / van</td></tr>
+  </tbody>
+</table>
+
+<h2>How to measure your real fuel consumption</h2>
+<p>Official figures come from a laboratory test cycle and rarely match real use. To get a reliable input, use the <strong>fill-to-click method</strong>:</p>
 <ol>
-    <li>Enter the distance traveled in kilometers.</li>
-    <li>Enter fuel consumption per 100 km (liters) and the fuel price per liter (optional).</li>
-    <li>Click the "Calculate" button.</li>
-    <li>View total fuel used, total cost, and cost per kilometer.</li>
+  <li>Fill the tank and stop when the nozzle <strong>clicks off</strong> — do not round up to a whole amount.</li>
+  <li>Reset the trip meter (or note the current odometer reading).</li>
+  <li>Drive normally for a while, ideally <strong>at least 300 km</strong>; shorter runs carry more error.</li>
+  <li>Fill again until it clicks off, and record <strong>liters added</strong> and <strong>km driven</strong>.</li>
+  <li>Fuel per 100 km = liters ÷ km × 100. Average two or three runs for a stable figure.</li>
 </ol>
+<p>If the result is clearly high, check tire pressure, a clogged air filter, carbon deposits and a pattern of short low-speed trips first — those are the most common causes of a real-world rise in consumption.</p>
+
+<h2>What affects fuel consumption</h2>
+<table class="ref-table">
+  <thead><tr><th>Factor</th><th>Direction</th><th>Impact</th><th>Note</th></tr></thead>
+  <tbody>
+    <tr><td>Congestion, stop-and-go traffic</td><td>consumption up</td><td>large</td><td>main reason real use exceeds official figures</td></tr>
+    <tr><td>Hard acceleration and braking</td><td>consumption up</td><td>large</td><td>driving style is the biggest variable for one car</td></tr>
+    <tr><td>Under-inflated tires</td><td>consumption up</td><td>moderate</td><td>raises rolling resistance and tire wear</td></tr>
+    <tr><td>Air conditioning</td><td>consumption up</td><td>moderate</td><td>proportionally larger at low speed</td></tr>
+    <tr><td>Extra load, roof rack</td><td>consumption up</td><td>moderate</td><td>weight plus drag, worse on highways</td></tr>
+    <tr><td>Short cold-start trips</td><td>consumption up</td><td>moderate</td><td>engine never reaches operating temperature</td></tr>
+    <tr><td>Steady speed, reading the road</td><td>consumption down</td><td>large</td><td>avoids needless braking and re-acceleration</td></tr>
+    <tr><td>Regular servicing, correct tire pressure</td><td>consumption down</td><td>moderate</td><td>keeps engine and tires in good condition</td></tr>
+  </tbody>
+</table>
+<p>The same car can differ by 2–3 L/100 km between drivers and routes. Instead of asking whether the official number is accurate, log one regular route over time and let real data tell you if the car's condition has changed.</p>
+
+<h2>Four worked examples</h2>
+<ol>
+  <li><strong>Tool defaults</strong>: 100 km, 8 L/100 km, $1.00/L → <strong>8.0 L</strong> used, <strong>$8.00</strong> total, <strong>$0.08</strong> per km.</li>
+  <li><strong>Highway trip</strong>: 500 km, 7 L/100 km, $1.10/L → <strong>35.0 L</strong>, <strong>$38.50</strong>, <strong>$0.077</strong> per km — steady-speed driving uses less fuel, so even at a higher price the per-km cost beats city driving.</li>
+  <li><strong>A month of commuting</strong>: 40 km × 22 working days = 880 km, 9 L/100 km, $1.00/L → <strong>79.2 L</strong>, <strong>$79.20</strong> a month, <strong>$0.09</strong> per km.</li>
+  <li><strong>A full year</strong>: 20,000 km, 10 L/100 km, $1.20/L → <strong>2,000 L</strong>, <strong>$2,400</strong> a year, <strong>$0.12</strong> per km.</li>
+</ol>
+
 <h2>Fuel Cost Calculator FAQ</h2>
-<h3>Is Fuel Cost Calculator free to use?</h3><p>Yes, Fuel Cost Calculator is completely free. There are no hidden fees, no account registration and no download required.</p>
-<h3>How accurate are the results?</h3><p>All calculations are performed locally in your browser using well-established formulas, so the results are accurate and consistent.</p>
-<h3>Is my data private?</h3><p>Your privacy is a priority. Everything you enter is processed directly on your device and is never uploaded to any server.</p>
-<h3>Does Fuel Cost Calculator work on mobile?</h3><p>Yes. The page is fully responsive and works smoothly on phones, tablets and desktop browsers.</p>
+<h3>How is cost per kilometer calculated?</h3><p>Cost per km = fuel per 100 km × price per liter ÷ 100, independent of distance. For example 8 L/100 km at $1.00 per liter gives $0.08 per km. Multiply by your actual distance for the total bill.</p>
+<h3>How do I measure my car's real fuel consumption?</h3><p>Fill until the nozzle clicks off, reset the trip meter, drive at least 300 km, then fill to the click again. Fuel per 100 km = liters ÷ km × 100. Repeat two or three times and average — one measurement carries a large error.</p>
+<h3>Fuel prices keep changing — will the result still be accurate?</h3><p>The tool calculates statically from the price you enter and does not fetch live prices. Pump prices vary widely by region and change often, so enter your local station's current price. The formula itself is exact; only the price input is an estimate.</p>
+<h3>Why is my real consumption higher than the official figure?</h3><p>Official figures come from a laboratory test cycle. Real driving adds congestion, stop-and-go traffic, air conditioning, short cold trips, low tire pressure and extra load, commonly 1–3 L/100 km higher. To judge whether your car has changed, measure the same commute repeatedly instead of comparing to the official number.</p>
+<h3>How do I convert L/100km to MPG?</h3><p>US MPG = 235.215 ÷ (L/100 km); UK MPG = 282.481 ÷ (L/100 km). For example 8 L/100 km is about 29.4 US MPG or 35.3 UK MPG. This calculator works in liters per 100 km, so convert first if your spec sheet quotes MPG.</p>
+
+<h2>How to read the result</h2>
+<p>Each of the three numbers has its own use: <strong>total fuel used</strong> tells you how much to pump and whether one tank covers the trip; <strong>total cost</strong> is the actual outlay for this journey or period; and <strong>cost per kilometer</strong> is the figure for comparison — use it to weigh different cars, different driving styles, or fuel against taxis and rail on a per-passenger basis. For fleet costing, folding fuel into a per-kilometer figure is the only way to see true margin. To convert distance or volume units, pair this with the <a href="/en/calculators/unit-converter">Unit Converter</a>; to split a trip budget into percentages, see the <a href="/en/calculators/percentage-calc">Percentage Calculator</a>.</p>
 </section>
     </main>
 

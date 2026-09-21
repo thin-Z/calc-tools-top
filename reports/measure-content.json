@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-09-21T15:38:17.507Z",
+  "generatedAt": "2026-09-21T16:21:25.374Z",
   "total": 222,
   "summary": {
     "zhToolHanzi": {
       "n": 64,
-      "mean": 1351,
+      "mean": 1362,
       "median": 1081
     },
     "enToolWords": {
       "n": 55,
-      "mean": 682,
-      "median": 461
+      "mean": 698,
+      "median": 463
     },
     "zhBlogHanzi": {
       "n": 40,
       "mean": 997,
       "median": 742
     },
-    "siteAvgOverlap": 0.084,
-    "siteAvgOverlapBody": 0.0988,
+    "siteAvgOverlap": 0.0838,
+    "siteAvgOverlapBody": 0.0969,
     "noindexPages": 12
   },
   "pages": [
@@ -900,7 +900,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 24,
-      "words": 323,
+      "words": 1199,
       "_shBody": {},
       "noindex": false
     },
@@ -1628,8 +1628,8 @@
       "rel": "dist/zh/calculators/fuel-cost.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 1184,
-      "words": 3,
+      "hanzi": 1867,
+      "words": 44,
       "_shBody": {},
       "noindex": false
     },
@@ -2075,17 +2075,17 @@
   ],
   "focus": {
     "keys": [
-      "workday-calculator"
+      "fuel-cost"
     ],
     "matched": 4,
     "noindexStubs": 0,
     "fulltext": {
-      "maxJaccard": 0.0902,
+      "maxJaccard": 0.1298,
       "pairsOver15pct": 0,
       "totalPairs": 440
     },
     "body": {
-      "maxJaccard": 0.0739,
+      "maxJaccard": 0.0913,
       "pairsOver15pct": 0,
       "totalPairs": 416
     },
@@ -2093,54 +2093,54 @@
     "fuseTriggered": false,
     "topPairsBody": [
       {
-        "a": "dist/blog/zh/workday-calculator-guide.html",
-        "b": "dist/zh/calculators/workday-calculator.html",
-        "jaccard": 0.0739
+        "a": "dist/blog/zh/fuel-cost-guide.html",
+        "b": "dist/blog/zh/unit-converter-guide.html",
+        "jaccard": 0.0913
       },
       {
-        "a": "dist/zh/calculators/workday-calculator.html",
-        "b": "dist/blog/zh/workday-calculator-guide.html",
-        "jaccard": 0.0739
+        "a": "dist/blog/zh/fuel-cost-guide.html",
+        "b": "dist/blog/zh/electricity-cost-guide.html",
+        "jaccard": 0.09
       },
       {
-        "a": "dist/en/calculators/workday-calculator.html",
-        "b": "dist/en/calculators/date-calc.html",
-        "jaccard": 0.0633
-      },
-      {
-        "a": "dist/blog/zh/workday-calculator-guide.html",
-        "b": "dist/blog/zh/date-calculation-tips.html",
-        "jaccard": 0.0557
-      },
-      {
-        "a": "dist/zh/calculators/workday-calculator.html",
-        "b": "dist/zh/calculators/date-calc.html",
-        "jaccard": 0.0536
-      },
-      {
-        "a": "dist/blog/zh/workday-calculator-guide.html",
+        "a": "dist/blog/zh/fuel-cost-guide.html",
         "b": "dist/tags/life.html",
-        "jaccard": 0.048
+        "jaccard": 0.087
       },
       {
-        "a": "dist/blog/en/workday-calculator-guide.html",
-        "b": "dist/en/calculators/workday-calculator.html",
-        "jaccard": 0.0461
+        "a": "dist/blog/en/fuel-cost-guide.html",
+        "b": "dist/blog/en/electricity-cost-guide.html",
+        "jaccard": 0.0803
       },
       {
-        "a": "dist/en/calculators/workday-calculator.html",
-        "b": "dist/blog/en/workday-calculator-guide.html",
-        "jaccard": 0.0461
+        "a": "dist/blog/en/fuel-cost-guide.html",
+        "b": "dist/blog/en/unit-converter-guide.html",
+        "jaccard": 0.0699
       },
       {
-        "a": "dist/zh/calculators/workday-calculator.html",
+        "a": "dist/blog/zh/fuel-cost-guide.html",
+        "b": "dist/blog/zh/discount-calculation-tips.html",
+        "jaccard": 0.0685
+      },
+      {
+        "a": "dist/blog/zh/fuel-cost-guide.html",
         "b": "dist/blog/zh/date-calculation-tips.html",
-        "jaccard": 0.0429
+        "jaccard": 0.0586
       },
       {
-        "a": "dist/en/calculators/workday-calculator.html",
-        "b": "dist/en/calculators/overtime.html",
-        "jaccard": 0.0409
+        "a": "dist/blog/en/fuel-cost-guide.html",
+        "b": "dist/blog/en/discount-calculation-tips.html",
+        "jaccard": 0.0579
+      },
+      {
+        "a": "dist/blog/en/fuel-cost-guide.html",
+        "b": "dist/en/calculators/fuel-cost.html",
+        "jaccard": 0.0567
+      },
+      {
+        "a": "dist/en/calculators/fuel-cost.html",
+        "b": "dist/blog/en/fuel-cost-guide.html",
+        "jaccard": 0.0567
       }
     ]
   }
