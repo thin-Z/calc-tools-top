@@ -118,6 +118,7 @@ KV_URL / KV_REDIS_URL
 | `validate-encoding.ps1` | 验证编码 | `powershell scripts/validate-encoding.ps1` |
 | `submit-indexnow.mjs` | **IndexNow 批量提交**（2026-09-20 新增，Tier 1）：把 sitemap 内 URL 推送给必应/Yandex/Naver 等参与的搜索引擎。**无需注册账号**——归属验证＝仓库根 `{32位hex}.txt`（内容须等于文件名，`build.mjs` 自动复制进 `dist/`）。只提交属于本站且**在 sitemap 内**的 URL（`noindex` 壳页天然排除）；本地状态记于 `scripts/.indexnow-state.json`（已 gitignore） | `npm run submit:indexnow`（`--dry-run` / `--force` / `--limit N`） |
 | `baidu-push.mjs` | **百度主动推送**（2026-09-20 新增，Tier 1）：大陆最大搜索入口的即时提交。⚠️ **有每日配额**，故默认只推 **10 条**并按优先级排序（首页 → 高频工具 → 博客 → 其余），接口返回的 `remain` 会打印出来供决定下次 `--limit`。token 来自 `BAIDU_PUSH_TOKEN` 或 `scripts/.baidu-push-token`（均 gitignore）；状态记于 `scripts/.baidu-push-state.json` | `npm run submit:baidu`（`--dry-run` 不需 token / `--limit N` / `--priority-only`） |
+| `push-any.sh` | **推送通道自动探测**（2026-09-21 新增，非门禁）：VPN（LvniuYun）开启时会把 `github.com` 解析到 fake-ip（`198.18.x.x`），裸 SSH 因此失败。本脚本依次探测 5 条通道 —— 1) 原生 remote；2) 真实 IP:22 直连（`-o HostKeyAlias=github.com` 保持 known_hosts 校验，彻底绕开 DNS）；3) 真实 IP:443（ssh.github.com 端点）；4) 本地代理端口（自动扫 7888/7890/1080 等）+ `curl --proxytunnel` 作 SSH `ProxyCommand`；5) HTTPS 绕行（诊断用）。**先只读 `ls-remote` 探测、成功才 push**；真实 IP 由国内 DoH（223.5.5.5）动态查询，避免硬编码 | `bash scripts/push-any.sh [branch]`（`DRY=1` 仅探测不推送） |
 
 内容审计操作手册见 `docs/content-audit-sop.md`；构建/校验与回滚见 `docs/rollback.md`。
 

@@ -56,6 +56,12 @@
 | `validate-encoding.ps1` | 工具 | 编码验证 | 手动 |
 | `gsc-submit-daily.sh` | GSC | 索引批量提交（bsk 原生 click 真实点击）：逐条查 URL Inspection，已收录自动跳过（不耗配额）、未收录点 Request indexing；**内置官方配额检测**（页面弹 "Quota exceeded" 即中断本批、队列原样保留，可跨天续跑）。队列 `reports/gsc-pending.txt` + 日志 `reports/gsc-submit-log.md`。⚠️ 前置：VPN 须开启 + Edge+bsk 扩展常驻；bash 直接跑，**命令输出勿接管道** | 手动 |
 
+## 运维辅助脚本（手动触发，非 verify 引用）
+
+| 脚本 | 用途 | 触发方式 |
+|------|------|----------|
+| `push-any.sh` | **推送通道自动探测**（2026-09-21 新增）：VPN 开/关通吃。VPN（LvniuYun）开启时 `github.com` 被解析成 fake-ip（`198.18.x.x`），裸 SSH 会失败；本脚本依次探测 5 条通道（原生 remote / 真实 IP:22 直连 + `HostKeyAlias` / 真实 IP:443 / 本地代理 + `curl --proxytunnel` 作 `ProxyCommand` / HTTPS 绕行），先只读 `ls-remote` 探测、成功才 push | `bash scripts/push-any.sh [branch]`（`DRY=1` 仅探测） |
+
 ## 归档清单（scripts/archive/，一次性 / 旧审计，非 verify 引用）
 
 见 `scripts/archive/README.md`。已归档：`full_seo_audit.py`、`security_audit.py`、`seo_audit.py`、`analyze_sitemap.py`、`audit-contrast.mjs`（被 `audit-a11y.mjs` 取代）。
