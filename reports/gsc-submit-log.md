@@ -493,3 +493,45 @@
       队列原样保留（未消耗），明日配额重置后直接续跑。
    汇总: 提交=1 已收录跳过=2 本批处理=108 剩余=105
 ===== 完成 =====
+
+## 2026-09-21 批提交（cap=120 dry=0，含 session 自动重连）
+── https://www.calc-tools.top/blog/zh/image-resize-crop-guide
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/blog/zh/json-formatter-guide
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/blog/zh/standard-weight-guide
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/blog/zh/tax2026-guide
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/blog/zh/text-diff-guide
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/blog/zh/workday-calculator-guide
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/en/about
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/en/fraction-decimal-table
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/en/help
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/en/methodology
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/en/calculators/bmi
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/en/calculators/calorie-calculator
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/en/calculators/car-loan
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/en/calculators/dca-calculator
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/en/calculators/electricity
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/en/calculators/fuel-cost
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/en/calculators/loan-compare
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/en/calculators/overtime
+   ⛔ GSC 官方配额已耗尽（Quota exceeded），中断本批
+   ⛔ 因 GSC 官方配额耗尽（Quota exceeded）提前中断 —— 非脚本故障，Google 明示每日重置。
+      队列原样保留（未消耗），明日配额重置后直接续跑。
+   汇总: 提交=11 已收录跳过=6 本批处理=105 剩余=88
+===== 完成 =====
