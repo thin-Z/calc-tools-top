@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-09-20T14:54:41.384Z",
+  "generatedAt": "2026-09-21T12:38:45.128Z",
   "total": 222,
   "summary": {
     "zhToolHanzi": {
       "n": 64,
-      "mean": 1284,
-      "median": 1080
+      "mean": 1311,
+      "median": 1081
     },
     "enToolWords": {
       "n": 55,
-      "mean": 606,
+      "mean": 629,
       "median": 369
     },
     "zhBlogHanzi": {
       "n": 40,
-      "mean": 995,
+      "mean": 997,
       "median": 742
     },
-    "siteAvgOverlap": 0.0843,
-    "siteAvgOverlapBody": 0.1023,
+    "siteAvgOverlap": 0.0842,
+    "siteAvgOverlapBody": 0.1017,
     "noindexPages": 12
   },
   "pages": [
@@ -503,8 +503,8 @@
       "rel": "dist/blog/zh/equal-installment-vs-equal-principal.html",
       "lang": "zh",
       "category": "blog",
-      "hanzi": 756,
-      "words": 9,
+      "hanzi": 815,
+      "words": 11,
       "_shBody": {},
       "noindex": false
     },
@@ -819,7 +819,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 24,
-      "words": 546,
+      "words": 1719,
       "_shBody": {},
       "noindex": false
     },
@@ -936,7 +936,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 24,
-      "words": 1164,
+      "words": 1179,
       "_shBody": {},
       "noindex": false
     },
@@ -945,7 +945,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 24,
-      "words": 1549,
+      "words": 1579,
       "_shBody": {},
       "noindex": false
     },
@@ -1547,8 +1547,8 @@
       "rel": "dist/zh/calculators/calorie-calculator.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 889,
-      "words": 58,
+      "hanzi": 2596,
+      "words": 99,
       "_shBody": {},
       "noindex": false
     },
@@ -1664,8 +1664,8 @@
       "rel": "dist/zh/calculators/loan-compare.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 2480,
-      "words": 12,
+      "hanzi": 2501,
+      "words": 13,
       "_shBody": {},
       "noindex": false
     },
@@ -1673,8 +1673,8 @@
       "rel": "dist/zh/calculators/mortgage.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 2137,
-      "words": 6,
+      "hanzi": 2160,
+      "words": 7,
       "_shBody": {},
       "noindex": false
     },
@@ -2075,17 +2075,17 @@
   ],
   "focus": {
     "keys": [
-      "calculators/ideal-weight"
+      "calorie"
     ],
     "matched": 2,
     "noindexStubs": 0,
     "fulltext": {
-      "maxJaccard": 0.0858,
+      "maxJaccard": 0.06,
       "pairsOver15pct": 0,
       "totalPairs": 220
     },
     "body": {
-      "maxJaccard": 0.0792,
+      "maxJaccard": 0.0535,
       "pairsOver15pct": 0,
       "totalPairs": 208
     },
@@ -2093,54 +2093,54 @@
     "fuseTriggered": false,
     "topPairsBody": [
       {
-        "a": "dist/en/calculators/ideal-weight.html",
+        "a": "dist/en/calculators/calorie-calculator.html",
         "b": "dist/en/calculators/bmi.html",
-        "jaccard": 0.0792
+        "jaccard": 0.0535
       },
       {
-        "a": "dist/en/calculators/ideal-weight.html",
+        "a": "dist/en/calculators/calorie-calculator.html",
+        "b": "dist/en/calculators/ideal-weight.html",
+        "jaccard": 0.0486
+      },
+      {
+        "a": "dist/en/calculators/calorie-calculator.html",
         "b": "dist/blog/en/bmi-normal-range-guide.html",
-        "jaccard": 0.0784
+        "jaccard": 0.0429
       },
       {
-        "a": "dist/en/calculators/ideal-weight.html",
-        "b": "dist/blog/en/standard-weight-guide.html",
-        "jaccard": 0.0512
-      },
-      {
-        "a": "dist/zh/calculators/ideal-weight.html",
-        "b": "dist/blog/zh/bmi-normal-range-guide.html",
-        "jaccard": 0.0506
-      },
-      {
-        "a": "dist/zh/calculators/ideal-weight.html",
+        "a": "dist/zh/calculators/calorie-calculator.html",
         "b": "dist/zh/calculators/bmi.html",
-        "jaccard": 0.0428
+        "jaccard": 0.0361
       },
       {
-        "a": "dist/zh/calculators/ideal-weight.html",
-        "b": "dist/blog/zh/standard-weight-guide.html",
-        "jaccard": 0.0397
-      },
-      {
-        "a": "dist/en/calculators/ideal-weight.html",
-        "b": "dist/en/calculators/overtime.html",
-        "jaccard": 0.0358
-      },
-      {
-        "a": "dist/en/calculators/ideal-weight.html",
-        "b": "dist/en/calculators/dca-calculator.html",
-        "jaccard": 0.0335
-      },
-      {
-        "a": "dist/en/calculators/ideal-weight.html",
+        "a": "dist/en/calculators/calorie-calculator.html",
         "b": "dist/en/calculators/compound-interest.html",
-        "jaccard": 0.0335
+        "jaccard": 0.0351
       },
       {
-        "a": "dist/en/calculators/ideal-weight.html",
+        "a": "dist/zh/calculators/calorie-calculator.html",
+        "b": "dist/zh/calculators/ideal-weight.html",
+        "jaccard": 0.0346
+      },
+      {
+        "a": "dist/en/calculators/calorie-calculator.html",
+        "b": "dist/en/calculators/mortgage.html",
+        "jaccard": 0.0336
+      },
+      {
+        "a": "dist/en/calculators/calorie-calculator.html",
+        "b": "dist/en/calculators/date-calc.html",
+        "jaccard": 0.0329
+      },
+      {
+        "a": "dist/en/calculators/calorie-calculator.html",
         "b": "dist/en/calculators/percentage-calc.html",
-        "jaccard": 0.0326
+        "jaccard": 0.0321
+      },
+      {
+        "a": "dist/en/calculators/calorie-calculator.html",
+        "b": "dist/en/calculators/overtime.html",
+        "jaccard": 0.0317
       }
     ]
   }

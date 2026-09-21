@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calorie Calculator - Daily Calorie Needs (BMR)</title>
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-    <meta name="description" content="Free calorie calculator based on BMR and TDEE. Estimate daily calorie needs from height, weight, age and gender to support your goals.">
+    <meta name="description" content="Free calorie calculator using the Mifflin-St Jeor equation to estimate BMR and TDEE, with fat-loss and muscle-gain ranges, plus official daily calorie reference tables, three worked examples and a 500 kcal food comparison.">
     <meta property='og:title' content='Calorie Calculator - Daily Calorie Needs (BMR)'/>
     <meta property='og:description' content='Free calorie calculator based on BMR and TDEE. Estimate daily calorie needs from height, weight, age and gender to support your goals.'/>
     <meta property='og:type' content='website'/>
@@ -51,26 +51,42 @@
     "mainEntity": [
         {
             "@type": "Question",
-            "name": "What is BMR (Basal Metabolic Rate)?",
+            "name": "Why am I not losing weight when I eat exactly my TDEE?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "BMR is the minimum number of calories your body needs at rest to sustain life. It accounts for about 60%-70% of total daily energy expenditure. This tool estimates BMR using the Mifflin-St Jeor formula."
+                "text": "Check three things: whether your activity factor is one notch too high (the most common cause); whether your food log misses cooking oil, drinks and snacks, since a tablespoon of oil is about 90 kcal and a sweetened milk tea often exceeds 300 kcal; and whether the observation window is too short. BMR and TDEE are estimates with individual error around ±10%, so eat your current intake for 2-3 weeks, watch the trend, then adjust by 100-200 kcal."
             }
         },
         {
             "@type": "Question",
-            "name": "Which formula is more accurate?",
+            "name": "Can I eat below my BMR to lose weight faster?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "The Mifflin-St Jeor equation (1990) is widely recommended for modern populations and usually has a smaller error margin. The revised Harris-Benedict equation (1984) is shown as a comparison. Actual needs also depend on body composition and metabolic health."
+                "text": "Not advisable. Sustained intake below BMR drives the body to adapt by lowering activity energy expenditure and burning muscle, which reduces resting metabolism and makes both further loss and maintenance harder. If your computed loss range dips below BMR, keep intake near BMR and widen the deficit through activity instead."
             }
         },
         {
             "@type": "Question",
-            "name": "How many calories should I eat to lose weight?",
+            "name": "Guidance mentions a 500-1,000 kcal cut, why does this tool only suggest 250-500?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Eating about 300-500 kcal below your daily maintenance calories (TDEE) typically leads to a weight loss of roughly 0.25-0.5 kg per week. Avoid extreme restriction below your BMR."
+                "text": "Large deficits of 500-1,000 kcal a day belong in supervised programmes for people with overweight or obesity, paired with staged goals. This tool serves a broader general audience and defaults to the more sustainable 250-500 kcal band. If your BMI is 24 or above and you need structured fat loss, a clinician or dietitian can set a larger deficit safely."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Do I need to recalculate after losing weight?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. BMR falls as body weight falls, since weight is the dominant variable in the equation, typically by tens to a hundred-plus kcal. Recalculate after every 5% drop in body weight, for example from 70 kg to 66-67 kg, to avoid the plateau where you still eat the old number and progress stalls."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Should I eat back the calories my workout burned?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Do not simply add your watch or treadmill figure back to your intake. The activity factor already accounts for routine training, so adding it again double-counts, and the body compensates by eating a little more and moving a little less after hard sessions. Move one activity level up when training volume changes meaningfully instead of adjusting day by day."
             }
         }
     ]
@@ -118,7 +134,7 @@
             <ul>
                 <li><a href="/en/calculators/bmi">BMI Calculator</a></li>
                 <li><a href="/en/calculators/ideal-weight">Ideal Weight Calculator</a></li>
-                <li><a href="/en/calculators/compound-interest">Compound Interest</a></li>
+                <li><a href="/en/calculators/pregnancy">Pregnancy Due Date Calculator</a></li>
             </ul>
         </div>
 
@@ -202,12 +218,83 @@
         
 
 <div class="tool-content">
-    <h2>Calorie Calculator Guide</h2>
-    <p>The Calorie Calculator is a completely free online tool that estimates your Basal Metabolic Rate (BMR) using the Mifflin-St Jeor formula from your gender, age, height, weight and activity level. It then multiplies BMR by an activity factor to get your daily maintenance calories (TDEE), plus recommended ranges for weight loss and muscle gain.</p>
-    <h3>What are BMR and TDEE?</h3>
-    <p>BMR is the minimum energy your body needs at rest. TDEE adds daily activity and exercise to that baseline. To maintain weight, eat around TDEE; to lose weight, eat slightly below it; to build muscle, eat slightly above it.</p>
-    <h3>How to choose your activity level</h3>
-    <p>Sedentary (desk job, little exercise) → ×1.2; exercise 1-3 days/week → ×1.375; 3-5 days/week → ×1.55; 6-7 days/week → ×1.725; physical labor or twice-daily training → ×1.9.</p>
+    <h2>How this calculator works: BMR, TDEE and where the ranges come from</h2>
+    <p>Enter your sex, age, height, weight and activity level. The tool first estimates your <strong>Basal Metabolic Rate (BMR)</strong> with the Mifflin-St Jeor equation, multiplies it by an activity factor to get your daily maintenance calories (<strong>TDEE</strong>), and then centres a weight-loss and a muscle-gain range on that number. Everything runs locally in your browser.</p>
+    <h3>Two equations: which one is the headline number</h3>
+    <p>You get two BMR figures. <strong>Mifflin-St Jeor (1990)</strong> is the headline result and the equation most nutrition practitioners use today; <strong>Harris-Benedict (1984 revision)</strong> is shown for comparison. The older equation tends to overestimate slightly for modern populations, so if the two numbers sit far apart it usually means your body composition (lean mass) does not match the equation's assumptions — trust your measured weight trend over either formula.</p>
+    <table class="ref-table">
+        <thead><tr><th>Equation</th><th>Men</th><th>Women</th><th>Year</th></tr></thead>
+        <tbody>
+            <tr><td>Mifflin-St Jeor (main)</td><td>10×weight + 6.25×height − 5×age + 5</td><td>10×weight + 6.25×height − 5×age − 161</td><td>1990</td></tr>
+            <tr><td>Harris-Benedict (reference)</td><td>13.397×weight + 4.799×height − 5.677×age + 88.362</td><td>9.247×weight + 3.098×height − 4.330×age + 447.593</td><td>1984 rev.</td></tr>
+        </tbody>
+    </table>
+    <p>Weight is in kilograms, height in centimetres, age in years. For a 30-year-old man at 175 cm and 75 kg: 10×75 + 6.25×175 − 5×30 + 5 = 1698.75, so his <strong>BMR is about 1,699 kcal</strong>.</p>
+
+    <h3>Activity factors: who each of the five levels is for</h3>
+    <p>TDEE = BMR × activity factor. This is the <strong>easiest step to get wrong</strong>, and it is the most common reason a result feels off — most people overestimate their own activity by about one level.</p>
+    <table class="ref-table">
+        <thead><tr><th>Factor</th><th>Option on the page</th><th>Typical profile</th><th>Weekly training</th></tr></thead>
+        <tbody>
+            <tr><td>×1.2</td><td>Sedentary</td><td>Desk job, driving commute, no dedicated exercise</td><td>None</td></tr>
+            <tr><td>×1.375</td><td>Lightly active</td><td>Walking, yoga or light gym work 1-3 days a week</td><td>1-3 sessions, ~30 min</td></tr>
+            <tr><td>×1.55</td><td>Moderately active</td><td>Moderate training (running, ball sports, lifting) 3-5 days</td><td>3-5 sessions, 45-60 min</td></tr>
+            <tr><td>×1.725</td><td>Very active</td><td>Training 6-7 days a week, or a physically demanding job</td><td>6-7 sessions</td></tr>
+            <tr><td>×1.9</td><td>Extremely active</td><td>Heavy manual labour, or athletes training twice a day</td><td>1-2 sessions daily</td></tr>
+        </tbody>
+    </table>
+    <p>When in doubt, <strong>pick one level lower</strong>. One level is roughly a 10-15% difference in TDEE — about 200-300 kcal a day at a 2,000 kcal baseline, or 6,000-9,000 kcal over a month.</p>
+
+    <h3>Where the loss and gain ranges come from</h3>
+    <p>The tool centres on your TDEE: the weight-loss range is TDEE−500 to TDEE−250, and the muscle-gain range is TDEE+250 to TDEE+500. One kilogram of body fat is roughly equivalent to 7,700 kcal, so a daily deficit of 250 kcal works out to about 0.25 kg per week and a 500 kcal deficit to about 0.5 kg per week.</p>
+    <table class="ref-table">
+        <thead><tr><th>Daily deficit</th><th>Theoretical weekly loss</th><th>In this tool</th><th>Assessment</th></tr></thead>
+        <tbody>
+            <tr><td>250 kcal</td><td>~0.25 kg</td><td>Upper end of the loss range</td><td>Gentle; suits small adjustments at a healthy weight</td></tr>
+            <tr><td>500 kcal</td><td>~0.5 kg</td><td>Lower end of the loss range</td><td>A widely used starting point for structured fat loss</td></tr>
+            <tr><td>750 kcal</td><td>~0.75 kg</td><td>Beyond the tool's range</td><td>Needs supervision; not advised as a long-term self-managed plan</td></tr>
+            <tr><td>1,000 kcal</td><td>~1 kg</td><td>Beyond the tool's range</td><td>Clinical territory, reserved for supervised cases</td></tr>
+        </tbody>
+    </table>
+    <p>Why stop at 500 kcal rather than push the deficit higher? Because the bigger the deficit, the higher the risk of muscle loss and metabolic adaptation. Aggressive deficits belong in a supervised programme, not in a default setting for the general public.</p>
+
+    <h3>Three worked examples you can compare against</h3>
+    <ol>
+        <li><strong>Man, 30, 175 cm, 75 kg, training 3-5 days a week (moderate ×1.55)</strong>: BMR about 1,699 kcal, TDEE about <strong>2,633 kcal</strong>. Weight loss: eat 2,133-2,383 kcal. Muscle gain: 2,883-3,133 kcal.</li>
+        <li><strong>Woman, 28, 162 cm, 55 kg, exercising 1-3 days a week (light ×1.375)</strong>: BMR about 1,262 kcal, TDEE about <strong>1,735 kcal</strong>. The loss range comes out at 1,235-1,485 kcal — <strong>the bottom of that range sits below her BMR</strong>. In this case keep intake near the BMR (about 1,400 kcal) and widen the deficit by moving more, not by eating less.</li>
+        <li><strong>Man, 45, 178 cm, 90 kg, sedentary (×1.2)</strong>: BMR about 1,793 kcal, TDEE about <strong>2,152 kcal</strong>. Weight loss: 1,652-1,902 kcal. Because he carries more weight than the population average, his computed TDEE is a little higher than the official reference figure for his age group (table below) even though he is sedentary.</li>
+    </ol>
+
+    <h3>Why your result may differ from official reference tables</h3>
+    <p>They measure different things. The table below is the US Department of Agriculture / HHS estimate for <strong>average-height adults at a healthy weight</strong>; this calculator works from <strong>your own measured height and weight</strong>.</p>
+    <table class="ref-table">
+        <thead><tr><th>Sex / age</th><th>Not active</th><th>Moderately active</th><th>Active</th></tr></thead>
+        <tbody>
+            <tr><td>Women 19-30</td><td>1,800-2,000</td><td>2,000-2,200</td><td>2,400</td></tr>
+            <tr><td>Women 31-50</td><td>1,800</td><td>2,000</td><td>2,200</td></tr>
+            <tr><td>Women 51+</td><td>1,600</td><td>1,800</td><td>2,000-2,200</td></tr>
+            <tr><td>Men 19-30</td><td>2,400-2,600</td><td>2,600-2,800</td><td>3,000</td></tr>
+            <tr><td>Men 31-50</td><td>2,200-2,400</td><td>2,400-2,600</td><td>2,800-3,000</td></tr>
+            <tr><td>Men 51+</td><td>2,000-2,200</td><td>2,200-2,400</td><td>2,400-2,800</td></tr>
+        </tbody>
+    </table>
+    <p>Calories per day. Source: Dietary Guidelines for Americans 2020-2025 (USDA and HHS, 9th edition). In that framework, "not active" means light activity from daily life only, "moderately active" adds the equivalent of walking 1.5-3 miles a day, and "active" adds more than 3 miles a day. Note the activity definitions do not line up exactly with the ×1.2-×1.9 multipliers here: the official "not active" tier is a little more active than this tool's ×1.2. A gap of about 10% between the two is normal; if the gap is much wider, check whether your activity level is set one notch too high.</p>
+
+    <h3>What 500 kcal looks like on a plate</h3>
+    <p>A deficit in the abstract is hard to picture. Here is what 500 kcal actually is in everyday foods:</p>
+    <table class="ref-table">
+        <thead><tr><th>Food</th><th>Energy per 100 g</th><th>Amount equal to 500 kcal</th></tr></thead>
+        <tbody>
+            <tr><td>Cooked white rice</td><td>~130 kcal</td><td>~385 g, about two cups</td></tr>
+            <tr><td>Chicken breast, cooked</td><td>~165 kcal</td><td>~300 g</td></tr>
+            <tr><td>Eggs (1 large ≈ 50 g)</td><td>~143 kcal</td><td>about 7 large eggs</td></tr>
+            <tr><td>Whole milk</td><td>~61 kcal per 100 ml</td><td>~820 ml</td></tr>
+            <tr><td>Apple</td><td>~52 kcal</td><td>~960 g, about five medium apples</td></tr>
+            <tr><td>Almonds</td><td>~579 kcal</td><td>~86 g, a small handful</td></tr>
+            <tr><td>Olive oil</td><td>~884 kcal</td><td>only ~57 ml, about four tablespoons</td></tr>
+        </tbody>
+    </table>
+    <p>Figures are approximate USDA-style values and vary with variety, cut and cooking method — added cooking oil is the usual hidden culprit. To place your own result in context, check your weight category with the <a href="/en/calculators/bmi">BMI Calculator</a> and set a target with the <a href="/en/calculators/ideal-weight">Ideal Weight Calculator</a>, then come back here to convert that target into daily calories.</p>
 </div>
 <section class="related-posts">
         <h3>Related Reading</h3>
@@ -216,21 +303,22 @@
         </ul>
     </section>
 <section class="tool-content">
-<h2>About Calorie Calculator</h2>
-<p>The Calorie Calculator is a completely free online tool that helps you estimate your daily calorie needs from your personal data. Whether you are a fitness enthusiast, on a diet, bulking, or simply curious about healthy eating, you can get a reference result instantly without installing any software.</p>
-<p>Together with the BMI Calculator and the Ideal Weight Calculator, it forms a complete health toolkit: first understand your weight status, then calculate your daily calorie needs to build a more scientific diet and exercise plan.</p>
-<h2>How to Use Calorie Calculator</h2>
+<h2>About the Calorie Calculator</h2>
+<p>This tool answers one specific question: <strong>given your body data, how many calories a day should you eat?</strong> It does not hand you a meal plan and it does not label foods as good or bad — it gives you a reference line you can actually follow: maintenance is roughly your TDEE, fat loss sits at TDEE−250 to −500, and muscle gain at TDEE+250 to +500.</p>
+<p>It works best alongside the rest of the health tools here. Start with the <a href="/en/calculators/bmi">BMI Calculator</a> to see whether you are inside the 18.5-23.9 healthy band, use the <a href="/en/calculators/ideal-weight">Ideal Weight Calculator</a> to set a target weight, then convert that target into daily calories here. If you are trying to conceive or already pregnant, energy needs differ substantially from a general adult, so see the <a href="/en/calculators/pregnancy">Pregnancy Due Date Calculator</a> and follow your clinician's advice.</p>
+<h2>How to use the Calorie Calculator</h2>
 <ol>
-<li>Select your gender and enter your age, height and weight.</li>
-<li>Choose the activity level that best matches your daily routine.</li>
-<li>Click Calculate to get BMR, TDEE and recommended ranges.</li>
-<li>Change any input and the result refreshes automatically.</li>
+<li>Select your sex and enter your age, height and current weight (your actual weight, not your target).</li>
+<li>Match the activity descriptions in the table above and pick the level closest to your real routine; when unsure, round down.</li>
+<li>Click Calculate to get your BMR, TDEE and both recommended ranges.</li>
+<li>Recalculate after roughly every 5% change in body weight.</li>
 </ol>
 <h2>Calorie Calculator FAQ</h2>
-<h3>Is Calorie Calculator free to use?</h3><p>Yes, Calorie Calculator is completely free. There are no hidden fees, no account registration and no download required.</p>
-<h3>How accurate are the results?</h3><p>The tool uses the internationally recognized Mifflin-St Jeor and Harris-Benedict equations and runs entirely in your browser, so results are stable and reliable. Individual needs vary with body composition and metabolism, so treat them as a reference.</p>
-<h3>Is my data private?</h3><p>Your privacy is a priority. Everything you enter is processed directly on your device and is never uploaded to any server.</p>
-<h3>Does Calorie Calculator work on mobile?</h3><p>Yes. The page is fully responsive and works smoothly on phones, tablets and desktop browsers.</p>
+<h3>Why am I not losing weight when I eat exactly my TDEE?</h3><p>Check three things, in order. First, whether your activity factor is one notch too high — this is the most common cause. Second, whether your food log misses cooking oil, drinks and snacks: a tablespoon of oil is around 90 kcal and a sweetened milk tea is often over 300 kcal. Third, whether your observation window is simply too short. BMR and TDEE are estimates with individual error typically around ±10%, so the reliable way to calibrate is to eat your current intake for 2-3 weeks, watch the weight trend, then adjust by 100-200 kcal — not day to day.</p>
+<h3>Can I eat below my BMR to lose weight faster?</h3><p>Not advisable. Sustained intake below BMR pushes the body to adapt by reducing activity energy expenditure and burning muscle, which lowers resting metabolism, makes further loss harder and makes regain more likely. The second worked example above lands in exactly this situation: its computed loss range dips below BMR, so the fix is to keep intake near BMR and widen the deficit through activity instead.</p>
+<h3>Guidance mentions a 500-1,000 kcal cut — why does this tool only suggest 250-500?</h3><p>The two are aimed at different people. Large deficits of 500-1,000 kcal a day belong in supervised programmes for people with overweight or obesity, paired with staged goals. This tool serves a broader general audience, so it defaults to the more conservative 250-500 kcal band that is easier to sustain. If your BMI is 24 or above and you need structured fat loss, a clinician or dietitian can set you up on the larger deficit safely.</p>
+<h3>Do I need to recalculate after losing weight?</h3><p>Yes. BMR falls as body weight falls, because weight is the dominant variable in the equation — usually tens to a hundred-plus kcal lower than before. Recalculate after every 5% drop in body weight (for example from 70 kg down to 66-67 kg) so you do not hit the classic plateau where you are still eating the old number and nothing moves.</p>
+<h3>Should I eat back the calories my workout burned?</h3><p>Do not simply add your watch or treadmill figure back to your intake. For one thing, the activity factor (×1.2-×1.9) already accounts for routine training, so adding it again double-counts. For another, the body compensates: after a hard session people tend to eat a little more and move a little less. The steadier approach is to move one activity level up when your training volume changes meaningfully (say from two sessions a week to five) rather than adjusting day by day.</p>
 </section>
     </main>
 
