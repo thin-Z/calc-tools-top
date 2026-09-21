@@ -46,8 +46,11 @@
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
-        { "@type": "Question", "name": "How many feet in a meter?", "acceptedAnswer": { "@type": "Answer", "text": "1 meter = 3.28084 feet." } },
-        { "@type": "Question", "name": "How to convert Celsius to Fahrenheit?", "acceptedAnswer": { "@type": "Answer", "text": "°F = °C × 1.8 + 32, °C = (°F - 32) ÷ 1.8." } }
+        { "@type": "Question", "name": "How many feet are in a meter?", "acceptedAnswer": { "@type": "Answer", "text": "1 meter = 3.2808 feet. The tool uses the exact definition 1 foot = 0.3048 meters; conversely 1 foot = 0.3048 meters." } },
+        { "@type": "Question", "name": "How do I convert Celsius to Fahrenheit?", "acceptedAnswer": { "@type": "Answer", "text": "°F = °C × 9/5 + 32, and °C = (°F − 32) × 5/9. Kelvin = °C + 273.15. Reference points: 0 °C = 32 °F, 20 °C = 68 °F, 37 °C = 98.6 °F, 100 °C = 212 °F, and −40 °C equals −40 °F." } },
+        { "@type": "Question", "name": "How many square meters are in an acre?", "acceptedAnswer": { "@type": "Answer", "text": "1 acre = 4,046.86 square meters. 1 hectare = 10,000 square meters = 2.4711 acres. The Chinese unit mu (亩) is 666.67 square meters, so 1 acre is about 6.07 mu — mu and acre are different systems and must not be used interchangeably." } },
+        { "@type": "Question", "name": "How many MB are in a GB?", "acceptedAnswer": { "@type": "Answer", "text": "Binary convention: 1 GB = 1024 MB and 1 TB = 1024 GB. Drive manufacturers label capacity in decimal (1 GB = 1000 MB), which is why a new 1 TB drive usually shows only about 931 GB in your operating system." } },
+        { "@type": "Question", "name": "Why can't temperature be converted by simple multiplication?", "acceptedAnswer": { "@type": "Answer", "text": "Length, weight and most other units are pure ratios — multiply by one factor. Celsius, Fahrenheit and Kelvin have different zero points, so there is an offset as well as a scale: 0 °C equals 32 °F, not 0 °F. You must subtract the offset before applying the ratio, so plain multiplication gives the wrong answer." } }
     ]
 }</script>
 
@@ -93,7 +96,6 @@
         <div class="tool-form"><div class="form-group"><label>Category</label><select id="category" data-csp-change="updateUnits"><option value="length">Length</option><option value="weight">Weight</option><option value="temp">Temperature</option><option value="area">Area</option><option value="volume">Volume</option><option value="speed">Speed</option><option value="data">Data</option><option value="time">Time</option></select></div><div class="form-group"><label>Value</label><input type="number" id="inputValue" value="1" step="any"></div><div class="form-group"><label>From</label><select id="fromUnit"></select></div><div class="form-group"><label>To</label><select id="toUnit"></select></div><div class="form-actions"><button type="button" class="btn btn-primary" data-csp-click="doConvert">Convert</button><button type="reset" class="btn btn-secondary" data-csp-click="resetForm">Reset</button></div></div>
         <div class="result-card hidden" id="resultArea" tabindex="0"><div class="st-2"><p id="resultLabel" class="st-63"></p><p id="resultValue" class="st-64"></p></div></div>
         
-        <div class='tool-content'><h2>Unit Converter - Length, Weight, Temperature Conversion Guide</h2><p>Free online unit converter. Convert between length, weight, temperature, and area units instantly.</p></div>
 <section class="related-posts">
         <h3>Related Reading</h3>
         <ul>
@@ -101,24 +103,131 @@
         </ul>
     </section>
 <section class="tool-content">
-<h2>About Unit Converter</h2>
-<p>Unit Converter is a completely free online tool that helps you Length/weight/temperature converter. Whether you are a casual user or a professional, you can use it instantly without installing any software.</p>
-<p>Whether you are a student, an engineer, or anyone who needs quick conversions in daily life, you can convert length, weight, temperature, area, and more.</p>
-<h2>How to Use</h2>
-<ol>
-    <li>Choose a conversion category (length, weight, temperature, area, etc.).</li>
-    <li>Enter the value you want to convert.</li>
-    <li>Select the "From" and "To" units.</li>
-    <li>See the result instantly; reverse conversion is supported.</li>
-</ol>
-<h2>Unit Converter FAQ</h2>
-<h3>Is Unit Converter free to use?</h3><p>Yes, Unit Converter is completely free. There are no hidden fees, no account registration and no download required.</p>
-<h3>How accurate are the results?</h3><p>All calculations are performed locally in your browser using well-established formulas, so the results are accurate and consistent.</p>
-<h3>Is my data private?</h3><p>Your privacy is a priority. Everything you enter is processed directly on your device and is never uploaded to any server.</p>
-<h3>Does Unit Converter work on mobile?</h3><p>Yes. The page is fully responsive and works smoothly on phones, tablets and desktop browsers.</p>
+<h2>About the Unit Converter</h2>
+<p>The Unit Converter is a completely free online tool covering eight categories — <strong>length, weight, temperature, area, volume, speed, data and time</strong> — with more than 40 units in total, accurate to four decimal places and computed entirely in your browser. Whether you are a student doing homework, an engineer reading drawings, a shopper comparing overseas listings, or just someone who needs a quick conversion, pick a category, enter a value, choose the "from" and "to" units, and you are done.</p>
 
-<h2>Why Use unit-converter</h2>
-<p>Unlike desktop applications or complicated spreadsheets, unit-converter works instantly in your browser with zero setup. You get the same reliable results whether you are on a computer, tablet or phone, and there is nothing to download, register or pay for. The tool is updated regularly and designed with a clean, distraction-free interface so you can focus on the task instead of figuring out the software.</p>
+<h2>How conversion works: route through a base unit</h2>
+<p>Apart from temperature, all seven other categories use the same logic: <strong>convert the source unit to the category's base unit, then convert from the base unit to the target unit</strong>. For length the base is the millimeter: 1 meter = 1000 mm and 1 foot = 304.8 mm, so 1 meter = 1000 ÷ 304.8 = 3.2808 feet.</p>
+<p>Once you see this, you no longer need to memorise every conversion constant — knowing each unit's factor against the base lets you derive any pair. <strong>Temperature is the one exception</strong>: Celsius, Fahrenheit and Kelvin have different zero points, so they are not in a pure ratio and must be converted with an offset formula (see below).</p>
+
+<h2>Conversion tables for all eight categories</h2>
+<p>The tables below use the same exact factors as the tool, so the numbers match what it actually outputs (to four decimals).</p>
+
+<h3>Length (base: millimeter)</h3>
+<table class="ref-table">
+  <thead><tr><th>Conversion</th><th>Result</th><th>Conversion</th><th>Result</th></tr></thead>
+  <tbody>
+    <tr><td>1 inch</td><td>2.54 cm</td><td>1 foot</td><td>30.48 cm</td></tr>
+    <tr><td>1 foot</td><td>0.3048 m</td><td>1 yard</td><td>0.9144 m</td></tr>
+    <tr><td>1 meter</td><td>3.2808 ft</td><td>1 meter</td><td>39.3701 in</td></tr>
+    <tr><td>1 kilometer</td><td>0.6214 mile</td><td>1 mile</td><td>1.6093 km</td></tr>
+  </tbody>
+</table>
+
+<h3>Weight (base: milligram)</h3>
+<table class="ref-table">
+  <thead><tr><th>Conversion</th><th>Result</th><th>Conversion</th><th>Result</th></tr></thead>
+  <tbody>
+    <tr><td>1 ounce</td><td>28.3495 g</td><td>1 pound</td><td>0.4536 kg</td></tr>
+    <tr><td>1 kilogram</td><td>2.2046 lb</td><td>1 pound</td><td>16 oz</td></tr>
+    <tr><td>1 tonne</td><td>1000 kg</td><td>1 kilogram</td><td>35.274 oz</td></tr>
+  </tbody>
+</table>
+
+<h3>Area (base: square meter)</h3>
+<table class="ref-table">
+  <thead><tr><th>Conversion</th><th>Result</th><th>Conversion</th><th>Result</th></tr></thead>
+  <tbody>
+    <tr><td>1 acre</td><td>4,046.86 m²</td><td>1 hectare</td><td>10,000 m²</td></tr>
+    <tr><td>1 hectare</td><td>2.4711 acres</td><td>1 km²</td><td>100 hectares</td></tr>
+    <tr><td>1 ft²</td><td>0.0929 m²</td><td>1 mu (亩, China)</td><td>666.67 m²</td></tr>
+  </tbody>
+</table>
+<p><strong>Note:</strong> The Chinese unit <em>mu</em> (亩, 666.67 m²) is a completely different system from the acre — 1 acre is about 6.07 mu. Do not treat them as interchangeable.</p>
+
+<h3>Volume (base: milliliter)</h3>
+<table class="ref-table">
+  <thead><tr><th>Conversion</th><th>Result</th><th>Conversion</th><th>Result</th></tr></thead>
+  <tbody>
+    <tr><td>1 liter</td><td>0.2642 US gallon</td><td>1 US gallon</td><td>3.7854 L</td></tr>
+    <tr><td>1 m³</td><td>1000 L</td><td>1 cup</td><td>236.588 ml</td></tr>
+    <tr><td>1 liter</td><td>4.2268 cups</td><td>1 liter</td><td>1000 ml</td></tr>
+  </tbody>
+</table>
+<p><strong>Note:</strong> "Gallon" here means the <strong>US gallon</strong> (3.7854 L). The imperial gallon is about 4.546 L — roughly 20% larger, which matters a lot when reading fuel-economy figures.</p>
+
+<h3>Speed (base: m/s)</h3>
+<table class="ref-table">
+  <thead><tr><th>Conversion</th><th>Result</th><th>Conversion</th><th>Result</th></tr></thead>
+  <tbody>
+    <tr><td>1 m/s</td><td>3.6 km/h</td><td>1 km/h</td><td>0.6214 mph</td></tr>
+    <tr><td>1 mph</td><td>1.6093 km/h</td><td>1 knot</td><td>1.852 km/h</td></tr>
+    <tr><td>1 knot</td><td>1.1508 mph</td><td>100 km/h</td><td>62.1371 mph</td></tr>
+  </tbody>
+</table>
+
+<h3>Data (base: byte, binary 1024)</h3>
+<table class="ref-table">
+  <thead><tr><th>Conversion</th><th>Result</th><th>Conversion</th><th>Result</th></tr></thead>
+  <tbody>
+    <tr><td>1 KB</td><td>1024 B</td><td>1 MB</td><td>1024 KB</td></tr>
+    <tr><td>1 GB</td><td>1024 MB</td><td>1 TB</td><td>1024 GB</td></tr>
+    <tr><td>1 GB</td><td>1,073,741,824 B</td><td>1 byte</td><td>8 bits</td></tr>
+  </tbody>
+</table>
+<p><strong>Note:</strong> Operating systems count in binary (1024) while drive makers label capacity in decimal (1000), so a "1 TB" drive usually shows about 931 GB — a difference of convention, not missing capacity.</p>
+
+<h3>Time (base: millisecond)</h3>
+<table class="ref-table">
+  <thead><tr><th>Conversion</th><th>Result</th><th>Conversion</th><th>Result</th></tr></thead>
+  <tbody>
+    <tr><td>1 hour</td><td>60 min = 3600 s</td><td>1 day</td><td>24 hours</td></tr>
+    <tr><td>1 week</td><td>7 days</td><td>1 year</td><td>365 days</td></tr>
+  </tbody>
+</table>
+
+<h3>Temperature (offset, not a ratio)</h3>
+<table class="ref-table">
+  <thead><tr><th>Celsius</th><th>Fahrenheit</th><th>Kelvin</th><th>Reference</th></tr></thead>
+  <tbody>
+    <tr><td>−40 °C</td><td>−40 °F</td><td>233.15 K</td><td>the one point where both scales agree</td></tr>
+    <tr><td>0 °C</td><td>32 °F</td><td>273.15 K</td><td>freezing point of water</td></tr>
+    <tr><td>20 °C</td><td>68 °F</td><td>293.15 K</td><td>room temperature</td></tr>
+    <tr><td>25 °C</td><td>77 °F</td><td>298.15 K</td><td>standard room temperature</td></tr>
+    <tr><td>37 °C</td><td>98.6 °F</td><td>310.15 K</td><td>normal body temperature</td></tr>
+    <tr><td>100 °C</td><td>212 °F</td><td>373.15 K</td><td>boiling point of water</td></tr>
+  </tbody>
+</table>
+<p>Formulas: °F = °C × 9/5 + 32; °C = (°F − 32) × 5/9; K = °C + 273.15.</p>
+
+<h2>Five worked examples</h2>
+<ol>
+  <li><strong>Height</strong>: 1.75 m = <strong>5.7415 ft</strong> — handy for forms that ask for feet.</li>
+  <li><strong>Weight</strong>: 150 lb = <strong>68.0388 kg</strong> — imperial body weight into metric.</li>
+  <li><strong>Land area</strong>: 1 acre = <strong>4,046.86 m²</strong> (about 6.07 mu) — useful when reading overseas property listings.</li>
+  <li><strong>Fuel tank</strong>: 50 L = <strong>13.2086 US gallons</strong> — North American fuel figures are quoted per gallon.</li>
+  <li><strong>Speed</strong>: 100 km/h = <strong>62.1371 mph</strong> — reading speed limits when driving abroad.</li>
+</ol>
+
+<h2>Common conversion mistakes</h2>
+<ul>
+  <li><strong>Treating temperature as a ratio</strong>: 0 °C is not 0 °F. Remove the offset first, then apply the factor — plain multiplication is always wrong.</li>
+  <li><strong>Confusing weight with volume</strong>: 1 liter of water weighs about 1 kg, but 1 liter of oil does not — density differs, so the two are not equivalent.</li>
+  <li><strong>Mixing up mu and acre</strong>: the Chinese mu (666.67 m²) and the acre (4,046.86 m²) differ by roughly a factor of six.</li>
+  <li><strong>US vs imperial gallon</strong>: 3.7854 L against about 4.546 L — about 20% apart, which skews fuel-economy comparisons.</li>
+  <li><strong>1024 vs 1000 for data</strong>: the system and the manufacturer use different bases, which is the real reason a drive looks smaller than advertised.</li>
+  <li><strong>Wrong category</strong>: "how big is this plot" is area, not length. Identify what is being measured before converting.</li>
+</ul>
+
+<h2>Unit Converter FAQ</h2>
+<h3>How many feet are in a meter?</h3><p>1 meter = 3.2808 feet. The tool uses the exact definition 1 foot = 0.3048 meters; conversely 1 foot = 0.3048 meters.</p>
+<h3>How do I convert Celsius to Fahrenheit?</h3><p>°F = °C × 9/5 + 32 and °C = (°F − 32) × 5/9, with K = °C + 273.15. Reference points: 0 °C = 32 °F, 37 °C = 98.6 °F, and −40 °C equals −40 °F.</p>
+<h3>How many square meters are in an acre?</h3><p>1 acre = 4,046.86 m²; 1 hectare = 10,000 m² = 2.4711 acres. The Chinese mu (亩) is 666.67 m², so 1 acre is about 6.07 mu — different systems, never interchangeable.</p>
+<h3>How many MB are in a GB?</h3><p>In binary, 1 GB = 1024 MB and 1 TB = 1024 GB. Drive makers use decimal (1 GB = 1000 MB), so a "1 TB" drive typically shows about 931 GB in your system.</p>
+<h3>Why can't temperature be converted by simple multiplication?</h3><p>Length, weight and similar units are pure ratios — one factor is enough. Celsius, Fahrenheit and Kelvin have different zero points (0 °C is 32 °F, not 0 °F), so you must subtract the offset before applying the ratio; multiplying alone gives the wrong answer.</p>
+
+<h2>How to read the result</h2>
+<p>The result is the equivalent of your input value expressed in the target unit, to four decimal places. In engineering, renovation, shopping or study, putting numbers from different sources into one unit is what makes comparison valid — seeing "0.5 m" as "50 cm" makes it far easier to judge whether something fits. The tool removes the mental arithmetic and the lookup tables so you can focus on the actual decision. To split a converted figure into proportions, pair it with the <a href="/en/calculators/percentage-calc">Percentage Calculator</a>; for fuel figures across units, see the <a href="/en/calculators/fuel-cost">Fuel Cost Calculator</a>.</p>
 </section>
     </main>
     <footer>

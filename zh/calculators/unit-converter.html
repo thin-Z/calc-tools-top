@@ -46,8 +46,11 @@
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
-        { "@type": "Question", "name": "1 米等于多少英尺？", "acceptedAnswer": { "@type": "Answer", "text": "1 米 = 3.28084 英尺。" } },
-        { "@type": "Question", "name": "摄氏度和华氏度怎么换算？", "acceptedAnswer": { "@type": "Answer", "text": "°F = °C × 1.8 + 32，°C = (°F - 32) ÷ 1.8。" } }
+        { "@type": "Question", "name": "1 米等于多少英尺？", "acceptedAnswer": { "@type": "Answer", "text": "1 米 = 3.2808 英尺（工具按 1 英尺 = 0.3048 米精确换算）。反向：1 英尺 = 0.3048 米。" } },
+        { "@type": "Question", "name": "摄氏度和华氏度怎么换算？", "acceptedAnswer": { "@type": "Answer", "text": "华氏度 = 摄氏度 × 9/5 + 32，摄氏度 = (华氏度 - 32) × 5/9。开尔文 = 摄氏度 + 273.15。例如 0°C = 32°F、37°C = 98.6°F，-40°C 与 -40°F 恰好相等。" } },
+        { "@type": "Question", "name": "1 亩等于多少平方米？", "acceptedAnswer": { "@type": "Answer", "text": "1 亩 = 666.67 平方米，1 公顷 = 10,000 平方米 = 15 亩，1 英亩 = 4,046.86 平方米 ≈ 6.07 亩。中国常用的「亩」是市制单位，与英制的英亩完全不同，换算时不要混用。" } },
+        { "@type": "Question", "name": "1 GB 等于多少 MB？", "acceptedAnswer": { "@type": "Answer", "text": "本工具按二进制口径：1 GB = 1024 MB，1 TB = 1024 GB。注意硬盘厂商常用十进制（1 GB = 1000 MB）标注容量，所以新买的 1TB 硬盘在操作系统里通常只显示约 931 GB。" } },
+        { "@type": "Question", "name": "为什么温度不能像长度那样直接乘除换算？", "acceptedAnswer": { "@type": "Answer", "text": "长度、重量等单位之间是纯倍数关系，乘一个系数即可；而摄氏、华氏、开尔文之间存在零点偏移，不是简单的比例关系。比如 0°C 对应 32°F 而不是 0°F，必须先减偏移量再乘系数，直接乘除会算错。" } }
     ]
 }</script>
 
@@ -93,7 +96,6 @@
         <div class="tool-form"><div class="form-group"><label>类别</label><select id="category" data-csp-change="updateUnits"><option value="length">长度</option><option value="weight">重量</option><option value="temp">温度</option><option value="area">面积</option><option value="volume">体积</option><option value="speed">速度</option><option value="data">数据量</option><option value="time">时间</option></select></div><div class="form-group"><label>数值</label><input type="number" id="inputValue" value="1" step="any"></div><div class="form-group"><label>从</label><select id="fromUnit"></select></div><div class="form-group"><label>到</label><select id="toUnit"></select></div><div class="form-actions"><button type="button" class="btn btn-primary" data-csp-click="doConvert">换算</button><button type="reset" class="btn btn-secondary" data-csp-click="resetForm">重置</button></div></div>
         <div class="result-card hidden" id="resultArea" tabindex="0"><div class="st-2"><p id="resultLabel" class="st-63"></p><p id="resultValue" class="st-64"></p></div></div>
         
-        <div class='tool-content'><h2>单位换算器 - 在线长度/重量/温度/面积/体积/速度/数据量/时间换算 使用说明</h2><p>免费在线单位换算器，支持长度、重量、温度、面积、体积、速度、数据量、时间等常用单位之间的快速换算，结果实时精确到 4 位小数。</p></div>
 <section class="related-posts">
         <h3>相关阅读</h3>
         <ul>
@@ -102,27 +104,131 @@
     </section>
 <section class="tool-content">
 <h2>关于单位换算器</h2>
-<p>单位换算器是一款完全免费的在线工具，帮助用户长度/重量/温度等常用单位换算。无论你是普通用户还是专业人士，都可以在不安装任何软件的情况下快速使用。</p>
-<p>无论是学习中的学生、工作中的工程师，还是日常生活中需要换算的用户，都能快速完成长度、重量、温度等单位转换。</p>
-<h2>如何使用</h2>
+<p>单位换算器是一款完全免费的在线工具，支持<strong>长度、重量、温度、面积、体积、速度、数据量、时间</strong>八大类共 40 多种单位互转，结果精确到 4 位小数，全部在浏览器本地完成。无论是做功课的学生、看图纸的工程师、海淘比价的买家，还是日常生活中需要换算单位的人，选中类别、填数值、选"从/到"单位即可得到结果。</p>
+
+<h2>换算的原理：先统一到"基准单位"</h2>
+<p>除了温度之外，其余七类的换算逻辑都一样：<strong>先把原单位换算成该类的基准单位，再从基准单位换算到目标单位</strong>。例如长度类以毫米为基准，1 米 = 1000 毫米、1 英尺 = 304.8 毫米，所以 1 米 = 1000 ÷ 304.8 = 3.2808 英尺。</p>
+<p>理解这一点后，你不必死记每一对换算常数——只要知道每个单位对应基准单位的倍数，任意两个单位之间都能推算出来。<strong>温度是唯一的例外</strong>：摄氏、华氏、开尔文之间存在零点偏移，不是纯倍数关系，必须按带偏移的公式换算（详见后文）。</p>
+
+<h2>八大类换算速查表</h2>
+<p>下表按工具内置的精确倍率给出每类的常用换算关系，数值与工具实际输出一致（保留 4 位小数）。</p>
+
+<h3>长度（基准：毫米 mm）</h3>
+<table class="ref-table">
+  <thead><tr><th>换算</th><th>结果</th><th>换算</th><th>结果</th></tr></thead>
+  <tbody>
+    <tr><td>1 英寸 (inch)</td><td>2.54 厘米</td><td>1 英尺 (ft)</td><td>30.48 厘米</td></tr>
+    <tr><td>1 英尺 (ft)</td><td>0.3048 米</td><td>1 码 (yard)</td><td>0.9144 米</td></tr>
+    <tr><td>1 米 (m)</td><td>3.2808 英尺</td><td>1 米 (m)</td><td>39.3701 英寸</td></tr>
+    <tr><td>1 公里 (km)</td><td>0.6214 英里</td><td>1 英里 (mile)</td><td>1.6093 公里</td></tr>
+  </tbody>
+</table>
+
+<h3>重量（基准：毫克 mg）</h3>
+<table class="ref-table">
+  <thead><tr><th>换算</th><th>结果</th><th>换算</th><th>结果</th></tr></thead>
+  <tbody>
+    <tr><td>1 盎司 (oz)</td><td>28.3495 克</td><td>1 磅 (lb)</td><td>0.4536 千克</td></tr>
+    <tr><td>1 千克 (kg)</td><td>2.2046 磅</td><td>1 磅 (lb)</td><td>16 盎司</td></tr>
+    <tr><td>1 吨 (ton)</td><td>1000 千克</td><td>1 千克 (kg)</td><td>35.274 盎司</td></tr>
+  </tbody>
+</table>
+
+<h3>面积（基准：平方米 m²）</h3>
+<table class="ref-table">
+  <thead><tr><th>换算</th><th>结果</th><th>换算</th><th>结果</th></tr></thead>
+  <tbody>
+    <tr><td>1 亩</td><td>666.67 平方米</td><td>1 公顷 (ha)</td><td>10,000 平方米</td></tr>
+    <tr><td>1 公顷 (ha)</td><td>15 亩</td><td>1 平方公里</td><td>1500 亩</td></tr>
+    <tr><td>1 英亩 (acre)</td><td>4,046.86 平方米</td><td>1 英亩 (acre)</td><td>6.0703 亩</td></tr>
+    <tr><td>1 平方英尺 (ft²)</td><td>0.0929 平方米</td><td>1 平方英尺</td><td>0.0929 m²</td></tr>
+  </tbody>
+</table>
+<p><strong>注意：</strong>中国的"亩"是市制单位，与英制的"英亩"（acre）完全不同：1 英亩约等于 6.07 亩，不要混用。工具按 1 亩 = 666.67 平方米计算，因此 1 公顷换算结果会显示为 14.9999 亩（标准值是 15 亩，差异来自 666.67 的四舍五入）。</p>
+
+<h3>体积（基准：毫升 ml）</h3>
+<table class="ref-table">
+  <thead><tr><th>换算</th><th>结果</th><th>换算</th><th>结果</th></tr></thead>
+  <tbody>
+    <tr><td>1 升 (L)</td><td>0.2642 美制加仑</td><td>1 美制加仑</td><td>3.7854 升</td></tr>
+    <tr><td>1 立方米 (m³)</td><td>1000 升</td><td>1 杯 (cup)</td><td>236.588 毫升</td></tr>
+    <tr><td>1 升 (L)</td><td>4.2268 杯</td><td>1 升 (L)</td><td>1000 毫升</td></tr>
+  </tbody>
+</table>
+<p><strong>注意：</strong>加仑分美制和英制：本工具的"加仑"指<strong>美制加仑</strong>（3.7854 升）；英制加仑约 4.546 升，两者相差约 20%。</p>
+
+<h3>速度（基准：米/秒 m/s）</h3>
+<table class="ref-table">
+  <thead><tr><th>换算</th><th>结果</th><th>换算</th><th>结果</th></tr></thead>
+  <tbody>
+    <tr><td>1 m/s</td><td>3.6 km/h</td><td>1 km/h</td><td>0.6214 mph</td></tr>
+    <tr><td>1 mph</td><td>1.6093 km/h</td><td>1 节 (knot)</td><td>1.852 km/h</td></tr>
+    <tr><td>1 节 (knot)</td><td>1.1508 mph</td><td>100 km/h</td><td>62.1371 mph</td></tr>
+  </tbody>
+</table>
+
+<h3>数据量（基准：字节 B，二进制 1024 进制）</h3>
+<table class="ref-table">
+  <thead><tr><th>换算</th><th>结果</th><th>换算</th><th>结果</th></tr></thead>
+  <tbody>
+    <tr><td>1 KB</td><td>1024 B</td><td>1 MB</td><td>1024 KB</td></tr>
+    <tr><td>1 GB</td><td>1024 MB</td><td>1 TB</td><td>1024 GB</td></tr>
+    <tr><td>1 GB</td><td>1,073,741,824 B</td><td>1 字节</td><td>8 比特</td></tr>
+  </tbody>
+</table>
+<p><strong>注意：</strong>操作系统按 1024 进制显示，而硬盘厂商按 1000 进制标注容量，所以标称 1 TB 的硬盘在电脑里通常只显示约 931 GB——这不是缩水，而是两种口径的差异。</p>
+
+<h3>时间（基准：毫秒 ms）</h3>
+<table class="ref-table">
+  <thead><tr><th>换算</th><th>结果</th><th>换算</th><th>结果</th></tr></thead>
+  <tbody>
+    <tr><td>1 小时</td><td>60 分钟 = 3600 秒</td><td>1 天</td><td>24 小时</td></tr>
+    <tr><td>1 周</td><td>7 天</td><td>1 年</td><td>365 天</td></tr>
+  </tbody>
+</table>
+
+<h3>温度（带偏移，非倍数关系）</h3>
+<table class="ref-table">
+  <thead><tr><th>摄氏度</th><th>华氏度</th><th>开尔文</th><th>场景</th></tr></thead>
+  <tbody>
+    <tr><td>-40 °C</td><td>-40 °F</td><td>233.15 K</td><td>两个刻度唯一的交点</td></tr>
+    <tr><td>0 °C</td><td>32 °F</td><td>273.15 K</td><td>水的冰点</td></tr>
+    <tr><td>20 °C</td><td>68 °F</td><td>293.15 K</td><td>室温</td></tr>
+    <tr><td>25 °C</td><td>77 °F</td><td>298.15 K</td><td>标准室温</td></tr>
+    <tr><td>37 °C</td><td>98.6 °F</td><td>310.15 K</td><td>人体正常体温</td></tr>
+    <tr><td>100 °C</td><td>212 °F</td><td>373.15 K</td><td>水的沸点</td></tr>
+  </tbody>
+</table>
+<p>公式：华氏度 = 摄氏度 × 9/5 + 32；摄氏度 = (华氏度 − 32) × 5/9；开尔文 = 摄氏度 + 273.15。</p>
+
+<h2>五个真实算例</h2>
 <ol>
-    <li>选择换算类别（长度、重量、温度、面积等）。</li>
-    <li>在"数值"输入框中填写要换算的数字。</li>
-    <li>选择"从"和"到"单位。</li>
-    <li>立即查看换算结果，支持反向换算。</li>
+  <li><strong>身高</strong>：1.75 米 = <strong>5.7415 英尺</strong>（海外体检表常填英尺）。</li>
+  <li><strong>体重</strong>：150 磅 = <strong>68.0388 千克</strong>（英制体重转公制）。</li>
+  <li><strong>土地面积</strong>：1 英亩 = <strong>6.0703 亩</strong>（看国外房产资料时常用）。</li>
+  <li><strong>油箱容量</strong>：50 升 = <strong>13.2086 美制加仑</strong>（北美油耗时按加仑计）。</li>
+  <li><strong>车速</strong>：100 km/h = <strong>62.1371 mph</strong>（出国自驾看限速牌）。</li>
 </ol>
-<h2>单位换算器常见问题</h2>
-<h3>单位换算器完全免费吗？</h3><p>是的，单位换算器完全免费，无需注册账号，也无需下载任何软件。</p>
-<h3>计算结果准确吗？</h3><p>所有计算均在浏览器本地完成，采用成熟可靠的计算公式，结果准确且稳定。</p>
-<h3>我的数据安全吗？</h3><p>你的隐私优先。所有输入内容都在你的设备上处理，不会上传到任何服务器。</p>
-<h3>手机可以使用吗？</h3><p>可以。页面完全适配手机、平板和电脑浏览器，随时随地都能使用。</p>
-<h2>掌握单位换算，先弄懂"基准单位"</h2>
-<p>单位换算的本质，是把不同单位的值统一到同一个"基准单位"上再比较。例如长度类，1 米作为国际单位制的基准，1 千米 = 1000 米、1 厘米 = 0.01 米；重量类以千克为基准，1 吨 = 1000 千克、1 克 = 0.001 千克。理解了"所有单位都指向同一个基准"这个逻辑，你就能轻松推算任意两个单位之间的换算，而不必死记硬背每一个换算常数。</p>
-<p>常见的类别里，长度、重量、面积、体积、时间都遵循这种"前缀 + 基准"的规律（如千米、厘米、毫米都是"米"加前缀）；而温度则特殊一些，摄氏、华氏、开尔文之间不是简单的倍数关系，而是存在偏移量，需要按特定公式换算。使用工具时，选对类别、把数值和单位填对即可，工具会自动处理这些逻辑。</p>
+
 <h2>换算时的常见误区</h2>
-<p>最常见的是搞混单位类别，比如把"重量"和"体积"混用——1 升水约等于 1 千克，但 1 升油就不到 1 千克，因为密度不同。另一个是温度换算，0°C 不等于 0°F，两者不仅倍数不同还带偏移，直接乘除会出错。还有些场景要用"面积"而非"长度"，例如说"这块地多少亩"其实是面积单位。弄清要换算的到底是长度、重量还是面积，选对类别，是准确换算的前提。</p>
-<h2>结果怎么解读？</h2>
-<p>换算得到的数值是你填的那个量在目标单位下的等效值。做工程、装修、购物或学习时，把不同来源的数值统一成同一单位，才能正确比较和计算。例如看到"产品规格是 0.5 米"，你换算成 50 厘米就能更直观地判断是否合适。工具省去了手工心算和查表的麻烦，让你专注于真正要做的判断。</p>
+<ul>
+  <li><strong>把温度当倍数换算</strong>：0 °C 不等于 0 °F，必须先处理零点偏移再乘系数，直接乘除必错。</li>
+  <li><strong>混淆"重量"和"体积"</strong>：1 升水约 1 千克，但 1 升油不到 1 千克——密度不同，两者不能等同换算。</li>
+  <li><strong>混用"亩"和"英亩"</strong>：中国市制的亩（666.67 m²）与英制英亩（4,046.86 m²）差约 6 倍。</li>
+  <li><strong>加仑的美制/英制</strong>：美制 3.7854 升、英制约 4.546 升，差约 20%，看油耗数据时尤其要注意。</li>
+  <li><strong>数据量的 1024 与 1000</strong>：系统与厂商口径不同，是"硬盘容量看起来变小"的真正原因。</li>
+  <li><strong>选错类别</strong>：问"这块地多大"是面积而非长度；换算前先确认量的性质。</li>
+</ul>
+
+<h2>单位换算器常见问题</h2>
+<h3>1 米等于多少英尺？</h3><p>1 米 = 3.2808 英尺。工具按 1 英尺 = 0.3048 米的精确定义换算；反向 1 英尺 = 0.3048 米。</p>
+<h3>摄氏度和华氏度怎么换算？</h3><p>华氏度 = 摄氏度 × 9/5 + 32；摄氏度 = (华氏度 − 32) × 5/9；开尔文 = 摄氏度 + 273.15。常用点：0 °C = 32 °F、37 °C = 98.6 °F，−40 °C 与 −40 °F 恰好相等。</p>
+<h3>1 亩等于多少平方米？</h3><p>1 亩 = 666.67 平方米；1 公顷 = 10,000 平方米 = 15 亩；1 英亩 = 4,046.86 平方米 ≈ 6.07 亩。中国的亩是市制单位，与英制英亩完全不同，切勿混用。</p>
+<h3>1 GB 等于多少 MB？</h3><p>按二进制口径 1 GB = 1024 MB、1 TB = 1024 GB。硬盘厂商多用十进制标注（1 GB = 1000 MB），所以标称 1 TB 的硬盘在系统中通常显示约 931 GB。</p>
+<h3>为什么温度不能像长度那样直接乘除换算？</h3><p>长度、重量等单位之间是纯倍数关系，乘一个系数即可；而摄氏、华氏、开尔文之间存在零点偏移（0 °C 对应 32 °F 而非 0 °F），必须先减偏移再乘系数，直接乘除会算错。</p>
+
+<h2>结果怎么解读</h2>
+<p>换算结果是你输入的量在目标单位下的等效值，精确到 4 位小数。做工程、装修、海淘或学习时，把不同来源的数值统一成同一单位才能正确比较——例如看到"规格 0.5 米"，换算成 50 厘米会更容易判断合不合适。工具省去了手工心算和查表的麻烦，让你专注于真正要做的判断。若要把换算结果再做比例拆分，可配合<a href="/zh/calculators/percentage-calc">百分比计算器</a>；涉及油耗的跨单位换算，可看<a href="/zh/calculators/fuel-cost">油耗计算器</a>。</p>
 </section>
     </main>
     <footer>

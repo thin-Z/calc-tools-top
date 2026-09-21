@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-09-21T16:21:25.374Z",
+  "generatedAt": "2026-09-21T16:33:12.602Z",
   "total": 222,
   "summary": {
     "zhToolHanzi": {
       "n": 64,
-      "mean": 1362,
+      "mean": 1370,
       "median": 1081
     },
     "enToolWords": {
       "n": 55,
-      "mean": 698,
-      "median": 463
+      "mean": 710,
+      "median": 475
     },
     "zhBlogHanzi": {
       "n": 40,
       "mean": 997,
       "median": 742
     },
-    "siteAvgOverlap": 0.0838,
-    "siteAvgOverlapBody": 0.0969,
+    "siteAvgOverlap": 0.0839,
+    "siteAvgOverlapBody": 0.0959,
     "noindexPages": 12
   },
   "pages": [
@@ -1043,8 +1043,8 @@
       "rel": "dist/en/calculators/unit-converter.html",
       "lang": "en",
       "category": "tool",
-      "hanzi": 24,
-      "words": 355,
+      "hanzi": 27,
+      "words": 1000,
       "_shBody": {},
       "noindex": false
     },
@@ -1772,8 +1772,8 @@
       "rel": "dist/zh/calculators/unit-converter.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 1081,
-      "words": 4,
+      "hanzi": 1600,
+      "words": 110,
       "_shBody": {},
       "noindex": false
     },
@@ -2075,17 +2075,17 @@
   ],
   "focus": {
     "keys": [
-      "fuel-cost"
+      "unit-converter"
     ],
     "matched": 4,
     "noindexStubs": 0,
     "fulltext": {
-      "maxJaccard": 0.1298,
+      "maxJaccard": 0.1304,
       "pairsOver15pct": 0,
       "totalPairs": 440
     },
     "body": {
-      "maxJaccard": 0.0913,
+      "maxJaccard": 0.1009,
       "pairsOver15pct": 0,
       "totalPairs": 416
     },
@@ -2093,54 +2093,54 @@
     "fuseTriggered": false,
     "topPairsBody": [
       {
-        "a": "dist/blog/zh/fuel-cost-guide.html",
-        "b": "dist/blog/zh/unit-converter-guide.html",
+        "a": "dist/blog/zh/unit-converter-guide.html",
+        "b": "dist/tags/life.html",
+        "jaccard": 0.1009
+      },
+      {
+        "a": "dist/blog/zh/unit-converter-guide.html",
+        "b": "dist/blog/zh/fuel-cost-guide.html",
         "jaccard": 0.0913
       },
       {
-        "a": "dist/blog/zh/fuel-cost-guide.html",
+        "a": "dist/blog/zh/unit-converter-guide.html",
         "b": "dist/blog/zh/electricity-cost-guide.html",
-        "jaccard": 0.09
-      },
-      {
-        "a": "dist/blog/zh/fuel-cost-guide.html",
-        "b": "dist/tags/life.html",
-        "jaccard": 0.087
-      },
-      {
-        "a": "dist/blog/en/fuel-cost-guide.html",
-        "b": "dist/blog/en/electricity-cost-guide.html",
         "jaccard": 0.0803
       },
       {
-        "a": "dist/blog/en/fuel-cost-guide.html",
-        "b": "dist/blog/en/unit-converter-guide.html",
+        "a": "dist/blog/zh/unit-converter-guide.html",
+        "b": "dist/zh/calculators/unit-converter.html",
+        "jaccard": 0.0787
+      },
+      {
+        "a": "dist/zh/calculators/unit-converter.html",
+        "b": "dist/blog/zh/unit-converter-guide.html",
+        "jaccard": 0.0787
+      },
+      {
+        "a": "dist/blog/zh/unit-converter-guide.html",
+        "b": "dist/blog/zh/discount-calculation-tips.html",
+        "jaccard": 0.0779
+      },
+      {
+        "a": "dist/blog/en/unit-converter-guide.html",
+        "b": "dist/blog/en/fuel-cost-guide.html",
         "jaccard": 0.0699
       },
       {
-        "a": "dist/blog/zh/fuel-cost-guide.html",
-        "b": "dist/blog/zh/discount-calculation-tips.html",
-        "jaccard": 0.0685
-      },
-      {
-        "a": "dist/blog/zh/fuel-cost-guide.html",
+        "a": "dist/blog/zh/unit-converter-guide.html",
         "b": "dist/blog/zh/date-calculation-tips.html",
-        "jaccard": 0.0586
+        "jaccard": 0.0696
       },
       {
-        "a": "dist/blog/en/fuel-cost-guide.html",
-        "b": "dist/blog/en/discount-calculation-tips.html",
-        "jaccard": 0.0579
+        "a": "dist/blog/en/unit-converter-guide.html",
+        "b": "dist/blog/en/date-calculation-tips.html",
+        "jaccard": 0.0625
       },
       {
-        "a": "dist/blog/en/fuel-cost-guide.html",
-        "b": "dist/en/calculators/fuel-cost.html",
-        "jaccard": 0.0567
-      },
-      {
-        "a": "dist/en/calculators/fuel-cost.html",
-        "b": "dist/blog/en/fuel-cost-guide.html",
-        "jaccard": 0.0567
+        "a": "dist/blog/en/unit-converter-guide.html",
+        "b": "dist/blog/en/electricity-cost-guide.html",
+        "jaccard": 0.0624
       }
     ]
   }
