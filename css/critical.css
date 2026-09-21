@@ -507,6 +507,7 @@ main { flex: 1; max-width: 1280px; margin: 0 auto; padding: 48px 28px; width: 10
     --text-primary: var(--text-on-dark);
     --text-secondary: var(--text-tertiary);
     --link-color: var(--accent-blue);
+    --link-color-elevated: #4DA6FF;
     --border: var(--surface-dark-2);
     --glass-bg: rgba(0,0,0,0.72);
     --glass-blur: 20px;

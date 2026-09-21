@@ -47,6 +47,9 @@
     --text-secondary: var(--text-tertiary);
     /* T1.4：暗色下 info 蓝(#2563eb) 在纯黑上仅 4.06:1，链接提亮为 accent 蓝(≈5.2:1) */
     --link-color: var(--accent-blue);
+    /* a11y(2026-09-21)：accent 蓝在「抬升面」--bg-elevated(= --surface-dark) 上仅 3.82:1 未达 AA，
+       正文链接改用更亮的达标蓝；具体见 .tool-content/.seo-content 正文链接规则。 */
+    --link-color-elevated: #4DA6FF;
     --border: var(--surface-dark-2);
     --glass-bg: rgba(0,0,0,0.72);
     --glass-blur: 20px;
@@ -790,6 +793,15 @@ footer .footer-links a:hover {
     text-decoration: underline;
     text-underline-offset: 0.15em;
     text-decoration-thickness: 1px;
+}
+/* a11y(2026-09-21)：深色下正文块底色为 --bg-elevated（= --surface-dark），
+   此处 --link-color（accent 蓝）实测仅 3.82:1、未达 AA 4.5；正文内联链接改用更亮的达标蓝（5.45:1）。
+   仅限正文块内链接，导航/卡片/按钮/related-posts 链接不受影响。 */
+[data-theme="dark"] .tool-content p a,
+[data-theme="dark"] .tool-content li a,
+[data-theme="dark"] .seo-content p a,
+[data-theme="dark"] .seo-content li a {
+    color: var(--link-color-elevated);
 }
 .tool-content ul,.seo-content ul {
     margin: 0.5rem 0 1rem;

@@ -99,6 +99,9 @@
     --text-on-dark: #F5F5F7;
     /* 正文链接色（T1.4：亮色用 info 蓝保 AA；暗色由主题块覆写为高亮蓝） */
     --link-color: var(--color-info);
+    /* a11y(2026-09-21)：深色「抬升面」(--bg-elevated = --surface-dark)上的正文链接需更亮才达 AA 4.5；
+       亮色沿用 info 蓝，深色由主题块覆写为更亮蓝(实测 5.45:1)。 */
+    --link-color-elevated: var(--color-info);
     --hot-badge-from: var(--color-warning);
     --hot-badge-to: #ef4444;
     --hot-likes: #d97706;
