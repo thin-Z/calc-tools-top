@@ -51,17 +51,19 @@
         "inLanguage": "en"
     }
     </script>
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            { "@type": "Question", "name": "How do I tell seconds from milliseconds?", "acceptedAnswer": { "@type": "Answer", "text": "In 2026, the current second-level timestamp is about 1.78 billion (10 digits), while the millisecond-level value is about 1.78 trillion (13 digits). This tool defaults to a boundary of 10^11, but you can also force a unit manually." } },
-            { "@type": "Question", "name": "Why do timestamps look different across timezones?", "acceptedAnswer": { "@type": "Answer", "text": "A timestamp is an absolute instant and is timezone-independent. Only the human-readable representation is affected by the timezone. This tool shows local and UTC side by side so you can verify." } },
-            { "@type": "Question", "name": "Is my data uploaded to a server?", "acceptedAnswer": { "@type": "Answer", "text": "No. Everything runs locally in your browser; your input never leaves your device." } }
-        ]
-    }
-    </script>
+            <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                { "@type": "Question", "name": "How do I tell seconds from milliseconds in a Unix timestamp?", "acceptedAnswer": { "@type": "Answer", "text": "Count the digits. In the 2020s a second-level timestamp has 10 digits while a millisecond-level one has 13. The tool defaults to a boundary of 100000000000, and you can force a unit manually." } },
+                { "@type": "Question", "name": "Why do timestamps look different across timezones?", "acceptedAnswer": { "@type": "Answer", "text": "A timestamp is an absolute instant and is timezone-independent. Only the human-readable representation is affected by the timezone. The tool shows local and UTC side by side so you can verify." } },
+                { "@type": "Question", "name": "What is the 2038 problem?", "acceptedAnswer": { "@type": "Answer", "text": "Systems storing a timestamp in a signed 32-bit integer cannot represent values above 2147483647, which occurs at 2038-01-19T03:14:07Z. Using 64-bit storage avoids the issue entirely." } },
+                { "@type": "Question", "name": "Do leap seconds affect Unix time?", "acceptedAnswer": { "@type": "Answer", "text": "No. Unix time counts 86400-second days since the epoch and does not insert leap seconds, which is why adding 86400 to a timestamp always advances exactly one day in UTC." } },
+                { "@type": "Question", "name": "Can a Unix timestamp be negative?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Negative values represent instants before 1 January 1970 and are converted the same way as positive ones." } }
+            ]
+        }
+        </script>
 </head>
 <body>
     <header>
@@ -127,18 +129,83 @@
 
         <section class="tool-content">
             <h2>What is a Unix Timestamp?</h2>
-            <p>A Unix timestamp (or Unix time / Epoch) is the number of seconds that have elapsed since 1970-01-01 00:00:00 UTC (ignoring leap seconds). It is a universal, timezone-free way to represent an instant in time, widely used in computers and databases. As precision needs grow, many systems store milliseconds (the current time multiplied by 1000). This tool automatically distinguishes second-level timestamps (around 10 digits) from millisecond-level ones (around 13 digits) and converts as needed.</p>
-            <h3>How to Use This Tool</h3>
+            <p>A Unix timestamp counts seconds since 00:00:00 UTC on 1 January 1970, excluding leap seconds. It is an absolute instant rather than a local clock reading: the number is the same everywhere on Earth, and only the human-readable rendering changes with timezone. That property is why logs, databases, and APIs prefer timestamps over formatted date strings — they sort correctly and need no timezone metadata to compare.</p>
+
+            <h3>Seconds versus Milliseconds</h3>
+            <p>The most common conversion mistake is unit confusion. Second-level values in the 2020s have 10 digits; millisecond-level values have 13. This tool detects the unit automatically and also lets you force one.</p>
+            <table class="ref-table">
+                <caption>Recognising the unit by digit count</caption>
+                <thead><tr><th>Unit</th><th>Typical length</th><th>Example value</th></tr></thead>
+                <tbody>
+                    <tr><td>Seconds (10 digits)</td><td>10 digits</td><td>1790090593</td></tr>
+                    <tr><td>Milliseconds (13 digits)</td><td>13 digits</td><td>1790090593958</td></tr>
+                </tbody>
+            </table>
+            <p><strong>Note:</strong> the tool treats values at or above 100000000000 as milliseconds, since no second-level timestamp reaches that size until the year 5138.</p>
+
+            <h3>Landmark Timestamps</h3>
+            <table class="ref-table">
+                <caption>Reference instants (UTC)</caption>
+                <thead><tr><th>Moment</th><th>Timestamp</th><th>UTC rendering</th></tr></thead>
+                <tbody>
+                    <tr><td>Unix epoch</td><td>0</td><td>1970-01-01T00:00:00Z</td></tr>
+                    <tr><td>Start of 2000</td><td>946684800</td><td>2000-01-01T00:00:00Z</td></tr>
+                    <tr><td>Start of 2020</td><td>1577836800</td><td>2020-01-01T00:00:00Z</td></tr>
+                    <tr><td>Start of 2026</td><td>1767225600</td><td>2026-01-01T00:00:00Z</td></tr>
+                    <tr><td>Start of 2030</td><td>1893456000</td><td>2030-01-01T00:00:00Z</td></tr>
+                    <tr><td>32-bit signed limit</td><td>2147483647</td><td>2038-01-19T03:14:07Z</td></tr>
+                </tbody>
+            </table>
+
+            <h3>The 2038 Problem</h3>
+            <p>Systems that store a timestamp in a signed 32-bit integer cannot represent values above 2147483647, which occurs at 2038-01-19T03:14:07Z. One second later the counter wraps to a negative number. Modern 64-bit storage and 64-bit database columns avoid the issue entirely, but embedded devices and legacy file formats still surface it.</p>
+
+            <h3>Timezones and Offsets</h3>
+            <p>A timestamp is timezone-independent; the offset belongs to the display layer. The same instant rendered in UTC and in UTC+8 differs by eight hours on the wall clock while the underlying number stays identical — which is why a timestamp is the safest way to store an event time.</p>
+
+            <h3>Worked Examples</h3>
             <ol>
-                <li>Paste a second- or millisecond-level timestamp into the "Unix Timestamp" box — the tool detects the unit and shows the matching local and UTC date in real time</li>
-                <li>Or pick a date and time to compute the corresponding seconds and milliseconds</li>
-                <li>Use the unit selector to force "Seconds" or "Milliseconds" and inspect the same value at a different precision</li>
-                <li>The result panel shows both your local timezone and UTC for cross-timezone checks</li>
+                <li><strong>Default input:</strong> 1600000000 converts to 2020-09-13T12:26:40Z in UTC — the value used as the placeholder in the input field.</li>
+                <li><strong>Unit detection:</strong> a 10-digit value is read as seconds and a 13-digit value as milliseconds; 1600000000 (10 digits) therefore means 2020, not 1970.</li>
+                <li><strong>Day arithmetic:</strong> adding 86400 to a timestamp moves exactly one day forward in UTC, because Unix time ignores leap seconds and daylight saving changes.</li>
             </ol>
+
+            <h3>Common Timestamp Formats</h3>
+            <p>The same instant can be written several ways. Unix time is the storage-friendly form; ISO 8601 is the interchange form used by most APIs; HTTP-date appears in protocol headers. Converting between them does not change the instant, only the notation.</p>
+            <table class="ref-table">
+                <caption>One instant (1600000000) in four notations</caption>
+                <thead><tr><th>Format</th><th>Value</th><th>Typical use</th></tr></thead>
+                <tbody>
+                    <tr><td>Unix seconds</td><td>1600000000</td><td>Databases, logs, sorting</td></tr>
+                    <tr><td>ISO 8601 / RFC 3339</td><td>2020-09-13T12:26:40Z</td><td>JSON APIs, config files</td></tr>
+                    <tr><td>HTTP-date (RFC 7231)</td><td>Sun, 13 Sep 2020 12:26:40 GMT</td><td>HTTP headers, caching</td></tr>
+                    <tr><td>Human (UTC)</td><td>2020-09-13 12:26:40 UTC</td><td>Reports, user interfaces</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Converting Without a Tool</h3>
+            <p>Two constants cover most quick checks: one day is 86400 seconds and a common year is 31536000 seconds. Dividing a timestamp by 86400 gives the number of days since the epoch, and the remainder is the time of day in seconds — so the hour is the remainder divided by 3600.</p>
+
+            <p>Offsets are then simple additions: UTC+8 adds 28800 seconds to the UTC rendering and UTC−5 subtracts 18000, with half-hour zones following the same rule. That is why most systems store offsets in minutes rather than hours.</p>
+
+            <h3>Practical Notes</h3>
+            <ul>
+                <li>Unix time ignores leap seconds, so it is not a count of elapsed SI seconds; it is a count of 86400-second days since the epoch.</li>
+                <li>Negative timestamps are valid and denote instants before 1970.</li>
+                <li>Store timestamps in UTC and convert only for display; daylight saving rules change far more often than your storage format will.</li>
+                <li>When a value looks about a thousand times too large or too small, the unit is almost always the cause.</li>
+                <li>A date string without a zone cannot be converted unambiguously, so always record the offset or the Z suffix when storing text.</li>
+            </ul>
+
             <h3>Frequently Asked Questions</h3>
-            <p><strong>How do I tell seconds from milliseconds?</strong> In 2026, the current second-level timestamp is about 1.78 billion (10 digits), while the millisecond-level value is about 1.78 trillion (13 digits). This tool defaults to a boundary of 10^11, but you can also force a unit manually.</p>
-            <p><strong>Why do timestamps look different across timezones?</strong> A timestamp is an absolute instant and is timezone-independent. Only the human-readable representation is affected by the timezone. This tool shows local and UTC side by side so you can verify.</p>
-            <p><strong>Is my data uploaded to a server?</strong> No. Everything runs locally in your browser; your input never leaves your device.</p>
+            <p><strong>How do I tell seconds from milliseconds?</strong> Count the digits. In the 2020s a second-level timestamp has 10 digits and a millisecond-level one has 13. The tool defaults to a boundary of 100000000000, and you can force a unit manually.</p>
+            <p><strong>Why do timestamps look different across timezones?</strong> A timestamp is an absolute instant and is timezone-independent. Only the human-readable representation changes. The tool shows local and UTC side by side so you can verify.</p>
+            <p><strong>What is the 2038 problem?</strong> Signed 32-bit storage overflows after 2038-01-19T03:14:07Z. Use 64-bit fields and the issue disappears.</p>
+            <p><strong>Do leap seconds affect Unix time?</strong> No. Unix time counts 86400-second days and does not insert leap seconds, which is why day arithmetic on timestamps is exact in UTC.</p>
+            <p><strong>Can a timestamp be negative?</strong> Yes. Negative values represent instants before 1 January 1970 and are handled the same way.</p>
+
+            <h3>Related Reading</h3>
+            <p>For day and week arithmetic around a given date, use the <a href="/en/calculators/date-calc">Date Calculator</a>; for background on offsets and working-day rules, see our <a href="/blog/en/date-calculation-tips">date calculation guide</a>. Timezone offsets behave like any other unit shift, which the <a href="/en/calculators/unit-converter">Unit Converter</a> illustrates for non-time quantities.</p>
         </section>
 
 </main>

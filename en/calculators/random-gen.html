@@ -45,30 +45,19 @@
     ]
 }
 </script>
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-        {
-            "@type": "Question",
-            "name": "Is the random number generator truly random?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "This tool uses JavaScript's built-in Math.random() function, which is a pseudo-random number generator (PRNG). It produces approximately random sequences based on seed values for most everyday uses (lotteries, testing, passwords). For cryptographically secure random numbers, consider using the secure random feature in our Password Generator."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "How to generate unique random numbers?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Check the 'Unique' option to generate non-repeating random numbers. The system uses the Fisher-Yates shuffle algorithm to draw the specified count of unique integers from the given range. Note: the count cannot exceed the range size (e.g., you can only generate up to 10 unique numbers from 1-10)."
-            }
-        }
-    ]
-}
-</script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            { "@type": "Question", "name": "Why is the random number range inclusive?", "acceptedAnswer": { "@type": "Answer", "text": "Most drawing tasks expect both endpoints to be possible, so 1 to 100 contains 100 values. If you need 99 values, set the maximum to 99." } },
+            { "@type": "Question", "name": "Why do repeats appear so often?", "acceptedAnswer": { "@type": "Answer", "text": "Collision probability grows quickly with the number of draws. Ten draws from 100 possible values already produce at least one repeat 37.18 percent of the time. Use unique mode when duplicates are unacceptable." } },
+            { "@type": "Question", "name": "What is the largest count I can request in unique mode?", "acceptedAnswer": { "@type": "Answer", "text": "The number of values in the range. Asking for more than that is impossible rather than merely slow, because unique mode removes each drawn value from the pool." } },
+            { "@type": "Question", "name": "Does sorting make the draw fairer?", "acceptedAnswer": { "@type": "Answer", "text": "No. Sorting reorders the same values for readability; the fairness of the draw is unaffected." } },
+            { "@type": "Question", "name": "Can I use this tool for passwords or tokens?", "acceptedAnswer": { "@type": "Answer", "text": "This tool is built for drawing and sampling. For secrets, use the dedicated password generator that draws from the platform cryptographic randomness source." } }
+        ]
+    }
+    </script>
 
 <script type="application/ld+json">
 {
@@ -161,17 +150,84 @@
 
 <div class="tool-content">
     <h2>Random Number Generator Guide</h2>
-    <p>The Random Number Generator is a free online tool that quickly generates random integers within a specified range. You can customize the minimum, maximum, and quantity, with support for unique mode and sorted output.</p>
-    <h3>Key Features</h3>
+    <p>This tool draws integers from a range you set: a minimum, a maximum, and how many values you want, with optional unique and sorted results. Two ideas explain every surprise users run into — how many values the range actually contains, and how quickly repeats appear once you draw more than a handful. Both are easy to compute in advance, and both are shown below.</p>
+
+    <h3>Inclusive Range and Value Count</h3>
+    <p>The range is inclusive, so the number of possible values is max − min + 1, not max − min. That off-by-one matters most on small ranges.</p>
+    <table class="ref-table">
+        <caption>Possible values for common ranges</caption>
+        <thead><tr><th>Range</th><th>Possible values</th><th>Typical use</th></tr></thead>
+        <tbody>
+            <tr><td>1 to 6</td><td>6</td><td>Die roll</td></tr>
+            <tr><td>1 to 10</td><td>10</td><td>Quick pick</td></tr>
+            <tr><td>0 to 9</td><td>10</td><td>Digit drawing</td></tr>
+            <tr><td>1 to 52</td><td>52</td><td>Card deck</td></tr>
+            <tr><td>1 to 100 (default)</td><td>100</td><td>Percentage-style draw</td></tr>
+            <tr><td>−50 to 50</td><td>101</td><td>Signed offsets, note the odd count</td></tr>
+            <tr><td>1 to 1000</td><td>1000</td><td>Lottery-style numbering</td></tr>
+            <tr><td>1 to 10000</td><td>10000</td><td>Large pool sampling</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Collision Probability: the Birthday Rule</h3>
+    <p>Drawing with replacement means a value can appear twice. The chance of at least one repeat climbs far faster than intuition suggests: with 100 possible values, 10 draws already collide more than a third of the time.</p>
+    <table class="ref-table">
+        <caption>Probability of at least one repeat (drawing with replacement)</caption>
+        <thead><tr><th>Draws</th><th>Range of 10</th><th>Range of 100</th><th>Range of 365</th><th>Range of 1000</th></tr></thead>
+        <tbody>
+            <tr><td>5</td><td>69.8%</td><td>9.7%</td><td>2.7%</td><td>1.0%</td></tr>
+            <tr><td>10</td><td>100.0%</td><td>37.2%</td><td>11.7%</td><td>4.4%</td></tr>
+            <tr><td>15</td><td>100.0%</td><td>66.9%</td><td>25.3%</td><td>10.0%</td></tr>
+            <tr><td>20</td><td>100.0%</td><td>87.0%</td><td>41.1%</td><td>17.4%</td></tr>
+            <tr><td>23</td><td>100.0%</td><td>93.6%</td><td>50.7%</td><td>22.5%</td></tr>
+            <tr><td>30</td><td>100.0%</td><td>99.2%</td><td>70.6%</td><td>35.6%</td></tr>
+            <tr><td>50</td><td>100.0%</td><td>100.0%</td><td>97.0%</td><td>71.2%</td></tr>
+        </tbody>
+    </table>
+    <p><strong>Note:</strong> with only 10 possible values, 10 draws are guaranteed to repeat. That is why small ranges need the unique option whenever repeats would spoil the draw.</p>
+
+    <h3>Unique Mode: Sampling Without Replacement</h3>
+    <p>Ticking unique removes each drawn value from the pool, so repeats become impossible. The cost is a hard ceiling: you cannot draw more unique values than the range contains.</p>
+    <table class="ref-table">
+        <caption>Maximum unique draws per range</caption>
+        <thead><tr><th>Range</th><th>Maximum unique draws</th><th>What happens beyond the limit</th></tr></thead>
+        <tbody>
+            <tr><td>1 to 6</td><td>6</td><td>Request is impossible; reduce the count</td></tr>
+            <tr><td>1 to 10</td><td>10</td><td>Request is impossible; reduce the count</td></tr>
+            <tr><td>1 to 52</td><td>52</td><td>Request is impossible; reduce the count</td></tr>
+            <tr><td>1 to 100 (default)</td><td>100</td><td>Request is impossible; reduce the count</td></tr>
+            <tr><td>1 to 1000</td><td>1000</td><td>Request is impossible; reduce the count</td></tr>
+        </tbody>
+    </table>
+
+    <h3>Choosing a Range That Fits the Job</h3>
+    <p>Picking a range is mostly a question of how many distinct outcomes you need. Classroom draws work well at 1 to 30, where every value stays readable on one screen; raffles usually want 1 to 1000, which leaves room without becoming unwieldy. When you are simulating a physical object, match it exactly — 6 for a die, 52 for a deck — so the behaviour matches what people expect from the real thing. If the result feeds a later step, choose a range whose size divides evenly by the number of groups you need, so no leftover values have to be discarded. And remember that unique mode changes the model: it removes each drawn value from the pool, which is the right choice for assigning distinct items and the wrong one for modelling independent events.</p>
+
+    <h3>Worked Examples</h3>
+    <p>All three use the tool defaults — minimum 1, maximum 100, one value — so you can reproduce them without changing a setting.</p>
+    <ol>
+        <li><strong>Single draw:</strong> one value from 1 to 100 gives each number a 1.00% chance. Nothing else is assumed about the distribution.</li>
+        <li><strong>Ten draws with replacement:</strong> the chance that at least one value appears twice is 37.18%. If you need ten distinct numbers, tick unique rather than drawing again and hoping.</li>
+        <li><strong>Exhausting a range:</strong> with unique ticked, drawing 100 values from 1 to 100 returns every number exactly once — a permutation, not a set of independent draws.</li>
+    </ol>
+
+    <h3>Practical Notes</h3>
     <ul>
-        <li><strong>Custom Range</strong>: Set minimum and maximum values freely, supports negative numbers</li>
-        <li><strong>Batch Generation</strong>: Generate up to 1000 random numbers at once</li>
-        <li><strong>Unique Mode</strong>: Ensures every generated number is distinct</li>
-        <li><strong>Sorted Output</strong>: Display results in ascending order</li>
-        <li><strong>One-Click Copy</strong>: Copy results to clipboard</li>
+        <li>Sorting only changes display order; it does not affect which values were drawn.</li>
+        <li>Results are not reproducible: there is no seed field, so the same settings give different values each run.</li>
+        <li>Browsers expose different randomness sources. General-purpose drawing uses a fast pseudo-random generator, while security-sensitive values should come from the cryptographic source exposed by the platform — for secrets, use the dedicated generator instead.</li>
+        <li>Negative bounds are allowed, so −50 to 50 is a valid 101-value range.</li>
     </ul>
-    <h3>Use Cases</h3>
-    <p>Online lotteries and giveaways, password generation, data sampling and testing, random grouping, game design, statistical simulations, and more.</p>
+
+    <h3>Frequently Asked Questions</h3>
+    <p><strong>Why is the range inclusive?</strong> Most drawing tasks expect both endpoints to be possible, so 1 to 100 contains 100 values. If you need 99, set the maximum to 99.</p>
+    <p><strong>Why do I see repeats so often?</strong> Collision probability grows quickly with the number of draws: ten draws from 100 values already repeat 37.18% of the time. Use unique mode when duplicates are unacceptable.</p>
+    <p><strong>What is the largest count I can request in unique mode?</strong> The number of values in the range. Asking for more than that is impossible rather than merely slow.</p>
+    <p><strong>Does sorting make the draw fairer?</strong> No. Sorting reorders the same values for readability; the fairness of the draw is unaffected.</p>
+    <p><strong>Can I use this for passwords or tokens?</strong> This tool is built for drawing and sampling. For secrets, use the generator that draws from the platform cryptographic source.</p>
+
+    <h3>Related Reading</h3>
+    <p>For the mathematics behind repeats and sampling, see our <a href="/blog/en/random-number-guide">randomness guide</a>. When the goal is a secret rather than a number, use the <a href="/en/calculators/password-gen">Password Generator</a>; to publish a drawn result, the <a href="/en/calculators/qr-generator">QR Code Generator</a> turns it into a scannable code.</p>
 </div>
 <section class="related-posts">
         <h3>Related Reading</h3>
@@ -179,23 +235,6 @@
             <li><a href="/blog/en/random-number-guide">Random Number Generator Guide: Online Random Number Applications</a></li>
         </ul>
     </section>
-<section class="tool-content">
-<h2>About Random Number Generator</h2>
-<p>Random Number Generator is a completely free online tool that helps you Generate random integers in custom range. Whether you are a casual user or a professional, you can use it instantly without installing any software.</p>
-<p>Whether you are running a raffle, testing code with random values, or teaching in class, you can generate random integers in bulk instantly.</p>
-<h2>How to Use</h2>
-<ol>
-    <li>Set the minimum and maximum values for the random numbers.</li>
-    <li>Set how many numbers to generate; optionally unique and sorted.</li>
-    <li>Click the "Generate" button.</li>
-    <li>Review the random number list and copy as needed.</li>
-</ol>
-<h2>Random Number Generator FAQ</h2>
-<h3>Is Random Number Generator free to use?</h3><p>Yes, Random Number Generator is completely free. There are no hidden fees, no account registration and no download required.</p>
-<h3>How accurate are the results?</h3><p>All calculations are performed locally in your browser using well-established formulas, so the results are accurate and consistent.</p>
-<h3>Is my data private?</h3><p>Your privacy is a priority. Everything you enter is processed directly on your device and is never uploaded to any server.</p>
-<h3>Does Random Number Generator work on mobile?</h3><p>Yes. The page is fully responsive and works smoothly on phones, tablets and desktop browsers.</p>
-</section>
     </main>
 
     <footer>

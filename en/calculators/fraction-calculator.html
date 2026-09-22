@@ -51,15 +51,16 @@
         "inLanguage": "en"
     }
     </script>
-    <script type="application/ld+json">
+        <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": [
-            { "@type": "Question", "name": "Why are results automatically simplified?", "acceptedAnswer": { "@type": "Answer", "text": "For example, 2/4 and 1/2 represent the same number; the tool simplifies to the lowest terms (1/2) so the result is easy to read and use." } },
-            { "@type": "Question", "name": "Can the denominator be zero?", "acceptedAnswer": { "@type": "Answer", "text": "No. A zero denominator is meaningless; the tool shows 'denominator cannot be 0'." } },
-            { "@type": "Question", "name": "What if the second fraction's numerator is 0 in division?", "acceptedAnswer": { "@type": "Answer", "text": "This is equivalent to dividing by zero and is undefined; the tool shows 'divisor cannot be 0'." } },
-            { "@type": "Question", "name": "Is my data uploaded to a server?", "acceptedAnswer": { "@type": "Answer", "text": "No. Everything runs locally in your browser; your input never leaves your device." } }
+            { "@type": "Question", "name": "Why does the tool simplify every answer?", "acceptedAnswer": { "@type": "Answer", "text": "Two fractions can name the same number, such as 2/4 and 1/2. The tool divides numerator and denominator by their greatest common divisor, leaving one canonical form that is easy to compare and reuse." } },
+            { "@type": "Question", "name": "Can a denominator be zero?", "acceptedAnswer": { "@type": "Answer", "text": "No. Division by zero has no defined value, so the tool shows \"denominator cannot be 0\" instead of returning a number." } },
+            { "@type": "Question", "name": "What happens when the second numerator is 0 during division?", "acceptedAnswer": { "@type": "Answer", "text": "That is division by zero, which is undefined. The tool shows \"divisor cannot be 0\"." } },
+            { "@type": "Question", "name": "Why does 1/3 show 0.3333 instead of an exact value?", "acceptedAnswer": { "@type": "Answer", "text": "1/3 never terminates in decimal notation. The calculator rounds to four decimal places for display, while the reduced fraction above it stays exact." } },
+            { "@type": "Question", "name": "How do I enter a mixed number such as 1 1/2?", "acceptedAnswer": { "@type": "Answer", "text": "Convert it to an improper fraction first: 1 1/2 equals 3/2, so enter 3 as the numerator and 2 as the denominator." } }
         ]
     }
     </script>
@@ -133,20 +134,129 @@
         </div>
 
         <section class="tool-content">
-            <h2>What is a Fraction Calculator?</h2>
-            <p>A fraction calculator performs addition, subtraction, multiplication, and division on two fractions. A fraction consists of a numerator (top) and a denominator (bottom), and the denominator can never be zero. This tool reduces every result to its simplest form (shown as an integer when the denominator is 1) entirely in your browser — your input never leaves your device.</p>
-            <h3>How to Use This Tool</h3>
+            <h2>What Is a Fraction Calculator?</h2>
+            <p>A fraction is a ratio, not an approximation. Writing 1/3 keeps the value exact; writing 0.33 throws away the remainder. This calculator adds, subtracts, multiplies, and divides two fractions and then reduces every result to its lowest terms — the reduction step is what turns a raw result such as 5/10 into a readable 1/2. All four operations run in your browser: enter two numerators and two denominators, pick an operator, and the result panel updates as you type.</p>
+
+            <h3>The Four Operations at a Glance</h3>
+            <p>Addition and subtraction need a common denominator; multiplication and division do not. That single difference explains why the same pair of numbers produces very different intermediate steps.</p>
+            <table class="ref-table">
+                <caption>Fraction operation rules (a/b and c/d, with b and d not zero)</caption>
+                <thead><tr><th>Operation</th><th>Rule</th><th>Common denominator needed?</th><th>Applied to 1/2 and 1/3</th></tr></thead>
+                <tbody>
+                    <tr><td>Add (+)</td><td>(a·d + c·b) / (b·d)</td><td>Yes — use b·d</td><td>5/6</td></tr>
+                    <tr><td>Subtract (−)</td><td>(a·d − c·b) / (b·d)</td><td>Yes — use b·d</td><td>1/6</td></tr>
+                    <tr><td>Multiply (×)</td><td>(a·c) / (b·d)</td><td>No — multiply straight across</td><td>1/6</td></tr>
+                    <tr><td>Divide (÷)</td><td>(a·d) / (b·c)</td><td>No — multiply by the reciprocal</td><td>3/2</td></tr>
+                </tbody>
+            </table>
+            <p><strong>Note:</strong> division flips the second fraction first (1/2 ÷ 1/3 becomes 1/2 × 3/1), which is why dividing two proper fractions can produce a result larger than either one.</p>
+
+            <h3>Why Results Are Reduced to Lowest Terms</h3>
+            <p>The tool divides numerator and denominator by their greatest common divisor (GCD). 8/12 has a GCD of 4, so it becomes 2/3 — the same value, far easier to compare against other results.</p>
+            <table class="ref-table">
+                <caption>Reducing with the greatest common divisor</caption>
+                <thead><tr><th>Input</th><th>GCD</th><th>Lowest terms</th><th>Decimal</th><th>Percent</th></tr></thead>
+                <tbody>
+                    <tr><td>2/4</td><td>2</td><td>1/2</td><td>0.5000</td><td>50.00%</td></tr>
+                    <tr><td>6/8</td><td>2</td><td>3/4</td><td>0.7500</td><td>75.00%</td></tr>
+                    <tr><td>8/12</td><td>4</td><td>2/3</td><td>0.6667</td><td>66.67%</td></tr>
+                    <tr><td>12/16</td><td>4</td><td>3/4</td><td>0.7500</td><td>75.00%</td></tr>
+                    <tr><td>18/24</td><td>6</td><td>3/4</td><td>0.7500</td><td>75.00%</td></tr>
+                    <tr><td>24/36</td><td>12</td><td>2/3</td><td>0.6667</td><td>66.67%</td></tr>
+                    <tr><td>45/60</td><td>15</td><td>3/4</td><td>0.7500</td><td>75.00%</td></tr>
+                    <tr><td>7/21</td><td>7</td><td>1/3</td><td>0.3333</td><td>33.33%</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Fraction, Decimal, and Percent</h3>
+            <p>Some fractions terminate (1/2, 1/4, 1/8); others repeat forever (1/3, 1/6, 1/7). A calculator that shows four decimal places is rounding, not being wrong — the repeating tail is simply cut off.</p>
+            <table class="ref-table">
+                <caption>Common fraction conversions (four decimal places)</caption>
+                <thead><tr><th>Fraction</th><th>Decimal</th><th>Percent</th><th>Decimal type</th></tr></thead>
+                <tbody>
+                    <tr><td>1/2</td><td>0.5000</td><td>50.00%</td><td>Terminating</td></tr>
+                    <tr><td>1/3</td><td>0.3333</td><td>33.33%</td><td>Repeating</td></tr>
+                    <tr><td>1/4</td><td>0.2500</td><td>25.00%</td><td>Terminating</td></tr>
+                    <tr><td>1/5</td><td>0.2000</td><td>20.00%</td><td>Terminating</td></tr>
+                    <tr><td>1/6</td><td>0.1667</td><td>16.67%</td><td>Repeating</td></tr>
+                    <tr><td>1/7</td><td>0.1429</td><td>14.29%</td><td>Repeating (6-digit cycle)</td></tr>
+                    <tr><td>1/8</td><td>0.1250</td><td>12.50%</td><td>Terminating</td></tr>
+                    <tr><td>1/9</td><td>0.1111</td><td>11.11%</td><td>Repeating</td></tr>
+                    <tr><td>1/12</td><td>0.0833</td><td>8.33%</td><td>Repeating</td></tr>
+                    <tr><td>1/16</td><td>0.0625</td><td>6.25%</td><td>Terminating</td></tr>
+                    <tr><td>2/3</td><td>0.6667</td><td>66.67%</td><td>Repeating</td></tr>
+                    <tr><td>3/4</td><td>0.7500</td><td>75.00%</td><td>Terminating</td></tr>
+                    <tr><td>3/8</td><td>0.3750</td><td>37.50%</td><td>Terminating</td></tr>
+                    <tr><td>5/6</td><td>0.8333</td><td>83.33%</td><td>Repeating</td></tr>
+                    <tr><td>5/8</td><td>0.6250</td><td>62.50%</td><td>Terminating</td></tr>
+                    <tr><td>7/8</td><td>0.8750</td><td>87.50%</td><td>Terminating</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Worked Examples</h3>
+            <p>All three use the tool default values (1/2 and 1/3), so you can reproduce them without typing anything.</p>
             <ol>
-                <li>Enter numbers in the numerator and denominator boxes for the first fraction (denominator not zero; numerators may be negative)</li>
-                <li>Choose the operation: add (+), subtract (−), multiply (×), or divide (÷)</li>
-                <li>Enter the numerator and denominator for the second fraction</li>
-                <li>The result panel shows the full calculation "first fraction [operator] second fraction = result" in real time</li>
+                <li><strong>Addition:</strong> 1/2 + 1/3 = (1·3 + 1·2) / (2·3) = 5/6 ≈ 0.8333. The common denominator 6 is the least common multiple of 2 and 3.</li>
+                <li><strong>Subtraction:</strong> 1/2 − 1/3 = (3 − 2) / 6 = 1/6 ≈ 0.1667. Same denominator, one term fewer.</li>
+                <li><strong>Multiply and divide:</strong> 1/2 × 1/3 = 1/6 ≈ 0.1667, but 1/2 ÷ 1/3 = 3/2 = 1.5. Dividing by a proper fraction makes the answer larger — a common source of surprise.</li>
             </ol>
+            <p><strong>Note:</strong> decimals are rounded to four places for display; the reduced fraction shown above them stays exact.</p>
+
+            <h3>Least Common Denominator Quick Reference</h3>
+            <p>Addition and subtraction rewrite both fractions over a shared denominator. Using the least common multiple (LCM) keeps the numbers small; multiplying the two denominators also works but usually leaves more to reduce afterwards.</p>
+            <table class="ref-table">
+                <caption>Least common multiple for common denominator pairs</caption>
+                <thead><tr><th>Denominator pair</th><th>GCD</th><th>LCM (smallest shared denominator)</th><th>Product (always works)</th></tr></thead>
+                <tbody>
+                    <tr><td>2 and 3</td><td>1</td><td>6</td><td>6</td></tr>
+                    <tr><td>2 and 4</td><td>2</td><td>4</td><td>8</td></tr>
+                    <tr><td>3 and 4</td><td>1</td><td>12</td><td>12</td></tr>
+                    <tr><td>2 and 5</td><td>1</td><td>10</td><td>10</td></tr>
+                    <tr><td>3 and 5</td><td>1</td><td>15</td><td>15</td></tr>
+                    <tr><td>4 and 6</td><td>2</td><td>12</td><td>24</td></tr>
+                    <tr><td>3 and 8</td><td>1</td><td>24</td><td>24</td></tr>
+                    <tr><td>5 and 6</td><td>1</td><td>30</td><td>30</td></tr>
+                    <tr><td>4 and 5</td><td>1</td><td>20</td><td>20</td></tr>
+                    <tr><td>6 and 8</td><td>2</td><td>24</td><td>48</td></tr>
+                    <tr><td>2 and 8</td><td>2</td><td>8</td><td>16</td></tr>
+                    <tr><td>3 and 6</td><td>3</td><td>6</td><td>18</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Where Fraction Arithmetic Shows Up</h3>
+            <p>Fractions are not school exercises; they appear whenever a quantity is split into equal parts. This tool handles all four operations, so the same page covers recipe scaling, material lengths, and probability.</p>
+            <table class="ref-table">
+                <caption>Everyday fraction calculations</caption>
+                <thead><tr><th>Situation</th><th>Calculation</th><th>Exact result</th><th>Decimal</th></tr></thead>
+                <tbody>
+                    <tr><td>Doubling a recipe</td><td>3/4 × 2</td><td>3/2 cups</td><td>1.5000</td></tr>
+                    <tr><td>Joining two board thicknesses</td><td>1/2 + 3/4</td><td>5/4 in</td><td>1.2500</td></tr>
+                    <tr><td>Splitting a workday</td><td>1/3 + 1/2</td><td>5/6 day</td><td>0.8333</td></tr>
+                    <tr><td>Two independent events both occurring</td><td>1/6 × 1/2</td><td>1/12</td><td>0.0833</td></tr>
+                    <tr><td>Quarter share of a 5% annual rate</td><td>5/100 × 1/4</td><td>1/80</td><td>0.0125</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Improper Fractions and Whole Numbers</h3>
+            <p>When the numerator is larger than the denominator, the result is an improper fraction such as 5/4. This tool keeps that form instead of converting it to a mixed number, because 5/4 is far easier to feed into the next calculation. When the denominator reduces to 1 — for example 6/3 — the result is shown as the whole number 2.</p>
+
+            <h3>Practical Checks Before You Trust a Result</h3>
+            <ul>
+                <li>Denominators must never be 0 — the tool reports "denominator cannot be 0" instead of returning a value.</li>
+                <li>Dividing by a fraction whose numerator is 0 is undefined; the tool reports "divisor cannot be 0".</li>
+                <li>A negative sign can sit on the numerator or the denominator; −1/2 and 1/−2 describe the same number and reduce to the same result.</li>
+                <li>Mixed numbers such as 1 1/2 must be converted first: enter 3/2.</li>
+            </ul>
+
             <h3>Frequently Asked Questions</h3>
-            <p><strong>Why is the result simplified?</strong> Fractions such as 2/4 and 1/2 represent the same value. This tool reduces the result to its lowest terms, so you can read and use it directly.</p>
-            <p><strong>Can a denominator be zero?</strong> No. A denominator of zero is undefined, and the tool shows "denominator cannot be zero".</p>
-            <p><strong>What if the second fraction's numerator is zero during division?</strong> Dividing by zero is undefined, so the tool shows "divisor cannot be zero".</p>
-            <p><strong>Is my data uploaded to a server?</strong> No. Everything runs locally in your browser; your input never leaves your device.</p>
+            <p><strong>Why does the tool simplify every answer?</strong> Two fractions can name the same number (2/4 and 1/2). Reducing by the GCD leaves one canonical form that is easy to compare and reuse.</p>
+            <p><strong>Can a denominator be zero?</strong> No. Division by zero has no defined value, so the tool shows "denominator cannot be 0" rather than a number.</p>
+            <p><strong>What happens when the second numerator is 0 during division?</strong> You would be dividing by zero; the tool shows "divisor cannot be 0".</p>
+            <p><strong>Why does 1/3 show 0.3333 instead of an exact value?</strong> 1/3 never terminates in decimal notation. Four decimal places is a display choice; the fraction 1/3 above it remains exact.</p>
+            <p><strong>How do I enter 1 1/2?</strong> Convert the mixed number first: 1 1/2 is 3/2, so enter 3 and 2.</p>
+
+            <h3>Related Reading</h3>
+            <p>Once a fraction is in decimal form, the <a href="/en/calculators/percentage-calc">Percentage Calculator</a> turns it into a percentage, and the <a href="/en/fraction-decimal-table">Fraction-Decimal Table</a> lists common conversions side by side. For unit-level conversions, see the <a href="/en/calculators/unit-converter">Unit Converter</a>; for the reasoning behind percentage forms, see our guide to <a href="/blog/en/percentage-calculation-tips">percentage calculation</a>.</p>
         </section>
 
 </main>

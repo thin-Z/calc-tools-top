@@ -36,49 +36,28 @@
     <script src="/js/like.js" defer></script>
     <script src="/js/vendor/qrcode.min.js" defer></script>
     <script src="/js/calculators/qr-generator.js" defer></script>
-    <script type="application/ld+json">
+            <script type="application/ld+json">
     {
-    "@context": "https://schema.org",
-    "@graph": [
-        {
-            "@type": "BreadcrumbList",
-            "itemListElement": [
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
                 { "@type": "ListItem", "position": 1, "name": "Online Calculators", "item": "https://www.calc-tools.top/en/" },
                 { "@type": "ListItem", "position": 2, "name": "QR Code Generator - Free Online QR Code Maker", "item": "https://www.calc-tools.top/en/calculators/qr-generator" }
             ]
-        },
-        {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-        {
-            "@type": "Question",
-            "name": "What can a QR Code store?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "QR codes can store text, URLs, contact information, Wi-Fi passwords, business cards, and more. Scanning the code reveals the stored content instantly."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "What are the error correction levels L/M/Q/H?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "L (Low) recovers about 7% of data, M (Medium) recovers about 15%, Q (Quartile) recovers about 25%, and H (High) recovers about 30%. Higher levels make the QR code readable even when partially damaged or dirty, but the pattern becomes denser."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "Do the generated QR codes expire?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "No, this tool generates static QR codes with no expiration date. The QR code is simply a graphic encoding of your input data. As long as you save the image, it can be scanned anytime."
-            }
-        }
-    ]
-}
-    ]
-}
+    }
+    </script>
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            { "@type": "Question", "name": "Which QR error correction level should I use?", "acceptedAnswer": { "@type": "Answer", "text": "Level M suits most print uses. Move to Q or H when the code may be covered, folded, or exposed outdoors, and to L only when the surface is clean and you need the smallest possible pattern." } },
+            { "@type": "Question", "name": "Why does my QR code fail to scan when printed small?", "acceptedAnswer": { "@type": "Answer", "text": "Each module fell below what the camera can resolve. Increase the output size, or shorten the content so a lower version with fewer modules is used." } },
+            { "@type": "Question", "name": "Does a higher error correction level make the QR code bigger?", "acceptedAnswer": { "@type": "Answer", "text": "It makes the pattern denser for the same data, which usually raises the version and therefore the module count. The exported pixel size is fixed by the size setting, so the modules get smaller." } },
+            { "@type": "Question", "name": "Can a QR code hold uppercase-only text more efficiently?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Alphanumeric mode encodes digits, uppercase letters, and a few symbols more compactly than byte mode, so the same text needs fewer modules." } },
+            { "@type": "Question", "name": "Is the generated QR image uploaded anywhere?", "acceptedAnswer": { "@type": "Answer", "text": "No. The code is drawn in your browser and the PNG is produced locally, so nothing you type leaves the device." } }
+        ]
+    }
     </script>
 
 <script type="application/ld+json">
@@ -141,7 +120,84 @@
 
         
 
-        <div class="tool-content"><h2>QR Code Generator Guide</h2><p>Enter text or a URL, select your preferred size and error correction level, then click "Generate" to create a QR code instantly. Download the QR code as a PNG image for printing or sharing.</p><h3>What is Error Correction?</h3><p>QR code error correction determines how much damage the code can withstand while remaining scannable. Level L is suitable for clean, unobstructed codes. Level H is best when the code may be partially covered or dirty. Higher levels produce denser QR patterns.</p></div>
+        <div class="tool-content">
+            <h2>QR Code Generator Guide</h2>
+            <p>A QR code is not an image of your text — it is a matrix of modules that a scanner reads back into data. Three settings decide whether a code scans reliably: how much data it carries, how much damage it can absorb, and how many physical pixels or millimetres each module gets. This tool exposes all three: content, output size, and error correction level.</p>
+
+            <h3>Error Correction Levels</h3>
+            <p>Error correction is redundancy. A higher level lets the code survive dirt, folds, or a printed logo overlay, at the cost of a denser pattern that needs more modules for the same data.</p>
+            <table class="ref-table">
+                <caption>Error correction levels defined by ISO/IEC 18004</caption>
+                <thead><tr><th>Level</th><th>Recoverable codewords</th><th>Best for</th></tr></thead>
+                <tbody>
+                    <tr><td>L — Low</td><td>about 7%</td><td>Clean, unobstructed display such as a screen or a flat label</td></tr>
+                    <tr><td>M — Medium (default)</td><td>about 15%</td><td>General printing, menus, flyers</td></tr>
+                    <tr><td>Q — Quartile</td><td>about 25%</td><td>Codes partly covered by artwork or text</td></tr>
+                    <tr><td>H — High</td><td>about 30%</td><td>Outdoor signage, stamped or worn surfaces, codes with a logo in the centre</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Versions, Module Grid and Print Size</h3>
+            <p>A QR version fixes the grid: version V has 17 + 4V modules per side, so version 1 is 21×21 and version 40 is 177×177. The standard also requires a quiet zone of four modules on every side, which is why the drawn matrix is 8 modules larger than the version number suggests. What matters for scanning is the size of a single module, not the size of the whole image.</p>
+            <table class="ref-table">
+                <caption>Module density at the default 300 × 300 output</caption>
+                <thead><tr><th>Version</th><th>Modules per side</th><th>Including quiet zone</th><th>Pixels per module at 300 px</th><th>Printed size at 0.4 mm per module</th></tr></thead>
+                <tbody>
+                    <tr><td>1</td><td>21</td><td>29</td><td>10.34 px</td><td>11.6 mm</td></tr>
+                    <tr><td>5</td><td>37</td><td>45</td><td>6.67 px</td><td>18.0 mm</td></tr>
+                    <tr><td>10</td><td>57</td><td>65</td><td>4.62 px</td><td>26.0 mm</td></tr>
+                    <tr><td>15</td><td>77</td><td>85</td><td>3.53 px</td><td>34.0 mm</td></tr>
+                    <tr><td>20</td><td>97</td><td>105</td><td>2.86 px</td><td>42.0 mm</td></tr>
+                    <tr><td>25</td><td>117</td><td>125</td><td>2.40 px</td><td>50.0 mm</td></tr>
+                    <tr><td>30</td><td>137</td><td>145</td><td>2.07 px</td><td>58.0 mm</td></tr>
+                    <tr><td>40</td><td>177</td><td>185</td><td>1.62 px</td><td>74.0 mm</td></tr>
+                </tbody>
+            </table>
+            <p><strong>Note:</strong> 0.4 mm per module is a common practical floor for reliable scanning at close range. Longer content pushes the version up, which shrinks each module — so a dense code printed small is the usual cause of scan failures.</p>
+
+            <h3>Content Types and Payload Prefixes</h3>
+            <p>Scanners act on the payload. A plain URL opens a browser; a prefixed string can dial a number, join a network, or add a contact. These prefixes are widely supported conventions rather than part of the QR specification itself.</p>
+            <table class="ref-table">
+                <caption>Common payload formats</caption>
+                <thead><tr><th>Intent</th><th>Payload format</th><th>Scanner behaviour</th></tr></thead>
+                <tbody>
+                    <tr><td>Open a web page</td><td>https://example.com/page</td><td>Opens the default browser</td></tr>
+                    <tr><td>Send email</td><td>mailto:name@example.com</td><td>Composes a message to the address</td></tr>
+                    <tr><td>Dial a phone number</td><td>tel:+15551234567</td><td>Starts a call</td></tr>
+                    <tr><td>Send a text message</td><td>SMSTO:15551234567:hello</td><td>Pre-fills number and body</td></tr>
+                    <tr><td>Join Wi-Fi</td><td>WIFI:T:WPA;S:network;P:password;;</td><td>Offers to join the network</td></tr>
+                    <tr><td>Add a contact</td><td>MECARD:N:Name;TEL:15551234567;;</td><td>Creates a contact entry</td></tr>
+                    <tr><td>Show a location</td><td>geo:39.9042,116.4074</td><td>Opens a map at the coordinates</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Worked Examples</h3>
+            <p>All three use the tool defaults — 300 × 300 output and error correction level M.</p>
+            <ol>
+                <li><strong>Short URL:</strong> a compact link fits a low version, so each module stays large: at version 5 the 300 px output gives 6.67 px per module, comfortable for screen and print alike.</li>
+                <li><strong>Long URL:</strong> a link with tracking parameters can push the version past 20, where 300 px yields only 2.86 px per module. Switching the output to 400 × 400 restores 3.81 px per module without shortening the link.</li>
+                <li><strong>Outdoor sign:</strong> choosing level H raises redundancy to about 30%, so the same content needs a denser grid. Compensate by increasing the output size rather than accepting a small dense code.</li>
+            </ol>
+
+            <h3>Scanning Reliability Checklist</h3>
+            <ul>
+                <li>Keep the quiet zone clear — never crop or overlap the white margin.</li>
+                <li>Prefer more output pixels over more error correction when the surface is clean; prefer more error correction when it is not.</li>
+                <li>Avoid inverted colours unless the target scanner supports them; dark modules on a light background are the safe default.</li>
+                <li>Test with the camera you expect users to have, at the distance you expect them to stand.</li>
+                <li>If a logo is placed in the centre, raise the level to Q or H to absorb the covered area.</li>
+            </ul>
+
+            <h3>Frequently Asked Questions</h3>
+            <p><strong>Which error correction level should I use?</strong> Level M suits most print uses. Move to Q or H when the code may be covered, folded, or exposed outdoors, and to L only when the surface is clean and you need the smallest possible pattern.</p>
+            <p><strong>Why does my code fail to scan when printed small?</strong> Each module fell below what the camera can resolve. Increase the output size, or shorten the content so a lower version is used.</p>
+            <p><strong>Does a higher level make the code bigger?</strong> It makes the pattern denser for the same data, which usually raises the version and therefore the module count. The exported pixel size is fixed by your size setting, so the modules get smaller.</p>
+            <p><strong>Can a QR code hold uppercase-only text more efficiently?</strong> Yes. Alphanumeric mode encodes a restricted set — digits, uppercase letters, and a few symbols — more compactly than byte mode, so the same text needs fewer modules.</p>
+            <p><strong>Is the generated image uploaded anywhere?</strong> No. The code is drawn in your browser and the PNG is produced locally, so nothing you type leaves the device.</p>
+
+            <h3>Related Reading</h3>
+            <p>For a fuller walkthrough of payload formats and print sizing, see our <a href="/blog/en/qr-generator-guide">QR code guide</a>. Secrets embedded in a code should be generated first with the <a href="/en/calculators/password-gen">Password Generator</a>; for embedding data as text rather than an image, the <a href="/en/text/base64-encode">Base64 Encoder</a> and the <a href="/en/image/badge-maker">Badge Maker</a> cover the other common cases.</p>
+        </div>
 
 <section class="related-posts">
         <h3>Related Reading</h3>
@@ -149,23 +205,6 @@
             <li><a href="/blog/en/qr-generator-guide">QR Code Generator Guide: How to Create QR Codes Online</a></li>
         </ul>
     </section>
-<section class="tool-content">
-<h2>About QR Code Generator</h2>
-<p>QR Code Generator is a completely free online tool that helps you Generate QR codes from text/URL, download as PNG. Whether you are a casual user or a professional, you can use it instantly without installing any software.</p>
-<p>Whether you are a marketer sharing links, a designer creating materials, or a regular user, you can generate and download custom QR codes in seconds.</p>
-<h2>How to Use</h2>
-<ol>
-    <li>Paste your text or URL into the input field.</li>
-    <li>Choose the QR code size and error correction level.</li>
-    <li>Click the "Generate" button.</li>
-    <li>Preview the QR code and click "Download" to save it as PNG.</li>
-</ol>
-<h2>QR Code Generator FAQ</h2>
-<h3>Is QR Code Generator free to use?</h3><p>Yes, QR Code Generator is completely free. There are no hidden fees, no account registration and no download required.</p>
-<h3>How accurate are the results?</h3><p>All calculations are performed locally in your browser using well-established formulas, so the results are accurate and consistent.</p>
-<h3>Is my data private?</h3><p>Your privacy is a priority. Everything you enter is processed directly on your device and is never uploaded to any server.</p>
-<h3>Does QR Code Generator work on mobile?</h3><p>Yes. The page is fully responsive and works smoothly on phones, tablets and desktop browsers.</p>
-</section>
     </main>
 
     <footer>
