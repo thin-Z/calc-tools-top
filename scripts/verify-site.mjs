@@ -195,9 +195,10 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
 }
 
 // ---------- 8. CSP assertNoInlineEventHandlers：dist 无 onxxx= 内联事件处理器（终点基准） ----------
-// 口径与 scripts/scan-csp-inline.py 的 EVENT_RE 一致。T01-T03 期间预期 FAIL，T04 起必须为 0。
+// 口径与 scripts/scan-csp-inline.py 的 EVENT_RE 一致（均要求 on<事件>="..." 带引号/大括号值，
+// 避免把英文词 one/two 后接等号（如 Base64 填充说明 "one ="）误判为 handler）。必须为 0。
 {
-  const eventRe = /\son[a-z]+\s*=/gi;
+  const eventRe = /\son[a-z]+\s*=\s*["'{]/gi;
   let handlerCount = 0;
   const byFile = new Map();
   if (fs.existsSync(DIST)) {
@@ -214,7 +215,7 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
   if (handlerCount !== 0) {
     const top = [...byFile.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5)
       .map(([f, c]) => `${f}=${c}`).join(', ');
-    fail(`[csp-inline-events] dist 含 ${handlerCount} 个 onxxx= 内联事件处理器（终点基准应为 0；T01 预期 FAIL）${top ? '，top: ' + top : ''}`);
+    fail(`[csp-inline-events] dist 含 ${handlerCount} 个 onxxx= 内联事件处理器（终点基准应为 0）${top ? '，top: ' + top : ''}`);
   } else {
     console.log('[8] CSP assertNoInlineEventHandlers: dist 内联事件处理器 = 0 ✓');
   }

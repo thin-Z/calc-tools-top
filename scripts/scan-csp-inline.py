@@ -17,7 +17,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SKIP_DIRS = {"dist", "node_modules", ".git", "deliverables"}
 
 SCRIPT_RE = re.compile(r"<script(?P<attrs>[^>]*)>(?P<body>.*?)</script>", re.S | re.I)
-EVENT_RE = re.compile(r"\son[a-z]+\s*=", re.I)
+EVENT_RE = re.compile(r"\son[a-z]+\s*=\s*[\"'{]", re.I)
 STYLE_BLOCK_RE = re.compile(r"<style[^>]*>(.*?)</style>", re.S | re.I)
 STYLE_ATTR_RE = re.compile(r"\sstyle\s*=", re.I)
 
