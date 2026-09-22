@@ -49,6 +49,19 @@
   "operatingSystem": "Web",
   "inLanguage": "en"
 }</script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            { "@type": "Question", "name": "Why can't Chinese and English reading speeds simply be added together?", "acceptedAnswer": { "@type": "Answer", "text": "Chinese is counted by character and English by word, different units; Chinese is recognized character by character while English is recognized by whole-word shape, so they impose different cognitive loads and must be timed separately then summed." } },
+            { "@type": "Question", "name": "Should images, code blocks, and tables count toward reading time?", "acceptedAnswer": { "@type": "Answer", "text": "The tool counts by characters and words, so a pure image is excluded but text inside code blocks and tables is counted. For material rich in code or figures, treat the result as an upper bound since actual dwell time is usually shorter." } },
+            { "@type": "Question", "name": "How do I estimate my own real reading speed?", "acceptedAnswer": { "@type": "Answer", "text": "Take an article of the type you normally read, note its word count, time yourself reading straight through without re-reading, divide word count by minutes, and average three to five trials for a personal speed." } },
+            { "@type": "Question", "name": "Why should blog posts and academic papers use different reading speeds?", "acceptedAnswer": { "@type": "Answer", "text": "Blogs use conversational, skimmable language and fit the normal band, while academic papers are full of terminology and require pausing to understand, often dropping below 200 characters per minute. Estimating a paper at blog speed understates the time needed." } }
+        ]
+    }
+    </script>
 </head>
 <body>
     <header>
@@ -74,7 +87,8 @@
                 <h3>Related Tools</h3>
                 <ul>
                     <li><a href="/en/text/word-counter">Word Counter</a></li>
-                    <li><a href="/en/text/case-converter">Case Converter</a></li>
+                    <li><a href="/en/text/keyword-density">Keyword Density</a></li>
+                    <li><a href="/en/text/markdown-preview">Markdown Preview</a></li>
                 </ul>
             </div>
 
@@ -153,6 +167,54 @@
                 </ul>
             </div>
         </div>
+
+        <section class="tool-content">
+            <h2>Why estimating reading time actually matters</h2>
+            <p>Most people treat reading time as a cosmetic label stuck at the top of an article, but behind it sits a practical language for content planning. For a writer, estimating reading time is the first step that converts "how much I want to write" into "how much readers are willing to read." A blog post that will take twelve minutes to read, while the average visitor on competing sites stays only three minutes, will lose most of its audience two-thirds of the way down regardless of quality. For a podcaster, reading time equals "how long the script will take to speak": a two-thousand-word English draft read at a normal pace of 150 words per minute runs about thirteen minutes, which directly decides whether the episode fits the planned show length. For students and working professionals, reading time is a hard constraint on the calendar: if you know a textbook page averages four minutes, eighty pages means you must block out five and a half hours tonight instead of vaguely planning to "read for a while." In short, reading-time estimation is not decoration; it translates vague content volume into a schedulable time budget.</p>
+            <p>This tool does exactly one thing: based on the Chinese character count and the English word count of the text you paste, it applies a set of experience-based speeds and returns reading and speaking durations. It relies on no external service and uploads none of your text; it is a purely local conversion. The sections below spell out the conversion basis, where the speeds come from, and several places where estimates commonly go wrong.</p>
+
+            <h3>Where reading speed comes from: an empirical baseline</h3>
+            <p>Reading speed has no single precise value that holds everywhere; researchers and publishers usually describe it as "how many characters or words are processed per minute." Chinese is counted by character, English by word, and the two cannot simply be added — they must be timed separately and then summed. The table below gives common ranges for ordinary adult readers. Note that these describe average throughput during continuous reading and exclude time spent pausing to think, re-reading, or looking up words.</p>
+            <table class="ref-table">
+                <thead><tr><th>Material type</th><th>Chinese speed (chars/min)</th><th>English speed (words/min)</th><th>Notes</th></tr></thead>
+                <tbody>
+                    <tr><td>Light reading (novels, essays)</td><td>400–500</td><td>220–250</td><td>Continuous plot, few unfamiliar words; faster</td></tr>
+                    <tr><td>General news and blogs</td><td>350–450</td><td>200–240</td><td>The most common "normal" reference</td></tr>
+                    <tr><td>Technical or academic material</td><td>200–300</td><td>120–180</td><td>Formulas, terminology, dense logic; clearly slower</td></tr>
+                    <tr><td>Close reading with notes</td><td>100–200</td><td>60–120</td><td>Requires re-reading and organizing; much slower</td></tr>
+                    <tr><td>Spoken aloud (narration)</td><td>150–200</td><td>100–150</td><td>Limited by speaking rate; usually slower than silent reading</td></tr>
+                </tbody>
+            </table>
+            <p><strong>How to use it</strong>: match your text to the right row. Do not estimate a technical blog post with the speed for light reading, or you will badly understate reader effort; for a speech script you must use the "spoken aloud" row. The tool's slow / normal / fast presets are essentially three values taken from the middle of this table.</p>
+
+            <h3>Word counts mapped to durations: a conversion example table</h3>
+            <p>To build intuition for the "word count to time" relationship, the table below uses a normal Chinese speed of 400 characters per minute and a normal English speed of 220 words per minute to show typical durations for several lengths:</p>
+            <table class="ref-table">
+                <thead><tr><th>Text length</th><th>Chinese (at 400 cpm)</th><th>English (at 220 wpm)</th></tr></thead>
+                <tbody>
+                    <tr><td>Social post (about 140 chars)</td><td>about 0.35 min</td><td>—</td></tr>
+                    <tr><td>Typical blog post (1,500 chars)</td><td>about 3.75 min</td><td>about 750 words ≈ 3.4 min</td></tr>
+                    <tr><td>Long-form article (5,000 chars)</td><td>about 12.5 min</td><td>about 2,500 words ≈ 11.4 min</td></tr>
+                    <tr><td>WeChat long article (8,000 chars)</td><td>about 20 min</td><td>—</td></tr>
+                    <tr><td>Undergraduate paper (8,000 words)</td><td>—</td><td>about 36 min</td></tr>
+                    <tr><td>Book chapter (20,000 chars)</td><td>about 50 min</td><td>about 10,000 words ≈ 45 min</td></tr>
+                </tbody>
+            </table>
+            <p><strong>How to use it</strong>: this table helps you plan backward. If your goal is "readers finish in under five minutes," keep Chinese length under about 2,000 characters; if you want a ten-minute podcast monologue, roughly 1,500 English words will do it. When you need the exact count, use the <a href="/en/text/word-counter">Word Counter</a> first, then come back to convert.</p>
+
+            <h3>The formula and a real worked example</h3>
+            <p>The core formula is a single line: <strong>reading time (minutes) = character count ÷ reading speed</strong>. When Chinese and English are mixed, time each language separately and add the results:</p>
+            <p>time = chinese_chars ÷ chinese_speed + english_words ÷ english_speed</p>
+            <p><strong>Example 1 (Chinese)</strong>: a 5,000-character Chinese long-form article at a normal speed of 400 characters per minute gives 5000 ÷ 400 = <strong>12.5 minutes</strong>. At a slow close-reading speed of 200 characters per minute it becomes 25 minutes — this is how difficulty and purpose amplify the duration.</p>
+            <p><strong>Example 2 (English)</strong>: a roughly 2,000-word English blog post at a normal speed of 220 words per minute gives 2000 ÷ 220 ≈ <strong>9 minutes</strong>. Read aloud as a podcast at 150 words per minute, it needs about 13.3 minutes, right at the upper limit of a short episode.</p>
+            <p><strong>Example 3 (mixed)</strong>: a product document of 3,000 Chinese characters plus 500 English words, at normal speed: 3000 ÷ 400 = 7.5 minutes, 500 ÷ 220 ≈ 2.3 minutes, total about <strong>9.8 minutes</strong>. Counting Chinese and English separately is the key here; adding the two segments directly avoids the bias of forcing one speed onto both.</p>
+
+            <h3>Frequently asked questions (reading-time specific)</h3>
+            <p><strong>Why can't Chinese and English reading speeds simply be added together?</strong> The root reason is different units: Chinese is counted by character, English by word, and one English word averages about five letters, corresponding to roughly one and a half to two Chinese characters of information. Beyond that, Chinese is logographic and recognized character by character, while English is a string of letters recognized by whole-word shape; the two processing paths impose different cognitive loads, so they must be timed separately and summed rather than forced through one shared speed.</p>
+            <p><strong>Should images, code blocks, and tables count toward reading time?</strong> This tool counts by characters and words, so a pure image is excluded, but the text inside code blocks and tables is counted. That creates bias: a five-hundred-line code sample that readers skim or skip still gets counted as a long read. The practical fix is to treat the tool's result as an upper bound for material rich in code or figures, since actual dwell time is usually shorter; you can also check body density first with the <a href="/en/text/keyword-density">Keyword Density</a> tool before judging.</p>
+            <p><strong>How do I estimate my own real reading speed?</strong> The most reliable method is to measure it: take an article of the type you normally read, note its word count, time yourself reading straight through without re-reading, and divide word count by minutes to get your personal speed. Repeat three to five times and average; that beats any generic baseline. If you mostly read technical docs, measure technical docs; if you mostly read novels, measure novels — the numbers can differ by a factor of two across contexts.</p>
+            <p><strong>Why should blog posts and academic papers use different speeds?</strong> Blogs target a general audience with conversational, linearly structured language that readers can skim quickly, fitting the normal band of 350–450 characters per minute for Chinese. Academic papers are full of terminology, formulas, and arguments that require pausing to understand, often dropping below 200 characters per minute. Estimating a paper at blog speed badly understates the time needed and breaks your study plan. When drafting a paper explanation, you can first organize structure with the <a href="/en/text/markdown-preview">Markdown Preview</a> tool, then rehearse the explanation at an academic speed.</p>
+        </section>
 
 </main>
     <footer>

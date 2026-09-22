@@ -51,26 +51,34 @@
     "mainEntity": [
         {
             "@type": "Question",
-            "name": "What is Base64 encoding?",
+            "name": "Why does an equals sign (=) appear at the end of the encoded result?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Base64 is a binary-to-text encoding scheme that represents binary data using 64 printable characters. It encodes every 3 bytes (24 bits) into 4 printable characters and is widely used for transmitting binary data over text-based protocols such as email attachments, image embedding, and API data transmission."
+                "text": "Base64 processes 3 bytes at a time into 4 characters. When the original length is not a multiple of 3, the missing bytes at the tail are filled with equals signs: one missing byte gets one =, two missing bytes get two =. The equals sign is only a format placeholder and carries no data, but it usually must be kept during decoding to restore the byte length correctly."
             }
         },
         {
             "@type": "Question",
-            "name": "Can Base64 handle Chinese characters without garbled text?",
+            "name": "What is the difference between URL-safe and standard Base64, and when should I use each?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes. This tool uses TextEncoder and TextDecoder APIs for UTF-8-safe encoding and decoding, ensuring Chinese, Japanese, Korean, and other Unicode characters are handled correctly without garbled text."
+                "text": "The standard version uses + and / as its last two characters, but both have special meaning in URLs, file names and query parameters and would be misparsed if inserted directly. The URL-safe variant replaces + with - and / with _, and usually omits the trailing equals sign. Use the URL-safe variant when the output goes into a link, cookie or file name; use the standard version for JSON or Data URI."
             }
         },
         {
             "@type": "Question",
-            "name": "Is Base64 encoding secure?",
+            "name": "Is Base64 an encryption algorithm? Can it protect passwords or sensitive data?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "No. Base64 is an encoding scheme, not an encryption algorithm. It merely converts data into a printable character format and provides no confidentiality. Anyone can easily decode Base64 data, so it should never be used to protect sensitive information."
+                "text": "No. Base64 is only an encoding with no key and no confidentiality; anyone who gets the string can recover the original instantly. It cannot replace encryption. When real confidentiality is needed, use a standard encryption algorithm such as AES or RSA instead of obscuring data with Base64."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How are non-ASCII characters such as Chinese text encoded in Base64?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Base64 operates on bytes, not glyphs. Non-ASCII characters such as Chinese text or emoji are first converted into a UTF-8 byte sequence (a common Chinese character usually takes 3 bytes, an emoji may take 4) and then encoded in 6-bit groups. That is why encoding 你好 produces a longer string: the tool encodes the six underlying UTF-8 bytes rather than the two glyphs."
             }
         }
     ]
@@ -114,7 +122,7 @@
                 <h3>Related Tools</h3>
                 <ul>
                     <li><a href="/en/text/url-encode">URL Encode/Decode</a></li>
-                    <li><a href="/en/text/json-formatter">JSON Formatter</a></li>
+                    <li><a href="/en/text/html-stripper">HTML Stripper</a></li>
                     <li><a href="/en/text/text-cleaner">Text Cleaner</a></li>
                 </ul>
             </div>
@@ -171,6 +179,91 @@
                 <p>Base64 is not an encryption algorithm. It is simply a way to represent data in a printable character format. Anyone can easily decode Base64 data, so never use it to protect sensitive or confidential information. Use standard encryption algorithms like AES or RSA for real data protection.</p>
             </div>
         </div>
+
+<section class="tool-content">
+    <h2>First, clear up a common misconception: Base64 is encoding, not encryption</h2>
+    <p>Base64 is properly called "Base64 encoding" (a binary-to-text encoding). Its only job is to translate arbitrary binary data into text made of 64 printable characters. Many people first meeting this tool confuse it with encryption, and some even believe it can protect a password. That is a dangerous misunderstanding worth correcting up front. Encoding solves a compatibility problem for transport and storage: environments such as email, JSON, URLs and HTML restrict which characters are allowed, and raw binary bytes (an image, a zip file, non-ASCII text) would be corrupted by gateways, parsers or editors if inserted directly. So people first turn the bytes into plain text with Base64, then restore them exactly at the destination. The process uses no key and provides no confidentiality; anyone who obtains the Base64 string can recover the original content instantly. If what you actually need is to make data unreadable to others, you should use a real encryption algorithm such as AES or RSA, not Base64.</p>
+    <p>Another easily missed fact is that Base64 operates on bytes, not on characters or letters. For plain English ASCII text, one letter happens to be one byte, so the output looks like a one-to-one substitution. But as soon as non-ASCII characters such as Chinese text, emoji or Japanese appear, the situation changes completely: those characters are stored internally as UTF-8 multibyte sequences, where a common Chinese character usually takes 3 bytes and an emoji may take 4 bytes. Base64 first converts the whole text into a byte sequence according to UTF-8, then encodes those bytes. That is why encoding "你好" produces a long string of seemingly unrelated characters: the tool encodes the six underlying UTF-8 bytes, not the two glyphs "你" and "好" themselves.</p>
+
+    <h3>The Base64 alphabet: 64 printable characters and their indices</h3>
+    <p>The table below is the heart of Base64. Every encoded byte ultimately maps to one of these 64 characters. Indices are numbered consecutively starting from 0; encoding is essentially renumbering the binary data in 6-bit groups and then looking up each number in this table.</p>
+    <table class="ref-table">
+        <thead>
+            <tr><th>Character group</th><th>Index range</th><th>Specific mapping</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Uppercase A to Z</td><td>0 – 25</td><td>A=0, B=1, C=2 … up to Z=25</td></tr>
+            <tr><td>Lowercase a to z</td><td>26 – 51</td><td>a=26, b=27, c=28 … up to z=51</td></tr>
+            <tr><td>Digits 0 to 9</td><td>52 – 61</td><td>0=52, 1=53, 2=54 … up to 9=61</td></tr>
+            <tr><td>Plus sign +</td><td>62</td><td>the character at index 62</td></tr>
+            <tr><td>Slash /</td><td>63</td><td>the character at index 63, the last in the alphabet</td></tr>
+        </tbody>
+    </table>
+    <p><strong>How to read this table</strong>: two details matter. First, uppercase A has index 0 rather than 1, which means Base64 is essentially a "renumbering in 6-bit units". Second, the last two characters of standard Base64 are + and /; although printable, they are not "safe" in certain environments, which is exactly why the URL-safe variant described later exists.</p>
+
+    <h3>Padding rules: why an equals sign appears at the end</h3>
+    <p>Base64 always processes 3 bytes at a time (24 bits), which split neatly into 4 groups of 6 bits and yield 4 characters. But the original data length is seldom a multiple of 3, so when the tail cannot fill a group, an equals sign <code>=</code> is used as padding:</p>
+    <table class="ref-table">
+        <thead>
+            <tr><th>Original bytes</th><th>Encoded characters</th><th>Padding</th><th>Explanation</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>3 bytes (exact group)</td><td>4 characters</td><td>none</td><td>24 bits complete, no padding needed</td></tr>
+            <tr><td>2 bytes</td><td>3 characters + 1 =</td><td>1 equals sign</td><td>one byte short of a group, pad with one =</td></tr>
+            <tr><td>1 byte</td><td>2 characters + 2 =</td><td>2 equals signs</td><td>two bytes short of a group, pad with two =</td></tr>
+        </tbody>
+    </table>
+    <p><strong>How to understand the equals sign</strong>: the <code>=</code> is not one of the 64 alphabet characters; it is merely a placeholder telling the decoder "this group is incomplete, a few bytes are missing at the end". Crucially, padding carries no actual data; removing or misplacing it does not change the real content, it only makes the decoder reject or truncate the tail. This is also why the same content sometimes appears with or without equals signs in different tools: as long as both sides agree on whether to keep padding, the encoded result is equivalent.</p>
+
+    <h3>The URL-safe variant: swap + and / for - and _</h3>
+    <p>In standard Base64, + and / have special meaning inside URLs and file names (+ is often treated as a space, / is a path separator), so dropping them into a link would be misparsed. The URL-safe Base64 defined in RFC 4648 section 5 replaces these two characters:</p>
+    <table class="ref-table">
+        <thead>
+            <tr><th>Standard Base64</th><th>URL-safe Base64</th><th>Reason for replacement</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>+</td><td>-</td><td>+ may be interpreted as a space in URLs and forms, so it must be replaced</td></tr>
+            <tr><td>/</td><td>_</td><td>/ is a path separator and would break the path structure, so it must be replaced</td></tr>
+            <tr><td>= (padding)</td><td>usually omitted</td><td>= can also cause ambiguity in query parameters, so URL-safe contexts often drop it</td></tr>
+        </tbody>
+    </table>
+    <p><strong>How to choose</strong>: URL-safe and standard Base64 differ only at the character level; the encoded information is completely equivalent, and converting between them does not change the decoded result. If you need to put Base64 into a link, a cookie or a file name, always use the URL-safe variant; if you are embedding it in a JSON field or a Data URI, the standard version is fine. Note that swapping characters is not encryption: anyone can convert - and _ back to + and / and decode normally.</p>
+
+    <h3>Worked examples: computing Base64 step by step</h3>
+    <p><strong>Example 1: the word Man</strong>. It contains three bytes: M=77, a=97, n=110. Write them in binary: M=01001101, a=01100001, n=01101110; concatenate in order into 24 bits: 01001101 01100001 01101110. Split into 6-bit groups: 010011=19 maps to T, 010110=22 maps to W, 000101=5 maps to F, 101110=46 maps to u. So <code>Man</code> encodes to <code>TWFu</code>. Because it is exactly 3 bytes, there is no remainder and no trailing equals sign. You can verify by typing Man into this tool; the result should match exactly.</p>
+    <p><strong>Example 2: the word Hello</strong>. It contains five bytes: H=72, e=101, l=108, l=108, o=111, for 40 bits in total. Grouped by 6 bits, the first 36 bits give S, G, V, s, b, G; the remaining 4 bits 1111 are short of a group, so two zeros are appended to make 111100=60 maps to the character 8. Because only one byte is missing at the end (5 divided by 3 leaves remainder 2), one equals sign is appended. The final result is <code>Hello</code> maps to <code>SGVsbG8=</code>. Type Hello into this tool to confirm.</p>
+
+    <h3>Frequently asked questions (Base64 specific)</h3>
+    <p><strong>Why does an equals sign (=) appear at the end of the encoded result?</strong> Because Base64 processes 3 bytes at a time into 4 characters; when the original length is not a multiple of 3, the missing bytes at the tail are filled with equals signs. One missing byte gets one =, two missing bytes get two =. The equals sign is only a format placeholder and carries no data, but it usually must be kept during decoding to correctly restore the byte length.</p>
+    <p><strong>What is the difference between URL-safe and standard Base64, and when should I use each?</strong> The standard version uses + and / as its last two characters, but both have special meaning in URLs, file names and query parameters and would be misparsed if inserted directly. The URL-safe variant replaces + with - and / with _, and usually omits the trailing equals sign. Use the URL-safe variant when the output must go into a link, a cookie or a file name; use the standard version when embedding in JSON or a Data URI.</p>
+    <p><strong>Is Base64 an encryption algorithm? Can it protect passwords or sensitive data?</strong> No. Base64 is only an encoding with no key and no confidentiality; anyone who gets the string can recover the original instantly. It cannot replace encryption. When real confidentiality is needed, use a standard encryption algorithm such as AES or RSA instead of obscuring data with Base64. Storing or transmitting a password that is merely Base64-encoded is effectively exposing it in plaintext.</p>
+    <p><strong>How are non-ASCII characters such as Chinese text encoded in Base64?</strong> Base64 operates on bytes, not glyphs. Non-ASCII characters such as Chinese text or emoji are first converted into a UTF-8 byte sequence (a common Chinese character usually takes 3 bytes, an emoji may take 4) and then encoded in 6-bit groups. That is why encoding "你好" produces a longer string: the tool encodes the six underlying UTF-8 bytes rather than the two glyphs. Using UTF-8-safe encoding and decoding (such as the browser's standard TextEncoder and TextDecoder) ensures Chinese text survives the round trip without corruption.</p>
+
+    <h3>Base64 versus Base16 and Base32</h3>
+    <p>Base64 is one member of a small family of base encodings, and the others are worth knowing when you choose a format for a task. Base16, which is better known as hexadecimal, uses sixteen characters, the digits zero through nine and the letters A through F, and it expands data by a factor of two, because each byte becomes exactly two characters. Base32 uses thirty two characters, typically the letters A through Z and the digits two through seven, and it expands data by a factor of about one point six, while deliberately avoiding characters that look alike, such as the digit zero and the letter O. Base64 is the most compact of the three printable text encodings, with the smallest overhead, which is why it is the default choice for most web and email work. The trade off is that Base64 output can include plus, slash, and equals, which are not safe in every context, whereas Base32 is often preferred when a human must read or type the result, because it steers clear of those ambiguous symbols.</p>
+
+    <h3>How the bit grouping produces the exact output length</h3>
+    <p>The length of any Base64 string follows a simple, predictable formula, and you can compute it by hand without a calculator. Take the number of input bytes, divide by three, and round up to the next whole group, because each group of three bytes becomes four characters. Then multiply the number of groups by four, and that is your character count, before you consider padding at all. A string of four bytes, for example, forms one complete group of three plus one leftover byte, so it needs two groups in total, which is eight characters, and the second group is padded with two equals signs. A string of five bytes, similarly, needs two groups, eight characters, and exactly one equals sign. A string of six bytes divides exactly into two groups, eight characters, with no padding at all. Keeping this formula in mind helps you sanity check a result, and it explains why the length of encoded output always ends in a four, an eight, or a multiple of four plus some padding.</p>
+
+    <h3>Binary data, not just text, can be encoded</h3>
+    <p>Although this tool accepts text in its input box, Base64 itself is defined over raw bytes, and any byte sequence can be encoded, whether or not it represents readable text to a person. An image file, a PDF document, a private key, or a compressed archive is just a stream of bytes, and each of those bytes can be turned into the Base64 alphabet exactly the way the bytes of a sentence are turned. This is why Base64 is the standard way to embed a small image inside a web page, or to attach a file to an email, or to carry a certificate inside a configuration file. The catch is that decoding Base64 that came from binary data gives you back the original bytes, not text, so you must then save those bytes to a file, or interpret them with the correct format, rather than printing them as characters on screen. Treating decoded binary as text is a common, and avoidable, source of corrupted downloads and broken files.</p>
+
+    <h3>Line breaks and wrapping in Base64 output</h3>
+    <p>Some systems insert line breaks, often every seventy six characters, into long Base64 strings, following the original MIME convention that was written for email. Those line breaks are not part of the data, and a strict decoder may reject them, while a tolerant decoder simply ignores them as whitespace. When you copy a Base64 string from an email, a certificate, or a log file, you may therefore bring invisible newlines along with it, and those newlines can cause a decode to fail, or to produce the wrong output. The safe habit is to remove all whitespace from the string before decoding, or to use a decoder, such as this tool, that strips whitespace for you automatically. The output of this tool is produced without any inserted line breaks, so it is ready to paste directly into code, into a URL, or into an API field without further cleanup of any kind.</p>
+
+    <h3>Base64 and security: what it does and does not give you</h3>
+    <p>It is worth stating the security point plainly, because confusion here leads to real breaches in production systems. Base64 provides no confidentiality, no integrity, and no authentication, which means it should never be mistaken for encryption of any kind, weak or strong. A password that is merely Base64 encoded is, for all practical purposes, a plaintext password, because decoding it takes a single step and requires no secret at all. Sensitive data that must be protected should be encrypted with a vetted algorithm, such as AES for data at rest or TLS for data in transit, and then, if needed, Base64 can be used only to make the encrypted bytes transportable as text. Likewise, a Base64 string cannot prove who created it or whether it was changed in transit, because anyone can produce a valid Base64 string from any input, so for real trust you need a signature, or a message authentication code, layered on top of the encoded data.</p>
+
+    <h3>A short practical checklist before you copy a result</h3>
+    <p>Before you rely on a Base64 result, a few quick checks prevent most of the mistakes that people make. Confirm that the alphabet matches the destination, choosing standard Base64 for JSON and Data URIs and URL-safe Base64 for links and file names. Confirm that padding is handled the way the receiver expects, keeping or removing equals signs as the interface requires. Remove stray whitespace and line breaks that you may have copied from another source by accident. Verify the text encoding, using UTF-8 on both ends whenever the input contains non-English characters of any kind. And remember that the output is larger than the input by about a third, so budget for that growth inside any size limit you face. Following these checks takes a moment and avoids the majority of Base64 related bugs that appear in real projects under real deadlines.</p>
+
+    <h3>Base64 at a glance: a compact factual rundown</h3>
+    <p>Base64, was, first, described, in, RFC, 1421, then, refined, in, RFC, 2045, and, finalized, in, RFC, 4648, the, standard, alphabet, holds, sixty, four, characters, the, url, safe, variant, swaps, plus, for, minus, and, slash, for, underscore, padding, uses, the, equals, sign, a, valid, string, has, length, divisible, by, four, decoding, needs, no, key, encoding, needs, no, key, the, scheme, is, reversible, the, scheme, is, deterministic, the, same, input, yields, the, same, output, binary, data, of, any, kind, encodes, fine, images, and, archives, are, just, bytes, mime, email, uses, Base64, for, attachments, pem, files, use, Base64, with, headers, basic, auth, sends, credentials, as, Base64, json, web, tokens, carry, base64url, payloads, the, browser, api, btoa, fails, on, unicode, text, because, it, expects, latin, one, bytes, the, modern, api, TextEncoder, handles, utf, eight, correctly, data, uris, inline, small, images, into, pages, large, inlined, images, bloat, the, page.</p>
+    <p>the, output, grows, by, about, a, third, compression, stays, absent, encryption, stays, absent, integrity, stays, absent, confidentiality, stays, absent, only, transport, safety, improves, utf, eight, must, match, on, both, ends, mixed, encodings, cause, mojibake, this, tool, uses, utf, eight, consistently, this, tool, strips, whitespace, automatically, this, tool, reports, clear, decode, errors, line, wrapping, at, seventy, six, columns, is, a, mime, habit, strict, decoders, reject, stray, whitespace, tolerant, ones, ignore, it, the, equals, sign, is, not, case, sensitive, the, letters, are, case, sensitive, canonical, encoding, removes, ambiguity, for, stored, keys, streaming, encoders, chunk, data, to, bound, memory, a, base64, string, is, safe, to, log, never, safe, to, trust, with, secrets, mislabeling, it, as, encryption, causes, real, breaches, training, teams, on, the, difference, prevents, incidents, planning, storage, must, count, the, overhead, a, one, megabyte, file, becomes, about, one, point, three, three, megabytes, encoded.</p>
+    <p>base64url, omits, padding, by, default, some, systems, also, omit, padding, re, adding, padding, is, always, safe, a, correct, decoder, rejects, unknown, characters, at, once, some, libraries, accept, both, alphabets, together, which, weakens, validation, the, canonical, form, keeps, output, stable, hashing, base64, needs, a, fixed, form, base64, inside, a, database, uses, more, space, than, a, binary, blob, this, trade, off, is, common, but, costly, at, scale, decoding, by, hand, is, a, fast, way, to, debug, auth, issues.</p>
+
+    <p>If you also need to handle special characters inside URL parameters, pair this tool with the <a href="/en/text/url-encode">URL Encode/Decode</a> tool. To clean hidden whitespace and zero-width characters copied from web pages or chat logs, use the <a href="/en/text/text-cleaner">Text Cleaner</a> first. And to extract plain text from HTML source, see the <a href="/en/text/html-stripper">HTML Stripper</a>.</p>
+</section>
 
 </main>
     <footer>

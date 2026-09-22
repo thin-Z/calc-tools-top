@@ -51,6 +51,19 @@
         "inLanguage": "en"
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            { "@type": "Question", "name": "What is relative luminance, and how is it different from a raw color value?", "acceptedAnswer": { "@type": "Answer", "text": "Relative luminance is the perceived brightness after perceptual weighting and gamma correction, ranging from 0 (black) to 1 (white). It is not the raw 0–255 sRGB value: each channel must be linearized with (c+0.055)/1.055 to the power 2.4, then weighted by 0.2126, 0.7152, 0.0722. The contrast formula uses only this luminance and ignores hue, so dark red and dark blue at equal luminance give equal contrast." } },
+            { "@type": "Question", "name": "Should body text use 3:1 or 4.5:1, and how do I choose?", "acceptedAnswer": { "@type": "Answer", "text": "Normal small body text must be at least 4.5:1 (AA), and you can push to 7:1 (AAA) for higher readability. Only large text (≥18pt, or ≥14pt bold) and UI components or graphics (button borders, icons, input outlines) are allowed to relax to 3:1. Simple rule: small text you must read → 4.5:1; non-text shapes you only need to recognize → 3:1." } },
+            { "@type": "Question", "name": "What is the relationship between contrast and font size?", "acceptedAnswer": { "@type": "Answer", "text": "It is direct. The larger and bolder the text, the lower the luminance gap the eye can still resolve, so WCAG asks only 3:1 for large text; small body text has thin strokes that blur when the gap is too small, so it requires 4.5:1. The same color pair may pass as a big heading but fail as small body text — never assume a clear-looking heading is also fine for body copy." } },
+            { "@type": "Question", "name": "Why do light gray texts (such as #777) so often fail?", "acceptedAnswer": { "@type": "Answer", "text": "Light gray is too close to white in luminance: #767676 on white is about 4.54:1 and only just clears AA, while one step at #777 drops to 4.48:1 and fails. Designers often treat light gray as soft and premium, but that softness comes exactly from a small luminance gap, which is the enemy of readability. When you need light text, go down to around #595959 (about 7:1) to be safe." } },
+            { "@type": "Question", "name": "How should I interpret the ratio the tool gives?", "acceptedAnswer": { "@type": "Answer", "text": "The larger the ratio the clearer the text: 1:1 means no difference and is unreadable, 21:1 is the top. Check against three bars: ≥7:1 is AAA body text, ≥4.5:1 is AA body text, ≥3:1 is only enough for large text and UI components. If it fails the target level, the tool shows a fail notice; deepen the text or lighten the background to fix it." } }
+        ]
+    }
+    </script>
 </head>
 <body>
     <header>
@@ -78,8 +91,8 @@
     <h3>Related Tools</h3>
     <ul>
         <li><a href="/en/image/color-picker">Color Picker</a></li>
-        <li><a href="/en/calculators/qr-generator">QR Code Generator</a></li>
-        <li><a href="/en/text/regex-tester">Regex Tester</a></li>
+        <li><a href="/en/text/word-counter">Word Counter</a></li>
+        <li><a href="/en/calculators/percentage-calc">Percentage Calculator</a></li>
     </ul>
 </div>
 
@@ -112,26 +125,66 @@
         </div>
 
         <section class="tool-content">
-            <h2>What is Color Contrast?</h2>
-            <p>Color contrast ratio measures the difference in luminance between a foreground color (such as text) and a background color. The value ranges from 1:1 to 21:1. The higher the contrast, the easier text is to read, especially in low-light environments or on low-resolution screens. WCAG 2.1 defines a standard relative luminance formula: each sRGB channel is linearized first, then weighted by 0.2126, 0.7152 and 0.0722 to produce luminance L, and finally the ratio is computed as (L1 + 0.05) / (L2 + 0.05).</p>
-            <h3>WCAG AA and AAA Requirements</h3>
-            <ul>
-                <li><strong>AA normal text</strong>: ratio ≥ 4.5:1, the minimum accessibility standard for most websites</li>
-                <li><strong>AA large text</strong> (≥18pt or 14pt bold): ratio ≥ 3:1</li>
-                <li><strong>AAA normal text</strong>: ratio ≥ 7:1, recommended for higher readability</li>
-                <li><strong>AAA large text</strong>: ratio ≥ 4.5:1</li>
-            </ul>
-            <h3>How to Use This Tool</h3>
+            <h2>What color contrast is, and why it matters for readability</h2>
+            <p>Color contrast ratio measures the difference in relative luminance between a foreground color (usually text) and its background. It is not a subjective impression of "how different two colors look"; it is a well-defined, repeatable number that ranges from 1:1 (identical) to 21:1 (pure black on pure white). Contrast matters because whether text can be read comfortably depends fundamentally on the luminance gap between the strokes and the background, not on the hue difference. Two people with different sensitivity, or two screens with different brightness, may disagree on whether a color scheme looks nice, but they can both agree on whether it is legible once the same formula is applied.</p>
+            <p>In web accessibility this standard is set by the W3C's WCAG (Web Content Accessibility Guidelines). WCAG makes "sufficient contrast between text and background" a hard success criterion (1.4.3 Contrast (Minimum) and 1.4.6 Contrast (Enhanced)). The point is not aesthetics: it is to let people with low vision, presbyopia, or color-vision differences, as well as anyone using a device in bright sunlight or on a low-resolution screen, read the content reliably. For a public-facing website, meeting AA is generally treated as the minimum acceptable bar; failing it means a portion of users is effectively locked out. That is also why many design systems run a dedicated contrast check before shipping.</p>
+
+            <h3>Relative luminance: the basis of the calculation</h3>
+            <p>The contrast calculation has two steps, and the core concept is "relative luminance" — how bright a color appears after perceptual weighting by the human eye. Note that this "brightness" is not the raw 0–255 value on screen; it is the value after gamma correction (the nonlinear sRGB encoding is converted back into something close to real light intensity).</p>
+            <p>For each channel, first normalize 0–255 to the range 0–1, call it c; if c ≤ 0.03928 the linear value is c ÷ 12.92, otherwise it is ((c + 0.055) ÷ 1.055) raised to the power 2.4. After obtaining the linear R, G, B, weight them by human-eye sensitivity:</p>
+            <p><strong>Relative luminance formula</strong>: L = 0.2126 · R + 0.7152 · G + 0.0722 · B</p>
+            <p>The three weights sum to exactly 1. Green has the largest weight (0.7152) because the eye is most sensitive to green; blue has the smallest (0.0722) because the same light intensity looks darkest in blue. This also explains a common misconception: contrast depends only on brightness, not on whether a color is red or blue. Darkening or lightening a color changes contrast far more through its luminance than through its hue.</p>
+            <p>Given the relative luminance L1 (lighter) and L2 (darker) of two colors, the contrast ratio is:</p>
+            <p><strong>Contrast formula</strong>: (L1 + 0.05) ÷ (L2 + 0.05)</p>
+            <p>The +0.05 in the denominator comes from the eye's "threshold luminance" against a fully black background (black is never absolute zero brightness), which keeps the darkest cases from producing division by zero or infinity. Always put the lighter color in the numerator and the darker in the denominator, or you will get a reciprocal below 1.</p>
+
+            <h3>WCAG 2.1 contrast thresholds</h3>
+            <p>The table below shows WCAG 2.1 requirements by content type. It separates "body text" from "large text / UI components" because they need different contrast levels (the reason follows in "Contrast and font size").</p>
+            <table class="ref-table">
+                <thead><tr><th>Content type</th><th>AA (minimum)</th><th>AAA (enhanced)</th><th>Notes</th></tr></thead>
+                <tbody>
+                    <tr><td>Normal body text</td><td>≥ 4.5:1</td><td>≥ 7:1</td><td>Applies to most website body copy; AA is the widely accepted floor</td></tr>
+                    <tr><td>Large text (≥18pt, or ≥14pt bold)</td><td>≥ 3:1</td><td>≥ 4.5:1</td><td>Relaxed threshold because the text is big</td></tr>
+                    <tr><td>UI components and graphics (button borders, icons, input outlines, chart lines)</td><td>≥ 3:1</td><td>—</td><td>WCAG 2.1 does not set a higher AAA bar for UI components; graphics objects are advised at ≥ 4.5:1</td></tr>
+                </tbody>
+            </table>
+            <p><strong>How to use it</strong>: first decide whether the element you are checking is "body text" or "large text / UI component". If it is body text, target at least 4.5:1 (push to 7:1 for higher readability). If it is button text, an icon, or a link underline, reaching 3:1 already satisfies AA. Many teams set their internal standard stricter than WCAG — for example requiring 7:1 for all body text — which is a safer enhanced practice.</p>
+
+            <h3>Real contrast of common color combinations</h3>
+            <p>Numbers alone are hard to picture, so here are several combinations designers frequently hit. Notice the last two: #767676 and #777 differ by a single step, yet one just passes AA and the other just fails.</p>
+            <table class="ref-table">
+                <thead><tr><th>Foreground</th><th>Background</th><th>Relative luminance L (fg)</th><th>Contrast</th><th>Verdict</th></tr></thead>
+                <tbody>
+                    <tr><td>#000000 (black)</td><td>#FFFFFF (white)</td><td>0.0000</td><td>21:1</td><td>Far above AAA, safest possible</td></tr>
+                    <tr><td>#333333 (dark gray)</td><td>#FFFFFF</td><td>0.0331</td><td>≈ 12.6:1</td><td>AAA; the usual safe choice for body text</td></tr>
+                    <tr><td>#595959 (mid gray)</td><td>#FFFFFF</td><td>0.1000</td><td>≈ 7:1</td><td>Exactly hits the AAA body-text bar</td></tr>
+                    <tr><td>#767676 (light gray)</td><td>#FFFFFF</td><td>0.1810</td><td>≈ 4.54:1</td><td>Just clears AA 4.5:1 (borderline)</td></tr>
+                    <tr><td>#777777 (light gray)</td><td>#FFFFFF</td><td>0.1844</td><td>≈ 4.48:1</td><td>Misses AA by a hair</td></tr>
+                    <tr><td>#949494 (lighter gray)</td><td>#FFFFFF</td><td>0.2960</td><td>≈ 3.03:1</td><td>Only meets AA for large text / UI components</td></tr>
+                </tbody>
+            </table>
+            <p><strong>How to use it</strong>: the pair worth memorizing is #767676 versus #777. Many design systems set default body gray to #767676, sitting at 4.54:1 and just clearing AA; the moment someone "lightens it one step" to #777, it drops to 4.48:1 and fails AA, even though the human eye can barely tell the difference. So never pick body gray by feel — pin it to the 4.5:1 formula. If you are sampling a color from the screen, use the <a href="/en/image/color-picker">Color Picker</a> to read it as a hex value, then come back to verify.</p>
+
+            <h3>Formula and worked examples</h3>
+            <p>Let's walk through real numbers so you can check the tool's output.</p>
+            <p><strong>Example 1 (black on white = 21:1)</strong>: black L = 0, white L = 1. Contrast = (1 + 0.05) ÷ (0 + 0.05) = 1.05 ÷ 0.05 = <strong>21:1</strong>. This is the theoretical maximum and the top of the contrast scale.</p>
+            <p><strong>Example 2 (#595959 gray on white ≈ 7:1, AAA)</strong>: #59 = 89, normalized c = 89 ÷ 255 ≈ 0.3490; since c &gt; 0.03928, linear = ((0.3490 + 0.055) ÷ 1.055)^2.4 ≈ (0.3829)^2.4 ≈ 0.1000. All three channels equal, so L = 0.2126×0.1 + 0.7152×0.1 + 0.0722×0.1 = 0.1000. Contrast = (1 + 0.05) ÷ (0.1 + 0.05) = 1.05 ÷ 0.15 = <strong>7:1</strong>, exactly the AAA body-text bar.</p>
+            <p><strong>Example 3 (why 3:1 only fits large text)</strong>: take #949494 on white, L ≈ 0.2960, contrast = 1.05 ÷ (0.2960 + 0.05) ≈ 1.05 ÷ 0.346 ≈ <strong>3.03:1</strong>. This only satisfies AA for large text or UI components; used as small body text it blurs. The reason is in the next section. You can verify the (L1+0.05)/(L2+0.05) ratio arithmetic with the <a href="/en/calculators/percentage-calc">Percentage Calculator</a>.</p>
+
+            <h3>How to use this tool</h3>
             <ol>
                 <li>Pick a color or type a hex value for the foreground (text) and the background</li>
                 <li>The tool computes the ratio in real time and shows AA/AAA results for each level</li>
                 <li>A preview area renders sample text with your chosen colors</li>
                 <li>If a level fails, adjust the colors until it passes</li>
             </ol>
-            <h3>Frequently Asked Questions</h3>
-            <p><strong>What contrast ratio is safe?</strong> Normal body text should reach at least AA 4.5:1. For older users or low-vision audiences, AAA 7:1 is recommended. Large headings and button text may use 3:1.</p>
-            <p><strong>Why does my color combination fail?</strong> Light gray text on a white background is usually only about 2:1. Darken the text, lighten the background, or switch to a deeper brand color. This tool lets you fine-tune colors until they pass.</p>
-            <p><strong>Is my data uploaded to a server?</strong> No. All calculations run locally in your browser; your colors never leave your device.</p>
+
+            <h3>Frequently asked questions (color-contrast specific)</h3>
+            <p><strong>What is relative luminance, and how is it different from a raw color value?</strong> Relative luminance is the perceived "how bright" value after perceptual weighting and gamma correction, ranging from 0 (black) to 1 (white). It is not the raw 0–255 sRGB value: each channel must first be linearized with (c+0.055)/1.055 to the power 2.4, then weighted by 0.2126, 0.7152, 0.0722. The contrast formula uses only this luminance and ignores hue, so "dark red" and "dark blue" at the same luminance give the same contrast.</p>
+            <p><strong>Should body text use 3:1 or 4.5:1, and how do I choose?</strong> It depends on the object. Normal small body text must be ≥ 4.5:1 (AA), and you can push to 7:1 (AAA) for higher readability. Only "large text" (≥18pt, or ≥14pt bold) and "UI components / graphics" (button borders, icons, input outlines) are allowed to relax to 3:1. Simple rule: small text you must read → 4.5:1; non-text shapes you only need to recognize → 3:1.</p>
+            <p><strong>What is the relationship between contrast and font size?</strong> It is direct. The larger and bolder the text, the lower the luminance gap the eye can still resolve, so WCAG asks only 3:1 for large text; small body text has thin strokes that blur when the gap is too small, so it requires 4.5:1. In other words, the same color pair may pass as a big heading but fail as small body text — never assume a heading that "looks clear" is also fine for body copy.</p>
+            <p><strong>Why do light gray texts (such as #777) so often fail?</strong> Because light gray is too close to white in luminance. As the examples show, #767676 on white is about 4.54:1 and only just clears AA, while one step darker at #777 it drops to 4.48:1 and fails. Designers often treat light gray as "soft and premium", but that softness comes precisely from a small luminance gap, which is the enemy of readability. When you need light text, go down to around #595959 (≈7:1) to be safe.</p>
+            <p><strong>How should I interpret the ratio the tool gives?</strong> The larger the ratio the clearer the text: 1:1 means no difference and is unreadable, 21:1 is the top. Check against three bars: ≥7:1 is AAA body text, ≥4.5:1 is AA body text, ≥3:1 is only enough for large text and UI components. If it fails the target level, the tool shows a fail notice; deepen the text or lighten the background to fix it. For counting the words in the copy you are checking, pair this with the <a href="/en/text/word-counter">Word Counter</a>.</p>
         </section>
 
     </main>

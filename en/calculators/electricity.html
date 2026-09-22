@@ -52,18 +52,34 @@
     "mainEntity": [
         {
             "@type": "Question",
-            "name": "What is 1 kWh?",
+            "name": "What is the difference between tiered pricing and time-of-use pricing?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "1 kWh is the energy consumed by a 1000-watt appliance running for 1 hour. Your electricity bill is calculated in kWh."
+                "text": "Tiered (block-rate) pricing adds a premium as total consumption rises, rewarding lower use. Time-of-use (TOU) pricing prices by when you consume: peak hours cost more, off-peak (usually overnight) costs less, encouraging shiftable loads to move to the night. The two can be combined."
             }
         },
         {
             "@type": "Question",
-            "name": "Typical appliance power ratings?",
+            "name": "How do I read the tier on my electricity bill?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "AC: 1000-3000W, Fridge: 100-200W, Washing Machine: 300-500W, Computer: 200-400W, TV: 100-300W."
+                "text": "Check the cumulative annual consumption to see whether it has crossed the band-2 or band-3 thresholds, because crossing raises the rate on the excess, and check whether there is a time-of-use breakdown. If a month's bill jumps, first confirm whether cumulative usage just crossed a threshold, then look for high-power appliances and standby loads."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do tenants or combined-meter users calculate electricity cost?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Combined-meter users (older buildings, rentals sharing one master meter) usually skip tiered banding and are billed at a single combined-meter rate that is a bit above band 1 and does not escalate. If a landlord resells at a markup, multiply usage by the landlord rate. This tool lets you enter any rate manually, which fits these non-standard cases."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How are peak and off-peak periods divided, and is time-of-use worth it?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Peak and off-peak periods are set by the local grid; off-peak is commonly overnight (for example 22:00 to 08:00). Whether it pays off depends on how much of your load can shift to off-peak: the more shiftable load, the more likely you save, while high peak-hour households may end up paying more. Exact periods and rates are published by your local grid."
             }
         }
     ]
@@ -110,7 +126,7 @@
     <h3>Related Tools</h3>
     <ul>
         <li><a href="/en/calculators/fuel-cost">Fuel Cost Calculator</a></li>
-        <li><a href="/en/calculators/unit-converter">Unit Converter</a></li>
+        <li><a href="/en/calculators/compound-interest">Compound Interest Calculator</a></li>
         <li><a href="/en/calculators/percentage-calc">Percentage Calculator</a></li>
     </ul>
 </div>
@@ -125,7 +141,56 @@
 
         
 
-        <div class="tool-content"><h2>Electricity Cost Calculator Guide</h2><p>Calculate the power consumption and cost of your appliances. Understand which appliances use the most electricity and find ways to save.</p><h3>Energy Saving Tips</h3><p>Choose energy-efficient appliances, turn off standby power, and set AC to optimal temperatures.</p></div>
+        <section class="tool-content">
+    <h2>How Residential Tiered Pricing Works</h2>
+    <p>The most basic calculation in this tool is "consumption times rate", but real residential bills are almost never a single flat price. Across most of China, household electricity uses a <strong>tiered pricing (block-rate) mechanism</strong>: a household's annual consumption is divided into bands, where the first (base) band covering essential living use carries the lowest price, and each higher band costs more per kilowatt-hour. The policy goal is to discourage waste through price signals while keeping basic living costs manageable for low-consumption households.</p>
+    <p>It is important to understand that there is no single national residential rate. Each province, and sometimes cities within a province, publishes its own band thresholds and prices within a range approved by the national regulator. The numbers in the table below are taken from <strong>one example province purely to illustrate the banding logic</strong>. <strong>Always treat the price schedule published by your local grid (power supply company) as the authoritative source</strong>, because this tool cannot and does not determine your actual tariff.</p>
+
+    <h3>Tiered Price Structure (Example Only)</h3>
+    <p>The table demonstrates a three-band model based on annual consumption. Note that some regions tier by monthly consumption instead of annual, and both thresholds and prices vary by province. The figures below are illustrative and <strong>must not be read as authoritative data</strong>:</p>
+    <table class="ref-table">
+        <thead><tr><th>Band</th><th>Annual consumption (kWh)</th><th>Example rate ($/kWh)</th><th>Note</th></tr></thead>
+        <tbody>
+            <tr><td>Band 1 (base)</td><td>0 to 2160</td><td>about 0.075</td><td>covers basic household living use</td></tr>
+            <tr><td>Band 2 (normal)</td><td>2161 to 4800</td><td>about 0.082</td><td>about $0.007 more per kWh over band 1</td></tr>
+            <tr><td>Band 3 (high)</td><td>over 4800</td><td>about 0.118</td><td>about $0.043 more per kWh over band 1</td></tr>
+        </tbody>
+    </table>
+    <p><strong>How to read this table</strong>: if your household uses 3000 kWh in a year, the first 2160 kWh are billed at the band-1 rate and only the remaining 840 kWh at the band-2 rate, not all 3000 kWh at the highest rate. Tiered pricing is segmented billing, not "once you cross a threshold everything costs the top rate". This is the single most common mistake people make when they try to reconcile their own calculation with the bill.</p>
+
+    <h3>Monthly Bill Estimate (fixed usage times rate)</h3>
+    <p>Under a single-rate assumption, "usage times rate" gives a quick estimate. The table below uses the example band-1 rate of 0.075 $/kWh to show typical monthly bills (excluding shared common-area consumption and government surcharges):</p>
+    <table class="ref-table">
+        <thead><tr><th>Monthly usage (kWh)</th><th>Annualised (kWh)</th><th>Rate ($/kWh, example)</th><th>Estimated monthly cost ($)</th></tr></thead>
+        <tbody>
+            <tr><td>150</td><td>1800</td><td>0.075</td><td>11.25</td></tr>
+            <tr><td>300</td><td>3600</td><td>0.075 (annual still within band 2)</td><td>22.50</td></tr>
+            <tr><td>400</td><td>4800</td><td>0.075</td><td>30.00</td></tr>
+            <tr><td>500</td><td>6000</td><td>crosses bands (see below)</td><td>needs segmented calc</td></tr>
+        </tbody>
+    </table>
+    <p><strong>How to use it</strong>: replace the example rate with your local grid's published band-1 rate to estimate your own monthly bill. If your monthly usage already exceeds the monthly equivalent of the band-1 cap (2160 divided by 12 equals 180 kWh per month in the example), you must account for the higher band.</p>
+
+    <h3>Worked Examples: 300 kWh and 600 kWh per Month</h3>
+    <p>The two examples below use the example rates so you can verify them by entering the same numbers in this tool. Base formula: consumption (kWh) = power (watts) times hours divided by 1000; cost = consumption times rate.</p>
+    <p><strong>Example 1 (300 kWh/month, single band-1 estimate)</strong>: at the example band-1 rate of 0.075 $/kWh, the simple monthly bill would be 300 times 0.075 = <strong>$22.50</strong>. But note the annual total of 3600 kWh already exceeds the band-1 cap of 2160, so on an annual-band basis the real bill is segmented: band 1 = 2160 times 0.075 = $162.00, and the remaining 1440 times 0.082 = $118.08, giving $280.08 per year, or about $23.34 per month. The method of banding changes the result slightly, so follow the metering basis your local grid actually uses.</p>
+    <p><strong>Example 2 (600 kWh/month, clearly crossing bands)</strong>: annual consumption is 7200 kWh, well above the band-3 threshold of 4800. Segmented billing: band 1 = 2160 times 0.075 = $162.00; band 2 = (4800 minus 2160) = 2640 kWh times 0.082 = $216.48; band 3 = (7200 minus 4800) = 2400 kWh times 0.118 = $283.20; total = $661.68 per year, about $55.14 per month. If you wrongly applied the band-1 rate to all 7200 kWh, you would get 7200 times 0.075 = $540.00, understating the real bill by about $121.68. That gap is exactly how tiered pricing makes heavy users pay more per unit.</p>
+
+    <h3>What is the difference between tiered pricing and time-of-use pricing?</h3>
+    <p><strong>Tiered (block-rate) pricing</strong> adds a premium as total consumption rises, rewarding lower use. <strong>Time-of-use (TOU) pricing</strong> prices by when you consume: peak hours cost more, off-peak (usually overnight) costs less, encouraging shiftable loads such as laundry, water heaters and EV charging to move to the night. The two can be combined: a home can be both tiered and time-of-use. Whether to opt into TOU depends on whether you have enough shiftable night load; otherwise it can end up more expensive.</p>
+
+    <h3>How do I read the tier on my electricity bill?</h3>
+    <p>A residential bill usually lists: current-period consumption, cumulative annual consumption, and the amount billed in each band. When reading it, check two things: first, whether the cumulative annual consumption has crossed the band-2 or band-3 thresholds (crossing raises the rate on the excess); second, whether there is a time-of-use breakdown. If one month's bill jumps, first confirm whether the cumulative usage just crossed a threshold, then look for a high-power appliance running for long periods. Calculating each appliance with this tool and summing lets you reconcile against the bill and locate the biggest cost drivers.</p>
+
+    <h3>How do tenants or combined-meter users calculate cost?</h3>
+    <p>Combined-meter users (common in older buildings and rental homes where several households share one master meter) usually do not follow tiered banding; instead they are billed at a single combined-meter rate that is typically a bit above the residential band-1 rate and does not escalate by band. In rental situations a landlord may resell at a fixed markup (for example $0.14/kWh), which differs from the grid tariff and is a resale price. To estimate: for a combined meter, use "usage times combined-meter rate"; for a landlord markup, use "usage times landlord rate". This tool lets you enter any rate manually, which is exactly why it fits these non-standard scenarios.</p>
+
+    <h3>How are peak and off-peak periods divided, and is time-of-use worth it?</h3>
+    <p>Peak and off-peak periods are set by the local grid; a common pattern is peak during daytime and early evening, with off-peak overnight (for example 22:00 to 08:00). Whether it pays off depends on your load shape: if a large share of your consumption can shift to off-peak (night laundry, midnight EV charging, scheduled water heating), TOU usually saves money; if your peak-hour share is already high, the average rate after opting in may rise. A rough rule: households that can shift more than about 20 to 30 percent of load to off-peak are more likely to benefit. The exact periods and rates are published by your local grid.</p>
+
+    <h3>Why might this tool's estimate differ from your bill?</h3>
+    <p>This tool estimates at the single rate you enter, while a real bill may include tiered premiums, time-of-use differences, shared common-area consumption, government funds and surcharges (such as the renewable-energy surcharge), and the standby power of always-on devices (set-top boxes, routers). Treat the tool result as a reference "at the entered rate". For a closer match, enter your local tiered or TOU rates band by band and include standby and continuously running appliances (fridge, water heater) in the calculation. For a finer breakdown you can use the <a href="/en/calculators/percentage-calc">Percentage Calculator</a> to weigh each item, or the <a href="/en/calculators/compound-interest">Compound Interest Calculator</a> to evaluate the payback period of an energy-saving upgrade.</p>
+</section>
 
 <section class="related-posts">
         <h3>Related Reading</h3>
@@ -133,23 +198,6 @@
             <li><a href="/blog/en/electricity-cost-guide">Electricity Calculator: Home Appliance Power Usage</a></li>
         </ul>
     </section>
-<section class="tool-content">
-<h2>About Electricity Calculator</h2>
-<p>Electricity Calculator is a completely free online tool that helps you Calculate electricity bill and usage. Whether you are a casual user or a professional, you can use it instantly without installing any software.</p>
-<p>Whether you want to know your appliance power usage, manage household costs, or estimate energy bills, you can quickly calculate electricity expenses.</p>
-<h2>How to Use</h2>
-<ol>
-    <li>Enter the appliance wattage in the "Power" field.</li>
-    <li>Enter daily usage hours and the number of days.</li>
-    <li>Enter your electricity rate (per kWh).</li>
-    <li>Click "Calculate" to see daily/monthly usage and cost.</li>
-</ol>
-<h2>Electricity Calculator FAQ</h2>
-<h3>Is Electricity Calculator free to use?</h3><p>Yes, Electricity Calculator is completely free. There are no hidden fees, no account registration and no download required.</p>
-<h3>How accurate are the results?</h3><p>All calculations are performed locally in your browser using well-established formulas, so the results are accurate and consistent.</p>
-<h3>Is my data private?</h3><p>Your privacy is a priority. Everything you enter is processed directly on your device and is never uploaded to any server.</p>
-<h3>Does Electricity Calculator work on mobile?</h3><p>Yes. The page is fully responsive and works smoothly on phones, tablets and desktop browsers.</p>
-</section>
     </main>
 
     <footer>

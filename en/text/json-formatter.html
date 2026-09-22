@@ -45,26 +45,34 @@
         "mainEntity": [
             {
                 "@type": "Question",
-                "name": "What is the difference between JSON formatting and minifying?",
+                "name": "Why doesn't JSON allow comments?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "JSON formatting adds indentation and line breaks to make the data easier to read and debug. JSON minifying removes all whitespace characters to reduce data size, which is ideal for network transfer and storage."
+                    "text": "JSON's creator deliberately excluded comments so that any given text yields exactly the same result in every language and parser. To annotate data, write the note as an ordinary field such as \"_note\" or keep it in a separate document rather than inside the JSON."
                 }
             },
             {
                 "@type": "Question",
-                "name": "Can this tool help me find JSON syntax errors?",
+                "name": "Does formatting change the JSON data?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Yes. When your JSON contains a syntax error, the tool detects it automatically and shows the error message, the exact location (line and column), and a snippet of the surrounding context to help you fix it quickly."
+                    "text": "No. Formatting only adds or removes whitespace (spaces, tabs, newlines) and never touches keys, values, types, or nesting. Only byte-level checks such as hashing or signatures see a difference, because whitespace is itself bytes."
                 }
             },
             {
                 "@type": "Question",
-                "name": "Is my data safe? Is it uploaded to a server?",
+                "name": "How do I read deeply nested JSON quickly?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Yes, it is safe. All JSON processing happens locally in your browser; your content never leaves your device, ensuring complete privacy."
+                    "text": "Format it first so each indent level maps to one nesting level; curly braces mean an object and square brackets mean an array. Track the dotted path (for example data.list[0].user.profile.name) and match it against the API docs instead of scanning characters."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is the difference between JSON and YAML, and when should I use each?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "JSON is strict and low-tolerance, making it the default for machine-to-machine exchange such as Web APIs and config files. YAML is lenient, allows comments, and uses indentation, so it suits config that humans write and read by hand, such as CI/CD and Kubernetes manifests."
                 }
             }
         ]
@@ -106,9 +114,9 @@
             <div class="related-tools">
                 <h3>Related Tools</h3>
                 <ul>
+                    <li><a href="/en/text/text-cleaner">Text Cleaner</a></li>
+                    <li><a href="/en/text/markdown-preview">Markdown Preview</a></li>
                     <li><a href="/en/text/regex-tester">Regex Tester</a></li>
-                    <li><a href="/en/text/base64-encode">Base64 Encode/Decode</a></li>
-                    <li><a href="/en/text/text-diff">Text Diff</a></li>
                 </ul>
             </div>
 
@@ -172,6 +180,59 @@
                 </ul>
             </div>
         </div>
+
+        <section class="tool-content">
+            <h2>What JSON Formatting Actually Does</h2>
+            <p>The first time many developers use a JSON formatter, they instinctively assume the tool is "parsing" or "translating" the data. It is not. JSON formatting performs exactly one job: it adjusts the whitespace characters of the data — the indentation, line breaks, and spaces — so that a blob that was crammed onto a single line becomes a clearly layered, human-readable structure. It adds no fields, removes no fields, changes no key names or values, and alters no data types. Take the same JSON, format it, then minify it again; as long as nobody edited it in between, the two results are semantically identical, and any program that parses them will produce exactly the same object.</p>
+            <p>This distinction matters because JSON is fundamentally a serialization format: it turns an in-memory object into a piece of plain text so the data can travel over a network, be written to a file, or be stored in a database. RFC 8259 — the current JSON standard, published by the IETF in 2017 and superseding the earlier RFC 4627 and RFC 7159 — states explicitly that a JSON text is composed of whitespace, values, and the punctuation that separates values, and that whitespace exists only to separate tokens and has no effect on the parsed result. In other words, how many spaces you indent, whether you break lines, and whether a line ends with trailing spaces are all questions of "who is looking at it," not "what the data is."</p>
+            <p>So the next time you paste a response body that was compressed into one unreadable line, hit format, and watch it unfold into a tidy, indented tree, remember this: every value you now see is the same value that lived inside that dense string of characters. The tool did not guess anything; it simply made the hierarchy that was already there visible through whitespace.</p>
+
+            <h3>Formatting and Minifying: Two Directions on the Same Whitespace</h3>
+            <p>"Format" and "minify" are two sides of the same coin. Formatting adds whitespace; minifying strips it back out into a single line. The scope they touch is identical — whitespace only, never the data itself. The contrast below makes the point:</p>
+            <p>Before minifying (formatted):</p>
+            <pre>{ "user": { "name": "Tom", "age": 28, "tags": ["a", "b"] } }</pre>
+            <p>After minifying (single line):</p>
+            <pre>{"user":{"name":"Tom","age":28,"tags":["a","b"]}}</pre>
+            <p>The two texts look dramatically different to the eye, yet any JSON parser reads them into an object with the same keys, the same values, and the same nesting. The only difference is the choice between "a human reads it" and "a machine transmits it." Use formatting when debugging an interface, inspecting data, hand-editing a config file, or learning a structure; use minifying when writing a request body, caching a value, or logging, because it shrinks the payload and saves bandwidth and storage.</p>
+
+            <h3>The Five Most Common JSON Syntax Errors</h3>
+            <p>JSON's syntax is stricter than many developers expect: it borrowed notation from JavaScript but deliberately dropped a good deal of its leniency. The errors below are extremely common in drafts that "look fine," and once they appear inside a minified, unindented line of JSON, the human eye can barely spot them. This tool pinpoints the exact line and column; you then fix against the table.</p>
+            <table class="ref-table">
+                <thead><tr><th>Error Type</th><th>Illegal Snippet</th><th>Valid Snippet</th></tr></thead>
+                <tbody>
+                    <tr><td>Trailing comma</td><td>{ "a": 1, }</td><td>{ "a": 1 }</td></tr>
+                    <tr><td>Unquoted key</td><td>{ name: "Tom" }</td><td>{ "name": "Tom" }</td></tr>
+                    <tr><td>Single quotes</td><td>{ "name": 'Tom' }</td><td>{ "name": "Tom" }</td></tr>
+                    <tr><td>Comments</td><td>{ // name "name": "Tom" }</td><td>{ "name": "Tom" }</td></tr>
+                    <tr><td>Unbalanced brackets</td><td>{ "a": [1, 2 }</td><td>{ "a": [1, 2] }</td></tr>
+                </tbody>
+            </table>
+            <p><strong>How to use this</strong>: the one that trips people up most is the trailing comma — many languages (such as JavaScript objects or certain Python styles) let you leave a comma after the last item, but the JSON standard forbids it, and that extra comma alone raises an error. Next is forgetting to quote the key, or using single quotes out of habit; RFC 8259 requires keys to be double-quoted strings, and single quotes are never accepted. The comments row especially surprises people coming from JavaScript: you are used to sprinkling // notes in code, but a comment inside a raw JSON file is simply illegal characters. As for unbalanced brackets, the easiest place to lose a square or curly brace is deep nesting; the line and column the tool reports is then your fastest starting point for the search.</p>
+
+            <h3>Worked Examples: From Invalid to Valid</h3>
+            <p><strong>Example 1 (unquoted key plus trailing comma)</strong>: the block below was copied straight out of a config draft and looks "like it should parse":</p>
+            <pre>{ name: 'Tom', }</pre>
+            <p>It commits two errors at once: the key name has no double quotes, the string value 'Tom' uses single quotes, and there is a trailing comma after the last item. The tool reports something like "Unexpected token n" or "Expected double-quoted property name" and points at the line where name sits. Fix each rule in turn:</p>
+            <pre>{ "name": "Tom" }</pre>
+            <p>After the fix it is fully RFC 8259 compliant JSON: double-quoted key, double-quoted string value, no trailing comma. Paste the corrected text back and the error vanishes, with the output area showing the formatted or minified result. The key lesson of this example is that text you thought was "close enough" can differ from the standard by only two or three characters, and the eye almost never finds those characters in the minified form — which is exactly what the tool's error location is for.</p>
+            <p><strong>Example 2 (deeply nested)</strong>: consider this response body:</p>
+            <pre>{"data":{"list":[{"id":1,"user":{"profile":{"name":"Tom"}}}]}}</pre>
+            <p>It is valid, but crammed onto one line it is unreadable. Hit format and the tool expands it into an indented tree: data holds list, list is an array, the first item of that array is an object, that object has id and user, user in turn has profile, and only inside profile do we find name. This example shows concretely that the deeper the nesting, the larger the readability payoff from whitespace.</p>
+
+            <h3>Why Doesn't JSON Allow Comments?</h3>
+            <p>This was a deliberate decision by JSON's creator, Douglas Crockford. Early on there was discussion about supporting comments, but the idea was rejected because once comments are allowed, people start writing "commented-out but maybe later restored" configuration inside the data, which produces multiple implicit "versions" of the same document and makes parsers disagree about whether a given comment should be ignored. To preserve JSON's role as a pure data-interchange format — one where a given text yields exactly the same result in every language and every parser — comments were excluded entirely. If you genuinely need to annotate data, the accepted workaround is to write the note as an ordinary field, for example "_note": "explanation here", or to keep the explanation in a separate document or a dedicated config file rather than inside the JSON itself.</p>
+
+            <h3>Does Formatting Change the Data?</h3>
+            <p>No. Formatting only adds or removes whitespace characters (spaces, tabs, newlines); it never touches the keys, values, types, or nesting levels. You can verify this with a simple round trip: take any valid JSON, minify it to one line, format it back out, then minify once more — as long as you edited nothing in between, the two endpoints should be character-for-character identical once whitespace is stripped. One caveat worth stating plainly: "unchanged content" means unchanged meaning. If you are doing a byte-exact comparison — such as verifying a hash, checking a signature, or comparing binaries — the minified and formatted versions really are different byte sequences, because whitespace itself is bytes. So whenever hashing, signing, or comparing at the byte level, agree on a single whitespace convention first, then compare.</p>
+
+            <h3>How Do I Read Deeply Nested JSON Quickly?</h3>
+            <p>The hardest part of deep JSON is getting lost: you see a value but cannot tell which path it hangs from. A few practical habits help. First, run the formatter to expand the text so each indentation level maps to one nesting level. Second, read the indentation from the outside in; each level of indent is one level of nesting, curly braces { } denote an object, square brackets [ ] denote an array, and a [ means the next stretch is an ordered list of items. Third, track the path rather than just the value — in Example 2 above, name's full path is data.list[0].user.profile.name, and matching that dotted path against the API documentation locates things far faster than scanning characters. Fourth, if the nesting is still too deep for the eye, put the formatted results of two responses side by side with a text-comparison tool; the difference usually hides in one specific layer.</p>
+
+            <h3>What Is the Difference Between JSON and YAML, and When Should I Use Each?</h3>
+            <p>Both are human-readable data serialization formats, but they tilt in opposite directions. JSON is strict and almost zero-tolerance: any small deviation fails to parse, which is precisely why it is the default for machine-to-machine data exchange — Web APIs, config files such as package.json, and NoSQL storage almost all use JSON because it parses fast and unambiguously. YAML is far more lenient: it permits comments, omits mandatory quotes, and expresses hierarchy through indentation rather than braces, reading more like natural language; that is why it shows up wherever humans write and read config by hand, such as CI/CD pipelines (GitHub Actions, GitLab CI), Kubernetes manifests, and Docker Compose files. A simple rule: for data that a program generates and a program consumes, JSON is safer; for config that a human writes, reads, and wants to annotate, YAML is more comfortable. Note that YAML is indentation-sensitive and will silently infer types — a value that looks like 2026-01-01 may be parsed as a date — which is its main trap compared with JSON. If you need to move data between the two, format it into clean JSON first and then convert with a YAML-aware editor or tool, rather than letting JSON carry YAML-only features such as comments or single quotes.</p>
+
+            <p>If your JSON picked up invisible characters — for instance zero-width characters or a BOM header copied in from a web page or a chat app — run it through the <a href="/en/text/text-cleaner">Text Cleaner</a> first, then come back to format; this often saves a round of confused debugging. When you want to turn structured JSON into documentation, pair it with the <a href="/en/text/markdown-preview">Markdown Preview</a> tool, and when you need to extract content matching a pattern from messy text, the <a href="/en/text/regex-tester">Regex Tester</a> lets you validate the rule before you rely on it.</p>
+        </section>
 
 </main>
     <footer>

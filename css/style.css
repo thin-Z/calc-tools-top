@@ -783,6 +783,18 @@ footer .footer-links a:hover {
 .tool-content p:last-child,.seo-content p:last-child {
     margin-bottom: 0;
 }
+/* 内容区代码示例（如 json-formatter 的 <pre> 长 JSON 串）窄屏防溢出：
+   默认 <pre> 不换行会撑破 390px 容器，故放开断行点并允许必要时横向滚动。 */
+.tool-content pre,.seo-content pre {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    border-radius: var(--radius-sm);
+    padding: 0.8rem 1rem;
+    margin: 0.8rem 0;
+    font-size: 0.85rem;
+    overflow-x: auto;
+}
 /* a11y: 正文内联链接必须可凭下划线区分（WCAG 1.4.1 / axe link-in-text-block）。
    全局 a 默认无下划线(Apple 风)，但段内链接仅靠品牌蓝与次级灰文字区分、对比不足，
    故对正文 prose 链接强制下划线；导航/卡片/按钮/related-posts 链接不在此列。 */

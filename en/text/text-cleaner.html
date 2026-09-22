@@ -49,6 +49,18 @@
   "operatingSystem": "Web",
   "inLanguage": "en"
 }</script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            { "@type": "Question", "name": "What are zero-width characters, and why do they sneak into my text?", "acceptedAnswer": { "@type": "Answer", "text": "Zero-width characters are Unicode code points that take up no visible width. The most common ones are U+200B (zero-width space), U+200C (zero-width non-joiner) and U+200D (zero-width joiner). They were designed to control shaping in scripts like Arabic and Hindi, but they often hitchhike into plain text when you copy from web pages, forward messages in chat apps such as WeChat or Feishu, or paste from a rich-text editor. Because they are invisible, they cause bizarre bugs where two strings look identical yet compare as unequal in code, passwords, or database keys." } },
+            { "@type": "Question", "name": "What is a BOM (byte order mark), and why should text cleaning remove it?", "acceptedAnswer": { "@type": "Answer", "text": "A BOM is the Byte Order Mark, the character U+FEFF. Programs such as Windows Notepad write three bytes EF BB BF at the start of a UTF-8 file by default. It is invisible to humans, but most script interpreters, JSON parsers, and CSV readers do not ignore it. As a result it can make a script's first line error out, break JSON parsing, or add an invisible prefix to the first field. Files that are meant to be read by programs, especially across platforms, should use BOM-less UTF-8." } },
+            { "@type": "Question", "name": "What is the difference between a full-width space and a half-width space?", "acceptedAnswer": { "@type": "Answer", "text": "A half-width space is U+0020, the ordinary space from an English keyboard. A full-width space is U+3000, the ideographic space used in Chinese and Japanese typography. They are different Unicode code points even though both look like a blank gap. Mixing them breaks deduplication, splitting, and word counting, and the regex \\s does not always match both in every environment. A text cleaner recognizes the full-width space and normalizes it to a half-width space, or removes it outright." } }
+        ]
+    }
+    </script>
 </head>
 <body>
     <header>
@@ -73,8 +85,8 @@
             <div class="related-tools">
                 <h3>Related Tools</h3>
                 <ul>
-                    <li><a href="/en/text/html-stripper">HTML Stripper</a></li>
-                    <li><a href="/en/text/text-diff">Text Diff</a></li>
+                    <li><a href="/en/text/case-converter">Case Converter</a></li>
+                    <li><a href="/en/text/base64-encode">Base64 Encode</a></li>
                     <li><a href="/en/text/word-counter">Word Counter</a></li>
                 </ul>
             </div>
@@ -139,6 +151,43 @@ empty lines,   and  punctuation!!!</textarea>
                 </ul>
             </div>
         </div>
+
+        <section class="tool-content">
+            <h2>The invisible characters are what actually make text "dirty"</h2>
+            <p>A text cleaner does not fix the mess you can see; it fixes the mess you cannot see. When you copy a passage from a web page, a chat app, a PDF, or an Excel sheet and paste it into code, a database, or another system, the text often carries a batch of characters you cannot perceive: trailing spaces, blank lines between paragraphs, a mix of full-width and half-width spaces from different sources, tab characters exported by Excel, and even fully transparent zero-width characters or a BOM at the very start of the file. They take up no visible width, yet they quietly change how programs interpret the text, making string comparisons fail, JSON parsing throw errors, and turning what should be the same database key into two different keys.</p>
+            <p>Text cleaning, at its core, is a normalization pass over this noise. It collapses irregular whitespace into a regular shape and strips out invisible characters, so you end up with plain text that is truly what you see. It is different from "formatting" because it works at the character level: it does not alter the content you wrote, it only handles the whitespace and control symbols that carry that content. The sections below explain exactly which kinds of characters this tool targets, then walk through two real scenarios showing when those invisible characters actually bite you.</p>
+
+            <h3>What text cleaning actually targets: six kinds of noise</h3>
+            <p>The table below lists the six categories of "dirty characters" this tool focuses on, together with the trouble each one causes. You can check it against the text in your hands to decide which operations to enable.</p>
+            <table class="ref-table">
+                <thead><tr><th>Noise type</th><th>Typical character / location</th><th>Common source</th><th>Harm if left uncleaned</th></tr></thead>
+                <tbody>
+                    <tr><td>Leading, trailing and extra whitespace</td><td>Spaces at line start or end, multiple consecutive spaces</td><td>Copying from web pages, extra keystrokes</td><td>"a" and "a " compare as unequal; database deduplication fails; CSV columns shift</td></tr>
+                    <tr><td>Unnormalized tabs and line breaks</td><td>U+0009 tab, U+000A / U+000D line breaks</td><td>Copied from Excel, code, or logs</td><td>Different systems read line breaks differently (LF vs CRLF); column parsing breaks</td></tr>
+                    <tr><td>Zero-width characters</td><td>U+200B zero-width space, U+200C zero-width non-joiner, U+FEFF (BOM)</td><td>Web pages, rich-text editors, chat forwards</td><td>Fully invisible, yet triggers syntax errors in code and breaks password or token validation</td></tr>
+                    <tr><td>Non-breaking space</td><td>U+00A0 (the HTML &amp;nbsp;)</td><td>Web copy, Word layout</td><td>Looks like a normal space but is not removed by an ordinary <code>trim</code>, breaking matching and splitting</td></tr>
+                    <tr><td>Control characters</td><td>U+0000 to U+001F (backspace, form feed, separators)</td><td>Logs, terminal output, legacy exports</td><td>Corrupts file parsing and can crash some parsers or produce mojibake</td></tr>
+                    <tr><td>Full-width space</td><td>U+3000 (CJK / Japanese ideographic space)</td><td>Chinese IME, Japanese typesetting</td><td>A different code point from the half-width space U+0020, so mixing skews counts and matches</td></tr>
+                </tbody>
+            </table>
+            <p><strong>How to use it</strong>: if you are unsure whether your text contains these characters, the safest move is to enable "Remove extra spaces", "Trim whitespace", and "Remove line breaks" together for an overall denoise, then add a targeted pass when you suspect zero-width characters or a BOM. Be careful, though: "Remove line breaks" collapses multiple lines into one, so leave it off when the paragraph structure must be preserved, as noted below.</p>
+
+            <h3>Two real examples: how invisible characters break your work</h3>
+            <p><strong>Example 1: a zero-width character (U+200B) triggers a syntax error in your editor.</strong> You copy a config line from a blog that looks like <code>apiKey = "abc123"</code>, which should be six characters long. After pasting it into your editor, validation fails with "invalid key format". The reason is a U+200B zero-width space hidden between <code>abc</code> and <code>123</code>: the real string is seven characters, not six. Neither the naked eye nor an ordinary find-and-replace can spot it; only inspecting the character code points reveals it. After running the cleaner with extra-space removal and zero-width stripping enabled, the invisible character is gone and the string becomes the real <code>abc123</code> (length 6), so validation passes.</p>
+            <p><strong>Example 2: a BOM (U+FEFF) makes your script's first line error out.</strong> You saved a <code>config.sh</code> with Windows Notepad and run it on Linux, only to see <code>-bash: #!/bin/bash: No such file or directory</code>, or Python reports <code>SyntaxError: invalid character in identifier</code> pointing at the very first character of line one. The problem is not your code but the BOM at the start of the file. Notepad saves UTF-8 with BOM by default, writing three bytes EF BB BF (U+FEFF) at the front. Most shells and interpreters treat the BOM as the first real character of the first line, so <code>#!</code> becomes <code>&lt;BOM&gt;#!</code> and fails immediately. Strip the BOM with the cleaner and the first line is restored, so the script runs.</p>
+
+            <h3>What are zero-width characters, and why do they sneak into my text?</h3>
+            <p>Zero-width characters are Unicode code points that take up no visible width. The most common ones are U+200B (zero-width space), U+200C (zero-width non-joiner), and U+200D (zero-width joiner). They were originally designed to control how letters join in scripts such as Arabic and Hindi. In daily use, however, they frequently hitchhike into your plain text: web pages insert U+200B so long words can wrap; chat apps such as WeChat and Feishu automatically attach zero-width characters when you forward messages; and hidden formatting marks from a rich-text editor can survive as zero-width characters when pasted into a plain-text box. Because they are completely invisible, you rarely notice them, yet they create bizarre bugs where two strings look identical but compare as unequal inside code, passwords, or database keys.</p>
+
+            <h3>What is a BOM (byte order mark), and why should text cleaning remove it?</h3>
+            <p>A BOM is the Byte Order Mark, corresponding to the character U+FEFF. It was first used to signal the byte order (big-endian or little-endian) of a UTF-16 file. Later, many Windows programs adopted the habit of writing a BOM at the start of UTF-8 files as well, three bytes EF BB BF. To a human reader the BOM is hidden at the very beginning and harmless. To a machine, however, it is a real character. Many script interpreters, JSON parsers, CSV readers, and programming-language string comparisons do not ignore it, so it can make a script's first line error out, break JSON parsing, or add an invisible prefix to the first field of a file. For this reason, text files transferred across platforms, especially config and source files that programs will read, should usually have the BOM removed and use BOM-less UTF-8.</p>
+
+            <h3>What is the difference between a full-width space and a half-width space?</h3>
+            <p>They are two different Unicode code points. The half-width space is U+0020, the ordinary space you get from an English keyboard, about as wide as one Latin letter. The full-width space is U+3000, the ideographic space from Chinese and Japanese character sets, roughly as wide as one CJK glyph. Both look like a blank gap to the eye, but the computer treats them as completely separate characters. Mixing them causes plenty of trouble: deduplication or splitting logic that uses the half-width space as a separator fails on full-width spaces; a word counter that only recognizes half-width spaces misses the full-width ones; and the regex <code>\s</code> does not always match both in every environment. A text cleaner recognizes the full-width space and normalizes it to a half-width space, or removes it outright, avoiding this "invisible yet unequal" discrepancy.</p>
+
+            <h3>What text cleaning can and cannot do</h3>
+            <p>A text cleaner only deals with noise at the character level. It does not rewrite the meaning of your words, fix typos, or merge sentences that say the same thing. In other words, it is best used as a preprocessing step right before you feed text to a program or a database, making the input clean and predictable; the quality of the content itself is still your responsibility. Also remember that cleaning is lossy: once spaces, line breaks, or punctuation are removed they cannot be restored, so keep an original backup before processing anything important. If you still need case conversion, Base64 encoding, or a word count afterward, pair the cleaner with the <a href="/en/text/case-converter">Case Converter</a>, <a href="/en/text/base64-encode">Base64 Encode</a>, and <a href="/en/text/word-counter">Word Counter</a> to take a messy document all the way to clean.</p>
+        </section>
 
 </main>
     <footer>

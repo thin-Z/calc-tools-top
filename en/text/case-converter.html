@@ -51,26 +51,26 @@
     "mainEntity": [
         {
             "@type": "Question",
-            "name": "What case conversion modes are available?",
+            "name": "What are the case conversion pitfalls in Turkish and similar languages?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "This tool provides 8 conversion modes: UPPERCASE, lowercase, Title Case, Sentence case, camelCase, snake_case, kebab-case, and AlTeRnAtInG case. Each mode serves different use cases from programming to content writing."
+                "text": "In Turkish and Azerbaijani, the uppercase of i is the dotted İ (U+0130) and the lowercase of I is the dotless ı (U+0131), unlike the English i↔I. This tool defaults to a locale-insensitive general mapping (English rules), so converting Turkish text may give wrong results; manually verify dotted and dotless i after conversion."
             }
         },
         {
             "@type": "Question",
-            "name": "What are camelCase and snake_case used for?",
+            "name": "How does Title Case handle abbreviations and hyphens?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "camelCase and snake_case are common naming conventions in programming. camelCase is frequently used for JavaScript variables and function names, while snake_case is popular in Python variables and database field names."
+                "text": "This tool splits on word boundaries, so letters after hyphens (well-known) and apostrophes (don't) are also capitalized, yielding Well-Known and Don't. But proper nouns like NASA and iPhone that already mix case become Nasa and Iphone, so review the output manually to keep the original spelling."
             }
         },
         {
             "@type": "Question",
-            "name": "Is my text uploaded to any server?",
+            "name": "What is the difference between camelCase and PascalCase?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "No. All text conversion happens locally in your browser. Your content never leaves your device, ensuring complete privacy and security."
+                "text": "Both remove spaces and capitalize each word's first letter; the difference is the first word. camelCase keeps the first word lowercase (helloWorld) while PascalCase capitalizes it (HelloWorld). In programming, PascalCase is used for classes, types, and components, whereas camelCase is used for variables and functions, and the two are not interchangeable."
             }
         }
     ]
@@ -113,9 +113,9 @@
             <div class="related-tools">
                 <h3>Related Tools</h3>
                 <ul>
-                    <li><a href="/en/text/word-counter">Word Counter</a></li>
-                    <li><a href="/en/text/reading-time">Reading Time</a></li>
                     <li><a href="/en/text/text-cleaner">Text Cleaner</a></li>
+                    <li><a href="/en/text/base64-encode">Base64 Encode</a></li>
+                    <li><a href="/en/text/word-counter">Word Counter</a></li>
                 </ul>
             </div>
 
@@ -174,6 +174,52 @@
             </div>
         </div>
 
+        <section class="tool-content">
+            <h2>What case conversion actually changes</h2>
+            <p>Case conversion is not simply "making letters bigger or smaller." Inside a computer, every Latin letter is represented by a Unicode code point, and the Unicode standard defines, for a large set of characters, two correspondences: an "uppercase mapping" and a "lowercase mapping." Converting case means, in essence, walking through the source string and replacing each code point with its counterpart from the mapping table. For example, the lowercase a (U+0061) maps to the uppercase A (U+0041), and the reverse is also true. The part that breaks quietly is that this mapping is not a universal one-to-one flip: in some languages the upper and lower forms of a letter are not symmetric, which is exactly why so many conversions look right but are wrong.</p>
+            <p>In daily work, case conversion shows up in four distinct situations. The first is writing and typesetting, such as formatting an article title as Title Case or normalizing body text to Sentence case. The second is programming identifiers, where different languages conventionally use styles like camelCase, snake_case, and kebab-case for variables, functions, classes, and files. The third is data cleaning, where user-entered values like "Apple," "APPLE," and "apple" need to be normalized to a single form so they are not treated as three different values. The fourth is brand and trademark conventions, where many logos and product names demand exact casing (think iPhone, macOS, eBay). Understanding what is actually being transformed is what tells you whether a result can be trusted.</p>
+
+            <h3>Unicode case mapping: more than a simple flip</h3>
+            <p>Unicode defines case mapping at several levels. The most common is the "simple case mapping," where one code point has exactly one upper or lower counterpart; the vast majority of English letters fall into this category. Beyond that, there is the "full case mapping," which takes context and locale into account for more careful handling. The classic counterexample is the German ß, which has no single uppercase character and expands to "SS" when uppercased (so "straße" becomes "STRASSE"). Greek letters can also change case differently depending on whether they sit at the start of a word. Even more locale-dependent are languages where the i/I relationship is inverted, as explained in the FAQ below.</p>
+            <p>This tool uses a locale-insensitive, general mapping — in other words, the English rule set — which covers the overwhelming majority of English and Latin-script conversion needs. Precisely because it ignores locale, you must be aware that it can produce incorrect output for Turkish, Azerbaijani, and similar texts, and you should switch to the appropriate language rule or manually verify the result when such text is involved.</p>
+
+            <h3>Eight conversion modes compared</h3>
+            <p>The table below applies every mode supported by this tool to the same input, "hello world," so you can compare them side by side. Note that, except for uppercase and lowercase, every other mode depends on detecting word boundaries — inputs with spaces or hyphens behave the way you expect, while continuous strings do not.</p>
+            <table class="ref-table">
+                <thead><tr><th>Mode</th><th>Result for "hello world"</th><th>Typical use</th></tr></thead>
+                <tbody>
+                    <tr><td>UPPERCASE</td><td>HELLO WORLD</td><td>Emphasis, warnings, constant macros</td></tr>
+                    <tr><td>lowercase</td><td>hello world</td><td>Normalization, case-insensitive comparison</td></tr>
+                    <tr><td>Title Case</td><td>Hello World</td><td>Article titles, book names, headings</td></tr>
+                    <tr><td>Sentence case</td><td>Hello world</td><td>Body paragraphs, sentence-level text</td></tr>
+                    <tr><td>camelCase</td><td>helloWorld</td><td>JavaScript variables and functions</td></tr>
+                    <tr><td>PascalCase</td><td>HelloWorld</td><td>Class, component, and type names</td></tr>
+                    <tr><td>snake_case</td><td>hello_world</td><td>Python variables, database fields</td></tr>
+                    <tr><td>kebab-case</td><td>hello-world</td><td>CSS classes, URL slugs</td></tr>
+                </tbody>
+            </table>
+            <p><strong>How to read it</strong>: the table's real value is separating two kinds of operations. Uppercase and lowercase only flip letter case and never touch spaces; camelCase and PascalCase remove spaces and capitalize word initials; snake_case and kebab-case replace spaces with an underscore or a hyphen. If your goal is a code identifier you can paste directly, pick one of the last four; if you are only typesetting, the first four are enough.</p>
+
+            <h3>Worked examples: turning "hello world" into eight forms</h3>
+            <p>Starting from the input string <code>hello world</code>, here are the actual outputs of each mode in this tool, which you can cross-check against the table above:</p>
+            <p><strong>Example 1</strong>: input <code>hello world</code>. UPPERCASE -> <code>HELLO WORLD</code>; lowercase -> <code>hello world</code>; Title Case -> <code>Hello World</code>; Sentence case -> <code>Hello world</code>; camelCase -> <code>helloWorld</code>; PascalCase -> <code>HelloWorld</code>; snake_case -> <code>hello_world</code>; kebab-case -> <code>hello-world</code>.</p>
+            <p><strong>Example 2 (word splitting depends on spaces)</strong>: change the input to the spaceless <code>helloworld</code> and convert to camelCase, and the result is <code>helloworld</code> — the tool cannot find a word boundary, so the whole string is treated as one word. This shows that modes needing tokenization (camelCase, snake_case, Title Case) work best when the input keeps its spaces or existing separators; a continuous string should be cleaned or manually split first, or the result will not match expectations.</p>
+            <p><strong>Example 3 (longer phrase)</strong>: input <code>the quick brown fox</code>, camelCase -> <code>theQuickBrownFox</code>, snake_case -> <code>the_quick_brown_fox</code>, kebab-case -> <code>the-quick-brown-fox</code>. The more words, the more visible the difference between the four separator styles becomes, yet the core rule — capitalize the first letter of every word — stays constant.</p>
+
+            <h3>Case pitfalls in Turkish and similar languages</h3>
+            <p>In Turkish and Azerbaijani the case rules differ from English: the uppercase of i is not I but the dotted İ (U+0130), and the lowercase of I is not i but the dotless ı (U+0131). Under those locales, uppercasing "i" yields "İ" and lowercasing "I" yields "ı," the exact opposite of English i↔I. This tool defaults to a locale-insensitive general mapping (the English rule), so converting Turkish text directly can be wrong: for instance, lowercasing the Turkish city "İstanbul" under English rules gives "istanbul," dropping the dot that should be preserved. When handling such text, apply the language-specific case rules explicitly, or manually verify every dotted and dotless i after conversion.</p>
+
+            <h3>How Title Case handles abbreviations and hyphens</h3>
+            <p>Title Case looks like a trivial "capitalize the first letter of each word," but it runs into two real problems. First, abbreviations and proper nouns: words like "NASA," "iPhone," and "macOS" that already mix case get mangled into "Nasa," "Iphone," and "Macos," which is actually wrong. Second, hyphens and apostrophes: for "well-known," "state-of-the-art," and "don't," a good implementation also capitalizes the letter after the hyphen or apostrophe (giving "Well-Known," "Don't"), while a naive one might only capitalize the first word. This tool splits on word boundaries, so letters after hyphens and apostrophes are also uppercased; whether an abbreviation should keep its original casing is something the tool cannot know, so manual review after conversion is recommended.</p>
+
+            <h3>The difference between camelCase and PascalCase</h3>
+            <p>Both remove spaces and capitalize the first letter of each word; the only difference is the very first word. In camelCase the first word is all lowercase, so "hello world" becomes "helloWorld"; in PascalCase the first word is also capitalized, becoming "HelloWorld." That distinction carries meaning in programming: most languages conventionally use PascalCase for types, classes, and components (such as React components in JavaScript, class names in C#, interfaces in Java) and camelCase for variables, functions, and methods. Mixing them up rarely causes a runtime error, but it violates team conventions and hurts readability. This tool offers the two modes separately precisely because they are not interchangeable in naming contexts.</p>
+
+            <h3>Frequently asked questions</h3>
+            <p><strong>What are the case conversion pitfalls in Turkish and similar languages?</strong> In Turkish and Azerbaijani, the uppercase of i is the dotted İ (U+0130) and the lowercase of I is the dotless ı (U+0131), unlike the English i↔I. This tool defaults to a locale-insensitive general mapping (English rules), so converting Turkish text may give wrong results; you should manually verify dotted and dotless i after conversion.</p>
+            <p><strong>How does Title Case handle abbreviations and hyphens?</strong> This tool splits on word boundaries, so letters after hyphens (well-known) and apostrophes (don't) are also capitalized, yielding Well-Known and Don't. But proper nouns like NASA and iPhone that already mix case will be turned into Nasa and Iphone, so keep the original spelling by reviewing the output manually.</p>
+            <p><strong>What is the difference between camelCase and PascalCase?</strong> Both remove spaces and capitalize each word's first letter; the difference is the first word. camelCase keeps the first word lowercase (helloWorld) while PascalCase capitalizes it (HelloWorld). In programming, PascalCase is used for classes, types, and components, whereas camelCase is used for variables and functions, and the two are not interchangeable.</p>
+        </section>
 </main>
     <footer>
     <div class="footer-links">

@@ -51,26 +51,26 @@
     "mainEntity": [
         {
             "@type": "Question",
-            "name": "大小写转换工具有哪些转换模式？",
+            "name": "土耳其语等语言的大小写转换有什么陷阱？",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "本工具提供8种转换模式：全部大写（UPPER）、全部小写（lower）、首字母大写（Title Case）、句子首字母大写（Sentence case）、驼峰式（camelCase）、蛇形式（snake_case）、连字符式（kebab-case）和交替式（AlTeRnAtInG）。"
+                "text": "土耳其语和阿塞拜疆语中，i 的大写是带点的 İ（U+0130），I 的小写是无点的 ı（U+0131），与英语的 i↔I 不同。本工具默认采用不依赖语言的通用映射（英语规则），处理土耳其语文本时可能得到错误结果，需在转换后人工核对带点/无点的 i。"
             }
         },
         {
             "@type": "Question",
-            "name": "驼峰式和蛇形式有什么用途？",
+            "name": "Title Case 会如何处理缩写和连字符？",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "驼峰式（camelCase）和蛇形式（snake_case）是编程中常用的命名规范。驼峰式常用于JavaScript变量和函数命名，蛇形式常用于Python变量和数据库字段命名。"
+                "text": "本工具按词边界切分，连字符（如 well-known）和撇号（如 don't）后的词首也会大写，得到 Well-Known、Don't。但像 NASA、iPhone 这类本就混合大小写的专有名词，机械首字母大写会变成 Nasa、Iphone，建议转换后人工保留原写法。"
             }
         },
         {
             "@type": "Question",
-            "name": "我的文本会上传到服务器吗？",
+            "name": "camelCase 与 PascalCase 有什么区别？",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "不会。所有文本转换都在你的浏览器本地完成，内容不会离开你的设备，确保完全隐私安全。"
+                "text": "两者都去除空格并把每个词首字母大写，区别在第一个词：camelCase 首词小写（helloWorld），PascalCase 首词也大写（HelloWorld）。编程中 PascalCase 多用于类名、类型、组件，camelCase 多用于变量、函数，二者在命名场景里不可互换。"
             }
         }
     ]
@@ -113,9 +113,9 @@
             <div class="related-tools">
                 <h3>相关工具</h3>
                 <ul>
-                    <li><a href="/zh/text/word-counter">字数统计</a></li>
-                    <li><a href="/zh/text/reading-time">阅读时间</a></li>
                     <li><a href="/zh/text/text-cleaner">文本清理</a></li>
+                    <li><a href="/zh/text/base64-encode">Base64 编码</a></li>
+                    <li><a href="/zh/text/word-counter">字数统计</a></li>
                 </ul>
             </div>
 
@@ -182,6 +182,52 @@
             </div>
         </div>
 
+        <section class="tool-content">
+            <h2>大小写转换到底在“转”什么</h2>
+            <p>大小写转换（case conversion）并不是把字母“变大”或“变小”这么简单。在计算机里，每一个拉丁字母都对应一个 Unicode 码点，而 Unicode 标准为一大批字符分别定义了“大写映射”和“小写映射”两套对应关系。所谓转换，本质上是按既定规则，把源字符串里的每个码点替换成它在映射表中的对应码点：例如小写 a（U+0061）在映射中指向大写 A（U+0041），反过来也一样成立。真正容易出问题的是，这种映射并不是处处“一一翻转”的——有些字母在不同语言里的大写、小写关系并不对称，这正是很多转换“看起来对、实际错”的根源。</p>
+            <p>日常里大小写转换出现在四类场景：一是排版与写作，比如把文章标题排成 Title Case、把正文统一成 Sentence case；二是编程命名，不同语言约定用 camelCase、snake_case、kebab-case 等风格给变量、函数、类、文件命名；三是数据清洗，把用户录入的 “Apple”“APPLE”“apple” 归一成同一种写法，避免被当成三个不同的值；四是品牌与商标规范，许多 logo 和商品名对大小写有严格要求（如 iPhone、macOS、eBay）。理解它“转的是什么”，才能知道转换结果是否可信。</p>
+
+            <h3>Unicode 大小写映射：不是简单的翻面</h3>
+            <p>Unicode 的大小写映射有三种层次。最常见的是“简单映射”（simple case mapping），即一个码点对应唯一的大写或小写，英语里绝大多数字母都属于这一类。但还有“全映射”（full case mapping），它会根据上下文和语言环境（locale）做更细致的处理。最典型的反例是德语的 ß：它没有对应的单字符大写，转大写时会展开成 “SS”（如 “straße” → “STRASSE”）；再比如希腊字母在词首与词中的大小写规则不同。更复杂的是语言相关映射：土耳其语等语言中，i/I 的关系与英语完全相反。</p>
+            <p>本工具采用对语言环境不敏感（locale-insensitive）的通用映射，也就是英语规则，足以覆盖绝大多数英文和拉丁文本的转换需求。但正因为它“无视语言”，当你处理土耳其语、阿塞拜疆语等文本时，必须清楚它可能给出错误结果，必要时应换用对应语言的大小写规则或在转换后人工核对。</p>
+
+            <h3>八种转换模式对照表</h3>
+            <p>下面把本工具支持的转换模式，用同一个输入 “hello world” 逐一对照。注意：除大写、小写外，其余模式都依赖“词边界”的识别——带空格或连字符的输入，结果才符合直觉。</p>
+            <table class="ref-table">
+                <thead><tr><th>模式</th><th>输入 hello world 的结果</th><th>典型用途</th></tr></thead>
+                <tbody>
+                    <tr><td>大写 UPPERCASE</td><td>HELLO WORLD</td><td>标题强调、警示语、常量宏命名</td></tr>
+                    <tr><td>小写 lowercase</td><td>hello world</td><td>数据归一、大小写不敏感的比较</td></tr>
+                    <tr><td>标题 Title Case</td><td>Hello World</td><td>文章标题、书名、栏目名</td></tr>
+                    <tr><td>句首 Sentence case</td><td>Hello world</td><td>正文段落、句子级排版</td></tr>
+                    <tr><td>驼峰 camelCase</td><td>helloWorld</td><td>JavaScript 变量与函数命名</td></tr>
+                    <tr><td>帕斯卡 PascalCase</td><td>HelloWorld</td><td>类名、组件名、类型名</td></tr>
+                    <tr><td>蛇形 snake_case</td><td>hello_world</td><td>Python 变量、数据库字段</td></tr>
+                    <tr><td>短横 kebab-case</td><td>hello-world</td><td>CSS 类名、URL slug</td></tr>
+                </tbody>
+            </table>
+            <p><strong>怎么用</strong>：这张表的价值在于区分“仅改变字母大小写”和“同时改变词间连接符”两类操作。大写、小写只翻转字母，不改动空格；而 camelCase、PascalCase 会删除空格并把词首大写；snake_case、kebab-case 则把空格替换成下划线或连字符。如果你的目标是生成可直接粘贴进代码的标识符，选后四种；如果只是排版，选前四种。</p>
+
+            <h3>真实算例：把 “hello world” 变成八种样子</h3>
+            <p>以输入字符串 <code>hello world</code> 为例，本工具各模式的实际输出如下，可直接与上方对照表互验：</p>
+            <p><strong>算例 1</strong>：输入 <code>hello world</code>。大写 → <code>HELLO WORLD</code>；小写 → <code>hello world</code>；Title Case → <code>Hello World</code>；Sentence case → <code>Hello world</code>；camelCase → <code>helloWorld</code>；PascalCase → <code>HelloWorld</code>；snake_case → <code>hello_world</code>；kebab-case → <code>hello-world</code>。</p>
+            <p><strong>算例 2（分词依赖空格）</strong>：把输入改成不带空格的 <code>helloworld</code> 再转 camelCase，结果是 <code>helloworld</code>（无法判断词边界，整个字符串被当作一个词）。这说明 camelCase、snake_case、Title Case 这类“需要切词”的模式，输入里最好保留空格或既有分隔符；连续无空格的字符串应先清理或人工断词，否则结果会与预期不符。</p>
+            <p><strong>算例 3（多词长句）</strong>：输入 <code>the quick brown fox</code>，camelCase → <code>theQuickBrownFox</code>，snake_case → <code>the_quick_brown_fox</code>，kebab-case → <code>the-quick-brown-fox</code>。可见词越多，四种分隔风格的差异越明显，但“每个词首字母大写”这一核心规则始终不变。</p>
+
+            <h3>土耳其语等语言的大小写陷阱</h3>
+            <p>土耳其语和阿塞拜疆语的大小写规则与英语不同：字母 i 的大写不是 I，而是带点的 İ（U+0130）；而字母 I 的小写不是 i，而是无点的 ı（U+0131）。因此在这类语言环境（locale）下，“i” 转大写得到 “İ”，“I” 转小写得到 “ı”，与英语的 i↔I 完全相反。本工具默认使用不依赖语言的通用映射（即英语规则），所以当你处理土耳其语文本时，直接转换会产生错误：例如把土耳其城市 “İstanbul” 转成小写，英语规则会给出 “istanbul”，丢掉了原本该保留的点。处理这类文本时，应当明确按土耳其语的大小写规则处理，或在转换后人工核对所有带点/无点的 i。</p>
+
+            <h3>Title Case 如何处理缩写与连字符</h3>
+            <p>Title Case 表面上看只是“每个词首字母大写”，实际会遇到两类麻烦。第一是缩写与专有名词：像 “NASA”、“iPhone”、“macOS” 这类本来混合大小写的词，机械地首字母大写会被改成 “Nasa”、“Iphone”、“Macos”，反而破坏了原意。第二是连字符与撇号：遇到 “well-known”、“state-of-the-art”、“don’t” 这类词，质量好的实现会把连字符后、撇号后的字母也大写（得到 “Well-Known”、“Don’t”），但简单的实现可能只对第一个词大写。本工具按“词边界”切分，连字符和撇号后的词首也会大写；至于缩写是否要保留原样，工具无法判断某个词是不是应当全大写，建议在转换后人工检查。</p>
+
+            <h3>camelCase 与 PascalCase 的差别</h3>
+            <p>两者都去除空格、把每个词的首字母大写，唯一的区别在于“第一个词的首字母”。camelCase（驼峰式）第一个词全小写，例如 “hello world” → “helloWorld”；PascalCase（帕斯卡式）第一个词也大写，例如 → “HelloWorld”。这个区别在编程里是有语义的：多数语言约定用 PascalCase 命名“类型、类、组件”（如 JavaScript 的 React 组件、C# 的类名、Java 的接口），用 camelCase 命名“变量、函数、方法”。把两者搞混通常不会让程序报错，但会违反团队约定、降低可读性。本工具把这两种模式拆开提供，正是因为它们在命名场景里不可互换。</p>
+
+            <h3>常见问题（专属）</h3>
+            <p><strong>土耳其语等语言的大小写转换有什么陷阱？</strong>土耳其语和阿塞拜疆语中，i 的大写是带点的 İ（U+0130），I 的小写是无点的 ı（U+0131），与英语的 i↔I 不同。本工具默认采用不依赖语言的通用映射（英语规则），处理土耳其语文本时可能得到错误结果，转换后需要人工核对带点/无点的 i。</p>
+            <p><strong>Title Case 会如何处理缩写和连字符？</strong>本工具按词边界切分，连字符（如 well-known）和撇号（如 don’t）后的词首也会大写，得到 Well-Known、Don’t。但像 NASA、iPhone 这类本就混合大小写的专有名词，机械首字母大写会变成 Nasa、Iphone，建议在转换后人工保留原写法。</p>
+            <p><strong>camelCase 与 PascalCase 有什么区别？</strong>两者都去除空格并把每个词首字母大写，区别在第一个词：camelCase 首词小写（helloWorld），PascalCase 首词也大写（HelloWorld）。编程中 PascalCase 多用于类名、类型、组件，camelCase 多用于变量、函数，二者在命名场景里不可互换。</p>
+        </section>
 </main>
     <footer>
     <div class="footer-links">

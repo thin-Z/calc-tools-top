@@ -51,18 +51,34 @@
     "mainEntity": [
         {
             "@type": "Question",
-            "name": "Is the UUID uuid-generator secure?",
+            "name": "Is UUID v4 truly unique? What is the collision probability?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "This tool uses the browser's built-in crypto.randomUUID() to generate random values. All generation happens locally in your browser — no data is uploaded to any server, ensuring security and privacy."
+                "text": "v4 uses 122 random bits, a space of roughly 5.3x10^36. Even generating a billion UUIDs every second for 100 years, the chance of a single collision stays far below being struck by a meteor. It is not mathematically impossible, but safe to treat as unique across any practical timeframe."
             }
         },
         {
             "@type": "Question",
-            "name": "What is a UUID?",
+            "name": "Does UUID v1 leak the MAC address? What is the privacy risk?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "UUID (Universally Unique Identifier) is a globally unique identifier standard. This tool generates UUID v4 based on random numbers, widely used for database primary keys, distributed system identifiers, session IDs, and more."
+                "text": "v1 encodes the generating machine's MAC address into the fifth group of the UUID, so anyone holding it can reverse-engineer the device and tie it to a physical location. That is unsuitable on the public internet and in multi-tenant clouds, which is why new projects switch to v4 that carries no hardware information."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do I choose between UUID v4 and v5?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "v4 is different every time and fits cases where you only care about uniqueness, such as session IDs, tokens, and trace numbers. v5 always yields the same UUID for the same namespace and name, fitting stable name-to-ID mapping like a URL. Use v5 when same name must mean same value; otherwise use v4."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What is the difference between a UUID and an auto-increment ID?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "An auto-increment ID is issued by the database: compact and ordered, but it reveals business scale and clashes when merging multiple databases. A UUID trades a longer string for identifiers that never collide across machines and reveal no scale. Use auto-increment on a single machine with storage and order sensitivity; use a UUID for distributed writes or cross-system migration."
             }
         }
     ]
@@ -103,8 +119,9 @@
             <div class="related-tools">
                 <h3>Related Tools</h3>
                 <ul>
-                    <li><a href="/en/calculators/random-gen">Random Number Generator</a></li>
-                    <li><a href="/en/text/regex-tester">Regex Tester</a></li>
+                    <li><a href="/en/text/word-counter">Word Counter</a></li>
+                    <li><a href="/en/text/case-converter">Case Converter</a></li>
+                    <li><a href="/en/text/base64-encode">Base64 Encode</a></li>
                 </ul>
             </div>
 
@@ -147,6 +164,47 @@
                 <p>The generated UUIDs drop straight into database primary keys, log trace IDs, order numbers, or API idempotency keys. You can also use them in filenames, temporary tokens, or cache keys to avoid collisions. If you need shorter or sortable identifiers, combine them with timestamps or a Snowflake-style algorithm.</p>
             </div>
         </div>
+
+        <section class="tool-content">
+            <h2>What a UUID Is, and Why Distributed Systems Depend on It</h2>
+            <p>A UUID (Universally Unique Identifier), also called a GUID, is a 128-bit value written as a 36-character string with hyphens. The problem it solves is concrete: in a system made of many machines, many services, and often many data centers, how do you give every record, every request, and every session a name that will never collide with another, without a central authority handing out numbers? That is the fundamental difference from an auto-increment primary key, which needs one coordinator to remember "what number comes next." A UUID lets any machine mint non-colliding identifiers on its own. This is precisely why UUIDs became standard in distributed databases, message queues, microservice tracing, session management, and data migration.</p>
+            <p>Most of the "random codes," "order-number suffixes," and "trace ids" you meet in daily development are UUIDs under the hood. They carry no business meaning and only promise uniqueness, which makes them remarkably convenient when stitching data together across systems: you never worry that two systems both starting from 1 will clash.</p>
+
+            <h3>The Five Official UUID Versions: How They Are Made and Where They Fit</h3>
+            <p>RFC 4122 defines several UUID versions, differing in how the 128 bits are computed. The table below puts all five side by side and marks how commonly each is used in real projects:</p>
+            <table class="ref-table">
+                <thead><tr><th>Version</th><th>Basis</th><th>Typical use</th><th>Commonness</th></tr></thead>
+                <tbody>
+                    <tr><td>v1</td><td>Timestamp (100-nanosecond precision) plus the generator's MAC address</td><td>Scenarios needing rough time-ordering and the ability to trace which machine made it</td><td>Rare (privacy concern)</td></tr>
+                    <tr><td>v2</td><td>DCE security variant of v1, embedding a POSIX UID/GID</td><td>Identity in distributed security systems; almost never seen in practice</td><td>Very rare</td></tr>
+                    <tr><td>v3</td><td>Namespace plus name, hashed with MD5 (same input always yields same output)</td><td>Stable, name-derived IDs, e.g. mapping a URL to a fixed ID</td><td>Less common</td></tr>
+                    <tr><td>v4</td><td>122 bits taken entirely from random sources (excluding version and variant bits)</td><td>The vast majority of general cases: primary keys, session IDs, tokens, trace ids</td><td>Most common</td></tr>
+                    <tr><td>v5</td><td>Namespace plus name, hashed with SHA-1, deterministic</td><td>Same family as v3 but stronger hash, reproducible name derivation</td><td>Common (second to v4)</td></tr>
+                </tbody>
+            </table>
+            <p><strong>How to use this</strong>: for almost any web project or ordinary business system, v4 is the right default: it is the simplest, the most universal, and it needs no input at all. Only when you "want the same name to always produce the same ID" (such as deriving a stable ID from a URL) do you need the name-based, deterministic v3 or v5. v1 is rarely used in new projects because it writes the MAC address into the ID.</p>
+
+            <h3>The 8-4-4-4-12 Format and What Each Part Means</h3>
+            <p>A standard UUID is 36 characters across five groups whose lengths are 8, 4, 4, 4, and 12, separated by hyphens, which is why it is called the 8-4-4-4-12 format. Stripping the hyphens leaves 32 hexadecimal characters, i.e. 128 bits. Two positions inside those 128 bits are reserved to encode identity:</p>
+            <p>First, the first hexadecimal character of the third group (the high 4 bits of its first byte) always marks the version. A v4 UUID therefore always begins its third group with the digit <code>4</code>; v1 begins with <code>1</code>; v5 begins with <code>5</code>. Second, the first hexadecimal character of the fourth group (the high 2 bits of its first byte) always marks the variant. Under RFC 4122 it must be the binary pattern <code>10</code>, which in hexadecimal means that digit can only be <code>8</code>, <code>9</code>, <code>A</code>, or <code>B</code>. Whenever the fourth group starts with one of those four characters, you can tell the value is an RFC 4122 UUID.</p>
+
+            <h3>Worked Example: Taking Apart a UUID String</h3>
+            <p><strong>Example 1 (following the brief)</strong>: take the string <code>123e4567-e89b-12d3-a456-426614174000</code>. Split it by 8-4-4-4-12: group 1 is <code>123e4567</code> (8), group 2 is <code>e89b</code> (4), group 3 is <code>12d3</code> (4), group 4 is <code>a456</code> (4), group 5 is <code>426614174000</code> (12). Look at the first byte of group 4, <code>a</code>: hexadecimal a is binary 1010, whose top two bits are 10, matching the RFC 4122 variant. Now look at the first byte of group 3, <code>1</code>, which marks it as version 1. To turn it into a proper v4, change only the first byte of group 3 to <code>4</code>, yielding <code>123e4567-e89b-42d3-a456-426614174000</code>, where group 3 starts with 4 and group 4 still starts with a, a format-correct v4. Every result this tool produces keeps group 3 starting with 4 and group 4 starting with 8, 9, A, or B, so you can pick any output and verify it yourself using the method above.</p>
+
+            <h3>Frequently Asked Questions Specific to UUIDs</h3>
+
+            <h3>Is UUID v4 truly unique? What is the collision probability?</h3>
+            <p>v4 has 122 random bits, a space of 2 to the 122nd power, roughly 5.3 times 10 to the 36th. To grasp that scale: even if you generated one billion UUIDs every second for 100 years straight, the chance of a single collision would still be far lower than being struck by a meteor. So it is not "mathematically impossible to repeat," but "safe to treat as unique across any practical timeframe." The real risk is not random collision but your own code writing the same UUID twice, which has nothing to do with the algorithm.</p>
+
+            <h3>UUID v1 leaks the MAC address. What is the privacy risk?</h3>
+            <p>v1 encodes the generating machine's MAC address directly into the fifth group of the UUID. That means anyone holding a v1 UUID can, in theory, reverse-engineer which network card produced it, tying the value to a specific device or even a physical location. Inside trusted internal networks of the past this was acceptable, but in today's public, multi-tenant cloud environments, writing a hardware address into an externally visible ID is clearly undesirable. This is why new projects overwhelmingly switch to v4, which carries no hardware information, and why v1 survives mainly in internal systems that need time ordering and trust their network boundary.</p>
+
+            <h3>How do I choose between UUID v4 and v5?</h3>
+            <p>The core difference is random versus deterministic. v4 is different every time and fits cases where you only care about uniqueness and not about any relationship to a name, such as session IDs, tokens, and trace numbers. v5 (and v3) do the opposite: given the same namespace and the same name, they always yield the same UUID, which fits "I want to map a stable thing, like a URL or a username, to a fixed ID." A simple rule: when you need unique but unrelated values, use v4; when you need "same name always gives same value," use v5.</p>
+
+            <h3>What is the real difference between a UUID and an auto-increment ID?</h3>
+            <p>An auto-increment ID (1, 2, 3, ...) is issued by the database itself: compact, ordered, and index-friendly, but with two hard flaws. First, it writes your business scale directly into the ID, so a competitor holding your order number can estimate your sales volume. Second, when data must be merged or migrated across machines or databases, two databases both starting from 1 will inevitably clash. A UUID trades a longer string for two benefits: identifiers generated independently on any machine never collide, and they reveal no business scale. The cost is larger storage (36 characters versus an integer) and unordered insertion that can make indexes slightly slower. In practice: for a single machine with storage and order sensitivity, use auto-increment; for distributed writes, cross-system migration, or hiding your scale, use a UUID.</p>
+        </section>
 
 </main>
     <footer>
