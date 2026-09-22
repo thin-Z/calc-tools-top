@@ -96,7 +96,49 @@
                 <div class="code-output" id="base64Output"></div>
                 <div class="btn-group" ><button class="btn btn-success copy-btn" id="copyBtn" disabled data-label="Copy" data-copied-label="Copied!">Copy</button></div>
             </div>
-            <div class="tool-content"><h2>Image to Base64: Turn an Image Into Plain Text</h2><p>This image-to-Base64 tool encodes an image into a text string made of letters, digits, and symbols. You can paste that string straight into HTML, CSS, or JSON, and the browser will reconstruct the original picture. Everything runs entirely in your browser with no uploads, making it fast and private — ideal for developers who need to inline small icons or thumbnails.</p><p>Inlining small images is a practical web trick: it removes an extra HTTP request, speeds up page load, and makes it easy to ship single-file apps or emails.</p><h3>How Is Base64 Encoding Done?</h3><p>Base64 converts binary data into ASCII text. It splits every 3 bytes (24 bits) into four 6-bit groups, each mapped to a character in the Base64 alphabet, so the encoded text is roughly 4/3 of the original length — about <strong>1.37&times;</strong> larger. The image bytes are read into the browser and remapped into text by that rule, producing the Base64 string you see.</p><p>Encoding is reversible: the browser can decode the text back into the original image bytes, so the displayed image is identical to the source.</p><h3>How to Use It</h3><p>1. Upload or drag an image (supports JPG, PNG, WebP, and other common formats).<br>2. The tool immediately encodes it into a Base64 string locally.<br>3. Click the &quot;Copy&quot; button in the result box to copy the full string.<br>4. Paste it where you need it: an HTML <code>&lt;img src="data:image/png;base64,...."&gt;</code>, a CSS <code>background-image: url(data:...)</code>, or a JSON field.</p><h3>When to Use It — and When Not To</h3><p><strong>Good fit:</strong> small icons, logos, favicons under a few KB, or any &quot;single-file&quot; delivery (SPAs, standalone HTML, signature emails).<br><strong>Bad fit:</strong> large images or many images. Encoding makes the payload bigger, so inlining lots of large images bloats the HTML and slows loading. In that case, keep images as separate files and optimize with a CDN or caching.</p><p>Rule of thumb: <strong>inline images under ~10KB, externally link anything larger</strong> — that balances &quot;fewer requests&quot; against &quot;smaller size&quot;.</p><h3>How to Use the Result</h3><p>Once you have the Base64 string, embed it via a <code>data:</code> URI. To keep pages small, run the image through our Image Compressor first, then encode it; and if you need a specific size, use our Resize &amp; Crop tool to hit the exact pixels before inlining.</p></div>
+            <div class="tool-content"><h2>Image to Base64: Turn an Image Into Plain Text</h2><p>This image-to-Base64 tool encodes an image into a text string made of letters, digits, and symbols. You can paste that string straight into HTML, CSS, or JSON, and the browser will reconstruct the original picture. Everything runs entirely in your browser with no uploads, making it fast and private — ideal for developers who need to inline small icons or thumbnails.</p><p>Inlining small images is a practical web trick: it removes an extra HTTP request, speeds up page load, and makes it easy to ship single-file apps or emails.</p><h3>How Is Base64 Encoding Done?</h3><p>Base64 converts binary data into ASCII text. It splits every 3 bytes (24 bits) into four 6-bit groups, each mapped to a character in the Base64 alphabet, so the encoded text is roughly 4/3 of the original length — about <strong>1.37&times;</strong> larger. The image bytes are read into the browser and remapped into text by that rule, producing the Base64 string you see.</p><p>Encoding is reversible: the browser can decode the text back into the original image bytes, so the displayed image is identical to the source.</p><h3>How to Use It</h3><p>1. Upload or drag an image (supports JPG, PNG, WebP, and other common formats).<br>2. The tool immediately encodes it into a Base64 string locally.<br>3. Click the &quot;Copy&quot; button in the result box to copy the full string.<br>4. Paste it where you need it: an HTML <code>&lt;img src="data:image/png;base64,...."&gt;</code>, a CSS <code>background-image: url(data:...)</code>, or a JSON field.</p><h3>When to Use It — and When Not To</h3><p><strong>Good fit:</strong> small icons, logos, favicons under a few KB, or any &quot;single-file&quot; delivery (SPAs, standalone HTML, signature emails).<br><strong>Bad fit:</strong> large images or many images. Encoding makes the payload bigger, so inlining lots of large images bloats the HTML and slows loading. In that case, keep images as separate files and optimize with a CDN or caching.</p><p>Rule of thumb: <strong>inline images under ~10KB, externally link anything larger</strong> — that balances &quot;fewer requests&quot; against &quot;smaller size&quot;.</p><h3>How to Use the Result</h3><p>Once you have the Base64 string, embed it via a <code>data:</code> URI. To keep pages small, run the image through our Image Compressor first, then encode it; and if you need a specific size, use our Resize &amp; Crop tool to hit the exact pixels before inlining.</p>
+            <h3>How Much Does Base64 Grow a File?</h3>
+            <p>Base64 splits every 3 bytes into four 6-bit groups and maps each group to a printable character, so the encoded text is 4/3 of the original byte count, padded up to a multiple of four. That overhead is a fixed mathematical result, independent of the image content, which means it can be calculated in advance.</p>
+            <table class="ref-table">
+                <caption>Base64 length for common image sizes</caption>
+                <thead><tr><th>Original size</th><th>Bytes</th><th>Base64 characters</th><th>Growth</th></tr></thead>
+                <tbody>
+                    <tr><td>1 KB</td><td>1,024</td><td>1,368</td><td>1.336&times;</td></tr>
+                    <tr><td>5 KB</td><td>5,120</td><td>6,828</td><td>1.334&times;</td></tr>
+                    <tr><td>10 KB</td><td>10,240</td><td>13,656</td><td>1.334&times;</td></tr>
+                    <tr><td>50 KB</td><td>51,200</td><td>68,268</td><td>1.333&times;</td></tr>
+                    <tr><td>100 KB</td><td>102,400</td><td>136,536</td><td>1.333&times;</td></tr>
+                    <tr><td>500 KB</td><td>512,000</td><td>682,668</td><td>1.333&times;</td></tr>
+                </tbody>
+            </table>
+            <p><strong>Note:</strong> character counts follow 4 &times; ceil(bytes / 3) and include the trailing padding. The growth lands at about 1.334&times; for every format.</p>
+
+            <h3>Inline or Link?</h3>
+            <p>Inlining removes a request but costs roughly a third more bytes and cannot be cached separately. Whether that trade is worth it depends on file size and how often the image is reused.</p>
+            <table class="ref-table">
+                <caption>data URI inlining versus an external file</caption>
+                <thead><tr><th>Dimension</th><th>Inline data URI</th><th>External image file</th></tr></thead>
+                <tbody>
+                    <tr><td>Extra HTTP request</td><td>0</td><td>1 (cheap under HTTP/2)</td></tr>
+                    <tr><td>Transfer size</td><td>about 1.334&times;</td><td>original size</td></tr>
+                    <tr><td>Caching</td><td>Cached with the HTML, cannot expire alone</td><td>Can be cached long-term and updated alone</td></tr>
+                    <tr><td>First paint</td><td>Blocks HTML parsing</td><td>Can be deferred or lazy-loaded</td></tr>
+                    <tr><td>Best for</td><td>Small icons, single-file delivery, email signatures</td><td>Regular images, anything needing caching</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Length Limits and Practical Thresholds</h3>
+            <p>There is no universal specification limit on data URI length; the real ceiling is set by each browser implementation. Early Internet Explorer capped it near 32 KB, while modern browsers handle megabyte-scale values. Parsing cost still grows with length, so beyond a few tens of kilobytes the saved request is usually outweighed by the extra bytes and parsing time.</p>
+
+            <h3>Frequently Asked Questions</h3>
+            <p><strong>Why is the encoded string larger than the image?</strong> Base64 represents 6 bits per character, turning 3 bytes into 4 characters, so the output is fixed at about 1.334&times; the input.</p>
+            <p><strong>What image size is worth inlining?</strong> A few kilobytes up to roughly ten is the usual band. Beyond that, the extra bytes and parsing cost exceed the benefit of removing one request.</p>
+            <p><strong>Does encoding change image quality?</strong> No. Base64 changes only the representation; decoding returns bytes identical to the source file.</p>
+            <p><strong>Can I encode only part of an image?</strong> The tool encodes the whole file. Crop first if you need a region, then encode the result.</p>
+
+            <h3>Related Reading</h3>
+            <p>Compressing before encoding shortens the string considerably — see the <a href="/en/image/compress">Image Compressor</a>. To change container format first, use the <a href="/en/image/convert">Format Converter</a>; for plain text rather than images, use the <a href="/en/text/base64-encode">Base64 Text Encoder</a>. More background is in our <a href="/blog/en/image-to-base64-guide">image to Base64 guide</a>.</p>
+</div>
 </main>
     <footer>
     <div class="footer-links">

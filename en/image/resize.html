@@ -96,7 +96,58 @@
                 <div class="preview-card" ><h3>Result</h3><div class="preview-area"><div class="preview-box"><img id="resizedPreview" alt="Resized"><div class="file-info" id="resizedInfo"></div></div></div></div>
                 <div class="download-area"><button class="btn btn-success" id="downloadBtn">Download</button></div>
             </div>
-            <div class="tool-content"><h2>Online Image Resize &amp; Crop: Adjust Any Image Size</h2><p>This free online image resizer lets you change the dimensions of any picture without installing heavyweight software like Photoshop — shrink a photo into a website thumbnail, crop it into a social-media avatar, or scale it up to a print resolution, all in seconds. Everything runs through your browser&rsquo;s built-in Canvas API on your own device, so images are never uploaded to a server, which both protects your privacy and removes upload/download wait times.</p><p>It's ideal for everyday users and content creators who resize images often but don't want the cost or learning curve of pro tools, as well as front-end developers who need to pre-process assets quickly.</p><h3>What Does Resizing Actually Do?</h3><p>An image's dimensions are its width &times; height in pixels. Resizing means redrawing each pixel to a new target size: when shrinking, the tool picks representative pixels from the original; when enlarging, it infers new pixel colors. The Canvas API handles this in the background and uses high-quality interpolation to minimize quality loss.</p><p>Note that <strong>enlarging doesn't add detail out of thin air</strong> — it simply stretches existing pixels and fills in the gaps with algorithms, so a small, blurry image stays blurry when blown up. To guarantee quality, start with a source image that has enough pixels.</p><h3>How to Use It</h3><p>1. Drag an image into the dashed area or click &quot;Select File&quot; (JPG / PNG / WebP / BMP / GIF, up to 50MB).<br>2. Enter your target width and height in pixels (you usually need only one — the other auto-fills by ratio).<br>3. Tick &quot;Keep aspect ratio&quot; so changing one dimension automatically adjusts the other, preventing distortion.<br>4. Click &quot;Resize&quot; and preview the result side-by-side with the original.<br>5. Once satisfied, click &quot;Download&quot; to save it locally.</p><h3>Common Pitfalls</h3><p><strong>① Don't turn off &quot;keep aspect ratio&quot;.</strong> Entering mismatched dimensions with the box unchecked will stretch or squash the image, causing distortion — unless you deliberately want that effect.<br><strong>② Upscaling ≠ sharper.</strong> For low-resolution sources, enlarging beyond the original size makes the image blurry; the fix is to use a higher-resolution original.<br><strong>③ Match the format.</strong> Export as JPG for photos, PNG for transparent designs, and WebP for a good balance of size and quality.</p><h3>Aspect Ratio &amp; Common Size Reference</h3><p>Many platforms have standard sizes: social avatars are often 1:1 (e.g. 400&times;400), banners commonly 16:9 (e.g. 1920&times;1080), and print photos usually 3:2 or 4:3. Check your platform's specs, then have the tool scale it proportionally for best results.</p><h3>How to Use the Result</h3><p>The resized image can be used directly for web graphics, article covers, e-commerce main images, community avatars, or printing. If you want to shrink the file size further, follow up with our Image Compressor to squeeze it once more and make pages load faster and use less bandwidth.</p></div>
+            <div class="tool-content"><h2>Online Image Resize &amp; Crop: Adjust Any Image Size</h2><p>This free online image resizer lets you change the dimensions of any picture without installing heavyweight software like Photoshop — shrink a photo into a website thumbnail, crop it into a social-media avatar, or scale it up to a print resolution, all in seconds. Everything runs through your browser&rsquo;s built-in Canvas API on your own device, so images are never uploaded to a server, which both protects your privacy and removes upload/download wait times.</p><p>It's ideal for everyday users and content creators who resize images often but don't want the cost or learning curve of pro tools, as well as front-end developers who need to pre-process assets quickly.</p><h3>What Does Resizing Actually Do?</h3><p>An image's dimensions are its width &times; height in pixels. Resizing means redrawing each pixel to a new target size: when shrinking, the tool picks representative pixels from the original; when enlarging, it infers new pixel colors. The Canvas API handles this in the background and uses high-quality interpolation to minimize quality loss.</p><p>Note that <strong>enlarging doesn't add detail out of thin air</strong> — it simply stretches existing pixels and fills in the gaps with algorithms, so a small, blurry image stays blurry when blown up. To guarantee quality, start with a source image that has enough pixels.</p><h3>How to Use It</h3><p>1. Drag an image into the dashed area or click &quot;Select File&quot; (JPG / PNG / WebP / BMP / GIF, up to 50MB).<br>2. Enter your target width and height in pixels (you usually need only one — the other auto-fills by ratio).<br>3. Tick &quot;Keep aspect ratio&quot; so changing one dimension automatically adjusts the other, preventing distortion.<br>4. Click &quot;Resize&quot; and preview the result side-by-side with the original.<br>5. Once satisfied, click &quot;Download&quot; to save it locally.</p><h3>Common Pitfalls</h3><p><strong>① Don't turn off &quot;keep aspect ratio&quot;.</strong> Entering mismatched dimensions with the box unchecked will stretch or squash the image, causing distortion — unless you deliberately want that effect.<br><strong>② Upscaling ≠ sharper.</strong> For low-resolution sources, enlarging beyond the original size makes the image blurry; the fix is to use a higher-resolution original.<br><strong>③ Match the format.</strong> Export as JPG for photos, PNG for transparent designs, and WebP for a good balance of size and quality.</p><h3>Aspect Ratio &amp; Common Size Reference</h3><p>Many platforms have standard sizes: social avatars are often 1:1 (e.g. 400&times;400), banners commonly 16:9 (e.g. 1920&times;1080), and print photos usually 3:2 or 4:3. Check your platform's specs, then have the tool scale it proportionally for best results.</p><h3>How to Use the Result</h3><p>The resized image can be used directly for web graphics, article covers, e-commerce main images, community avatars, or printing. If you want to shrink the file size further, follow up with our Image Compressor to squeeze it once more and make pages load faster and use less bandwidth.</p>
+            <h3>Scale Factor and Total Pixels</h3>
+            <p>Area changes with the square of the side length: halving each side leaves a quarter of the pixels, and file size tends to follow. That is why reducing dimensions often saves more than lowering quality alone.</p>
+            <table class="ref-table">
+                <caption>Scaling relative to a 1920 &times; 1080 source</caption>
+                <thead><tr><th>Scale</th><th>Output size</th><th>Total pixels</th><th>Area versus original</th></tr></thead>
+                <tbody>
+                    <tr><td>25%</td><td>480 &times; 270</td><td>129,600</td><td>6.25%</td></tr>
+                    <tr><td>50%</td><td>960 &times; 540</td><td>518,400</td><td>25.00%</td></tr>
+                    <tr><td>75%</td><td>1440 &times; 810</td><td>1,166,400</td><td>56.25%</td></tr>
+                    <tr><td>100%</td><td>1920 &times; 1080</td><td>2,073,600</td><td>100.00%</td></tr>
+                    <tr><td>150%</td><td>2880 &times; 1620</td><td>4,665,600</td><td>225.00%</td></tr>
+                    <tr><td>200%</td><td>3840 &times; 2160</td><td>8,294,400</td><td>400.00%</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Choosing an Interpolation Method</h3>
+            <p>Canvas fills in new pixel values using interpolation. The choice matters little when shrinking and a great deal when enlarging.</p>
+            <table class="ref-table">
+                <caption>Common interpolation approaches</caption>
+                <thead><tr><th>Method</th><th>How it works</th><th>When shrinking</th><th>When enlarging</th><th>Speed</th></tr></thead>
+                <tbody>
+                    <tr><td>Nearest neighbour</td><td>Takes the closest pixel</td><td>Visible aliasing</td><td>Clearly blocky</td><td>Fastest</td></tr>
+                    <tr><td>Bilinear</td><td>Weighted average of four neighbours</td><td>Smooth and natural</td><td>Slightly soft</td><td>Fast</td></tr>
+                    <tr><td>Bicubic / Lanczos</td><td>Weighted over a wider neighbourhood</td><td>Better detail retention</td><td>Sharper edges</td><td>Slower</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Print Sizes and Responsive Breakpoints</h3>
+            <p>Screens are measured in pixels, print in DPI. At the common 300 DPI requirement, inches &times; DPI gives the pixels you need; on the web, device pixel ratio decides how large an asset must be to stay sharp.</p>
+            <table class="ref-table">
+                <caption>Pixel requirements for common outputs</caption>
+                <thead><tr><th>Scenario</th><th>Specification</th><th>Required pixels</th><th>Notes</th></tr></thead>
+                <tbody>
+                    <tr><td>4 &times; 6 inch photo</td><td>300 DPI</td><td>1200 &times; 1800</td><td>Inches &times; DPI</td></tr>
+                    <tr><td>A4 page</td><td>300 DPI</td><td>About 2480 &times; 3508</td><td>Converted from 210 &times; 297 mm</td></tr>
+                    <tr><td>Full-width phone image</td><td>375 CSS pixels, DPR 2</td><td>750 physical pixels wide</td><td>CSS width &times; device pixel ratio</td></tr>
+                    <tr><td>Full-width phone image</td><td>375 CSS pixels, DPR 3</td><td>1125 physical pixels wide</td><td>High-density devices</td></tr>
+                    <tr><td>Desktop hero image</td><td>1440 CSS pixels, DPR 1</td><td>1440 physical pixels wide</td><td>Standard displays</td></tr>
+                </tbody>
+            </table>
+            <p><strong>Note:</strong> the DPI in print sizing is an output setting rather than metadata stored in the file. As long as enough pixels exist, set DPI at export time.</p>
+
+            <h3>Frequently Asked Questions</h3>
+            <p><strong>Why does resizing save more than lowering quality?</strong> File size tracks total pixels roughly in proportion, and halving each side leaves a quarter of the pixels, so reducing dimensions usually helps most.</p>
+            <p><strong>Can a small image be enlarged into a sharp one?</strong> No. Interpolation only estimates new pixels; it cannot recover detail that was never captured, so enlarged images look soft.</p>
+            <p><strong>What does locking the ratio do?</strong> It prevents stretching caused by changing only one side. When a specific composition is needed, crop instead of stretching.</p>
+            <p><strong>How large should web images be?</strong> Prepare them at display width times the device pixel ratio and offer several sizes, which saves more bandwidth than shipping one oversized file.</p>
+
+            <h3>Related Reading</h3>
+            <p>To remove unwanted edges precisely, use <a href="/en/image/image-crop">Crop</a>; once dimensions are settled, reduce file size with the <a href="/en/image/compress">Image Compressor</a>; to change container format, use the <a href="/en/image/convert">Format Converter</a>. More sizing guidance is in our <a href="/blog/en/image-resize-crop-guide">resize and crop guide</a>.</p>
+</div>
 </main>
     <footer>
     <div class="footer-links">

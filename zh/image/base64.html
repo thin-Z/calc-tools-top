@@ -136,7 +136,49 @@
                 <p>举个例子：如果你想在 HTML 里内联一个 4KB 的 logo，直接写 <code>&lt;img src="data:image/png;base64,iVBORw0KGgo..."&gt;</code> 即可，浏览器能立即解析并显示。这样做的好处是省去了一次网络请求，且图片能跟随 HTML 一起被缓存，适合图标类和"必须单文件"的场合。</p>
                 <h3>浏览器兼容性要注意什么？</h3>
                 <p>现代浏览器（Chrome、Firefox、Safari、Edge）都能完整支持 Base64 的 <code>data:</code> URI，包括 CSS 的 <code>background-image: url(data:...)</code>、HTML 的 <code>img</code> 和 `&lt;link&gt;`。但要注意：旧版 IE 对 Base64 图片的缓存和部分 MIME 类型支持较差，若目标用户包含大量旧浏览器，建议谨慎内联。此外，内联图片会显著增加 HTML 源文件长度，不利于源码阅读，因此更适合封装成组件或构建时自动处理，而非长期人工维护。</p>
-            </div>
+            
+            <h3>Base64 会让体积变大多少</h3>
+            <p>Base64 把每 3 个字节拆成 4 个 6 位组，每个组映射为一个可打印字符，因此编码后长度约为原字节的 4/3，并按 4 的倍数补齐。这个膨胀是固定的数学结果，与图片内容无关，所以可以事先算出来。</p>
+            <table class="ref-table">
+                <caption>常见图片体积的 Base64 编码长度</caption>
+                <thead><tr><th>原图大小</th><th>字节数</th><th>Base64 字符数</th><th>膨胀倍数</th></tr></thead>
+                <tbody>
+                    <tr><td>1 KB</td><td>1,024</td><td>1,368</td><td>1.336&times;</td></tr>
+                    <tr><td>5 KB</td><td>5,120</td><td>6,828</td><td>1.334&times;</td></tr>
+                    <tr><td>10 KB</td><td>10,240</td><td>13,656</td><td>1.334&times;</td></tr>
+                    <tr><td>50 KB</td><td>51,200</td><td>68,268</td><td>1.333&times;</td></tr>
+                    <tr><td>100 KB</td><td>102,400</td><td>136,536</td><td>1.333&times;</td></tr>
+                    <tr><td>500 KB</td><td>512,000</td><td>682,668</td><td>1.333&times;</td></tr>
+                </tbody>
+            </table>
+            <p><strong>注意：</strong>表中的字符数按 4&times;ceil(字节数/3) 计算，末尾的等号填充也已计入；无论图片是什么格式，膨胀比例都落在约 1.334 倍。</p>
+
+            <h3>内联还是外链</h3>
+            <p>内联省掉一次请求，但要付出约三分之一的体积代价，并且无法单独缓存。是否划算，取决于图片大小与复用频率。</p>
+            <table class="ref-table">
+                <caption>data URI 内联与外链文件对比</caption>
+                <thead><tr><th>维度</th><th>内联 data URI</th><th>外链图片文件</th></tr></thead>
+                <tbody>
+                    <tr><td>额外 HTTP 请求</td><td>0 次</td><td>1 次（HTTP/2 下成本较低）</td></tr>
+                    <tr><td>传输体积</td><td>约 1.334 倍</td><td>原始体积</td></tr>
+                    <tr><td>缓存</td><td>随 HTML 一起缓存，无法单独失效</td><td>可长期缓存并单独更新</td></tr>
+                    <tr><td>首屏影响</td><td>增大 HTML，阻塞解析</td><td>可延迟加载</td></tr>
+                    <tr><td>适合场景</td><td>小图标、单文件交付、邮件签名</td><td>常规图片、需要缓存的图片</td></tr>
+                </tbody>
+            </table>
+
+            <h3>长度上限与实用阈值</h3>
+            <p>data URI 没有统一的规范长度上限，实际限制由各家浏览器实现决定：早期 IE8 限制在约 32 KB，现代浏览器可处理 MB 级数据。但解析成本随长度增长，超过几十 KB 后，内联带来的请求收益通常已被体积与解析开销抵消。</p>
+
+            <h3>常见问题</h3>
+            <p><strong>为什么编码后字符串比图片还大？</strong>Base64 用 6 位表示一个字符，3 字节变成 4 个字符，因此固定膨胀约 1.334 倍，这是编码规则决定的。</p>
+            <p><strong>多大的图片适合内联？</strong>通常以几 KB 到十几 KB 为界。超过这个范围，体积与解析开销会超过省下一次请求的收益。</p>
+            <p><strong>编码会改变图片画质吗？</strong>不会。Base64 只是表示方式的变化，解码后得到与源文件完全相同的字节。</p>
+            <p><strong>可以只编码图片的一部分吗？</strong>工具按整张图片编码。需要先裁剪时，可先用裁剪工具处理再编码。</p>
+
+            <h3>相关阅读</h3>
+            <p>编码前先压缩可以显著减少字符串长度，见<a href="/zh/image/compress">图片压缩</a>；需要统一格式时用<a href="/zh/image/convert">格式转换</a>；纯文本的编码需求可用<a href="/zh/text/base64-encode">文本 Base64 编码</a>。更多背景见我们的<a href="/blog/zh/image-to-base64-guide">图片转 Base64 指南</a>。</p>
+</div>
 </main>
     <footer>
     <div class="footer-links">

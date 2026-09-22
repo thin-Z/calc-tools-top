@@ -181,7 +181,48 @@
                 <p><strong>① Don't over-crop a low-resolution image.</strong> The more you crop, the less image remains and the blurrier it gets when enlarged. For high-resolution output, start from a high-resolution source.<br><strong>② Remember composition.</strong> Cropping recomposes the photo; placing the subject a third of the way across (the rule of thirds) often looks livelier than dead center.<br><strong>③ Match the platform's ratio.</strong> Different platforms require different cover/avatar specs (e.g. a 2.35:1 cover or a 1:1 avatar), so picking the platform's ratio saves effort.</p>
                 <h3>How to Choose an Export Format</h3>
                 <p>If the cropped image needs a transparent background (like a PNG icon or cutout), use PNG; if it's a photo or for web display where you want a smaller file, use JPEG. After cropping, if you want an even smaller file, follow up with our Image Compressor to balance clarity and loading speed.</p>
-            </div>
+            
+            <h3>Common Aspect Ratios and Example Pixels</h3>
+            <p>Crop by ratio first, then by pixels. The ratio decides whether the composition is distorted, and the pixel count decides whether a platform minimum is met. The table gives one example size per ratio; scale proportionally as needed.</p>
+            <table class="ref-table">
+                <caption>Common aspect ratios with example pixel sizes</caption>
+                <thead><tr><th>Aspect ratio</th><th>Example pixels (width &times; height)</th></tr></thead>
+                <tbody>
+                    <tr><td>1:1</td><td>1080 &times; 1080</td></tr>
+                    <tr><td>4:3</td><td>1600 &times; 1200</td></tr>
+                    <tr><td>3:2</td><td>1800 &times; 1200</td></tr>
+                    <tr><td>16:9</td><td>1920 &times; 1080</td></tr>
+                    <tr><td>9:16</td><td>1080 &times; 1920</td></tr>
+                    <tr><td>2:1</td><td>1600 &times; 800</td></tr>
+                    <tr><td>21:9</td><td>2100 &times; 900</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Typical Sizes for Avatars and Covers</h3>
+            <p>Platform recommendations change over time, so treat the values below as long-stable reference points and check current requirements before submitting. If the ratio is right and the pixel count is at or above the recommendation, the image will normally display correctly.</p>
+            <table class="ref-table">
+                <caption>Common uses and size references</caption>
+                <thead><tr><th>Use</th><th>Typical recommended size</th><th>Ratio</th><th>Notes</th></tr></thead>
+                <tbody>
+                    <tr><td>Social avatar</td><td>400 &times; 400 up to 640 &times; 640</td><td>1:1</td><td>Square, subject centred with margin</td></tr>
+                    <tr><td>Profile cover</td><td>Around 1500 &times; 500</td><td>3:1</td><td>Wide banner; the centre may be covered by the avatar</td></tr>
+                    <tr><td>Article image</td><td>Around 1200 &times; 800</td><td>3:2</td><td>Balances sharpness and load time</td></tr>
+                    <tr><td>Video thumbnail</td><td>1280 &times; 720 or 1920 &times; 1080</td><td>16:9</td><td>Match the player ratio</td></tr>
+                    <tr><td>Vertical phone image</td><td>1080 &times; 1920</td><td>9:16</td><td>Full screen; keep text away from the edges</td></tr>
+                    <tr><td>ID photo (1-inch)</td><td>About 295 &times; 413</td><td>About 5:7</td><td>Follow the exact pixel and background rules</td></tr>
+                </tbody>
+            </table>
+            <p><strong>Note:</strong> cropping never adds pixels. Turning a small image into a larger specification only makes it softer; when pixels run short, start from a higher-resolution original.</p>
+
+            <h3>Frequently Asked Questions</h3>
+            <p><strong>Does cropping reduce quality?</strong> Removing edges does not recompress pixels, so quality is preserved. Loss appears only when the crop is followed by upscaling or re-encoding.</p>
+            <p><strong>Why does my crop look distorted?</strong> When the target ratio differs from the source, either more of the frame is cut or the image is stretched. Locking the ratio avoids the second outcome.</p>
+            <p><strong>Can I crop a small image into a large size?</strong> You can set the size, but the pixel count stays the same, so the result is softer.</p>
+            <p><strong>How much margin should an avatar leave?</strong> Keeping the subject at roughly seventy percent of the frame with space around it avoids clipping key features in circular or square masks.</p>
+
+            <h3>Related Reading</h3>
+            <p>To standardise dimensions after cropping, see <a href="/en/image/resize">Resize</a>; to reduce file size further, use the <a href="/en/image/compress">Image Compressor</a>; to change container format, use the <a href="/en/image/convert">Format Converter</a>. More cropping and composition guidance is in our <a href="/blog/en/image-resize-crop-guide">resize and crop guide</a>.</p>
+</div>
 </main>
     <footer>
     <div class="footer-links">

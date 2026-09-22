@@ -143,7 +143,47 @@
                 <p>还有一个实用思路：如果你的图片本来就要在网页里用到，且不追求透明，直接把 JPG 或 PNG 转成 WebP 通常是性价比最高的做法——它往往能在画质几乎不变的前提下显著减小文件。若你的目标受众以老浏览器为主，则先保留 JPG，因为 WebP 在非常早期的浏览器上兼容性有限。</p>
                 <h3>转换结果该怎么用？</h3>
                 <p>转换完成后，你可以直接下载到本地，用于网页、文档、社交平台或电商后台。若转换后体积仍偏大，可再用「图片压缩」把关。把「选对格式 → 缩到合适尺寸 → 压缩到合适质量」作为图片处理的三步法，通常能让图片既清晰又小巧，显著改善加载体验。</p>
-            </div>
+            
+            <h3>六种格式的特性对照</h3>
+            <p>选格式本质上是三件事：要不要透明、要不要动画、能不能接受有损。下表把常见格式放在同一张表里比较。</p>
+            <table class="ref-table">
+                <caption>常见图片格式特性对照</caption>
+                <thead><tr><th>格式</th><th>压缩方式</th><th>透明</th><th>动画</th><th>色深</th><th>典型用途</th><th>兼容性</th></tr></thead>
+                <tbody>
+                    <tr><td>JPEG</td><td>有损（离散余弦变换）</td><td>不支持</td><td>不支持</td><td>24 位真彩</td><td>照片、复杂色彩图</td><td>几乎所有设备</td></tr>
+                    <tr><td>PNG</td><td>无损</td><td>支持（alpha 通道）</td><td>不支持（APNG 除外）</td><td>最高 48 位</td><td>截图、图标、透明图</td><td>广泛</td></tr>
+                    <tr><td>WebP</td><td>有损与无损皆可</td><td>支持</td><td>支持</td><td>24 位 + alpha</td><td>网页图片</td><td>现代浏览器</td></tr>
+                    <tr><td>AVIF</td><td>有损与无损皆可</td><td>支持</td><td>支持</td><td>最高 12 位/通道</td><td>高压缩率网页图</td><td>较新浏览器</td></tr>
+                    <tr><td>GIF</td><td>无损（调色板）</td><td>1 位透明</td><td>支持</td><td>最多 256 色</td><td>简单动画</td><td>广泛</td></tr>
+                    <tr><td>BMP</td><td>基本不压缩</td><td>不支持</td><td>不支持</td><td>24 / 32 位</td><td>遗留与中间格式</td><td>广泛但体积大</td></tr>
+                </tbody>
+            </table>
+
+            <h3>常见转换场景与结果</h3>
+            <p>同一次转换，透明、体积、可逆性三者的变化并不一致，提前看清可以避免返工。</p>
+            <table class="ref-table">
+                <caption>转换场景对照</caption>
+                <thead><tr><th>转换</th><th>透明如何处理</th><th>体积趋势</th><th>是否可逆</th><th>注意点</th></tr></thead>
+                <tbody>
+                    <tr><td>PNG → JPEG</td><td>透明区域被填充，通常为白色</td><td>下降</td><td>否</td><td>先确认是否真的不需要透明</td></tr>
+                    <tr><td>JPEG → PNG</td><td>无法凭空补出透明</td><td>上升</td><td>是（画质不再改善）</td><td>仅在需要无损编辑时转换</td></tr>
+                    <tr><td>PNG → WebP</td><td>可保留</td><td>下降</td><td>视有损/无损而定</td><td>无损模式体积也常小于 PNG</td></tr>
+                    <tr><td>JPEG → WebP</td><td>不涉及</td><td>下降约 25%–34%</td><td>否</td><td>留意轻微画质变化</td></tr>
+                    <tr><td>GIF → WebP 动画</td><td>可保留</td><td>明显下降</td><td>否</td><td>需整段动画一起转换</td></tr>
+                    <tr><td>JPEG → JPEG</td><td>不涉及</td><td>视质量档而定</td><td>否</td><td>反复保存会累积损失</td></tr>
+                </tbody>
+            </table>
+            <p><strong>注意：</strong>表中 JPEG 转 WebP 的 25%–34% 是 Google 官方文档在同等画质下的公开数据，实际结果随图片内容与质量设置浮动。AVIF 压缩率通常更高，但编码耗时明显更长，本工具不导出 AVIF，需要时请使用专用编码器。</p>
+
+            <h3>常见问题</h3>
+            <p><strong>为什么 PNG 转成 JPEG 后背景变白了？</strong>JPEG 不支持透明通道，转换时透明区域必须被某种颜色填充，默认通常是白色。需要保留透明请选 PNG 或 WebP。</p>
+            <p><strong>转换就等于压缩吗？</strong>不等于。转成 WebP 通常会变小，但 PNG 转 PNG 不会；要显著减小体积，需要改质量档或换压缩率更高的格式，并配合压缩工具。</p>
+            <p><strong>反复在 JPEG 之间转换会怎样？</strong>每次有损保存都会再丢一点细节，来回转换会累积损失。需要多次编辑时，先转成 PNG 之类的无损格式。</p>
+            <p><strong>WebP 一定更小吗？</strong>同为有损时通常更小，但无损 WebP 未必小于已经优化过的 PNG；是否更小取决于源图与质量设置。</p>
+
+            <h3>相关阅读</h3>
+            <p>转换后想再缩小体积，见<a href="/zh/image/compress">图片压缩</a>；需要精确像素尺寸时用<a href="/zh/image/resize">尺寸调整</a>；要把图片变成可粘贴的文本，用<a href="/zh/image/base64">图片转 Base64</a>。更多选型思路见我们的<a href="/blog/zh/image-format-converter-guide">图片格式转换指南</a>。</p>
+</div>
 </main>
     <footer>
     <div class="footer-links">

@@ -139,7 +139,58 @@
 
                 <h3>缩放结果该怎么用？</h3>
                 <p>调整完成的图片可以直接用于网页配图、文章封面、电商主图、社群头像或打印。如果你还想进一步减小文件体积，可以接着用本站的「图片压缩」工具把缩放后的图片再压一次，让页面加载更快、更省流量。</p>
-            </div>
+            
+            <h3>缩放倍数与像素总量的关系</h3>
+            <p>面积随边长的平方变化：边长减半，像素总量只剩四分之一，文件体积也大致按这个比例下降。这正是"先缩尺寸"往往比"只调质量"更能减小体积的原因。</p>
+            <table class="ref-table">
+                <caption>以 1920 &times; 1080 为基准的缩放关系</caption>
+                <thead><tr><th>缩放比例</th><th>输出尺寸</th><th>像素总量</th><th>相对原图面积</th></tr></thead>
+                <tbody>
+                    <tr><td>25%</td><td>480 &times; 270</td><td>129,600</td><td>6.25%</td></tr>
+                    <tr><td>50%</td><td>960 &times; 540</td><td>518,400</td><td>25.00%</td></tr>
+                    <tr><td>75%</td><td>1440 &times; 810</td><td>1,166,400</td><td>56.25%</td></tr>
+                    <tr><td>100%</td><td>1920 &times; 1080</td><td>2,073,600</td><td>100.00%</td></tr>
+                    <tr><td>150%</td><td>2880 &times; 1620</td><td>4,665,600</td><td>225.00%</td></tr>
+                    <tr><td>200%</td><td>3840 &times; 2160</td><td>8,294,400</td><td>400.00%</td></tr>
+                </tbody>
+            </table>
+
+            <h3>插值算法怎么选</h3>
+            <p>浏览器 Canvas 在缩放时会用插值算法补出新的像素值。缩小时算法影响不大，放大时差别明显。</p>
+            <table class="ref-table">
+                <caption>常见插值方式对比</caption>
+                <thead><tr><th>方式</th><th>原理</th><th>缩小效果</th><th>放大效果</th><th>速度</th></tr></thead>
+                <tbody>
+                    <tr><td>最近邻</td><td>直接取最近的像素</td><td>易出现锯齿</td><td>块状明显</td><td>最快</td></tr>
+                    <tr><td>双线性</td><td>取周围四个像素加权平均</td><td>平滑自然</td><td>略软</td><td>快</td></tr>
+                    <tr><td>双三次 / Lanczos</td><td>取更大邻域做加权</td><td>细节保留较好</td><td>边缘更锐利</td><td>较慢</td></tr>
+                </tbody>
+            </table>
+
+            <h3>打印尺寸与响应式断点</h3>
+            <p>屏幕看像素，打印看 DPI。300 DPI 是常见的印刷要求，按"英寸 &times; DPI"就能反推所需像素；网页则要考虑设备像素比，高 DPI 屏幕需要更大的实际像素才不模糊。</p>
+            <table class="ref-table">
+                <caption>常见输出的像素要求</caption>
+                <thead><tr><th>场景</th><th>规格</th><th>所需像素</th><th>说明</th></tr></thead>
+                <tbody>
+                    <tr><td>4 &times; 6 英寸照片</td><td>300 DPI</td><td>1200 &times; 1800</td><td>按英寸 &times; DPI 计算</td></tr>
+                    <tr><td>A4 纸张</td><td>300 DPI</td><td>约 2480 &times; 3508</td><td>210 &times; 297 毫米换算</td></tr>
+                    <tr><td>手机全宽图</td><td>375 CSS 像素，DPR 2</td><td>750 物理像素宽</td><td>CSS 宽度 &times; 设备像素比</td></tr>
+                    <tr><td>手机全宽图</td><td>375 CSS 像素，DPR 3</td><td>1125 物理像素宽</td><td>高 DPI 机型</td></tr>
+                    <tr><td>桌面首屏图</td><td>1440 CSS 像素，DPR 1</td><td>1440 物理像素宽</td><td>常规显示器</td></tr>
+                </tbody>
+            </table>
+            <p><strong>注意：</strong>打印尺寸换算中的 DPI 是输出设定，不是图片文件里记录的元数据；只要像素足够，导出时再指定 DPI 即可。</p>
+
+            <h3>常见问题</h3>
+            <p><strong>为什么缩小后体积降得比质量调整更明显？</strong>体积大致与像素总量成正比，边长减半意味着像素只剩四分之一，因此先缩尺寸通常最有效。</p>
+            <p><strong>能把小图放大变清晰吗？</strong>不能。插值只能补出新像素的估计值，无法恢复原始细节，放大后画面会变软。</p>
+            <p><strong>锁定比例有什么作用？</strong>避免只改一边导致的拉伸变形；需要特定构图时，应改用裁剪而不是强行拉伸。</p>
+            <p><strong>网页图片应该输出多大？</strong>按显示宽度乘以设备像素比准备，并提供几档尺寸供浏览器选择，比一张超大图更省流量。</p>
+
+            <h3>相关阅读</h3>
+            <p>需要精确裁掉多余画面时用<a href="/zh/image/image-crop">裁剪</a>；定完尺寸再压体积，见<a href="/zh/image/compress">图片压缩</a>；换容器格式用<a href="/zh/image/convert">格式转换</a>。更多尺寸选择见我们的<a href="/blog/zh/image-resize-crop-guide">尺寸调整指南</a>。</p>
+</div>
 </main>
     <footer>
     <div class="footer-links">
