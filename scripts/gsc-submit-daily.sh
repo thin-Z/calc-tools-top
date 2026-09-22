@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # ============================================================================
 # GSC 每日批提交器（bsk 真实点击，daemon 同生命周期）
+# 口径（2026-09-22 统一）：bsk 是本脚本的**专用运行时依赖**，不再是浏览器自动化入口；
+#   通用浏览器自动化入口 = agent-browser（原 browser-skill skill 定义已归档，二进制保留、不影响本脚本）。
 # ----------------------------------------------------------------------------
 # 用法:
 #   bash scripts/gsc-submit-daily.sh [CAP] [--dry] [--stop-on-throttle]
@@ -15,7 +17,7 @@
 #
 # 前置:
 #   1) VPN 必须开启（Google 系可达）。脚本开头会自检，不可达直接退出。
-#   2) 已登录的 Edge + bsk 扩展必须在线（本机常驻）。
+#   2) 已登录的 Edge + bsk 扩展必须在线（本机常驻）；bsk 二进制在 PATH 或 BSK_BIN 指定即可，**无需 browser-skill skill**。
 #
 # 产物:
 #   reports/gsc-pending.txt  剩余待提交队列（成功/已收录项会被移除）
@@ -32,8 +34,8 @@
 #   失败项不移出队列 → 下一批自动补跑，不消耗提交配额。
 # ============================================================================
 set -u
-# bsk 二进制路径：优先用环境变量 BSK_BIN，否则尝试 PATH 解析，最后兜底 thinZ 机器路径
-# （双机共享仓库，thinZ 与 zhaoxin 的 bsk 安装位置不同，避免写死）
+# bsk 二进制路径：优先 BSK_BIN 环境变量，其次 PATH 解析，最后兜底 thinZ 机器路径
+# （双机共享仓库：thinZ = C:/Users/thinZ/.local/bin/bsk，zhaoxin = D:/AI_Tools/bsk，二者均在 PATH）
 BSK="${BSK_BIN:-$(command -v bsk 2>/dev/null || echo C:/Users/thinZ/.local/bin/bsk.exe)}"
 REPO="D:/_Careate.Program/calculator-site"
 PENDING="$REPO/reports/gsc-pending.txt"
