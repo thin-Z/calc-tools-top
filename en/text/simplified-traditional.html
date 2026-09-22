@@ -56,9 +56,12 @@
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": [
-            { "@type": "Question", "name": "Does it cover every character?", "acceptedAnswer": { "@type": "Answer", "text": "It includes a table of common characters covering high-frequency usage. Rare characters are not guaranteed and are kept unchanged." } },
-            { "@type": "Question", "name": "Why do some conversions look ambiguous?", "acceptedAnswer": { "@type": "Answer", "text": "Some simplified characters map to multiple traditional forms (e.g. 发→發/髮, 后→後/后). This tool uses the most common form; please double-check for special contexts." } },
-            { "@type": "Question", "name": "Is my data uploaded to a server?", "acceptedAnswer": { "@type": "Answer", "text": "No. Everything runs locally in your browser; your input never leaves your device." } }
+            { "@type": "Question", "name": "Does it cover every character?", "acceptedAnswer": { "@type": "Answer", "text": "This tool ships a built-in common-character table (181 high-frequency entries) covering daily high-frequency characters; it does not guarantee coverage of every rare character or CJK extension-region character, and uncovered characters are kept unchanged." } },
+            { "@type": "Question", "name": "Why do some conversions look ambiguous?", "acceptedAnswer": { "@type": "Answer", "text": "Because of one-to-many mappings, where one simplified character maps to several traditional forms (e.g. 发→發/髮, 后→後/后). The tool uses the most common form; please double-check special contexts." } },
+            { "@type": "Question", "name": "How does the tool handle one-to-many characters like 发, 后, 干?", "acceptedAnswer": { "@type": "Answer", "text": "It picks the most frequent traditional form by character frequency (发→發, 后→後, 干→幹) and cannot sense your real meaning; confirm manually for names, places, and terms." } },
+            { "@type": "Question", "name": "How different are traditional forms across the Chinese mainland, the Taiwan region, and the Hong Kong SAR?", "acceptedAnswer": { "@type": "Answer", "text": "The traditional character forms are mostly the same; the bigger difference is regional vocabulary (e.g. 软件/軟體/軟件, 出租车/計程車/的士). This tool defaults to s2t (characters only), so regional vocabulary needs a second pass." } },
+            { "@type": "Question", "name": "What is the difference between OpenCC s2t, s2tw, and s2hk?", "acceptedAnswer": { "@type": "Answer", "text": "s2t emits standard traditional; s2tw applies Taiwan-region vocabulary; s2hk applies Hong Kong SAR vocabulary; the three are identical at the character layer and differ only at the vocabulary layer." } },
+            { "@type": "Question", "name": "Why is manual review still recommended after whole-sentence conversion?", "acceptedAnswer": { "@type": "Answer", "text": "Personal names, place names, technical terms, and idioms often contain high-ambiguity one-to-many characters, and mechanical conversion may pick the wrong one (e.g. 理發 should be 理髮). In formal contexts, always confirm key terms by hand." } }
         ]
     }
     </script>
@@ -91,7 +94,7 @@
     <ul>
         <li><a href="/en/text/case-converter">Case Converter</a></li>
         <li><a href="/en/text/word-counter">Word Counter</a></li>
-        <li><a href="/en/text/text-cleaner">Text Cleaner</a></li>
+        <li><a href="/en/text/url-encode">URL Encode</a></li>
     </ul>
 </div>
 
@@ -113,19 +116,136 @@
         </div>
 
         <section class="tool-content">
-            <h2>What is Simplified-Traditional Conversion?</h2>
-            <p>Simplified and traditional Chinese share the same language system but differ in the written form of some characters (such as 汉/漢, 见/見). Simplification conversion maps characters between the two forms using a lookup table. This tool includes a common-character table covering high-frequency characters, useful for emails, writing submissions, and cross-border communication.</p>
-            <h3>How to Use This Tool</h3>
-            <ol>
-                <li>Paste simplified or traditional Chinese in the "Input text" box</li>
-                <li>Choose "Simplified → Traditional" or "Traditional → Simplified"</li>
-                <li>The result updates in real time below</li>
-                <li>Click "Copy" to copy the converted text</li>
-            </ol>
+            <h2>What Simplified-Traditional Conversion Really Is: Character Mapping, Not Translation</h2>
+            <p>Simplified and traditional Chinese share the same language and the same meanings; they differ only in how a subset of characters is written. The difference comes from the Chinese script simplification that began in the 1950s. A Simplified-Traditional converter is therefore not a translator (meaning is unchanged) — it is a per-character lookup table that swaps each simplified glyph for its traditional counterpart, or vice versa. This tool ships a built-in common-character table of 181 high-frequency entries and maps each character individually. Because it reads characters, not words, the ambiguities and regional differences discussed below are unavoidable.</p>
+
+            <h3>One-to-Many Mappings: One Simplified, Several Traditional Forms</h3>
+            <p>When the simplified script was created, several traditional characters were often merged into a single simplified one. Reversing that — simplified to traditional — means one simplified character can map to two or more traditional forms. <strong>Note:</strong> such characters inevitably lose their context during a literal conversion; the tool can only pick the most frequent form.</p>
+            <table class="ref-table">
+                <thead><tr><th>Simplified</th><th>Traditional candidates</th><th>Meaning / usage</th></tr></thead>
+                <tbody>
+                    <tr><td>发</td><td>發 / 髮</td><td>發 = to emit, develop; 髮 = hair</td></tr>
+                    <tr><td>后</td><td>後 / 后</td><td>後 = before/after; 后 = monarch, queen</td></tr>
+                    <tr><td>干</td><td>乾 / 幹 / 干</td><td>乾 = dry; 幹 = trunk, to do; 干 = clean, to interfere</td></tr>
+                    <tr><td>里</td><td>裡 / 里</td><td>裡 = inside; 里 = mile, neighborhood</td></tr>
+                    <tr><td>面</td><td>麵 / 面</td><td>麵 = noodle; 面 = face, surface</td></tr>
+                    <tr><td>复</td><td>復 / 複</td><td>復 = recover; 複 = complex</td></tr>
+                    <tr><td>历</td><td>歷 / 曆</td><td>歷 = experience; 曆 = calendar</td></tr>
+                    <tr><td>台</td><td>臺 / 檯 / 颱 / 台</td><td>臺 = Taiwan; 檯 = counter; 颱 = typhoon; 台 = platform</td></tr>
+                    <tr><td>只</td><td>隻 / 只</td><td>隻 = a measure word; 只 = only</td></tr>
+                    <tr><td>制</td><td>製 / 制</td><td>製 = to manufacture; 制 = system, to control</td></tr>
+                    <tr><td>采</td><td>採 / 彩 / 采</td><td>採 = to pick; 彩 = color; 采 = demeanor</td></tr>
+                    <tr><td>折</td><td>摺 / 折</td><td>摺 = to fold; 折 = to break, to lose</td></tr>
+                    <tr><td>松</td><td>鬆 / 松</td><td>鬆 = loose; 松 = pine</td></tr>
+                    <tr><td>卷</td><td>捲 / 卷</td><td>捲 = to roll; 卷 = exam paper</td></tr>
+                    <tr><td>别</td><td>別 / 彆</td><td>別 = to separate; 彆 = awkward</td></tr>
+                    <tr><td>脏</td><td>髒 / 臟</td><td>髒 = dirty; 臟 = internal organ</td></tr>
+                </tbody>
+            </table>
+            <p>These are only the high-frequency representatives. We catalogued 48 representative one-to-many groups in total; the statistics follow.</p>
+
+            <h3>High-Ambiguity Statistics (based on this tool's built-in table)</h3>
+            <p>Placing the one-to-many mappings inside the tool's 181 built-in common characters shows how common ambiguity really is:</p>
+            <table class="ref-table">
+                <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+                <tbody>
+                    <tr><td>One-to-many groups catalogued</td><td>48</td></tr>
+                    <tr><td>2-way ambiguity (2 traditional forms)</td><td>43</td></tr>
+                    <tr><td>3-way ambiguity (3 traditional forms)</td><td>3</td></tr>
+                    <tr><td>4-way ambiguity (4 traditional forms)</td><td>2</td></tr>
+                    <tr><td>Maximum traditional forms for one character</td><td>4 (台)</td></tr>
+                    <tr><td>Share of built-in common characters</td><td>about 26.5%</td></tr>
+                </tbody>
+            </table>
+            <p><strong>Note:</strong> roughly 1 in every 4 built-in common characters can be ambiguous when converting simplified to traditional. Personal names, place names, technical terms, and idioms are the four riskiest categories — always proofread those after a whole-sentence conversion.</p>
+
+            <h3>Character Sets and Encodings: GB2312 / GB18030-2022 / Big5 / Unicode</h3>
+            <p>Behind the simplified-traditional debate sit several different Chinese encoding standards. The current mandatory national standard in mainland China is GB18030-2022 (Information Technology — Chinese Coded Character Set), which has the broadest coverage; traditional Chinese in the Taiwan region historically used Big5; and international exchange relies on Unicode. The comparison:</p>
+            <table class="ref-table">
+                <thead><tr><th>Standard</th><th>Published / year</th><th>Han character scale</th><th>Encoding</th><th>Code point range</th></tr></thead>
+                <tbody>
+                    <tr><td>GB2312</td><td>1980</td><td>6,763 chars</td><td>double-byte</td><td>0xA1A1–0xFEFE</td></tr>
+                    <tr><td>GBK</td><td>1995</td><td>21,003 chars</td><td>double-byte</td><td>0x8140–0xFEFE</td></tr>
+                    <tr><td>GB18030-2022</td><td>2022 (mandatory)</td><td>87,887 Han chars (CJK Ext A–G)</td><td>single/double/quad-byte</td><td>0x00–0x7F + double + quad</td></tr>
+                    <tr><td>Big5</td><td>1984 (Taiwan region)</td><td>13,053 chars</td><td>double-byte</td><td>0xA140–0xF9FE</td></tr>
+                    <tr><td>Unicode CJK Unified</td><td>—</td><td>20,992 code points</td><td>UTF-8/16/32</td><td>U+4E00–U+9FFF</td></tr>
+                    <tr><td>Unicode CJK Ext A</td><td>—</td><td>6,592 code points</td><td>UTF-8/16/32</td><td>U+3400–U+4DBF</td></tr>
+                    <tr><td>Unicode CJK Ext B</td><td>—</td><td>42,720 code points</td><td>UTF-8/16/32</td><td>U+20000–U+2A6DF</td></tr>
+                </tbody>
+            </table>
+            <p>This tool runs entirely in your browser and emits UTF-8, so whether your source text came from a GB18030 or a Big5 file, pasting it here converts correctly in both directions.</p>
+
+            <h3>Variant Forms and Regional Glyph Differences</h3>
+            <p>Even within "traditional", different dictionaries and regions disagree on a few characters; these are called variant forms. Common groups:</p>
+            <table class="ref-table">
+                <thead><tr><th>Group</th><th>Note</th></tr></thead>
+                <tbody>
+                    <tr><td>為 / 为</td><td>为 is simplified; the traditional standard is 為, though some older glyphs write 爲</td></tr>
+                    <tr><td>裏 / 裡</td><td>both traditional; 裏 is the classical form, 裡 is more common in the Taiwan region</td></tr>
+                    <tr><td>够 / 夠</td><td>够 is simplified; 夠 is traditional, common in the Taiwan region</td></tr>
+                    <tr><td>群 / 羣</td><td>群 is the mainland standard; 羣 is a variant / traditional form</td></tr>
+                    <tr><td>回 / 迴</td><td>迴 is a variant of 回, used in 迴旋 (revolve), 迴廊 (corridor)</td></tr>
+                    <tr><td>线 / 線</td><td>线 simplified; 線 traditional</td></tr>
+                    <tr><td>窗 / 窓 / 牕</td><td>窓 and 牕 are variant forms of 窗 (window)</td></tr>
+                    <tr><td>强 / 強 / 彊</td><td>強 is traditional; 彊 is a variant</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Regional Vocabulary: Chinese Mainland / Taiwan Region / Hong Kong SAR</h3>
+            <p>Beyond individual characters, the three regions differ far more at the vocabulary level. The same concept can be written completely differently. <strong>Note:</strong> this tool's default "Simplified to Traditional (standard)" converts characters only and does not automatically switch to regional vocabulary; the table below helps you decide whether a second pass is needed.</p>
+            <table class="ref-table">
+                <thead><tr><th>Concept</th><th>Mainland China</th><th>Taiwan region</th><th>Hong Kong SAR</th></tr></thead>
+                <tbody>
+                    <tr><td>software</td><td>软件</td><td>軟體</td><td>軟件</td></tr>
+                    <tr><td>information</td><td>信息</td><td>資訊</td><td>資訊</td></tr>
+                    <tr><td>video</td><td>视频</td><td>影片</td><td>影片</td></tr>
+                    <tr><td>taxi</td><td>出租车</td><td>計程車</td><td>的士</td></tr>
+                    <tr><td>printer</td><td>打印机</td><td>印表機</td><td>列印機</td></tr>
+                    <tr><td>mouse</td><td>鼠标</td><td>滑鼠</td><td>滑鼠</td></tr>
+                    <tr><td>internet</td><td>互联网</td><td>網際網路</td><td>互聯網</td></tr>
+                    <tr><td>folder</td><td>文件夹</td><td>資料夾</td><td>檔案夾</td></tr>
+                    <tr><td>memory</td><td>内存</td><td>記憶體</td><td>記憶體</td></tr>
+                    <tr><td>CD / disc</td><td>光盘</td><td>光碟</td><td>光碟</td></tr>
+                </tbody>
+            </table>
+
+            <h3>OpenCC Pipelines: s2t / s2tw / s2hk</h3>
+            <p>The open-source library OpenCC offers several configurations. This tool's "Simplified to Traditional (standard)" direction is equivalent to OpenCC's <strong>s2t</strong>; if you target a specific region, here is how the other two differ:</p>
+            <table class="ref-table">
+                <thead><tr><th>Config</th><th>Target</th><th>Vocabulary bias</th><th>Character layer</th></tr></thead>
+                <tbody>
+                    <tr><td>s2t</td><td>standard traditional</td><td>neutral, no regional words</td><td>identical</td></tr>
+                    <tr><td>s2tw</td><td>Taiwan traditional</td><td>applies Taiwan-region words (軟體 / 影片 / 資訊)</td><td>identical</td></tr>
+                    <tr><td>s2hk</td><td>Hong Kong traditional</td><td>applies Hong Kong SAR words (軟件 / 影片 / 的士)</td><td>identical</td></tr>
+                </tbody>
+            </table>
+            <p><strong>Note:</strong> the three differ mainly at the vocabulary layer; the traditional character forms are essentially the same. This tool defaults to s2t, so if you write for readers in the Taiwan region or the Hong Kong SAR, after conversion you may do a second pass such as 軟件→軟體, 視頻→影片, 信息→資訊, taxi→計程車/的士, to match local usage.</p>
+
+            <h3>Three Real Examples (default "Simplified to Traditional" direction)</h3>
+            <p>The examples below use the page's default direction "Simplified to Traditional"; the input is exactly what you would type into the default text box, and the output is produced by this tool's per-character mapping.</p>
+            <h4>Example 1: How one-to-many fails in practice</h4>
+            <p>Input: <code>小明后天要出差，出发前请理发。</code></p>
+            <p>Output: <code>小明後天要出差，出發前請理發。</code></p>
+            <p>Analysis: both occurrences of 发 are rendered with the most common traditional form 發 — "出发→出發" is correct, but "理发" should be "理髮" (haircut, a noun). The tool gave "理發". This is the classic failure of "one character, many traditional forms" when semantics are invisible; a human should change "理發" back to "理髮".</p>
+            <h4>Example 2: Default s2t output and regional vocabulary</h4>
+            <p>Input: <code>这个软件可以处理网络文件，信息很全。</code></p>
+            <p>Output: <code>這個軟件可以處理網絡文件，信息很全。</code></p>
+            <p>Analysis: the character layer converts fully (软件→軟件, 网络→網絡). But 軟件 happens to match Hong Kong SAR usage; for the Taiwan region you would change it to 軟體. Meanwhile 信息 is not in the tool's built-in table and stays as-is — which also shows the default s2t does no regional vocabulary substitution, so 信息→資訊 (a s2tw-style change) must be handled separately.</p>
+            <h4>Example 3: A clean one-to-one conversion</h4>
+            <p>Input: <code>我们认真学习汉字。</code></p>
+            <p>Output: <code>我們認真學習漢字。</code></p>
+            <p>Analysis: every character here is a one-to-one pair with no ambiguity, so the correct traditional text comes out directly. Pure one-to-one text is the safest scenario for simplified-traditional conversion.</p>
+
+            <h3>Further Reading</h3>
+            <p>For more on text processing, see the <a href="/blog/en/case-converter-guide">Complete Case Converter Guide</a>, and the tools <a href="/en/text/case-converter">Case Converter</a>, <a href="/en/text/word-counter">Word Counter</a>, and <a href="/en/text/url-encode">URL Encode</a>.</p>
+
             <h3>Frequently Asked Questions</h3>
-            <p><strong>Does it cover every character?</strong> It includes a table of common characters covering high-frequency usage. Rare characters are not guaranteed and are kept unchanged.</p>
-            <p><strong>Why do some conversions look ambiguous?</strong> Some simplified characters map to multiple traditional forms (如 发→發/髮, 后→後/后). This tool uses the most common form; please double-check for special contexts.</p>
-            <p><strong>Is my data uploaded to a server?</strong> No. Everything runs locally in your browser; your input never leaves your device.</p>
+            <p><strong>Does it cover every character?</strong> This tool ships a built-in common-character table (181 high-frequency entries) covering daily high-frequency characters; it does not guarantee coverage of every rare character or CJK extension-region character, and uncovered characters are kept unchanged.</p>
+            <p><strong>Why do some conversions look ambiguous?</strong> Because of one-to-many mappings, where one simplified character maps to several traditional forms (e.g. 发→發/髮, 后→後/后). The tool uses the most common form; please double-check special contexts.</p>
+            <p><strong>How does the tool handle one-to-many characters like 发, 后, 干?</strong> It picks the most frequent traditional form by character frequency (发→發, 后→後, 干→幹) and cannot sense your real meaning; confirm manually for names, places, and terms.</p>
+            <p><strong>How different are traditional forms across the Chinese mainland, the Taiwan region, and the Hong Kong SAR?</strong> The traditional character forms are mostly the same; the bigger difference is regional vocabulary (e.g. 软件/軟體/軟件, 出租车/計程車/的士). This tool defaults to s2t (characters only), so regional vocabulary needs a second pass.</p>
+            <p><strong>What is the difference between OpenCC s2t, s2tw, and s2hk?</strong> s2t emits standard traditional; s2tw applies Taiwan-region vocabulary; s2hk applies Hong Kong SAR vocabulary; the three are identical at the character layer and differ only at the vocabulary layer.</p>
+            <p><strong>Why is manual review still recommended after whole-sentence conversion?</strong> Personal names, place names, technical terms, and idioms often contain high-ambiguity one-to-many characters, and mechanical conversion may pick the wrong one (e.g. 理發 should be 理髮). In formal contexts, always confirm key terms by hand.</p>
         </section>
 
     </div>

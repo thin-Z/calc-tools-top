@@ -104,36 +104,147 @@
 
             <!-- SEO Content -->
             <div class="seo-content">
-                <h2>What is HTML Stripping?</h2>
-                <p>HTML stripping is the process of removing all or some HTML tags from code, leaving only plain text content. This is useful for extracting plain text from web pages, cleaning rich text editor content, preprocessing data for analysis, or converting HTML emails to plain text format.</p>
-                <p>All processing is done entirely in your browser— no data is uploaded to any server, ensuring your privacy.</p>
+                <h2>HTML to Plain Text: It Is Normalization, Not Just Deleting Tags</h2>
+                <p>Many tutorials describe "stripping HTML" as "delete everything between &lt; and &gt; with a regex" and call it done. But a strict HTML-to-plain-text conversion is a <strong>normalization pipeline</strong> that must at least do four things: decode character entities, collapse runs of whitespace, insert line breaks for block-level elements, and discard scripts and styles. If you only delete tags while ignoring entities and whitespace, what you get is not "clean text" — it is a half-stripped blob carrying <code>&amp;nbsp;</code>, <code>&amp;amp;</code> leftovers and odd indentation. This tool takes the lightweight regex route (it runs entirely in your browser and uploads nothing), which is great for quick cleanup; but you should know exactly where its boundary lies so you can judge whether the output is trustworthy.</p>
+                <p>On sourcing: HTML is an international standard defined by the W3C and the WHATWG HTML Living Standard. The entity table and the whitespace rules both come from that specification. One cross-locale gotcha worth flagging: the HTML non-breaking space <code>&amp;nbsp;</code> (U+00A0) is not the same character as the CJK full-width space (U+3000) that appears in Chinese text. The tool treats both as ordinary characters and does not collapse them, so a Chinese page stripped here can show "spaces that will not go away" — that is expected, not a bug.</p>
 
-                <h3>Supported Tags to Keep</h3>
-                <ul>
-                    <li><strong>&lt;br&gt;</strong> Keep line breaks to maintain text structure</li>
-                    <li><strong>&lt;p&gt;</strong> Keep paragraph tags for text segmentation</li>
-                    <li><strong>&lt;b&gt;</strong> Keep bold tags</li>
-                    <li><strong>&lt;i&gt;</strong> Keep italic tags</li>
-                    <li><strong>&lt;a&gt;</strong> Keep link tags to preserve hyperlinks</li>
-                </ul>
+                <h3>Table 1: HTML Entity Decoding Rules</h3>
+                <p>A conforming HTML parser resolves character references into their Unicode code points at parse time. The WHATWG HTML Living Standard named-character-reference table holds <strong>2,231</strong> named references (HTML 4.01 defined only 252), plus two numeric forms — decimal <code>&amp;#nnn;</code> and hexadecimal <code>&amp;#xNNN;</code> — that can represent any Unicode code point. The most common ones and their real code points:</p>
+                <table class="ref-table">
+                    <thead><tr><th>Reference</th><th>Decodes to</th><th>Unicode</th><th>Category / use</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>&amp;amp;</code></td><td>&amp;</td><td>U+0026</td><td>syntax char (must escape)</td></tr>
+                        <tr><td><code>&amp;lt;</code></td><td>&lt;</td><td>U+003C</td><td>syntax char (tag start)</td></tr>
+                        <tr><td><code>&amp;gt;</code></td><td>&gt;</td><td>U+003E</td><td>syntax char (tag end)</td></tr>
+                        <tr><td><code>&amp;quot;</code></td><td>"</td><td>U+0022</td><td>attribute quote</td></tr>
+                        <tr><td><code>&amp;apos;</code></td><td>'</td><td>U+0027</td><td>apostrophe (added in HTML5)</td></tr>
+                        <tr><td><code>&amp;nbsp;</code></td><td>no-break space</td><td>U+00A0</td><td>typographic space (not collapsed)</td></tr>
+                        <tr><td><code>&amp;mdash;</code></td><td>—</td><td>U+2014</td><td>em dash</td></tr>
+                        <tr><td><code>&amp;copy;</code></td><td>©</td><td>U+00A9</td><td>copyright sign</td></tr>
+                        <tr><td><code>&amp;pound;</code></td><td>£</td><td>U+00A3</td><td>currency sign</td></tr>
+                        <tr><td><code>&amp;yen;</code></td><td>¥</td><td>U+00A5</td><td>currency sign</td></tr>
+                        <tr><td><code>&amp;#8212;</code></td><td>—</td><td>U+2014</td><td>numeric reference (equals &amp;mdash;)</td></tr>
+                    </tbody>
+                </table>
+                <p><strong>Note:</strong> this tool is a pure regex stripper and <strong>does not</strong> decode entities. So <code>&amp;nbsp;</code> stays in the output as the literal text <code>&amp;nbsp;</code> rather than becoming a space. To truly decode, use a browser DOM parser or a backend library. Example 3 below shows this directly.</p>
 
-                <h3>Use Cases</h3>
-                <ul>
-                    <li><strong>Web content extraction</strong> Extract clean text from HTML pages</li>
-                    <li><strong>Rich text conversion</strong> Convert rich text editor content to plain text</li>
-                    <li><strong>Data preprocessing</strong> Clean HTML-formatted datasets for analysis</li>
-                    <li><strong>Email conversion</strong> Convert HTML emails to plain text format</li>
-                    <li><strong>SEO optimization</strong> Review plain text readability of your pages</li>
-                </ul>
-                <h3>Why Strip HTML Tags?</h3>
-                <p>HTML tags are the code a browser uses to interpret page structure, but for reading and analyzing plain text, they're mostly noise. When you need to copy web content into a Word doc, send a plain-text email, store it in a database, or feed it to a natural-language model, these tags interfere with the cleanliness of the content. Removing them gives you genuinely "plain text".</p>
-                <p>Another common need is <strong>extracting body text for analysis</strong> — keyword counting, word statistics, text clustering, or turning a page's body into a readable summary. If you leave a bunch of <code>&lt;div&gt;</code>, <code>&lt;span&gt;</code>, class attributes, and inline styles, the numbers you compute won't be accurate. Strip the tags first so your analysis means something.</p>
-                <h3>Common Mistakes</h3>
-                <p><strong>① Don't assume "remove everything".</strong> Sometimes keeping <code>&lt;br&gt;</code> or <code>&lt;p&gt;</code> preserves paragraph structure; otherwise the plain text collapses into one big block and becomes harder to read. The tool lets you pick which tags to keep, exactly for this case.</p>
-                <p><strong>② Watch out for scripts and styles.</strong> Complex HTML often contains <code>&lt;script&gt;</code> or <code>&lt;style&gt;</code> that shouldn't remain in plain text; if the source is untrusted, stripping tags also removes that potentially risky code.</p>
-                <p><strong>③ Mind special entities.</strong> Things like <code>&amp;nbsp;</code> (space) and <code>&amp;amp;</code> (&amp;) may linger as artifacts after removal; give the result a quick review to make sure no weird characters remain.</p>
-                <h3>How to Use the Result</h3>
-                <p>The clean plain text can go straight into editing, analysis, database storage, or document organization. If you next need to count words or clean extra spaces, pair this with our Word Counter and Text Cleaner tools to build a full text-processing workflow.</p>
+                <h3>Table 2: Block-Level Element Line-Break Rules</h3>
+                <p>Plain text has no "tags", but humans expect "paragraphs". During rendering, different block-level elements should inject different numbers of line breaks when textified. The most-asked rules:</p>
+                <table class="ref-table">
+                    <thead><tr><th>Element</th><th>Adds break?</th><th>Where</th><th>Note</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>&lt;p&gt;</code></td><td>yes</td><td>1 line before & after</td><td>paragraph; common segmentation base</td></tr>
+                        <tr><td><code>&lt;div&gt;</code></td><td>yes (visually)</td><td>1 line before & after</td><td>block container; add break when textifying</td></tr>
+                        <tr><td><code>&lt;br&gt;</code></td><td>yes</td><td>1 line after only</td><td>hard break; no closing tag</td></tr>
+                        <tr><td><code>&lt;li&gt;</code></td><td>yes</td><td>1 line before each item</td><td>list item; usually prefix "· " or "1. "</td></tr>
+                        <tr><td><code>&lt;tr&gt;</code></td><td>yes</td><td>1 line after each row</td><td>table row; column alignment in Table 5</td></tr>
+                        <tr><td><code>&lt;h1&gt;–&lt;h6&gt;</code></td><td>yes</td><td>1 line before & after</td><td>heading; often blank line for emphasis</td></tr>
+                        <tr><td><code>&lt;blockquote&gt;</code></td><td>yes</td><td>1 line before & after</td><td>quote block; prefix ">"</td></tr>
+                        <tr><td><code>&lt;hr&gt;</code></td><td>no (semantic)</td><td>use "---" instead</td><td>horizontal rule; no plain-text equivalent</td></tr>
+                    </tbody>
+                </table>
+                <p>By default this tool <strong>does not</strong> add these breaks — it only deletes tags, so the default output paragraphs get "glued" together. To keep a sense of paragraphs, check "keep" for <code>&lt;p&gt;</code> or <code>&lt;br&gt;</code> (see Example 2).</p>
+
+                <h3>Table 3: Elements to Discard vs Attributes to Keep</h3>
+                <table class="ref-table">
+                    <thead><tr><th>Element / attribute</th><th>Handling</th><th>Reason</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>&lt;script&gt;</code></td><td>drop entirely</td><td>executable code; plain text neither needs nor should keep it</td></tr>
+                        <tr><td><code>&lt;style&gt;</code></td><td>drop entirely</td><td>CSS; unrelated to content</td></tr>
+                        <tr><td><code>&lt;!-- comment --&gt;</code></td><td>drop entirely</td><td>author note; invisible to readers</td></tr>
+                        <tr><td><code>&lt;noscript&gt;</code></td><td>drop entirely</td><td>no-script fallback; meaningless once textified</td></tr>
+                        <tr><td><code>alt</code> (img)</td><td>keep as text</td><td>alternative text; the only readable info for an invisible image</td></tr>
+                        <tr><td><code>title</code> (element)</td><td>keep as text</td><td>hover hint; can fold into body or a bracket note</td></tr>
+                        <tr><td><code>&lt;img&gt;</code> itself</td><td>drop tag</td><td>image cannot render as plain text, but alt should be textified</td></tr>
+                    </tbody>
+                </table>
+                <p>This is where "drop formatting, keep content" lands: <code>&lt;script&gt;</code>/<code>&lt;style&gt;</code>/comments are removed, while semantic-bearing attributes like <code>alt</code> and <code>title</code> are restored to readable words.</p>
+
+                <h3>Table 4: Whitespace Collapsing Rules (HTML white-space collapsing)</h3>
+                <p>The HTML specification says that under default rendering, a run of whitespace characters (spaces, tabs, newlines) is <strong>collapsed to a single space</strong>, whitespace at element boundaries is collapsed, and leading/trailing whitespace on a line is removed. Common cases:</p>
+                <table class="ref-table">
+                    <thead><tr><th>Case</th><th>Spec behavior</th><th>Plain-text tip</th></tr></thead>
+                    <tbody>
+                        <tr><td>runs of space / tab / newline</td><td>merge to one space</td><td>replace <code>\s+</code> with single space</td></tr>
+                        <tr><td>whitespace at tag boundary</td><td>collapsed</td><td>clear it after tag removal</td></tr>
+                        <tr><td>leading / trailing whitespace</td><td>removed</td><td><code>trim()</code> each line</td></tr>
+                        <tr><td><code>&amp;nbsp;</code> (U+00A0)</td><td>not collapsed</td><td>keep, or replace with normal space as needed</td></tr>
+                        <tr><td>CJK full-width space (U+3000)</td><td>treated as a character</td><td>keep or convert per locale</td></tr>
+                    </tbody>
+                </table>
+                <p><strong>Note:</strong> collapsing applies only to ordinary whitespace. <code>&amp;nbsp;</code> and the full-width space (U+3000) are excluded — which is exactly why you sometimes see "spaces that will not delete" after stripping.</p>
+
+                <h3>Table 5: &lt;table&gt; to Plain Text Alignment Problem</h3>
+                <p>Turning a table into plain text is hard not because of "removing tags" but because of "aligning columns". Plain text has no cell width, so these issues make output unreadable:</p>
+                <table class="ref-table">
+                    <thead><tr><th>Problem</th><th>Symptom</th><th>Tip</th></tr></thead>
+                    <tbody>
+                        <tr><td>column alignment</td><td>cells vary in length; lines misalign</td><td>fixed-width pad or Markdown table</td></tr>
+                        <tr><td><code>colspan</code></td><td>one cell spans many columns; width math gets complex</td><td>merge and label</td></tr>
+                        <tr><td><code>rowspan</code></td><td>content spans rows vertically</td><td>repeat or leave blank per row</td></tr>
+                        <tr><td>nested tables</td><td>table inside table</td><td>flatten inner first, then outer</td></tr>
+                        <tr><td>empty cells</td><td>missing content shifts layout</td><td>pad with placeholder (e.g. "-")</td></tr>
+                    </tbody>
+                </table>
+                <p>Verdict: if your goal is a "readable table", plain-text stripping is the wrong tool — hand it to a structure-preserving tool like <a href="/en/text/markdown-preview">Markdown Preview</a>. Use this tool only when the goal is "format-free plain text".</p>
+
+                <h3>Table 6: HTML Stripping vs Markdown Conversion</h3>
+                <table class="ref-table">
+                    <thead><tr><th>Dimension</th><th>Plain-text strip (this tool)</th><th>Markdown conversion</th></tr></thead>
+                    <tbody>
+                        <tr><td>structure</td><td>discarded</td><td>keeps headings / lists / quotes</td></tr>
+                        <tr><td>links</td><td>anchor text only</td><td>keeps <code>[text](URL)</code></td></tr>
+                        <tr><td>headings</td><td>plain line</td><td><code>#</code> prefix</td></tr>
+                        <tr><td>lists</td><td>plain line</td><td><code>-</code> / <code>1.</code> prefix</td></tr>
+                        <tr><td>bold / italic</td><td>lost</td><td>keeps <code>**</code> / <code>*</code></td></tr>
+                        <tr><td>tables</td><td>misaligned (see above)</td><td>keeps pipe table</td></tr>
+                    </tbody>
+                </table>
+                <p>In short: use this tool for "plain text", use <a href="/en/text/markdown-preview">Markdown Preview</a> for "lightweight formatting". They are not substitutes; they serve different goals.</p>
+
+                <h3>Three Worked Examples (using the page default input)</h3>
+                <p>All three examples use the default HTML already in the tool's text box, so they match exactly what you see when you open the page. Output was verified character by character with a script.</p>
+
+                <h4>Example 1: Strip all tags (no keep boxes checked)</h4>
+                <p>The default input is <strong>186</strong> characters and contains <strong>18</strong> tags. After stripping all, the result is <strong>88</strong> characters:</p>
+<pre>Welcome to My Website
+This is bold and italic text.
+
+  Item 1
+  Item 2
+
+Learn more here.</pre>
+                <p>Notice how the heading, paragraphs and list are "pressed" into continuous text, and the <code>&lt;li&gt;</code> leading spaces remain (no collapsing) — the typical product of "delete tags only".</p>
+
+                <h4>Example 2: Keep &lt;p&gt; and &lt;br&gt;</h4>
+                <p>With <code>p</code> and <code>br</code> kept, the output grows to <strong>102</strong> characters — the <code>&lt;p&gt;</code> tags are kept verbatim in the text:</p>
+<pre>Welcome to My Website
+&lt;p&gt;This is bold and italic text.&lt;/p&gt;
+
+  Item 1
+  Item 2
+
+&lt;p&gt;Learn more here.&lt;/p&gt;</pre>
+                <p><strong>Note:</strong> this tool's "keep" means <strong>keep the whole tag</strong>, not turn <code>&lt;p&gt;</code> into a line break. So what you see is the literal angled-bracket text <code>&lt;p&gt;</code>, not a real blank line. If you want paragraph breaks, post-process or switch to a structure-preserving tool.</p>
+
+                <h4>Example 3: Entities are not decoded (key trap)</h4>
+                <p>Input <code>&lt;p&gt;Price: &amp;pound;10 &amp;amp; &amp;copy; 2026&amp;mdash;end&amp;nbsp;space&lt;/p&gt;</code> yields <strong>55</strong> characters with entities <strong>kept literally</strong>:</p>
+<pre>Price: &amp;pound;10 &amp;amp; &amp;copy; 2026&amp;mdash;end&amp;nbsp;space</pre>
+                <p>A conforming parser would decode it to <code>Price: £10 &amp; © 2026—end space</code>. The gap exists because entity decoding belongs to the HTML parse stage, which this tool does not perform. For clean output, decode entities first in another environment, or accept the literal residue and replace by hand.</p>
+
+                <h3>Frequently Asked Questions</h3>
+                <h4>Why doesn't &amp;nbsp; become a space after stripping?</h4>
+                <p>Because this tool is a pure regex stripper that only deletes <code>&lt;...&gt;</code> tags and does not run HTML entity decoding. <code>&amp;nbsp;</code> (U+00A0 no-break space) stays in the output as the literal text <code>&amp;nbsp;</code>. To really turn it into a space, decode entities first with a browser DOM or a backend library, then strip tags.</p>
+                <h4>After keeping &lt;p&gt;, why is the &lt;p&gt; text still in the result?</h4>
+                <p>The keep logic is "keep the whole tag", meaning the matched <code>&lt;p&gt;</code> tag is left in the text as-is, not replaced by a line break. It suits debugging where you want to see the tag still present; for real paragraph breaks, post-process or use a structure-preserving tool.</p>
+                <h4>Why does a &lt;table&gt; turn misaligned in plain text?</h4>
+                <p>Plain text has no cell width, so uneven column lengths, <code>colspan</code>/<code>rowspan</code>, nested tables and empty cells all cause misalignment. Plain-text stripping only solves "remove tags"; the alignment problem needs fixed-width padding or a pipe table in <a href="/en/text/markdown-preview">Markdown Preview</a>.</p>
+                <h4>Should I strip HTML or convert to Markdown?</h4>
+                <p>The goal decides: for format-free plain text (word counts, storage, feeding a model) use this tool; for lightweight formatting that keeps headings, lists, links and tables, use <a href="/en/text/markdown-preview">Markdown Preview</a>. See Table 6 above.</p>
+                <h4>Why do spaces look wrong after stripping a Chinese page?</h4>
+                <p>Chinese pages mix two spaces: HTML <code>&amp;nbsp;</code> (U+00A0, Western no-break space) and the CJK full-width space (U+3000). They are different characters and neither is covered by whitespace collapsing, so both survive stripping. Treat them deliberately — keep or convert to a half-width space — rather than assuming they will vanish.</p>
+
+                <p>Want to analyze the cleaned text further? Count characters with <a href="/en/text/word-counter">Word Counter</a>, or compare before-and-after with <a href="/en/text/text-diff">Text Diff</a>. For more hands-on tips, see the <a href="/blog/en/html-stripper-guide">HTML Stripper guide</a>.</p>
             </div>
         </div>
 
@@ -150,5 +261,53 @@
     <p>© 2026 Online Calculators | Free Online Calculators</p>
 </footer>
     <script src="/js/like.js" defer></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Why doesn't &nbsp; become a space after stripping?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Because this tool is a pure regex stripper that only deletes <...> tags and does not run HTML entity decoding. &nbsp; (U+00A0 no-break space) stays in the output as the literal text &nbsp;. To really turn it into a space, decode entities first with a browser DOM or a backend library, then strip tags."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "After keeping <p>, why is the <p> text still in the result?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The keep logic is keep the whole tag, meaning the matched <p> tag is left in the text as-is, not replaced by a line break. It suits debugging where you want to see the tag still present; for real paragraph breaks, post-process or use a structure-preserving tool."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why does a <table> turn misaligned in plain text?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Plain text has no cell width, so uneven column lengths, colspan/rowspan, nested tables and empty cells all cause misalignment. Plain-text stripping only solves remove tags; the alignment problem needs fixed-width padding or a pipe table in Markdown Preview."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Should I strip HTML or convert to Markdown?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The goal decides: for format-free plain text (word counts, storage, feeding a model) use this tool; for lightweight formatting that keeps headings, lists, links and tables, use Markdown Preview. They are not substitutes; they serve different goals."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why do spaces look wrong after stripping a Chinese page?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Chinese pages mix two spaces: HTML &nbsp; (U+00A0, Western no-break space) and the CJK full-width space (U+3000). They are different characters and neither is covered by whitespace collapsing, so both survive stripping. Treat them deliberately rather than assuming they will vanish."
+                }
+            }
+        ]
+    }
+    </script>
     </body>
 </html>

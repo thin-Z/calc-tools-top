@@ -35,6 +35,55 @@
     <script src="/js/api-client.js" defer></script>
     <script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
     <script src="/js/text-tools/url-encode.js" defer></script>
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "为什么默认的搜索词 hello%20world 不能再用本工具编码一次？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "因为它已经是用百分号编码过的串，% 是普通字符。再编码会把 % 变成 %25，空格原本的 %20 变成 %2520，服务端只解码一次就会得到字面量 hello%20world 而非空格。只有原始文本才需要编码，已编码串应直接解码或使用。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "路径、查询、片段里的同一个字符，编码规则为什么不一样？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "因为 RFC 3986 给三个位置定义了不同的合法字符集：路径允许 pchar（含子分隔符与 : @ /），查询和片段允许范围更宽（甚至允许 ?）。但语法允许不意味语义安全，像 & = 在查询里是分隔符，要当数据传就必须编码。本工具用 encodeURIComponent 把结构字符也编码掉，适合编码参数值。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "一个中文字符在 URL 里会变成几个百分号字符？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "按 UTF-8，常用汉字占 3 字节，每字节写成 %XX，所以 1 个汉字等于 3 个 %XX 等于 9 个显示字符（如你转为 %E4%BD%A0）。德文变音等 Latin-1 字符占 2 字节（6 个字符），emoji 占 4 字节（12 个字符）。长度由字符集而非字符本身决定。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "encodeURI 和 encodeURIComponent 到底什么时候该用哪个？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "编码完整 URL 地址用 encodeURI（保留 : / ? # & = 等结构字符，不破坏地址）；编码某个参数值用 encodeURIComponent（把结构字符也编码，防止特殊字符被误读）。本工具对应后者。escape 已废弃，切勿在新代码使用。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "表单提交里空格为什么变成了加号，而路径里却是 %20？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "application/x-www-form-urlencoded 表单体沿用早期约定把空格写成 +；URL 路径与查询的原始百分号编码把空格写成 %20。两者语境不同，服务端对表单体里的 + 还原为空格、对路径里的 + 当作真正的加号。所以空格还是加号取决于它处在表单体还是 URL 中。"
+            }
+        }
+    ]
+}
+</script>
 </head>
 <body>
     <header>
@@ -98,30 +147,121 @@
                 </div>
             </div>
 
-            <!-- SEO Content -->
-            <div class="seo-content">
-                <h2>什么是 URL 编码？</h2>
-                <p>URL 编码（百分号编码）是在特定情况下对 URI 中的信息进行编码的机制。它将特殊字符和非 ASCII 字符转换为百分号（%）后跟两个十六进制数字，代表该字符的字节值。这确保数据能通过 HTTP 安全传输而不破坏 URL 结构。</p>
-                <p>本工具使用浏览器内置的 <code>encodeURIComponent</code> 和 <code>decodeURIComponent</code> API 进行 UTF-8 安全的编码与解码。所有处理均在浏览器本地完成，数据不会离开你的设备。</p>
+            <!-- Tool Content -->
+            <div class="tool-content">
+                <h2>URL 编码不是"把特殊字符藏起来"：它是 UTF-8 字节的百分号转写</h2>
+                <p>很多人把 URL 编码理解成"把空格、中文、&amp; 这类麻烦字符替换掉"。这个直觉只说对了一半。百分号编码（percent-encoding）的准确含义是：先把字符按约定的字符集（现代几乎都是 UTF-8）拆成字节，再把每个字节写成"%"加两位十六进制数。也就是说，<code>%E4%BD%A0</code> 不是"你"这个汉字本身的代号，而是汉字"你"在 UTF-8 下的三个字节 <code>E4 BD A0</code> 的另一种写法。</p>
+                <p>意识到"编码是对字节、而不是对字符"这一点，能解开绝大多数困惑：为什么同一个中文在不同系统里有时乱码（字符集不一致）、为什么把已经是 %XX 的字符串再编码一次会越编越长（双重编码）、为什么 emoji 占的字符特别多（四个字节）。本工具严格采用浏览器内置的 <code>encodeURIComponent</code> 加 <code>decodeURIComponent</code>，全程 UTF-8，因此不会出现字符集错配导致的乱码。关于前端处理这类参数的更多细节，可参考 <a href="/blog/zh/url-encode-guide">URL 编码完整指南</a>。</p>
 
-                <h3>常见使用场景</h3>
+                <h3>RFC 3986 字符分类表：哪些"不用编码"、哪些"必须编码"</h3>
+                <p>RFC 3986（统一资源标识符通用语法）把 URI 允许出现的字符分成三大类。关键在于：<strong>未保留字符</strong>在任何位置都可原样出现、永远不需要编码；<strong>保留字符</strong>被保留作分隔符用途，只有在"它出现的位置与它的分隔角色冲突"时才必须编码；其余字符（空格、%、引号、尖括号、反斜杠、花括号等）一律必须编码。下表列出本工具（<code>encodeURIComponent</code>）对各类字符的实际处理——注意它比 RFC 更严格：几乎所有保留字符都会被编码，只留下未保留字符加上 <code>!'()*-._~</code> 中那几个碰巧也被放行的子分隔符。</p>
+                <table class="ref-table">
+                    <thead><tr><th>类别</th><th>字符</th><th>数量</th><th>是否必须编码</th><th>encodeURIComponent 行为</th></tr></thead>
+                    <tbody>
+                        <tr><td>未保留 unreserved</td><td>A-Z a-z 0-9 - . _ ~</td><td>66</td><td>不需要（原样即可）</td><td>全部保留，不编码</td></tr>
+                        <tr><td>保留·通用分隔符 gen-delims</td><td>: / ? # [ ] @</td><td>7</td><td>在其分隔角色之外的位置必须编码</td><td>全部编码（: 转为 %3A 等）</td></tr>
+                        <tr><td>保留·子分隔符 sub-delims</td><td>! $ &amp; ' ( ) * + , ; =</td><td>11</td><td>作为"数据值"出现时建议编码</td><td>除 ! ' ( ) * 外全部编码</td></tr>
+                        <tr><td>其余（控制与标点）</td><td>空格 % " &lt; &gt; \ ^ ` { | } 等</td><td>其余</td><td>必须编码</td><td>全部编码（空格转为 %20，% 转为 %25）</td></tr>
+                    </tbody>
+                </table>
+                <p><strong>注意：</strong>未保留字符即便被编码（例如把 <code>a</code> 写成 <code>%61</code>）在语义上仍然等价，服务器解码后会还原；但保留字符一旦被错误编码，可能破坏 URL 结构。所以"要不要在值里编码保留字符"取决于这个字符是"分隔符"还是"数据"。</p>
+
+                <h3>path、query、fragment 的编码差异对照</h3>
+                <p>同一个字符出现在 URL 的不同位置，能否原样出现完全不同。原因在 RFC 3986 的 ABNF：路径（path）允许 pchar（未保留加子分隔符加 : @ /），查询（query）和片段（fragment）允许的范围更宽（甚至允许 ?）。但语义上的"允许"不等于"安全"——比如在查询里 <code>&amp;</code> 和 <code>=</code> 虽然语法上能原样写，却被当作参数分隔符；要把它们当数据传递就必须编码。下表同时给出本工具的输出作为对照：</p>
+                <table class="ref-table">
+                    <thead><tr><th>字符</th><th>path 路径</th><th>query 查询</th><th>fragment 片段</th><th>encodeURIComponent</th><th>说明</th></tr></thead>
+                    <tbody>
+                        <tr><td>+</td><td>可原样</td><td>可原样</td><td>可原样</td><td>%2B</td><td>在表单编码里 + 表示空格，作数据应编码</td></tr>
+                        <tr><td>/</td><td>可原样（段分隔）</td><td>可原样</td><td>可原样</td><td>%2F</td><td>路径里是层级分隔符</td></tr>
+                        <tr><td>?</td><td>必须编码</td><td>可原样</td><td>可原样</td><td>%3F</td><td>? 在路径里会误判为查询起点</td></tr>
+                        <tr><td>&amp;</td><td>可原样</td><td>可原样</td><td>可原样</td><td>%26</td><td>查询里是参数分隔符，作数据须编码</td></tr>
+                        <tr><td>=</td><td>可原样</td><td>可原样</td><td>可原样</td><td>%3D</td><td>查询里是键值分隔符，作数据须编码</td></tr>
+                        <tr><td>#</td><td>必须编码</td><td>必须编码</td><td>可原样（片段起点）</td><td>%23</td><td># 在任何数据位置都要编码</td></tr>
+                        <tr><td>:</td><td>可原样</td><td>可原样</td><td>可原样</td><td>%3A</td><td>常用于 scheme 与端口</td></tr>
+                        <tr><td>@</td><td>可原样</td><td>可原样</td><td>可原样</td><td>%40</td><td>用于 userinfo</td></tr>
+                        <tr><td>[ ]</td><td>必须编码</td><td>必须编码</td><td>必须编码</td><td>%5B %5D</td><td>仅 IPv6 字面量专用，数据须编码</td></tr>
+                    </tbody>
+                </table>
+                <p><strong>注意：</strong>上面"可原样"是语法层面。把 URL 当作"完整地址"编码时应使用 <code>encodeURI</code>（保留结构字符）；把"某个参数值"编码时才用本工具的 <code>encodeURIComponent</code>（把结构字符也编码掉）。混淆二者会让地址结构被破坏或让特殊字符漏网。配合 <a href="/zh/text/base64-encode">Base64 编解码</a> 处理二进制或复杂文本时，先 Base64 再放进参数往往更省心。</p>
+
+                <h3>UTF-8 多字节编码对照：中文 1 字 = 9 个 % 字符</h3>
+                <p>百分号编码的长度取决于字符在 UTF-8 下占几个字节：每字节变成"%"加两位十六进制，所以字节数乘 3 等于 % 形式字符数。中文常用汉字落在基本多文种平面（BMP），每个占 3 字节；德文变音、部分欧洲字符落在 Latin-1 增补区，占 2 字节；emoji 落在辅助平面，占 4 字节。下表数值均由 Node 的 <code>Buffer</code> 按 UTF-8 实测：</p>
+                <table class="ref-table">
+                    <thead><tr><th>样例</th><th>字符数</th><th>UTF-8 字节数</th><th>% 形式长度</th><th>编码结果（节选）</th></tr></thead>
+                    <tbody>
+                        <tr><td>你</td><td>1</td><td>3</td><td>9</td><td>%E4%BD%A0</td></tr>
+                        <tr><td>你好世界</td><td>4</td><td>12</td><td>36</td><td>%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C</td></tr>
+                        <tr><td>ö（德文）</td><td>1</td><td>2</td><td>6</td><td>%C3%B6</td></tr>
+                        <tr><td>ß（德文）</td><td>1</td><td>2</td><td>6</td><td>%C3%9F</td></tr>
+                        <tr><td>あ（日文假名）</td><td>1</td><td>3</td><td>9</td><td>%E3%81%82</td></tr>
+                        <tr><td>こんにちは（日文）</td><td>5</td><td>15</td><td>45</td><td>%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF</td></tr>
+                        <tr><td>U+1F600（emoji 笑脸）</td><td>1</td><td>4</td><td>12</td><td>%F0%9F%98%80</td></tr>
+                        <tr><td>U+1F680（emoji 火箭）</td><td>1</td><td>4</td><td>12</td><td>%F0%9F%9A%80</td></tr>
+                    </tbody>
+                </table>
+                <p><strong>注意：</strong>字节数由字符集决定。若某个旧系统用 GBK 而非 UTF-8，"你"会变成 2 个字节（%C4%E3）而非 3 个。本工具固定 UTF-8，因此与 RFC 3986 及 WHATWG URL Standard 的现代约定一致，也是避免乱码的关键。需要统计这类文本长度时，可用 <a href="/zh/text/word-counter">字数统计</a> 工具先看清字符与字节差异。</p>
+
+                <h3>encodeURI 与 encodeURIComponent 与 escape 三者的对照</h3>
+                <p>这是开发者最常踩坑的地方。三者的"不编码字符集"完全不同，而且 <code>escape</code> 早已被标准废弃（ES3 起不推荐，WHATWG 明确不鼓励）。关键差别：<code>escape</code> 不按 UTF-8 编码，而是对非 ASCII 字符输出 <code>%uXXXX</code> 形式的 UTF-16 码元，服务器端几乎无法正确解码，极易产生乱码。以测试串 <code>https://example.com/p?q=1&amp;x=a b+c#frag(ok)~*.中</code> 为例：</p>
+                <table class="ref-table">
+                    <thead><tr><th>函数</th><th>不编码的字符集</th><th>对"中"的处理</th><th>是否 UTF-8 安全</th></tr></thead>
+                    <tbody>
+                        <tr><td>encodeURI</td><td>未保留加全部保留字符（除 % 等少数）</td><td>%E4%B8%AD（正确）</td><td>是</td></tr>
+                        <tr><td>encodeURIComponent</td><td>仅 未保留加 ! ' ( ) * - . _ ~</td><td>%E4%B8%AD（正确）</td><td>是（本工具采用）</td></tr>
+                        <tr><td>escape</td><td>@ * + - _ . / 及字母数字</td><td>%u4E2D（非 UTF-8）</td><td>否（已废弃）</td></tr>
+                    </tbody>
+                </table>
+                <p>同一测试串三者的输出（节选差异）：</p>
                 <ul>
-                    <li><strong>GET 请求参数</strong>：编码查询参数以安全传输特殊字符和非 ASCII 文本</li>
-                    <li><strong>POST 表单数据</strong>：application/x-www-form-urlencoded 格式需要 URL 编码</li>
-                    <li><strong>AJAX / Fetch 请求</strong>：构建带编码参数的安全 API 请求 URL</li>
-                    <li><strong>URL 重定向</strong>：对重定向 URL 中的目标地址进行编码</li>
-                    <li><strong>Cookie 值编码</strong>：对特殊字符编码以安全存储 Cookie</li>
+                    <li><code>encodeURI</code> 得到 <code>https://example.com/p?q=1&amp;x=a%20b+c#frag(ok)~*.%E4%B8%AD</code>（保留了 : / ? # &amp; = + ( ) ~ *，只编码了空格和中文）</li>
+                    <li><code>encodeURIComponent</code> 得到 <code>https%3A%2F%2Fexample.com%2Fp%3Fq%3D1%26x%3Da%20b%2Bc%23frag(ok)~*.%E4%B8%AD</code>（几乎全部编码，空格仍为 %20）</li>
+                    <li><code>escape</code> 得到 <code>https%3A//example.com/p%3Fq%3D1%26x%3Da%20b+c%23frag%28ok%29%7E*.%u4E2D</code>（中文变成 %u4E2D，斜杠与 + 未编码）</li>
                 </ul>
+                <p><strong>注意：</strong>新代码一律用 <code>encodeURIComponent</code> 编码"参数值"，用 <code>encodeURI</code> 编码"完整 URL"。<code>escape</code> 仅在维护极老脚本时见到，新项目禁止使用。需要剥掉 HTML 标签再编码时，可先用 <a href="/zh/text/html-stripper">HTML 剥离</a> 清理文本。</p>
 
-                <h3>重要说明</h3>
-                <p>与 encodeURI 不同，encodeURIComponent 会编码所有非字母数字字符，包括 URL 结构中合法存在的字符（如 : // ? # &amp;）。本工具使用 encodeURIComponent / decodeURIComponent，这是编码查询参数值时的正确选择。仅当你需要编码完整 URL 且不破坏其结构时，才使用 encodeURI。</p>
-                <h3>为什么 URL 需要编码？</h3>
-                <p>URL 本身有一套严格的字符规范，只允许字母、数字和少数保留字符（如 / ? & # =）。如果你把一个带空格、中文、特殊符号的参数直接拼进 URL，比如搜索"你好 世界"或带 & 的文本，浏览器和服务器都可能无法正确解析——空格会被截断、& 会被当成参数分隔符、中文会乱码。URL 编码的作用，就是把这些"不合法"的字符安全地转成百分号形式，让数据能原样传过去。</p>
-                <p>举个例子，搜索词"你好 world"会被编码成类似 <code>%E4%BD%A0%E5%A5%BD%20world</code> 的形式，服务器收到后再解码，就能还原出原始的中文和空格。整个过程是"可逆"的——编码只是换个写法，并没有改变信息本身。</p>
-                <h3>encodeURI 和 encodeURIComponent 有什么区别？</h3>
-                <p>这是开发者最容易搞混的一点。虽然两者都会做百分号编码，但作用范围不同。<strong>encodeURI</strong> 用于编码"完整的 URL 地址"，它会保留 URL 中那些有结构意义的字符（如 / ? & #），以免破坏 URL 的组成；而 <strong>encodeURIComponent</strong> 用于编码"URL 中的一个参数值"，会把几乎所有特殊字符都转义掉。如果你的目标只是某个查询参数的值（比如搜索词、用户输入），应该用 Component 版本；如果用错了，要么特殊字符没被转义，要么整个 URL 结构被破坏。</p>
-                <h3>结果怎么用？</h3>
-                <p>编码结果可以直接拼进 GET 请求、表单提交或 API 调用里，作为安全参数的传递形式；解码则用于把接收到的 URL 参数还原成可读文本，方便调试或读取用户输入。若你还需要做 Base64 或 JSON 处理，可配合「Base64 编解码」「JSON 格式化」工具一起使用。</p>
+                <h3>表单编码：空格为什么在表单里是 +，在路径里却是 %20</h3>
+                <p><code>application/x-www-form-urlencoded</code> 是 HTML 表单默认的提交格式。它的历史约定来自早期邮件与 CGI：空格被写成 <code>+</code>（加号），其余特殊字符仍走百分号编码。而 URL 路径（path）里的空格，按百分号编码规则直接写成 <code>%20</code>。两者都"合法"，但语境不同：</p>
+                <table class="ref-table">
+                    <thead><tr><th>场景</th><th>空格的写法</th><th>成因</th></tr></thead>
+                    <tbody>
+                        <tr><td>URL 路径 / query 原始百分号编码</td><td>%20</td><td>RFC 3986 规定空格必须编码，标准写法是 %20</td></tr>
+                        <tr><td>application/x-www-form-urlencoded 表单体</td><td>+</td><td>HTML 与 WHATWG 表单规范把 + 当作空格的简写</td></tr>
+                    </tbody>
+                </table>
+                <p>实测：对 <code>a b c</code> 调用 <code>encodeURIComponent</code> 得到 <code>a%20b%20c</code>；若再按表单规则把 <code>%20</code> 替换成 <code>+</code>，则得到 <code>a+b+c</code>。这正是很多"明明编码了空格却收到加号"怪象的来源——服务器端把表单体里的 + 还原成空格，而把路径里的 + 当成真正的加号。所以"我传的是空格还是加号"取决于它处在表单体还是 URL 里。</p>
+
+                <h3>三个真实算例（与页面默认输入自洽）</h3>
+                <p>以下三个算例均使用本工具采用的 <code>encodeURIComponent</code> 加 UTF-8 逻辑，所有输出均由脚本按页面同一公式实测，可直接用页面顶部输入框复现。</p>
+
+                <h4>算例一：默认输入本身就是编码串——双重编码陷阱</h4>
+                <p>页面默认输入框内容是 <code>https://example.com/search?q=hello%20world</code>。注意其中的 <code>%20</code> 已经是编码后的空格。若你"随手再编码一次"（比如把它当普通文本塞进另一个参数），<code>%</code> 本身会被编码成 <code>%25</code>，结果变成：</p>
+<pre>编码结果：https%3A%2F%2Fexample.com%2Fsearch%3Fq%3Dhello%2520world
+双重编码：https%253A%252F%252Fexample.com%252Fsearch%253Fq%253Dhello%252520world</pre>
+                <p>解码本工具的编码结果能完美还原原串（<code>decodeURIComponent</code> 可逆）；但若把"双重编码"的结果直接当参数，服务端解码一次后得到的仍是 <code>hello%20world</code> 这个字面量，而不是空格——这就是经典的双重编码 bug。<strong>注意：</strong>只有当输入确实是"原始文本"时才编码；已经编码过的串不要重复编码。</p>
+
+                <h4>算例二：中文"你好世界"的字节展开</h4>
+                <p>输入 <code>你好世界</code>（4 个汉字），按 UTF-8 每个字 3 字节，编码为：</p>
+<pre>%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C</pre>
+                <p>共 12 字节、36 个 % 形式字符。解码回 <code>你好世界</code>，与原输入完全一致。这正是"中文在 URL 里占 9 个字符每字"说法的来源（3 字节乘每字节 3 个显示字符）。</p>
+
+                <h4>算例三：带结构字符的值 price=9.9&amp;q=a/b c#tag</h4>
+                <p>输入 <code>price=9.9&amp;q=a/b c#tag</code>，其中 <code>&amp;</code> <code>=</code> <code>/</code> <code>#</code> 与空格都是结构字符。作为"单个参数值"编码后全部被转义：</p>
+<pre>price%3D9.9%26q%3Da%2Fb%20c%23tag</pre>
+                <p>解码后还原为 <code>price=9.9&amp;q=a/b c#tag</code>。如果这里不编码，服务器会把 <code>&amp;q=</code> 当成新参数、把 <code>#tag</code> 当成片段，原始数据就被截断了。</p>
+
+                <h3>补充问答（绑定本工具具体业务）</h3>
+                <dl>
+                    <dt>为什么默认的搜索词 hello%20world 不能再用本工具编码一次？</dt>
+                    <dd>因为它已经是用百分号编码过的串，<code>%</code> 是普通字符。再编码会把 <code>%</code> 变成 <code>%25</code>，空格原本的 <code>%20</code> 变成 <code>%2520</code>，服务端只解码一次就会得到字面量 <code>hello%20world</code> 而非空格。只有"原始文本"才需要编码，已编码串应直接解码或使用。</dd>
+                    <dt>路径、查询、片段里的同一个字符，编码规则为什么不一样？</dt>
+                    <dd>因为 RFC 3986 给三个位置定义了不同的合法字符集：路径允许 pchar（含子分隔符与 : @ /），查询和片段允许范围更宽（甚至允许 ?）。但"语法允许"不意味"语义安全"——像 &amp; = 在查询里是分隔符，要当数据传就必须编码。本工具用 encodeURIComponent 把结构字符也编码掉，适合编码"参数值"。</dd>
+                    <dt>一个中文字符在 URL 里会变成几个百分号字符？</dt>
+                    <dd>按 UTF-8，常用汉字占 3 字节，每字节写成 %XX，所以 1 个汉字等于 3 个 %XX 等于 9 个显示字符（如"你"转为 %E4%BD%A0）。德文变音等 Latin-1 字符占 2 字节（6 个字符），emoji 占 4 字节（12 个字符）。长度由字符集而非字符本身决定。</dd>
+                    <dt>encodeURI 和 encodeURIComponent 到底什么时候该用哪个？</dt>
+                    <dd>编码"完整 URL 地址"用 encodeURI（保留 : / ? # &amp; = 等结构字符，不破坏地址）；编码"某个参数值"用 encodeURIComponent（把结构字符也编码，防止特殊字符被误读）。本工具对应后者。escape 已废弃，切勿在新代码使用。</dd>
+                    <dt>表单提交里空格为什么变成了加号，而路径里却是 %20？</dt>
+                    <dd>application/x-www-form-urlencoded 表单体沿用早期约定把空格写成 +；URL 路径与查询的原始百分号编码把空格写成 %20。两者语境不同，服务端对表单体里的 + 还原为空格、对路径里的 + 当作真正的加号。所以"空格还是加号"取决于它处在表单体还是 URL 中。</dd>
+                </dl>
             </div>
         </div>
 

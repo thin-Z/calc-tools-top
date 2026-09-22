@@ -49,6 +49,18 @@
   "operatingSystem": "Web",
   "inLanguage": "en"
 }</script>
+
+    <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Which diff algorithm does this tool use, and why does it compare line by line?","acceptedAnswer":{"@type":"Answer","text":"It uses an LCS (Longest Common Subsequence) dynamic-programming pass, anchoring on identical lines and flagging lines present in only one side as added or deleted. Line-by-line comparison is simple and stable for prose, config, and documents. For heavily reordered code, Git's underlying Myers (1986) / Patience / Histogram strategies are better."}},
+    {"@type":"Question","name":"For Chinese text, does character-level or word-level diff show a bigger difference?","acceptedAnswer":{"@type":"Answer","text":"Much bigger. Chinese has no space-delimited words, so a character diff of '这是第一行。' to '这是修改后的第二行。' costs 5 edits, whereas word-segmented diff keeps the shared prefix '这是' and only flags '第一行 to 修改后的第二行'. English is space-tokenized, so word vs character gaps are smaller (about 12 character edits for the same kind of change)."}},
+    {"@type":"Question","name":"What is the difference between unified diff and context diff output?","acceptedAnswer":{"@type":"Answer","text":"Unified diff (the GNU diffutils default) puts old/new hunks in one column with @@ -l,s +l,s @@ headers and + / - prefixes; context diff separates old/new with *** and --- headers and marks changed lines with !. This tool's side-by-side view is equivalent to aligning a unified diff's + / - lines left and right."}},
+    {"@type":"Question","name":"How is the change rate (difference ratio) calculated?","acceptedAnswer":{"@type":"Answer","text":"Change rate = changed lines / (unchanged lines + changed lines) x 100%, where changed lines = added + deleted. It only looks at line identity, not how many characters changed within a line; for intra-line magnitude use character-level Levenshtein."}},
+    {"@type":"Question","name":"Can I feed this tool's output directly into git?","acceptedAnswer":{"@type":"Answer","text":"This tool is a file-less mini diff. To bring it back into Git, save the difference as a unified diff (with --- / +++ file headers and @@ hunks) so git apply can read it; conflict markers must be resolved in Git. After a quick scan here, run git diff --stat for a repo-wide summary."}}
+  ]
+}</script>
 </head>
 <body>
     <header>
@@ -118,25 +130,110 @@ Fourth line is new content.</textarea>
             </div>
 
             <div class="seo-content">
-                <h2>About Text Diff</h2>
-                <p>Text diff is a technique for comparing the differences between two blocks of text, helping you quickly see what was changed, removed, or added. This tool uses the LCS (Longest Common Subsequence) algorithm for line-level comparison: it aligns the two texts, treats identical lines as unchanged, and marks lines that appear in only one version as added or deleted — so the changes jump out at a glance.</p>
-                <p>Color key: <strong class="st-35">Green background</strong> marks added content; <strong class="st-11">Red background + strikethrough</strong> marks deleted content; <strong>White background</strong> marks unchanged content.</p>
-                <h3>How Does the LCS Algorithm Work?</h3>
-                <p>LCS (Longest Common Subsequence) finds the longest subsequence that appears in both sequences in the same order, then uses that common part as an anchor so the remaining differences are highlighted. Because it seeks the <em>longest</em> common portion, it minimizes redundant added/deleted marks, making the result closer to human intuition.</p>
-                <p>This is the approach mainstream diff tools (version control, document comparison) generally take — the main difference is granularity: some compare by character, others by line or word. This tool compares line by line, which suits whole-text comparison of code, config files, and documents.</p>
-                <h3>How to Use It</h3>
-                <p>1. Paste the first version into the &quot;Original&quot; box.<br>2. Paste the edited version into the &quot;New&quot; box.<br>3. Click &quot;Diff&quot;. The result shows two side-by-side panes with colors highlighting added/deleted/unchanged.<br>4. The stats at the top count added, deleted, and unchanged lines so you can gauge the scope at a glance.<br>5. Use &quot;Clear&quot; to start over.</p>
-                <h3>Use Cases</h3>
-                <ul>
-                    <li>Code version comparison: see what logic changed between versions</li>
-                    <li>Before/after article comparison: spot editorial edits</li>
-                    <li>Document proofreading: catch missed edits, accidental deletions, or duplicated text</li>
-                    <li>Data difference analysis: compare two configs or exported text</li>
-                </ul>
-                <h3>Common Diff Pitfalls</h3>
-                <p><strong>① Case and whitespace.</strong> Comparison is exact, so a version differing only in case or spacing is treated as a changed line. If you don't want that, normalize formatting first.<br><strong>② Line endings.</strong> Windows CRLF vs. Unix LF can make lines that look identical be flagged as different.<br><strong>③ Large text performance.</strong> Very long text or huge files may be slow; compare in segments to isolate issues.</p>
-                <h3>How to Read the Result</h3>
-                <p>Added lines usually represent edits, insertions, or supplements; deleted lines represent removed or replaced content. To pinpoint a change, combine line numbers with surrounding context; to review systematically, look at the stats first to gauge the scope, then verify section by section.</p>
+                <h2>Text diff is not "spot the difference" - it turns change size into a measurable metric</h2>
+                <p>Text diff is often treated as a naked-eye game of "where do these two versions differ", but from an engineering and information-retrieval view it really answers three measurable questions: how big is the change, where is it distributed, and how similar are the two versions. This tool runs a line-by-line LCS (Longest Common Subsequence) pass, anchors on identical lines, and flags lines present in only one side as added or deleted. It outputs four counts (unchanged, added, deleted, total changed) and a similarity view - not a vague "they are different". Once you internalize that, you can use the result as a review checklist, a merge basis, or a quality gate instead of a highlight effect.</p>
+
+                <h3>Algorithm family: four mainstream diff algorithms, each with a strength</h3>
+                <p>Every diff tool is a different solution to the same problem - how to efficiently find "what changed and what stayed" between two sequences. The table below puts four common algorithms side by side. The point is not to memorize complexities but to understand why one tool is fast for a one-line edit while another handles heavily reshuffled code better.</p>
+                <table class="ref-table">
+                    <thead><tr><th>Algorithm</th><th>Core idea</th><th>Best for</th><th>Best case</th><th>Worst case</th></tr></thead>
+                    <tbody>
+                        <tr><td>LCS (Longest Common Subsequence)</td><td>Dynamic programming for the longest common subsequence as anchor</td><td>Short text, teaching demos, side-by-side</td><td>O(m+n)</td><td>O(m&times;n)</td></tr>
+                        <tr><td>Myers O(ND)</td><td>Shortest edit path on the edit graph</td><td>Code version diff, Git's engine</td><td>O(N)</td><td>O((N+D)&times;D)</td></tr>
+                        <tr><td>Patience Diff</td><td>Patient matching on unique, increasing anchor lines</td><td>Code moved or reordered a lot</td><td>~O(n log n)</td><td>~O(n log n)</td></tr>
+                        <tr><td>Histogram Diff</td><td>Weights lines by frequency, then picks anchors</td><td>Large files, log/data with repeats</td><td>~O(n log n)</td><td>~O(n log n)</td></tr>
+                    </tbody>
+                </table>
+                <p>Note: m and n are the line counts of each side; N is the total size of both versions and D is the actual difference. This tool uses LCS because it is intuitive and produces "keep the common, show the rare" output that matches human intuition for whole-text, config, and document comparison. When you deal with code that has been heavily moved or reordered, Myers / Patience / Histogram (the strategies behind GNU diffutils and Git) are usually a better fit.</p>
+
+                <h3>Granularity: line / word / character / glyph</h3>
+                <p>A diff's "granularity" decides what counts as one indivisible comparison unit. Coarser granularity (by line) gives cleaner output and better performance but hides intra-line edits; finer granularity (by character, by glyph) locates exactly which character changed but adds noise. The table below weighs the four options.</p>
+                <table class="ref-table">
+                    <thead><tr><th>Granularity</th><th>Unit</th><th>Best for</th><th>Cost / caveat</th></tr></thead>
+                    <tbody>
+                        <tr><td>By line</td><td>Whole line</td><td>Code, config, paragraph-level docs</td><td>Intra-line tweaks show as delete+add of the whole line</td></tr>
+                        <tr><td>By word</td><td>Space/punctuation tokens</td><td>English prose, in-sentence doc edits</td><td>Chinese has no space tokens, needs segmentation first</td></tr>
+                        <tr><td>By character</td><td>Single character</td><td>Spotting typos, IDs, symbol drift</td><td>Verbose; good for short strings, not long text</td></tr>
+                        <tr><td>By glyph</td><td>Single CJK character</td><td>Precise in-sentence CJK edits</td><td>Very different from "by word" - see below</td></tr>
+                    </tbody>
+                </table>
+                <p><strong>Note:</strong> For Chinese, "by character" and "by word" differ enormously. Chinese text has no spaces, so a character diff of "这是第一行。" to "这是修改后的第二行。" costs 5 edits (6 vs 10 glyphs, LCS edit distance 5 on that one line); if you segment first and diff by word, the shared prefix "这是" is kept and only "第一行 &rarr; 修改后的第二行" flags as changed, reporting far less. English is space-tokenized, so word vs character gaps are smaller (about 12 character edits for the same kind of change). For Chinese, picking the right granularity matters more than picking the algorithm. For long text, first check length with the <a href="/en/text/word-counter">Word Counter</a> before deciding to split.</p>
+
+                <h3>Similarity and difference ratio: three computable metrics</h3>
+                <p>"How alike are the two versions" should not be a guess. The three metrics below are all reproducible by script; the numbers in this tool's examples come from the same formulas.</p>
+                <p>1) Levenshtein distance (edit distance): the minimum single-character insertions, deletions, and substitutions to turn one string into the other. Smaller means more similar.<br>
+                2) Jaccard similarity: intersection over union of two sets, 0-1. For line sets, J = unchanged lines / (unchanged + added + deleted lines).<br>
+                3) Normalized edit distance (similarity): Sim = 1 - Lev / max( len(A), len(B) ), shown as a percentage; closer to 100% means more similar.</p>
+                <p>Using the page default input (3-line original vs 4-line new): the whole-text character-level Levenshtein distance is 40 (English), normalized similarity about 66.9%; the line-set Jaccard is 40.0%. Note: the line counts do not match (3 vs 4 lines) which drags Jaccard down, while normalized edit distance only looks at total characters - so the two give different "how alike" conclusions. Review both.</p>
+                <table class="ref-table">
+                    <thead><tr><th>Metric</th><th>Formula</th><th>Default input</th><th>Read</th></tr></thead>
+                    <tbody>
+                        <tr><td>Levenshtein distance</td><td>min insert/delete/substitute</td><td>40</td><td>smaller = more similar</td></tr>
+                        <tr><td>Jaccard (line set)</td><td>unchanged / all lines seen</td><td>40.0%</td><td>hurt by line-count gap</td></tr>
+                        <tr><td>Normalized edit distance</td><td>1 - Lev / max(len)</td><td>66.9%</td><td>only counts characters</td></tr>
+                    </tbody>
+                </table>
+
+                <h3>unified diff vs context diff, field by field</h3>
+                <p>Command-line diff usually emits two classic formats. Knowing the fields lets you translate this tool's side-by-side result into a pasteable patch. Markdown docs can be tidied first in the <a href="/en/text/markdown-preview">Markdown Preview</a> before comparing.</p>
+                <table class="ref-table">
+                    <thead><tr><th>Field</th><th>unified diff (@@ / + / -)</th><th>context diff (* / ! / context)</th></tr></thead>
+                    <tbody>
+                        <tr><td>File header</td><td><code>--- a/file</code> / <code>+++ b/file</code> mark old/new</td><td><code>*** file1</code> / <code>--- file2</code> two-column headers</td></tr>
+                        <tr><td>Hunk header</td><td><code>@@ -l,s +l,s @@</code> old/new start &amp; length</td><td><code>***************</code> separates the two context blocks</td></tr>
+                        <tr><td>Unchanged line</td><td>space prefix</td><td>space prefix / context line</td></tr>
+                        <tr><td>Added line</td><td><code>+</code> prefix</td><td><code>+</code> prefix</td></tr>
+                        <tr><td>Deleted line</td><td><code>-</code> prefix</td><td><code>-</code> prefix</td></tr>
+                        <tr><td>Context lines</td><td>default 3 (use <code>-U n</code>)</td><td>default 3 above and below</td></tr>
+                    </tbody>
+                </table>
+                <p>This tool's side-by-side view is equivalent to "aligning a unified diff's + / - lines left and right": the old version sits on the left (deleted lines land left, blanks fill gaps), the new version on the right (added lines land right). There is no file header because it compares two pasted texts, not disk files.</p>
+
+                <h3>Difference-ratio benchmarks for common text pairs (measured)</h3>
+                <p>The four samples below were run through this tool's own line-by-line LCS logic. Difference ratio is defined as "changed lines / (unchanged lines + changed lines) x 100%". They give you a直觉 gauge of "how alike is alike, how big is big". To move large text, shrink it first with the <a href="/en/text/compress-decompress">Compress/Decompress</a> tool, then compare in segments.</p>
+                <table class="ref-table">
+                    <thead><tr><th>Sample type</th><th>Lines (old&rarr;new)</th><th>Unchanged</th><th>Added</th><th>Deleted</th><th>Total changed</th><th>Diff ratio</th></tr></thead>
+                    <tbody>
+                        <tr><td>Minor in-place edit (change 1 + add 1)</td><td>12 &rarr; 13</td><td>11</td><td>2</td><td>1</td><td>3</td><td>21.4%</td></tr>
+                        <tr><td>Local rewrite (change 4, keep 8)</td><td>12 &rarr; 12</td><td>8</td><td>4</td><td>4</td><td>8</td><td>50.0%</td></tr>
+                        <tr><td>Full rewrite (almost all new)</td><td>12 &rarr; 12</td><td>0</td><td>12</td><td>12</td><td>24</td><td>100.0%</td></tr>
+                        <tr><td>Code with comments (change 2)</td><td>8 &rarr; 8</td><td>6</td><td>2</td><td>2</td><td>4</td><td>40.0%</td></tr>
+                    </tbody>
+                </table>
+                <p><strong>Note:</strong> The difference ratio only looks at line identity, not how many characters changed inside a line; editing one character and rewriting the whole line both count as "1 changed line" at the line level. To gauge intra-line magnitude, return to the character-level / glyph-level Levenshtein from the previous section.</p>
+
+                <h3>Three real examples (page default input)</h3>
+                <p>All three examples use the default content already in this tool's text boxes; the numbers match what you see after clicking "Compare".</p>
+                <p><strong>Example 1: line-level diff stats for the default input</strong><br>
+                Original box (3 lines):<br>
+                "Hello, welcome to the text diff tool!"<br>
+                "This is the first line."<br>
+                "Third line unchanged."<br>
+                New box (4 lines):<br>
+                "Hello, welcome to the text diff tool!"<br>
+                "This is the modified second line."<br>
+                "Third line unchanged."<br>
+                "Fourth line is new content."<br>
+                After LCS alignment: line 1 and line 3 are unchanged (2 lines), "This is the first line." is deleted (1 line), "This is the modified second line." and "Fourth line is new content." are added (2 lines). Stats: unchanged 2, added 2, deleted 1, total changed 3, difference ratio = 3 / (2+3) = 60.0%. In the side-by-side view only the area around line 2 and line 4 are highlighted; everything else stays white.</p>
+                <p><strong>Example 2: the changed line at character granularity</strong><br>
+                Focus on the changed line: old "This is the first line." (23 chars) vs new "This is the modified second line." (33 chars). A character-level Levenshtein needs 12 edits (swap "first" for "modified", "line" for "second", and add "second"). If you switched to word granularity (English is space-tokenized), the shared prefix "This is the" is kept and only "first line" &rarr; "modified second line" flags - far less noise. This shows that for English, granularity still shapes readability, though less drastically than for Chinese. This tool compares by line; use the <a href="/en/text/word-counter">Word Counter</a> to reason about intra-line change.</p>
+                <p><strong>Example 3: overall similarity of the default input</strong><br>
+                Feed both full texts into the similarity formulas: character-level Levenshtein distance = 40, normalized similarity &asymp; 66.9%; line-set Jaccard = 40.0%. One metric high (66.9%) and one low (40.0%) looks contradictory but is consistent - normalized edit distance only counts "how many characters changed", while Jaccard is dragged down by the "3 lines became 4" line gap. Conclusion: this text kept about two-thirds of its characters but changed four-tenths of its line structure.</p>
+
+                <h3>Connecting to git diff / version control</h3>
+                <p>Git uses Myers (and its variants, per Myers 1986) under the hood, plus rename detection and hunk merging. This tool relates to git diff in three layers: first, this tool is a file-less "mini diff" for quickly comparing two pasted snippets; second, to bring a result back into Git you should save the difference as a unified diff (see the field table above) so git apply can read it; third, Git's line numbers are file-global while this tool only gives relative positions, and conflict markers (&lt;&lt;&lt;&lt;&lt;&lt;&lt; / ======= / &gt;&gt;&gt;&gt;&gt;&gt;&gt;) must be resolved in Git. To tally change size, scan here first, then run <code>git diff --stat</code> for a repo-wide summary. For a deeper treatment see the blog post <a href="/blog/en/text-diff-guide">Text Diff in Practice</a>.</p>
+
+                <h3>Frequently asked questions</h3>
+                <h4>Which diff algorithm does this tool use, and why does it compare line by line?</h4>
+                <p>It uses an LCS (Longest Common Subsequence) dynamic-programming pass, anchoring on identical lines and flagging lines present in only one side as added or deleted. Line-by-line comparison is simple and stable for prose, config, and documents. For heavily reordered code, Git's underlying Myers (1986) / Patience / Histogram strategies are better.</p>
+                <h4>For Chinese text, does character-level or word-level diff show a bigger difference?</h4>
+                <p>Much bigger. Chinese has no space-delimited words, so a character diff of "这是第一行。" to "这是修改后的第二行。" costs 5 edits, whereas word-segmented diff keeps the shared prefix "这是" and only flags "第一行 &rarr; 修改后的第二行". English is space-tokenized, so word vs character gaps are smaller (about 12 character edits for the same kind of change).</p>
+                <h4>What is the difference between unified diff and context diff output?</h4>
+                <p>Unified diff (the GNU diffutils default) puts old/new hunks in one column with @@ -l,s +l,s @@ headers and + / - prefixes; context diff separates old/new with *** and --- headers and marks changed lines with !. This tool's side-by-side view is equivalent to aligning a unified diff's + / - lines left/right.</p>
+                <h4>How is the change rate (difference ratio) calculated?</h4>
+                <p>Change rate = changed lines / (unchanged lines + changed lines) x 100%, where changed lines = added + deleted. It only looks at line identity, not how many characters changed within a line; for intra-line magnitude use character-level Levenshtein.</p>
+                <h4>Can I feed this tool's output directly into git?</h4>
+                <p>This tool is a file-less mini diff. To bring it back into Git, save the difference as a unified diff (with --- / +++ file headers and @@ hunks) so git apply can read it; conflict markers must be resolved in Git. After a quick scan here, run git diff --stat for a repo-wide summary.</p>
             </div>
         </div>
 

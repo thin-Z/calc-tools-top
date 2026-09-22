@@ -51,6 +51,55 @@
     "inLanguage": "en"
 }
 </script>
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Why must I not re-encode an already percent-encoded string like hello%20world?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Because it is already a percent-encoded string and % is an ordinary character in it. Re-encoding turns % into %25 and the original %20 into %2520; the server, decoding only once, gets the literal hello%20world instead of a space. Only raw text needs encoding; an already-encoded string should be decoded or used as-is."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Why do the same characters get encoded differently in path, query, and fragment?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Because RFC 3986 defines a different legal character set for each position: the path allows pchar (sub-delims plus : @ /), while query and fragment allow a wider set (the fragment even allows ?). But syntax allowance is not semantic safety - & = act as delimiters in a query and must be encoded to be passed as data. This tool uses encodeURIComponent, which encodes the structural characters too, fitting a parameter value."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How many percent-encoded characters does one Chinese character become?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Under UTF-8, a common Han character takes 3 bytes; each byte is written as %XX, so one Han character equals 3 %XX equals 9 display characters (e.g. 你 becomes %E4%BD%A0). German umlauts in the Latin-1 range take 2 bytes (6 characters); emoji take 4 bytes (12 characters). The length is set by the character set, not the character itself."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "When should I use encodeURI versus encodeURIComponent versus escape?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Use encodeURI for a whole URL address (it keeps : / ? # & = and other structural characters, preserving the address); use encodeURIComponent for one parameter value (it encodes the structural characters too, preventing special characters from being misread). This tool corresponds to the latter. escape is deprecated and must not be used in new code."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Why does a space become + in form data but %20 in a path?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The application/x-www-form-urlencoded form body follows the old convention of writing a space as +; the raw percent-encoding of a URL path and query writes a space as %20. The contexts differ: the server turns a + in the form body back into a space, yet treats a + in the path as a literal plus. So whether you sent a space or a plus depends on whether it lived in the form body or the URL."
+            }
+        }
+    ]
+}
+</script>
 </head>
 <body>
     <header>
@@ -114,23 +163,121 @@
                 </div>
             </div>
 
-            <!-- SEO Content -->
-            <div class="seo-content">
-                <h2>What is URL Encoding?</h2>
-                <p>URL encoding (Percent-encoding) is a mechanism for encoding information in a Uniform Resource Identifier (URI) under certain circumstances. It converts special characters and non-ASCII characters into a percent-sign (%) followed by two hexadecimal digits representing the character's byte value. This ensures that data can be safely transmitted over HTTP without breaking the URL structure.</p>
-                <p>This tool uses the browser's built-in <code>encodeURIComponent</code> and <code>decodeURIComponent</code> APIs for UTF-8-safe encoding and decoding. All processing happens locally in your browser your data never leaves your device.</p>
+            <!-- Tool Content -->
+            <div class="tool-content">
+                <h2>URL encoding is byte transcription, not character hiding</h2>
+                <p>It is tempting to think of percent-encoding as "replacing the troublesome characters" - spaces, Chinese text, ampersands. That intuition is only half right. The precise meaning of percent-encoding is: first split the character into bytes according to an agreed character set (almost always UTF-8 today), then write each byte as a percent sign followed by two uppercase hexadecimal digits. So <code>%E4%BD%A0</code> is not a magic code for the Chinese character 你; it is simply another notation for the three UTF-8 bytes <code>E4 BD A0</code> that represent 你.</p>
+                <p>Once you internalize that "encoding is about bytes, not characters", most confusion disappears: why the same Chinese text sometimes mojibakes on another system (a character-set mismatch), why re-encoding an already percent-encoded string keeps growing (double encoding), and why an emoji expands so much (four bytes). This tool strictly uses the browser's built-in <code>encodeURIComponent</code> and <code>decodeURIComponent</code> over UTF-8, so there is no character-set mismatch and no mojibake. For more on handling such parameters on the front end, see the <a href="/blog/en/url-encode-guide">complete URL encoding guide</a>.</p>
 
-                <h3>Common Use Cases</h3>
+                <h3>RFC 3986 character classes: what never needs encoding, what must be encoded</h3>
+                <p>RFC 3986 (Uniform Resource Identifier: Generic Syntax) divides the characters allowed in a URI into three classes. The key point: <strong>unreserved</strong> characters may appear verbatim anywhere and never need encoding; <strong>reserved</strong> characters are reserved for their delimiter role, and must be encoded only when they appear in a position that conflicts with that role; everything else (space, %, quotes, angle brackets, backslash, braces, and so on) must always be encoded. The table below shows how this tool (<code>encodeURIComponent</code>) actually treats each class - note it is stricter than RFC 3986: it encodes nearly all reserved characters, leaving only the unreserved set plus a few sub-delimiters that happen to be exempt (! ' ( ) * - . _ ~).</p>
+                <table class="ref-table">
+                    <thead><tr><th>Class</th><th>Characters</th><th>Count</th><th>Must encode?</th><th>encodeURIComponent behavior</th></tr></thead>
+                    <tbody>
+                        <tr><td>Unreserved</td><td>A-Z a-z 0-9 - . _ ~</td><td>66</td><td>No (verbatim is fine)</td><td>All left unencoded</td></tr>
+                        <tr><td>Reserved: gen-delims</td><td>: / ? # [ ] @</td><td>7</td><td>Must encode outside its delimiter role</td><td>All encoded (: becomes %3A, etc.)</td></tr>
+                        <tr><td>Reserved: sub-delims</td><td>! $ &amp; ' ( ) * + , ; =</td><td>11</td><td>Encode when used as data</td><td>Encoded except ! ' ( ) *</td></tr>
+                        <tr><td>Everything else (control/punct)</td><td>space % &lt; &gt; \ ^ ` { | } etc.</td><td>rest</td><td>Must encode</td><td>All encoded (space to %20, % to %25)</td></tr>
+                    </tbody>
+                </table>
+                <p><strong>Note:</strong> Encoding an unreserved character anyway (writing <code>a</code> as <code>%61</code>) is still semantically equivalent - the server decodes it back. But mis-encoding a reserved character can break the URL structure. So whether to encode a reserved character inside a value depends on whether that character is acting as a delimiter or as data.</p>
+
+                <h3>path vs query vs fragment: the same character encodes differently</h3>
+                <p>The same character is allowed to appear verbatim in different parts of a URL for different reasons. RFC 3986's ABNF defines it: the path allows pchar (unreserved plus sub-delims plus : @ /); the query and fragment allow a wider set (the fragment even allows ?). But "allowed by syntax" is not "safe in practice" - inside a query, <code>&amp;</code> and <code>=</code> may be written verbatim yet act as parameter delimiters; to pass them as data you must encode them. The table below pairs each fact with this tool's output for reference:</p>
+                <table class="ref-table">
+                    <thead><tr><th>Char</th><th>path</th><th>query</th><th>fragment</th><th>encodeURIComponent</th><th>Note</th></tr></thead>
+                    <tbody>
+                        <tr><td>+</td><td>verbatim</td><td>verbatim</td><td>verbatim</td><td>%2B</td><td>In form encoding + means space; encode it as data</td></tr>
+                        <tr><td>/</td><td>verbatim (segment sep)</td><td>verbatim</td><td>verbatim</td><td>%2F</td><td>Hierarchy separator in path</td></tr>
+                        <tr><td>?</td><td>must encode</td><td>verbatim</td><td>verbatim</td><td>%3F</td><td>? in path is misread as query start</td></tr>
+                        <tr><td>&amp;</td><td>verbatim</td><td>verbatim</td><td>verbatim</td><td>%26</td><td>Query param separator; encode as data</td></tr>
+                        <tr><td>=</td><td>verbatim</td><td>verbatim</td><td>verbatim</td><td>%3D</td><td>Key/value separator; encode as data</td></tr>
+                        <tr><td>#</td><td>must encode</td><td>must encode</td><td>verbatim (fragment start)</td><td>%23</td><td># must be encoded in any data position</td></tr>
+                        <tr><td>:</td><td>verbatim</td><td>verbatim</td><td>verbatim</td><td>%3A</td><td>Used for scheme and port</td></tr>
+                        <tr><td>@</td><td>verbatim</td><td>verbatim</td><td>verbatim</td><td>%40</td><td>Used for userinfo</td></tr>
+                        <tr><td>[ ]</td><td>must encode</td><td>must encode</td><td>must encode</td><td>%5B %5D</td><td>Reserved for IPv6 literals; encode as data</td></tr>
+                    </tbody>
+                </table>
+                <p><strong>Note:</strong> "Verbatim" above is a syntax statement. When encoding a URL as a "whole address", use <code>encodeURI</code> (it keeps the structural characters); when encoding "one parameter value", use this tool's <code>encodeURIComponent</code> (it encodes the structural characters too). Mixing the two either breaks the address structure or lets special characters slip through. When handling binary or complex text with the <a href="/en/text/base64-encode">Base64 encoder</a>, Base64-then-parameter is often the cleaner route.</p>
+
+                <h3>UTF-8 multi-byte reference: one Chinese character = 9 percent characters</h3>
+                <p>The length of percent-encoding depends on how many bytes the character takes in UTF-8: each byte becomes a percent sign plus two hex digits, so bytes times 3 equals the length of the percent form. Common CJK ideographs sit in the Basic Multilingual Plane (BMP) and take 3 bytes each; German umlauts and some European characters sit in the Latin-1 Supplement and take 2 bytes; emoji sit in the Supplementary Plane and take 4 bytes. All numbers below are measured with Node's <code>Buffer</code> under UTF-8:</p>
+                <table class="ref-table">
+                    <thead><tr><th>Sample</th><th>Chars</th><th>UTF-8 bytes</th><th>% form length</th><th>Encoded (excerpt)</th></tr></thead>
+                    <tbody>
+                        <tr><td>你</td><td>1</td><td>3</td><td>9</td><td>%E4%BD%A0</td></tr>
+                        <tr><td>你好世界</td><td>4</td><td>12</td><td>36</td><td>%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C</td></tr>
+                        <tr><td>ö (German)</td><td>1</td><td>2</td><td>6</td><td>%C3%B6</td></tr>
+                        <tr><td>ß (German)</td><td>1</td><td>2</td><td>6</td><td>%C3%9F</td></tr>
+                        <tr><td>あ (Japanese kana)</td><td>1</td><td>3</td><td>9</td><td>%E3%81%82</td></tr>
+                        <tr><td>こんにちは (Japanese)</td><td>5</td><td>15</td><td>45</td><td>%E3%81%93%E3%82%93%E3%81%AB%E3%81%A1%E3%81%AF</td></tr>
+                        <tr><td>U+1F600 (emoji, grinning face)</td><td>1</td><td>4</td><td>12</td><td>%F0%9F%98%80</td></tr>
+                        <tr><td>U+1F680 (emoji, rocket)</td><td>1</td><td>4</td><td>12</td><td>%F0%9F%9A%80</td></tr>
+                    </tbody>
+                </table>
+                <p><strong>Note:</strong> The byte count is decided by the character set. If a legacy system uses GBK instead of UTF-8, 你 becomes 2 bytes (%C4%E3) rather than 3. This tool is fixed to UTF-8, which matches RFC 3986 and the WHATWG URL Standard and is the key to avoiding mojibake. To measure such text length first, the <a href="/en/text/word-counter">word counter</a> shows the character-versus-byte difference clearly.</p>
+
+                <h3>encodeURI vs encodeURIComponent vs escape</h3>
+                <p>This is where developers trip up most. The three functions leave entirely different character sets unencoded, and <code>escape</code> has long been deprecated (discouraged since ES3, explicitly discouraged by WHATWG). The crucial difference: <code>escape</code> does not encode in UTF-8 - for non-ASCII characters it emits a <code>%uXXXX</code> UTF-16 code unit that servers almost never decode correctly, inviting mojibake. Take the test string <code>https://example.com/p?q=1&amp;x=a b+c#frag(ok)~*.中</code>:</p>
+                <table class="ref-table">
+                    <thead><tr><th>Function</th><th>Characters left unencoded</th><th>Treatment of 中</th><th>UTF-8 safe?</th></tr></thead>
+                    <tbody>
+                        <tr><td>encodeURI</td><td>Unreserved plus all reserved (except a few like %)</td><td>%E4%B8%AD (correct)</td><td>Yes</td></tr>
+                        <tr><td>encodeURIComponent</td><td>Only unreserved plus ! ' ( ) * - . _ ~</td><td>%E4%B8%AD (correct)</td><td>Yes (this tool)</td></tr>
+                        <tr><td>escape</td><td>@ * + - _ . / and alphanumerics</td><td>%u4E2D (not UTF-8)</td><td>No (deprecated)</td></tr>
+                    </tbody>
+                </table>
+                <p>The three outputs for the same test string (key differences):</p>
                 <ul>
-                    <li><strong>GET Request Parameters</strong> Encode query parameters to safely transmit special characters and non-ASCII text</li>
-                    <li><strong>POST Form Data</strong> application/x-www-form-urlencoded format requires URL encoding</li>
-                    <li><strong>AJAX / Fetch Requests</strong> Build safe API request URLs with encoded parameters</li>
-                    <li><strong>URL Redirects</strong> Encode destination URLs within redirect URLs</li>
-                    <li><strong>Cookie Value Encoding</strong> Encode special characters for safe cookie storage</li>
+                    <li><code>encodeURI</code> yields <code>https://example.com/p?q=1&amp;x=a%20b+c#frag(ok)~*.%E4%B8%AD</code> (keeps : / ? # &amp; = + ( ) ~ *, encodes only the space and the Chinese)</li>
+                    <li><code>encodeURIComponent</code> yields <code>https%3A%2F%2Fexample.com%2Fp%3Fq%3D1%26x%3Da%20b%2Bc%23frag(ok)~*.%E4%B8%AD</code> (encodes almost everything, space stays %20)</li>
+                    <li><code>escape</code> yields <code>https%3A//example.com/p%3Fq%3D1%26x%3Da%20b+c%23frag%28ok%29%7E*.%u4E2D</code> (Chinese becomes %u4E2D, slash and + left unencoded)</li>
                 </ul>
+                <p><strong>Note:</strong> In new code, always use <code>encodeURIComponent</code> for "parameter values" and <code>encodeURI</code> for "whole URLs". <code>escape</code> appears only in very old scripts and must not be used in new projects. To strip HTML tags before encoding, clean the text first with the <a href="/en/text/html-stripper">HTML stripper</a>.</p>
 
-                <h3>Important Note</h3>
-                <p>Unlike encodeURI, encodeURIComponent encodes all non-alphanumeric characters including those that are legally part of a URL structure (such as : // ? # &). This tool uses encodeURIComponent / decodeURIComponent, which is the correct choice for encoding query parameter values. Use encodeURI only when you need to encode a complete URL without breaking its structure.</p>
+                <h3>Form encoding: why a space is + in a form but %20 in a path</h3>
+                <p><code>application/x-www-form-urlencoded</code> is the default submission format for HTML forms. Its historical convention comes from early email and CGI: a space is written as <code>+</code> (plus), while other special characters still use percent-encoding. A space inside a URL path (path), by the percent-encoding rule, is written directly as <code>%20</code>. Both are "legal" but in different contexts:</p>
+                <table class="ref-table">
+                    <thead><tr><th>Context</th><th>Space written as</th><th>Why</th></tr></thead>
+                    <tbody>
+                        <tr><td>URL path / query raw percent-encoding</td><td>%20</td><td>RFC 3986 requires spaces to be encoded; %20 is the standard form</td></tr>
+                        <tr><td>application/x-www-form-urlencoded body</td><td>+</td><td>HTML and the WHATWG form spec treat + as a space shorthand</td></tr>
+                    </tbody>
+                </table>
+                <p>Measured: calling <code>encodeURIComponent</code> on <code>a b c</code> gives <code>a%20b%20c</code>; if you then apply the form rule and replace <code>%20</code> with <code>+</code>, you get <code>a+b+c</code>. This is the source of the common "I encoded the space but received a plus" mystery - the server turns a + in the form body back into a space, yet treats a + in the path as a literal plus. Whether you sent a space or a plus depends on whether it lived in the form body or the URL.</p>
+
+                <h3>Three worked examples (consistent with the page default)</h3>
+                <p>All three examples use the same <code>encodeURIComponent</code> plus UTF-8 logic this tool uses; every output is measured by a script using the page's exact formula and can be reproduced in the input box above.</p>
+
+                <h4>Example 1: the default input is already encoded - the double-encoding trap</h4>
+                <p>The page's default input is <code>https://example.com/search?q=hello%20world</code>. Note that <code>%20</code> is already an encoded space. If you "encode it once more on a whim" (say, stuffing it as plain text into another parameter), the <code>%</code> itself gets encoded to <code>%25</code>, and the result becomes:</p>
+<pre>Encoded:    https%3A%2F%2Fexample.com%2Fsearch%3Fq%3Dhello%2520world
+Double-enc: https%253A%252F%252Fexample.com%252Fsearch%253Fq%253Dhello%252520world</pre>
+                <p>Decoding this tool's encoded result restores the original string perfectly (<code>decodeURIComponent</code> is reversible); but if you pass the "double-encoded" result straight in as a parameter, the server decodes once and still gets the literal <code>hello%20world</code> instead of a space - the classic double-encoding bug. <strong>Note:</strong> Encode only when the input is genuinely "raw text"; do not re-encode a string that is already encoded.</p>
+
+                <h4>Example 2: byte expansion of the Chinese 你好世界</h4>
+                <p>Input <code>你好世界</code> (four Han characters), UTF-8 at 3 bytes each, encodes to:</p>
+<pre>%E4%BD%A0%E5%A5%BD%E4%B8%96%E7%95%8C</pre>
+                <p>That is 12 bytes and 36 percent-form characters. Decoding returns <code>你好世界</code>, identical to the input. This is exactly why people say "a Chinese character takes 9 characters in a URL" (3 bytes times 3 display characters per byte).</p>
+
+                <h4>Example 3: a value with structural characters, price=9.9&amp;q=a/b c#tag</h4>
+                <p>Input <code>price=9.9&amp;q=a/b c#tag</code>, where <code>&amp;</code> <code>=</code> <code>/</code> <code>#</code> and the space are all structural. Encoded as a "single parameter value", all are escaped:</p>
+<pre>price%3D9.9%26q%3Da%2Fb%20c%23tag</pre>
+                <p>Decoding restores <code>price=9.9&amp;q=a/b c#tag</code>. Without encoding, the server would treat <code>&amp;q=</code> as a new parameter and <code>#tag</code> as a fragment, truncating the original data.</p>
+
+                <h3>Frequently asked questions (specific to this tool)</h3>
+                <dl>
+                    <dt>Why must I not re-encode an already percent-encoded string like hello%20world?</dt>
+                    <dd>Because it is already a percent-encoded string and % is an ordinary character in it. Re-encoding turns % into %25 and the original %20 into %2520; the server, decoding only once, gets the literal hello%20world instead of a space. Only raw text needs encoding; an already-encoded string should be decoded or used as-is.</dd>
+                    <dt>Why do the same characters get encoded differently in path, query, and fragment?</dt>
+                    <dd>Because RFC 3986 defines a different legal character set for each position: the path allows pchar (sub-delims plus : @ /), while query and fragment allow a wider set (the fragment even allows ?). But syntax allowance is not semantic safety - &amp; = act as delimiters in a query and must be encoded to be passed as data. This tool uses encodeURIComponent, which encodes the structural characters too, fitting a "parameter value".</dd>
+                    <dt>How many percent-encoded characters does one Chinese character become?</dt>
+                    <dd>Under UTF-8, a common Han character takes 3 bytes; each byte is written as %XX, so one Han character equals 3 %XX equals 9 display characters (e.g. 你 becomes %E4%BD%A0). German umlauts in the Latin-1 range take 2 bytes (6 characters); emoji take 4 bytes (12 characters). The length is set by the character set, not the character itself.</dd>
+                    <dt>When should I use encodeURI versus encodeURIComponent versus escape?</dt>
+                    <dd>Use encodeURI for a "whole URL address" (it keeps : / ? # &amp; = and other structural characters, preserving the address); use encodeURIComponent for "one parameter value" (it encodes the structural characters too, preventing special characters from being misread). This tool corresponds to the latter. escape is deprecated and must not be used in new code.</dd>
+                    <dt>Why does a space become + in form data but %20 in a path?</dt>
+                    <dd>The application/x-www-form-urlencoded form body follows the old convention of writing a space as +; the raw percent-encoding of a URL path and query writes a space as %20. The contexts differ: the server turns a + in the form body back into a space, yet treats a + in the path as a literal plus. So whether you sent a space or a plus depends on whether it lived in the form body or the URL.</dd>
+                </dl>
             </div>
         </div>
 

@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-09-21T16:33:12.602Z",
+  "generatedAt": "2026-09-22T14:05:50.167Z",
   "total": 222,
   "summary": {
     "zhToolHanzi": {
       "n": 64,
-      "mean": 1370,
-      "median": 1081
+      "mean": 1798,
+      "median": 2160
     },
     "enToolWords": {
       "n": 55,
-      "mean": 710,
-      "median": 475
+      "mean": 1125,
+      "median": 1243
     },
     "zhBlogHanzi": {
       "n": 40,
       "mean": 997,
       "median": 742
     },
-    "siteAvgOverlap": 0.0839,
-    "siteAvgOverlapBody": 0.0959,
+    "siteAvgOverlap": 0.0886,
+    "siteAvgOverlapBody": 0.0964,
     "noindexPages": 12
   },
   "pages": [
@@ -882,7 +882,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 24,
-      "words": 312,
+      "words": 1287,
       "_shBody": {},
       "noindex": false
     },
@@ -1044,7 +1044,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 27,
-      "words": 1000,
+      "words": 1003,
       "_shBody": {},
       "noindex": false
     },
@@ -1107,7 +1107,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 24,
-      "words": 330,
+      "words": 1466,
       "_shBody": {},
       "noindex": false
     },
@@ -1268,8 +1268,8 @@
       "rel": "dist/en/text/base64-encode.html",
       "lang": "en",
       "category": "tool",
-      "hanzi": 24,
-      "words": 280,
+      "hanzi": 30,
+      "words": 3059,
       "_shBody": {},
       "noindex": false
     },
@@ -1278,7 +1278,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 24,
-      "words": 267,
+      "words": 1651,
       "_shBody": {},
       "noindex": false
     },
@@ -1287,7 +1287,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 24,
-      "words": 485,
+      "words": 1714,
       "_shBody": {},
       "noindex": false
     },
@@ -1296,7 +1296,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 24,
-      "words": 551,
+      "words": 2144,
       "_shBody": {},
       "noindex": false
     },
@@ -1314,7 +1314,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 24,
-      "words": 281,
+      "words": 2001,
       "_shBody": {},
       "noindex": false
     },
@@ -1331,8 +1331,8 @@
       "rel": "dist/en/text/markdown-preview.html",
       "lang": "en",
       "category": "tool",
-      "hanzi": 24,
-      "words": 369,
+      "hanzi": 72,
+      "words": 1510,
       "_shBody": {},
       "noindex": false
     },
@@ -1341,7 +1341,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 24,
-      "words": 226,
+      "words": 1409,
       "_shBody": {},
       "noindex": false
     },
@@ -1350,7 +1350,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 24,
-      "words": 329,
+      "words": 1824,
       "_shBody": {},
       "noindex": false
     },
@@ -1358,8 +1358,8 @@
       "rel": "dist/en/text/simplified-traditional.html",
       "lang": "en",
       "category": "tool",
-      "hanzi": 35,
-      "words": 238,
+      "hanzi": 397,
+      "words": 1379,
       "_shBody": {},
       "noindex": false
     },
@@ -1368,7 +1368,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 24,
-      "words": 295,
+      "words": 1708,
       "_shBody": {},
       "noindex": false
     },
@@ -1376,8 +1376,8 @@
       "rel": "dist/en/text/text-diff.html",
       "lang": "en",
       "category": "tool",
-      "hanzi": 24,
-      "words": 496,
+      "hanzi": 78,
+      "words": 1965,
       "_shBody": {},
       "noindex": false
     },
@@ -1385,8 +1385,8 @@
       "rel": "dist/en/text/url-encode.html",
       "lang": "en",
       "category": "tool",
-      "hanzi": 24,
-      "words": 282,
+      "hanzi": 47,
+      "words": 2106,
       "_shBody": {},
       "noindex": false
     },
@@ -1395,7 +1395,7 @@
       "lang": "en",
       "category": "tool",
       "hanzi": 24,
-      "words": 355,
+      "words": 1549,
       "_shBody": {},
       "noindex": false
     },
@@ -1403,8 +1403,8 @@
       "rel": "dist/en/text/word-counter.html",
       "lang": "en",
       "category": "tool",
-      "hanzi": 24,
-      "words": 273,
+      "hanzi": 50,
+      "words": 1436,
       "_shBody": {},
       "noindex": false
     },
@@ -1610,8 +1610,8 @@
       "rel": "dist/zh/calculators/electricity.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 1099,
-      "words": 3,
+      "hanzi": 2047,
+      "words": 4,
       "_shBody": {},
       "noindex": false
     },
@@ -1772,7 +1772,7 @@
       "rel": "dist/zh/calculators/unit-converter.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 1600,
+      "hanzi": 1606,
       "words": 110,
       "_shBody": {},
       "noindex": false
@@ -1808,8 +1808,8 @@
       "rel": "dist/zh/image/color-contrast.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 1099,
-      "words": 31,
+      "hanzi": 2225,
+      "words": 103,
       "_shBody": {},
       "noindex": false
     },
@@ -1880,8 +1880,8 @@
       "rel": "dist/zh/text/base64-encode.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 897,
-      "words": 71,
+      "hanzi": 2890,
+      "words": 209,
       "_shBody": {},
       "noindex": false
     },
@@ -1889,8 +1889,8 @@
       "rel": "dist/zh/text/case-converter.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 982,
-      "words": 62,
+      "hanzi": 2864,
+      "words": 280,
       "_shBody": {},
       "noindex": false
     },
@@ -1898,8 +1898,8 @@
       "rel": "dist/zh/text/compress-decompress.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 802,
-      "words": 76,
+      "hanzi": 2546,
+      "words": 260,
       "_shBody": {},
       "noindex": false
     },
@@ -1907,8 +1907,8 @@
       "rel": "dist/zh/text/html-stripper.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 1080,
-      "words": 92,
+      "hanzi": 2929,
+      "words": 416,
       "_shBody": {},
       "noindex": false
     },
@@ -1925,8 +1925,8 @@
       "rel": "dist/zh/text/json-formatter.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 971,
-      "words": 54,
+      "hanzi": 3439,
+      "words": 199,
       "_shBody": {},
       "noindex": false
     },
@@ -1943,8 +1943,8 @@
       "rel": "dist/zh/text/markdown-preview.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 1033,
-      "words": 26,
+      "hanzi": 2351,
+      "words": 263,
       "_shBody": {},
       "noindex": false
     },
@@ -1952,8 +1952,8 @@
       "rel": "dist/zh/text/reading-time.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 1074,
-      "words": 2,
+      "hanzi": 2858,
+      "words": 4,
       "_shBody": {},
       "noindex": false
     },
@@ -1961,8 +1961,8 @@
       "rel": "dist/zh/text/regex-tester.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 1034,
-      "words": 48,
+      "hanzi": 2762,
+      "words": 267,
       "_shBody": {},
       "noindex": false
     },
@@ -1970,8 +1970,8 @@
       "rel": "dist/zh/text/simplified-traditional.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 1270,
-      "words": 8,
+      "hanzi": 2364,
+      "words": 103,
       "_shBody": {},
       "noindex": false
     },
@@ -1979,8 +1979,8 @@
       "rel": "dist/zh/text/text-cleaner.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 1103,
-      "words": 6,
+      "hanzi": 3156,
+      "words": 127,
       "_shBody": {},
       "noindex": false
     },
@@ -1988,8 +1988,8 @@
       "rel": "dist/zh/text/text-diff.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 1081,
-      "words": 16,
+      "hanzi": 2993,
+      "words": 182,
       "_shBody": {},
       "noindex": false
     },
@@ -1997,8 +1997,8 @@
       "rel": "dist/zh/text/url-encode.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 877,
-      "words": 80,
+      "hanzi": 2870,
+      "words": 378,
       "_shBody": {},
       "noindex": false
     },
@@ -2006,8 +2006,8 @@
       "rel": "dist/zh/text/uuid-generator.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 563,
-      "words": 43,
+      "hanzi": 2349,
+      "words": 158,
       "_shBody": {},
       "noindex": false
     },
@@ -2015,8 +2015,8 @@
       "rel": "dist/zh/text/word-counter.html",
       "lang": "zh",
       "category": "tool",
-      "hanzi": 1080,
-      "words": 6,
+      "hanzi": 2807,
+      "words": 59,
       "_shBody": {},
       "noindex": false
     }
@@ -2075,72 +2075,72 @@
   ],
   "focus": {
     "keys": [
-      "unit-converter"
+      "image/compress"
     ],
-    "matched": 4,
+    "matched": 2,
     "noindexStubs": 0,
     "fulltext": {
-      "maxJaccard": 0.1304,
+      "maxJaccard": 0.1173,
       "pairsOver15pct": 0,
-      "totalPairs": 440
+      "totalPairs": 220
     },
     "body": {
-      "maxJaccard": 0.1009,
+      "maxJaccard": 0.0992,
       "pairsOver15pct": 0,
-      "totalPairs": 416
+      "totalPairs": 208
     },
     "fuseThreshold": 0.15,
     "fuseTriggered": false,
     "topPairsBody": [
       {
-        "a": "dist/blog/zh/unit-converter-guide.html",
-        "b": "dist/tags/life.html",
-        "jaccard": 0.1009
+        "a": "dist/zh/image/compress.html",
+        "b": "dist/zh/image/resize.html",
+        "jaccard": 0.0992
       },
       {
-        "a": "dist/blog/zh/unit-converter-guide.html",
-        "b": "dist/blog/zh/fuel-cost-guide.html",
+        "a": "dist/zh/image/compress.html",
+        "b": "dist/zh/image/image-crop.html",
         "jaccard": 0.0913
       },
       {
-        "a": "dist/blog/zh/unit-converter-guide.html",
-        "b": "dist/blog/zh/electricity-cost-guide.html",
-        "jaccard": 0.0803
+        "a": "dist/en/image/compress.html",
+        "b": "dist/en/image/image-crop.html",
+        "jaccard": 0.091
       },
       {
-        "a": "dist/blog/zh/unit-converter-guide.html",
-        "b": "dist/zh/calculators/unit-converter.html",
-        "jaccard": 0.0787
+        "a": "dist/zh/image/compress.html",
+        "b": "dist/zh/image/convert.html",
+        "jaccard": 0.0909
       },
       {
-        "a": "dist/zh/calculators/unit-converter.html",
-        "b": "dist/blog/zh/unit-converter-guide.html",
-        "jaccard": 0.0787
+        "a": "dist/en/image/compress.html",
+        "b": "dist/en/image/resize.html",
+        "jaccard": 0.0882
       },
       {
-        "a": "dist/blog/zh/unit-converter-guide.html",
-        "b": "dist/blog/zh/discount-calculation-tips.html",
-        "jaccard": 0.0779
+        "a": "dist/en/image/compress.html",
+        "b": "dist/en/image/convert.html",
+        "jaccard": 0.0851
       },
       {
-        "a": "dist/blog/en/unit-converter-guide.html",
-        "b": "dist/blog/en/fuel-cost-guide.html",
-        "jaccard": 0.0699
+        "a": "dist/en/image/compress.html",
+        "b": "dist/en/image/base64.html",
+        "jaccard": 0.0617
       },
       {
-        "a": "dist/blog/zh/unit-converter-guide.html",
-        "b": "dist/blog/zh/date-calculation-tips.html",
-        "jaccard": 0.0696
+        "a": "dist/zh/image/compress.html",
+        "b": "dist/zh/image/base64.html",
+        "jaccard": 0.0511
       },
       {
-        "a": "dist/blog/en/unit-converter-guide.html",
-        "b": "dist/blog/en/date-calculation-tips.html",
-        "jaccard": 0.0625
+        "a": "dist/zh/image/compress.html",
+        "b": "dist/zh/image/index.html",
+        "jaccard": 0.0501
       },
       {
-        "a": "dist/blog/en/unit-converter-guide.html",
-        "b": "dist/blog/en/electricity-cost-guide.html",
-        "jaccard": 0.0624
+        "a": "dist/en/image/compress.html",
+        "b": "dist/blog/en/image-compression-guide.html",
+        "jaccard": 0.0484
       }
     ]
   }

@@ -106,38 +106,147 @@
 
             <!-- SEO Content -->
             <div class="seo-content">
-                <h2>什么是 HTML 标签去除？</h2>
-                <p>HTML 标签去除是从代码中移除全部或部分 HTML 标签、仅保留纯文本内容的过程。它适用于从网页提取纯文本、清理富文本编辑器内容、为分析预处理数据，或将 HTML 邮件转换为纯文本格式。</p>
-                <p>所有处理完全在浏览器本地完成——不会上传任何数据到服务器，确保你的隐私安全。</p>
+                <h2>HTML 转纯文本：是「规格化」，不是「删标签」</h2>
+                <p>很多教程把"去 HTML 标签"讲成"用正则把 &lt; 和 &gt; 之间的内容删掉"就完事，但严格意义上的 HTML 转纯文本是一套<strong>规格化（normalization）流程</strong>：它至少要完成四件事——解码字符实体、折叠连续空白、按块级元素补换行、丢弃脚本与样式。只删标签而忽略实体和空白，得到的并不是"干净文本"，而是带着 <code>&amp;nbsp;</code>、<code>&amp;amp;</code> 残留和诡异缩进的半成品。本工具走的是轻量正则路线（直接在浏览器本地运行，不上传数据），适合快速清理；但你要知道它的边界在哪，才能判断结果是否可信。</p>
+                <p>从口径上看，HTML 是国际标准（W3C / WHATWG 的 HTML Living Standard），实体表与空白规则都来自规范本身；而中文场景另有一个容易踩的坑：GB 18030-2022《信息技术 中文编码字符集》是我国强制性国家标准，要求中文文本以该字符集存储与交换。中文网页里常见的"全角空格"（U+3000）和 HTML 的 <code>&amp;nbsp;</code>（U+00A0 不换行空格）并不是同一个字符——前者是中文排版空格，后者是西文不换行空格，二者在去标签后的纯文本里表现完全不同，切勿混为一谈。</p>
 
-                <h3>支持保留的标签</h3>
-                <ul>
-                    <li><strong>&lt;br&gt;</strong>：保留换行以维护文本结构</li>
-                    <li><strong>&lt;p&gt;</strong>：保留段落标签以进行文本分段</li>
-                    <li><strong>&lt;b&gt;</strong>：保留加粗标签</li>
-                    <li><strong>&lt;i&gt;</strong>：保留斜体标签</li>
-                    <li><strong>&lt;a&gt;</strong>：保留链接标签以保留超链接</li>
-                </ul>
+                <h3>表 1：HTML 实体解码规则对照表</h3>
+                <p>符合规范的 HTML 解析会在读取阶段把字符实体还原成对应 Unicode 码位。WHATWG HTML Living Standard 的命名字符引用表共收录 <strong>2,231</strong> 个命名实体（HTML 4.01 时代仅有 252 个），外加十进制 <code>&amp;#nnn;</code> 与十六进制 <code>&amp;#xNNN;</code> 两种数字实体可表示任意 Unicode 码点。下表给出最常用的一组及其真实码位：</p>
+                <table class="ref-table">
+                    <thead><tr><th>实体写法</th><th>解码字符</th><th>Unicode 码位</th><th>类别 / 用途</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>&amp;amp;</code></td><td>&amp;</td><td>U+0026</td><td>语法字符（必须转义）</td></tr>
+                        <tr><td><code>&amp;lt;</code></td><td>&lt;</td><td>U+003C</td><td>语法字符（标签起始）</td></tr>
+                        <tr><td><code>&amp;gt;</code></td><td>&gt;</td><td>U+003E</td><td>语法字符（标签结束）</td></tr>
+                        <tr><td><code>&amp;quot;</code></td><td>"</td><td>U+0022</td><td>属性引号</td></tr>
+                        <tr><td><code>&amp;apos;</code></td><td>'</td><td>U+0027</td><td>单引号（HTML5 新增）</td></tr>
+                        <tr><td><code>&amp;nbsp;</code></td><td>不换行空格</td><td>U+00A0</td><td>排版空格（不折叠）</td></tr>
+                        <tr><td><code>&amp;mdash;</code></td><td>—</td><td>U+2014</td><td>长破折号</td></tr>
+                        <tr><td><code>&amp;copy;</code></td><td>©</td><td>U+00A9</td><td>版权符号</td></tr>
+                        <tr><td><code>&amp;pound;</code></td><td>£</td><td>U+00A3</td><td>货币符号</td></tr>
+                        <tr><td><code>&amp;yen;</code></td><td>¥</td><td>U+00A5</td><td>货币符号（日元 / 人民币旧写法）</td></tr>
+                        <tr><td><code>&amp;#8212;</code></td><td>—</td><td>U+2014</td><td>数字实体（与 &amp;mdash; 等价）</td></tr>
+                    </tbody>
+                </table>
+                <p><strong>注意：</strong>本工具是纯正则剥离器，<strong>不做</strong>实体解码。也就是说 <code>&amp;nbsp;</code> 在结果里仍写作字面文本 <code>&amp;nbsp;</code>，而不会变成空格；需要真正解码时，应改用浏览器 DOM 解析或后端库。这一点在算例 3 会直接看到。</p>
 
-                <h3>使用场景</h3>
-                <ul>
-                    <li><strong>网页内容提取</strong>：从 HTML 页面提取干净文本</li>
-                    <li><strong>富文本转换</strong>：将富文本编辑器内容转为纯文本</li>
-                    <li><strong>数据预处理</strong>：清理 HTML 格式的数据集以进行分析</li>
-                    <li><strong>邮件转换</strong>：将 HTML 邮件转为纯文本格式</li>
-                    <li><strong>SEO 优化</strong>：检查页面的纯文本可读性</li>
-                </ul>
-                <h3>为什么需要去掉 HTML 标签？</h3>
-                <p>HTML 标签是浏览器用来"解释页面结构"的代码，但对阅读和分析纯文本的人来说，它们是多余的噪音。当你需要把网页内容复制到 Word、发送纯文本邮件、存入数据库或喂给自然语言处理模型时，这些标签会干扰内容的纯净度。去掉它们，才能得到真正意义上的"纯文本"。</p>
-                <p>另一个常见需求是<strong>提取正文用于分析</strong>：比如做关键词统计、字数统计、文本聚类，或把网页正文转成可读摘要。如果带着一堆 <code>&lt;div&gt;</code>、<code>&lt;span&gt;</code>、class 属性和内联样式，统计出来的数字就不准确。先把标签剥干净，后续的分析才有意义。</p>
-                <h3>使用时的常见误区</h3>
-                <p><strong>① 不要只想着"全去掉"。</strong> 有时候保留 <code>&lt;br&gt;</code> 或 <code>&lt;p&gt;</code> 能帮你维持段落结构，否则纯文本会挤成一大段，反而更难读。工具支持按需勾选保留标签，正是为这种情况设计。</p>
-                <p><strong>② 注意脚本与样式。</strong> 有些复杂的 HTML 里含 <code>&lt;script&gt;</code> 或 <code>&lt;style&gt;</code>，它们通常不应留在纯文本里；如果源内容来自不可信来源，去标签也能帮你去掉这部分潜在风险代码。</p>
-                <p><strong>③ 特殊字符要留意。</strong> 像 <code>&amp;nbsp;</code>（空格实体）、<code>&amp;amp;</code>（& 符号）这类实体，去除后可能残留为乱码，处理完建议快速浏览一遍结果，确认没有奇怪的字符残留。</p>
-                <h3>结果怎么用？</h3>
-                <p>去除标签后得到的纯文本，可以直接用于二次编辑、内容分析、数据库存储或文档整理。若你接下来还要统计字数或清理多余空格，可以配合「字数统计」「文本清理」工具一起使用，形成一套完整的文本处理流程。</p>
-                <p>一个常见的应用场景是把网页正文提取成可读摘要：先在浏览器里"查看源代码"或复制网页内容，再通过本工具剥掉标签，剩下的就是干净的正文文字，可以拿去写作参考、要点提炼或数据归档。对需要大量处理网页内容的人来说，这比手动一点点删除标签要高效得多。</p>
-                <p>最后提醒一句：去标签的本质是"丢掉格式、保留内容"，它会牺牲原网页的排版信息（颜色、字号、图片位置等）。如果你需要的是带格式的内容，应优先保留 HTML 而非去标签；只有当目标是"纯文本"时，使用本工具才是合适的。理解这一点，你就能在合适的场景里用对它。</p>
+                <h3>表 2：块级元素换行规则对照表</h3>
+                <p>纯文本没有"标签"，但人有"段落"。规范渲染时，不同块级元素在文本化后应补的换行数并不相同。下表是做 HTML 转纯文本时最常被问到的换行规则：</p>
+                <table class="ref-table">
+                    <thead><tr><th>元素</th><th>是否产生换行</th><th>换行位置</th><th>说明</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>&lt;p&gt;</code></td><td>是</td><td>前后各 1 行</td><td>段落，常作为分段基准</td></tr>
+                        <tr><td><code>&lt;div&gt;</code></td><td>是（渲染上）</td><td>前后各 1 行</td><td>块容器，文本化后建议补换行</td></tr>
+                        <tr><td><code>&lt;br&gt;</code></td><td>是</td><td>仅其后 1 行</td><td>硬换行，无配对结束标签</td></tr>
+                        <tr><td><code>&lt;li&gt;</code></td><td>是</td><td>每项前 1 行</td><td>列表项，通常加 "· " 或 "1. " 前缀</td></tr>
+                        <tr><td><code>&lt;tr&gt;</code></td><td>是</td><td>每行后 1 行</td><td>表格行，列对齐见下表 5</td></tr>
+                        <tr><td><code>&lt;h1&gt;–&lt;h6&gt;</code></td><td>是</td><td>前后各 1 行</td><td>标题，文本化后常加空行突出</td></tr>
+                        <tr><td><code>&lt;blockquote&gt;</code></td><td>是</td><td>前后各 1 行</td><td>引用块，可加前缀 ">" 标记</td></tr>
+                        <tr><td><code>&lt;hr&gt;</code></td><td>否（语义分隔）</td><td>可用 "---" 代替</td><td>水平线，纯文本无对应物</td></tr>
+                    </tbody>
+                </table>
+                <p>本工具默认<strong>不</strong>补这些换行——它只删标签，所以默认输出的段落会"挤"在一起；想保留段落感，就勾选保留 <code>&lt;p&gt;</code> 或 <code>&lt;br&gt;</code>（见算例 2）。</p>
+
+                <h3>表 3：必须丢弃的元素与应保留文本的属性</h3>
+                <table class="ref-table">
+                    <thead><tr><th>元素 / 属性</th><th>处理</th><th>原因</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>&lt;script&gt;</code></td><td>整段丢弃</td><td>可执行代码，纯文本不需要也不该保留</td></tr>
+                        <tr><td><code>&lt;style&gt;</code></td><td>整段丢弃</td><td>CSS 样式，与内容无关</td></tr>
+                        <tr><td><code>&lt;!-- 注释 --&gt;</code></td><td>整段丢弃</td><td>作者注释，读者不可见</td></tr>
+                        <tr><td><code>&lt;noscript&gt;</code></td><td>整段丢弃</td><td>无脚本时的兜底内容，文本化无意义</td></tr>
+                        <tr><td><code>alt</code>（图片）</td><td>保留为文本</td><td>替代文字，是不可见图片的唯一可读信息</td></tr>
+                        <tr><td><code>title</code>（元素）</td><td>保留为文本</td><td>悬停提示，可并入正文或括号注</td></tr>
+                        <tr><td><code>&lt;img&gt;</code> 本身</td><td>丢弃标签</td><td>图片无法以纯文本呈现，但 alt 应文本化</td></tr>
+                    </tbody>
+                </table>
+                <p>这正是"丢格式、留内容"的落点：<code>&lt;script&gt;</code>/<code>&lt;style&gt;</code>/注释被剔除，而 <code>alt</code>、<code>title</code> 这类承载语义的属性被还原成可读文字。</p>
+
+                <h3>表 4：空白折叠规则（HTML 规范 white-space collapsing）</h3>
+                <p>HTML 规范规定，在默认渲染下连续的空白字符（空格、制表符、换行）会被<strong>折叠为一个空格</strong>，元素边界处的空白也会被折叠，行首行尾的空白会被去掉。下表对照常见情形：</p>
+                <table class="ref-table">
+                    <thead><tr><th>场景</th><th>规范行为</th><th>纯文本处理建议</th></tr></thead>
+                    <tbody>
+                        <tr><td>连续空格 / 制表 / 换行</td><td>合并为单个空格</td><td>用正则 <code>\s+</code> 替换为单空格</td></tr>
+                        <tr><td>标签边界的空白</td><td>折叠</td><td>删标签后顺手清掉</td></tr>
+                        <tr><td>行首 / 行尾空白</td><td>去除</td><td>对每行做 <code>trim()</code></td></tr>
+                        <tr><td><code>&amp;nbsp;</code>（U+00A0）</td><td>不折叠</td><td>保留，或按需替换为普通空格</td></tr>
+                        <tr><td>中文全角空格（U+3000）</td><td>视为普通字符</td><td>按 GB 18030 语境保留或转换</td></tr>
+                    </tbody>
+                </table>
+                <p><strong>注意：</strong>"折叠"只针对普通空白字符，<code>&amp;nbsp;</code> 与全角空格（U+3000）都不在折叠之列——这也是为什么去标签后有时会出现"删不掉的多余空格"。</p>
+
+                <h3>表 5：&lt;table&gt; 转纯文本的对齐难题</h3>
+                <p>把表格变成纯文本，最难的不是"去掉标签"，而是"对齐列"。纯文本没有单元格宽度，下列问题都会让结果难读：</p>
+                <table class="ref-table">
+                    <thead><tr><th>难点</th><th>表现</th><th>处理建议</th></tr></thead>
+                    <tbody>
+                        <tr><td>列对齐</td><td>单元格内容长短不一，直接换行错位</td><td>用定宽填充或 Markdown 表格</td></tr>
+                        <tr><td>跨列 <code>colspan</code></td><td>某格占多列，行宽计算复杂</td><td>合并显示并标注</td></tr>
+                        <tr><td>跨行 <code>rowspan</code></td><td>内容纵向跨多行</td><td>在每行重复或留空</td></tr>
+                        <tr><td>嵌套表格</td><td>表中有表</td><td>先展平内层再处理外层</td></tr>
+                        <tr><td>空单元格</td><td>缺失内容导致错位</td><td>补占位符（如 "-"）</td></tr>
+                    </tbody>
+                </table>
+                <p>结论：若你的目标是"可读的表格"，纯文本剥离并不是好选择，应当交给 <a href="/zh/text/markdown-preview">Markdown 预览</a> 这类保留结构的工具；只有当目标是"无格式的纯文本"时，本工具才合适。</p>
+
+                <h3>表 6：与 Markdown 转换的差异对照表</h3>
+                <table class="ref-table">
+                    <thead><tr><th>维度</th><th>纯文本剥离（本工具）</th><th>Markdown 转换</th></tr></thead>
+                    <tbody>
+                        <tr><td>结构</td><td>全部丢弃</td><td>保留标题 / 列表 / 引用</td></tr>
+                        <tr><td>链接</td><td>仅留锚文本</td><td>保留 <code>[文本](URL)</code></td></tr>
+                        <tr><td>标题</td><td>变成普通行</td><td>加 <code>#</code> 前缀</td></tr>
+                        <tr><td>列表</td><td>变成普通行</td><td>加 <code>-</code> / <code>1.</code> 前缀</td></tr>
+                        <tr><td>粗体 / 斜体</td><td>丢失</td><td>保留 <code>**</code> / <code>*</code></td></tr>
+                        <tr><td>表格</td><td>错位（见上表）</td><td>保留管道表格</td></tr>
+                    </tbody>
+                </table>
+                <p>简言之：要"纯文本"用本工具，要"带轻量格式"用 <a href="/zh/text/markdown-preview">Markdown 预览</a>；二者不是替代关系，而是不同目标。</p>
+
+                <h3>三个真实算例（基于页面默认输入）</h3>
+                <p>下面三个例子都用本工具文本框里的默认 HTML 作为输入，确保与你打开页面看到的一致。输出已用脚本逐字符核验。</p>
+
+                <h4>算例 1：全部标签去除（默认不勾选任何保留项）</h4>
+                <p>默认输入共 <strong>186</strong> 个字符，包含 <strong>18</strong> 个标签。全部去除后得 <strong>88</strong> 个字符，结果如下：</p>
+<pre>Welcome to My Website
+This is bold and italic text.
+
+  Item 1
+  Item 2
+
+Learn more here.</pre>
+                <p>可以看到：标题、段落、列表都"压"进了连续文本，<code>&lt;li&gt;</code> 前导空格还在（因为没有折叠），这正是"只删标签"的典型产物。</p>
+
+                <h4>算例 2：保留 &lt;p&gt; 与 &lt;br&gt;</h4>
+                <p>勾选保留 <code>p</code> 与 <code>br</code> 后，输出变为 <strong>102</strong> 个字符——<code>&lt;p&gt;</code> 标签被原样保留在文本里：</p>
+<pre>Welcome to My Website
+&lt;p&gt;This is bold and italic text.&lt;/p&gt;
+
+  Item 1
+  Item 2
+
+&lt;p&gt;Learn more here.&lt;/p&gt;</pre>
+                <p><strong>注意：</strong>本工具的正则"保留"是<strong>整标签留存</strong>，不是把 <code>&lt;p&gt;</code> 变成换行。所以你看到的是带尖括号的 <code>&lt;p&gt;</code> 字面文本，而非真正的空行。若你要的是"段落换行"，更稳妥的做法是后处理或换用结构保留工具。</p>
+
+                <h4>算例 3：实体不解码（关键陷阱）</h4>
+                <p>输入 <code>&lt;p&gt;Price: &amp;pound;10 &amp;amp; &amp;copy; 2026&amp;mdash;end&amp;nbsp;space&lt;/p&gt;</code>，本工具输出 <strong>55</strong> 个字符且实体<strong>原样保留</strong>：</p>
+<pre>Price: &amp;pound;10 &amp;amp; &amp;copy; 2026&amp;mdash;end&amp;nbsp;space</pre>
+                <p>而符合规范的解析应解码为 <code>Price: £10 &amp; © 2026—end space</code>。差异在于：实体解码属于 HTML 解析阶段，本工具没做这一步。需要干净结果时，请先在其他环境解码实体，或接受字面残留、手动替换。</p>
+
+                <h3>常见问题</h3>
+                <h4>为什么去标签后 &amp;nbsp; 不变成空格？</h4>
+                <p>因为本工具是纯正则剥离器，只删 <code>&lt;...&gt;</code> 标签，不执行 HTML 实体解码。<code>&amp;nbsp;</code>（U+00A0 不换行空格）在结果里仍是字面文本 <code>&amp;nbsp;</code>。要真正变成空格，需用浏览器 DOM 或后端库先做实体解码，再剥离标签。</p>
+                <h4>勾选保留 &lt;p&gt; 后，结果里为什么还有 &lt;p&gt; 字样？</h4>
+                <p>保留逻辑是"整标签留存"，即把匹配的 <code>&lt;p&gt;</code> 标签原样留在文本中，而不是替换成换行。它适合"想看标签还在"的调试场景；若你要的是段落换行，请配合后处理或结构保留工具。</p>
+                <h4>把 &lt;table&gt; 转成纯文本为什么对不齐？</h4>
+                <p>纯文本没有单元格宽度，遇到列宽不一、<code>colspan</code>/<code>rowspan</code>、嵌套表、空单元格时就会错位。纯文本剥离只解决"去标签"，不对齐问题要靠定宽填充或改用 <a href="/zh/text/markdown-preview">Markdown 预览</a> 的管道表格。</p>
+                <h4>HTML 去标签和转 Markdown 该选哪个？</h4>
+                <p>目标决定工具：要"无格式纯文本"（字数统计、入库、喂模型）用本工具；要"保留标题 / 列表 / 链接 / 表格"的轻量格式用 <a href="/zh/text/markdown-preview">Markdown 预览</a>。详见上方对照表 6。</p>
+                <h4>中文网页去标签后空格为何异常？</h4>
+                <p>中文场景常见两种空格：HTML 的 <code>&amp;nbsp;</code>（U+00A0 西文不换行空格）与中文"全角空格"（U+3000，GB 18030 编码字符集收录）。二者不是同一字符，空白折叠规则也不覆盖它们。按 GB 18030-2022 口径，中文排版空格应保留或显式转换为半角空格，避免混用导致统计偏差。</p>
+
+                <p>需要把清理后的文本进一步分析？可以配合 <a href="/zh/text/word-counter">字数统计</a> 统计字符数，或用 <a href="/zh/text/text-diff">文本对比</a> 比较去标签前后的差异；更多实战技巧见 <a href="/blog/zh/html-stripper-guide">HTML 标签去除器使用指南</a>。</p>
             </div>
         </div>
 
@@ -153,5 +262,53 @@
     </div>
     <p>© 2026 工具箱里 | 免费在线工具</p>
 </footer>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "为什么去标签后 &nbsp; 不变成空格？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "因为本工具是纯正则剥离器，只删 <...> 标签，不执行 HTML 实体解码。&nbsp;（U+00A0 不换行空格）在结果里仍是字面文本 &nbsp;。要真正变成空格，需用浏览器 DOM 或后端库先做实体解码，再剥离标签。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "勾选保留 <p> 后，结果里为什么还有 <p> 字样？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "保留逻辑是整标签留存，即把匹配的 <p> 标签原样留在文本中，而不是替换成换行。它适合想看标签还在的调试场景；若你要的是段落换行，请配合后处理或结构保留工具。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "把 <table> 转成纯文本为什么对不齐？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "纯文本没有单元格宽度，遇到列宽不一、colspan/rowspan、嵌套表、空单元格时就会错位。纯文本剥离只解决去标签，不对齐问题要靠定宽填充或改用 Markdown 预览的管道表格。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "HTML 去标签和转 Markdown 该选哪个？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "目标决定工具：要无格式纯文本（字数统计、入库、喂模型）用本工具；要保留标题、列表、链接、表格的轻量格式用 Markdown 预览。两者不是替代关系，而是不同目标。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "中文网页去标签后空格为何异常？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "中文场景常见两种空格：HTML 的 &nbsp;（U+00A0 西文不换行空格）与中文全角空格（U+3000，GB 18030 编码字符集收录）。二者不是同一字符，空白折叠规则也不覆盖它们。按 GB 18030-2022 口径，中文排版空格应保留或显式转换为半角空格。"
+                }
+            }
+        ]
+    }
+    </script>
     </body>
 </html>

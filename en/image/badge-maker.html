@@ -58,6 +58,54 @@
         "inLanguage": "en"
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What pixel size is the single exact-size PNG at the default 58mm spec?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The tool exports at 300 DPI: with-bleed pixels = total diameter(mm) × 300 ÷ 25.4. At the default 58mm spec the with-bleed diameter is 64mm, so it exports as a 756 × 756 px square PNG; the inner cut circle is about 685px and the safe-area radius about 319px. With the default 11% text ratio the font size is about 75px."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why does the A4 sheet default to 20 badges but only export 8?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The printable area of A4 is limited by an 8mm margin on each side. At 58mm the cell is 756px, so A4 (2480 × 3508 px) fits at most 2 columns × 4 rows = 8 badges; choosing 20 is auto-clamped to 8 (block about 1547 × 3129px). To fit more, use a smaller spec: 32mm fits up to 35, 44mm up to 15."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How big is the arc text by default, and is it still legible at 32mm?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Font size = finished circle diameter × 11% (default ratio). That is about 75px at 58mm and about 42px at 32mm, roughly 55% of the former. Because the physical diameter is smaller, the text is also smaller, so for small specs keep the arc text short, raise the ratio, and keep text inside the safe area (2mm inset from the cut line)."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "When is transparent-background export useful, and does it work with the realistic metal effect?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Transparent background applies only to the Preview export mode, making the area outside the badge shape transparent — handy for stickers or avatar overlays. But the realistic tinplate effect paints a metal rim and base colour, so the badge body is never transparent; single and A4 print sheets also fill white to stay opaque for printing. For a purely transparent round image, turn off the realistic effect and use the plain circle crop."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is the difference in cut precision between the PNG export and the A4 PDF?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Both use the same 300 DPI pixels (A4 = 2480 × 3508 px) and the cut circle and bleed lines land in exactly the same place. The difference is packaging: PNG is a bitmap good for viewing and re-editing; the A4 PDF embeds a JPEG (quality 0.92) sized to the exact A4 physical dimensions (595.28 × 841.89 pt), so the size will not drift when a print shop scales it on screen."
+                }
+            }
+        ]
+    }
+    </script>
 </head>
 <body>
 <header>
@@ -530,6 +578,132 @@
 <div id="printArea"><canvas id="printCanvas"></canvas></div>
 
         </div>
+            <div class="tool-content">
+                <h2>Badge Maker: turn a photo into a wearable round badge, but the export is really a precisely-sized PNG</h2>
+                <p>Badge Maker is a fully free, local-only tool. The "badge" it makes is a <strong>tinplate pin badge</strong> (a physical button), not the small "status badge" you see on a profile page. But both end up as a <strong>precisely-sized image</strong>. The tool crops a photo into a circle, adds a metal rim and text, then exports a print sheet with bleed and cut lines at 300 DPI — its size is not arbitrary, it is derived from the spec, the bleed, and the DPI. Once you understand that conversion, you can make both a correct physical badge and a correct avatar, cover, or icon.</p>
+                <p>All processing happens in the browser via Canvas; the image is never uploaded, so it protects privacy and previews instantly. It suits creators who print their own merch or event materials, and designers who also need social images and icons in one pass.</p>
+
+                <h3>What actually defines a badge spec? Finish, bleed, and with-bleed</h3>
+                <p>Three sizes matter in print: the <strong>finished diameter</strong> is the final cut circle (e.g. 58mm); the <strong>bleed</strong> is the extra ring outside the finish — cutters are imperfect, so any artwork within 2–3mm of the edge gets trimmed, and you must leave room; the <strong>with-bleed diameter</strong> = finish + bleed on both sides, and that is the real edge length of your delivered file. In this tool the specs 32/44/58/75mm are finished diameters, with with-bleed diameters of 36/48/64/81mm.</p>
+
+                <h3>Pixel output for all four specs (300 DPI, with-bleed square PNG)</h3>
+                <p>Formula: <strong>with-bleed pixels = with-bleed diameter(mm) × 300 ÷ 25.4</strong>. The table gives the full export parameters at the default 300 DPI; font sizes use the tool's default 11% ratio:</p>
+                <table class="ref-table">
+                <thead><tr><th>Spec (finish)</th><th>Bleed</th><th>With-bleed</th><th>With-bleed square(px)</th><th>Cut circle(px)</th><th>Safe radius(px)</th><th>Font(px,11%)</th></tr></thead>
+                <tbody>
+                <tr><td>32mm</td><td>2mm</td><td>36mm</td><td>425</td><td>378</td><td>165</td><td>41.6</td></tr>
+                <tr><td>44mm</td><td>2mm</td><td>48mm</td><td>567</td><td>520</td><td>236</td><td>57.2</td></tr>
+                <tr><td>58mm (default)</td><td>3mm</td><td>64mm</td><td>756</td><td>685</td><td>319</td><td>75.4</td></tr>
+                <tr><td>75mm</td><td>3mm</td><td>81mm</td><td>957</td><td>886</td><td>419</td><td>97.5</td></tr>
+                </tbody>
+                </table>
+                <p><strong>Note:</strong> the "safe area" is the ring inset 2mm from the cut line (shown as a light-green dashed circle by the tool); text and key artwork should sit inside it — cutter error may reach outside the safe area but must never reach inside it. A 58mm image has 75px text on a 756px canvas because it is meant to be printed and read on a physical object, not used as a small on-screen graphic.</p>
+
+                <h3>Social image specs (Open Graph, Twitter, GitHub — international standards)</h3>
+                <p>A badge is physical, but you often post the same art as an avatar or cover. Each platform defines its own card size; the canonical references are the Open Graph protocol, Twitter Cards, and schema.org. GitHub uses its own social preview:</p>
+                <table class="ref-table">
+                <thead><tr><th>Platform / standard</th><th>Recommended size(px)</th><th>Aspect</th><th>Notes</th></tr></thead>
+                <tbody>
+                <tr><td>Open Graph (shared link cards)</td><td>1200 × 630</td><td>1.91:1</td><td>Open Graph protocol; Facebook, LinkedIn, iMessage</td></tr>
+                <tr><td>Twitter / X Card (large)</td><td>1200 × 600</td><td>2:1</td><td>summary_large_image primary</td></tr>
+                <tr><td>Twitter / X Card (legacy)</td><td>1200 × 675</td><td>1.78:1</td><td>near the older 1.5:1 framing</td></tr>
+                <tr><td>schema.org ImageObject</td><td>1200 × 900 (min 696 × 696)</td><td>4:3</td><td>Google recommends ≥696px for rich results</td></tr>
+                <tr><td>GitHub Social Preview</td><td>1280 × 640</td><td>2:1</td><td>repo header preview</td></tr>
+                </tbody>
+                </table>
+                <p>These sizes are unrelated to the round badge, but they belong to the same "image spec" family: pick the target platform's canvas before you start, and you avoid a lot of rework.</p>
+
+                <h3>Status-badge (shields.io-style) spec</h3>
+                <p>The little "build passing / version" badges in docs are different from a pin badge, yet the "made with calc-tools.top" mark this tool adds is the same family of small badge. These status badges follow a de-facto standard (from shields.io):</p>
+                <table class="ref-table">
+                <thead><tr><th>Parameter</th><th>Value</th><th>Notes</th></tr></thead>
+                <tbody>
+                <tr><td>Total height</td><td>20px</td><td>standard height of one status badge</td></tr>
+                <tr><td>Font</td><td>11px Verdana</td><td>vertically centred, scales proportionally</td></tr>
+                <tr><td>Corner radius</td><td>3px</td><td>rx of the rect</td></tr>
+                <tr><td>label / value blocks</td><td>label grey bg + dark text, value blue bg + white text</td><td>left block names it, right block shows the value; colours customizable</td></tr>
+                <tr><td>Char width</td><td>~7px / character</td><td>total length estimated from both text blocks</td></tr>
+                <tr><td>SVG vs PNG</td><td>SVG vector (lossless, CSS-scalable); PNG raster (blurs when upscaled)</td><td>embed SVG in README / docs</td></tr>
+                </tbody>
+                </table>
+                <p>The last row is the key difference: SVG is vector and never blurs at any size; PNG is raster and loses sharpness when scaled. That is why status badges are almost always SVG, while this tool's print sheet is PNG (it needs exact pixels).</p>
+
+                <h3>favicon and app-icon sizes (cover the platforms)</h3>
+                <p>To turn a brand into a site or app icon, one size is not enough — each system pulls a different tier. The tiers below map to the PNG this tool exports:</p>
+                <table class="ref-table">
+                <thead><tr><th>Size(px)</th><th>Typical use</th><th>Platform / context</th></tr></thead>
+                <tbody>
+                <tr><td>16 × 16</td><td>browser tab favicon, address bar</td><td>universal</td></tr>
+                <tr><td>32 × 32</td><td>legacy IE, Windows taskbar</td><td>Windows</td></tr>
+                <tr><td>48 × 48</td><td>desktop icon</td><td>Windows</td></tr>
+                <tr><td>180 × 180</td><td>Apple Touch icon (home screen)</td><td>iOS</td></tr>
+                <tr><td>192 × 192</td><td>manifest icon (mdpi baseline)</td><td>Android / PWA</td></tr>
+                <tr><td>512 × 512</td><td>manifest largest tier (xxxhdpi)</td><td>Android / PWA</td></tr>
+                </tbody>
+                </table>
+                <p>Start from the largest tier (e.g. 512) and downscale to the smaller tiers, so the small icons do not pick up aliasing from a second downscale.</p>
+
+                <h3>Safe margin and minimum readable size: what your export becomes after platform scaling</h3>
+                <p>Social images get shrunk hard in the feed. Using a "40px title / 24px body on the canvas" example, the table reverse-computes the on-screen size from each platform's typical feed width — body text often drops below the ~14px readable floor:</p>
+                <table class="ref-table">
+                <thead><tr><th>Platform / context</th><th>Canvas width(px)</th><th>Typical shown width(px)</th><th>Scale</th><th>40px title shown(px)</th><th>24px body shown(px)</th></tr></thead>
+                <tbody>
+                <tr><td>Open Graph desktop feed</td><td>1200</td><td>476</td><td>0.40</td><td>15.9</td><td>9.5</td></tr>
+                <tr><td>Twitter / X desktop large</td><td>1200</td><td>506</td><td>0.42</td><td>16.9</td><td>10.1</td></tr>
+                <tr><td>WeChat article (phone)</td><td>900</td><td>414</td><td>0.46</td><td>18.4</td><td>11.0</td></tr>
+                <tr><td>Xiaohongshu feed card</td><td>1080</td><td>337</td><td>0.31</td><td>12.5</td><td>7.5</td></tr>
+                <tr><td>GitHub repo header</td><td>1280</td><td>640</td><td>0.50</td><td>20.0</td><td>12.0</td></tr>
+                </tbody>
+                </table>
+                <p><strong>Note:</strong> on a Xiaohongshu card a 24px body shrinks to only 7.5px, far below the readable floor. The fix: put titles and key text in the large centre zone, keep body copy short, or bake the text into the big image instead of relying on it being read after scaling. To check whether a foreground colour stays clear on a small image, use this site's <a href="/en/image/color-contrast">colour contrast checker</a>.</p>
+
+                <h3>Export format: PNG transparency vs JPEG size vs SVG lossless</h3>
+                <table class="ref-table">
+                <thead><tr><th>Dimension</th><th>PNG</th><th>JPEG</th><th>SVG</th></tr></thead>
+                <tbody>
+                <tr><td>Transparency</td><td>yes</td><td>no (filled white)</td><td>yes</td></tr>
+                <tr><td>Scaling</td><td>raster, blurs up</td><td>raster, blurs up</td><td>vector, lossless up</td></tr>
+                <tr><td>Size</td><td>medium (lossless)</td><td>smallest (lossy)</td><td>text, tiny</td></tr>
+                <tr><td>Typical use</td><td>badge / transparent sticker / mark</td><td>photo sheet to shrink (A4 PDF embed)</td><td>status badge / logo</td></tr>
+                </tbody>
+                </table>
+                <p>This tool exports PNG for preview, single, and A4 sheet (print needs exact pixels); the A4 PDF embeds a JPEG (quality 0.92) to keep the file small. If you want to turn an image into embeddable code, see <a href="/en/image/base64">image to Base64</a>. For colour work, go back to the <a href="/en/image/color-picker">colour picker</a> to sample exact colours first.</p>
+
+                <h3>DPR 2x / 3x export: how many pixels for a retina screen</h3>
+                <p>High-DPI screens (Retina / high-DPI phones) render at a device pixel ratio DPR: a 44px UI element needs 88px of image at DPR=2 to stay sharp. This tool's preview defaults to 1024px (@1x); 2048px is @2x. The table gives the three tiers for common sizes:</p>
+                <table class="ref-table">
+                <thead><tr><th>UI CSS size(px)</th><th>@1x</th><th>@2x</th><th>@3x</th></tr></thead>
+                <tbody>
+                <tr><td>16</td><td>16</td><td>32</td><td>48</td></tr>
+                <tr><td>32</td><td>32</td><td>64</td><td>96</td></tr>
+                <tr><td>44</td><td>44</td><td>88</td><td>132</td></tr>
+                <tr><td>48</td><td>48</td><td>96</td><td>144</td></tr>
+                <tr><td>180</td><td>180</td><td>360</td><td>540</td></tr>
+                <tr><td>192</td><td>192</td><td>384</td><td>576</td></tr>
+                <tr><td>512</td><td>512</td><td>1024</td><td>1536</td></tr>
+                </tbody>
+                </table>
+                <p>The rule is direct: export pixels = display size × DPR. A 512px favicon master shows at only 16px in a tab, and the browser auto-picks the @1x–@3x tier; but when you export your own PNG, multiply by DPR for high-DPI devices.</p>
+
+                <h3>Three real examples (using the tool's default parameters, numbers from above)</h3>
+                <p><strong>Example 1 (single exact size):</strong> keep the default 58mm spec and click "Export single exact-size PNG". With-bleed 64mm × 300 ÷ 25.4 = 755.9 → rounded to <strong>756 × 756 px</strong>; the inner cut circle is about 685px and the safe radius about 319px; at the default 11% text ratio the font is about 75px. That is the precise file for the print shop.</p>
+                <p><strong>Example 2 (A4 sheet auto-clamp):</strong> default 58mm, count 20, gap 3mm. The A4 printable area is limited by an 8mm margin, and at 756px per cell it fits at most 2 columns × 4 rows = <strong>8 badges</strong>; asking for 20 is auto-clamped to 8 (block about 1547 × 3129px, ~467px side margins and ~190px top/bottom). To fit 20 at once, use 32mm (up to 35) or 44mm (up to 15) instead.</p>
+                <p><strong>Example 3 (text scaling and @2x retina):</strong> the same image at the default 1024px preview has a finished circle faceD = 1024 × 0.74 = 757.8px and text about 83px. For retina sharpness pick 2048px (@2x) and the text scales to about 166px. If you switch to 32mm for the same image, the single faceD is only 378px → text about 42px, about 45% smaller than the 75px at 58mm, so for small specs keep the arc text short or raise the ratio to stay legible.</p>
+
+                <h3>Frequently asked questions</h3>
+                <p><strong>Q: What pixel size is the single exact-size PNG at the default 58mm spec?</strong><br>
+                A: with-bleed 64mm at 300 DPI exports as 756 × 756 px; the cut circle is about 685px and the safe radius about 319px; the default 11% text is about 75px.</p>
+                <p><strong>Q: Why does the A4 sheet default to 20 badges but only export 8?</strong><br>
+                A: the A4 printable area is limited by an 8mm margin; at 58mm the 756px cell fits at most 2 × 4 = 8. Asking for 20 is auto-clamped to 8 (block about 1547 × 3129px). Use 32mm (up to 35) or 44mm (up to 15) to fit more.</p>
+                <p><strong>Q: How big is the arc text by default, and is it legible at 32mm?</strong><br>
+                A: font = finished circle × 11%. About 75px at 58mm and about 42px at 32mm (about 55%). The physical diameter is smaller so the text is smaller; keep it short, raise the ratio, and stay inside the safe area.</p>
+                <p><strong>Q: When is transparent background useful, and does it work with the realistic metal effect?</strong><br>
+                A: transparent background applies only to Preview export, making the area outside the badge transparent — good for stickers or avatar overlays. But the realistic effect paints a metal rim and base, so the badge body is never transparent; single and A4 sheets also fill white to stay opaque. For a purely transparent round image, turn off realistic and use the plain circle crop.</p>
+                <p><strong>Q: What is the cut-precision difference between the PNG and the A4 PDF?</strong><br>
+                A: both use the same 300 DPI pixels (A4 = 2480 × 3508 px) and the cut circle and bleed lines land identically. The packaging differs: PNG is a bitmap for re-editing; the A4 PDF embeds a JPEG (quality 0.92) sized to exact A4 physical dimensions (595.28 × 841.89 pt), so size will not drift on a print shop's screen.</p>
+
+                <p>For QR merchandise workflows read the blog <a href="/blog/en/qr-generator-guide">QR code generator guide</a>; for colour work use the <a href="/en/image/color-picker">colour picker</a> to sample exact colours, the <a href="/en/image/color-contrast">colour contrast checker</a> to verify legibility, and <a href="/en/image/base64">image to Base64</a> to turn an image into embeddable code.</p>
+            </div>
     </main>
 <footer>
     <div class="footer-links">

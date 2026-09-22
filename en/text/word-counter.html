@@ -49,6 +49,35 @@
   "operatingSystem": "Web",
   "inLanguage": "en"
 }</script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why does my Chinese text show only 1 sentence?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Because sentences are split by ASCII period, question mark, and exclamation mark (.!?), while Chinese uses full-width 。！？, which are not recognized. To count Chinese sentences accurately, temporarily replace the Chinese punctuation with English punctuation before analyzing." }
+        },
+        {
+          "@type": "Question",
+          "name": "How are English words counted when mixed with CJK?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Any continuous run of Latin letters ([A-Za-z]+) counts as one English word; Chinese, digits, and punctuation are excluded. WordCount is 1 English word, while 2026 is a digit and is not counted as an English word." }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is keyword density for Chinese counted per-character, not per-word?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Chinese has no whitespace to tokenize words, so counting per character is unambiguous and fully reproducible. This tool shows the most frequent Han characters with their share for Chinese, and stopword-filtered content words for English." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between total characters and visible characters?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Total Characters equals the text length including every space and newline; Visible Characters equals the length after removing whitespace. They match only when the text has no spaces or newlines, and diverge once you add either." }
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <header>
@@ -123,16 +152,106 @@
             </div>
 
             <div class="tool-content">
-                <h2>Online Word Counter & Keyword Density Analyzer</h2>
-                <p>Our free word counter and keyword density analyzer helps writers, editors, students, and SEO professionals quickly understand their text metrics.</p>
-                <h3>Word Count Mode</h3>
-                <p>Quickly count total characters, Chinese characters, English words, paragraphs, sentences, lines, visible characters, digits, and punctuation marks in real time.</p>
-                <h3>Keyword Density Analysis</h3>
-                <p>For English text, words are split by boundaries and common stop words are automatically filtered out for accurate results. For Chinese text, each character is analyzed individually. The top 20 keywords are displayed sorted by frequency with density percentage.</p>
-                <h3>Privacy First</h3>
-                <p>All text processing is performed locally in your browser. Your content never leaves your device, ensuring complete privacy.</p>
-                <h3>Use Cases</h3>
-                <p>SEO content writing: optimize keyword density for better rankings. Academic writing: meet word count requirements. Social media: stay within character limits. Translation: compare source and target text lengths.</p>
+                <h2>Word Count Is Not One Number: The Real Spec Difference Between Chinese and English</h2>
+                <p>Many people treat "word count" as a single fixed number, but it is actually a set of different metrics. The same passage, counted as total characters, as Chinese characters, or as English words, yields three completely different results. Understanding these differences matters more than staring at one number—this tool reports nine metrics at once so you can pick the one you need instead of being misled by a single figure. For writing and formatting tips built on these metrics, see the <a href="/blog/en/word-counter-guide">complete word counter guide</a>.</p>
+
+                <h3>What the Nine Metrics Actually Measure (Rules & Algorithm)</h3>
+                <p>The nine metrics below follow exactly the same logic as the calculator at the top of the page. Using the page's default sample text ("Welcome to the online word counter tool! … maximum privacy protection."), the measured values are:</p>
+                <table class="ref-table">
+                    <thead>
+                        <tr><th>Metric</th><th>Meaning</th><th>Rule</th><th>Default Sample Measured</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Total Characters</td><td>Length of text (spaces, newlines, punctuation included)</td><td>String length</td><td>346</td></tr>
+                        <tr><td>Chinese Characters</td><td>Count of Han characters</td><td>Matches CJK block U+4E00–U+9FFF</td><td>0</td></tr>
+                        <tr><td>English Words</td><td>Count of Latin letter runs</td><td>Matches [A-Za-z]+ runs</td><td>54</td></tr>
+                        <tr><td>Paragraphs</td><td>Non-empty lines</td><td>Split by newline, drop blank lines</td><td>1</td></tr>
+                        <tr><td>Sentences</td><td>Segments split by sentence-end punctuation</td><td>Split by ASCII .!?</td><td>5</td></tr>
+                        <tr><td>Lines</td><td>Newline count + 1</td><td>Split by newline</td><td>1</td></tr>
+                        <tr><td>Visible Characters</td><td>Length after removing whitespace</td><td>Strip all whitespace</td><td>293</td></tr>
+                        <tr><td>Digits</td><td>Arabic digit count</td><td>Match \d</td><td>0</td></tr>
+                        <tr><td>Punctuation</td><td>Non-word, non-space symbols</td><td>Exclude letters, digits, whitespace, CJK</td><td>10</td></tr>
+                    </tbody>
+                </table>
+                <p>Note: the default sample has no Chinese, no digits, and no extra whitespace, so "Chinese Characters" and "Digits" are 0, while "Total Characters" (346) and "Visible Characters" (293) differ by the 53 spaces. The gap between those two is the quickest way to sanity-check whether hidden whitespace is inflating your count.</p>
+
+                <h3>Why CJK and Latin Count "Words" Differently</h3>
+                <p>Chinese and English define "how many words" from fundamentally different bases. Chinese has no inter-word spaces and counts by character; English tokenizes by whitespace and counts by word. This difference runs through encoding, punctuation, reading speed, and sentence segmentation:</p>
+                <table class="ref-table">
+                    <thead>
+                        <tr><th>Dimension</th><th>Latin / English Convention</th><th>CJK / International View (Unicode / ISO)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Base unit</td><td>Word, tokenized by whitespace (Unicode Text Segmentation, UAX #29)</td><td>Character for Han text; Latin parts still tokenized by whitespace</td></tr>
+                        <tr><td>Punctuation</td><td>Half-width: . ( ) " " ,</td><td>Full-width for CJK: 。（）""、，</td></tr>
+                        <tr><td>Reading speed</td><td>About 200–250 words / minute (typical adult English range)</td><td>About 300–500 characters / minute for Chinese readers</td></tr>
+                        <tr><td>Sentence split</td><td>By . ! ?</td><td>By 。！？ for CJK text</td></tr>
+                        <tr><td>Mixed handling</td><td>Latin counted by whitespace, CJK by character</td><td>Different break rules applied per script (UAX #29)</td></tr>
+                    </tbody>
+                </table>
+                <p>Note: because the two systems use different units, you cannot directly subtract or convert a Chinese character count into an English word count. Always label which unit you are reporting when comparing texts across languages.</p>
+
+                <h3>Platform Character / Word Limits (How Much Fits Before You Are Cut Off)</h3>
+                <p>The trap is that platforms cap by different units—some by "characters", some by "characters" but counting CJK as one each. Below are common international limits, with the English word capacity estimated at an average of about 6.1 characters per word (including the space):</p>
+                <table class="ref-table">
+                    <thead>
+                        <tr><th>Platform</th><th>Limit Unit</th><th>Cap</th><th>English Words (~)</th><th>CJK Characters (~)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Twitter / X</td><td>Characters per tweet</td><td>280</td><td>~45</td><td>280</td></tr>
+                        <tr><td>SEO Title</td><td>Search snippet characters</td><td>60</td><td>~9</td><td>60</td></tr>
+                        <tr><td>Meta Description</td><td>Search snippet characters</td><td>155</td><td>~25</td><td>155</td></tr>
+                        <tr><td>SMS (GSM)</td><td>Characters per message</td><td>160</td><td>~26</td><td>160</td></tr>
+                        <tr><td>Domain Label (RFC 1035)</td><td>Characters per label</td><td>63</td><td>~10</td><td>63</td></tr>
+                    </tbody>
+                </table>
+                <p>Note: the "English words (~)" column is a theoretical estimate at ~6.1 characters per word including spaces; real numbers move with word length. On character-capped platforms, each CJK character usually costs exactly one character, so 280 characters hold about 280 Han characters—roughly six times the English word count for the same budget.</p>
+
+                <h3>Reading Speed Tiers and Time Estimation</h3>
+                <p>Beyond counts, reading time is another planning yardstick. English readers typically fall in these ranges:</p>
+                <table class="ref-table">
+                    <thead>
+                        <tr><th>Reading Scenario</th><th>English Words / Min</th><th>Chinese Chars / Min</th><th>Note</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Slow, careful</td><td>150–200</td><td>200–300</td><td>Technical docs, contracts</td></tr>
+                        <tr><td>Normal</td><td>200–250</td><td>300–400</td><td>Articles, blogs, news</td></tr>
+                        <tr><td>Fast skim</td><td>250–300</td><td>400–500</td><td>Headlines, summaries, feeds</td></tr>
+                    </tbody>
+                </table>
+                <p>The <a href="/en/text/reading-time">Reading Time tool</a> uses a "slow 200 / normal 300 / fast 400 characters per minute" model; the default sample (54 English words) estimates to about 0.3 / 0.2 / 0.1 minutes under that model. For finer planning, pair it with the <a href="/blog/en/reading-time-guide">reading time estimation guide</a>.</p>
+
+                <h3>How Mixed CJK + Latin Text Is Counted</h3>
+                <p>When a passage contains both Chinese and English (product docs, subtitles, technical writing), different software segments "words" very differently. Knowing this tool's approach helps you predict the result:</p>
+                <table class="ref-table">
+                    <thead>
+                        <tr><th>Tool / Software</th><th>CJK Counting</th><th>Latin Counting</th><th>This Tool</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Microsoft Word</td><td>Counts characters as "words"</td><td>Spaces split into "words"</td><td>Same idea: two separate metrics</td></tr>
+                        <tr><td>Google Docs</td><td>Counts by character</td><td>Splits by whitespace</td><td>English words = letter runs</td></tr>
+                        <tr><td>This tool</td><td>Matches CJK block U+4E00–U+9FFF</td><td>Matches [A-Za-z]+ runs</td><td>Chinese chars and English words counted apart</td></tr>
+                    </tbody>
+                </table>
+                <p>Note: this tool only counts the common Han block U+4E00–U+9FFF for "Chinese Characters"; rare extension-region characters, emoji, and full-width Latin letters are excluded from that metric. English counts only continuous ASCII letter runs, so hyphenated words like "word-count" count as one, and pure numbers are not English words. Results on code comments or symbol-heavy text will differ from a visual estimate—this is expected.</p>
+
+                <h3>Three Real Examples (Consistent With the Page Defaults)</h3>
+                <p><strong>Example 1: the default sample text.</strong> Analyzing the page's default content ("Welcome to the online word counter tool! … maximum privacy protection.") gives: Total Characters 346, Chinese Characters 0, English Words 54, Paragraphs 1, Sentences 5, Lines 1, Visible Characters 293, Digits 0, Punctuation 10. The keyword "tool" appears twice, about 3.70% density, the most frequent non-stopword.</p>
+                <p><strong>Example 2: mixed CJK + Latin text.</strong> Take "Our WordCount tool supports mixed CJK and English text, e.g. 中文混排统计 in one paragraph." The result is: Total Characters 85, Chinese Characters 6, English Words 14, Paragraphs 1, Sentences 3, Visible Characters 72, Punctuation 4. Mixed scripts are split into two independent metrics that do not interfere.</p>
+                <p><strong>Example 3: applying platform limits.</strong> To fit a message inside a Twitter cap of 280 characters, you can place about 45 English words or about 280 Han characters. A 155-character meta description holds about 25 English words. Reversing it: a 54-word English paragraph is far under both, while the same information in Chinese would be a similar character count—showing again why the two units are not interchangeable.</p>
+
+                <h3>Frequently Asked Questions</h3>
+                <h4>Why does my Chinese text show only 1 sentence?</h4>
+                <p>Because "Sentences" is split by ASCII period, question mark, and exclamation mark (.!?), while Chinese uses full-width 。！？, which are not recognized. For example "今天天气很好。明天可能会下雨。我们带伞出门吧。" contains 3 Chinese periods but this tool still counts it as 1 sentence. To count Chinese sentences accurately, temporarily replace the Chinese punctuation with English punctuation before analyzing.</p>
+                <h4>How are English words counted when mixed with CJK?</h4>
+                <p>Any continuous run of Latin letters ([A-Za-z]+) counts as one English word; Chinese, digits, and punctuation are excluded. In "WordCount tool", WordCount is 1 English word; "2026" is a digit and is not counted as an English word.</p>
+                <h4>Why is keyword density for Chinese counted per-character, not per-word?</h4>
+                <p>Chinese has no whitespace to tokenize words, so counting per character is unambiguous and fully reproducible, avoiding the uncertainty a word-segmentation engine would introduce. This tool shows the most frequent Han characters with their share for Chinese, and stopword-filtered content words for English; the two "density" meanings are not the same, so compare them with care.</p>
+                <h4>What is the difference between total characters and visible characters?</h4>
+                <p>Total Characters equals the text length including every space and newline; Visible Characters equals the length after removing whitespace. They match only when the text has no spaces or newlines—once you add either, the two diverge, which is the first pair to check when your numbers look off.</p>
+
+                <h3>Privacy, Use Cases, and Companion Tools</h3>
+                <p>All text processing runs locally in your browser; your content never leaves your device, ensuring complete privacy. Common uses: optimizing keyword density for SEO writing, meeting word-count minimums for academic work, staying within character limits for social posts, and comparing source and target lengths in translation. After counting, use the <a href="/en/text/text-cleaner">Text Cleaner</a> to strip extra spaces and newlines, then re-run the check here—forming a complete "write, count, clean, optimize" workflow.</p>
             </div>
 </main>
     <footer>

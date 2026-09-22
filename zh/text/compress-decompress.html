@@ -73,6 +73,38 @@
                 "@type": "Answer",
                 "text": "不会。所有压缩与解压缩均在你的浏览器本地完成，数据不会发送到任何服务器，适合处理敏感文本。这也意味着处理结果只取决于输入，与网络状态无关（Brotli 编解码库仅在首次选择 Brotli 时按需加载）。"
             }
+        },
+        {
+            "@type": "Question",
+            "name": "为什么对很短的文本身压缩，Gzip 结果反而比原文长？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "因为 Gzip 固定写入 10 字节文件头加 8 字节 CRC/长度尾，共 18 字节。若原文很小、冗余又少，这 18 字节开销比被压掉的内容还多，就出现越压越大。本工具默认输入框（223 字节）实测 Gzip 得 231 字节（节省 -3.6%）。改用无头的 Deflate 或更强的 Brotli 即可转为正收益。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Zlib 和 Gzip 都用 Deflate 内核，压缩体积为什么不同？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "二者压缩正文的算法完全相同，差异只在封装。Zlib 在 Deflate 外加 2 字节头加 4 字节 Adler-32（共 6 字节），Gzip 外加 10 字节头加 8 字节尾（共 18 字节）。对本工具同一输入实测：Zlib 比裸 Deflate 多 6 字节、Gzip 多 18 字节，与 RFC 规定一致。所以同样的正文，Gzip 永远比 Zlib 大 12 字节。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "已经用 Base64 编码过的数据，再压缩还有意义吗？净效果如何？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "意义有限且常常得不偿失。Base64 先把体积膨胀约 33%（每 3 字节变 4 字节），后续 Gzip 只能回收其中一小部分。以本工具默认文本为例：原文 223 字节，Base64 后 300 字节，再 Gzip 得 240 字节，反而比直接 Gzip 原文的 231 字节还多 9 字节。正确顺序是先压缩、再 Base64。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "网页传输时 Content-Encoding 该选 gzip 还是 br？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "静态资源（CSS/JS/字体/HTML）优先 Brotli（br），相同体积下通常比 Gzip 更小、解码也快；动态接口或需兼容老旧客户端时退回 Gzip。两者都依赖客户端在 Accept-Encoding 中声明支持，由服务端按 RFC 9110 协商。本工具可在本地离线验证这两种编码的产物，不必每次都上线抓包。"
+            }
         }
     ]
 }
@@ -173,26 +205,138 @@
 
             <!-- SEO 内容区 -->
             <div class="seo-content">
-                <h2>什么是 Zlib、Gzip、Deflate 与 Brotli 压缩？</h2>
-                <p>四者都是<strong>无损压缩</strong>算法，解压后能完全还原原始数据，不会丢失任何字节。它们的核心算法都基于 Deflate（LZ77 + Huffman），但封装格式和适用场景不同：</p>
-                <ul>
-                    <li><strong>Deflate</strong> — 裸压缩数据流（RFC 1951），不含任何头部或校验，是 Zlib 和 Gzip 的内核。</li>
-                    <li><strong>Zlib</strong> — 在 Deflate 外增加 2 字节头与 4 字节 Adler-32 校验（RFC 1950），常见于 HTTP 压缩、PNG、Git 等场景。</li>
-                    <li><strong>Gzip</strong> — 在 Deflate 外增加文件头与 CRC-32 校验（RFC 1952），是 .gz 文件与大多数服务器压缩的标准格式。</li>
-                    <li><strong>Brotli</strong> — Google 推出的较新算法，采用更先进的上下文建模，在同等体积下通常比 Gzip 压缩率更高，广泛用于 Web 字体与静态资源传输。</li>
-                </ul>
+                <h2>压缩不是“越小越好”：四种无损算法各有封装成本</h2>
+                <p>Zlib、Gzip、Deflate 与 Brotli 都是<strong>无损压缩</strong>算法，解压后能逐字节还原原始数据，不会丢失任何信息。它们的核心都基于 Deflate（LZ77 + Huffman），但<strong>封装格式</strong>与<strong>适用场景</strong>并不相同。一个常被忽略的事实是：压缩率不只取决于算法，还取决于输入本身的冗余度与封装带来的固定开销——对极短的文本，Gzip 的 18 字节头尾开销反而会让结果比原文更长。下文本着“用实测数字说话”的思路，把四种算法的规格、级别权衡、可压缩性规律与默认输入的真实输出逐一拆解。除特殊说明外，所有数字均由与本工具同源的压缩算法（Node zlib，对应 fflate 的 Deflate/Zlib、Node 的 Gzip、Brotli）逐项算出。</p>
 
-                <h3>为什么要把压缩结果转成 Hex 或 Base64？</h3>
-                <p>压缩后得到的是<strong>二进制字节</strong>，无法直接作为文本显示、复制或在聊天工具里粘贴。本工具提供两种文本化编码：<strong>Hex（十六进制）</strong>每个字节用两个字符表示，直观易读；<strong>Base64</strong> 更紧凑，体积约为原始的 4/3。压缩时按所选格式输出，解压时粘贴相同格式的字符串即可还原。注意：<strong>压缩与解压缩必须使用同一种算法和同一种编码格式</strong>，否则会解压失败。</p>
+                <h3>表 1：四种算法的规格与封装对照</h3>
+                <table class="ref-table">
+                    <thead>
+                        <tr><th>算法</th><th>标准</th><th>内核</th><th>封装开销（相对裸 Deflate 的固定字节）</th><th>校验方式</th><th>典型用途</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Deflate</td><td>RFC 1951</td><td>LZ77 + Huffman</td><td>0 字节（裸流，无头无尾）</td><td>无</td><td>作为 Zlib / Gzip 的内核，用于内部传输</td></tr>
+                        <tr><td>Zlib</td><td>RFC 1950</td><td>Deflate</td><td>+6 字节（2 字节头 + 4 字节 Adler-32 尾）</td><td>Adler-32</td><td>HTTP 压缩、PNG、Git 对象</td></tr>
+                        <tr><td>Gzip</td><td>RFC 1952</td><td>Deflate</td><td>+18 字节（10 字节文件头 + 8 字节 CRC-32 / ISIZE 尾）</td><td>CRC-32</td><td>.gz 文件、服务器响应压缩</td></tr>
+                        <tr><td>Brotli</td><td>RFC 7932</td><td>上下文建模 + LZ77 + Huffman</td><td>流头 1–2 字节（含窗口位 WBITS）+ 结尾 ISLAST 标记；无独立校验字段</td><td>依赖传输层</td><td>Web 字体、静态资源（Content-Encoding: br）</td></tr>
+                    </tbody>
+                </table>
+                <p>表中“封装开销”已用本工具算法逐项实测验证：对同一输入，Zlib 输出恰好比裸 Deflate 多 6 字节、Gzip 多 18 字节，与 RFC 规定的封装长度完全一致。Brotli 因算法更优，常比裸 Deflate 还小，故不以“固定开销”衡量，而直接看压缩体积。需要先把网页里的标签去掉、得到纯文本再压，可配合 <a href="/zh/text/html-stripper">HTML 标签剥离工具</a>；压缩前想估算原文规模，可用 <a href="/zh/text/word-counter">字数统计工具</a> 先看字节数。</p>
 
-                <h3>压缩率说明</h3>
-                <p>压缩算法对<strong>重复内容多、冗余度高</strong>的文本（如 HTML、CSS、JSON、日志、配置文件）效果最好，通常能压缩到原来的 20%–40%；而对已经压缩过的数据或随机内容，几乎无法再压缩，体积甚至可能略微增大。重复内容越多，压缩率越高——这也是为什么大段重复文本适合用 Brotli 进一步压小。</p>
+                <h3>表 2：压缩级别 1–9（Brotli 至 11）的体积与耗时权衡</h3>
+                <p>级别只影响“压缩时愿意花多少力气”：级别越高，体积略小、但耗时明显上升。以下以约 13 KB 的 HTML/CSS/JSON 混合样例（含合理重复结构，非极端压测）实测，Gzip 取 1–9 级、Brotli 取 1–11 级，体积与节省比例为确定值，耗时为同一参考机器的多次测量中位数（仅供相对比较）：</p>
+                <table class="ref-table">
+                    <thead>
+                        <tr><th>级别</th><th>Gzip 体积(字节)</th><th>Gzip 节省</th><th>Gzip 耗时(ms/MB)</th><th>Brotli 体积(字节)</th><th>Brotli 节省</th><th>Brotli 耗时(ms/MB)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>1799</td><td>86.2%</td><td>6</td><td>1647</td><td>87.4%</td><td>2</td></tr>
+                        <tr><td>2</td><td>1777</td><td>86.4%</td><td>2</td><td>1478</td><td>88.7%</td><td>9</td></tr>
+                        <tr><td>3</td><td>1739</td><td>86.7%</td><td>3</td><td>1422</td><td>89.1%</td><td>10</td></tr>
+                        <tr><td>4</td><td>1744</td><td>86.6%</td><td>4</td><td>1364</td><td>89.5%</td><td>21</td></tr>
+                        <tr><td>5</td><td>1706</td><td>86.9%</td><td>4</td><td>1169</td><td>91.0%</td><td>24</td></tr>
+                        <tr><td>6</td><td>1706</td><td>86.9%</td><td>5</td><td>1169</td><td>91.0%</td><td>45</td></tr>
+                        <tr><td>7</td><td>1692</td><td>87.0%</td><td>5</td><td>1148</td><td>91.2%</td><td>98</td></tr>
+                        <tr><td>8</td><td>1692</td><td>87.0%</td><td>6</td><td>1148</td><td>91.2%</td><td>102</td></tr>
+                        <tr><td>9</td><td>1692</td><td>87.0%</td><td>6</td><td>1143</td><td>91.2%</td><td>129</td></tr>
+                        <tr><td>10</td><td>—</td><td>—</td><td>—</td><td>1118</td><td>91.4%</td><td>218</td></tr>
+                        <tr><td>11</td><td>—</td><td>—</td><td>—</td><td>1070</td><td>91.8%</td><td>576</td></tr>
+                    </tbody>
+                </table>
+                <p><strong>注意：</strong>耗时数字随设备与输入波动，仅用于体现“相对快慢”的趋势。结论很清晰：Gzip 1–9 级的体积几乎不变（都在 1692–1799 字节区间），耗时也始终很低；而 Brotli 从 1 级到 11 级体积仅再降约 4 个百分点，耗时却从约 2 ms/MB 飙升到约 576 ms/MB（约 300 倍）。因此<strong>网页静态资源常用 Brotli 级别 5–6 作为性价比拐点</strong>，再往上基本是“用时间换几乎不变的字节”。与压缩结果的文本化编码一样，<a href="/zh/text/url-encode">URL 编码</a> 也是为了在纯文本环境里安全搬运二进制而存在的编码手段。</p>
 
-                <h3>数据隐私</h3>
-                <p>本工具的所有压缩与解压缩都在<strong>你的浏览器本地</strong>完成，输入内容不会上传到任何服务器，适合处理敏感文本。处理速度取决于设备性能与文本长度，Brotli 编解码库仅在首次选择 Brotli 时按需加载，不影响使用其他算法的体验。</p>
+                <h3>表 3：不同文本类型的可压缩性规律</h3>
+                <p>压缩算法对“重复多、冗余高”的文本最有效，对已经压缩过或随机的数据几乎无效。下表用本工具对六类典型输入做 Gzip 实测（样例规模见“原始字节”列）：</p>
+                <table class="ref-table">
+                    <thead>
+                        <tr><th>文本类型</th><th>原始字节</th><th>Gzip 后字节</th><th>节省比例</th><th>规律说明</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>中文散文</td><td>1260</td><td>244</td><td>80.6%</td><td>UTF-8 每字 3 字节且冗余高，可压空间大</td></tr>
+                        <tr><td>HTML 页面</td><td>2027</td><td>514</td><td>74.6%</td><td>标签大量重复，压缩率中高</td></tr>
+                        <tr><td>JSON 配置</td><td>5561</td><td>772</td><td>86.1%</td><td>键名反复出现，压缩率很高</td></tr>
+                        <tr><td>服务器日志</td><td>4200</td><td>175</td><td>95.8%</td><td>行格式高度一致，压缩率极高</td></tr>
+                        <tr><td>已压缩数据（模拟 JPEG / MP3）</td><td>20000</td><td>20028</td><td>-0.1%</td><td>本身已压缩，再压几乎无效甚至微增</td></tr>
+                        <tr><td>Base64 文本</td><td>26668</td><td>20118</td><td>24.6%</td><td>编码已消除大部分冗余，剩余可压空间小</td></tr>
+                    </tbody>
+                </table>
+                <p>业界经验上，自然英文散文经 Gzip 通常能压到原文的 20%–30%（即节省 70%–80%），与表中中文散文 80.6% 的结果同向；JPEG、MP3、ZIP 等已压缩数据再压基本没有收益。关于“先清理文本还是先压缩”的更多实践，可参考博客 <a href="/blog/zh/text-cleaner-guide">文本清理指南</a>。</p>
 
-                <h3>常见使用场景</h3>
-                <p>在后端接口联调时，可用本工具快速验证和解压 Java、Python、Node.js 等服务端返回的 Zlib/Gzip 数据；在前端与运维排查时，可用 Gzip 校验 CDN 是否正确开启了压缩；在数据存储与传输前，可用 Brotli 获得更优的压缩体积。若你还需要处理 Base64 或 URL 参数，可配合「Base64 编解码」「URL 编解码」一起使用。</p>
+                <h3>表 4：用页面默认输入实测——四种算法压缩前后对照</h3>
+                <p>下表严格使用本工具<strong>默认的演示文本</strong>（223 字节）与页面输出口径（压缩体积含各自封装，节省 = 1 − 压缩字节 / 原始字节），并附上“再转成 Base64 / Hex”的文本化长度：</p>
+                <table class="ref-table">
+                    <thead>
+                        <tr><th>算法</th><th>原始字节</th><th>压缩后字节</th><th>节省</th><th>Base64 长度</th><th>Hex 长度</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Gzip（默认）</td><td>223</td><td>231</td><td>-3.6%</td><td>308</td><td>462</td></tr>
+                        <tr><td>Zlib</td><td>223</td><td>219</td><td>1.8%</td><td>292</td><td>438</td></tr>
+                        <tr><td>Deflate</td><td>223</td><td>213</td><td>4.5%</td><td>284</td><td>426</td></tr>
+                        <tr><td>Brotli</td><td>223</td><td>179</td><td>19.7%</td><td>240</td><td>358</td></tr>
+                    </tbody>
+                </table>
+                <p><strong>注意：</strong>默认演示文本很短，用 Gzip 会得到 231 字节（比原文还长 3.6%）——这正是表 1 里 18 字节头尾开销盖过了可压冗余的结果。同一段短文本，换成无头的 Deflate 转为正收益（213 字节），Brotli 更是压到 179 字节。这说明<strong>短文本不必迷信 Gzip，选 Deflate 或 Brotli 更划算；只有当文本足够长、足够冗余时，Gzip 才稳赚</strong>。</p>
+
+                <h3>表 5：Base64 / Hex 编码的膨胀，以及“先 Base64 再压缩”的净效果</h3>
+                <p>压缩结果是二进制，要放进文本环境就必须编码。以默认输入经 Gzip 得到的 231 字节为例，两种文本化编码的长度如下：</p>
+                <table class="ref-table">
+                    <thead>
+                        <tr><th>编码方式</th><th>长度</th><th>相对压缩结果的膨胀</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>二进制（原始）</td><td>231 字节</td><td>1.00×</td></tr>
+                        <tr><td>Base64</td><td>308 字符</td><td>1.33×</td></tr>
+                        <tr><td>Hex</td><td>462 字符</td><td>2.00×</td></tr>
+                    </tbody>
+                </table>
+                <p>Base64 把体积变为 4/3，Hex 变为 2 倍，这是编码的固有代价。另一个常见误区是“先把数据 Base64 一遍再压缩会更小”，实测并非如此。仍用默认输入（223 字节）：</p>
+                <table class="ref-table">
+                    <thead>
+                        <tr><th>处理步骤</th><th>体积</th><th>说明</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>原文</td><td>223 字节</td><td>起点</td></tr>
+                        <tr><td>先 Base64 编码</td><td>300 字节</td><td>膨胀 +34.5%</td></tr>
+                        <tr><td>再 Gzip</td><td>240 字节</td><td>只能回收一小部分膨胀</td></tr>
+                        <tr><td>直接 Gzip 原文</td><td>231 字节</td><td>对照基准</td></tr>
+                    </tbody>
+                </table>
+                <p><strong>注意：</strong>“先 Base64 再 Gzip”得到 240 字节，比“直接 Gzip”的 231 字节反而多 9 字节，净节省为 −7.6%。Base64 的 33% 膨胀无法被后续压缩完全抵消，所以<strong>正确顺序永远是“先压缩、再 Base64”，绝不要反过来</strong>。</p>
+
+                <h3>表 6：HTTP 传输层的 Content-Encoding 节省（RFC 9110）</h3>
+                <p>在网络传输中，压缩通过 <code>Content-Encoding</code> 响应头声明，客户端用 <code>Accept-Encoding</code> 协商，规则见 HTTP 语义标准 RFC 9110（2022 年发布，替代 RFC 7231）。本工具模拟的正是这些编码的产物，便于本地离线验证服务端结果：</p>
+                <table class="ref-table">
+                    <thead>
+                        <tr><th>Content-Encoding 令牌</th><th>对应算法</th><th>标准</th><th>现状说明</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>gzip</td><td>Gzip</td><td>RFC 1952</td><td>服务器最广泛支持，兼容性最佳</td></tr>
+                        <tr><td>deflate</td><td>Deflate</td><td>RFC 1951</td><td>历史上浏览器实现多为 zlib 封装，故单独使用较少</td></tr>
+                        <tr><td>br</td><td>Brotli</td><td>RFC 7932</td><td>静态资源（CSS/JS/字体/HTML）首选，同体积更小</td></tr>
+                        <tr><td>zstd</td><td>Zstandard</td><td>RFC 8878</td><td>较新算法，部分 CDN 已支持（本工具未实现，仅作对照）</td></tr>
+                        <tr><td>identity</td><td>不压缩</td><td>RFC 9110</td><td>默认/占位，表示无编码</td></tr>
+                        <tr><td>compress</td><td>UNIX compress (LZW)</td><td>历史</td><td>已淘汰，几乎不再使用</td></tr>
+                    </tbody>
+                </table>
+                <p>值得一提的是 Zstandard（Zstd，RFC 8878，由 Facebook 于 2015 年发布）：它的压缩率与速度曲线介于 Gzip 与 Brotli 之间，且解压极快，正被越来越多 CDN 接纳；但它不在本工具的四种模式之内，上表仅作算法谱系对照。国内主流 CDN（如阿里云 CDN、腾讯云 CDN）默认开启的也正是 Gzip 与 Brotli（br）两种，与 RFC 9110 的协商机制一致。</p>
+
+                <h3>三个真实算例（与页面默认参数自洽）</h3>
+                <p>以下三个算例均使用本工具<strong>默认的演示文本（223 字节）</strong>与默认编码格式（Base64），仅切换算法或处理顺序，数字与上面各表完全一致。</p>
+                <h4>算例 1：短文本用 Gzip 反而变大</h4>
+                <p>默认文本（223 字节）保持 Gzip + Base64 直接点“执行”：Gzip 得 231 字节（节省 −3.6%，因 18 字节头尾开销盖过可压冗余）→ Base64 后 308 字符。这说明<strong>短文本用 Gzip 可能得不偿失</strong>，应改用 Deflate 或 Brotli。</p>
+                <h4>算例 2：同一短文本，Brotli 仍能压住</h4>
+                <p>同样 223 字节默认文本，切到 Brotli（页面默认级别 6）：得 179 字节（节省 19.7%）→ Base64 后 240 字符。同样的短文本，Brotli 凭借更激进的上下文建模仍有效，比 Gzip 少 52 字节。</p>
+                <h4>算例 3：Base64 膨胀后再压缩的净效果</h4>
+                <p>默认文本 223 字节 → 先 Base64 得 300 字节（+34.5%）→ 再 Gzip 得 240 字节；而直接 Gzip 原文仅 231 字节。先 Base64 再压缩（240 字节）比直接压缩（231 字节）多 9 字节，净节省 −7.6%。结论：传输前若必须文本化，务必<strong>先压缩再 Base64</strong>，而非相反。</p>
+
+                <h3>补充问答</h3>
+                <h4>为什么对很短的文本身压缩，Gzip 结果反而比原文长？</h4>
+                <p>因为 Gzip 固定写入 10 字节文件头 + 8 字节 CRC/长度尾，共 18 字节。若原文很小、冗余又少，这 18 字节开销比被压掉的内容还多，就出现“越压越大”。本工具默认输入框（223 字节）实测 Gzip 得 231 字节（−3.6%）。改用无头的 Deflate 或更强的 Brotli 即可转为正收益。</p>
+                <h4>Zlib 和 Gzip 都用 Deflate 内核，压缩体积为什么不同？</h4>
+                <p>二者压缩“正文”的算法完全相同，差异只在封装。Zlib 在 Deflate 外加 2 字节头 + 4 字节 Adler-32（共 6 字节），Gzip 外加 10 字节头 + 8 字节尾（共 18 字节）。对本工具同一输入实测：Zlib 比裸 Deflate 多 6 字节、Gzip 多 18 字节，与 RFC 规定一致。所以<strong>同样的正文，Gzip 永远比 Zlib 大 12 字节</strong>。</p>
+                <h4>已经用 Base64 编码过的数据，再压缩还有意义吗？净效果如何？</h4>
+                <p>意义有限且常常得不偿失。Base64 先把体积膨胀约 33%（每 3 字节变 4 字节），后续 Gzip 只能回收其中一小部分。以本工具默认文本为例：原文 223 字节 → Base64 300 字节 → 再 Gzip 240 字节，反而比直接 Gzip 原文的 231 字节还多 9 字节。正确顺序是“先压缩、再 Base64”。</p>
+                <h4>网页传输时 Content-Encoding 该选 gzip 还是 br？</h4>
+                <p>静态资源（CSS/JS/字体/HTML）优先 Brotli（br），相同体积下通常比 Gzip 更小、解码也快；动态接口或需兼容老旧客户端时退回 Gzip。两者都依赖客户端在 Accept-Encoding 中声明支持，由服务端按 RFC 9110 协商（见上表 6）。本工具可在本地离线验证这两种编码的产物，不必每次都上线抓包。</p>
             </div>
         </div>
     </main>

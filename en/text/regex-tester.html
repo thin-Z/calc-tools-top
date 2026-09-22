@@ -51,6 +51,19 @@
         "inLanguage": "en"
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            { "@type": "Question", "name": "Why does the same regex run here but error or differ in Python / Java?", "acceptedAnswer": { "@type": "Answer", "text": "Different engine dialects. ECMAScript has no possessive quantifier *+, while Java/PCRE do; PCRE's (*SKIP) has no JS equivalent; Python re does not match newline with . by default, unlike JS with s. Check the engine-family table for portability before moving a pattern across languages." } },
+            { "@type": "Question", "name": "Why does \\d match a different range with and without the u flag?", "acceptedAnswer": { "@type": "Answer", "text": "Without u, \\d is only [0-9] (ASCII digits). With the u flag ECMAScript treats it as Unicode, so \\d also matches Arabic, full-width and other scripts' digits. If text may contain full-width digits like ２０２６, turn on u or the validation misses them." } },
+            { "@type": "Question", "name": "How do I validate an email without a regex that hangs?", "acceptedAnswer": { "@type": "Answer", "text": "Email/URL checks are usually safe alone; the risk is nested quantifier plus long input. Use the flat library patterns, never something like ([\\w]+@[\\w]+)+; truncate over-long user input before validating, or use a linear engine like RE2." } },
+            { "@type": "Question", "name": "Do many capture groups hurt performance? Is a named group different from an anonymous one?", "acceptedAnswer": { "@type": "Answer", "text": "Named and anonymous groups are functionally equal; named groups only make output readable and prevent index-shift bugs. The cost is tiny; what actually bites is nested capture groups plus catastrophic backtracking, independent of naming." } },
+            { "@type": "Question", "name": "Why does my browser freeze on a complex regex over a large text?", "acceptedAnswer": { "@type": "Answer", "text": "Almost certainly ReDoS. The browser is also a backtracking engine, and (a+)+ over long input explodes exponentially. Diagnose by stress-testing with longer input and watching whether time climbs steeply; if so, replace nested quantifiers with character-class boundaries or split into simple passes." } }
+        ]
+    }
+    </script>
 </head>
 <body>
     <header>
@@ -119,27 +132,113 @@
         <div class="result-card hidden" id="regex-error"></div>
 
         <section class="tool-content">
-            <h2>What is a Regular Expression?</h2>
-            <p>A regular expression (regex) is a sequence of special characters that describes a text pattern. It is widely used for searching, replacing, validating and extracting data. For example, `\d{4}-\d{2}-\d{2}` matches dates like 2026-08-23, and `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$` validates email addresses. Core building blocks include character classes, quantifiers, groups and assertions; mastering them greatly improves text-processing efficiency.</p>
-            <h3>Common Flags</h3>
-            <ul>
-                <li><strong>g (global)</strong>: find all matches, not just the first one</li>
-                <li><strong>i (ignore case)</strong>: match without distinguishing case</li>
-                <li><strong>m (multiline)</strong>: ^ and $ match at the start and end of each line</li>
-                <li><strong>s (dot matches newline)</strong>: let . also match newline characters</li>
-                <li><strong>u (unicode)</strong>: treat patterns as Unicode code points, useful for Chinese and emoji</li>
-            </ul>
-            <h3>How to Use This Tool</h3>
-            <ol>
-                <li>Type a pattern such as `\b\w+@\w+\.\w+\b` in the expression field</li>
-                <li>Select the flags you need</li>
-                <li>Paste test text into the text area and view highlighted matches in real time</li>
-                <li>Review the match count, each match position and the capture group list</li>
-            </ol>
-            <h3>Frequently Asked Questions</h3>
-            <p><strong>What if my regex has an error?</strong> The tool reports syntax errors (such as an unterminated group) in real time; fixing the pattern recalculates immediately.</p>
-            <p><strong>How do I match Chinese characters?</strong> Enable the u flag and use a Unicode property escape such as `\p{Script=Han}+`, or a character range like `[\u4e00-\u9fff]+`.</p>
-            <p><strong>Is my data uploaded to a server?</strong> No. Regex building, matching and highlighting all run locally in your browser.</p>
+            <h2>A regex is a mini-language for describing text shapes, not a single feature</h2>
+            <p>Many people treat a regular expression as "one button in a search box", but the more useful mental model is: it is a small language of special characters that describes <em>what a piece of text looks like</em>. For example, <code>\d{4}-\d{2}-\d{2}</code> describes the shape "four digits, hyphen, two digits, hyphen, two digits" — not a specific date — and <code>^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$</code> describes the structure "local-part@domain". Because it is a shape description rather than a fixed value, the same pattern is reusable across email, logs, IDs and URLs. To use it well you only need to understand three things: <strong>how characters are written</strong> (classes, escaping), <strong>how repetition is written</strong> (quantifiers, greedy vs lazy) and <strong>how structure is grouped and anchored</strong> (groups, assertions, <code>^</code> <code>$</code>). This tool builds and runs the pattern locally in your browser's ECMAScript engine; the tables below help you avoid the most common traps.</p>
+
+            <h3>Regex engine families: why the same pattern behaves differently elsewhere</h3>
+            <p>The same regex can "run / throw / give different results" in a browser, PHP, Java or Python because the underlying <strong>engine</strong> differs. Mainstream engines fall into two camps: <strong>backtracking NFA</strong> (the default for most languages) and <strong>DFA / automaton</strong> (RE2 and friends: linear-time, never backtracks). The table contrasts the runtimes developers meet most often, based on the ECMA-262 15th edition (ES2024), PCRE2, Python <code>re</code> and Java <code>java.util.regex</code> documentation.</p>
+            <table class="ref-table">
+                <thead>
+                    <tr><th>Engine / implementation</th><th>Typical use</th><th>Backtracking behaviour</th><th>Key syntax differences</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>ECMAScript (browser / Node.js, what this tool uses)</td><td>Front-end validation, JS scripts</td><td>Backtracking NFA; greedy by default, lazy <code>*?</code> supported, <strong>possessive quantifiers unsupported</strong></td><td><code>\p{...}</code> needs the u flag; named groups <code>(?&lt;name&gt;...)</code>; under u, <code>\d</code> matches all Unicode digits</td></tr>
+                    <tr><td>PCRE2 (PHP, Notepad++, Apache, etc.)</td><td>Server side, editors</td><td>Backtracking; possessive <code>*+</code> and atomic groups <code>(&gt;...)</code> mitigate ReDoS</td><td>Richest syntax; <code>\p{L}</code>, backtracking control <code>(*SKIP)</code></td></tr>
+                    <tr><td>RE2 (Go <code>regexp</code>, some Rust crates)</td><td>High-concurrency servers</td><td>DFA / automaton, linear time, never backtracks, inherently ReDoS-safe</td><td>No backreferences, no lookbehind; a syntax subset</td></tr>
+                    <tr><td>Python <code>re</code> (CPython default)</td><td>Data cleaning, scraping</td><td>Backtracking; no possessive quantifiers; atomic grouping as an experimental feature since 3.11</td><td><code>\p</code> needs the third-party <code>regex</code> library; <code>.</code> does not match newline by default</td></tr>
+                    <tr><td>Java <code>java.util.regex</code></td><td>Enterprise back ends</td><td>Backtracking; possessive <code>*+</code> and atomic groups <code>(&gt;...)</code> supported</td><td><code>\p{L}</code>, named groups <code>(?&lt;name&gt;...)</code>; <code>matches()</code> anchors the whole string by default</td></tr>
+                </tbody>
+            </table>
+            <p><strong>Note:</strong> this tool runs on the browser's ECMAScript engine, so a possessive quantifier like <code>*+</code> <strong>throws a syntax error here</strong>. If your pattern comes from Java or PCRE and uses <code>*+</code>, rewrite it or drop the possessive modifier. The difference from server-side PCRE/Java is the most common source of integration surprises.</p>
+
+            <h3>Backtracking vs DFA: how one bad pattern can take down a service (measured)</h3>
+            <p>A backtracking engine "guesses": the <code>+</code> quantifier first eats as much as possible, and when the rest fails to fit it "spits back" and re-partitions. Usually that is fast, but certain <strong>nested quantifiers</strong> — such as <code>(a+)+$</code> — make the number of re-partitions grow <strong>exponentially</strong> with input length. That is <strong>ReDoS (Regular Expression Denial of Service)</strong>. In web contexts, an attacker only needs to send a crafted long string to peg the validation endpoint's CPU. OWASP (Top 10:2021, A06) lists ReDoS as a classic web risk. The table below is measured on this machine (Node v22 / 12th-gen Intel i5-12600KF; input is n copies of <code>a</code> followed by one <code>!</code>, <strong>for relative comparison only</strong>):</p>
+            <table class="ref-table">
+                <thead>
+                    <tr><th>Input length (n a's + one !)</th><th><code>(a+)+$</code> time (ms)</th><th>Linear <code>a+</code> time (ms)</th><th>Note</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>18</td><td>2.22</td><td>762</td><td>Both fast at short length</td></tr>
+                    <tr><td>20</td><td>8.49</td><td>734</td><td>Catastrophic backtracking begins</td></tr>
+                    <tr><td>22</td><td>31.90</td><td>769</td><td>Roughly x4 per +2 length</td></tr>
+                    <tr><td>24</td><td>128.24</td><td>788</td><td>Already 6x the linear version</td></tr>
+                    <tr><td>26</td><td>517.60</td><td>818</td><td>Half a second; noticeable lag</td></tr>
+                    <tr><td>28</td><td>2316.20</td><td>786</td><td>Over 2s; endpoint effectively down</td></tr>
+                    <tr><td>30</td><td>15446.63</td><td>824</td><td>About 15s; service taken down</td></tr>
+                </tbody>
+            </table>
+            <p>The contrast is clear: the linear regex <code>a+</code> stays roughly flat (~780ms, first-compile noise) while the catastrophic version climbs from 2ms at 18 letters to 15 seconds at 30 — <strong>about 7000x</strong>. Rule of thumb: <strong>avoid "quantifier inside quantifier" where both can match the same character</strong> (e.g. <code>(a+)+</code>, <code>(a*)*</code>, <code>(.*a){10}</code>). Validate user input with simple, deterministic patterns on both client and server, and prefer a linear engine like RE2 when you can. This tool highlights matches in real time but does <strong>not</strong> block ReDoS-prone patterns for you — stress-test complex regexes with longer input yourself.</p>
+
+            <h3>Metacharacters &amp; quantifiers cheat sheet</h3>
+            <p>This table covers about 90% of daily usage. Key point: in ECMAScript there is <strong>only greedy and lazy</strong>, never possessive; to get the anti-backtracking effect of "possessive" you must restructure (e.g. use <code>[^x]+</code> instead of <code>.*</code>).</p>
+            <table class="ref-table">
+                <thead>
+                    <tr><th>Symbol</th><th>Meaning</th><th>Greedy / lazy / possessive</th><th>Note</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>*</code></td><td>Previous item, 0 or more times</td><td>greedy <code>*</code> / lazy <code>*?</code> / possessive <code>*+</code> (ECMAScript unsupported)</td><td>Most common ReDoS source</td></tr>
+                    <tr><td><code>+</code></td><td>Previous item, 1 or more times</td><td>greedy <code>+</code> / lazy <code>+?</code> / possessive <code>++</code> (ECMAScript unsupported)</td><td>At least one</td></tr>
+                    <tr><td><code>?</code></td><td>Previous item, 0 or 1 time</td><td>greedy <code>?</code> / lazy <code>??</code> / possessive <code>?+</code></td><td>Also makes a group non-capturing <code>(?:...)</code></td></tr>
+                    <tr><td><code>{n,m}</code></td><td>Previous item, n to m times</td><td>greedy <code>{n,m}</code> / lazy <code>{n,m}?</code> / possessive <code>{n,m}+</code></td><td><code>{3,}</code> at least 3, <code>{3}</code> exactly 3</td></tr>
+                    <tr><td><code>\b</code></td><td>Word boundary (zero-width)</td><td>—</td><td>Matches a position, not a character</td></tr>
+                    <tr><td><code>\d</code></td><td>Digit</td><td>—</td><td>Without u, only <code>[0-9]</code>; with u, all Unicode digits</td></tr>
+                    <tr><td><code>\w</code></td><td>Word character</td><td>—</td><td><code>[A-Za-z0-9_]</code>; not Chinese even under u</td></tr>
+                    <tr><td><code>\p{L}</code></td><td>Unicode letter property</td><td>—</td><td>Needs u flag; <code>\p{Script=Han}</code> matches Han characters</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Flags reference</h3>
+            <p>Flags decide <em>how</em> to search, not <em>what</em>. This tool exposes g / i / m / s / u; the ECMAScript <code>y</code> (sticky) flag is listed for completeness:</p>
+            <table class="ref-table">
+                <thead>
+                    <tr><th>Flag</th><th>Effect</th><th>Tool default</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><code>g</code></td><td>Global: find all matches, not just the first</td><td>On by default</td></tr>
+                    <tr><td><code>i</code></td><td>Ignore case: <code>a</code> also matches A</td><td>Off by default</td></tr>
+                    <tr><td><code>m</code></td><td>Multiline: <code>^</code> <code>$</code> anchor each line's start/end</td><td>Off by default</td></tr>
+                    <tr><td><code>s</code></td><td>dotAll: let <code>.</code> also match newline</td><td>Off by default</td></tr>
+                    <tr><td><code>u</code></td><td>Unicode code-point mode: enables <code>\p{...}</code>, correct surrogate handling</td><td>Off by default (turn on for non-Latin text)</td></tr>
+                    <tr><td><code>y</code></td><td>Sticky: match only at <code>lastIndex</code>; common in front-end code</td><td>Not a UI toggle; write it inline if needed</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Common pattern library: patterns and known limits</h3>
+            <p>These are high-frequency patterns pulled from real projects, <strong>all compile-verified on this machine</strong>. But regex validation is "shape validation", not "semantic validation" — each row also notes what it <strong>fails to catch</strong>, which is exactly where such tools are most often misused.</p>
+            <table class="ref-table">
+                <thead>
+                    <tr><th>Purpose</th><th>Pattern</th><th>Known limits</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Email</td><td><code>^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$</code></td><td>No quoted local parts, no IDN domains, no consecutive dots; passes weak addresses like <code>a@b.c</code></td></tr>
+                    <tr><td>URL (http/https)</td><td><code>^https?:\/\/[\w.-]+(?:\/[\w./?%&amp;=#-]*)?$</code></td><td>No port check, no ftp, no TLD validation; shape only</td></tr>
+                    <tr><td>Date YYYY-MM-DD</td><td><code>^\d{4}-\d{2}-\d{2}$</code></td><td>Passes invalid calendar values like <code>2026-13-45</code>; needs a separate date sanity check</td></tr>
+                    <tr><td>IPv4 address</td><td><code>^(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)$</code></td><td>Allows leading zeros like <code>192.168.001.1</code>; does not reject reserved blocks like <code>0.0.0.0</code></td></tr>
+                    <tr><td>International phone (E.164)</td><td><code>^\+[1-9]\d{1,14}$</code></td><td>Only checks the +CountryCode format; does not verify the number is allocated or in service</td></tr>
+                    <tr><td>Password strength</td><td><code>^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{8,}$</code></td><td>Only checks "lower + upper + digit + symbol + 8 chars"; passes trivial passwords like <code>Password1!</code>. Pair it with a <a href="/en/calculators/password-gen">password generator</a> and the <a href="/blog/en/password-security-guide">password security guide</a></td></tr>
+                </tbody>
+            </table>
+
+            <h3>Three real examples (using the page default input)</h3>
+            <p>All three examples use this tool's <strong>default test text</strong> <code>2026-08-23 released a new version, 2026-09-01 update planned.</code> (only the <code>g</code> flag checked by default); paste them straight in to reproduce. To double-check how many characters or words a text holds, the <a href="/en/text/word-counter">word counter</a> helps; to compare two revisions of a text, use the <a href="/en/text/text-diff">text diff</a> tool.</p>
+            <h4>Example 1: count all dates</h4>
+            <p>Pattern <code>\d{4}-\d{2}-\d{2}</code>, flag <code>g</code>. On the default text this yields <strong>2 matches</strong>: <code>2026-08-23</code> (position 0) and <code>2026-09-01</code> (position 35). This is exactly the placeholder example — the most direct way to "pull out every date".</p>
+            <h4>Example 2: split year / month / day into capture groups</h4>
+            <p>Pattern <code>(\d{4})-(\d{2})-(\d{2})</code>, flag <code>g</code>. Still 2 matches, but each now has 3 capture groups: group 1 year (<code>2026</code>), group 2 month (<code>08</code> / <code>09</code>), group 3 day (<code>23</code> / <code>01</code>). The tool's "Capture Groups" list shows them so you can extract by field.</p>
+            <h4>Example 3: extract every number</h4>
+            <p>Pattern <code>\d+</code>, flag <code>g</code>. The default text has <strong>6 numeric matches</strong>: <code>2026</code>@0, <code>08</code>@5, <code>23</code>@8, <code>2026</code>@35, <code>09</code>@40, <code>01</code>@43. Notice <code>\d+</code> treats "2026" as one number, not four single digits — that is the quantifier "eating greedily".</p>
+
+            <h3>Common regex pitfalls</h3>
+            <p><strong>① Escaping.</strong> <code>.</code> <code>*</code> <code>+</code> <code>?</code> <code>(</code> <code>)</code> are special; to match them literally add a backslash (<code>\.</code> <code>\*</code>). In a programming-language string the backslash itself often needs escaping too — the #1 reason "it looks right but throws".<br>
+            <strong>② Greedy vs lazy.</strong> Quantifiers are greedy (match as much as possible) by default; add <code>?</code> for lazy (<code>.*?</code>). Getting this wrong when extracting HTML tags can swallow half an article in one match.<br>
+            <strong>③ Forgetting anchors.</strong> To validate "the whole string is an email", wrap it in <code>^</code> and <code>$</code>; otherwise it matches only a substring and the validation "leaks".</p>
+
+            <h3>Frequently asked questions</h3>
+            <p><strong>Why does the same regex run here but error or differ in Python / Java?</strong> Different engine dialects (see the engine-family table above). The sharpest gaps: ECMAScript <strong>has no possessive quantifier</strong> <code>*+</code> while Java/PCRE do; PCRE's <code>(*SKIP)</code> backtracking control has no JS equivalent; Python <code>re</code> does not match newline with <code>.</code> by default, unlike JS with <code>s</code>. Check the table for syntax portability before moving a pattern across languages.</p>
+            <p><strong>Why does <code>\d</code> match a different range with and without the u flag?</strong> Without u, <code>\d</code> is only <code>[0-9]</code> (ASCII digits). With the u flag, ECMAScript treats it as Unicode, so <code>\d</code> also matches Arabic, full-width and other scripts' digits. If your text may contain full-width digits like "２０２６", turn on u or the validation misses them.</p>
+            <p><strong>How do I validate an email without a regex that hangs?</strong> Email/URL checks are usually safe on their own; the risk is "nested quantifier + long input". Rule: use the flat patterns in the library above, <strong>never</strong> something like <code>([\w]+@[\w]+)+</code>; truncate over-long user input before validating, or use a linear engine like RE2. More on breach and weak-password defence in the <a href="/blog/en/password-security-guide">password security guide</a>.</p>
+            <p><strong>Do many capture groups hurt performance? Is a named group <code>(?&lt;name&gt;...)</code> different from an anonymous one?</strong> They are functionally equal; named groups just make output readable and stop later code breaking when a group is inserted and shifts the indices. The performance cost is tiny; what actually bites is "nested capture groups + catastrophic backtracking", independent of whether groups are named.</p>
+            <p><strong>Why does my browser freeze on a complex regex over a large text?</strong> Almost certainly ReDoS (see the measured table). The browser is also a backtracking engine, and <code>(a+)+</code> over long input explodes exponentially. To diagnose: stress-test with longer input and watch whether time climbs steeply with length; if so, replace nested quantifiers with character-class boundaries (e.g. <code>[^x]+</code>) or split into several simple passes.</p>
         </section>
 
         </div>

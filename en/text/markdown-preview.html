@@ -51,6 +51,46 @@
         "inLanguage": "en"
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Does a trailing two-space hard break actually work in this previewer?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. In CommonMark two trailing spaces make a hard break (a br tag), but this previewer collapses intra-paragraph newlines into a single space and emits no br. To break a line, start a new paragraph with a blank line."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why did my pipe table render as a single line of pipe characters instead of a table?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A pipe table requires a delimiter row. Put a row like | --- | --- | right after the header; if you only have one row |a|b| with no delimiter, the renderer treats it as an ordinary paragraph. The leading and trailing pipes are optional, but the delimiter row is not."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Will pasted script tags or img onerror execute in the preview?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. This previewer HTML-escapes all text before parsing Markdown, so script tags and onerror handlers appear as plain text and no code runs; javascript: and data: link protocols are filtered as well."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do GFM task lists - [ ] and strikethrough ~~text~~ work in this previewer?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Not in the current subset. Task lists and strikethrough are GFM extensions, not part of the CommonMark base spec; this previewer aligns with CommonMark base syntax plus a common subset (headings, emphasis, code, lists, blockquotes, links, tables, horizontal rules). If your target platform uses GFM, preview there to confirm those extensions render."
+                }
+            }
+        ]
+    }
+    </script>
 </head>
 <body>
     <header>
@@ -99,15 +139,39 @@
 
         <section class="tool-content">
             <h2>What is Markdown?</h2>
-            <p>Markdown is a lightweight markup language that uses simple symbols for formatting: `#` for headings, `**` for bold, `-` for lists and backticks for inline code or code blocks. Markdown files are easy to read and write, and it is the de facto standard for GitHub, blogs and technical documentation. This previewer supports a practical syntax subset: H1-H6 headings, bold and italic, inline code, fenced code blocks, ordered and unordered lists, links, blockquotes, horizontal rules and tables, covering most everyday writing and document formatting needs.</p>
-            <h3>Syntax Cheat Sheet</h3>
-            <ul>
-                <li><strong>Headings</strong>: `# Heading 1` through `###### Heading 6`</li>
-                <li><strong>Bold/Italic</strong>: `**bold**`, `*italic*`</li>
-                <li><strong>Inline code</strong>: `` `code` ``; <strong>Code block</strong>: ``` ```language ```</li>
-                <li><strong>Lists</strong>: `- unordered` or `1. ordered`</li>
-                <li><strong>Tables</strong>: separate columns with `|`, second row as `|---|---|`</li>
-            </ul>
+            <p>Markdown is not an app, but a set of plain-text rules for expressing document structure. The same <code>.md</code> source renders consistently in any renderer that follows CommonMark 0.31.2 (the base specification, published 2024-01-28) or GitHub Flavored Markdown / GFM 0.29-gfm (published 2019-04-06, a strict superset of CommonMark). The moment a platform adds private post-processing (emoji shortcodes, @mentions, tag filtering), the same source can look different. This previewer works entirely in your browser using an escape-then-render subset, so what you type and what you get are predictable &mdash; which is exactly why it is useful for confirming output before you publish.</p>
+
+            <h3>CommonMark 0.31.2 vs GFM specification differences</h3>
+            <p>The table below settles, in one place, which syntax this tool definitely supports and which belongs to an extension &mdash; so you avoid surprises when moving documents between platforms. Sources: CommonMark 0.31.2 (spec.commonmark.org) and GFM 0.29-gfm (github.github.com/gfm).</p>
+            <table class="ref-table">
+                <thead><tr><th>Feature</th><th>CommonMark 0.31.2</th><th>GFM 0.29-gfm</th><th>This previewer</th></tr></thead>
+                <tbody>
+                    <tr><td>Pipe tables</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+                    <tr><td>Task lists <code>- [ ]</code></td><td>No</td><td>Yes</td><td>No</td></tr>
+                    <tr><td>Strikethrough <code>~~text~~</code></td><td>No</td><td>Yes</td><td>No</td></tr>
+                    <tr><td>Bare URL autolink</td><td>Angle-bracket <code>&lt;url&gt;</code> only</td><td>Bare URLs auto-linked</td><td>No bare URLs (use <code>[text](url)</code>)</td></tr>
+                    <tr><td>Footnotes <code>[^1]</code></td><td>Not in spec</td><td>Not in spec (GitHub non-spec extension)</td><td>No</td></tr>
+                    <tr><td>Intraword underscore emphasis</td><td>Disallowed</td><td>Same as CommonMark</td><td>Simplified rule (see traps table)</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Syntax element reference (with nesting rules)</h3>
+            <table class="ref-table">
+                <thead><tr><th>Element</th><th>Syntax</th><th>Renders as</th><th>Nesting / boundary rules</th></tr></thead>
+                <tbody>
+                    <tr><td>Headings</td><td><code>#</code> to <code>######</code> + space</td><td><code>&lt;h1&gt;</code>&ndash;<code>&lt;h6&gt;</code></td><td>1&ndash;6 levels; space required after <code>#</code>; optional closing <code>#</code></td></tr>
+                    <tr><td>Emphasis</td><td><code>**b**</code>/<code>__b__</code> bold, <code>*i*</code>/<code>_i_*</code> italic</td><td><code>&lt;strong&gt;</code>/<code>&lt;em&gt;</code></td><td>Paired delimiters; not inside code spans</td></tr>
+                    <tr><td>Inline code</td><td><code>`code`</code></td><td><code>&lt;code&gt;</code></td><td>Backtick content kept literal, no emphasis parsed</td></tr>
+                    <tr><td>Code block</td><td><code>```</code> + optional language</td><td><code>&lt;pre&gt;&lt;code&gt;</code></td><td>Fenced pair; content not parsed as Markdown</td></tr>
+                    <tr><td>Blockquote</td><td><code>&gt; text</code></td><td><code>&lt;blockquote&gt;</code></td><td>Consecutive <code>&gt;</code> lines merge; blank line ends</td></tr>
+                    <tr><td>Lists</td><td><code>-</code>/<code>*</code>/<code>+</code> or <code>1.</code></td><td><code>&lt;ul&gt;</code>/<code>&lt;ol&gt;</code></td><td>Continuation indented to content column; ordered starts at 1</td></tr>
+                    <tr><td>Links</td><td><code>[text](url)</code></td><td><code>&lt;a&gt;</code></td><td>URL limited to http/https/mailto/tel/#/absolute path</td></tr>
+                    <tr><td>Images</td><td><code>![alt](url)</code></td><td>Not supported here</td><td>Current subset skips image syntax</td></tr>
+                    <tr><td>Horizontal rule</td><td><code>---</code>/<code>***</code>/<code>___</code></td><td><code>&lt;hr&gt;</code></td><td>3+ of the same character</td></tr>
+                    <tr><td>Tables</td><td><code>|</code> cols + <code>|---|</code> delimiter</td><td><code>&lt;table&gt;</code></td><td>Needs delimiter row, else degrades to text</td></tr>
+                </tbody>
+            </table>
+
             <h3>How to Use This Tool</h3>
             <ol>
                 <li>Type or paste Markdown content into the editor</li>
@@ -115,12 +179,69 @@
                 <li>Click "Load Sample" to try all supported syntax, or "Clear" to start over</li>
                 <li>A word counter below the editor shows the combined CJK and English word count</li>
             </ol>
-            <h3>Common Use Cases</h3>
+
+            <h3>Markdown parsing traps</h3>
+            <p><strong>Note:</strong> Most "it rendered differently than I expected" cases below come from misreading the CommonMark rules, not from a tool bug. Preview locally first, then publish to the platform.</p>
+            <table class="ref-table">
+                <thead><tr><th>Trap</th><th>Common mistake</th><th>Correct form</th><th>This previewer</th></tr></thead>
+                <tbody>
+                    <tr><td>Hard line break</td><td>Two trailing spaces expect <code>&lt;br&gt;</code></td><td>Use a blank line for a new paragraph</td><td>Intra-paragraph newlines collapse to a space, no <code>&lt;br&gt;</code></td></tr>
+                    <tr><td>Emphasis boundary</td><td><code>a_b_c</code> expected emphasized</td><td>Use <code>*</code> or spaces</td><td>Simplified regex may over-emphasize <code>_</code>; code spans always safe</td></tr>
+                    <tr><td>HTML + MD mix</td><td>Write MD inside <code>&lt;div&gt;</code></td><td>Exit the HTML block with a blank line</td><td>Always escaped first, raw HTML not rendered</td></tr>
+                    <tr><td>List continuation indent</td><td>Continuation at column 0</td><td>Indent to the content column</td><td>Insufficient indent treated as a new paragraph</td></tr>
+                    <tr><td>Missing table delimiter</td><td>Only one row <code>|a|b|</code></td><td>Add <code>|---|</code> on row 2</td><td>No delimiter row degrades to plain text</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Rendering safety: XSS scenarios</h3>
+            <p><strong>Note:</strong> Any environment that allows raw HTML passthrough (for example an unsanitized CommonMark configuration) can introduce XSS when rendering user-submitted content. This previewer avoids it by design through escape-then-render plus a URL protocol allowlist. The table contrasts three inputs under the two environments:</p>
+            <table class="ref-table">
+                <thead><tr><th>Scenario</th><th>Risk if raw HTML allowed</th><th>This previewer (escape-then-render)</th><th>Result</th></tr></thead>
+                <tbody>
+                    <tr><td><code>&lt;script&gt;alert(1)&lt;/script&gt;</code></td><td>Script execution</td><td>Escaped to text</td><td>Safe</td></tr>
+                    <tr><td><code>&lt;img src=x onerror=alert(1)&gt;</code></td><td>Event execution</td><td>Escaped to text</td><td>Safe</td></tr>
+                    <tr><td><code>[x](javascript:alert(1))</code></td><td>Protocol execution</td><td>sanitizeUrl rejects</td><td>Renders as plain text</td></tr>
+                    <tr><td><code>&lt;style&gt;</code> tag</td><td>Layout breakage</td><td>Escaped</td><td>Safe</td></tr>
+                    <tr><td><code>data:</code> URI link</td><td>Possible execution</td><td>Rejected</td><td>Plain text</td></tr>
+                </tbody>
+            </table>
+            <p>To strip the rendered HTML back down to plain text, pair this with the <a href="/en/text/html-stripper">HTML tag stripper</a>.</p>
+
+            <h3>Volume compared with plain text / HTML</h3>
+            <p>The same content (heading, bold, list, table, code block) expressed four ways, in UTF-8 bytes. Markdown's "symbols are semantics" keeps it most compact; hand-written HTML and rendered HTML balloon about 2x because of tags; plain text is lightest but loses all structure.</p>
+            <table class="ref-table">
+                <thead><tr><th>Form</th><th>Bytes (UTF-8)</th><th>Relative to Markdown</th><th>Note</th></tr></thead>
+                <tbody>
+                    <tr><td>Markdown source</td><td>188</td><td>1.00&times;</td><td>Most compact, symbols are semantics</td></tr>
+                    <tr><td>Hand-written HTML</td><td>359</td><td>1.91&times;</td><td>Same content, manual tags</td></tr>
+                    <tr><td>This previewer rendered HTML</td><td>374</td><td>1.99&times;</td><td>Semantic tags add slight size</td></tr>
+                    <tr><td>Plain text (no markup)</td><td>136</td><td>0.72&times;</td><td>Content only, no structure</td></tr>
+                </tbody>
+            </table>
+            <p>To compare the Markdown source and its rendered output character by character, see the <a href="/blog/en/text-diff-guide">text diff guide</a>.</p>
+
+            <h3>Three worked examples (default input)</h3>
+            <p>All three examples use the exact default input produced by the "Load Sample" button. The numbers come from the same logic the page runs, so they match what you see in the editor.</p>
+            <h4>Example 1: word count of the default sample</h4>
+            <p>Clicking "Load Sample" fills the editor with a Markdown block of <strong>491 bytes</strong> (UTF-8). The counter below shows <strong>106 words</strong> (94 CJK characters + 12 English words). That number comes from <code>countWords</code> as "CJK characters + English words" and matches the live display. To count a longer document on its own, use the <a href="/en/text/word-counter">word counter</a>; for more on word counts and reading time, see the <a href="/blog/en/word-counter-guide">word counter guide</a>.</p>
+            <h4>Example 2: emphasis and code spans</h4>
+            <p>The second line of the sample, <code>支持 **粗体**、*斜体* 和 `行内代码`。</code>, renders as:</p>
+            <p><code>支持 &lt;strong&gt;粗体&lt;/strong&gt;、&lt;em&gt;斜体&lt;/em&gt; 和 &lt;code&gt;行内代码&lt;/code&gt;。</code></p>
+            <p>This shows <code>**粗体**</code> and <code>*斜体*</code> recognized, while the inline code span protects its backtick content. Confirm the code-span shield for emphasis markers: typing <code>模板 `a**b**c` 中的星号</code> renders as <code>模板 &lt;code&gt;a**b**c&lt;/code&gt; 中的星号</code> &mdash; the asterisks are not treated as syntax because code spans always keep content literal.</p>
+            <h4>Example 3: link safety allowlist</h4>
+            <p>The last line of the sample, <code>[工具箱里](https://www.calc-tools.top/)</code>, passes sanitizeUrl and renders as <code>&lt;a href="https://www.calc-tools.top/"&gt;工具箱里&lt;/a&gt;</code> (https is on the allowlist). If you instead write <code>[恶意](javascript:alert(1))</code>, sanitizeUrl returns empty and the link is filtered to plain text; <code>mailto:a@b.com</code> is allowed while <code>data:</code> is rejected. Local rendering is therefore immune to XSS.</p>
+
+            <h3>Common use cases</h3>
             <p>Markdown is widely used for README files, blog posts, knowledge bases, code documentation, forum posts and chat messages. With this previewer you can quickly check how your writing will look before publishing, verify that tables and code blocks render correctly, and estimate the length of your document before you commit it to a repository or a publishing system.</p>
-            <h3>Frequently Asked Questions</h3>
-            <p><strong>Do you support task lists and images?</strong> Not yet. Task lists and image syntax are not implemented in the current subset; all other common syntax is covered.</p>
-            <p><strong>Is the rendered output safe?</strong> Yes. All content is HTML-escaped before rendering; script tags and dangerous link protocols are filtered out, so no code is executed.</p>
-            <p><strong>Is my content saved or uploaded?</strong> No. Editing and previewing happen entirely in your browser; refreshing the page clears the content.</p>
+
+            <h3>How to use the result</h3>
+            <p>The live preview shows you, instantly, how the Markdown you wrote will look: heading levels, bold and italic, list indentation, code highlighting and table alignment are all visible at a glance. It fits README files, blog drafts, technical docs, notes and any writing scenario where a what-you-see-is-what-you-get check helps. When you are happy, copy the Markdown source into your platform or tool to publish; the preview only confirms the final effect.</p>
+
+            <h3>Frequently asked questions</h3>
+            <p><strong>Does a trailing two-space hard break actually work in this previewer?</strong> No. In CommonMark, two trailing spaces make a hard break (a <code>&lt;br&gt;</code>), but this previewer collapses intra-paragraph newlines into a single space and emits no <code>&lt;br&gt;</code>. To break a line, start a new paragraph with a blank line.</p>
+            <p><strong>Why did my pipe table render as a single line of pipe characters instead of a table?</strong> A pipe table requires a delimiter row. The correct form puts a row like <code>| --- | --- |</code> right after the header; if you only have one row <code>|a|b|</code> with no delimiter, the renderer treats it as an ordinary paragraph. The leading and trailing <code>|</code> are optional, but the delimiter row is not.</p>
+            <p><strong>Will pasted <code>&lt;script&gt;</code> or <code>&lt;img src=x onerror=...&gt;</code> execute in the preview?</strong> No. This previewer HTML-escapes all text before parsing Markdown, so <code>&lt;script&gt;</code> and <code>onerror</code> appear as plain text and no code runs; <code>javascript:</code> and <code>data:</code> link protocols are also filtered.</p>
+            <p><strong>Do GFM task lists <code>- [ ]</code> and strikethrough <code>~~text~~</code> work in this previewer?</strong> Not in the current subset. Task lists and strikethrough are GFM extensions, not part of the CommonMark base spec; this previewer aligns with CommonMark base syntax plus a common subset (headings, emphasis, code, lists, blockquotes, links, tables, horizontal rules). If your target platform uses GFM, preview there to confirm those extensions render.</p>
         </section>
 
         </div>

@@ -49,6 +49,54 @@
     "inLanguage": "en"
 }
 </script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Why does compressing a PNG turn it into a JPG and drop the transparency?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "PNG is lossless, so lossy compression at low quality barely helps. To get a real size win, the tool converts PNG to JPEG below quality 100, and JPEG has no alpha, so transparent areas fill white. To keep transparency, stay PNG or move to WebP or AVIF."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Why is quality 100 sometimes larger than quality 95?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Quality 100 triggers near-lossless re-encoding, discarding almost nothing, so the file is about 71.7% larger than at 95 (measured). Web use never needs 100."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What quality should I use for web images?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Photos: 80–85 is the sweet spot (this tool defaults to 80, about 55% saved); thumbnails can go to 60; text and line art should use PNG or WebP to avoid jaggies."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "WebP or JPEG for the same image — which do I pick?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Prefer WebP on modern browsers — better detail at equal size, smaller at equal quality (measured: WebP q80 beats JPEG q85 on size). Keep a JPEG copy only for legacy systems."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How much DPI do I need for screen? Is 300 DPI necessary?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Screens render by CSS pixels and ignore DPI; 300 DPI is for print only. Size web images by display pixels and skip the 300 DPI chase."
+            }
+        }
+    ]
+}
+</script>
 </head>
 <body>
     <header>
@@ -95,7 +143,105 @@
                 <div class="preview-card" ><h3>Result</h3><div class="preview-area"><div class="preview-box"><img id="compressedPreview" alt="Compressed"><div class="file-info" id="compressedInfo"></div></div></div></div>
                 <div class="download-area"><button class="btn btn-success" id="downloadBtn">Download</button></div>
             </div>
-            <div class="tool-content"><h2>Online Image Compression: Smaller Files, Faster Loading</h2><p>This online image compressor reduces a picture's file size without noticeably hurting quality, making pages load faster, consuming less bandwidth, and making uploads smoother. All compression runs locally through your browser's Canvas API, with files never leaving your device — so it's private and gives instant feedback, a key advantage over online compressors that require uploads.</p><p>It's ideal for site operators, e-commerce sellers, content creators, and anyone who wants to optimize image size and improve user experience.</p><h3>How Does Compression &quot;Slim Down&quot; an Image?</h3><p>File size depends mainly on pixel count and how it's compressed. This tool re-encodes the image via the Canvas API, adjusting sampling and how much redundant information is kept based on your quality setting. <strong>Lower quality means smaller files but more visible loss; higher quality keeps more detail but grows the size.</strong></p><p>JPEG is lossy and chases small size; PNG is lossless with limited room. That's why when compressing a PNG at low quality, the tool automatically converts to JPEG for better results (at the cost of transparency).</p><h3>How to Use It</h3><p>1. Upload or drag an image (JPG / PNG / WebP / BMP, up to 50MB).<br>2. Drag the &quot;quality&quot; slider and compare the original vs. new size on the right.<br>3. Preview the compressed result live and confirm the quality is acceptable.<br>4. When satisfied, click download to save it.</p><h3>Common Compression Mistakes</h3><p><strong>① Don't chase the lowest quality.</strong> Crank quality too low and you get obvious color blocks and blur that look &quot;dirty&quot;. For photos, 70%–85% is usually a good sweet spot.<br><strong>② PNG compression can drop transparency.</strong> When a PNG is converted to JPEG for smaller size, transparency turns white. If you need transparency, keep PNG or use WebP.<br><strong>③ Order of resize vs. compress.</strong> Resize to your target dimensions first, then compress — usually better, because you don't pay file size for pixels you no longer need.</p><h3>How Much Should You Compress?</h3><p>For images shown on the web, compress as much as you can while still looking fine, to get faster loads and lower bounce. For work that will be printed or viewed close-up, keep higher quality. Test one version, then nudge quality up or down to find the right size/quality balance.</p></div>
+            <div class="tool-content">
+<h2>Online Image Compression: A Trade-off Between Quality and Size, Not "Smaller Is Always Better"</h2>
+<p>Image compression is not simply "making a file smaller" — it is a trade-off between <strong>acceptable quality loss</strong> and <strong>a smaller file size</strong>. This tool's quality slider (default 80%) is exactly that trade-off knob: lower it and the file shrinks but detail softens; raise it and quality holds but the file grows. Once you see it that way, you stop chasing the lowest possible quality and start picking a level that fits the job.</p>
+<p>All compression runs locally in your browser through the Canvas API — files never leave your device, so it is private and gives instant feedback. It suits site owners, e-commerce sellers, creators, and anyone who wants to trim image weight and improve load performance.</p>
+
+<h3>Lossy vs Lossless: Two Very Different Ways to "Slim Down"</h3>
+<p>Compression algorithms split into two families with completely different mechanics, which decide how small you can go and whether information is discarded:</p>
+<table class="ref-table">
+<thead><tr><th>Dimension</th><th>Lossy (JPEG, lossy WebP, AVIF)</th><th>Lossless (PNG)</th></tr></thead>
+<tbody>
+<tr><td>Mechanism</td><td>Drops high-frequency detail the eye barely misses (chroma subsampling, quantization)</td><td>Rewrites pixels more compactly without dropping anything</td></tr>
+<tr><td>Transparency</td><td>JPEG: no; WebP, AVIF: yes</td><td>Yes</td></tr>
+<tr><td>Size</td><td>Can get very small (photos often 1/5–1/10 of original)</td><td>Photos barely shrink, often larger than the source JPEG</td></tr>
+<tr><td>Best for</td><td>Photos, gradients, complex real-world scenes</td><td>Line art, text, icons, anything needing alpha</td></tr>
+<tr><td>Re-compress</td><td>Each pass adds generation loss</td><td>Can be re-encoded losslessly any number of times</td></tr>
+</tbody>
+</table>
+<p>When you compress a PNG below quality 100, this tool smartly converts it to JPEG to win real savings — the cost is that transparency turns white. If you must keep transparency, keep PNG or switch to WebP (see the format table below).</p>
+
+<h3>Format Efficiency Compared (Same 4000×3000 Sample Photo, Measured in Browser)</h3>
+<p>We built a 4000×3000, 24-bit true-color sample (sky gradient, colored building blocks, and high-frequency detail to mimic a real photo) and measured each format's output with the exact same <code>canvas.toBlob</code> logic this tool uses. Raw pixel data is about 34.3 MB; as a camera-export baseline its high-quality JPEG (quality 95) is about 5.73 MB.</p>
+<table class="ref-table">
+<thead><tr><th>Format &amp; quality</th><th>Output size</th><th>% of raw pixels</th><th>Quality note</th></tr></thead>
+<tbody>
+<tr><td>JPEG quality 95</td><td>5734.8 KB</td><td>~16.3%</td><td>Near-lossless, file is large</td></tr>
+<tr><td>JPEG quality 85</td><td>3232.5 KB</td><td>~9.2%</td><td>Hard to tell apart on screen (recommended ceiling)</td></tr>
+<tr><td>JPEG quality 75</td><td>2068.3 KB</td><td>~5.9%</td><td>Slightly soft, more than half the size</td></tr>
+<tr><td>JPEG quality 60</td><td>1244.5 KB</td><td>~3.5%</td><td>Visible artifacts, thumbnails only</td></tr>
+<tr><td>WebP quality 80</td><td>2856.3 KB</td><td>~8.1%</td><td>Better detail than JPEG at equal size</td></tr>
+<tr><td>WebP quality 95</td><td>5216.5 KB</td><td>~14.8%</td><td>High-quality tier close to JPEG</td></tr>
+<tr><td>PNG (lossless)</td><td>20546.8 KB</td><td>~58.5%</td><td>Lossless but photos balloon; not advised</td></tr>
+<tr><td>AVIF quality 80*</td><td>~40%–50% smaller than same-quality JPEG</td><td>—</td><td>Not exported by this tool; official docs only</td></tr>
+</tbody>
+</table>
+<p>* AVIF encoding needs a server or dedicated tool; this tool (and most in-browser Canvas encoders) does not export it directly. The figure above is the typical saving from Google / AOMedia documentation, for format-choice reference only.</p>
+<p><strong>Note:</strong> Measured size varies a lot with image content — busier, noisier photos compress harder in JPEG and WebP; flat solid-color images compress even smaller. The table is a relative reference from a real sample, not a fixed multiplier.</p>
+
+<h3>Quality–Size Curve: Measured Output at Each Level (Tool Default = 80)</h3>
+<p>Using the same 5.73 MB baseline photo, we changed only the quality slider and watched this tool's real output (everything else unchanged):</p>
+<table class="ref-table">
+<thead><tr><th>Quality</th><th>Output size</th><th>Saved vs baseline</th></tr></thead>
+<tbody>
+<tr><td>40</td><td>748.0 KB</td><td>87.0%</td></tr>
+<tr><td>60</td><td>1244.5 KB</td><td>78.3%</td></tr>
+<tr><td>75</td><td>2068.3 KB</td><td>63.9%</td></tr>
+<tr><td>80 (default)</td><td>2574.5 KB</td><td>55.1%</td></tr>
+<tr><td>85</td><td>3232.5 KB</td><td>43.6%</td></tr>
+<tr><td>95</td><td>5734.8 KB</td><td>0% (the baseline itself)</td></tr>
+<tr><td>100</td><td>9844.7 KB</td><td>+71.7% (larger)</td></tr>
+</tbody>
+</table>
+<p>Key finding: quality 100 is 71.7% larger than 95. Quality 100 triggers near-lossless re-encoding, discarding far less, so the file balloons. For web use, 80–85 is already the sweet spot; pushing past 95 usually just adds bytes.</p>
+
+<h3>Standard Differences: Local Web/Print Norms vs International Core Web Vitals</h3>
+<p>The same image has different "pass lines" per context. Below we put local and international norms side by side so you can benchmark:</p>
+<table class="ref-table">
+<thead><tr><th>Scenario</th><th>Common local norm</th><th>International norm (Core Web Vitals etc.)</th></tr></thead>
+<tbody>
+<tr><td>Mobile hero image</td><td>Baidu mobile landing-page guidelines advise keeping each image lean; total page image weight should stay small</td><td>LCP (Largest Contentful Paint) should be under 2.5 s; hero images often compressed to tens of KB–200 KB</td></tr>
+<tr><td>Total page image weight</td><td>Keep above-the-fold images under ~1 MB where possible</td><td>From bandwidth / Total Blocking Time, less is better; prefer WebP, AVIF</td></tr>
+<tr><td>Print resolution</td><td>Print shops' standard 300 DPI</td><td>Print industry's same 300 DPI (PPI) standard</td></tr>
+<tr><td>Recommended format</td><td>JPG (legacy compatibility), WebP (modern browsers)</td><td>WebP, AVIF (Google recommends, ~25%–50% savings)</td></tr>
+</tbody>
+</table>
+
+<h3>Pixels, DPI, and Physical Size: Screen Display Does Not Need 300 DPI</h3>
+<p><strong>Note:</strong> "DPI (dots per inch)" only matters for printing. Screens render by CSS pixels and ignore DPI — a 1920-pixel-wide image shows at 1920 pixels wide whether the display is 72 DPI or 300 DPI. Only printing needs enough pixels for the physical size.</p>
+<p>The formula: <strong>required pixels = physical inches × DPI</strong>, and 1 inch = 2.54 cm. In other words, DPI does not create pixels out of nothing; if the source lacks pixels, raising DPI only prints bigger and blurrier.</p>
+<table class="ref-table">
+<thead><tr><th>Use</th><th>Physical size</th><th>Recommended DPI</th><th>Required pixels (W×H)</th></tr></thead>
+<tbody>
+<tr><td>Web full-width banner</td><td>By screen</td><td>72 (display only)</td><td>1920 × 1080</td></tr>
+<tr><td>6-inch photo print</td><td>6 × 4 in</td><td>300</td><td>1800 × 1200</td></tr>
+<tr><td>A4 document print</td><td>8.27 × 11.69 in</td><td>300</td><td>2480 × 3508</td></tr>
+<tr><td>Mobile square share</td><td>By screen</td><td>72</td><td>1080 × 1080</td></tr>
+<tr><td>E-commerce main image</td><td>Per platform</td><td>72</td><td>800 × 800 (common floor)</td></tr>
+</tbody>
+</table>
+<p>Takeaway: for web images, set pixels to the display size first (e.g., phone width ~375–750 px), then compress to a good size here. Do not let "300 DPI" push you to export giant images the screen cannot use. To change dimensions first, use the <a href="/en/image/resize">Resize &amp; Crop</a> tool.</p>
+
+<h3>Three Real Examples (Tool Defaults, Numbers From the Measurements Above)</h3>
+<p><strong>Example 1 (compress a camera photo):</strong> A 4000×3000 camera JPEG, baseline 5.73 MB. Compressed with this tool's <strong>default quality 80</strong>, output is 2574.5 KB — a 55.1% saving. Plenty for a web hero image.</p>
+<p><strong>Example 2 (PNG to JPEG rescue):</strong> The same shot saved as lossless PNG is 20546.8 KB. At default quality 80 the tool auto-converts to JPEG, output 2574.5 KB — an 87.5% saving. <strong>Note:</strong> if the source PNG had transparent areas, they turn white; to keep transparency, use <a href="/en/image/convert">Format Converter</a> to switch to WebP instead.</p>
+<p><strong>Example 3 (reverse quality from a target size):</strong> You want the 5.73 MB original down to "about 2 MB, still decent". From the curve, quality 75 gives 2068.3 KB (63.9% saved) — the closest; if ~1.2 MB is acceptable, use quality 60. "Set the target size first, then read the curve to pick quality" beats blind dragging.</p>
+
+<h3>Frequently Asked Questions</h3>
+<p><strong>Q: Why does compressing a PNG turn it into a JPG and drop the transparency?</strong><br>
+A: PNG is lossless, so lossy compression at low quality barely helps. To get a real size win, the tool converts PNG to JPEG below quality 100 — and JPEG has no alpha, so transparent areas fill white. To keep transparency, stay PNG or move to WebP or AVIF.</p>
+<p><strong>Q: Why is quality 100 sometimes larger than quality 95?</strong><br>
+A: Quality 100 triggers near-lossless re-encoding, discarding almost nothing, so the file is about 71.7% larger than at 95 (measured). Web use never needs 100.</p>
+<p><strong>Q: What quality should I use for web images?</strong><br>
+A: Photos: 80–85 is the sweet spot (this tool defaults to 80, ~55% saved); thumbnails can go to 60; text and line art should use PNG or WebP to avoid jaggies.</p>
+<p><strong>Q: WebP or JPEG for the same image — which do I pick?</strong><br>
+A: Prefer WebP on modern browsers — better detail at equal size, smaller at equal quality (measured: WebP q80 beats JPEG q85 on size). Keep a JPEG copy only for legacy systems. Convert with <a href="/en/image/convert">Format Converter</a>.</p>
+<p><strong>Q: How much DPI do I need for screen? Is 300 DPI necessary?</strong><br>
+A: Screens render by CSS pixels and ignore DPI; 300 DPI is for print only. Size web images by display pixels and skip the 300 DPI chase. See the table above.</p>
+
+<p>For a full optimization walkthrough, read the blog post <a href="/blog/en/image-compression-guide">How to Compress Images Online: Complete Guide</a>; to squeeze an image into text for transfer, see <a href="/en/text/compress-decompress">Text Compress / Decompress</a>.</p>
+</div>
 </main>
     <footer>
     <div class="footer-links">

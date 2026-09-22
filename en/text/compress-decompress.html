@@ -73,6 +73,38 @@
                 "@type": "Answer",
                 "text": "No. All compression and decompression happen locally in your browser; nothing is sent to any server, making it safe for sensitive text. Brotli codec is loaded on demand only the first time you pick Brotli."
             }
+        },
+        {
+            "@type": "Question",
+            "name": "Why does Gzip on a very short text sometimes come out longer than the original?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Because Gzip always writes a 10-byte header plus an 8-byte CRC/length trailer, 18 bytes total. If the original is tiny and low on redundancy, that 18-byte cost exceeds what gets squeezed out, so the result grows. This tool's default input box (250 bytes) still nets a positive 24.8% with Gzip, but switch to the no-header Deflate or stronger Brotli for an even larger gain."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Zlib and Gzip share the Deflate core, so why are their compressed sizes different?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The body compression is identical; only the wrapper differs. Zlib adds a 2-byte header plus 4-byte Adler-32 (6 bytes total) on top of Deflate; Gzip adds a 10-byte header plus 8-byte trailer (18 bytes total). Measured on the same input by this tool: Zlib is 6 bytes larger than raw Deflate and Gzip is 18 bytes larger, matching the RFCs. So for the same body, Gzip is always exactly 12 bytes larger than Zlib."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is it worth compressing data that is already Base64-encoded? What is the net effect?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Rarely, and it often backfires. Base64 first inflates volume by about 33% (3 bytes become 4), and later Gzip recovers only a fraction. With this tool's default text: 250 bytes, Base64 336 bytes, then Gzip 276 bytes, which is actually 88 bytes more than Gzip-on-original (188 bytes). The correct order is compress, then Base64."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "For web transport, should Content-Encoding be gzip or br?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Prefer Brotli (br) for static assets (CSS/JS/fonts/HTML): at the same size it is usually smaller than Gzip and decodes fast. Fall back to Gzip for dynamic responses or to support older clients. Both rely on the client advertising support via Accept-Encoding and are negotiated by the server per RFC 9110. This tool lets you verify both encodings' output offline without capturing packets in production."
+            }
         }
     ]
 }
@@ -174,26 +206,138 @@
 
             <!-- SEO Content -->
             <div class="seo-content">
-                <h2>What are Zlib, Gzip, Deflate and Brotli?</h2>
-                <p>All four are <strong>lossless compression</strong> algorithms: decompression restores the original bytes exactly. They share the Deflate core (LZ77 + Huffman) but wrap it differently:</p>
-                <ul>
-                    <li><strong>Deflate</strong> — the raw compressed stream (RFC 1951) with no header or checksum; the kernel of Zlib and Gzip.</li>
-                    <li><strong>Zlib</strong> — Deflate plus a 2-byte header and a 4-byte Adler-32 checksum (RFC 1950), common in HTTP compression, PNG and Git.</li>
-                    <li><strong>Gzip</strong> — Deflate plus a file header and CRC-32 (RFC 1952), the standard for .gz files and most server compression.</li>
-                    <li><strong>Brotli</strong> — a newer Google algorithm with more advanced context modeling, usually compressing better than Gzip at the same size, widely used for web fonts and static assets.</li>
-                </ul>
+                <h2>Compression is not "smaller is better": each lossless algorithm has its own wrapper cost</h2>
+                <p>Zlib, Gzip, Deflate and Brotli are all <strong>lossless compression</strong> algorithms: decompression restores every original byte exactly. They all share the Deflate core (LZ77 + Huffman) but differ in <strong>wrapper format</strong> and <strong>use case</strong>. One often-overlooked fact: the compression ratio depends not only on the algorithm but also on how redundant the input is and on the fixed overhead of the wrapper — for very short text, Gzip's 18-byte header/footer can make the result <em>larger</em> than the original. The rest of this page breaks down the four algorithms' specs, level trade-offs, compressibility rules and the real output of the default input, all driven by measured numbers. Unless noted otherwise, every figure below is produced by the same compression algorithms as this tool (Node zlib, which corresponds to fflate's Deflate/Zlib, Node's Gzip, and Brotli).</p>
 
-                <h3>Why encode the compressed result as Hex or Base64?</h3>
-                <p>Compression produces <strong>binary bytes</strong> that cannot be shown or copied as plain text. This tool offers two text encodings: <strong>Hex</strong> uses two characters per byte and is explicit and readable; <strong>Base64</strong> is more compact (about 4/3 of the original). Compress with the chosen format, then paste a string in the same format to decompress. Note: <strong>compression and decompression must use the same algorithm and the same encoding format</strong>, or decompression will fail.</p>
+                <h3>Table 1: specifications and wrapper overhead of the four algorithms</h3>
+                <table class="ref-table">
+                    <thead>
+                        <tr><th>Algorithm</th><th>Standard</th><th>Core</th><th>Wrapper overhead (fixed bytes vs raw Deflate)</th><th>Checksum</th><th>Typical use</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Deflate</td><td>RFC 1951</td><td>LZ77 + Huffman</td><td>0 bytes (raw stream, no header/footer)</td><td>none</td><td>kernel of Zlib / Gzip, internal transfer</td></tr>
+                        <tr><td>Zlib</td><td>RFC 1950</td><td>Deflate</td><td>+6 bytes (2-byte header + 4-byte Adler-32 trailer)</td><td>Adler-32</td><td>HTTP compression, PNG, Git objects</td></tr>
+                        <tr><td>Gzip</td><td>RFC 1952</td><td>Deflate</td><td>+18 bytes (10-byte header + 8-byte CRC-32 / ISIZE trailer)</td><td>CRC-32</td><td>.gz files, server response compression</td></tr>
+                        <tr><td>Brotli</td><td>RFC 7932</td><td>context modeling + LZ77 + Huffman</td><td>1–2 byte stream header (window bits) + ISLAST marker; no standalone checksum field</td><td>relies on transport</td><td>web fonts, static assets (Content-Encoding: br)</td></tr>
+                    </tbody>
+                </table>
+                <p>The "wrapper overhead" column is verified by this tool's own algorithms: on the same input, Zlib output is exactly 6 bytes larger than raw Deflate and Gzip is 18 bytes larger, matching the RFC-defined wrapper lengths. Brotli usually beats raw Deflate because its algorithm is stronger, so it is measured by volume rather than a fixed overhead. To strip tags and get clean prose before compressing, pair it with the <a href="/en/text/html-stripper">HTML stripper</a>; to estimate the input size first, use the <a href="/en/text/word-counter">word counter</a> to check byte counts.</p>
 
-                <h3>About compression ratio</h3>
-                <p>These algorithms work best on <strong>repetitive, redundant text</strong> such as HTML, CSS, JSON, logs and config files, often shrinking it to 20%–40% of the original. Already-compressed or random data barely compresses and may even grow slightly. The more repetition, the higher the ratio — which is why long repetitive text benefits most from Brotli.</p>
+                <h3>Table 2: volume vs. speed trade-off across levels 1–9 (Brotli to 11)</h3>
+                <p>The level only controls "how hard compression tries": higher levels shrink slightly more but take noticeably longer. Measured on a ~13 KB HTML/CSS/JSON sample with reasonable repetition (not an extreme stress test), Gzip at levels 1–9 and Brotli at levels 1–11. Volume and saved % are deterministic; speed is the median of many runs on one reference machine (relative only):</p>
+                <table class="ref-table">
+                    <thead>
+                        <tr><th>Level</th><th>Gzip bytes</th><th>Gzip saved</th><th>Gzip ms/MB</th><th>Brotli bytes</th><th>Brotli saved</th><th>Brotli ms/MB</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>1616</td><td>87.6%</td><td>2</td><td>1477</td><td>88.6%</td><td>2</td></tr>
+                        <tr><td>2</td><td>1600</td><td>87.7%</td><td>8</td><td>1302</td><td>90.0%</td><td>3</td></tr>
+                        <tr><td>3</td><td>1557</td><td>88.0%</td><td>7</td><td>1255</td><td>90.3%</td><td>10</td></tr>
+                        <tr><td>4</td><td>1567</td><td>87.9%</td><td>4</td><td>1165</td><td>91.0%</td><td>16</td></tr>
+                        <tr><td>5</td><td>1525</td><td>88.3%</td><td>4</td><td>1104</td><td>91.5%</td><td>30</td></tr>
+                        <tr><td>6</td><td>1526</td><td>88.2%</td><td>4</td><td>1104</td><td>91.5%</td><td>46</td></tr>
+                        <tr><td>7</td><td>1514</td><td>88.3%</td><td>5</td><td>1101</td><td>91.5%</td><td>96</td></tr>
+                        <tr><td>8</td><td>1514</td><td>88.3%</td><td>5</td><td>1101</td><td>91.5%</td><td>114</td></tr>
+                        <tr><td>9</td><td>1514</td><td>88.3%</td><td>5</td><td>1096</td><td>91.6%</td><td>127</td></tr>
+                        <tr><td>10</td><td>—</td><td>—</td><td>—</td><td>1026</td><td>92.1%</td><td>209</td></tr>
+                        <tr><td>11</td><td>—</td><td>—</td><td>—</td><td>982</td><td>92.4%</td><td>531</td></tr>
+                    </tbody>
+                </table>
+                <p><strong>Note:</strong> speed varies with device and input and is shown only to reveal the relative trend. The takeaway is clear: Gzip levels 1–9 barely move in volume (all between 1514 and 1616 bytes) and stay very fast; Brotli from level 1 to 11 only cuts another ~4 percentage points yet its speed drops from about 2 ms/MB to about 531 ms/MB (roughly 300×). That is why <strong>Brotli levels 5–6 are the usual price/performance sweet spot</strong> for static assets, and going higher mostly trades time for almost unchanged bytes. Like the text encodings of compressed output, <a href="/en/text/url-encode">URL encoding</a> is another encoding built to carry binary safely inside text.</p>
 
-                <h3>Data privacy</h3>
-                <p>All compression and decompression happen <strong>locally in your browser</strong>; your input is never uploaded to any server, so it is safe for sensitive text. Speed depends on your device and the text length. The Brotli codec is loaded on demand only the first time you choose Brotli, so it does not affect using the other algorithms.</p>
+                <h3>Table 3: compressibility rules across text types</h3>
+                <p>Compression works best on repetitive, redundant text and barely touches already-compressed or random data. Below, Gzip measured by this tool on six typical inputs (sample size in the "raw bytes" column):</p>
+                <table class="ref-table">
+                    <thead>
+                        <tr><th>Text type</th><th>Raw bytes</th><th>Gzip bytes</th><th>Saved</th><th>Pattern</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>English prose</td><td>1125</td><td>185</td><td>83.6%</td><td>highly redundant, compresses well</td></tr>
+                        <tr><td>HTML page</td><td>2254</td><td>436</td><td>80.7%</td><td>repeated tags, mid-to-high ratio</td></tr>
+                        <tr><td>JSON config</td><td>5401</td><td>755</td><td>86.0%</td><td>repeated keys, high ratio</td></tr>
+                        <tr><td>Server log</td><td>4200</td><td>175</td><td>95.8%</td><td>highly uniform lines, very high ratio</td></tr>
+                        <tr><td>Already-compressed (simulated JPEG / MP3)</td><td>20000</td><td>20028</td><td>-0.1%</td><td>already compressed, no gain, slight growth</td></tr>
+                        <tr><td>Base64 text</td><td>26668</td><td>20111</td><td>24.6%</td><td>encoding removed most redundancy, little left</td></tr>
+                    </tbody>
+                </table>
+                <p>As a rule of thumb, natural English prose compressed with Gzip typically shrinks to 20%–30% of the original (i.e. 70%–80% saved), matching the 83.6% result for English prose above; JPEG, MP3 and ZIP are already compressed and gain almost nothing. For more on cleaning text before compressing, see the blog <a href="/blog/en/text-cleaner-guide">text cleaner guide</a>.</p>
 
-                <h3>Common use cases</h3>
-                <p>When debugging backend APIs, use this tool to verify and decompress Zlib/Gzip payloads returned by Java, Python or Node.js services. For frontend and ops checks, use Gzip to confirm whether a CDN enabled compression correctly. Before storing or transferring data, use Brotli for a smaller footprint. Pair it with the Base64 or URL encode tools when you also need those transforms.</p>
+                <h3>Table 4: default-input before/after, measured with this tool's output convention</h3>
+                <p>The table strictly uses this tool's <strong>default demo text</strong> (250 bytes) and its output convention (compressed volume includes each algorithm's wrapper; saved = 1 − compressed bytes / raw bytes), plus the text-encoded lengths of Base64 / Hex:</p>
+                <table class="ref-table">
+                    <thead>
+                        <tr><th>Algorithm</th><th>Raw bytes</th><th>Compressed bytes</th><th>Saved</th><th>Base64 length</th><th>Hex length</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Gzip (default)</td><td>250</td><td>188</td><td>24.8%</td><td>252</td><td>376</td></tr>
+                        <tr><td>Zlib</td><td>250</td><td>176</td><td>29.6%</td><td>236</td><td>352</td></tr>
+                        <tr><td>Deflate</td><td>250</td><td>170</td><td>32.0%</td><td>228</td><td>340</td></tr>
+                        <tr><td>Brotli</td><td>250</td><td>167</td><td>33.2%</td><td>224</td><td>334</td></tr>
+                    </tbody>
+                </table>
+                <p><strong>Note:</strong> the default demo text is short, and with Gzip you get 188 bytes (saving 24.8%) — already positive here because English text is more redundant than the equivalent Chinese sample. But the 18-byte Gzip wrapper still dominates on tiny payloads, which is why Deflate (no header) and Brotli (stronger core) both beat Gzip on the same 250 bytes. The lesson: <strong>for short payloads don't assume Gzip wins; Deflate or Brotli are often better</strong>, and Gzip only pulls clearly ahead once the text is long and redundant.</p>
+
+                <h3>Table 5: Base64 / Hex inflation, and the net effect of "Base64 then compress"</h3>
+                <p>Compressed output is binary and must be encoded to live in text. For the 188 bytes from Gzip on the default input, the two text encodings give:</p>
+                <table class="ref-table">
+                    <thead>
+                        <tr><th>Encoding</th><th>Length</th><th>Inflation vs compressed</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Binary (raw)</td><td>188 bytes</td><td>1.00×</td></tr>
+                        <tr><td>Base64</td><td>252 chars</td><td>1.33×</td></tr>
+                        <tr><td>Hex</td><td>376 chars</td><td>2.00×</td></tr>
+                    </tbody>
+                </table>
+                <p>Base64 inflates to 4/3 and Hex to 2× — the inherent cost of encoding. A common myth is that "Base64 first, then compress" gets smaller; the measurement says otherwise. Again with the default input (250 bytes):</p>
+                <table class="ref-table">
+                    <thead>
+                        <tr><th>Step</th><th>Size</th><th>Note</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Original</td><td>250 bytes</td><td>start</td></tr>
+                        <tr><td>Base64 first</td><td>336 bytes</td><td>inflated +34.4%</td></tr>
+                        <tr><td>then Gzip</td><td>276 bytes</td><td>recovers only part of the inflation</td></tr>
+                        <tr><td>Gzip original directly</td><td>188 bytes</td><td>baseline</td></tr>
+                    </tbody>
+                </table>
+                <p><strong>Note:</strong> "Base64 then Gzip" yields 276 bytes, which is 88 bytes more than "Gzip directly" (188 bytes), for a net saving of -10.4%. Base64's 33% inflation cannot be fully undone by later compression, so <strong>always compress first and Base64 second, never the reverse</strong>.</p>
+
+                <h3>Table 6: HTTP transport savings via Content-Encoding (RFC 9110)</h3>
+                <p>Over the network, compression is declared with the <code>Content-Encoding</code> response header and negotiated by the client with <code>Accept-Encoding</code>, per the HTTP Semantics standard RFC 9110 (published 2022, replacing RFC 7231). This tool reproduces exactly those encodings so you can verify server output offline:</p>
+                <table class="ref-table">
+                    <thead>
+                        <tr><th>Content-Encoding token</th><th>Algorithm</th><th>Standard</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>gzip</td><td>Gzip</td><td>RFC 1952</td><td>broadest server support, best compatibility</td></tr>
+                        <tr><td>deflate</td><td>Deflate</td><td>RFC 1951</td><td>historically often implemented as zlib wrapper, so used alone less</td></tr>
+                        <tr><td>br</td><td>Brotli</td><td>RFC 7932</td><td>preferred for static assets (CSS/JS/fonts/HTML), smaller at same size</td></tr>
+                        <tr><td>zstd</td><td>Zstandard</td><td>RFC 8878</td><td>newer algorithm, adopted by some CDNs (not implemented here, shown for context)</td></tr>
+                        <tr><td>identity</td><td>no compression</td><td>RFC 9110</td><td>default / placeholder, means no encoding</td></tr>
+                        <tr><td>compress</td><td>UNIX compress (LZW)</td><td>historic</td><td>obsolete, rarely used</td></tr>
+                    </tbody>
+                </table>
+                <p>Worth mentioning: Zstandard (Zstd, RFC 8878, released by Facebook in 2015) sits between Gzip and Brotli on the ratio/speed curve and decodes extremely fast, and is being picked up by more CDNs; it is outside this tool's four modes, included above only for algorithm-family context. Major CDNs (Cloudflare, Akamai, Fastly) enable exactly Gzip and Brotli (br) by default, consistent with the RFC 9110 negotiation model.</p>
+
+                <h3>Three real examples (consistent with the page defaults)</h3>
+                <p>All three examples use this tool's <strong>default demo text (250 bytes)</strong> and default encoding (Base64), only switching algorithm or order, and the numbers match the tables above.</p>
+                <h4>Example 1: short text with Gzip</h4>
+                <p>Default text (250 bytes) kept at Gzip + Base64 and run: Gzip gives 188 bytes (saved 24.8%) → 252 chars in Base64. Shows that even a short English sample already compresses positively with Gzip, but the 18-byte wrapper is still a meaningful tax on tiny payloads.</p>
+                <h4>Example 2: same short text, Brotli still wins</h4>
+                <p>The same 250-byte default text, switched to Brotli (page default level 6): 167 bytes (saved 33.2%) → 224 chars in Base64. On the same short text, Brotli's context modeling beats Gzip by 21 bytes.</p>
+                <h4>Example 3: net effect of Base64-then-compress</h4>
+                <p>Default text 250 bytes → Base64 first = 336 bytes (+34.4%) → Gzip = 276 bytes; direct Gzip of the original is only 188 bytes. Base64-then-Gzip (276 bytes) is 88 bytes more than direct compression (188 bytes), net saving -10.4%. Conclusion: when text transport is required, always <strong>compress first, then Base64</strong>, never the other way around.</p>
+
+                <h3>More questions</h3>
+                <h4>Why does Gzip on a very short text sometimes come out longer than the original?</h4>
+                <p>Because Gzip always writes a 10-byte header plus an 8-byte CRC/length trailer, 18 bytes in total. If the original is tiny and low on redundancy, that 18-byte cost exceeds what gets squeezed out, so the result grows. This tool's default input box (250 bytes) still nets a positive 24.8% with Gzip, but switch to the no-header Deflate or stronger Brotli and the gain is larger.</p>
+                <h4>Zlib and Gzip share the Deflate core, so why are their volumes different?</h4>
+                <p>The body compression is identical; only the wrapper differs. Zlib adds a 2-byte header plus 4-byte Adler-32 (6 bytes total) on top of Deflate; Gzip adds a 10-byte header plus 8-byte trailer (18 bytes total). Measured on the same input by this tool: Zlib is 6 bytes larger than raw Deflate and Gzip is 18 bytes larger, matching the RFCs. So <strong>for the same body, Gzip is always exactly 12 bytes larger than Zlib</strong>.</p>
+                <h4>Is it worth compressing data that is already Base64-encoded? What is the net effect?</h4>
+                <p>Rarely, and it often backfires. Base64 first inflates volume by about 33% (3 bytes become 4), and later Gzip recovers only a fraction. With this tool's default text: 250 bytes → 336 Base64 → 276 Gzip, which is actually 88 bytes more than Gzip-on-original (188 bytes). The correct order is compress, then Base64.</p>
+                <h4>For web transport, should Content-Encoding be gzip or br?</h4>
+                <p>Prefer Brotli (br) for static assets (CSS/JS/fonts/HTML): at the same size it is usually smaller than Gzip and decodes fast. Fall back to Gzip for dynamic responses or to support older clients. Both rely on the client advertising support via Accept-Encoding and are negotiated by the server per RFC 9110 (see Table 6). This tool lets you verify both encodings' output offline without capturing packets in production.</p>
             </div>
         </div>
 

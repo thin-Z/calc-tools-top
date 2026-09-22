@@ -58,6 +58,54 @@
         "inLanguage": "zh-CN"
     }
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "默认 58mm 规格导出单枚精确尺寸 PNG 是多少像素？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "本工具按 300 DPI 输出：含出血直径 = 规格总直径(mm) × 300 ÷ 25.4。默认 58mm 规格含出血 64mm，导出为 756 × 756 px 的正方形 PNG，内部裁切圆直径约 685px，安全区半径约 319px。文字层默认 11% 比例，在该尺寸上字号约 75px。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "为什么 A4 拼版默认选 20 枚，实际只导出 8 枚？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A4 可打印区受四周 8mm 留白限制。58mm 规格单元为 756px，A4（2480 × 3508 px）最多只能排 2 列 × 4 行 = 8 枚；选 20 枚会被自动夹取为 8 枚（版心块约 1547 × 3129px）。想排更多应改小规格：32mm 最多 35 枚、44mm 最多 15 枚。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "吧唧上的弧形文字默认多大？缩到 32mm 还读得清吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "文字字号 = 成品圆直径 × 11%（默认比例）。58mm 成品上约 75px，32mm 成品上约 42px，约为前者 55%。小规格物理直径小，文字实际显示也更小，建议缩短弧形文字字数、放大比例，并让文字落在安全区（距裁切线内缩 2mm）内。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "透明背景导出适合什么场景，和拟真金属效果能同时用吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "透明背景只作用于「预览导出」模式，让徽章外形以外的区域透明，适合做贴纸、头像叠加。但拟真马口铁效果会绘制金属包边与底色，徽章本体始终不透明；单枚与 A4 印刷稿也会铺白底以保证印刷不透光。要纯透明圆图请关闭拟真效果、用纯圆裁剪。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "导出 PNG 和 A4 PDF 在裁切精度上有什么区别？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "两者都基于同一套 300 DPI 像素（A4 = 2480 × 3508 px），裁切圆与出血线位置完全一致。区别在封装：PNG 是位图，可用于任意查看/再编辑；A4 PDF 内嵌 JPEG（质量 0.92）并按 A4 物理尺寸（595.28 × 841.89 pt）精确标定，交给印刷厂时尺寸不会因屏幕缩放而漂移。"
+                }
+            }
+        ]
+    }
+    </script>
 </head>
 <body>
 <header>
@@ -530,6 +578,133 @@
 <div id="printArea"><canvas id="printCanvas"></canvas></div>
 
         </div>
+            <div class="tool-content">
+                <h2>在线吧唧制作：把照片做成可佩戴的圆徽，但导出的本质是一张精确像素的 PNG</h2>
+                <p>在线吧唧制作是一款完全免费的本地工具，它做的「吧唧」指的是<strong>马口铁实体徽章</strong>（pin badge），不是社交平台资料页上那种小「状态徽章」。但两者有个共同点：最终都要落到一张<strong>精确像素的图片</strong>上。本工具把照片裁成圆形、加金属包边与文字，再按 300 DPI 输出带出血线和裁切线的印刷稿——它的尺寸不是随手定的，而是严格由规格、出血与 DPI 推算出来。理解这套换算，你才既做得对实体吧唧，也做得对线上头像、封面和图标。</p>
+                <p>所有处理都在浏览器本地通过 Canvas 完成，图片不上传服务器，因此既能保护隐私又能即时预览。它适合想自印周边、做活动物料的创作者，也适合需要顺手产出社交图与图标的设计师。</p>
+
+                <h3>吧唧规格到底怎么定？成品、出血与含出血</h3>
+                <p>印刷里三个尺寸必须分清：<strong>成品直径</strong>是最终切出来的圆（如 58mm）；<strong>出血</strong>是成品外多留的一圈，裁刀有误差，超出成品 2–3mm 的图案会被切掉，所以必须预留；<strong>含出血直径</strong> = 成品 + 两侧出血，这才是你交付文件的真实边长。本工具规格表的 32/44/58/75mm 指成品直径，对应含出血为 36/48/64/81mm。</p>
+
+                <h3>四类规格导出的像素一览（300 DPI，含出血正方形 PNG）</h3>
+                <p>换算公式：<strong>含出血像素 = 含出血直径(mm) × 300 ÷ 25.4</strong>。下表给出四种规格在默认 300 DPI 下的完整导出参数，文字字号按工具默认 11% 比例算出：</p>
+                <table class="ref-table">
+                <thead><tr><th>规格（成品）</th><th>出血</th><th>含出血直径</th><th>含出血方图(px)</th><th>裁切圆直径(px)</th><th>安全区半径(px)</th><th>文字字号(px,11%)</th></tr></thead>
+                <tbody>
+                <tr><td>32mm</td><td>2mm</td><td>36mm</td><td>425</td><td>378</td><td>165</td><td>41.6</td></tr>
+                <tr><td>44mm</td><td>2mm</td><td>48mm</td><td>567</td><td>520</td><td>236</td><td>57.2</td></tr>
+                <tr><td>58mm（默认）</td><td>3mm</td><td>64mm</td><td>756</td><td>685</td><td>319</td><td>75.4</td></tr>
+                <tr><td>75mm</td><td>3mm</td><td>81mm</td><td>957</td><td>886</td><td>419</td><td>97.5</td></tr>
+                </tbody>
+                </table>
+                <p><strong>注意：</strong>「安全区」指距裁切线内缩 2mm 的圈（本工具以浅绿虚线标出），文字与关键图案应落在安全区内——裁刀误差可能切到安全区外，但绝不该切到安全区内。同一张 58mm 图在 756px 画布上文字有 75px，看着很大，是因为它要经印刷再被肉眼在实物上观看，不是给屏幕小图用。</p>
+
+                <h3>社交平台图片规格对照（同一张图去做线上头像/封面时参考）</h3>
+                <p>吧唧是实体的，但你常把同一张图也发到社交平台当头像或封面。各平台的首图尺寸口径不一，下表按国内平台（微信/小红书）与国际平台（Open Graph / Twitter / GitHub）分列：</p>
+                <table class="ref-table">
+                <thead><tr><th>平台 / 场景</th><th>推荐尺寸(px)</th><th>长宽比</th><th>说明</th></tr></thead>
+                <tbody>
+                <tr><td>Open Graph（朋友圈分享、LinkedIn）</td><td>1200 × 630</td><td>1.9:1</td><td>网页分享卡片通用标准</td></tr>
+                <tr><td>Twitter / X Card（大图）</td><td>1200 × 600</td><td>2:1</td><td>summary_large_image 主用</td></tr>
+                <tr><td>Twitter / X Card（旧兼容）</td><td>1200 × 675</td><td>1.78:1</td><td>早期 1.5:1 口径的近似</td></tr>
+                <tr><td>微信公众号 首图</td><td>900 × 383</td><td>2.35:1</td><td>订阅号会话头图；封面另取方形</td></tr>
+                <tr><td>小红书 笔记封面</td><td>1080 × 1440</td><td>3:4</td><td>竖版信息流主用比例</td></tr>
+                <tr><td>GitHub Social Preview</td><td>1280 × 640</td><td>2:1</td><td>仓库页头部预览图</td></tr>
+                </tbody>
+                </table>
+                <p>这些尺寸与本工具的圆形吧唧无关，但它们都是「图片规格」这一知识族的一部分：做一张图之前先定目标平台的画布，能少走很多返工弯路。</p>
+
+                <h3>状态徽章（shields.io 风格"角标"）规范</h3>
+                <p>文档里常见的「构建通过 / 版本号」小徽章（badge）与吧唧是两回事，但本工具「导出图带 calc-tools.top 制作角标」就是同族的小角标。这类状态徽章有一套事实标准（源自 shields.io）：</p>
+                <table class="ref-table">
+                <thead><tr><th>参数</th><th>数值</th><th>说明</th></tr></thead>
+                <tbody>
+                <tr><td>整体高度</td><td>20px</td><td>单枚状态徽章标准高度</td></tr>
+                <tr><td>字体</td><td>11px Verdana</td><td>垂直居中，等比缩放</td></tr>
+                <tr><td>左右圆角</td><td>3px</td><td>rect 的 rx 值</td></tr>
+                <tr><td>label / value 双色块</td><td>label 浅灰底深字、value 蓝底白字</td><td>左块写名称、右块写数值，可自定义配色</td></tr>
+                <tr><td>字符宽度</td><td>约 7px / 字符</td><td>总长由左右两块文本长度估算</td></tr>
+                <tr><td>SVG vs PNG</td><td>SVG 矢量无损、可随 CSS 缩放；PNG 位图放大发虚</td><td>README / 文档优先嵌 SVG</td></tr>
+                </tbody>
+                </table>
+                <p>关键差异在最后一行：SVG 是矢量，放到多大都不糊；PNG 是位图，缩放会损失清晰度和体积优势。所以状态徽章几乎都用 SVG，而本工具的印刷稿用 PNG（要精确像素）。</p>
+
+                <h3>favicon 与 app icon 多档尺寸（给网站/App 做图标时备齐）</h3>
+                <p>想把品牌做成网站图标或 App 图标，单一尺寸不够——不同系统取不同档。下表按用途分档，可与本工具导出的 PNG 衔接：</p>
+                <table class="ref-table">
+                <thead><tr><th>尺寸(px)</th><th>典型用途</th><th>平台 / 场景</th></tr></thead>
+                <tbody>
+                <tr><td>16 × 16</td><td>浏览器标签页 favicon、地址栏</td><td>通用</td></tr>
+                <tr><td>32 × 32</td><td>旧版 IE、Windows 任务栏</td><td>Windows</td></tr>
+                <tr><td>48 × 48</td><td>桌面图标</td><td>Windows</td></tr>
+                <tr><td>180 × 180</td><td>Apple Touch 图标（主屏）</td><td>iOS</td></tr>
+                <tr><td>192 × 192</td><td>manifest 图标（mdpi 基准）</td><td>Android / PWA</td></tr>
+                <tr><td>512 × 512</td><td>manifest 最大档（xxxhdpi）</td><td>Android / PWA</td></tr>
+                </tbody>
+                </table>
+                <p>做图标时建议从最大档（如 512）出发，再用本表向下缩放出各小档，避免小图由大图二次缩小产生锯齿。</p>
+
+                <h3>安全边距与最小可读字号：导出后在各平台被缩放到多少</h3>
+                <p>社交图在信息流里会被大幅缩小。下表以「画布 40px 标题 / 24px 正文」为例，按各平台典型信息流显示宽度反推实际落到屏幕上的字号——你会发现正文常常跌破屏幕可读下限（约 14px）：</p>
+                <table class="ref-table">
+                <thead><tr><th>平台 / 场景</th><th>画布宽(px)</th><th>典型显示宽(px)</th><th>缩放倍率</th><th>40px 标题实显(px)</th><th>24px 正文实显(px)</th></tr></thead>
+                <tbody>
+                <tr><td>Open Graph 桌面信息流</td><td>1200</td><td>476</td><td>0.40</td><td>15.9</td><td>9.5</td></tr>
+                <tr><td>Twitter / X 桌面大图</td><td>1200</td><td>506</td><td>0.42</td><td>16.9</td><td>10.1</td></tr>
+                <tr><td>微信公众号 手机会话</td><td>900</td><td>414</td><td>0.46</td><td>18.4</td><td>11.0</td></tr>
+                <tr><td>小红书 信息流卡片</td><td>1080</td><td>337</td><td>0.31</td><td>12.5</td><td>7.5</td></tr>
+                <tr><td>GitHub 仓库头部</td><td>1280</td><td>640</td><td>0.50</td><td>20.0</td><td>12.0</td></tr>
+                </tbody>
+                </table>
+                <p><strong>注意：</strong>小红书卡片里画布 24px 正文缩到只剩 7.5px，远低于可读下限。对策是：标题与关键文字放到画布中心大字号区，正文尽量精简，或干脆把文字烤进大图而非依赖缩放后阅读。想确认某前景色在小图上是否清晰，可配合本站的 <a href="/zh/image/color-contrast">颜色对比度检查器</a> 验证。</p>
+
+                <h3>导出格式怎么选：PNG 透明 vs JPEG 体积 vs SVG 无损</h3>
+                <table class="ref-table">
+                <thead><tr><th>维度</th><th>PNG</th><th>JPEG</th><th>SVG</th></tr></thead>
+                <tbody>
+                <tr><td>透明</td><td>支持</td><td>不支持（填白）</td><td>支持</td></tr>
+                <tr><td>缩放</td><td>位图，放大发虚</td><td>位图，放大发虚</td><td>矢量，无损放大</td></tr>
+                <tr><td>体积</td><td>中等（无损）</td><td>最小（有损）</td><td>文本，极小</td></tr>
+                <tr><td>典型用途</td><td>吧唧 / 透明贴纸 / 角标</td><td>照片拼版压体积（A4 PDF 内嵌）</td><td>状态徽章 / Logo</td></tr>
+                </tbody>
+                </table>
+                <p>本工具的预览、单枚、A4 拼版都导出 PNG（印刷要精确像素）；A4 PDF 内部用 JPEG（质量 0.92）封装以减小文件。若你想把一张图转成可在别处嵌的代码，可看 <a href="/zh/image/base64">图片转 Base64</a>。做配色相关的图，可回到 <a href="/zh/image/color-picker">在线取色器</a> 先取准颜色。</p>
+
+                <h3>DPR 2x / 3x 导出：视网膜屏要几倍像素</h3>
+                <p>高清屏（Retina / 高 DPI 手机）按设备像素比 DPR 渲染：一个标称 44px 的界面元素，在 DPR=2 的屏上需要 88px 的图才不糊。本工具预览默认 1024px，对应 @1x；选 2048px 即 @2x。下表给出常见尺寸的三档导出像素：</p>
+                <table class="ref-table">
+                <thead><tr><th>界面 CSS 尺寸(px)</th><th>@1x</th><th>@2x</th><th>@3x</th></tr></thead>
+                <tbody>
+                <tr><td>16</td><td>16</td><td>32</td><td>48</td></tr>
+                <tr><td>32</td><td>32</td><td>64</td><td>96</td></tr>
+                <tr><td>44</td><td>44</td><td>88</td><td>132</td></tr>
+                <tr><td>48</td><td>48</td><td>96</td><td>144</td></tr>
+                <tr><td>180</td><td>180</td><td>360</td><td>540</td></tr>
+                <tr><td>192</td><td>192</td><td>384</td><td>576</td></tr>
+                <tr><td>512</td><td>512</td><td>1024</td><td>1536</td></tr>
+                </tbody>
+                </table>
+                <p>规律很直接：导出像素 = 显示尺寸 × DPR。favicon 的 512px 母版，在标签页上只显示 16px，靠浏览器自动取 @1x–@3x 多档；但你自己导出 PNG 时，给高 DPI 设备就按上表乘倍。</p>
+
+                <h3>三个真实算例（使用本工具默认参数，数字来自上方推导）</h3>
+                <p><strong>算例一（单枚精确尺寸）：</strong>保持默认 58mm 规格，点「导出单枚精确尺寸 PNG」。含出血 64mm × 300 ÷ 25.4 = 755.9 → 取整 <strong>756 × 756 px</strong>；内部裁切圆直径约 685px，安全区半径约 319px；文字层默认 11% → 字号约 75px。这就是交给印刷厂的精确稿件。</p>
+                <p><strong>算例二（A4 拼版自动夹取）：</strong>默认 58mm、枚数选 20、枚间距 3mm。A4 可打印区受四周 8mm 留白限制，单元 756px 最多排 2 列 × 4 行 = <strong>8 枚</strong>；请求 20 会被自动夹取为 8（版心块约 1547 × 3129px，左右留白约 467px、上下约 190px）。若想一次排满 20 枚，改用 32mm（最多 35 枚）或 44mm（最多 15 枚）更合适。</p>
+                <p><strong>算例三（文字缩放与 @2x 视网膜）：</strong>同一张图用预览默认 1024px 导出，成品圆 faceD = 1024 × 0.74 = 757.8px，文字约 83px。要视网膜清晰改选 2048px（@2x），文字按比例约 166px。若改做 32mm 规格出同图，单枚 faceD 仅 378px → 文字约 42px，比 58mm 的 75px 小约 45%，故小规格应缩短弧形文字字数、或上调文字比例，避免印出来读不清。</p>
+
+                <h3>补充问答</h3>
+                <p><strong>问：默认 58mm 规格导出单枚精确尺寸 PNG 是多少像素？</strong><br>
+                答：含出血 64mm 按 300 DPI 输出为 756 × 756 px 正方形 PNG，内部裁切圆约 685px，安全区半径约 319px；文字层默认 11% 在该尺寸上约 75px。</p>
+                <p><strong>问：为什么 A4 拼版默认选 20 枚，实际只导出 8 枚？</strong><br>
+                答：A4 可打印区受四周 8mm 留白限制，58mm 单元 756px 最多排 2 列 × 4 行 = 8 枚；选 20 会自动夹取为 8（版心块约 1547 × 3129px）。想排更多就改 32mm（最多 35 枚）或 44mm（最多 15 枚）。</p>
+                <p><strong>问：吧唧上的弧形文字默认多大？缩到 32mm 还读得清吗？</strong><br>
+                答：字号 = 成品圆直径 × 11%。58mm 上约 75px，32mm 上约 42px（约 55%）。小规格物理直径小、文字也更小，建议缩短字数、放大比例，并让文字落在安全区内。</p>
+                <p><strong>问：透明背景导出适合什么场景，和拟真金属效果能同时用吗？</strong><br>
+                答：透明背景只作用于预览导出模式，让徽章外区域透明，适合贴纸/头像叠加。但拟真效果会绘金属包边与底色，徽章本体始终不透明；单枚与 A4 印刷稿也铺白底以保证不透光。要纯透明圆图请关拟真、用纯圆裁剪。</p>
+                <p><strong>问：导出 PNG 和 A4 PDF 在裁切精度上有什么区别？</strong><br>
+                答：两者都基于同一套 300 DPI 像素（A4 = 2480 × 3508 px），裁切圆与出血线位置一致。差别在封装：PNG 是位图便于再编辑；A4 PDF 内嵌 JPEG（质量 0.92）并按 A4 物理尺寸（595.28 × 841.89 pt）精确标定，交印刷厂时尺寸不随屏幕缩放漂移。</p>
+
+                <p>想系统了解二维码物料可阅读博客 <a href="/blog/zh/qr-generator-guide">二维码生成器使用指南</a>；做配色相关的图可用 <a href="/zh/image/color-picker">在线取色器</a> 取准颜色、用 <a href="/zh/image/color-contrast">颜色对比度检查器</a> 验证可读性、用 <a href="/zh/image/base64">图片转 Base64</a> 把图转成可嵌代码。</p>
+            </div>
     </main>
 <footer>
     <div class="footer-links">
