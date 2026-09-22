@@ -32,7 +32,9 @@
 #   失败项不移出队列 → 下一批自动补跑，不消耗提交配额。
 # ============================================================================
 set -u
-BSK="C:/Users/thinZ/.local/bin/bsk.exe"
+# bsk 二进制路径：优先用环境变量 BSK_BIN，否则尝试 PATH 解析，最后兜底 thinZ 机器路径
+# （双机共享仓库，thinZ 与 zhaoxin 的 bsk 安装位置不同，避免写死）
+BSK="${BSK_BIN:-$(command -v bsk 2>/dev/null || echo C:/Users/thinZ/.local/bin/bsk.exe)}"
 REPO="D:/_Careate.Program/calculator-site"
 PENDING="$REPO/reports/gsc-pending.txt"
 LOG="$REPO/reports/gsc-submit-log.md"
