@@ -544,3 +544,41 @@
       队列原样保留（未消耗），明日配额重置后直接续跑。
    汇总: 提交=0 已收录跳过=0 本批处理=88 剩余=88
 ===== 完成 =====
+
+## 2026-09-23 批提交（cap=120 dry=0，含 session 自动重连）
+── https://www.calc-tools.top/en/calculators/overtime
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/en/calculators/ovulation
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/en/calculators/password-gen
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/en/calculators/pregnancy
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/en/calculators/qr-generator
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/en/calculators/random-gen
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/en/calculators/timestamp
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/en/calculators/unit-converter
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/en/calculators/workday-calculator
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/en/image/badge-maker
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/en/image/base64
+   ✅ 已收录，移出队列（不消耗提交配额）
+── https://www.calc-tools.top/en/image/color-contrast
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/en/image/color-picker
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/en/image/compress
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/en/image/convert
+   ✅ 已提交（Indexing requested）
+── https://www.calc-tools.top/en/image/image-crop
+   ⛔ GSC 官方配额已耗尽（Quota exceeded），中断本批
+   ⛔ 因 GSC 官方配额耗尽（Quota exceeded）提前中断 —— 非脚本故障，Google 明示每日重置。
+      队列原样保留（未消耗），明日配额重置后直接续跑。
+   汇总: 提交=12 已收录跳过=3 本批处理=88 剩余=73
+===== 完成 =====

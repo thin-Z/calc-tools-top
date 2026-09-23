@@ -107,18 +107,15 @@ KV_URL / KV_REDIS_URL
 | `check-design-system.mjs` | 设计系统门禁：统计全站裸 checkbox/radio，阈值只降不升（基线写在 `scripts/design-baseline.json`，由 verkify 当前扫描结果锁定），防 UX 控件回归（verify-site [31] 调用） | `node scripts/check-design-system.mjs` |
 | `check-global-contract.mjs` | 全局契约门禁：校验 `window.copyText`+`window.showError` 契约完整且 `runtime-head` 注入 `csp-events`（防删 csp-events 或重命名 break 全站事件委托），硬门禁（verify-site [32] 调用） | `node scripts/check-global-contract.mjs` |
 | `check-innerhtml-escape.mjs` | innerHTML 趋势指标（非阻断）：扫描 `.innerHTML` 赋值，提示疑似未转义拼接供 review；不阻断构建/verify | `node scripts/check-innerhtml-escape.mjs` |
-| `gsc-submit-daily.sh` | GSC 每日索引提交（2026-09-19 新增，非门禁）：bsk 原生 click 真实点击「Request indexing」；逐条先查 URL Inspection，**已收录自动跳过**（不消耗配额）、未收录才提交；**内置官方配额检测**（页面弹 "Quota exceeded" 即中断本批、队列原样保留，可跨天续跑）。队列 `reports/gsc-pending.txt`、日志 `reports/gsc-submit-log.md`。⚠️ 前置：VPN 须开启 + Edge+bsk 扩展常驻；bash 直接运行，**输出勿接管道** | `bash scripts/gsc-submit-daily.sh 60`（可选 `--dry` 冒烟、`--stop-on-throttle` 限流即停） |
 | `scan-csp-inline.py` | 扫描全站内联脚本/事件/样式 | `python scripts/scan-csp-inline.py` |
 | ~~`analyze_sitemap.py`~~ | ~~分析 sitemap 结构~~（归档） | `python scripts/archive/analyze_sitemap.py` |
 | ~~`full_seo_audit.py`~~ | ~~全维度 SEO 审计~~（归档，被 `seo-batch-audit.mjs` 取代） | `python scripts/archive/full_seo_audit.py` |
 | ~~`security_audit.py`~~ | ~~安全审计~~（归档） | `python scripts/archive/security_audit.py` |
 | ~~`seo_audit.py`~~ | ~~SEO 审计~~（归档，被 `seo-batch-audit.mjs` 取代） | `python scripts/archive/seo_audit.py` |
 | ~~`audit-contrast.mjs`~~ | ~~暗色主题对比度审计（Phase 1 T1.4 一次性）~~（归档，日常由 `audit-a11y.mjs` 覆盖） | `node scripts/archive/audit-contrast.mjs` |
-| `deploy-like-system.ps1` | 部署点赞系统 | `powershell scripts/deploy-like-system.ps1` |
 | `validate-encoding.ps1` | 验证编码 | `powershell scripts/validate-encoding.ps1` |
-| `submit-indexnow.mjs` | **IndexNow 批量提交**（2026-09-20 新增，Tier 1）：把 sitemap 内 URL 推送给必应/Yandex/Naver 等参与的搜索引擎。**无需注册账号**——归属验证＝仓库根 `{32位hex}.txt`（内容须等于文件名，`build.mjs` 自动复制进 `dist/`）。只提交属于本站且**在 sitemap 内**的 URL（`noindex` 壳页天然排除）；本地状态记于 `scripts/.indexnow-state.json`（已 gitignore） | `npm run submit:indexnow`（`--dry-run` / `--force` / `--limit N`） |
-| `baidu-push.mjs` | **百度主动推送**（2026-09-20 新增，Tier 1）：大陆最大搜索入口的即时提交。⚠️ **有每日配额**，故默认只推 **10 条**并按优先级排序（首页 → 高频工具 → 博客 → 其余），接口返回的 `remain` 会打印出来供决定下次 `--limit`。token 来自 `BAIDU_PUSH_TOKEN` 或 `scripts/.baidu-push-token`（均 gitignore）；状态记于 `scripts/.baidu-push-state.json` | `npm run submit:baidu`（`--dry-run` 不需 token / `--limit N` / `--priority-only`） |
-| `push-any.sh` | **推送通道自动探测**（2026-09-21 新增，非门禁）：VPN（LvniuYun）开启时会把 `github.com` 解析到 fake-ip（`198.18.x.x`），裸 SSH 因此失败。本脚本依次探测 5 条通道 —— 1) 原生 remote；2) 真实 IP:22 直连（`-o HostKeyAlias=github.com` 保持 known_hosts 校验，彻底绕开 DNS）；3) 真实 IP:443（ssh.github.com 端点）；4) 本地代理端口（自动扫 7888/7890/1080 等）+ `curl --proxytunnel` 作 SSH `ProxyCommand`；5) HTTPS 绕行（诊断用）。**先只读 `ls-remote` 探测、成功才 push**；真实 IP 由国内 DoH（223.5.5.5）动态查询，避免硬编码 | `bash scripts/push-any.sh [branch]`（`DRY=1` 仅探测不推送） |
+
+> **运维 / 发布类脚本已迁出**（2026-09-23）：`gsc-submit-daily.sh`、`baidu-push.mjs`、`submit-indexnow.mjs`、`push-any.sh`、`deploy-like-system.ps1` 因本仓库为 **public**，已迁至知识库 `_ObsidianVault/90-运维工具/`（附用法与依赖说明）。工作区只保留构建 / 校验链。
 
 内容审计操作手册见 `docs/content-audit-sop.md`；构建/校验与回滚见 `docs/rollback.md`。
 
