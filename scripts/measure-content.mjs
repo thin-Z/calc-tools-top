@@ -241,7 +241,7 @@ if (focusKeys.length) {
 // JSON 产物：2026-09-23 起落在**知识库**（不入 PUBLIC 仓库，避免暴露薄页分布）；
 //   仍不放 dist（dist 会部署上线，且与 dist 卫生门禁冲突）。
 const outArg = (() => { const i = args.indexOf('--out'); return i >= 0 ? args[i + 1] : null; })();
-const VAULT_ROOT = process.env.OBSIDIAN_VAULT || 'C:/Users/thinZ/Documents/BaiduSyncdisk/_ObsidianVault';
+const VAULT_ROOT = process.env.OBSIDIAN_VAULT || 'D:/BaiduSyncdisk/_ObsidianVault';
 const DEFAULT_OUT = path.join(VAULT_ROOT, '90-运维工具', 'reports', 'measure-content.json');
 const OUT_FILE = outArg ? path.resolve(outArg) : (process.env.MEASURE_OUT || DEFAULT_OUT);
 const out = {
