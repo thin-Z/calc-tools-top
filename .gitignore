@@ -19,8 +19,11 @@ _project_memory.md
 使用说明书.md
 docs/
 
-# 交付文档（存于 Obsidian 知识库 projects/2_AI建站项目/deliverables/，不进站点仓库）
-deliverables/**/*.md
+# 交付文档（已整体迁至 Obsidian 知识库：02-个人项目/projects/2_AI建站项目/deliverables/）
+# 2026-09-23：含 .html 报告、审计截图在内的全部交付物移出工作区
+#   —— 远程仓库 thin-Z/calc-tools-top 为 PUBLIC，审计结论与缺陷清单不宜随代码公开
+# 保留整目录忽略，防止后续误放回工作区
+deliverables/
 
 # 设计预览文件
 logo-font-preview.html
