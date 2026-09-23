@@ -61,7 +61,7 @@ snapshots/
 # 审计临时目录（诊断脚本/截图/日志，build.mjs 亦已排除出 dist）
 .audit_tmp/
 
-# GSC 批提交器临时快照（scripts/gsc-submit-daily.sh 每次运行覆盖，勿入库）
+# GSC 批提交器临时快照（原在仓库根；2026-09-23 已迁知识库 90-运维工具/reports/，保留规则防再混入）
 snap_t.txt
 
 # 搜索引擎提交（Tier 1 · 2026-09-20）：token 与本地推送状态不入库
@@ -69,6 +69,10 @@ scripts/.baidu-push-token
 scripts/.baidu-push-state.json
 scripts/.indexnow-state.json
 
-# GSC 批任务临时产物（2026-09-20）
-reports/gsc_*.out
-reports/gsc-fail/
+# 运维产物（2026-09-23 整体迁至 Obsidian 知识库：90-运维工具/reports/）
+#   含 GSC 队列(gsc-pending.txt) / 提交日志(gsc-submit-log.md) / 失败证据(gsc-fail/) / 运行输出(gsc_*.out)
+#   + 内容度量产物(measure-content.json) + 批提交快照(snap_t.txt)
+#   原因：本站仓库 thin-Z/calc-tools-top 为 PUBLIC——索引提交策略与进度、
+#        以及「哪些页面内容薄弱」的薄页分布，均不宜随代码公开。
+#   保留整目录忽略，防止后续误放回工作区
+reports/

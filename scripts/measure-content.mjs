@@ -18,7 +18,10 @@
  *   现改为写 `reports/measure-content.json`（仓库根，**入库**）——
  *   既脱离部署目录，又让每次度量都留下可追溯历史，
  *   避免重演「批次 0 基线文件 content-baseline.json 丢失、无法计算降幅」的教训。
- *   可用 `--out <path>` 覆盖。
+ *   ⚠️ 2026-09-23 再次迁移：产物挪到**知识库** `90-运维工具/reports/measure-content.json`。
+ *      原因：站点仓库 `thin-Z/calc-tools-top` 是 PUBLIC，而度量结果会暴露
+ *      「哪些页面内容薄弱」（薄页分布 = 站点 SEO 弱点），不宜随代码公开。
+ *      知识库根可用 `OBSIDIAN_VAULT` 覆盖；也可用 `--out <path>` 或 `MEASURE_OUT` 指定。
  * 用法：node scripts/measure-content.mjs [--dir <dist>] [--top <N>]
  * 退出码：0（只度量不门禁；异常才非 0）。
  */
@@ -235,9 +238,12 @@ if (focusKeys.length) {
   };
 }
 
-// JSON 产物：落在仓库根 reports/（入库可追溯），**不放 dist**（dist 会部署上线，且与 dist 卫生门禁冲突）
+// JSON 产物：2026-09-23 起落在**知识库**（不入 PUBLIC 仓库，避免暴露薄页分布）；
+//   仍不放 dist（dist 会部署上线，且与 dist 卫生门禁冲突）。
 const outArg = (() => { const i = args.indexOf('--out'); return i >= 0 ? args[i + 1] : null; })();
-const OUT_FILE = outArg ? path.resolve(outArg) : path.join(ROOT, 'reports', 'measure-content.json');
+const VAULT_ROOT = process.env.OBSIDIAN_VAULT || 'C:/Users/thinZ/Documents/BaiduSyncdisk/_ObsidianVault';
+const DEFAULT_OUT = path.join(VAULT_ROOT, '90-运维工具', 'reports', 'measure-content.json');
+const OUT_FILE = outArg ? path.resolve(outArg) : (process.env.MEASURE_OUT || DEFAULT_OUT);
 const out = {
   generatedAt: new Date().toISOString(),
   total: pages.length,
