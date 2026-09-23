@@ -181,10 +181,29 @@
     --shadow-md-dark: 0 4px 12px rgba(0,0,0,0.12);
     --shadow-lg-dark: 0 4px 12px rgba(0,0,0,0.2);
     --shadow-xl: 0 0 0 3px rgba(0,122,255,0.15);
+    /* ── Shadow 命名契约（2026-09-23 P0-1 修复）─────────────────────
+     * --shadow-*        只存【完整值】（几何 + 颜色），可作为 box-shadow 的唯一值
+     * --shadow-color-*  只存【颜色】，用于「字面几何 + 颜色令牌」的组合写法
+     * 禁止把 --shadow-* 当颜色拼在手写 length 之后：展开后 length > 4，
+     * 整条声明会被浏览器静默丢弃（不报错、不告警，computed 恒为 none）。
+     * 由静态门禁 scripts/check-token-discipline.mjs 的 R1 规则拦截。
+     */
+    --shadow-color-soft: rgba(0,0,0,0.04);
+    --shadow-color-light: rgba(0,0,0,0.1);
+    --shadow-color-medium: rgba(0,0,0,0.12);
+    --shadow-color-strong: rgba(0,0,0,0.2);
     /* 暗色阴影色（修复 Phase 0 遗留：style.css 曾引用未定义的 --shadow-2xl/3xl/overlay） */
     --shadow-color-dark: rgba(0,0,0,0.3);
     --shadow-color-darker: rgba(0,0,0,0.4);
     --shadow-color-deepest: rgba(0,0,0,0.5);
+    /* ── Cookie 横幅动作色（2026-09-23 a11y）───────────────────────
+     * banner 内文字 11.52~11.84px 属非大字号，阈值 4.5:1；
+     * 纯 --primary 作文字或作白字底均只有 4.02:1，不达标。
+     * 只作用于 banner，不动 --primary 本体（站级既有议题，另立待决项）。
+     */
+    --cmp-action-bg: var(--brand-blue-dark);
+    --cmp-action-fg: var(--white);
+    --cmp-banner-link: var(--brand-blue-dark);
 
     /* ── Brand blue alpha tints ── */
     --blue-05: rgba(0,122,255,0.05);
@@ -265,4 +284,40 @@
     --cp-danger-border: rgba(239,68,68,0.28);
     --cp-warn-bg: rgba(245,158,11,0.12);
     --cp-warn-border: rgba(245,158,11,0.38);
+
+    /* ── badge-maker 组件调色板（2026-09-24 从 badge-maker.css 升格）────────
+     * 该页原有一套自成体系的局部调色板（P1-13「完全脱离令牌体系」）。
+     * 此处按原值升格为组件级令牌，**色值一字未改 → 视觉零变化**，
+     * badge-maker.css 内只保留 var() 引用，达成「色值单一来源」。
+     * -rgb 结尾为 RGB 分量令牌，配合字面 alpha 使用：rgba(var(--bm-ink-rgb), .09)
+     *   （该形式由 check-p0-gate 的 checkCssColors 认可，非裸色值）
+     * ⚠️ 是否进一步统一到主站色阶（会改变视觉）→ 需视觉评审，列为待决项。
+     */
+    --bm-ink: #0F172A;
+    --bm-ink-2: #59637A;
+    --bm-ink-3: #8A93A3;
+    --bm-ink-4: #9AA4B6;
+    --bm-ink-5: #6C7689;
+    --bm-ink-2-dark: #B4BCC9;
+    --bm-ink-3-dark: #8E96A3;
+    --bm-blue-dark: #0062CC;
+    --bm-accent-dark: #3395FF;
+    --bm-bg-1: #F7F9FC;
+    --bm-bg-2: #EDF1F7;
+    --bm-surface-deep: #222730;
+    --bm-elevated: #242427;
+    --bm-line-strong: #C8D1E0;
+    --bm-line-soft: #DEE5EF;
+    --bm-ink-rgb: 15,23,42;
+    --bm-ink2-rgb: 17,24,39;
+    --bm-glass-rgb: 255,255,255;
+    --bm-blue-rgb: 0,122,255;
+    --bm-accent-rgb: 10,132,255;
+    --bm-slate-rgb: 120,130,150;
+    --bm-warn-rgb: 217,119,6;
+    --bm-amber-rgb: 251,191,36;
+    --bm-black-rgb: 0,0,0;
+    --bm-panel-rgb: 20,26,36;
+    --bm-panel2-rgb: 20,24,33;
+    --bm-surface-rgb: 44,44,46;
 }

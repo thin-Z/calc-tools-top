@@ -5,7 +5,14 @@
  * 用 Playwright(msedge channel, 复用系统 Edge) + axe-core 对代表性页面集做
  * 全规则(`wcag2a/2aa/21a/21aa`) axe 扫描，明/暗双主题各跑一遍。
  * violations>0 时退出码 1（可接入 verify-site #22 / CI 阻断）。
- * incomplete（无法判定）仅记录不阻断。
+ * incomplete（无法判定）输出**规则级明细**（规则 id + 节点数 + 代表 target），**不阻断**。
+ *
+ * ═══ V0（2026-09-23）修复三处可信度缺陷（P0-6）═══
+ *   B1 移除「主动隐藏被测组件」逻辑：原实现把真实用户可见的 `.cmp-banner` 整体 display:none，
+ *      使该页仅有的对比度违规永久不可见。现改为「不点击、不隐藏，直接采样」。
+ *   B2 修正对比度合成公式方向：原有效背景算法把祖先层当上层 src（方向反了），系统性**高估**
+ *      对比度；现按 source-over 语义 acc over pb 合成（acc=子层 src，pb=祖先 dst）。
+ *   B3 incomplete 由「只打印一个数字」升级为「规则级明细」，JSON 与文本输出均含；仍不阻断。
  *
  * 说明：默认 `chromium.launch({ channel:'msedge' })` 复用系统 Edge（本机已装）。
  *       CI(ubuntu-latest) 无 msedge，设 `E2E_CHANNEL=chromium` 可走 Playwright 自带 chromium
@@ -14,7 +21,7 @@
  * 用法：
  *   node scripts/audit-a11y.mjs              # 人读输出；违规 exit 1
  *   node scripts/audit-a11y.mjs --json       # JSON 输出
- *   node scripts/audit-a11y.mjs --rules      # 仅列违规规则 ID（供定位）
+ *   node scripts/audit-a11y.mjs --rules      # 仅列违规规则 ID + 未判定(incomplete)规则 ID（供定位）
  */
 import { chromium } from 'playwright/test';
 import { createServer } from 'node:http';
@@ -127,10 +134,18 @@ for (const theme of THEMES) {
       // C4-a11y(2026-08-28): 强制设定 data-theme + 等字体/两帧, 消除 headless 下 dark 主题采样偏差(原读到浅底浅字误报)
       await page.evaluate((t) => { document.documentElement.setAttribute('data-theme', t); }, theme);
       await page.waitForFunction((t) => document.documentElement.getAttribute('data-theme') === t, theme, { timeout: 3000 }).catch(() => {});
-      // CMP 横幅不点「接受」而直接隐藏：点「接受」在部分页面会触发整页 reload（同样导致上下文销毁、整页被跳过）；
-      // 隐藏后 axe 会跳过 display:none 元素，既不影响对比度测量、也不遮挡内容。此为次级加固，
-      // 本页跳过的**主根因**（meta refresh 跳转）已在服务端剔除。
-      await page.evaluate(() => { const b = document.querySelector('.cmp-banner'); if (b) b.style.display = 'none'; }).catch(() => {});
+      // ═══ V0 修复（2026-09-23，P0-6）：移除「主动隐藏被测组件」逻辑 ═══
+      // 原实现（考古记录，已删除）：
+      //   await page.evaluate(() => { const b = document.querySelector('.cmp-banner'); if (b) b.style.display = 'none'; });
+      //   // 旧注释理由：「CMP 横幅不点『接受』而直接隐藏……隐藏后 axe 会跳过 display:none 元素，
+      //   //              既不影响对比度测量、也不遮挡内容。此为次级加固。」
+      // 删除原因：**该理由不成立，且构成信任缺陷**。`.cmp-banner` 是真实用户可见 UI（role="dialog"），
+      //   把它整体移出 axe 视野 = 把该页仅有的 2 条对比度违规（banner 内 #007AFF on #FFFFFF，
+      //   实测 4.01:1 ×2）永久掩盖成「全绿」——门禁自证清白的反模式。
+      // 原注释的真实顾虑（点「接受」会触发整页 reload → 上下文销毁）确实存在，但正解是
+      //   「**既不点击、也不隐藏**，直接采样」：banner 是静态 DOM，axe 可直接测量其对比度，
+      //   不点击就不会有 reload。实测 58 次采样（29 页 × 明暗双主题）0 个 ERR 页，无 reload 时序问题。
+      // 若日后确现 reload 时序问题：应改为**单独采样 banner 后并入报告**，绝不可整体隐藏。
       // 去偶发加固(2026-09-21): 等字体就绪 + 入场动画/过渡结束后再采样，
       // 避免 axe 在 CI 慢机器上赶在 CSS 过渡/动画未稳定时抓到瞬态对比度假阳性（run #245 的偶发失败根因）。
       await page.evaluate(() => document.fonts.ready).catch(() => {});
@@ -171,13 +186,44 @@ for (const theme of THEMES) {
               let node = el.parentElement, guard = 0;
               while (node && acc[3] < 1 && guard++ < 16) {
                 const pb = parseRGBA(getComputedStyle(node).backgroundColor);
-                if (pb) acc = [pb[0] * pb[3] + acc[0] * (1 - pb[3]), pb[1] * pb[3] + acc[1] * (1 - pb[3]), pb[2] * pb[3] + acc[2] * (1 - pb[3]), Math.min(1, pb[3] + acc[3] * (1 - pb[3]))];
+                // V0 修复（2026-09-23，P0-6）：原公式**合成方向反了** —— 把祖先层 pb 当作上层
+                // src、把累积前景 acc 当作下层 dst，等于把「浅色祖先背景」压在「半透明子层」之上，
+                // 结果系统性**高估**对比度（该报的违规报不出来）。
+                // 正确语义：acc 是子元素/累积前景（src），pb 是祖先背景（dst）→ 结果为 **acc over pb**：
+                //   a_o = a_s + a_d*(1-a_s)；out_rgb = (acc_rgb*a_s + pb_rgb*a_d*(1-a_s)) / a_o
+                // 修正后判定更准确，违规数只会增不会减（这是期望方向，不得为「好看」调松判定）。
+                if (pb) {
+                  const aS = acc[3], aD = pb[3];
+                  const aO = aS + aD * (1 - aS); // 与 a_d + a_s*(1-a_d) 等价：alpha 合成本就对称
+                  if (aO > 0) {
+                    acc = [
+                      (acc[0] * aS + pb[0] * aD * (1 - aS)) / aO,
+                      (acc[1] * aS + pb[1] * aD * (1 - aS)) / aO,
+                      (acc[2] * aS + pb[2] * aD * (1 - aS)) / aO,
+                      Math.min(1, aO),
+                    ];
+                  }
+                  // aO === 0：子层与祖先层都完全透明，无底层信息可合成，保持 acc 并继续上溯（guard 兜底）
+                }
                 node = node.parentElement;
               }
             }
             return acc;
           };
-          const out = { violations: [], incompleteCount: r.incomplete.reduce((a, v) => a + v.nodes.length, 0) };
+          const out = {
+            violations: [],
+            incompleteCount: r.incomplete.reduce((a, v) => a + v.nodes.length, 0),
+            // V0 修复（2026-09-23，P0-6）：incomplete 原先只统计了一个数字，**无规则级明细**，
+            // 无法人工复核（「有 53 条未判定」这种信息不可行动）。这里补规则级明细：
+            // 规则 id + 节点数 + 代表 target。语义**仍为不阻断** —— exit code 只看 violations。
+            incomplete: r.incomplete.map((v) => ({
+              id: v.id,
+              impact: v.impact,
+              help: v.help,
+              count: v.nodes.length,
+              samples: v.nodes.slice(0, 3).map((n) => (Array.isArray(n.target) ? n.target.join(' ') : String(n.target))),
+            })),
+          };
           for (const v of r.violations) {
             if (v.id === 'color-contrast') {
               const nodes = [];
@@ -219,14 +265,14 @@ for (const theme of THEMES) {
         // 全量留痕：豁免掉的也记录实测合成值，形成"每次豁免都有真值反证"的审计链（CI 产物可回溯）
         const diag = [];
         for (const v of ax.violations) if (v.id === 'color-contrast') for (const n of v.nodes) diag.push(n);
-        if (!best || viol.length < best.violations.length) best = { violations: viol, incompleteCount: ax.incompleteCount, realColors: diag };
+        if (!best || viol.length < best.violations.length) best = { violations: viol, incompleteCount: ax.incompleteCount, incomplete: ax.incomplete, realColors: diag };
         if (viol.length === 0) break;
         await page.waitForTimeout(700);
       }
       best.violations.forEach((v) => ruleIds.add(v.id));
       row = { theme, url, status: resp?.status(), ...best };
     } catch (e) {
-      row = { theme, url, status: 'ERR', error: e.message.split('\n')[0], violations: [], incompleteCount: 0 };
+      row = { theme, url, status: 'ERR', error: e.message.split('\n')[0], violations: [], incompleteCount: 0, incomplete: [] };
     }
     report.push(row);
     totalViolations += row.violations.length;
@@ -236,10 +282,33 @@ for (const theme of THEMES) {
 
 await browser.close();
 
+// ---------- incomplete（无法判定）规则级汇总（V0 新增，2026-09-23） ----------
+// 语义：**不阻断**。exit code 只由 totalViolations 决定（见文件末尾）。
+// 目的：把「N 条未判定」变成可行动的清单（规则 id + 节点数 + 代表 target），供人工复核。
+const incByRule = {};
+let totalIncomplete = 0;
+for (const r of report) {
+  totalIncomplete += r.incompleteCount || 0;
+  for (const v of r.incomplete || []) {
+    const d = incByRule[v.id] || (incByRule[v.id] = { id: v.id, impact: v.impact, help: v.help, count: 0, pages: [], samples: [] });
+    d.count += v.count;
+    if (d.pages.length < 4) d.pages.push(`${r.theme} ${r.url}`);
+    for (const s of v.samples || []) if (d.samples.length < 3 && !d.samples.includes(s)) d.samples.push(s);
+  }
+}
+const incRules = Object.values(incByRule).sort((a, b) => b.count - a.count);
+
 if (jsonMode) {
-  process.stdout.write(JSON.stringify({ totalViolations, rules: [...ruleIds], pages: report }, null, 2) + '\n');
+  process.stdout.write(JSON.stringify({
+    totalViolations,
+    rules: [...ruleIds],
+    incompleteTotal: totalIncomplete,
+    incompleteRules: incRules,
+    pages: report,
+  }, null, 2) + '\n');
 } else if (rulesOnly) {
   console.log(`违规规则: ${[...ruleIds].join(', ') || '(none)'} | 总数 ${totalViolations}`);
+  console.log(`未判定规则(incomplete, 不阻断): ${incRules.map((d) => d.id).join(', ') || '(none)'} | 总数 ${totalIncomplete}`);
 } else {
   const byRule = {};
   for (const r of report) for (const v of r.violations) {
@@ -252,6 +321,17 @@ if (jsonMode) {
     console.log(`  ✗ [${d.impact}] ${id}: ${d.help} (${d.count} 处)`);
     d.pages.forEach((p) => console.log(`      ${p}`));
   }
+  // V0（2026-09-23）：incomplete 规则级明细（**不阻断**，但必须可见以便人工复核）
+  // 注：标记刻意用 ASCII `[!]` 而非 emoji —— 本脚本属 .js/.mjs 源码，已被 P0 门禁的
+  // emoji 扫描覆盖（非注释行一律计入），不得在功能位引入 emoji 作图标。
+  console.log(`\n[!] ${totalIncomplete} 条未判定（incomplete），不计入阻断但需人工复核`);
+  incRules.slice(0, 8).forEach((d) => {
+    console.log(`  ? [${d.impact}] ${d.id}: ${d.help} (${d.count} 节点)`);
+    d.pages.forEach((p) => console.log(`      ${p}`));
+    if (d.samples.length) console.log(`      代表 target: ${d.samples.join(' | ')}`);
+  });
+  if (incRules.length > 8) console.log(`  ... and ${incRules.length - 8} more rules`);
+
   console.log(totalViolations === 0 ? '\n✅ a11y 全站审计通过（WCAG 2.1 A/AA）' : `\n❌ 存在 ${totalViolations} 处 a11y 违规`);
 }
 

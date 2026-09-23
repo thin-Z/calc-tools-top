@@ -65,11 +65,15 @@
     --shadow-sm: 0 1px 3px var(--shadow-color-dark);
     --shadow-md: 0 4px 12px var(--shadow-color-darker);
     --shadow-lg: 0 8px 30px var(--shadow-color-deepest);
+    /* Cookie 横幅动作色（暗色）：保留品牌亮蓝底，文字转深色（白字压亮蓝仅 3.65:1，黑字 5.76:1） */
+    --cmp-action-bg: var(--accent-blue);
+    --cmp-action-fg: var(--black);
+    --cmp-banner-link: var(--accent-blue);
 }
 
 [data-theme="dark"] .tool-card-wrap {
     border-color: var(--glass-white-06);
-    box-shadow: 0 1px 3px var(--shadow-lg-dark),0 4px 12px var(--shadow-lg-dark);
+    box-shadow: 0 1px 3px var(--shadow-color-strong), 0 4px 12px var(--shadow-color-strong);
 }
 
 /* 暗色图标渐变（P2-3：提取为 CSS 变量，便于统一维护主题色） */
@@ -1461,7 +1465,7 @@ svg.ic {
     text-decoration: none;
     filter: brightness(0.9);
     transform: translateY(-1px);
-    box-shadow: 0 2px 4px var(--shadow-base);
+    box-shadow: var(--shadow-base);
 }
 .tag-finance { background: var(--cat-finance-bg); color: var(--cat-finance); }
 .tag-health { background: var(--success-bg); color: var(--color-success-deep); }
@@ -1835,7 +1839,7 @@ svg.ic {
     background: var(--brand-blue);
     cursor: pointer;
     border: 2px solid var(--white);
-    box-shadow: 0 1px 3px var(--shadow-lg-dark);
+    box-shadow: 0 1px 3px var(--shadow-color-strong);
 }
 
 .range-value {
@@ -2267,7 +2271,7 @@ svg.ic {
     transition: all 0.3s ease;
 }
 .hot-tool-card:hover {
-    box-shadow: 0 4px 12px var(--shadow-md-dark);
+    box-shadow: var(--shadow-md-dark);
     transform: translateY(-2px);
 }
 .hot-tool-card .hot-badge {
@@ -2795,10 +2799,8 @@ svg.ic {
     align-items: center;
     gap: 0.5rem;
 }
-.related-posts h3::before {
-    content: "📖";
-    font-size: 1.2rem;
-}
+/* 2026-09-24 P0：原 `.related-posts h3::before` 用书本 emoji 作装饰图标，
+   违反「禁止 emoji 作功能图标」已移除。如需恢复标题图标，应改用站内 SVG sprite，不得再引入 emoji。 */
 .related-posts ul {
     list-style: none;
     padding: 0;
@@ -2864,7 +2866,7 @@ svg.ic {
 .blog-cta a:hover {
     background: var(--blue-50);
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px var(--shadow-base);
+    box-shadow: 0 2px 8px var(--shadow-color-light);
     text-decoration: none;
 }
 /* ===== Breadcrumb ===== */
@@ -3416,7 +3418,7 @@ svg.ic {
   color: var(--text);
   border: 1px solid var(--border);
   border-radius: 12px;
-  box-shadow: 0 8px 28px var(--shadow-lg-dark);
+  box-shadow: 0 8px 28px var(--shadow-color-strong);
   padding: 10px 12px;
   display: flex;
   flex-wrap: wrap;
@@ -3427,7 +3429,9 @@ svg.ic {
 }
 .cmp-banner[hidden] { display: none; }
 .cmp-banner p { margin: 0; flex: 1 1 320px; }
-.cmp-banner a { color: var(--primary); }
+/* text-decoration: 2026-09-23 a11y —— WCAG 1.4.1 link-in-text-block：
+   链接位于文本块中时不得仅靠颜色区分（该链接此前 banner 被审计隐藏，修复后暴露 17 处） */
+.cmp-banner a { color: var(--cmp-banner-link); text-decoration: underline; }
 .cmp-actions { display: flex; gap: 6px; flex-shrink: 0; }
 .cmp-btn {
   border: 1px solid var(--border);
@@ -3571,7 +3575,7 @@ svg.ic {
     font-size: 0.9rem;
 }
 .cmp-btn:hover { transform: translateY(-1px); }
-.cmp-btn-primary { background: var(--primary); border-color: var(--primary); color: var(--white); }
+.cmp-btn-primary { background: var(--cmp-action-bg); border-color: var(--cmp-action-bg); color: var(--cmp-action-fg); }
 
 /* ==== CSP style-src 硬化工具类（自动生成，勿手改） ==== */
 
@@ -4050,7 +4054,7 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--primary); }
     background: var(--glass-bg);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 2px 8px var(--shadow-2xs);
+    box-shadow: 0 2px 8px var(--shadow-color-soft);
 }
 
 /* --- 结果卡片:品牌渐变底 + 渐变数字 --- */
@@ -4061,12 +4065,11 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--primary); }
     box-shadow: 0 8px 30px var(--blue-08);
     transition: box-shadow 0.3s ease;
 }
-.result-card .result-value {
-    background: linear-gradient(120deg,var(--brand-blue),var(--brand-blue-dark));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
+/* .result-card .result-value 的渐变文字已移除（2026-09-23 P0-2）：
+   核心计算结果不应依赖 background-clip —— 强制颜色模式下 -webkit-text-fill-color
+   仍为 transparent，用户算完房贷看不到月供金额（功能性阻断）。
+   回落基线规则的 color: var(--primary)：32px/700 属大字号（阈值 3:1），
+   亮色 4.02:1 / 暗色 5.76:1 双主题达标，且保住品牌色。 */
 
 /* --- 内容说明区:圆角统一 --- */
 .tool-content {
@@ -4077,7 +4080,7 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--primary); }
 /* --- 点赞按钮胶囊化 --- */
 .detail-like {
     border-radius: var(--radius-full);
-    box-shadow: 0 2px 8px var(--shadow-2xs);
+    box-shadow: 0 2px 8px var(--shadow-color-soft);
 }
 
 /* --- 图片/文本工具上传区:玻璃拟态 + 品牌虚线 --- */
@@ -4412,7 +4415,7 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--primary); }
     background: var(--bg-elevated,var(--white));
     border: 1px solid var(--border,var(--border-soft));
     border-radius: 12px;
-    box-shadow: 0 12px 30px var(--shadow-md-dark);
+    box-shadow: 0 12px 30px var(--shadow-color-medium);
     z-index: 50;
     max-height: 320px;
     overflow-y: auto;
@@ -4695,4 +4698,32 @@ mark {
 
 @media (max-width: 480px) {
     .pg-charset-grid { grid-template-columns: 1fr; }
+}
+
+/* ══ 强制颜色模式降级（2026-09-23 P0-2）══════════════════════════════
+   全站此前 forced-colors 覆盖为 0。Windows 高对比度 / forced-colors:active 下，
+   浏览器强制覆盖 color 为系统色，但 -webkit-text-fill-color 优先级更高且仍为
+   transparent —— 渐变文字会彻底消失。此处统一降级为 CanvasText。
+   禁止：渐变文字禁令清单（新增页面不得再引入，见 scripts/README.md）：
+      .page-header h1 / .error-code / .blog-post h1 / .category-header h1
+      .about-page h1 / .contact-page h1 / .privacy-page h1 / .lang-select-page h1
+      另有 .result-card .result-value 已改纯色（不再需要降级）。
+   注：.page-header h1 在 critical.css 中另有首屏版本，已同步补降级。
+   ================================================================== */
+@media (forced-colors: active) {
+    .page-header h1,
+    .error-code,
+    .blog-post h1,
+    .category-header h1,
+    .about-page h1,
+    .contact-page h1,
+    .privacy-page h1,
+    .lang-select-page h1 {
+        background: none;
+        -webkit-background-clip: border-box;
+        background-clip: border-box;
+        -webkit-text-fill-color: CanvasText;
+        color: CanvasText;
+        text-shadow: none;
+    }
 }

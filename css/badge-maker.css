@@ -1,33 +1,33 @@
 /* =========================================================================
    吧唧（马口铁徽章）制作工具 —— 站点内样式
    作用域：.badge-maker-root（所有规则已限定，:root 变量与 body 重置均已作用域化）
-   主色 #007AFF / 浅色主题 / 玻璃拟态 / 8pt 栅格
+   主色 var(--brand-blue) / 浅色主题 / 玻璃拟态 / 8pt 栅格
    ========================================================================= */
 
 /* =========================================================================
    吧唧制作工具 —— 单文件离线工具
-   设计规范：主色 #007AFF / 浅色主题 / 玻璃拟态 / 8pt 栅格
+   设计规范：主色 var(--brand-blue) / 浅色主题 / 玻璃拟态 / 8pt 栅格
    ========================================================================= */
 
 .badge-maker-root{
-  --blue:#007AFF;
-  --blue-dark:#0062CC;
-  --blue-soft:rgba(0,122,255,.10);
-  --bg-1:#F7F9FC;
-  --bg-2:#EDF1F7;
-  --card:rgba(255,255,255,.74);
-  --card-border:rgba(255,255,255,.9);
-  --line:rgba(15,23,42,.09);
-  --text:#0F172A;
-  --text-2:#59637A;
-  --text-3:#8A93A3;
-  --warn:#D97706;
-  --warn-soft:rgba(217,119,6,.10);
+  --blue:var(--brand-blue);
+  --blue-dark:var(--bm-blue-dark);
+  --blue-soft:rgba(var(--bm-blue-rgb), .10);
+  --bg-1:var(--bm-bg-1);
+  --bg-2:var(--bm-bg-2);
+  --card:rgba(var(--bm-glass-rgb), .74);
+  --card-border:rgba(var(--bm-glass-rgb), .9);
+  --line:rgba(var(--bm-ink-rgb), .09);
+  --text:var(--bm-ink);
+  --text-2:var(--bm-ink-2);
+  --text-3:var(--bm-ink-3);
+  --warn:var(--hot-likes);
+  --warn-soft:rgba(var(--bm-warn-rgb), .10);
   --radius:16px;
   --radius-sm:12px;
   --radius-xs:10px;
-  --shadow:0 12px 32px rgba(15,23,42,.09), 0 2px 8px rgba(15,23,42,.05);
-  --shadow-sm:0 4px 16px rgba(15,23,42,.07);
+  --shadow:0 12px 32px rgba(var(--bm-ink-rgb), .09), 0 2px 8px rgba(var(--bm-ink-rgb), .05);
+  --shadow-sm:0 4px 16px rgba(var(--bm-ink-rgb), .07);
   --font:-apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 }
 
@@ -51,7 +51,7 @@
 /* ------------------------------ 顶栏 ------------------------------ */
 .topbar{
   position:sticky; top:0; z-index:60;
-  background:rgba(255,255,255,.72);
+  background:rgba(var(--bm-glass-rgb), .72);
   backdrop-filter:blur(20px) saturate(1.6);
   -webkit-backdrop-filter:blur(20px) saturate(1.6);
   border-bottom:1px solid var(--line);
@@ -77,7 +77,7 @@
 /* --------------------------- 分段控件 --------------------------- */
 .segmented{
   display:inline-flex; padding:3px; gap:2px;
-  background:rgba(120,130,150,.15);
+  background:rgba(var(--bm-slate-rgb), .15);
   border-radius:12px;
   flex:none;
 }
@@ -88,11 +88,11 @@
   padding:8px 18px; border-radius:9px;
   transition:background .2s ease, color .2s ease, box-shadow .2s ease;
 }
-.segmented button:hover:not(.active){ color:var(--text); background:rgba(255,255,255,.5); }
+.segmented button:hover:not(.active){ color:var(--text); background:rgba(var(--bm-glass-rgb), .5); }
 .badge-maker-root .segmented button:focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
 .badge-maker-root .segmented button.active{
-  background:#fff; color:var(--text);
-  box-shadow:0 1px 4px rgba(15,23,42,.16);
+  background:var(--bg-card); color:var(--text);
+  box-shadow:0 1px 4px rgba(var(--bm-ink-rgb), .16);
 }
 .segmented-sm button{ padding:6px 12px; font-size:13px; border-radius:8px; }
 
@@ -118,14 +118,14 @@
 /* 参数坞 · 分类标签 */
 .dock-tabs{ display:flex; flex-wrap:wrap; gap:6px; }
 .dock-tabs button{
-  border:1px solid var(--line); background:rgba(255,255,255,.78); color:var(--text-2);
+  border:1px solid var(--line); background:rgba(var(--bm-glass-rgb), .78); color:var(--text-2);
   border-radius:var(--radius-xs); padding:7px 14px; font-size:13px; font-weight:600;
   font-family:inherit; cursor:pointer; min-height:34px;
   transition:background .18s ease, color .18s ease, border-color .18s ease, box-shadow .18s ease;
 }
-.dock-tabs button:hover:not(.active){ color:var(--blue); border-color:rgba(0,122,255,.45); background:#fff; }
+.dock-tabs button:hover:not(.active){ color:var(--blue); border-color:rgba(var(--bm-blue-rgb), .45); background:var(--bg-card); }
 .dock-tabs button:focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
-.badge-maker-root .dock-tabs button.active{ background:var(--blue); color:#fff; border-color:var(--blue); }
+.badge-maker-root .dock-tabs button.active{ background:var(--blue); color:var(--bg-card); border-color:var(--blue); }
 
 /* 按钮 / 药丸文案一律不换行 —— 换行只发生在「控件之间」，不发生在控件内部 */
 .dock-tabs button,
@@ -282,13 +282,13 @@
 .badge-maker-root .btn-sm{ padding:8px 12px; font-size:13px; border-radius:var(--radius-xs); min-width:68px; }
 .badge-maker-root .btn-block{ width:100%; margin-top:8px; min-width:0; }
 .badge-maker-root .btn-primary{
-  background:var(--blue); color:#fff;
-  box-shadow:0 6px 16px rgba(0,122,255,.28);
+  background:var(--blue); color:var(--bg-card);
+  box-shadow:0 6px 16px rgba(var(--bm-blue-rgb), .28);
 }
 .badge-maker-root .btn-primary:hover:not(:disabled){ background:var(--blue-dark); transform:translateY(-1px); }
 .badge-maker-root .btn-primary:active:not(:disabled){ transform:translateY(0) scale(.985); }
 .badge-maker-root .btn-ghost{
-  background:rgba(255,255,255,.78);
+  background:rgba(var(--bm-glass-rgb), .78);
   border:1px solid var(--line);
   color:var(--text);
 }
@@ -296,7 +296,7 @@
 .badge-maker-root .pill:focus-visible{
   outline:2px solid var(--blue); outline-offset:2px;
 }
-.badge-maker-root .btn-ghost:hover:not(:disabled){ background:#fff; border-color:rgba(0,122,255,.45); color:var(--blue); }
+.badge-maker-root .btn-ghost:hover:not(:disabled){ background:var(--bg-card); border-color:rgba(var(--bm-blue-rgb), .45); color:var(--blue); }
 .badge-maker-root .btn-ghost:active:not(:disabled){ transform:scale(.985); }
 
 /* --------------------------- 表单控件 --------------------------- */
@@ -327,25 +327,25 @@
 }
 .badge-maker-root input[type="range"]::-webkit-slider-runnable-track{
   height:4px; border-radius:2px;
-  background:linear-gradient(90deg, var(--blue) 0 var(--p,50%), rgba(15,23,42,.13) var(--p,50%) 100%);
+  background:linear-gradient(90deg, var(--blue) 0 var(--p,50%), rgba(var(--bm-ink-rgb), .13) var(--p,50%) 100%);
 }
 .badge-maker-root input[type="range"]::-webkit-slider-thumb{
   -webkit-appearance:none; appearance:none;
   width:18px; height:18px; margin-top:-7px;
-  border-radius:50%; background:#fff; border:1px solid rgba(15,23,42,.08);
-  box-shadow:0 1px 4px rgba(15,23,42,.28);
+  border-radius:50%; background:var(--bg-card); border:1px solid rgba(var(--bm-ink-rgb), .08);
+  box-shadow:0 1px 4px rgba(var(--bm-ink-rgb), .28);
   transition:transform .15s ease;
 }
 .badge-maker-root input[type="range"]:active::-webkit-slider-thumb{ transform:scale(1.15); }
 .badge-maker-root input[type="range"]::-moz-range-track{
   height:4px; border-radius:2px;
-  background:linear-gradient(90deg, var(--blue) 0 var(--p,50%), rgba(15,23,42,.13) var(--p,50%) 100%);
+  background:linear-gradient(90deg, var(--blue) 0 var(--p,50%), rgba(var(--bm-ink-rgb), .13) var(--p,50%) 100%);
 }
 .badge-maker-root input[type="range"]::-moz-range-thumb{
   width:16px; height:16px; border:none; border-radius:50%;
-  background:#fff; box-shadow:0 1px 4px rgba(15,23,42,.28);
+  background:var(--bg-card); box-shadow:0 1px 4px rgba(var(--bm-ink-rgb), .28);
 }
-.badge-maker-root input[type="range"]:focus-visible{ outline:2px solid rgba(0,122,255,.5); outline-offset:2px; border-radius:8px; }
+.badge-maker-root input[type="range"]:focus-visible{ outline:2px solid rgba(var(--bm-blue-rgb), .5); outline-offset:2px; border-radius:8px; }
 
 .row{
   display:flex; align-items:center; justify-content:space-between;
@@ -356,7 +356,7 @@
 
 .field{
   display:flex; align-items:center; gap:6px;
-  background:rgba(255,255,255,.8);
+  background:rgba(var(--bm-glass-rgb), .8);
   border:1px solid var(--line);
   border-radius:var(--radius-xs);
   padding:0 12px; height:40px; min-width:112px;
@@ -376,19 +376,19 @@
 .switch{
   -webkit-appearance:none; appearance:none;
   width:48px; height:28px; border-radius:14px; flex:none;
-  background:rgba(120,130,150,.32);
+  background:rgba(var(--bm-slate-rgb), .32);
   position:relative; cursor:pointer; margin:0;
   transition:background .25s ease;
 }
 .switch::after{
   content:""; position:absolute; top:2px; left:2px;
   width:24px; height:24px; border-radius:50%;
-  background:#fff; box-shadow:0 1px 3px rgba(15,23,42,.3);
+  background:var(--bg-card); box-shadow:0 1px 3px rgba(var(--bm-ink-rgb), .3);
   transition:transform .25s cubic-bezier(.4,0,.2,1);
 }
 .switch:checked{ background:var(--blue); }
 .switch:checked::after{ transform:translateX(20px); }
-.switch:focus-visible{ outline:2px solid rgba(0,122,255,.5); outline-offset:2px; }
+.switch:focus-visible{ outline:2px solid rgba(var(--bm-blue-rgb), .5); outline-offset:2px; }
 
 /* 药丸按钮组 */
 .pill-grid{ display:grid; gap:8px; }
@@ -397,7 +397,7 @@
 .pill{
   font-family:inherit; font-size:13px; font-weight:600;
   border:1px solid var(--line);
-  background:rgba(255,255,255,.78);
+  background:rgba(var(--bm-glass-rgb), .78);
   color:var(--text-2);
   border-radius:var(--radius-xs);
   /* 统一最小宽度：坞内 pill 组（桶 C）是 wrap 型 flex 行，pill 宽度由 min-width 决定 ——
@@ -406,11 +406,11 @@
   padding:8px 0; min-height:34px; min-width:56px; cursor:pointer; text-align:center;
   transition:background .18s ease, color .18s ease, border-color .18s ease, box-shadow .18s ease, transform .12s ease;
 }
-.badge-maker-root .pill:hover:not(.active){ border-color:rgba(0,122,255,.45); color:var(--blue); }
+.badge-maker-root .pill:hover:not(.active){ border-color:rgba(var(--bm-blue-rgb), .45); color:var(--blue); }
 .badge-maker-root .pill:active:not(.active){ transform:scale(.97); }
 .badge-maker-root .pill.active{
-  background:var(--blue); border-color:var(--blue); color:#fff;
-  box-shadow:0 4px 12px rgba(0,122,255,.26);
+  background:var(--blue); border-color:var(--blue); color:var(--bg-card);
+  box-shadow:0 4px 12px rgba(var(--bm-blue-rgb), .26);
 }
 /* 药丸内的小图标（边框样式预览用）：带图标的药丸转 inline-flex 并加宽，
    使 6 个边框选项等宽；stroke=currentColor 让图标自动跟随选中态（active 时变白）。 */
@@ -430,9 +430,9 @@
 
 /* 超出当前规格 A4 上限的枚数选项：降权置灰，点击会自动夹取到上限 */
 .pill-over{
-  background:rgba(255,255,255,.42);
+  background:rgba(var(--bm-glass-rgb), .42);
   border-style:dashed;
-  border-color:rgba(15,23,42,.14);
+  border-color:rgba(var(--bm-ink-rgb), .14);
   color:var(--text-3);
   opacity:.62;
 }
@@ -440,14 +440,14 @@
   content:"↧";
   font-size:10px; margin-left:3px; opacity:.75;
 }
-.badge-maker-root .pill-over:hover:not(.active){ border-color:rgba(15,23,42,.26); color:var(--text-2); }
+.badge-maker-root .pill-over:hover:not(.active){ border-color:rgba(var(--bm-ink-rgb), .26); color:var(--text-2); }
 
 /* 动态枚数药丸：预设集合 {1,2,4,6,8,9,12,16,20} 装不下「实际生效枚数」时出现
    （例：44mm@间距3mm → A4 容量 15，不在集合内）。点线边框表示该值由当前
    规格 × 间距推导而来，不是预设选项。 */
 .pill-dyn{
   border-style:dotted;
-  border-color:rgba(0,122,255,.55);
+  border-color:rgba(var(--bm-blue-rgb), .55);
 }
 .spec-info{
   margin:12px 0 0; font-size:12.5px; font-weight:600; color:var(--blue);
@@ -500,11 +500,11 @@
 .shortcut-item dd{ margin:0; color:var(--text-2); text-align:right; }
 kbd{
   font-family:var(--font); font-size:11px; font-weight:700;
-  background:#fff; color:var(--text);
-  border:1px solid rgba(15,23,42,.16);
+  background:var(--bg-card); color:var(--text);
+  border:1px solid rgba(var(--bm-ink-rgb), .16);
   border-bottom-width:2px;
   border-radius:5px; padding:2px 6px; white-space:nowrap;
-  box-shadow:0 1px 1px rgba(15,23,42,.06);
+  box-shadow:0 1px 1px rgba(var(--bm-ink-rgb), .06);
 }
 
 /* --------------------------- 编辑器 --------------------------- */
@@ -532,24 +532,24 @@ kbd{
   border-radius:var(--radius);
   touch-action:none;
   cursor:grab;
-  background-color:#222730;
+  background-color:var(--bm-surface-deep);
   background-image:
-    linear-gradient(45deg, rgba(255,255,255,.045) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.045) 75%),
-    linear-gradient(45deg, rgba(255,255,255,.045) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.045) 75%);
+    linear-gradient(45deg, rgba(var(--bm-glass-rgb), .045) 25%, transparent 25%, transparent 75%, rgba(var(--bm-glass-rgb), .045) 75%),
+    linear-gradient(45deg, rgba(var(--bm-glass-rgb), .045) 25%, transparent 25%, transparent 75%, rgba(var(--bm-glass-rgb), .045) 75%);
   background-size:24px 24px;
   background-position:0 0, 12px 12px;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.05);
+  box-shadow:inset 0 0 0 1px rgba(var(--bm-glass-rgb), .05);
 }
 .editor-canvas.dragging{ cursor:grabbing; }
 .editor-empty{
   position:absolute; inset:0;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
   gap:4px; pointer-events:none; text-align:center; padding:24px;
-  color:#9AA4B6;
+  color:var(--bm-ink-4);
 }
 .editor-empty p{ margin:0; font-size:13px; }
-.editor-empty p.dim{ font-size:11.5px; color:#6C7689; }
-.editor-empty strong{ color:#C8D1E0; }
+.editor-empty p.dim{ font-size:11.5px; color:var(--bm-ink-5); }
+.editor-empty strong{ color:var(--bm-line-strong); }
 
 /* --------------------------- 预览区 --------------------------- */
 .badge-maker-root .preview-card{ padding:16px; }
@@ -563,8 +563,8 @@ kbd{
   display:flex; align-items:center; justify-content:center;
   padding:16px 8px;
   border-radius:var(--radius);
-  background:linear-gradient(180deg, #EDF1F7 0%, #DEE5EF 100%);
-  box-shadow:inset 0 0 0 1px rgba(17,24,39,.06);
+  background:linear-gradient(180deg, var(--bm-bg-2) 0%, var(--bm-line-soft) 100%);
+  box-shadow:inset 0 0 0 1px rgba(var(--bm-ink2-rgb), .06);
 }
 .preview-canvas{
   display:block; width:min(100%, 320px); aspect-ratio:1 / 1; height:auto;
@@ -577,28 +577,28 @@ kbd{
   display:block; width:min(100%, 200px); aspect-ratio:1 / 1; height:auto;
   min-width:0; max-width:100%;
   border-radius:var(--radius-sm);
-  background:rgba(17,24,39,.03);
-  box-shadow:inset 0 0 0 1px rgba(17,24,39,.08);
+  background:rgba(var(--bm-ink2-rgb), .03);
+  box-shadow:inset 0 0 0 1px rgba(var(--bm-ink2-rgb), .08);
 }
 .preview-canvas-a4{
   display:block; width:min(100%, 160px); aspect-ratio:210 / 297; height:auto;
   min-width:0; max-width:100%;
   border-radius:8px;
-  background:#fff;
-  box-shadow:0 6px 18px rgba(17,24,39,.14);
+  background:var(--bg-card);
+  box-shadow:0 6px 18px rgba(var(--bm-ink2-rgb), .14);
 }
 
 /* --------------------------- 拖拽覆盖层 --------------------------- */
 .drop-overlay{
   position:fixed; inset:0; z-index:200;
   display:none; align-items:center; justify-content:center;
-  background:rgba(15,23,42,.42);
+  background:rgba(var(--bm-ink-rgb), .42);
   backdrop-filter:blur(4px);
   -webkit-backdrop-filter:blur(4px);
 }
 .drop-overlay.show{ display:flex; }
 .drop-box{
-  background:rgba(255,255,255,.94);
+  background:rgba(var(--bm-glass-rgb), .94);
   border:2px dashed var(--blue);
   border-radius:20px;
   padding:32px 48px;
@@ -610,10 +610,10 @@ kbd{
 .toast{
   position:fixed; left:50%; bottom:32px; transform:translate(-50%, 16px);
   z-index:300;
-  background:rgba(20,26,36,.92); color:#fff;
+  background:rgba(var(--bm-panel-rgb), .92); color:var(--bg-card);
   font-size:13px; font-weight:600;
   padding:11px 20px; border-radius:999px;
-  box-shadow:0 10px 32px rgba(0,0,0,.3);
+  box-shadow:0 10px 32px rgba(var(--bm-black-rgb), .3);
   opacity:0; pointer-events:none;
   transition:opacity .25s ease, transform .25s ease;
   max-width:80vw; text-align:center;
@@ -626,7 +626,7 @@ kbd{
 @media print{
   @page{ size:A4 portrait; margin:0; }
   html, body{
-    background:#fff !important;
+    background:var(--bg-card) !important;
     margin:0 !important; padding:0 !important;
     width:210mm; height:297mm;
   }
@@ -686,13 +686,13 @@ kbd{
   position:fixed; top:16px; right:16px; z-index:200;
   display:none; align-items:center; gap:6px;
   font-family:inherit; font-size:13px; font-weight:600;
-  color:#fff; background:rgba(15,23,42,.62);
-  border:1px solid rgba(255,255,255,.18);
+  color:var(--bg-card); background:rgba(var(--bm-ink-rgb), .62);
+  border:1px solid rgba(var(--bm-glass-rgb), .18);
   border-radius:999px; padding:9px 14px; cursor:pointer;
   backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
-  box-shadow:0 6px 20px rgba(0,0,0,.28);
+  box-shadow:0 6px 20px rgba(var(--bm-black-rgb), .28);
 }
-.fs-exit:hover{ background:rgba(15,23,42,.78); }
+.fs-exit:hover{ background:rgba(var(--bm-ink-rgb), .78); }
 .fs-exit svg{ flex:none; }
 
 /* 全屏开启：三段式工作台全部保留（顶条 / 画布区 / 底部参数坞）
@@ -732,10 +732,10 @@ body.is-fullscreen .preview-card{ display:flex; flex-direction:column; min-heigh
 .text-input{
   font-family:inherit; font-size:14px; color:var(--text);
   border:1px solid var(--line); border-radius:var(--radius-sm);
-  padding:9px 11px; background:rgba(255,255,255,.72); width:100%;
+  padding:9px 11px; background:rgba(var(--bm-glass-rgb), .72); width:100%;
   transition:border-color .18s ease, box-shadow .18s ease;
 }
-.text-input:focus{ outline:none; border-color:var(--blue); box-shadow:0 0 0 3px rgba(0,122,255,.16); }
+.text-input:focus{ outline:none; border-color:var(--blue); box-shadow:0 0 0 3px rgba(var(--bm-blue-rgb), .16); }
 .text-field-inline{ flex-direction:row; align-items:center; justify-content:space-between; margin-top:10px; }
 .text-field-inline label{ margin:0; }
 .color-input{
@@ -750,12 +750,12 @@ body.is-fullscreen .preview-card{ display:flex; flex-direction:column; min-heigh
 .queue-list{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
 .queue-item{
   position:relative; width:48px; height:48px; border-radius:10px; overflow:hidden;
-  border:1px solid var(--line); background:rgba(0,0,0,.04);
+  border:1px solid var(--line); background:rgba(var(--bm-black-rgb), .04);
 }
 .queue-item img{ width:100%; height:100%; object-fit:cover; display:block; }
 .queue-item .q-remove{
   position:absolute; top:1px; right:1px; width:18px; height:18px; line-height:16px; text-align:center;
-  border:none; border-radius:50%; background:rgba(20,24,33,.72); color:#fff; font-size:12px; cursor:pointer; padding:0;
+  border:none; border-radius:50%; background:rgba(var(--bm-panel2-rgb), .72); color:var(--bg-card); font-size:12px; cursor:pointer; padding:0;
 }
 .queue-empty{ font-size:12px; color:var(--text-3); margin-top:10px; }
 
@@ -877,75 +877,75 @@ body.is-fullscreen:has(.badge-maker-root) > main > .badge-maker-root{ flex:1 1 0
    （本就是深色浮层）、.bm-* 站点集成段（已用站点变量）。
    ========================================================================= */
 [data-theme="dark"] .badge-maker-root{
-  --blue:#0a84ff;                          /* 站点 accent 蓝（暗底更亮） */
-  --blue-dark:#3395ff;                     /* 暗色下 hover 提亮而非压暗 */
-  --blue-soft:rgba(10,132,255,.16);
-  --bg-1:#1c1c1e;                          /* surface-darker */
-  --bg-2:#000;                             /* black */
-  --card:rgba(44,44,46,.62);
-  --card-border:rgba(255,255,255,.08);
-  --line:rgba(255,255,255,.12);
-  --text:#F5F5F7;                          /* text-on-dark */
-  --text-2:#B4BCC9;
-  --text-3:#8E96A3;
-  --warn:#FBBF24;
-  --warn-soft:rgba(251,191,36,.14);
-  --shadow:0 12px 32px rgba(0,0,0,.5), 0 2px 8px rgba(0,0,0,.35);
-  --shadow-sm:0 4px 16px rgba(0,0,0,.4);
+  --blue:var(--accent-blue);                          /* 站点 accent 蓝（暗底更亮） */
+  --blue-dark:var(--bm-accent-dark);                     /* 暗色下 hover 提亮而非压暗 */
+  --blue-soft:rgba(var(--bm-accent-rgb), .16);
+  --bg-1:var(--surface-darker);                          /* surface-darker */
+  --bg-2:var(--black);                             /* black */
+  --card:rgba(var(--bm-surface-rgb), .62);
+  --card-border:rgba(var(--bm-glass-rgb), .08);
+  --line:rgba(var(--bm-glass-rgb), .12);
+  --text:var(--bg);                          /* text-on-dark */
+  --text-2:var(--bm-ink-2-dark);
+  --text-3:var(--bm-ink-3-dark);
+  --warn:var(--amber-400);
+  --warn-soft:rgba(var(--bm-amber-rgb), .14);
+  --shadow:0 12px 32px rgba(var(--bm-black-rgb), .5), 0 2px 8px rgba(var(--bm-black-rgb), .35);
+  --shadow-sm:0 4px 16px rgba(var(--bm-black-rgb), .4);
 }
 /* 顶栏玻璃 */
-[data-theme="dark"] .badge-maker-root .topbar{ background:rgba(28,28,30,.72); }
+[data-theme="dark"] .badge-maker-root .topbar{ background:var(--surface-alpha-72); }
 /* 分段控件：容器压深、选中块由「白块」改浅灰卡（白块在暗底会过曝） */
-[data-theme="dark"] .badge-maker-root .segmented{ background:rgba(120,130,150,.22); }
-[data-theme="dark"] .badge-maker-root .segmented button:hover:not(.active){ background:rgba(255,255,255,.08); }
+[data-theme="dark"] .badge-maker-root .segmented{ background:rgba(var(--bm-slate-rgb), .22); }
+[data-theme="dark"] .badge-maker-root .segmented button:hover:not(.active){ background:rgba(var(--bm-glass-rgb), .08); }
 [data-theme="dark"] .badge-maker-root .segmented button.active{
-  background:#3a3a3c; color:var(--text);
-  box-shadow:0 1px 4px rgba(0,0,0,.45);
+  background:var(--surface-dark-2); color:var(--text);
+  box-shadow:0 1px 4px rgba(var(--bm-black-rgb), .45);
 }
 /* 次级按钮 / 分类标签 / 药丸：白底 → 白 7% 玻璃；hover 提到 13% */
 [data-theme="dark"] .badge-maker-root .dock-tabs button,
 [data-theme="dark"] .badge-maker-root .btn-ghost,
-[data-theme="dark"] .badge-maker-root .pill{ background:rgba(255,255,255,.07); }
+[data-theme="dark"] .badge-maker-root .pill{ background:rgba(var(--bm-glass-rgb), .07); }
 [data-theme="dark"] .badge-maker-root .dock-tabs button:hover:not(.active),
 [data-theme="dark"] .badge-maker-root .btn-ghost:hover:not(:disabled),
-[data-theme="dark"] .badge-maker-root .pill:hover:not(.active){ background:rgba(255,255,255,.13); }
-[data-theme="dark"] .badge-maker-root .pill-over{ background:rgba(255,255,255,.04); border-color:rgba(255,255,255,.16); }
-[data-theme="dark"] .badge-maker-root .pill-over:hover:not(.active){ border-color:rgba(255,255,255,.32); }
+[data-theme="dark"] .badge-maker-root .pill:hover:not(.active){ background:rgba(var(--bm-glass-rgb), .13); }
+[data-theme="dark"] .badge-maker-root .pill-over{ background:rgba(var(--bm-glass-rgb), .04); border-color:rgba(var(--bm-glass-rgb), .16); }
+[data-theme="dark"] .badge-maker-root .pill-over:hover:not(.active){ border-color:rgba(var(--bm-glass-rgb), .32); }
 /* 输入容器 / 文本框 / kbd */
-[data-theme="dark"] .badge-maker-root .field{ background:rgba(255,255,255,.07); }
-[data-theme="dark"] .badge-maker-root .text-input{ background:rgba(255,255,255,.07); }
+[data-theme="dark"] .badge-maker-root .field{ background:rgba(var(--bm-glass-rgb), .07); }
+[data-theme="dark"] .badge-maker-root .text-input{ background:rgba(var(--bm-glass-rgb), .07); }
 [data-theme="dark"] .badge-maker-root kbd{
-  background:rgba(255,255,255,.09); color:var(--text);
-  border-color:rgba(255,255,255,.16); border-bottom-color:rgba(255,255,255,.28);
-  box-shadow:0 1px 1px rgba(0,0,0,.25);
+  background:rgba(var(--bm-glass-rgb), .09); color:var(--text);
+  border-color:rgba(var(--bm-glass-rgb), .16); border-bottom-color:rgba(var(--bm-glass-rgb), .28);
+  box-shadow:0 1px 1px rgba(var(--bm-black-rgb), .25);
 }
 /* 滑杆未填充段（原 rgba(15,23,42,.13) 在暗底不可见） */
 [data-theme="dark"] .badge-maker-root input[type="range"]::-webkit-slider-runnable-track{
-  background:linear-gradient(90deg, var(--blue) 0 var(--p,50%), rgba(255,255,255,.18) var(--p,50%) 100%);
+  background:linear-gradient(90deg, var(--blue) 0 var(--p,50%), rgba(var(--bm-glass-rgb), .18) var(--p,50%) 100%);
 }
 [data-theme="dark"] .badge-maker-root input[type="range"]::-moz-range-track{
-  background:linear-gradient(90deg, var(--blue) 0 var(--p,50%), rgba(255,255,255,.18) var(--p,50%) 100%);
+  background:linear-gradient(90deg, var(--blue) 0 var(--p,50%), rgba(var(--bm-glass-rgb), .18) var(--p,50%) 100%);
 }
 /* 预览台 / 小预览底（.preview-canvas-a4 是 A4 纸模拟，保持白） */
 [data-theme="dark"] .badge-maker-root .preview-stage{
-  background:linear-gradient(180deg,#242427 0%, #1c1c1e 100%);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+  background:linear-gradient(180deg,var(--bm-elevated) 0%, var(--surface-darker) 100%);
+  box-shadow:inset 0 0 0 1px rgba(var(--bm-glass-rgb), .06);
 }
 [data-theme="dark"] .badge-maker-root .preview-canvas-sm{
-  background:rgba(255,255,255,.04);
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);
+  background:rgba(var(--bm-glass-rgb), .04);
+  box-shadow:inset 0 0 0 1px rgba(var(--bm-glass-rgb), .08);
 }
 /* 拖拽覆盖层 */
-[data-theme="dark"] .badge-maker-root .drop-overlay{ background:rgba(0,0,0,.62); }
-[data-theme="dark"] .badge-maker-root .drop-box{ background:rgba(44,44,46,.96); }
+[data-theme="dark"] .badge-maker-root .drop-overlay{ background:rgba(var(--bm-black-rgb), .62); }
+[data-theme="dark"] .badge-maker-root .drop-box{ background:rgba(var(--bm-surface-rgb), .96); }
 /* 打印保护：暗色主题下打印时强制回到浅色变量（否则 #printArea 内若含文字，
    会是浅字印在白纸上而不可见）。与上面的暗色块同特异性，靠后出现取胜。 */
 @media print{
   [data-theme="dark"] .badge-maker-root{
-    --text:#0F172A; --text-2:#59637A; --text-3:#8A93A3;
-    --card:#fff; --card-border:rgba(255,255,255,.9);
-    --line:rgba(15,23,42,.09);
-    --bg-1:#fff; --bg-2:#fff;
+    --text:var(--bm-ink); --text-2:var(--bm-ink-2); --text-3:var(--bm-ink-3);
+    --card:var(--bg-card); --card-border:rgba(var(--bm-glass-rgb), .9);
+    --line:rgba(var(--bm-ink-rgb), .09);
+    --bg-1:var(--bg-card); --bg-2:var(--bg-card);
     --shadow:none; --shadow-sm:none;
   }
 }

@@ -343,6 +343,18 @@ main { flex: 1; max-width: 1280px; margin: 0 auto; padding: 48px 28px; width: 10
     color: transparent;
     text-shadow: none;
 }
+/* 强制颜色模式降级（2026-09-23 P0-2）：Windows 高对比度下 background-clip:text 会让
+   文字彻底消失。首帧只有 critical.css，故此处必须补 —— 否则 style.css 异步到达前会闪。 */
+@media (forced-colors: active) {
+    .page-header h1 {
+        background: none;
+        -webkit-background-clip: border-box;
+        background-clip: border-box;
+        -webkit-text-fill-color: CanvasText;
+        color: CanvasText;
+        text-shadow: none;
+    }
+}
 .page-header p { font-size: 1.05rem; color: var(--text-secondary); max-width: 620px; margin: 0 auto; line-height: 1.6; }
 .page-header::after {
     content: '';
@@ -522,8 +534,12 @@ main { flex: 1; max-width: 1280px; margin: 0 auto; padding: 48px 28px; width: 10
     --shadow-sm: 0 1px 3px var(--shadow-color-dark);
     --shadow-md: 0 4px 12px var(--shadow-color-darker);
     --shadow-lg: 0 8px 30px var(--shadow-color-deepest);
+    /* Cookie 横幅动作色（暗色，首屏版）：与 style.css 暗色块同值 */
+    --cmp-action-bg: var(--accent-blue);
+    --cmp-action-fg: var(--black);
+    --cmp-banner-link: var(--accent-blue);
 }
-[data-theme="dark"] .tool-card-wrap { border-color: var(--glass-white-06); box-shadow: 0 1px 3px var(--shadow-lg-dark), 0 4px 12px var(--shadow-lg-dark); }
+[data-theme="dark"] .tool-card-wrap { border-color: var(--glass-white-06); box-shadow: 0 1px 3px var(--shadow-color-strong), 0 4px 12px var(--shadow-color-strong); }
 [data-theme="dark"] {
     --icon-finance-1: var(--blue-900);   --icon-finance-2: var(--blue-500);
     --icon-health-1: var(--green-900);   --icon-health-2: var(--green-500);

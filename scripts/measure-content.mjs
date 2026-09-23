@@ -222,7 +222,7 @@ if (focusKeys.length) {
   console.log(`  最高重叠率: ${(maxBody * 100).toFixed(2)}%   超 15% 对数: ${overBody} / ${bestBody.length}`);
   for (const p of bestBody.slice(0, Math.min(5, topN))) console.log(`    ${(p.jaccard * 100).toFixed(1)}%  ${p.a}  ↔  ${p.b}`);
   console.log(
-    `\n判定（口径②）: ${maxBody > FUSE_THRESHOLD ? '⚠️ 超过 15% —— 按熔断线 1 应暂停 B 批' : '✅ 未超 15% —— 熔断线 1 未触发'}`
+    `\n判定（口径②）: ${maxBody > FUSE_THRESHOLD ? '[!] 超过 15% —— 按熔断线 1 应暂停 B 批' : 'OK 未超 15% —— 熔断线 1 未触发'}`
   );
   console.log(`口径差异: UI 骨架贡献了约 ${((maxFull - maxBody) * 100).toFixed(2)} 个百分点的重叠`);
 

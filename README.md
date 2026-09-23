@@ -12,7 +12,7 @@
 | 存储 | **Vercel KV（Upstash Redis）**，点赞/点击计数 + 限速/防刷均存于此 |
 | 广告 | AdSense Auto Ads，client ID 单一来源 `includes/adsense-head.html`，构建期注入全站 |
 | 分析 | GA4 `G-B61D908J5F`（`includes/adsense-head.html` 单一来源，构建期剥离占位符守卫） |
-| 安全 | **CSP 全站硬化**：script-src / style-src 无 `unsafe-inline`（`js/csp-events.js` 委托层 + `js/inline/*.js` 外链化），img-src 白名单化；`verify-site.mjs` 34 项断言守护 |
+| 安全 | **CSP 全站硬化**：script-src / style-src 无 `unsafe-inline`（`js/csp-events.js` 委托层 + `js/inline/*.js` 外链化），img-src 白名单化；`verify-site.mjs` 35 项断言守护 |
 | 竞品迭代（08-25） | **URL 参数预填**（`js/url-state.js`，计算器工具页带参直达/刷新保留/输入同步）、**打印样式**（`@media print` 隐藏导航广告）、**mortgage 输入扩展**（房产税/保险/PMI/额外还款）、**相关工具强化**（`scripts/strengthen-related-links.mjs`）、**标签聚合落地页**（`scripts/generate-tag-pages.mjs`，8 分类 × zh/en = 16 页，工具+文章聚合 + JSON-LD + hreflang） |
 | 首页区块与栏目页筛选（09-16） | 首页 6 区块（财务计算 / 健康计算 / 生活·出行 / 实用工具 / 图片工具 / 文字工具）的「查看全部」跳栏目页并携带 **`?cat=<区块>`**（image / text 整页即该分类，不带参），由 `js/category-filter.js` 消费：按 chip 上 `data-category` 声明的**区块 tag 集合**过滤（life 区块 = `life,travel`、finance = `finance,shopping`，**不可只按单 tag 筛**），同步 chip 高亮 / 计数文案 / URL。⚠️ **区块↔分类映射的单一数据源 = `scripts/lib/tool-card.mjs`（`CATEGORY_SECTION` / `SECTION_ORDER` / `SECTION_TITLES` / `sectionTags()` / `toolInSection()`），首页与栏目页共用，禁止各写一份**；⚠️ 工具的 `dir`（URL 栏目）与 `categories`（语义标签）必须对齐，错位会让同批工具被拆到两个栏目页（09-16 已归位 4 个工具） |
 
@@ -69,13 +69,14 @@ KV_URL / KV_REDIS_URL
 | 脚本 | 作用 | 用法 |
 |------|------|------|
 | `build.mjs` | Vercel 构建入口：复制到 `dist/` → 清理旧 cookie-consent → GA4 启用/占位守卫 → 注入 AdSense（单一来源 `includes/adsense-head.html`）→ 注入缓存版本号（`?v=YYYYMMDDHHmm`，仅 dist）→ 卫生转换（去 BOM / charset 置首 / 懒加载 / inline→.hidden）→ CSS 压缩 → CMP 横幅注入 → sprite 内联 → **版本戳兜底补齐（HTML 二次补扫 + `dist/js` 内动态加载字面量打戳，覆盖 CMP 注入的 `/js/cmp.js` 与 JS 懒加载的 `site-home.js`/`brotli-*`）** | `node scripts/build.mjs` |
-| `verify-site.mjs` | 集成校验 **34 项断言**：header/footer 字节一致 / JSON-LD（check-jsonld 5 项）/ 静态 AdSense 唯一性 / 断链 / 浮动控件清零 / GA4 ID 不变量 / CSP 无内联脚本 / 无内联事件处理器 / CSP 头无 unsafe-inline / 图片懒加载 / 图片 alt / SRI integrity / a11y（main+skip-link+label）/ SEO 存在率 / site.js 无 var / **首页三源同步（check-home-sync）** / **搜索升级专项（拼音+文章搜索+诚实热搜）** / **搜索升级 Phase C（GA4 零结果+aria-live+EN 关键词）** / **P0 门禁（CSS裸色值+Emoji清零+紫二次色清零）** / **canonical/hreflang 门禁** / **JS 语法门禁** / a11y 全站扫描（#22，需 `E2E_A11Y=1`）/ **工具页模板一致性（#23）** / **重定向门禁（#24）** / **CSP 委托层可达性（#25）** / **文档同步（#26）** / **embed 可嵌入性（#27）** / **sitemap 健康（#28）** / **dist 卫生（#29，防 P0-3 构建产物泄漏：禁 .workbuddy/e2e/test-results/__*/根级配置 .mjs/根级 .json，白名单放行 manifest.json+tools.json）** / **csp-events 解耦（#30，事件委托层与 AdSense 片段解耦 + 全页覆盖断言）** / **设计系统门禁（#31，裸 checkbox/radio 只降不升，基线 scripts/design-baseline.json）** / **全局契约门禁（#32，window.copyText+window.showError 契约完整 + runtime-head 注入 csp-events）** / **sitemap 反向覆盖门禁（#33，页面漏收录 sitemap 检测 + 豁免清单 stale 检测，2026-09-10 新增）** / **资源版本戳门禁（#34，immutable 长缓存下资源必须全部带 `?v=`，2026-09-13 新增）** | `node scripts/verify-site.mjs`（全绿退出码 0） |
+| `verify-site.mjs` | 集成校验 **35 项断言**：header/footer 字节一致 / JSON-LD（check-jsonld 5 项）/ 静态 AdSense 唯一性 / 断链 / 浮动控件清零 / GA4 ID 不变量 / CSP 无内联脚本 / 无内联事件处理器 / CSP 头无 unsafe-inline / 图片懒加载 / 图片 alt / SRI integrity / a11y（main+skip-link+label）/ SEO 存在率 / site.js 无 var / **首页三源同步（check-home-sync）** / **搜索升级专项（拼音+文章搜索+诚实热搜）** / **搜索升级 Phase C（GA4 零结果+aria-live+EN 关键词）** / **P0 门禁（CSS裸色值+Emoji清零+紫二次色清零）** / **canonical/hreflang 门禁** / **JS 语法门禁** / a11y 全站扫描（#22，需 `E2E_A11Y=1`）/ **工具页模板一致性（#23）** / **重定向门禁（#24）** / **CSP 委托层可达性（#25）** / **文档同步（#26）** / **embed 可嵌入性（#27）** / **sitemap 健康（#28）** / **dist 卫生（#29，防 P0-3 构建产物泄漏：禁 .workbuddy/e2e/test-results/__*/根级配置 .mjs/根级 .json，白名单放行 manifest.json+tools.json）** / **csp-events 解耦（#30，事件委托层与 AdSense 片段解耦 + 全页覆盖断言）** / **设计系统门禁（#31，裸 checkbox/radio 只降不升，基线 scripts/design-baseline.json）** / **全局契约门禁（#32，window.copyText+window.showError 契约完整 + runtime-head 注入 csp-events）** / **sitemap 反向覆盖门禁（#33，页面漏收录 sitemap 检测 + 豁免清单 stale 检测，2026-09-10 新增）** / **资源版本戳门禁（#34，immutable 长缓存下资源必须全部带 `?v=`，2026-09-13 新增）** / **令牌纪律门禁（#35，box-shadow 值型令牌 `--shadow-*` 与字面 length 混排 → 单层 length 超 CSS 上限 4 被浏览器静默丢弃，2026-09-23 新增）** | `node scripts/verify-site.mjs`（全绿退出码 0） |
 | `check-links.js` | 断链扫描（相对/绝对路径存在性 + 越界 + cleanUrls） | `node scripts/check-links.js` |
 | `check-jsonld.mjs` | 全站 JSON-LD 5 项断言（解析 / @context+type\|graph / 无双斜杠 URL / FAQPage mainEntity / @graph 节点 @type），退出码非 0 | `node scripts/check-jsonld.mjs` |
 | `check-csp-fns.mjs` | CSP 委托层处理器可达性门禁：`data-csp-*` 引用的函数必须是真正的 window 属性（按括号深度判定作用域，识别 NESTED / 顶层 const-let / MISSING）（verify-site [25] 调用） | `node scripts/check-csp-fns.mjs` |
 | `check-canonical.mjs` | canonical/hreflang 一致性门禁（verify-site [20] 调用） | `node scripts/check-canonical.mjs` |
 | `check-home-sync.mjs` | 首页三源同步：磁盘页面 == 首页 zh/en 卡片 == 配置 == TOOLS_DATA（verify-site [16] 调用） | `node scripts/check-home-sync.mjs` |
 | `check-p0-gate.mjs` | P0 门禁：CSS 裸色值 / Emoji 清零 / 紫二次色清零（verify-site [19] 调用） | `node scripts/check-p0-gate.mjs` |
+| `check-token-discipline.mjs` | 令牌纪律门禁 R1：`box-shadow` 值型阴影令牌（`--shadow-*` 存完整值）与字面 length 混排 → 单层 length 超 CSS 上限 4，整条声明被浏览器静默丢弃（`--shadow-color-*` 是颜色型，不得当值型展开）（verify-site [35] 调用） | `node scripts/check-token-discipline.mjs` |
 | `check-js-syntax.mjs` | 全量 JS 语法门禁（verify-site [21] 调用，防缺陷 1 防御） | `node scripts/check-js-syntax.mjs` |
 | `check-no-var.mjs` | site.js 无 `var`（verify-site [15] 调用） | `node scripts/check-no-var.mjs` |
 | `generate-blog-posts.py` / `generate-sitemap.ps1` | 博客生成 / sitemap 生成（**ps1 须排除 dist/docs/deliverables/includes**，见记忆） | 见脚本头注释 |
@@ -136,11 +137,11 @@ KV_URL / KV_REDIS_URL
 #    → CSS 压缩 → CMP 横幅（仅 dist，源码不含 ?v）→ 版本戳兜底补齐（HTML + dist/js）
 node scripts/build.mjs
 
-# 2) 集成校验 34 项断言：header/footer 字节一致 + JSON-LD + AdSense 唯一性
+# 2) 集成校验 35 项断言：header/footer 字节一致 + JSON-LD + AdSense 唯一性
 #    + 断链 + 浮动控件清零 + GA4 不变量 + CSP 3 项 + 懒加载/alt/SRI/a11y/SEO/var
 #    + 首页三源同步(check-home-sync) + 搜索升级专项 + 搜索升级 Phase C
 #    + 工具页模板(#23) + 重定向(#24) + CSP 委托层可达性(#25) + 文档同步(#26)
-#    + sitemap 反向覆盖(#33) + 资源版本戳(#34)（全绿退出码 0）
+#    + sitemap 反向覆盖(#33) + 资源版本戳(#34) + 令牌纪律(#35)（全绿退出码 0）
 node scripts/verify-site.mjs
 
 # 3) 断链回归（单独跑亦可）

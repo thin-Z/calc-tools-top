@@ -147,7 +147,7 @@ if (changed.length === 0) {
   process.exit(0);
 }
 
-console.log(`\n${CHECK ? '⚠️ 发现' : DRY ? '[dry-run] 将修改' : '已同步'} ${changed.length} 个页面：`);
+console.log(`\n${CHECK ? '[!] 发现' : DRY ? '[dry-run] 将修改' : '已同步'} ${changed.length} 个页面：`);
 for (const c of changed) console.log(`  ${c.rel}  (${c.tags.join(' + ')})`);
 
 if (CHECK) {

@@ -760,6 +760,20 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
   }
 }
 
+// ---------- 35. 令牌纪律门禁（R1：box-shadow 值型令牌/length 混排，2026-09-23 V0 新增） ----------
+// 背景：P0-1 查明 10 处 `box-shadow` 把值型阴影令牌（--shadow-*，存完整值）与字面 length 混排，
+// 单层 length 数超过 CSS 规范上限 4 → 整条声明语法无效、被浏览器**静默丢弃**。
+// 该类失效不报错、不崩溃，只是悄悄不生效，属最贵的「沉默逻辑错误」；既有门禁完全不覆盖
+// 声明级语义，故新增本项。命门：--shadow-* 是值型、--shadow-color-* 是颜色型，不得混同展开。
+{
+  try {
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'check-token-discipline.mjs')], { stdio: 'inherit', cwd: ROOT });
+    console.log('[35] 令牌纪律门禁 (check-token-discipline R1): ✓');
+  } catch (e) {
+    fail('[token-discipline] scripts/check-token-discipline.mjs 退出码非 0（存在 box-shadow 值型令牌与字面 length 混排 → 单层 length 超上限，声明被浏览器静默丢弃）');
+  }
+}
+
 // ---------- 汇总 ----------
 if (failures.length) {
   console.error(`\n❌ verify-site 失败 ${failures.length} 项：`);
