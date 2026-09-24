@@ -361,6 +361,37 @@ if (existsSync(distCriticalPath)) {
       }
     }
   }
+  // L1 DRY 扩展（2026-09-24）：同步暗色 Cookie 横幅动作色（--cmp-*）从 tokens.css 到 critical.css，消除 S2 漂移
+  const cmpDarkMatch = tokensSrc.match(/\[data-theme="dark"\]\s*\{/);
+  if (cmpDarkMatch) {
+    let ds = cmpDarkMatch.index, dd = 0, de = -1;
+    for (let i = ds; i < tokensSrc.length; i++) {
+      if (tokensSrc[i] === '{') dd++;
+      if (tokensSrc[i] === '}') { dd--; if (dd === 0) { de = i + 1; break; } }
+    }
+    const cmpLines = tokensSrc.slice(ds, de).split('\n')
+      .filter(l => /^[\s]*--cmp-(action-bg|action-fg|banner-link)\s*:/.test(l)).map(l => l.trim());
+    if (cmpLines.length === 3) {
+      const cdMatch = critDist.match(/\[data-theme="dark"\]\s*\{/);
+      if (cdMatch) {
+        let cs = cdMatch.index, cd = 0, ce = -1;
+        for (let i = cs; i < critDist.length; i++) {
+          if (critDist[i] === '{') cd++;
+          if (critDist[i] === '}') { cd--; if (cd === 0) { ce = i + 1; break; } }
+        }
+        let critDark = critDist.slice(cs, ce);
+        cmpLines.forEach(line => {
+          const prop = line.split(':')[0].trim();
+          const re = new RegExp('[\\s]*' + prop.replace(/-/g, '\\-') + '\\s*:[^;]*;', 'g');
+          if (re.test(critDark)) critDark = critDark.replace(re, line);
+          else critDark = critDark.replace(/\}\s*$/, '    ' + line + '\n}');
+        });
+        critDist = critDist.slice(0, cs) + critDark + critDist.slice(ce);
+        console.log('[build] L1 DRY: critical.css 暗色 --cmp-* 已从 tokens.css 同步');
+      }
+    }
+  }
+
   writeFileSync(distCriticalPath, critDist, 'utf8');
   console.log(`[build] L1 DRY: critical.css :root 已从 tokens.css 同步`);
 }

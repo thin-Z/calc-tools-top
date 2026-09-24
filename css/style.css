@@ -65,10 +65,7 @@
     --shadow-sm: 0 1px 3px var(--shadow-color-dark);
     --shadow-md: 0 4px 12px var(--shadow-color-darker);
     --shadow-lg: 0 8px 30px var(--shadow-color-deepest);
-    /* Cookie 横幅动作色（暗色）：保留品牌亮蓝底，文字转深色（白字压亮蓝仅 3.65:1，黑字 5.76:1） */
-    --cmp-action-bg: var(--accent-blue);
-    --cmp-action-fg: var(--black);
-    --cmp-banner-link: var(--accent-blue);
+    /* Cookie 横幅动作色（暗色）统一由 tokens.css [data-theme="dark"] 提供（S2-DRY 单源，禁止此处重复定义）*/
 }
 
 [data-theme="dark"] .tool-card-wrap {

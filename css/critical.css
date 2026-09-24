@@ -534,10 +534,7 @@ main { flex: 1; max-width: 1280px; margin: 0 auto; padding: 48px 28px; width: 10
     --shadow-sm: 0 1px 3px var(--shadow-color-dark);
     --shadow-md: 0 4px 12px var(--shadow-color-darker);
     --shadow-lg: 0 8px 30px var(--shadow-color-deepest);
-    /* Cookie 横幅动作色（暗色，首屏版）：与 style.css 暗色块同值 */
-    --cmp-action-bg: var(--accent-blue);
-    --cmp-action-fg: var(--black);
-    --cmp-banner-link: var(--accent-blue);
+    /* Cookie 横幅动作色（暗色，首屏版）：构建期由 build.mjs L1 DRY 从 tokens.css [data-theme="dark"] 同步注入，勿手工维护 */
 }
 [data-theme="dark"] .tool-card-wrap { border-color: var(--glass-white-06); box-shadow: 0 1px 3px var(--shadow-color-strong), 0 4px 12px var(--shadow-color-strong); }
 [data-theme="dark"] {

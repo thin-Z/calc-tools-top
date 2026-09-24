@@ -321,3 +321,15 @@
     --bm-panel2-rgb: 20,24,33;
     --bm-surface-rgb: 44,44,46;
 }
+
+/* ── Cookie 横幅动作色（暗色主题，2026-09-24 S2-DRY 单源）──────────
+ * 暗底使用更亮的 accent 蓝（#0a84ff）以保证按钮黑字对比度（≈5.73:1 ≥ 4.5:1），
+ * 与亮色 --brand-blue-dark(#0056CC) 区分。单一来源：本文件定义，
+ * 构建期经 build.mjs L1 DRY 同步进 dist/css/critical.css（消除 S2 漂移）；
+ * style.css 经 @import 自动继承，禁止在 [data-theme="dark"] 块重复定义。
+ */
+[data-theme="dark"] {
+    --cmp-action-bg: var(--accent-blue);
+    --cmp-action-fg: var(--black);
+    --cmp-banner-link: var(--accent-blue);
+}
