@@ -75,14 +75,14 @@
 
 /* 暗色图标渐变（P2-3：提取为 CSS 变量，便于统一维护主题色） */
 [data-theme="dark"] {
-  --icon-finance-1: var(--blue-900);   --icon-finance-2: var(--blue-500);
-  --icon-health-1: var(--green-900);   --icon-health-2: var(--green-500);
-  --icon-life-1: var(--orange-900);     --icon-life-2: var(--strength-strong);
-  --icon-shopping-1: var(--pink-900); --icon-shopping-2: var(--pink-500);
-  --icon-travel-1: var(--sky-900);   --icon-travel-2: var(--sky-400);
-  --icon-utility-1: var(--slate-800);  --icon-utility-2: var(--slate-300);
-  --icon-image-1: var(--emerald-900);    --icon-image-2: var(--emerald-500);
-  --icon-text-1: var(--brown-900);     --icon-text-2: var(--orange-500);
+  --icon-finance-1: var(--blue-900);   --icon-finance-2: var(--icon-finance-b);
+  --icon-health-1: var(--green-900);   --icon-health-2: var(--icon-health-b);
+  --icon-life-1: var(--orange-900);     --icon-life-2: var(--icon-life-b);
+  --icon-shopping-1: var(--pink-900); --icon-shopping-2: var(--icon-shopping-b);
+  --icon-travel-1: var(--sky-900);   --icon-travel-2: var(--icon-travel-b);
+  --icon-utility-1: var(--slate-800);  --icon-utility-2: var(--icon-utility-b);
+  --icon-image-1: var(--emerald-900);    --icon-image-2: var(--icon-image-b);
+  --icon-text-1: var(--brown-900);     --icon-text-2: var(--icon-text-b);
 }
 [data-theme="dark"] .tool-card .icon.icon-finance { background: linear-gradient(135deg,var(--icon-finance-1),var(--icon-finance-2)); }
 [data-theme="dark"] .tool-card .icon.icon-health { background: linear-gradient(135deg,var(--icon-health-1),var(--icon-health-2)); }
@@ -93,16 +93,15 @@
 [data-theme="dark"] .tool-card .icon.icon-image { background: linear-gradient(135deg,var(--icon-image-1),var(--icon-image-2)); }
 [data-theme="dark"] .tool-card .icon.icon-text { background: linear-gradient(135deg,var(--icon-text-1),var(--icon-text-2)); }
 
-/* 明色图标渐变（默认）：分类彩色渐变背景，使白色图标可见
-   （FIX 2026-08-28: light mode hot-tool-card icons were white-on-white/invisible） */
-.tool-card .icon.icon-finance { background: linear-gradient(135deg,var(--brand-blue),var(--blue-600)); }
-.tool-card .icon.icon-health { background: linear-gradient(135deg,var(--green-500),var(--color-success)); }
-.tool-card .icon.icon-life { background: linear-gradient(135deg,var(--orange-500),var(--strength-strong)); }
-.tool-card .icon.icon-shopping { background: linear-gradient(135deg,var(--pink-500),var(--cat-shopping)); }
-.tool-card .icon.icon-travel { background: linear-gradient(135deg,var(--sky-400),var(--cat-travel)); }
-.tool-card .icon.icon-utility { background: linear-gradient(135deg,var(--slate-500),var(--tag-utility-deep)); }
-.tool-card .icon.icon-image { background: linear-gradient(135deg,var(--emerald-500),var(--cat-image)); }
-.tool-card .icon.icon-text { background: linear-gradient(135deg,var(--orange-500),var(--brown-900)); }
+/* V3 (2026-09-24)：分类图标底板渐变，白图标对比度 ≥3:1（令牌化到 --icon-*，与标签 --cat-* 解耦） */
+.tool-card .icon.icon-finance { background: linear-gradient(135deg,var(--icon-finance-a),var(--icon-finance-b)); }
+.tool-card .icon.icon-health { background: linear-gradient(135deg,var(--icon-health-a),var(--icon-health-b)); }
+.tool-card .icon.icon-life { background: linear-gradient(135deg,var(--icon-life-a),var(--icon-life-b)); }
+.tool-card .icon.icon-shopping { background: linear-gradient(135deg,var(--icon-shopping-a),var(--icon-shopping-b)); }
+.tool-card .icon.icon-travel { background: linear-gradient(135deg,var(--icon-travel-a),var(--icon-travel-b)); }
+.tool-card .icon.icon-utility { background: linear-gradient(135deg,var(--icon-utility-a),var(--icon-utility-b)); }
+.tool-card .icon.icon-image { background: linear-gradient(135deg,var(--icon-image-a),var(--icon-image-b)); }
+.tool-card .icon.icon-text { background: linear-gradient(135deg,var(--icon-text-a),var(--icon-text-b)); }
 
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -214,7 +213,6 @@ header nav a:hover {
     box-shadow: 0 0 0 3px var(--primary-light);
 }
 .format-select:focus {
-    outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 3px var(--primary-light);
 }
@@ -467,7 +465,6 @@ main {
 }
 
 .form-group input:focus,.form-group select:focus {
-    outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 3px var(--primary-light);
 }
@@ -1859,7 +1856,6 @@ svg.ic {
 }
 
 .control-group select:focus {
-    outline: none;
     border-color: var(--brand-blue);
     box-shadow: 0 0 0 3px var(--primary-light);
 }
@@ -1876,7 +1872,6 @@ svg.ic {
 }
 
 .control-group input[type="number"]:focus {
-    outline: none;
     border-color: var(--brand-blue);
     box-shadow: 0 0 0 3px var(--primary-light);
 }
@@ -3061,7 +3056,6 @@ svg.ic {
     box-sizing: border-box;
 }
 .text-input:focus {
-    outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 3px var(--primary-light);
 }
@@ -3732,7 +3726,6 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--primary); }
     transition: border-color 0.2s,box-shadow 0.2s;
 }
 .input-group input[type="text"]:focus,.regex-pattern-input:focus {
-    outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 3px var(--primary-light);
 }

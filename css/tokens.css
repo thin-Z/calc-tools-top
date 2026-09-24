@@ -320,6 +320,22 @@
     --bm-panel-rgb: 20,26,36;
     --bm-panel2-rgb: 20,24,33;
     --bm-surface-rgb: 44,44,46;
+
+    /* ── 分类图标底板渐变（2026-09-24 V3：白图标对比度 ≥3:1 单一来源）────
+     * 旧方案图标底板复用 --cat-* / --strength-strong / --color-success 等广用令牌，
+     * 暗色块把这些令牌压浅后白图标对比度跌破 3:1（life 1.92 / travel 2.14 / health 2.28 / image 2.54 / utility 2.56 / text 2.80）。
+     * 此处锁定 8 组专用图标渐变令牌（起→止），颜色均实测白字 ≥3:1（多数 ≥4:1），
+     * 与标签用 --cat-* 解耦，消除「死镜像 / 暗色覆盖」连带击穿。
+     * 仅作用于 .tool-card .icon.* ，不改标签配色。
+     */
+    --icon-finance-a: #007AFF; --icon-finance-b: #0056CC;
+    --icon-health-a: #15803D;  --icon-health-b: #14532D;
+    --icon-life-a: #b45309;    --icon-life-b: #A16207;
+    --icon-shopping-a: #db2777; --icon-shopping-b: #be185d;
+    --icon-travel-a: #0284C7;  --icon-travel-b: #075985;
+    --icon-utility-a: #64748b; --icon-utility-b: #475569;
+    --icon-image-a: #047857;   --icon-image-b: #065f46;
+    --icon-text-a: #C2410C;    --icon-text-b: #9a3412;
 }
 
 /* ── Cookie 横幅动作色（暗色主题，2026-09-24 S2-DRY 单源）──────────

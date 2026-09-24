@@ -467,15 +467,15 @@ main { flex: 1; max-width: 1280px; margin: 0 auto; padding: 48px 28px; width: 10
 .tool-card-wrap:hover .icon { transform: scale(1.08); }
 .tool-card h3 { font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; line-height: 1.4; }
 .tool-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; }
-/* 分类图标渐变（明色默认，保证白色图标可见） */
-.tool-card .icon.icon-finance { background: linear-gradient(135deg, var(--brand-blue), var(--blue-600)); }
-.tool-card .icon.icon-health { background: linear-gradient(135deg, var(--green-500), var(--color-success)); }
-.tool-card .icon.icon-life { background: linear-gradient(135deg, var(--orange-500), var(--strength-strong)); }
-.tool-card .icon.icon-shopping { background: linear-gradient(135deg, var(--pink-500), var(--cat-shopping)); }
-.tool-card .icon.icon-travel { background: linear-gradient(135deg, var(--sky-400), var(--cat-travel)); }
-.tool-card .icon.icon-utility { background: linear-gradient(135deg, var(--slate-500), var(--tag-utility-deep)); }
-.tool-card .icon.icon-image { background: linear-gradient(135deg, var(--emerald-500), var(--cat-image)); }
-.tool-card .icon.icon-text { background: linear-gradient(135deg, var(--orange-500), var(--brown-900)); }
+/* 分类图标渐变（V3 2026-09-24：白图标对比度 ≥3:1，令牌化到 --icon-*） */
+.tool-card .icon.icon-finance { background: linear-gradient(135deg, var(--icon-finance-a), var(--icon-finance-b)); }
+.tool-card .icon.icon-health { background: linear-gradient(135deg, var(--icon-health-a), var(--icon-health-b)); }
+.tool-card .icon.icon-life { background: linear-gradient(135deg, var(--icon-life-a), var(--icon-life-b)); }
+.tool-card .icon.icon-shopping { background: linear-gradient(135deg, var(--icon-shopping-a), var(--icon-shopping-b)); }
+.tool-card .icon.icon-travel { background: linear-gradient(135deg, var(--icon-travel-a), var(--icon-travel-b)); }
+.tool-card .icon.icon-utility { background: linear-gradient(135deg, var(--icon-utility-a), var(--icon-utility-b)); }
+.tool-card .icon.icon-image { background: linear-gradient(135deg, var(--icon-image-a), var(--icon-image-b)); }
+.tool-card .icon.icon-text { background: linear-gradient(135deg, var(--icon-text-a), var(--icon-text-b)); }
 
 /* ===== Skip link / Focus ===== */
 .skip-link {
@@ -493,6 +493,15 @@ main { flex: 1; max-width: 1280px; margin: 0 auto; padding: 48px 28px; width: 10
 }
 .skip-link:focus { left: 0; outline: none; }
 :focus-visible { outline: 3px solid var(--primary, var(--blue-600)); outline-offset: 2px; border-radius: 4px; }
+/* V4 (2026-09-24)：鼠标点击聚焦不显示默认 outline，键盘聚焦仍由上方 :focus-visible 提供 3px 指示。
+   解耦「鼠标无丑环」与「键盘有可见焦点」，修复此前 :focus{outline:none} 覆盖全局兜底导致搜索框等键盘焦点不可见。 */
+:focus:not(:focus-visible) { outline: none; }
+
+/* V6 (2026-09-24)：logo 词标明暗双图，按主题切换，修复暗色下词标 #1f2937 不可见（1.43:1）。
+   logo-h.svg=浅色词标（亮色模式），logo-h-dark.svg=浅色底上用深/浅词标已由 SVG 内置 fill 处理。 */
+header .logo img.logo-dark { display: none; }
+[data-theme="dark"] header .logo img.logo-light { display: none; }
+[data-theme="dark"] header .logo img.logo-dark { display: inline-block; }
 
 /* ===== 暗色模式（首屏令牌覆盖，防主题闪烁） ===== */
 [data-theme="dark"] {
@@ -538,14 +547,14 @@ main { flex: 1; max-width: 1280px; margin: 0 auto; padding: 48px 28px; width: 10
 }
 [data-theme="dark"] .tool-card-wrap { border-color: var(--glass-white-06); box-shadow: 0 1px 3px var(--shadow-color-strong), 0 4px 12px var(--shadow-color-strong); }
 [data-theme="dark"] {
-    --icon-finance-1: var(--blue-900);   --icon-finance-2: var(--blue-500);
-    --icon-health-1: var(--green-900);   --icon-health-2: var(--green-500);
-    --icon-life-1: var(--orange-900);     --icon-life-2: var(--strength-strong);
-    --icon-shopping-1: var(--pink-900); --icon-shopping-2: var(--pink-500);
-    --icon-travel-1: var(--sky-900);   --icon-travel-2: var(--sky-400);
-    --icon-utility-1: var(--slate-800);  --icon-utility-2: var(--slate-300);
-    --icon-image-1: var(--emerald-900);    --icon-image-2: var(--emerald-500);
-    --icon-text-1: var(--brown-900);     --icon-text-2: var(--orange-500);
+    --icon-finance-1: var(--blue-900);   --icon-finance-2: var(--icon-finance-b);
+    --icon-health-1: var(--green-900);   --icon-health-2: var(--icon-health-b);
+    --icon-life-1: var(--orange-900);     --icon-life-2: var(--icon-life-b);
+    --icon-shopping-1: var(--pink-900); --icon-shopping-2: var(--icon-shopping-b);
+    --icon-travel-1: var(--sky-900);   --icon-travel-2: var(--icon-travel-b);
+    --icon-utility-1: var(--slate-800);  --icon-utility-2: var(--icon-utility-b);
+    --icon-image-1: var(--emerald-900);    --icon-image-2: var(--icon-image-b);
+    --icon-text-1: var(--brown-900);     --icon-text-2: var(--icon-text-b);
 }
 [data-theme="dark"] .tool-card .icon.icon-finance { background: linear-gradient(135deg, var(--icon-finance-1), var(--icon-finance-2)); }
 [data-theme="dark"] .tool-card .icon.icon-health { background: linear-gradient(135deg, var(--icon-health-1), var(--icon-health-2)); }
