@@ -723,16 +723,6 @@ footer .footer-links a:hover {
     font-size: 0.95rem;
 }
 /* 顶部品牌渐变装饰条 */
-.tool-content::before,.seo-content::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 1.75rem;
-    right: 1.75rem;
-    height: 3px;
-    border-radius: 0 0 3px 3px;
-    background: linear-gradient(90deg,var(--brand-blue),var(--brand-blue-dark));
-}
 .tool-content > h2:first-child,.seo-content > h2:first-child {
     margin-top: 0;
 }
@@ -756,23 +746,11 @@ footer .footer-links a:hover {
     background: linear-gradient(180deg,var(--brand-blue),var(--brand-blue-dark));
 }
 .tool-content h3,.seo-content h3 {
-    position: relative;
     font-size: 1.05rem;
     font-weight: 600;
     line-height: 1.5;
     margin: 1.4rem 0 0.6rem;
-    padding-left: 0.75rem;
     color: var(--text);
-}
-.tool-content h3::before,.seo-content h3::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0.22em;
-    bottom: 0.22em;
-    width: 3px;
-    border-radius: 2px;
-    background: var(--brand-blue);
 }
 .tool-content p,.seo-content p {
     margin-bottom: 0.9rem;
@@ -851,6 +829,10 @@ footer .footer-links a:hover {
     color: var(--text);
     font-weight: 600;
 }
+/* a11y(2026-09-27)：内联 code 原用 --brand-blue(#007AFF)，在 --bg-elevated 抬升面上
+   实测仅 3.79:1（亮）/ 3.82:1（暗），均未达 AA 4.5；改用与「抬升面正文链接」同源的
+   --link-color-elevated（亮 #2563EB = 4.87:1 / 暗 #4DA6FF = 5.30:1）。
+   注：该缺陷长期被上方装饰伪元素遮挡（axe 只判 incomplete），2026-09-27 删除装饰后现形为 violation。 */
 .tool-content code,.seo-content code {
     background: var(--bg-elevated);
     border: 1px solid var(--border);
@@ -858,7 +840,7 @@ footer .footer-links a:hover {
     padding: 0.1rem 0.4rem;
     font-size: 0.88em;
     font-family: "SF Mono","Courier New",monospace;
-    color: var(--brand-blue);
+    color: var(--link-color-elevated);
     word-break: break-word;
 }
 .tool-content blockquote,.seo-content blockquote {
@@ -886,15 +868,6 @@ footer .footer-links a:hover {
     font-size: 1.05rem;
     font-weight: 600;
     color: var(--text-primary);
-}
-/* 标题装饰：纯 CSS 竖条（非 emoji/字符/字体图标），继承品牌蓝令牌，双主题自动适配 */
-.related-tools h3::before {
-    content: "";
-    width: 4px;
-    height: 1em;
-    border-radius: 2px;
-    background: var(--brand-blue);
-    flex-shrink: 0;
 }
 .related-tools ul {
     list-style: none;
@@ -3982,7 +3955,7 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--primary); }
    工具详情页美化 (2026-08-24)— 玻璃拟态 + 品牌渐变
    纯 CSS 追加,不改动既有规则;全站工具页共用(zh/en × 92 页)============================================================ */
 
-/* --- 页面头部:品牌渐变标题 + 装饰线 --- */
+/* --- 页面头部:品牌渐变标题 --- */
 .page-header { position: relative; }
 .page-header h1 {
     background: linear-gradient(120deg,var(--brand-blue),var(--brand-blue-dark));
@@ -3991,16 +3964,6 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--primary); }
     -webkit-text-fill-color: transparent;
     color: transparent;
     text-shadow: none;
-}
-.page-header::after {
-    content: '';
-    display: block;
-    width: 64px;
-    height: 4px;
-    margin: 16px auto 0;
-    border-radius: var(--radius-full);
-    background: linear-gradient(90deg,var(--brand-blue),var(--brand-blue-dark));
-    opacity: 0.8;
 }
 
 /* --- 表单卡片:玻璃拟态 + 圆角 + 柔和光晕 --- */
@@ -4132,21 +4095,6 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--primary); }
     font-size: 1.9rem;
     line-height: 1.35;
 }
-.blog-post h2 {
-    position: relative;
-    padding-left: 14px;
-}
-.blog-post h2::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 4px;
-    bottom: 4px;
-    width: 4px;
-    border-radius: var(--radius-full);
-    background: linear-gradient(180deg,var(--brand-blue),var(--brand-blue-dark));
-    opacity: 0.7;
-}
 .blog-post blockquote {
     background: linear-gradient(135deg,var(--primary-light),var(--blue-08));
     border-left: 4px solid var(--brand-blue);
@@ -4217,19 +4165,6 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--primary); }
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
-}
-.category-header {
-    position: relative;
-}
-.category-header::after {
-    content: '';
-    display: block;
-    width: 56px;
-    height: 4px;
-    margin: 14px auto 0;
-    border-radius: var(--radius-full);
-    background: linear-gradient(90deg,var(--brand-blue),var(--brand-blue-dark));
-    opacity: 0.8;
 }
 .tool-count {
     margin-top: 0.75rem;
@@ -4715,5 +4650,19 @@ mark {
         -webkit-text-fill-color: CanvasText;
         color: CanvasText;
         text-shadow: none;
+    }
+}
+
+/* ==================================================================
+   减弱动效偏好降级（2026-09-27 P1-9 / P2-18）
+   系统开启「减弱动态效果」时不播放入场动画、不做过位过渡。
+   注：critical.css 另有首屏版本（首帧只有 critical.css 到达），两源同步。
+   ================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,*::before,*::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }

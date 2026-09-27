@@ -356,16 +356,6 @@ main { flex: 1; max-width: 1280px; margin: 0 auto; padding: 48px 28px; width: 10
     }
 }
 .page-header p { font-size: 1.05rem; color: var(--text-secondary); max-width: 620px; margin: 0 auto; line-height: 1.6; }
-.page-header::after {
-    content: '';
-    display: block;
-    width: 64px;
-    height: 4px;
-    margin: 16px auto 0;
-    border-radius: var(--radius-full);
-    background: linear-gradient(90deg, var(--brand-blue), var(--brand-blue-dark));
-    opacity: 0.8;
-}
 
 /* ===== Search Bar ===== */
 .search-bar { max-width: 480px; margin: 0 auto 1.5rem; position: relative; }
@@ -607,4 +597,18 @@ header .logo img.logo-dark { display: none; }
 @media (max-width: 480px) {
     .category-filters { gap: 0.35rem; }
     .category-chip { font-size: 0.8rem; padding: 0.35rem 0.7rem; }
+}
+
+/* ==================================================================
+   减弱动效偏好降级（2026-09-27 P1-9 / P2-18）
+   系统开启「减弱动态效果」时不播放入场动画、不做过位过渡。
+   注：critical.css 另有首屏版本（首帧只有 critical.css 到达），两源同步。
+   ================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,*::before,*::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
 }

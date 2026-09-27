@@ -49,7 +49,9 @@ function initReadingProgress() {
 function initBackToTop() {
     const btn = document.createElement('button');
     btn.className = 'back-to-top';
-    btn.setAttribute('aria-label', 'Back to top');
+    /* 无障碍名按页面语言本地化（2026-09-27 P2-19）：zh 页原本读英文提示，中文屏幕阅读器体验差 */
+    const isZhPage = /^zh/i.test(document.documentElement.lang || '');
+    btn.setAttribute('aria-label', isZhPage ? '返回顶部' : 'Back to top');
     btn.innerHTML = '\u2B06';
     btn.addEventListener('click', function() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
