@@ -117,6 +117,7 @@ KV_URL / KV_REDIS_URL
 | ~~`seo_audit.py`~~ | ~~SEO 审计~~（归档，被 `seo-batch-audit.mjs` 取代） | `python scripts/archive/seo_audit.py` |
 | ~~`audit-contrast.mjs`~~ | ~~暗色主题对比度审计（Phase 1 T1.4 一次性）~~（归档，日常由 `audit-a11y.mjs` 覆盖） | `node scripts/archive/audit-contrast.mjs` |
 | `validate-encoding.ps1` | 验证编码 | `powershell scripts/validate-encoding.ps1` |
+| `pre-submit-audit.mjs` | **提交前深度审查（强制流程，2026-09-27 起）**：改动面分类（含非预期类型告警）· 未跟踪清单（防夹带/防漏 add）· 安全扫描（`id_rsa`/`.env`/`.pem` 等敏感名 + >1MB 文件）· 新增文件行尾（须 LF）· 按改动类型映射专项核查提示（css→双源+var-refs；scripts→README 登记+断言数；assets→线上可达）· 必做清单（`npm run ci:quick` / `E2E_CHANNEL=chromium` a11y / 浏览器实测 / 负向测试自证 / 文档同步）。**定位是自检器不是门禁** —— 不接入 verify-site、不改变 36 项断言 | `npm run audit:pre` |
 
 > **运维 / 发布类脚本已迁出**（2026-09-23）：`gsc-submit-daily.sh`、`baidu-push.mjs`、`submit-indexnow.mjs`、`push-any.sh`、`deploy-like-system.ps1` 因本仓库为 **public**，已迁至知识库 `_ObsidianVault/90-运维工具/`（附用法与依赖说明）。工作区只保留构建 / 校验链。
 

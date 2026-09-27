@@ -53,6 +53,7 @@
 | `inject-url-state.mjs` | 工具页 | URL 参数预填注入（**默认 dry-run，须 `--write` 才真实写入**） | 手动 |
 | `e2e-server.mjs` | 测试 | Playwright 本地预览服务器 | 手动 |
 | `pre-work-check.ps1/.sh` | 会话 | 开工前基线防护 | 手动 |
+| `pre-submit-audit.mjs` | 提交 | **提交前深度审查**（强制流程）：改动面分类 / 未跟踪清单 / 安全扫描（敏感文件+超大文件）/ 新增文件行尾 / 按改动类型的专项核查提示 / 必做清单；FAIL 时退出码 1。**定位是自检器不是门禁**（不接入 verify-site、不改断言数） | 手动 |
 | `r4-screenshots.mjs` | R4 | 截图回归 | 手动 |
 | `scan-csp-inline.py` | verify 口径 | 扫描内联脚本/事件（verify #7/8 口径依赖，保留） | 手动 |
 | `validate-encoding.ps1` | 工具 | 编码验证 | 手动 |
