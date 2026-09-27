@@ -774,6 +774,23 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
   }
 }
 
+// ---------- 36. 自定义属性引用门禁（R2：自引用/循环 + 无定义无回退引用，2026-09-27 新增） ----------
+// 背景：批 D 修 P1 时查明 style.css 暗色块有 5 条自引用（--like: var(--like) 与 4 条 --cat-*-bg）。
+// 自定义属性引用自身属**计算值阶段非法**：令牌计算值变 guaranteed-invalid，且**不回退** :root 定义，
+// 消费处整条声明失效（暗色 4 类标签底板消失 + ~20 处点赞控件丢失配色）。这类失效不报错、
+// 不崩溃，既有门禁（裸色值只看字面颜色、R1 只看 box-shadow 声明语法）完全照不到
+// 「令牌之间的引用关系」，故新增本项补位。
+// 命门：style.css 与 critical.css 的暗色块逐行孪生，但 critical.css 那份**恰好没有** -bg 自环；
+// 「保持一致」地整块复制会**新造 4 条自环**。期望值钉死 0，等于机械锁死该回归（0 → 4 即红）。
+{
+  try {
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'check-var-refs.mjs')], { stdio: 'inherit', cwd: ROOT });
+    console.log('[36] 自定义属性引用门禁 (check-var-refs R2): ✓');
+  } catch (e) {
+    fail('[var-refs] scripts/check-var-refs.mjs 退出码非 0（存在自定义属性自引用/循环引用，或无定义且无回退的 var() 引用 → 令牌计算值为空且不回退 :root，消费处整条声明被浏览器静默丢弃）');
+  }
+}
+
 // ---------- 汇总 ----------
 if (failures.length) {
   console.error(`\n❌ verify-site 失败 ${failures.length} 项：`);

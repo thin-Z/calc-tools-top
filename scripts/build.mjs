@@ -285,7 +285,7 @@ console.log(`[build] runtime-head(csp-events) 注入: 更新 ${runtimeUpdated} |
 const PWA_INJECT = '<link rel="manifest" href="/manifest.json">'
   + '\n    <meta name="theme-color" content="#007AFF">'
   + '\n    <meta name="apple-mobile-web-app-capable" content="yes">'
-  + '\n    <link rel="apple-touch-icon" href="/assets/logo.svg">'
+  + '\n    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">'
   + '\n    <script src="/js/pwa.js" defer></script>';
 let pwaUpdated = 0;
 walkHtml(dist, (f) => {

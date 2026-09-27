@@ -12,7 +12,7 @@
 | 脚本 | 被谁引用 | 用途 | 触发方式 |
 |------|----------|------|----------|
 | `build.mjs` | Vercel build | 构建入口（复制→注入→卫生→压缩） | 自动 |
-| `verify-site.mjs` | CI / 本地 | 集成校验 35 项断言（#27 embed / #28 sitemap / #29 dist 卫生 / #30 csp-events 解耦 / #31 设计系统门禁 / #32 全局契约门禁 / #33 sitemap 反向覆盖 / #34 资源版本戳 / #35 令牌纪律，2026-09-02 / 2026-09-09 / 2026-09-13 / 2026-09-23 新增） | 自动 |
+| `verify-site.mjs` | CI / 本地 | 集成校验 36 项断言（#27 embed / #28 sitemap / #29 dist 卫生 / #30 csp-events 解耦 / #31 设计系统门禁 / #32 全局契约门禁 / #33 sitemap 反向覆盖 / #34 资源版本戳 / #35 令牌纪律 / #36 自定义属性引用 R2，2026-09-02 / 2026-09-09 / 2026-09-13 / 2026-09-23 / 2026-09-27 新增） | 自动 |
 | `check-jsonld.mjs` | verify #2 | JSON-LD 5 项断言 | 自动 |
 | `check-links.js` | verify #4 | 断链检查 | 自动 |
 | `seo-batch-audit.mjs` | verify #14 | SEO 批量审计 | 自动 |
@@ -20,6 +20,7 @@
 | `check-home-sync.mjs` | verify #16 | 首页三源同步 | 自动 |
 | `check-p0-gate.mjs` | verify #19 | P0 门禁（裸色/emoji/紫） | 自动 |
 | `check-token-discipline.mjs` | verify #35 | 令牌纪律门禁 R1：box-shadow 值型令牌 `--shadow-*` 与字面 length 混排 → 单层 length 超上限 4，整条声明被浏览器静默丢弃（`--shadow-color-*` 为颜色型，不得当值型展开） | 自动 |
+| `check-var-refs.mjs` | verify #36 | 自定义属性引用门禁 R2：R2-a1 自引用/循环引用 + R2-a2 无定义且无回退的 `var()` 引用，期望均为 0。自引用属计算值阶段非法 → 令牌计算值为空且不回退 `:root`，消费处整条声明被静默丢弃（暗色标签底板消失 / 点赞配色丢失）。注入点（JS `setProperty` / HTML 内联）由门禁自推导进白名单 | 自动 |
 | `check-canonical.mjs` | verify #20 | canonical/hreflang | 自动 |
 | `check-js-syntax.mjs` | verify #21 | JS 语法门禁 | 自动 |
 | `check-csp-fns.mjs` | verify #7/8/9 | CSP 函数级断言 | 自动 |
@@ -46,6 +47,7 @@
 | `generate-sitemap.ps1` | 内容 | sitemap 生成 | 手动 |
 | `gen-pinyin-index.py` | 搜索 | 拼音索引生成 | 手动 |
 | `gen-allowed-ids.js` | API | API 白名单生成（API 变更时） | 手动 |
+| `gen-social-assets.py` | 资产 | 社交分享位图生成：`assets/og-image.png`（1200×630）+ `assets/apple-touch-icon.png`（180×180），品牌蓝阶单一色源，落盘后读回 PNG 实测对比度 | 一次性 |
 | `strengthen-related-links.mjs` | 内链 | 相关工具内链强化 | 手动 |
 | `sync-includes.mjs` | 布局 | header/footer 死副本同步（includes 权威版本 → 全站页面；`--check` 自检、`--dry-run` 预览、`--lang` 限语言） | 手动 |
 | `inject-url-state.mjs` | 工具页 | URL 参数预填注入（**默认 dry-run，须 `--write` 才真实写入**） | 手动 |

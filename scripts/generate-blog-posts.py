@@ -335,9 +335,12 @@ def generate_zh_blog(slug, cat, zh_title, zh_desc, zh_body, zh_cta_text, tool_pa
     <meta property='og:description' content='{zh_desc}'/>
     <meta property='og:type' content='article'/>
     <meta property='og:url' content='{canonical}'/>
-    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:image' content='https://www.calc-tools.top/assets/og-image.png'/>
+    <meta property='og:image:width' content='1200'/>
+    <meta property='og:image:height' content='630'/>
     <meta property='og:locale' content='zh_CN'/>
     <meta name='twitter:card' content='summary_large_image'/>
+    <meta name='twitter:image' content='https://www.calc-tools.top/assets/og-image.png'/>
     <meta name='twitter:title' content='{zh_title}'/>
     <meta name='twitter:description' content='{zh_desc}'/>
     <link rel="canonical" href="{canonical}">
@@ -421,9 +424,12 @@ def generate_en_blog(slug, cat, en_title, en_desc, en_body, en_cta_text, tool_pa
     <meta property='og:description' content='{en_desc}'/>
     <meta property='og:type' content='website'/>
     <meta property='og:url' content='{canonical}'/>
-    <meta property='og:image' content='https://www.calc-tools.top/assets/logo.svg'/>
+    <meta property='og:image' content='https://www.calc-tools.top/assets/og-image.png'/>
+    <meta property='og:image:width' content='1200'/>
+    <meta property='og:image:height' content='630'/>
     <meta property='og:locale' content='en_US'/>
     <meta name='twitter:card' content='summary_large_image'/>
+    <meta name='twitter:image' content='https://www.calc-tools.top/assets/og-image.png'/>
     <meta name='twitter:title' content='{en_title}'/>
     <meta name='twitter:description' content='{en_desc}'/>
 <link rel="canonical" href="{canonical}">

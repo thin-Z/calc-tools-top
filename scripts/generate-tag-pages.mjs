@@ -179,9 +179,12 @@ ${catLinks}
     <meta property="og:description" content="${escAttr(description)}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="${escAttr(canonical)}">
-    <meta property="og:image" content="${SITE}/assets/logo.svg">
+    <meta property="og:image" content="${SITE}/assets/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:locale" content="${titleLang === 'zh-CN' ? 'zh_CN' : 'en'}">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="${SITE}/assets/og-image.png">
     <meta name="twitter:title" content="${escAttr(title)}">
     <meta name="twitter:description" content="${escAttr(description)}">
     <link rel="canonical" href="${escAttr(canonical)}">

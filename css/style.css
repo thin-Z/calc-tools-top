@@ -23,7 +23,6 @@
 
 
 [data-theme="dark"] {
-    --like: var(--like);
     --like-bg: var(--like-alpha);
     --danger: var(--red-300);
     --danger-strong: var(--red-200);
@@ -32,11 +31,11 @@
     --trend-hot-text: var(--red-200);
     --trend-up-text: var(--orange-200);
     --cat-finance: var(--blue-300);
-    --cat-life: var(--amber-100);          --cat-life-bg: var(--cat-life-bg);
-    --cat-shopping: var(--pink-200);      --cat-shopping-bg: var(--cat-shopping-bg);
-    --cat-travel: var(--sky-300);        --cat-travel-bg: var(--cat-travel-bg);
+    --cat-life: var(--amber-100);
+    --cat-shopping: var(--pink-200);
+    --cat-travel: var(--sky-300);
     --cat-utility: var(--slate-300);
-    --cat-image: var(--emerald-200);         --cat-image-bg: var(--cat-image-bg);
+    --cat-image: var(--emerald-200);
     --bg: var(--black);
     --bg-card: var(--surface-darker);
     --bg-elevated: var(--surface-dark);
@@ -73,35 +72,27 @@
     box-shadow: 0 1px 3px var(--shadow-color-strong), 0 4px 12px var(--shadow-color-strong);
 }
 
-/* 暗色图标渐变（P2-3：提取为 CSS 变量，便于统一维护主题色） */
+/* 暗色分类图标描边（D2 2026-09-27：替代旧「暗色图标渐变」；暗色下描边转亮，token 级自动切换） */
 [data-theme="dark"] {
-  --icon-finance-1: var(--blue-900);   --icon-finance-2: var(--icon-finance-b);
-  --icon-health-1: var(--green-900);   --icon-health-2: var(--icon-health-b);
-  --icon-life-1: var(--orange-900);     --icon-life-2: var(--icon-life-b);
-  --icon-shopping-1: var(--pink-900); --icon-shopping-2: var(--icon-shopping-b);
-  --icon-travel-1: var(--sky-900);   --icon-travel-2: var(--icon-travel-b);
-  --icon-utility-1: var(--slate-800);  --icon-utility-2: var(--icon-utility-b);
-  --icon-image-1: var(--emerald-900);    --icon-image-2: var(--icon-image-b);
-  --icon-text-1: var(--brown-900);     --icon-text-2: var(--icon-text-b);
+  --icon-finance-fg: var(--blue-300);
+  --icon-health-fg: var(--green-100);
+  --icon-life-fg: var(--amber-100);
+  --icon-shopping-fg: var(--pink-200);
+  --icon-travel-fg: var(--sky-300);
+  --icon-utility-fg: var(--slate-300);
+  --icon-image-fg: var(--emerald-200);
+  --icon-text-fg: var(--amber-400);
 }
-[data-theme="dark"] .tool-card .icon.icon-finance { background: linear-gradient(135deg,var(--icon-finance-1),var(--icon-finance-2)); }
-[data-theme="dark"] .tool-card .icon.icon-health { background: linear-gradient(135deg,var(--icon-health-1),var(--icon-health-2)); }
-[data-theme="dark"] .tool-card .icon.icon-life { background: linear-gradient(135deg,var(--icon-life-1),var(--icon-life-2)); }
-[data-theme="dark"] .tool-card .icon.icon-shopping { background: linear-gradient(135deg,var(--icon-shopping-1),var(--icon-shopping-2)); }
-[data-theme="dark"] .tool-card .icon.icon-travel { background: linear-gradient(135deg,var(--icon-travel-1),var(--icon-travel-2)); }
-[data-theme="dark"] .tool-card .icon.icon-utility { background: linear-gradient(135deg,var(--icon-utility-1),var(--icon-utility-2)); }
-[data-theme="dark"] .tool-card .icon.icon-image { background: linear-gradient(135deg,var(--icon-image-1),var(--icon-image-2)); }
-[data-theme="dark"] .tool-card .icon.icon-text { background: linear-gradient(135deg,var(--icon-text-1),var(--icon-text-2)); }
 
-/* V3 (2026-09-24)：分类图标底板渐变，白图标对比度 ≥3:1（令牌化到 --icon-*，与标签 --cat-* 解耦） */
-.tool-card .icon.icon-finance { background: linear-gradient(135deg,var(--icon-finance-a),var(--icon-finance-b)); }
-.tool-card .icon.icon-health { background: linear-gradient(135deg,var(--icon-health-a),var(--icon-health-b)); }
-.tool-card .icon.icon-life { background: linear-gradient(135deg,var(--icon-life-a),var(--icon-life-b)); }
-.tool-card .icon.icon-shopping { background: linear-gradient(135deg,var(--icon-shopping-a),var(--icon-shopping-b)); }
-.tool-card .icon.icon-travel { background: linear-gradient(135deg,var(--icon-travel-a),var(--icon-travel-b)); }
-.tool-card .icon.icon-utility { background: linear-gradient(135deg,var(--icon-utility-a),var(--icon-utility-b)); }
-.tool-card .icon.icon-image { background: linear-gradient(135deg,var(--icon-image-a),var(--icon-image-b)); }
-.tool-card .icon.icon-text { background: linear-gradient(135deg,var(--icon-text-a),var(--icon-text-b)); }
+/* D2 (2026-09-27)：分类色描边 + 浅色 tint 底板（P1-5a 统一图标语言；暗色由 --icon-*-fg 令牌自动切换，无需重复规则） */
+.tool-card .icon.icon-finance { background: var(--icon-finance-bg); color: var(--icon-finance-fg); }
+.tool-card .icon.icon-health { background: var(--icon-health-bg); color: var(--icon-health-fg); }
+.tool-card .icon.icon-life { background: var(--icon-life-bg); color: var(--icon-life-fg); }
+.tool-card .icon.icon-shopping { background: var(--icon-shopping-bg); color: var(--icon-shopping-fg); }
+.tool-card .icon.icon-travel { background: var(--icon-travel-bg); color: var(--icon-travel-fg); }
+.tool-card .icon.icon-utility { background: var(--icon-utility-bg); color: var(--icon-utility-fg); }
+.tool-card .icon.icon-image { background: var(--icon-image-bg); color: var(--icon-image-fg); }
+.tool-card .icon.icon-text { background: var(--icon-text-bg); color: var(--icon-text-fg); }
 
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1746,6 +1737,15 @@ svg.ic {
     max-height: 300px;
     border-radius: 8px;
     border: 1px solid var(--border);
+    /* D1d (2026-09-27, P2-9)：运行时 src 的预览图（previewImg/originalPreview/
+     * compressedPreview/convertedPreview/cropPreview/resizedPreview，共 16 处）无固有尺寸，
+     * 此处声明占位比例以抑制载入前后重排。
+     * 必须用 `auto <ratio>` 形式：加载后让位于图片自身比例（实测比值保真度 1.00）；
+     * 纯 `4/3` 形式会把 400x800 竖图拉伸成 400x300（保真度 2.67），属视觉回归。
+     * object-fit: contain 与之配套：一旦盒子被约束为异比例，内容按比例内缩而非拉伸。
+     */
+    aspect-ratio: auto 4 / 3;
+    object-fit: contain;
 }
 
 .file-info {
@@ -2265,7 +2265,6 @@ svg.ic {
     font-size: 22px;
     margin-bottom: 12px;
     border-radius: 12px;
-    color: var(--white);
 }
 .hot-tool-card .tool-card h3 {
     font-size: 15px;
@@ -3506,7 +3505,7 @@ svg.ic {
     color: white;
 }
 .btn-primary:hover {
-    background: var(--primary-dark);
+    background: var(--brand-blue-dark);
 }
 .btn-secondary {
     background: var(--bg-muted);
