@@ -34,7 +34,14 @@ node scripts/build.mjs
 ## 三、校验（提交前必跑，全绿才提交）
 
 ```bash
+# 0) 提交前深度审查（第一步；含跨文件一致性自动检查）
+npm run audit:pre
+
+# 1) 集成校验（36 项断言）
 node scripts/verify-site.mjs
+
+# 2) a11y 必须按 CI 通道跑（默认 msedge 会假绿）+ 亮暗双主题
+E2E_CHANNEL=chromium node scripts/audit-a11y.mjs
 ```
 
 **集成校验 36 项断言**（`verify-site.mjs`）：header/footer 字节一致 / JSON-LD / AdSense 唯一性 / 断链 / 浮动控件 / GA4 不变量 / CSP 无内联脚本 / 无内联事件 / CSP 头 / 懒加载 / alt / SRI / a11y 结构 / SEO / 无 var / 首页三源同步 / 搜索升级 / P0 门禁 / canonical-hreflang / JS 语法 / a11y 全站扫描 / 工具页模板一致性(#23) / 重定向顺序(#24) / CSP 委托层可达性(#25) / 文档同步(#26) / embed 可嵌入性(#27) / sitemap×noindex 交叉(#28) / dist 卫生门禁(#29，防 P0-3 构建产物泄漏复发) / csp-events 解耦(#30，事件委托层与 AdSense 片段解耦 + 全页覆盖) / 设计系统门禁(#31，裸 checkbox/radio 只降不升，基线 scripts/design-baseline.json) / 全局契约门禁(#32，window.copyText+window.showError 契约完整 + runtime-head 注入 csp-events) / sitemap 反向覆盖门禁(#33，页面存在但漏收录 sitemap 检测 + 豁免清单 stale 检测，2026-09-10 新增) / 资源版本戳门禁(#34，immutable 长缓存下所有本地资源引用必须带 `?v=`，2026-09-13 新增) / 令牌纪律门禁(#35，box-shadow 值型令牌与字面 length 混排 → 单层 length 超上限被静默丢弃，2026-09-23 新增)/ **自定义属性引用门禁（#36，自引用/循环引用 + 无定义且无回退的 `var()` 引用，期望均 0；令牌引用自身属计算值阶段非法 → 计算值为空且**不回退** `:root`，消费处整条声明被浏览器静默丢弃，2026-09-27 新增）**。
@@ -53,6 +60,7 @@ node scripts/verify-site.mjs
 | **R4** | verify 伪绿防御：图标/CSS/JS 变更，除 verify 外**必须叠加真实浏览器渲染断言**（Playwright 或 opencli 真实 Edge），不可仅以 verify 全绿宣称完成 |
 | **R5** | innerHTML 动态内容须转义：任何 `el.innerHTML = ...` 拼接**用户输入/外部数据**时，必须先用 `escapeHtml()` 转义；纯常量/纯数字结果（如 percentage-calc 拼接数值）可豁免。趋势指标 `node scripts/check-innerhtml-escape.mjs`（非阻断，供 review） |
 | **R6** | 新工具「零 DOM + 单测」准入（Q-5）：算法逻辑抽到 `js/calculators/<tool>.js` **纯函数**（无 `document` 依赖），UI 交互在 `js/inline/<tool>.js`；纯函数文件**必须配 `js/test/<tool>.test.js` 单测**。样板：`js/calculators/bmi.js`（纯函数 `calculateBMI`）+ `js/inline/bmi.js`（UI）。存量 26 个耦合计算器按页逐步拆（长线，非阻断） |
+| **R7** | **提交前深度审查（2026-09-28 立）**：任何 `commit` / `push` 前必须 ① `npm run audit:pre` 无 FAIL ② `npm run ci:quick` 全绿 ③ `E2E_CHANNEL=chromium node scripts/audit-a11y.mjs` 通过（本地默认通道会假绿）。`audit:pre` 内含**跨文件一致性自动检查**：`scripts/` 实际脚本 ↔ 两份 README 登记录双向差集 · `verify-site` 实测断言数 ↔ 三份文档声明比对。④ 新增门禁或任何「期望 0」类断言，**必须先证明装置有效**（注入真实违规 → 改动前报得出、改动后归零），**只报 0 不算证明** ⑤ 文档同步（报告就地校正 / 待办 / 日志 / 记忆）。<br>**设计原则**：凡是**可机械判定**的一致性检查，一律写进 `audit:pre` 这类必跑脚本，**不要留给「主动想起来」** —— 靠记忆的检查在长任务末尾必掉（多次实证：2026-09-27 一次提交易漏 2 个脚本登记，靠人工双向差集才发现）。 |
 
 ---
 
