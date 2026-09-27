@@ -25,6 +25,7 @@
 | `check-js-syntax.mjs` | verify #21 | JS 语法门禁 | 自动 |
 | `check-csp-fns.mjs` | verify #7/8/9 | CSP 函数级断言 | 自动 |
 | `audit-a11y.mjs` | verify #22 | 全站 axe 扫描（默认跳过，E2E_A11Y=1 启用） | 自动 |
+| `audit-narrow-overflow.mjs` | 本地 CI 链 | 全站 390px 横向溢出 + 卡片结构缺陷审计（GitHub Actions 不含此作业，需本地 `npm run ci:quick`） | 手动 |
 | `check-embed.mjs` | verify #27 | embed 可嵌入性门禁（XFO 冲突 / frame-ancestors / 接线） | 自动 |
 | `check-redirects.mjs` | verify #24 | 重定向门禁（通配须置末 + companion） | 自动 |
 | `check-sitemap.mjs` | verify #28 | sitemap 健康门禁（无死链 + noindex 不进 + 规模下界） | 自动 |
@@ -40,6 +41,7 @@
 | `check-innerhtml-escape.mjs` | 独立（非阻断趋势） | innerHTML 动态内容转义趋势指标：统计拼接用法 + 标记无 escapeHtml 工具的可疑项（供 review，不阻断构建） | 手动 |
 | `check-doc-sync.mjs` | — | 文档-代码同步检查（README ↔ scripts ↔ archive ↔ 配置） | 手动 |
 | `generate-home.mjs` | build | 首页生成（读源码） | 自动 |
+| `generate-category-pages.mjs` | build | 栏目索引页卡片生成器（tools.json 单一数据源，按标记区间替换，幂等） | 自动 |
 | `generate-tag-pages.mjs` | build | 标签聚合页生成 | 自动 |
 | `generate-redirects.mjs` | build | 工具扁平 URL 重定向生成（tools.json 单一数据源补齐 zh/en 扁平旧 URL，幂等；**dir 变更时自动修正已登记规则的过期目的地**；**严禁 process.exit()**——被 build.mjs import，exit 会终止整个构建） | 自动 |
 | `extract-critical.mjs` | build | 关键 CSS 抽取 | 自动 |
