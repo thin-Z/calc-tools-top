@@ -9,6 +9,8 @@
  *   4. 任何以 `__` 命名的文件/目录 —— 临时/探针（__a11y_probe.mjs / __perf-results.json）
  *   5. dist 根级 `*.mjs`         —— 疑似配置/脚本泄漏（如 playwright.config.mjs）
  *   6. dist 根级 `*.json`        —— 疑似源码配置泄漏（如 package.json / tsconfig.json）
+ *   7. dist 根级 `*.md`          —— 仓库文档泄漏（README/CONTRIBUTING 含 API 端点、防刷阈值、
+ *                                  Upstash 调用约定等内部资产；2026-09-28 S16 实测二者线上 200 可读）
  *
  * ⚠️ 白名单（运行时必需，必须保留在 dist 根）：
  *   - `manifest.json`  —— PWA 清单，HTML 经 <link rel="manifest" href="/manifest.json"> 引用
@@ -31,6 +33,10 @@ const DIST = path.join(ROOT, 'dist');
 const FORBIDDEN_DIRS = new Set(['.workbuddy', 'e2e', 'test-results']);
 // dist 根级允许保留的 .json（运行时必需，详见文件头注释）
 const ROOT_JSON_ALLOW = new Set(['manifest.json', 'tools.json']);
+// dist 根级允许保留的 .md —— 当前为空：仓库文档一律不进产物。
+// 若将来确需发布公开文档页，应走「写成 HTML 页」路径而非放行 md，故此处保持为空；
+// 确有例外时在此登记并在文件头注释写明理由（禁止无理由放行）。
+const ROOT_MD_ALLOW = new Set();
 
 const violations = [];
 
@@ -72,6 +78,11 @@ function walk(dir, rel) {
         if (!ROOT_JSON_ALLOW.has(name)) {
           violations.push(`根级 .json 泄漏(疑似源码配置，非 PWA/embed 必需): ${relPath}`);
         }
+      } else if (name.endsWith('.md')) {
+        // 7. 仓库文档泄漏（README/CONTRIBUTING 等内部资产，公网可读即暴露）
+        if (!ROOT_MD_ALLOW.has(name)) {
+          violations.push(`根级 .md 泄漏(仓库文档属内部资产，公网可读): ${relPath}`);
+        }
       }
     }
   }
@@ -84,7 +95,7 @@ if (!fs.existsSync(DIST)) {
 
 walk(DIST, '');
 
-console.log('[dist-hygiene] 禁止目录集:', [...FORBIDDEN_DIRS].join(', '), '| 根级 .json 白名单:', [...ROOT_JSON_ALLOW].join(', '));
+console.log('[dist-hygiene] 禁止目录集:', [...FORBIDDEN_DIRS].join(', '), '| 根级 .json 白名单:', [...ROOT_JSON_ALLOW].join(', '), '| 根级 .md 白名单:', [...ROOT_MD_ALLOW].join(', ') || '(空)');
 
 if (violations.length) {
   console.error(`\n❌ dist 卫生门禁失败 ${violations.length} 项（疑似 P0-3 构建产物泄漏复发）：`);
@@ -92,4 +103,4 @@ if (violations.length) {
   process.exit(1);
 }
 
-console.log('✅ dist 卫生门禁: 无 .workbuddy/ e2e/ test-results/ __* / 根级配置 .mjs/.json 泄漏 ✓');
+console.log('✅ dist 卫生门禁: 无 .workbuddy/ e2e/ test-results/ __* / 根级配置 .mjs/.json/.md 泄漏 ✓');

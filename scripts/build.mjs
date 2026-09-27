@@ -52,6 +52,8 @@ const EXCLUDE_FILES = new Set([
   '.gitignore',
   'vercel.json',
   'AGENTS.md',
+  'README.md',       // P0-3：仓库文档属内部资产（含 API 端点清单、防刷阈值、Upstash 调用
+  'CONTRIBUTING.md', // 约定、内部文件路径、历史 commit），随产物部署即公网可读 → 禁止进 dist
   'package.json',      // P0-3：依赖清单属内部资产，暴露依赖版本利于供应链攻击
   'package-lock.json', // P0-3：锁定文件同理
 ]);
