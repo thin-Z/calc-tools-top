@@ -2,7 +2,7 @@
 /**
  * scripts/check-p0-gate.mjs — Phase 0 P0 门禁（T0.4）+ Phase 1 紫色清零门禁（T1.1）
  * -----------------------------------------------------------------
- * 三项阻断检查：
+ * 四项阻断检查：
  *   1. CSS 裸色值：`css/` 下全部 *.css 中非变量定义行不允许出现 rgba() 或 #hex
  *      （tokens.css 是令牌定义源，豁免）
  *   2. Emoji 清零：全站源码（.js/.mjs/.cjs/.html/.py/.css）不允许出现图形 emoji
@@ -11,6 +11,9 @@
  *      generate-blog-posts.py）为已知例外，完整计数并显式报告但不阻断
  *   3. 紫二次色清零（Phase 1 T1.1，D7 决策）：全站禁止 purple/violet/indigo
  *      色值与 token（css 全部 + 非 dist 的 HTML/JS/SVG），注释行豁免
+ *   4. 孤儿变体选择符清零（2026-09-28 新增）：U+FE0E/U+FE0F 只能紧跟 emoji
+ *      基码（非 ASCII）；前一位为 ASCII 或行首者必为「幽灵字符」→ 阻断
+ *      （emoji→图标转换只换基码、漏删 VS 即产生，旧区间表按设计不覆盖 FE00-FE0F）
  *
  * ═══ V0（2026-09-23）修复门禁三重结构性缺陷（P0-6）═══
  * 背景：09-23《深度视觉审查报告》查明门禁体系自身有三处作用域/语义缺口，使多个 P0 视觉
@@ -198,6 +201,62 @@ function checkEmoji() {
 }
 
 // ═══════════════════════════════════════════════════════════════
+// 2b. 孤儿变体选择符（U+FE0E / U+FE0F）—— 2026-09-28 新增
+// ═══════════════════════════════════════════════════════════════
+// 背景：emoji → SVG 图标转换时若只替换基码（如 ❤ U+2764）而漏删尾随的 VS-16
+//   （U+FE0F），会留下不可见的「幽灵字符」（实测 `</svg>️`）。它落在 FE00–FE0F
+//   变体选择符块，**不在** EMOJI_RE 的图形 emoji 区间内 → 旧门禁与区间 grep 按
+//   设计都不覆盖，故长期「全绿」漏检（2026-09-28 视觉审查实测 90 处，4 文件）。
+// 判据（零误报）：变体选择符**只能**紧跟 emoji 基码，而所有 emoji 基码均为
+//   非 ASCII（≥ U+00A0）。故「前一位为 ASCII（< 0x80）或位于行首」者必为孤儿；
+//   合法用法（⚠️/©️/™️/🖼️ 等）前一位均非 ASCII，不会误报。
+//   ⚠️ 用 charCodeAt 而非 codePointAt：对补充平面 emoji（代理对）取到低位代理
+//      （≥ 0xDC00 > 0x80），恰好不误判，符合预期。
+function checkOrphanVS() {
+  const violations = [];
+  let scannedFiles = 0;
+  let vsCount = 0;
+
+  walkDir(ROOT, (filepath) => {
+    const rel = path.relative(ROOT, filepath).split(path.sep).join('/');
+    const ext = path.extname(filepath);
+    if (!EMOJI_EXTS.includes(ext)) return;
+    scannedFiles++;
+
+    const isHtml = ext === '.html';
+    const lines = fs.readFileSync(filepath, 'utf8').split('\n');
+    lines.forEach((ln, i) => {
+      const t = ln.trim();
+      // 注释行豁免（与 emoji 检查一致）：注释里提及的 VS 非结构字符
+      if (!isHtml && (t.startsWith('//') || t.startsWith('*') || t.startsWith('#'))) return;
+      for (const ch of ['\uFE0F', '\uFE0E']) {
+        let idx = -1;
+        while ((idx = ln.indexOf(ch, idx + 1)) !== -1) {
+          vsCount++;
+          const prevCode = idx === 0 ? -1 : ln.charCodeAt(idx - 1);
+          if (prevCode < 0x80) {
+            violations.push({
+              file: rel,
+              line: i + 1,
+              what: ch === '\uFE0F' ? 'U+FE0F' : 'U+FE0E',
+              context: t.slice(0, 100),
+            });
+          }
+        }
+      }
+    });
+  });
+
+  return {
+    ok: violations.length === 0,
+    scannedFiles,
+    vsCount,
+    violations: violations.length,
+    detail: violations,
+  };
+}
+
+// ═══════════════════════════════════════════════════════════════
 // 3. 紫二次色清零（Phase 1 T1.1，D7 决策：纯 #007AFF 单一品牌蓝阶）
 // ═══════════════════════════════════════════════════════════════
 // 覆盖：css/ 全部 *.css（定义与引用双向禁止）+ 非 dist 的 HTML/JS/SVG（防 JS 内联 /
@@ -300,10 +359,11 @@ function checkDuplicateSelectors() {
 // ═══════════════════════════════════════════════════════════════
 const css = checkCssColors();
 const emoji = checkEmoji();
+const orphanVS = checkOrphanVS();
 const purple = checkPurple();
 const dupSel = checkDuplicateSelectors(); // 趋势指标，非阻断
 
-const allOk = css.ok && emoji.ok && purple.ok;
+const allOk = css.ok && emoji.ok && orphanVS.ok && purple.ok;
 
 /** 按文件聚合计数，方便 V1–V6 批次修复定位（Top N） */
 function groupByFile(detail, n = 8) {
@@ -316,6 +376,7 @@ if (jsonMode) {
   process.stdout.write(JSON.stringify({
     css: { ...css, byFile: groupByFile(css.detail) },
     emoji: { ...emoji, byFile: groupByFile(emoji.detail) },
+    orphanVS: { ...orphanVS, byFile: groupByFile(orphanVS.detail) },
     purple: { ...purple, byFile: groupByFile(purple.detail) },
     duplicateSelectors: dupSel,
     allOk,
@@ -331,6 +392,11 @@ if (jsonMode) {
   if (!emoji.ok) emoji.detail.slice(0, 10).forEach(v => console.log(`  ${v.file}:${v.line} [${v.emoji}]: ${v.context}`));
   if (emoji.detail.length > 10) console.log(`  ... and ${emoji.detail.length - 10} more`);
   if (!emoji.ok) groupByFile(emoji.detail).forEach(g => console.log(`   ×${g.count}  ${g.file}`));
+
+  console.log(`[P0 gate] 孤儿变体选择符清零 (U+FE0E/U+FE0F, 扫 ${orphanVS.scannedFiles} 文件): ${orphanVS.ok ? '✓ 0' : '✗ ' + orphanVS.violations + ' 处孤儿'}（VS 总数 ${orphanVS.vsCount}）`);
+  if (!orphanVS.ok) orphanVS.detail.slice(0, 10).forEach(v => console.log(`  ${v.file}:${v.line} [${v.what}]: ${v.context}`));
+  if (orphanVS.detail.length > 10) console.log(`  ... and ${orphanVS.detail.length - 10} more`);
+  if (!orphanVS.ok) groupByFile(orphanVS.detail).forEach(g => console.log(`   ×${g.count}  ${g.file}`));
 
   console.log(`[P0 gate] 紫二次色清零 (T1.1/D7, 覆盖 css+html+js+svg 共 ${purple.scannedFiles} 文件): ${purple.violations === 0 ? '✓ 0' : '✗ ' + purple.violations + ' 行级条目 / ' + purple.hits + ' 处紫值'}`);
   if (!purple.ok) purple.detail.slice(0, 10).forEach(v => console.log(`  ${v.file}:${v.line} [${v.what}]: ${v.context}`));

@@ -29,19 +29,26 @@ CAT_ICON_EN = CAT_ICON_ZH
 def _icon(name):
     return '<svg class="ic" aria-hidden="true"><use href="%s%s"></use></svg> ' % (SPRITE, name)
 
+def _strip_orphan_vs(text):
+    # 变体选择符（VS-15/VS-16）只能紧跟 emoji 基码；emoji 基码被替换/删除后，
+    # 尾随的 VS 会变成不可见的「幽灵字符」（实测 </svg>️，U+FE0F）。
+    # 生成输出不应残留任何 emoji → 不存在合法 VS，统一清除即安全。
+    import re as _re
+    return _re.sub(r'[\uFE0E\uFE0F]', '', text)
+
 def emoji_to_icon(text):
     import re as _re
     for emo, name in EMOJI_MAP.items():
         if emo in text:
             text = _re.sub(_re.escape(emo) + r'\s*', _icon(name), text)
-    return text
+    return _strip_orphan_vs(text)
 
 def strip_emoji(text):
     import re as _re
     for emo in EMOJI_MAP:
         if emo in text:
             text = _re.sub(_re.escape(emo) + r'\s*', '', text)
-    return text
+    return _strip_orphan_vs(text)
 
 # ── Blog content data ─────────────────────────────────────────────
 # (slug, category_zh, category_en, zh_title, zh_desc, zh_body, zh_cta_text,

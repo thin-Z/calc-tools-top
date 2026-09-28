@@ -18,7 +18,7 @@
 | `seo-batch-audit.mjs` | verify #14 | SEO 批量审计 | 自动 |
 | `check-no-var.mjs` | verify #15 | site.js 无 var | 自动 |
 | `check-home-sync.mjs` | verify #16 | 首页三源同步 | 自动 |
-| `check-p0-gate.mjs` | verify #19 | P0 门禁（裸色/emoji/紫） | 自动 |
+| `check-p0-gate.mjs` | verify #19 | P0 门禁（裸色/emoji/孤儿变体选择符/紫） | 自动 |
 | `check-token-discipline.mjs` | verify #35 | 令牌纪律门禁 R1：box-shadow 值型令牌 `--shadow-*` 与字面 length 混排 → 单层 length 超上限 4，整条声明被浏览器静默丢弃（`--shadow-color-*` 为颜色型，不得当值型展开） | 自动 |
 | `check-var-refs.mjs` | verify #36 | 自定义属性引用门禁 R2：R2-a1 自引用/循环引用 + R2-a2 无定义且无回退的 `var()` 引用，期望均为 0。自引用属计算值阶段非法 → 令牌计算值为空且不回退 `:root`，消费处整条声明被静默丢弃（暗色标签底板消失 / 点赞配色丢失）。注入点（JS `setProperty` / HTML 内联）由门禁自推导进白名单 | 自动 |
 | `check-canonical.mjs` | verify #20 | canonical/hreflang | 自动 |
