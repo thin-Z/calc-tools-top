@@ -89,8 +89,8 @@
     --tag-text-deep: #c2410c;
     --text-on-dark: #F5F5F7;
     --link-color: var(--color-info);
-    --hot-badge-from: var(--color-warning);
-    --hot-badge-to: #ef4444;
+    --hot-badge-from: #C2410C;
+    --hot-badge-to: #B91C1C;
     --hot-likes: #d97706;
     --trend-hot-bg: #fef2f2;
     --trend-hot-text: var(--color-danger);
@@ -203,6 +203,11 @@
     --hot-likes-bg: rgba(251,191,36,0.15);
     --hot-likes-border: rgba(251,191,36,0.3);
     --hot-score-bg: rgba(239,68,68,0.2);
+    /* 批1·组A4：`.hot-score` 首帧规则（本文件 L406）即引用此令牌，
+     * 故首帧（仅 critical.css 到达时）必须在此可解析，否则 color 退化为 inherit。
+     * 本 :root 块为构建期死镜像（build.mjs 会用 tokens.css 的 :root 整块替换），
+     * 此处留档只为源一致性。 */
+    --hot-score-fg: #B91C1C;
     --orange-08: rgba(255,149,0,0.08);
     --green-08: rgba(52,199,89,0.08);
     --green-10a: rgba(48,209,88,0.1);
@@ -402,8 +407,8 @@ main { flex: 1; max-width: 1280px; margin: 0 auto; padding: 48px 28px; width: 10
 .hot-tool-card .tool-card .icon { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 12px; border-radius: 12px; }
 .hot-tool-card .tool-card h3 { font-size: 15px; font-weight: 600; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 4px; }
 .hot-tool-card .tool-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 10px; }
-.hot-tool-card .hot-badge { position: absolute; top: -1px; left: -1px; background: linear-gradient(135deg, var(--strength-fair), var(--danger)); color: var(--white); font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: 12px 0 12px 0; z-index: 1; }
-.hot-tool-card .hot-score { background: var(--danger-alpha); position: absolute; z-index: 2; top: 38px; right: 10px; font-size: var(--fs-xs); color: var(--danger-strong); font-weight: 700; display: flex; align-items: center; gap: 2px; padding: 2px 7px; border-radius: 8px; }
+.hot-tool-card .hot-badge { position: absolute; top: -1px; left: -1px; background: linear-gradient(135deg, var(--hot-badge-from), var(--hot-badge-to)); color: var(--white); font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: 12px 0 12px 0; z-index: 1; }
+.hot-tool-card .hot-score { background: var(--danger-alpha); position: absolute; z-index: 2; top: 38px; right: 10px; font-size: var(--fs-xs); color: var(--hot-score-fg); font-weight: 700; display: flex; align-items: center; gap: 2px; padding: 2px 7px; border-radius: 8px; }
 .hot-tool-card .like-btn { position: absolute; top: 10px; right: 10px; z-index: 2; display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: var(--radius-full); border: 1.5px solid var(--border); background: var(--glass-white-90); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); font-size: 12px; color: var(--text-secondary); cursor: pointer; transition: all 0.2s ease; line-height: 1; }
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 .tool-card-wrap {
@@ -468,12 +473,18 @@ main { flex: 1; max-width: 1280px; margin: 0 auto; padding: 48px 28px; width: 10
 .tool-card .icon.icon-text { background: var(--icon-text-bg); color: var(--icon-text-fg); }
 
 /* ===== Skip link / Focus ===== */
+/* 批1·组A3 + 收口（2026-09-28）：与 style.css 同名规则**逐字节相同**，两处必须同改
+ * （critical.css 是首帧唯一到达的样式表，只改一份会首帧闪）。
+ * ① 原 `var(--primary, var(--blue-600))` 纯色 + 白字仅 4.02:1，未达 AA，改同源渐变；
+ *    但最左角 4.35:1（暗 4.01:1）仍 < 4.5，未达标。
+ * ② 收口：to 端 stop 提前到 30% 后，最左角 t=0.169 → 亮 5.26 / 暗 5.03，全域达标。
+ * 因果推导与 [告警] 详见 style.css `.btn-primary` 首处注释；品牌色本体未改动。 */
 .skip-link {
     position: absolute;
     left: -9999px;
     top: 0;
     z-index: 9999;
-    background: var(--primary, var(--blue-600));
+    background: linear-gradient(135deg, var(--brand-blue), var(--brand-blue-dark) 30%);
     color: var(--white);
     padding: 10px 18px;
     border-radius: 0 0 10px 0;
@@ -516,6 +527,11 @@ header .logo img.logo-dark { display: none; }
     --text: var(--text-on-dark);
     --text-primary: var(--text-on-dark);
     --text-secondary: var(--text-tertiary);
+    /* 批1·组A1（2026-09-28）：上一行把 --text-secondary 级联到 --text-tertiary，
+     * 故暗色必须**显式**覆写回原浅灰值（在 --surface-darker 上 5.93:1 / --surface-dark 上 4.85:1）。
+     * 若此处缺省，亮色新值会漏进暗色，次级文字跌到 2.75:1（修亮色反坏暗色）。
+     * 注意：本行属 [data-theme="dark"] 块，**不**在 build.mjs 的 :root 覆写范围内，须手工维护。 */
+    --text-tertiary: #98989D;
     --link-color: var(--accent-blue);
     --link-color-elevated: #4DA6FF;
     --border: var(--surface-dark-2);
@@ -581,7 +597,8 @@ header .logo img.logo-dark { display: none; }
     transition: all 0.2s ease;
 }
 .category-chip.active {
-    background: linear-gradient(135deg, var(--brand-blue), var(--brand-blue-dark));
+    /* 批1·组A3 收口（2026-09-28）：与 style.css 同名规则逐字节相同，两处必须同改（只改一份会首帧闪）；依据见 style.css .btn-primary 首处注释 */
+    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark) 30%);
     color: var(--white);
     box-shadow: 0 2px 8px var(--blue-30);
 }

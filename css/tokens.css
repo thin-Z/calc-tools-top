@@ -24,7 +24,13 @@
     --text-primary: #1D1D1F;
     /* T1.4：#86868B 在浅灰背景上仅 ~3.4:1，未达 AA；#6E6E73 为 ≥4.5:1 的次级文字标准值 */
     --text-secondary: #6E6E73;
-    --text-tertiary: #98989D;
+    /* 批1·组A1（2026-09-28）：原 #98989D 在 --bg 上仅 2.64:1，未达 AA 4.5；
+     * 改 #6E6E73 = 4.66:1（与 --text-secondary 同值）。
+     * 注意：本值**不可**为暗色沿用 —— 暗色块含 `--text-secondary: var(--text-tertiary)` 级联，
+     * 沿用会使暗色次级文字由 5.93:1 跌到 2.75:1（修亮色反坏暗色）。
+     * 亮色需 4.66、暗色需 5.93 → 一值不可能同时满足，故两处 [data-theme="dark"] 块
+     * （style.css / critical.css）必须**显式覆写**回 #98989D。 */
+    --text-tertiary: #6E6E73;
     --primary: #007AFF;
     --primary-hover: #0056CC;
     --primary-light: rgba(0,122,255,0.15);
@@ -88,6 +94,13 @@
     --color-success: #16a34a;
     /* T1.4：#16a34a 在浅绿底(success-bg)上仅 ~3.14:1；组件层文字用深一档的 green-700 保 AA */
     --color-success-deep: #15803d;
+    /* 批1·组A5 + 收口（2026-09-28）：warning 色**作文字**统一用 --color-warning-text
+     * （#fff 上 5.18:1；真实消费场景「--orange-08 叠 --bg-card」浅橙底上 4.86:1）。
+     * **不设** `--color-warning-deep` —— 它与本令牌语义重复，且全域**零消费者**（死令牌），
+     * 收口时已撤销；其候选值 #B45309 在同一浅橙底上仅 4.71:1，反低于本令牌，双重不该留。
+     * 来源：--brand-orange(#FF9500) 作文字时在浅底上仅 2.07:1，远未达 AA；
+     * #C2410C = orange-700，供 .blog-post 引言标签 / 内联 code 等「橙色作文字」处引用。 */
+    --color-warning-text: #C2410C;
     --color-info: #2563eb;
     --color-info-alpha: rgba(37,99,235,0.8);
     /* T1.4: tag text overrides for WCAG AA on light tint backgrounds */
@@ -100,10 +113,19 @@
     /* 正文链接色（T1.4：亮色用 info 蓝保 AA；暗色由主题块覆写为高亮蓝） */
     --link-color: var(--color-info);
     /* a11y(2026-09-21)：深色「抬升面」(--bg-elevated = --surface-dark)上的正文链接需更亮才达 AA 4.5；
-       亮色沿用 info 蓝，深色由主题块覆写为更亮蓝(实测 5.45:1)。 */
-    --link-color-elevated: var(--color-info);
-    --hot-badge-from: var(--color-warning);
-    --hot-badge-to: #ef4444;
+     * 深色由主题块覆写为更亮蓝(#4DA6FF，在 --surface-dark 上 5.45:1)。
+     * 批1·组B2（2026-09-28）：亮色由 `var(--color-info)`(#2563eb) 改为 **#1D4ED8**
+     * （白底 6.70:1 / 在 --bg-elevated 上 6.32:1），并与 --cat-finance 同值以减少蓝色散度。
+     * 注意：不改 `--link-color` 本体 —— 它挂在全局 `a { color: var(--link-color) }`，
+     * 改它会连带改掉导航/卡片默认链接色（违反既有约束「导航/卡片用 --link-color，勿改」）。 */
+    --link-color-elevated: #1D4ED8;
+    /* 批1·组A4（2026-09-28）：.hot-badge 原用 `linear-gradient(135deg, var(--strength-fair), var(--danger))`
+     * —— 视觉与文字均不合格（白字落在 #f59e0b 端仅 2.15:1）。
+     * 改由本对**专属令牌**承担：#C2410C(5.18:1) → #B91C1C(6.47:1)，字形所在渐变段实测 5.51:1 以上。
+     * 注意：刻意**不动** --strength-fair / --danger —— 二者是共用令牌（--danger 另有 4 处消费者），
+     * 改其值会牵连别处；本对令牌此前全站零引用，正是为此预留。 */
+    --hot-badge-from: #C2410C;
+    --hot-badge-to: #B91C1C;
     --hot-likes: #d97706;
     --trend-hot-bg: #fef2f2;
     --trend-hot-text: var(--color-danger);
@@ -119,7 +141,11 @@
     --cat-image: #059669;
     --white: #fff;
     --black: #000;
-    --text-muted: #6b7280;
+    /* 批1·组A2（2026-09-28）：原 #6b7280 在 --bg 上仅 4.44:1，未达 AA；
+     * #5D6470 = 5.48:1（与 --text-secondary-deep 同族深档）。
+     * 暗色**不需要**同步改：暗色侧有独立的 --text-muted-dark(#8a8a8f)，且暗色块未覆写
+     * --text-muted（已核实：两处 [data-theme="dark"] 块均无 --text-muted 声明）→ 本值只作用于亮色。 */
+    --text-muted: #5D6470;
     /* T4.3：dark 下 text-muted(#6b7280) 在黑底 4.34:1 稍不足，提亮达标 */
     --text-muted-dark: #8a8a8f;
     /* T1.4：浅色底(#e9eff7 等)上的说明文字需比 secondary 更深才达 4.5:1 */
@@ -250,6 +276,11 @@
     --hot-likes-bg: rgba(251,191,36,0.15);
     --hot-likes-border: rgba(251,191,36,0.3);
     --hot-score-bg: rgba(239,68,68,0.2);
+    /* 批1·组A4：.hot-score 文字原取 --danger-strong（= --color-danger #dc2626），
+     * 在 --danger-alpha 叠 --bg-card 后仅 4.23:1，未达 AA；
+     * #B91C1C 在同一底色上 5.68:1。**不改 --color-danger 本体**（它另有 --trend-hot-text
+     * 等消费者），故单列本令牌。 */
+    --hot-score-fg: #B91C1C;
     /* T1.1：--purple-08/06/08b 紫色 tint 已删除，引用处改用蓝色阶 tint（D7） */
     --orange-08: rgba(255,149,0,0.08);
     --green-08: rgba(52,199,89,0.08);

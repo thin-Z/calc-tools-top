@@ -44,6 +44,11 @@
     --text: var(--text-on-dark);
     --text-primary: var(--text-on-dark);
     --text-secondary: var(--text-tertiary);
+    /* 批1·组A1（2026-09-28）：上一行把 --text-secondary 级联到 --text-tertiary，
+     * 故暗色必须**显式**覆写回原浅灰值（在 --surface-darker 上 5.93:1 / --surface-dark 上 4.85:1）。
+     * 若此处缺省，亮色新值会漏进暗色，次级文字跌到 2.75:1（修亮色反坏暗色）。
+     * 注意：与 critical.css 同名暗色块逐行孪生，两处必须同改（只改一份会首帧闪）。 */
+    --text-tertiary: #98989D;
     /* T1.4：暗色下 info 蓝(#2563eb) 在纯黑上仅 4.06:1，链接提亮为 accent 蓝(≈5.2:1) */
     --link-color: var(--accent-blue);
     /* a11y(2026-09-21)：accent 蓝在「抬升面」--bg-elevated(= --surface-dark) 上仅 3.82:1 未达 AA，
@@ -485,7 +490,20 @@ main {
 }
 
 .btn-primary {
-    background: var(--primary);
+    /* 批1·组A3（2026-09-28）+ 收口：原 `background: var(--primary)`（纯品牌蓝）配白字
+     * 仅 4.02:1 < 4.5，且本按钮文字为小字号（0.95rem / 600，不构成 WCAG 大字号）。
+     * 改同源渐变后实测（浏览器真值 100.8x39，字形包围盒 t∈[0.215,0.785]，中段 5.10:1），
+     * 但字形包围盒「最左角」仍落在 from 端附近，**未达标**：
+     *   · from 端品牌色**本体**：亮 #007AFF 4.02:1 / 暗 #0a84ff 3.65:1 —— 两者均 < 4.5
+     *   · 原式（to 端无 stop，默认落在 100%）角点：亮 4.44:1 / 暗 4.11:1 → 未达标
+     * 硬约束「不改 --brand-blue / --brand-blue-dark 品牌色本体」⇒ 原式下全域达标**数学上不可行**。
+     * 处方：把 to 端 stop **提前到 30%**，使 t≥0.30 的整段恒为 --brand-blue-dark
+     * （#0056CC，白字 6.56:1），只剩 t<0.30 的一小段过渡；最左角 t=0.215 → 亮 5.68 / 暗 5.52。
+     * [告警] **严禁**把 `30%` 改回无 stop 的默认式 —— 默认即 to 端落在 100%，角点会立刻
+     * 掉回 4.44（暗 4.11）跌破 AA；同理不得删除本 stop。
+     * **不改 --primary 品牌色本体**。
+     * 同址另见 css/critical-tool.css：构建期由 extract-critical 从本文件实时抽取，自动同步。 */
+    background: linear-gradient(135deg, var(--brand-blue), var(--brand-blue-dark) 30%);
     color: var(--white);
 }
 
@@ -686,7 +704,13 @@ footer .footer-links a:hover {
 .lang-select-card {
     display: block;
     padding: 24px 48px;
-    background: var(--primary);
+    /* 批1·组A3 + 收口：原 `var(--primary)` 纯色 + 白字 = 4.02:1，未达 AA。
+     * 字号 1.2rem / 600 不构成 WCAG「大字号」（大字号需字重 700 以上或字号 24px 以上），
+     * 故阈值仍 4.5。改同源渐变后白字字形最左角 4.63:1（t≈0.30；解析几何值 —— 本选择器
+     * 全站**零引用**，无渲染样本可实测，属防御性修补）。
+     * 收口：to 端 stop 提前到 30% 后，该最左角已落入恒色段（t≥0.30 即 --brand-blue-dark
+     * 6.56:1），较原式再抬升 ~1.9；同类修改的因果与 [告警] 见本文件 `.btn-primary` 首处注释。 */
+    background: linear-gradient(135deg, var(--brand-blue), var(--brand-blue-dark) 30%);
     color: white;
     border-radius: var(--radius-lg);
     text-decoration: none;
@@ -1004,8 +1028,15 @@ footer .footer-links a:hover {
     letter-spacing: 0.5px;
 }
 .blog-post blockquote.info::before { content: "INFO"; color: var(--brand-blue); }
-.blog-post blockquote.warning::before { content: "WARNING"; color: var(--brand-orange); }
-.blog-post blockquote.tip::before { content: "TIP"; color: var(--brand-green); }
+/* 批1·组A5（2026-09-28）：--brand-orange **作文字**时在 --orange-08 叠 --bg-card 的
+ * 浅橙底上仅 2.07:1，远未达 AA → 改 --color-warning-text（同底色 4.87:1）。
+ * 注意：本条是**亮色取值**；暗色下 --brand-orange 解析为 --orange-400，在该底色上 6.93:1
+ * 本已达标，故暗色侧下方另有覆写回 --brand-orange 的规则 —— 两处必须成对存在，
+ * 缺一则必有一边不合格。 */
+.blog-post blockquote.warning::before { content: "WARNING"; color: var(--color-warning-text); }
+/* 批1·组A5：同理，--brand-green 作文字在 --green-08 浅绿底上仅 2.09:1
+ * → 改 --color-success-deep（同底色 4.72:1）；暗色由下方覆写回 --brand-green。 */
+.blog-post blockquote.tip::before { content: "TIP"; color: var(--color-success-deep); }
 
 /* ===== Blog Post: Code ===== */
 .blog-post code {
@@ -1013,7 +1044,9 @@ footer .footer-links a:hover {
     font-size: 0.88em;
     padding: 0.15em 0.4em;
     background: var(--bg-muted);
-    color: var(--brand-orange);
+    /* 批1·组A5：--brand-orange 作内联 code 文字色，在 --bg-muted 上仅 2.07:1
+     * → --color-warning-text 同底色 4.88:1。暗色侧由下方 [data-theme="dark"] 规则覆写。 */
+    color: var(--color-warning-text);
     border-radius: 4px;
 }
 .blog-post pre {
@@ -1243,7 +1276,8 @@ button:active,.btn:active {
 }
 
 .category-chip.active {
-    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark));
+    /* 批1·组A3 收口（2026-09-28）：白字落在品牌蓝渐变上，to 端 stop 提前到 30%（字形最左角 4.44 → 5.26:1）；推导与 [告警] 见本文件 .btn-primary 首处注释 */
+    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark) 30%);
     color: var(--white);
     box-shadow: 0 2px 8px var(--blue-30);
 }
@@ -2243,7 +2277,13 @@ svg.ic {
     position: absolute;
     top: -1px;
     left: -1px;
-    background: linear-gradient(135deg,var(--strength-fair),var(--danger));
+    /* 批1·组A4（2026-09-28）：原 `linear-gradient(135deg, var(--strength-fair), var(--danger))`
+     * —— 白字落在 --strength-fair 端仅 2.15:1，严重不足。
+     * 改用专属令牌 --hot-badge-from / --hot-badge-to（5.18:1 → 6.47:1），
+     * 字形所在渐变段浏览器实测最差像素 5.51:1。
+     * 注意：刻意**不改** --strength-fair / --danger 本体 —— 二者为共用令牌，别处仍在用。
+     * 同址另见 critical.css 首帧规则，两处必须同改。 */
+    background: linear-gradient(135deg, var(--hot-badge-from), var(--hot-badge-to));
     color: var(--white);
     font-size: 0.7rem;
     font-weight: 700;
@@ -2342,7 +2382,10 @@ svg.ic {
     top: 38px;    /* 排在右上角点赞按钮正下方，右边缘与点赞按钮对齐 */
     right: 10px;  /* 与 .like-btn 的 right:10px 对齐 */
     font-size: var(--fs-xs);
-    color: var(--danger-strong);
+    /* 批1·组A4：原 var(--danger-strong)（= --color-danger）在 --danger-alpha 叠 --bg-card
+     * 后仅 4.23:1，未达 AA；改专属令牌 --hot-score-fg（实测 5.68:1）。
+     * **不改 --color-danger 本体**（它另有 --trend-hot-text 等消费者）。 */
+    color: var(--hot-score-fg);
     font-weight: 700;
     display: flex;
     align-items: center;
@@ -2564,7 +2607,8 @@ svg.ic {
     color: var(--glass-white-90);
 }
 [data-theme="dark"] .category-chip.active {
-    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark));
+    /* 批1·组A3 收口（2026-09-28）：白字落在品牌蓝渐变上，to 端 stop 提前到 30%（字形最左角 4.44 → 5.26:1）；推导与 [告警] 见本文件 .btn-primary 首处注释 */
+    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark) 30%);
     color: var(--white);
     box-shadow: 0 2px 8px var(--blue-30);
 }
@@ -2631,6 +2675,12 @@ svg.ic {
     background: var(--green-10a);
     border-left-color: var(--brand-green);
 }
+/* 批1·组A5（2026-09-28）：暗色侧必须**保留** --brand-orange / --brand-green。
+ * 二者在暗色块内解析为 --orange-400（6.93:1）/ --green-apple（7.06:1），本已达标；
+ * 若沿用亮色新值反而崩（2.75:1 / 2.85:1，均在暗底）。
+ * 这是「同一条规则跨主题必须分列取值」的第二处 —— 与 A1 的 --text-tertiary 同源根因。 */
+[data-theme="dark"] .blog-post blockquote.warning::before { color: var(--brand-orange); }
+[data-theme="dark"] .blog-post blockquote.tip::before { color: var(--brand-green); }
 [data-theme="dark"] .blog-post code {
     background: var(--bg-elevated);
     color: var(--brand-orange);
@@ -2802,7 +2852,8 @@ svg.ic {
 .blog-cta {
     margin: 2rem 0;
     padding: 1.2rem 1.5rem;
-    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark));
+    /* 批1·组A3 收口（2026-09-28）：白字落在品牌蓝渐变上，to 端 stop 提前到 30%（字形最左角 4.44 → 5.26:1）；推导与 [告警] 见本文件 .btn-primary 首处注释 */
+    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark) 30%);
     color: var(--white);
     border-radius: var(--radius-lg);
     text-align: center;
@@ -2984,7 +3035,8 @@ svg.ic {
     font-weight: 600;
     transition: all 0.2s ease;
 }
-.btn-primary-404 { background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark)); color: var(--white); }
+    /* 批1·组A3 收口（2026-09-28）：白字落在品牌蓝渐变上，to 端 stop 提前到 30%（字形最左角 4.44 → 5.26:1）；推导与 [告警] 见本文件 .btn-primary 首处注释 */
+.btn-primary-404 { background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark) 30%); color: var(--white); }
 .btn-primary-404:hover { transform: translateY(-2px); box-shadow: 0 4px 20px var(--primary-glow); }
 .btn-secondary-404 { background: var(--glass-bg); color: var(--text-primary); border: 1px solid var(--glass-border); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 .btn-secondary-404:hover { background: var(--bg-elevated); transform: translateY(-2px); }
@@ -3058,7 +3110,8 @@ svg.ic {
     color: var(--primary);
 }
 .mode-chip.active {
-    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark));
+    /* 批1·组A3 收口（2026-09-28）：白字落在品牌蓝渐变上，to 端 stop 提前到 30%（字形最左角 4.44 → 5.26:1）；推导与 [告警] 见本文件 .btn-primary 首处注释 */
+    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark) 30%);
     border-color: var(--primary);
     color: var(--white);
 }
@@ -3215,7 +3268,8 @@ svg.ic {
     color: var(--primary);
 }
 .speed-chip.active {
-    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark));
+    /* 批1·组A3 收口（2026-09-28）：白字落在品牌蓝渐变上，to 端 stop 提前到 30%（字形最左角 4.44 → 5.26:1）；推导与 [告警] 见本文件 .btn-primary 首处注释 */
+    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark) 30%);
     border-color: var(--primary);
     color: var(--white);
 }
@@ -3344,7 +3398,8 @@ svg.ic {
 .gen-tabs { display: flex; gap: var(--space-2); margin-bottom: var(--space-4); }
 .gen-tab { padding: 0.5rem 1.2rem; border-radius: 20px; border: 1.5px solid var(--border); background: var(--bg-card); color: var(--text-secondary); font-size: 0.9rem; cursor: pointer; transition: all 0.2s; user-select: none; }
 .gen-tab:hover { border-color: var(--primary); color: var(--primary); }
-.gen-tab.active { background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark)); border-color: var(--primary); color: var(--white); }
+    /* 批1·组A3 收口（2026-09-28）：白字落在品牌蓝渐变上，to 端 stop 提前到 30%（字形最左角 4.44 → 5.26:1）；推导与 [告警] 见本文件 .btn-primary 首处注释 */
+.gen-tab.active { background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark) 30%); border-color: var(--primary); color: var(--white); }
 .gen-panel { display: none; }
 .gen-panel.active { display: block; }
 
@@ -3501,7 +3556,10 @@ svg.ic {
     border: none;
 }
 .btn-primary {
-    background: var(--primary);
+    /* 批1·组A3 + 收口：同上方 .btn-primary 处置理由 —— 原 `var(--primary)` 纯色 + 白字仅
+     * 4.02:1，未达 AA；改同源渐变并把 to 端 stop 提前到 30%（因果与 [告警] 见首处注释）。
+     * 本文件内两处 .btn-primary 定义**均需同步**（后者优先级更高，漏改一处即失效）。 */
+    background: linear-gradient(135deg, var(--brand-blue), var(--brand-blue-dark) 30%);
     color: white;
 }
 .btn-primary:hover {
@@ -3908,12 +3966,21 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--primary); }
 /* ============================================================
    P1P2-10 可访问性：skip-link 与 :focus-visible 可见焦点
    ============================================================ */
+/* 批1·组A3 + 收口（2026-09-28）：
+ * ① 原 `var(--primary, var(--blue-600))` 纯色 + 白字仅 4.02:1，未达 AA。改同源渐变后浏览器
+ *    实测（真值 132x45.6，字形包围盒 t∈[0.169,0.822]）：中段 5.09:1，但**最左角** 4.35:1
+ *    （暗色 4.01:1）仍低于 4.5 —— 本元素横向内边距小、文字起点更靠近渐变 from 端。
+ * ② 收口：to 端 stop 提前到 30% 后，最左角 t=0.169 → 亮 5.26 / 暗 5.03，全域达标
+ *    （t≥0.30 的整段恒为 --brand-blue-dark，即 6.56）。
+ * [告警] 本规则与 css/critical.css 同名规则**逐字节相同**，两处必须同改 ——
+ *    critical.css 是首帧唯一到达的样式表，只改一份会首帧闪。
+ * 因果推导详见本文件 `.btn-primary` 首处注释。 */
 .skip-link {
     position: absolute;
     left: -9999px;
     top: 0;
     z-index: 9999;
-    background: var(--primary,var(--blue-600));
+    background: linear-gradient(135deg, var(--brand-blue), var(--brand-blue-dark) 30%);
     color: var(--white);
     padding: 10px 18px;
     border-radius: 0 0 10px 0;
@@ -3992,13 +4059,19 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--primary); }
 }
 
 /* --- 按钮:主按钮渐变胶囊 + 副按钮玻璃描边 --- */
+/* 批1·A3 收口（2026-09-28）：本处是 `.btn-primary` 的**第三处**定义，位于文件末尾 ——
+ * 与 492 / 3551 同特异度但后出现，故**实际生效**（优先级最高，覆盖前两处）。
+ * 若 A3 的 `30%` stop 只改前两处而漏改本处，主按钮会退回原式：实测角点亮 4.44 / 暗 4.11，
+ * AA 破线（本条经 Chromium 真实渲染像素验证，见批次回传 A3 收口小节）。
+ * 因果推导与 [告警] 详见 492 处首注；下方 `:hover` 同步 —— 悬停时底仍为同一渐变，白字阈值同为 4.5。 */
 .btn-primary {
-    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark));
+    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark) 30%);
     border-radius: var(--radius-full);
     box-shadow: 0 4px 16px var(--primary-glow);
 }
 .btn-primary:hover {
-    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark));
+    /* 批1·A3 收口：悬停态底为同一同源渐变（原式角点亮 4.44 / 暗 4.11 同样破线），stop 必须同步提前。 */
+    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark) 30%);
     box-shadow: 0 6px 22px var(--primary-glow);
 }
 .btn-secondary {
@@ -4106,7 +4179,8 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--primary); }
     box-shadow: var(--shadow-md);
 }
 .blog-post .blog-cta {
-    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark));
+    /* 批1·组A3 收口（2026-09-28）：白字落在品牌蓝渐变上，to 端 stop 提前到 30%（字形最左角 4.44 → 5.26:1）；推导与 [告警] 见本文件 .btn-primary 首处注释 */
+    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark) 30%);
     border-radius: var(--radius-xl);
     box-shadow: 0 8px 24px var(--primary-glow);
 }
@@ -4310,7 +4384,8 @@ input[type="checkbox"], input[type="radio"] { accent-color: var(--primary); }
 }
 [data-theme="dark"] .tag-cat-list .tag { color: var(--brand-blue); } /* C4-a11y: dark 维持亮蓝(暗底达标) */
 .tag-cat-list .tag:hover {
-    background: var(--brand-blue);
+    /* 批1·组A3 收口（2026-09-28）：原纯色 --brand-blue 配白字仅 4.02:1，改同源渐变 + 30% stop；推导与 [告警] 见本文件 .btn-primary 首处注释 */
+    background: linear-gradient(135deg,var(--brand-blue),var(--brand-blue-dark) 30%);
     color: var(--white);
 }
 
