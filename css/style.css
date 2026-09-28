@@ -1003,9 +1003,9 @@ footer .footer-links a:hover {
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
-.blog-post blockquote.info::before { content: "\2139\FE0F INFO"; color: var(--brand-blue); }
-.blog-post blockquote.warning::before { content: "\26A0\FE0F WARNING"; color: var(--brand-orange); }
-.blog-post blockquote.tip::before { content: "\1F4A1 TIP"; color: var(--brand-green); }
+.blog-post blockquote.info::before { content: "INFO"; color: var(--brand-blue); }
+.blog-post blockquote.warning::before { content: "WARNING"; color: var(--brand-orange); }
+.blog-post blockquote.tip::before { content: "TIP"; color: var(--brand-green); }
 
 /* ===== Blog Post: Code ===== */
 .blog-post code {

@@ -12,6 +12,37 @@ BLOG_ZH = os.path.join(ROOT, "blog", "zh")
 BLOG_EN = os.path.join(ROOT, "blog", "en")
 DATE = "2026-07-02"
 
+# ── Emoji → SVG sprite (P1-15 unification) ───────────────────────
+SPRITE = "/assets/icons/icons.svg#icon-"
+EMOJI_MAP = {
+    '🧮': 'calculator', '🖼️': 'image', '🖼': 'image', '🔣': 'type',
+    '💰': 'coins', '🔧': 'wrench', '🏞': 'heart-pulse', '🏔': 'flower',
+    '📌': 'map-pin', '📰': 'newspaper', '👉': 'arrow-right', '📅': 'calendar',
+    '📖': 'book-open', '✅': 'check', '❤': 'heart', '🏥': 'stethoscope',
+    '🏠': 'home', '📎': 'link', '🛒': 'shopping-cart', '🇨🇳': 'languages',
+    '🇺🇸': 'languages', '🔑': 'key', '📊': 'bar-chart', '🎲': 'dice-5',
+    '📱': 'smartphone',
+}
+CAT_ICON_ZH = {"finance": "coins", "health": "heart-pulse", "life": "flower", "utility": "wrench"}
+CAT_ICON_EN = CAT_ICON_ZH
+
+def _icon(name):
+    return '<svg class="ic" aria-hidden="true"><use href="%s%s"></use></svg> ' % (SPRITE, name)
+
+def emoji_to_icon(text):
+    import re as _re
+    for emo, name in EMOJI_MAP.items():
+        if emo in text:
+            text = _re.sub(_re.escape(emo) + r'\s*', _icon(name), text)
+    return text
+
+def strip_emoji(text):
+    import re as _re
+    for emo in EMOJI_MAP:
+        if emo in text:
+            text = _re.sub(_re.escape(emo) + r'\s*', '', text)
+    return text
+
 # ── Blog content data ─────────────────────────────────────────────
 # (slug, category_zh, category_en, zh_title, zh_desc, zh_body, zh_cta_text,
 #  en_title, en_desc, en_body, en_cta_text, tool_path_zh, tool_path_en, tool_name_zh, tool_name_en)
@@ -289,17 +320,17 @@ def en_blog_filename(slug):
     return f"{slug}.html"
 
 CATEGORY_ZH_MAP = {
-    "finance": ("💰 财务", "tag-finance"),
-    "health": ("🏞 健康", "tag-health"),
-    "life": ("🏔 生活", "tag-life"),
-    "utility": ("🔧 工具", "tag-utility"),
+    "finance": ("财务", "tag-finance"),
+    "health": ("健康", "tag-health"),
+    "life": ("生活", "tag-life"),
+    "utility": ("工具", "tag-utility"),
 }
 
 CATEGORY_EN_MAP = {
-    "finance": ("💰 Finance", "tag-finance"),
-    "health": ("🏞 Health", "tag-health"),
-    "life": ("🏔 Lifestyle", "tag-life"),
-    "utility": ("🔧 Tools", "tag-utility"),
+    "finance": ("Finance", "tag-finance"),
+    "health": ("Health", "tag-health"),
+    "life": ("Lifestyle", "tag-life"),
+    "utility": ("Tools", "tag-utility"),
 }
 
 
@@ -308,17 +339,19 @@ def build_related_posts_zh(current_slug, cat, all_entries, max_items=4):
     if not related:
         return ''
     items = ''.join(f'<li><a href="/blog/zh/{slug}.html">{title}</a></li>' for slug, cat, title, desc in related)
-    return f'<div class="related-posts"><h3>📌 相关文章</h3><ul>{items}</ul></div>'
+    return f'<div class="related-posts"><h3>{_icon("map-pin")}相关文章</h3><ul>{items}</ul></div>'
 
 def build_related_posts_en(current_slug, cat, all_entries, max_items=4):
     related = [e for e in all_entries if e[0] != current_slug and e[1] == cat][:max_items]
     if not related:
         return ''
     items = ''.join(f'<li><a href="/blog/en/{slug}.html">{title}</a></li>' for slug, cat, title, desc in related)
-    return f'<div class="related-posts"><h3>📌 Related Articles</h3><ul>{items}</ul></div>'
+    return f'<div class="related-posts"><h3>{_icon("map-pin")} Related Articles</h3><ul>{items}</ul></div>'
 
 def generate_zh_blog(slug, cat, zh_title, zh_desc, zh_body, zh_cta_text, tool_path, tool_name, related_posts_zh=""):
-    cat_zh, tag_class = CATEGORY_ZH_MAP.get(cat, ("🔧 工具", "tag-utility"))
+    cat_zh, tag_class = CATEGORY_ZH_MAP.get(cat, ("工具", "tag-utility"))
+    cat_zh = _icon(CAT_ICON_ZH.get(cat, "wrench")) + cat_zh
+    tool_name = strip_emoji(tool_name)
     canonical = f"https://calc-tools.top/blog/zh/{slug}.html"
     en_canonical = f"https://calc-tools.top/blog/en/{slug}.html"
     article_id = f"blog_{slug.replace('-', '_')}"
@@ -376,8 +409,8 @@ def generate_zh_blog(slug, cat, zh_title, zh_desc, zh_body, zh_cta_text, tool_pa
         <nav>
             <a href="/">首页</a>
             <select class="lang-switch" onchange="switchLang(this.value)">
-                <option value="zh" selected>🇨🇳 中文</option>
-                <option value="en">🇺🇸 English</option>
+                <option value="zh" selected>中文</option>
+                <option value="en">English</option>
             </select>
         </nav>
     </header>
@@ -390,12 +423,12 @@ def generate_zh_blog(slug, cat, zh_title, zh_desc, zh_body, zh_cta_text, tool_pa
                 <span>{zh_title}</span>
             </nav>
             <div class="article-tags"><a href="/blog/zh/?cat={cat}" class="tag {tag_class}" data-tag="{cat}">{cat_zh}</a></div>
-            <p class="blog-meta">📰 {DATE} · Calc-Tools 编辑</p>
+            <p class="blog-meta">{_icon('newspaper')}{DATE} · Calc-Tools 编辑</p>
             <h1>{zh_title}</h1>{zh_body}
             <div class="blog-cta">
                 <p><strong>在线使用 {tool_name}</strong></p>
                 <p>无需下载，打开即用</p>
-                <p><a href="{tool_path}">👉 立即使用 {tool_name}</a></p>
+                <p><a href="{tool_path}">{_icon('arrow-right')} 立即使用 {tool_name}</a></p>
             </div>
             {related_posts_zh}
             <div class="article-bottom-tags"><a href="/blog/zh/?cat={cat}" class="tag {tag_class}" data-tag="{cat}">{cat_zh}</a></div>
@@ -410,7 +443,9 @@ def generate_zh_blog(slug, cat, zh_title, zh_desc, zh_body, zh_cta_text, tool_pa
     return html
 
 def generate_en_blog(slug, cat, en_title, en_desc, en_body, en_cta_text, tool_path, tool_name, related_posts_en=""):
-    cat_en, tag_class = CATEGORY_EN_MAP.get(cat, ("🔧 Tools", "tag-utility"))
+    cat_en, tag_class = CATEGORY_EN_MAP.get(cat, ("Tools", "tag-utility"))
+    cat_en = _icon(CAT_ICON_EN.get(cat, "wrench")) + cat_en
+    tool_name = strip_emoji(tool_name)
     canonical = f"https://calc-tools.top/blog/en/{slug}.html"
     zh_canonical = f"https://calc-tools.top/blog/zh/{slug}.html"
 
@@ -452,12 +487,12 @@ def generate_en_blog(slug, cat, en_title, en_desc, en_body, en_cta_text, tool_pa
                 <span>{en_title}</span>
             </nav>
 <div class="article-tags"><a href="/blog/en/?cat={cat}" class="tag {tag_class}" data-tag="{cat}">{cat_en}</a></div>
-<p class="blog-meta">📰 {DATE} · Calc-Tools Editor</p>
+<p class="blog-meta">{_icon('newspaper')}{DATE} · Calc-Tools Editor</p>
 <h1>{en_title}</h1>{en_body}
             <div class="blog-cta">
                 <p><strong>Online {tool_name}</strong></p>
                 <p>Free to use, no download required</p>
-                <p><a href="{tool_path}">👉 Use {tool_name} Now</a></p>
+                <p><a href="{tool_path}">{_icon('arrow-right')} Use {tool_name} Now</a></p>
             </div>
             {related_posts_en}
 <div class="article-bottom-tags"><a href="/blog/en/?cat={cat}" class="tag {tag_class}" data-tag="{cat}">{cat_en}</a></div>
@@ -503,7 +538,7 @@ def main():
         zh_path = os.path.join(BLOG_ZH, f"{slug}.html")
         with open(zh_path, 'w', encoding='utf-8') as f:
             f.write(zh_html)
-        print(f"✅ zh: {slug}.html")
+        print(f"zh: {slug}.html")
 
         # Generate en
         related_en = build_related_posts_en(slug, cat_en, en_entries)
@@ -511,7 +546,7 @@ def main():
         en_path = os.path.join(BLOG_EN, f"{slug}.html")
         with open(en_path, 'w', encoding='utf-8') as f:
             f.write(en_html)
-        print(f"✅ en: {slug}.html")
+        print(f"en: {slug}.html")
 
     print(f"\nTotal: {len(BLOGS)} × 2 = {len(BLOGS)*2} blog posts generated")
 
@@ -521,21 +556,21 @@ def main():
         zh_index = f.read()
 
     # Add utility category filter
-    utility_filter = '''            <button class="category-chip" data-category="utility">🔧 工具</button>'''
+    utility_filter = '<button class="category-chip" data-category="utility">' + _icon("wrench") + '工具</button>'
     zh_index = zh_index.replace(
-        '<button class="category-chip" data-category="life">🏔 生活</button>',
-        '<button class="category-chip" data-category="life">🏔 生活</button>\n' + utility_filter
+        '<button class="category-chip" data-category="life">生活</button>',
+        '<button class="category-chip" data-category="life">生活</button>\n' + utility_filter
     )
 
     # Generate article list HTML for new entries
     new_articles_html_zh = ""
     for slug, cat, title, desc in zh_entries:
         article_id = f"blog_{slug.replace('-', '_')}"
-        cat_zh_display, _ = CATEGORY_ZH_MAP.get(cat, ("🔧 工具", "tag-utility"))
+        cat_zh_display, _ = CATEGORY_ZH_MAP.get(cat, ("工具", "tag-utility"))
         new_articles_html_zh += f'''
             <article class="article-item" data-category="{cat}">
                 <h2><a href="/blog/zh/{slug}.html">{title}</a></h2>
-                <p class="article-meta">📰 {DATE}</p><button class="article-like" data-blog-id="{article_id}"><span class="heart">❤️</span> <span class="like-count">0</span></button>
+                <p class="article-meta">{_icon('newspaper')} {DATE}</p><button class="article-like" data-blog-id="{article_id}"><span class="heart">{_icon('heart')}</span> <span class="like-count">0</span></button>
                 <p class="article-summary">{desc}</p>
                 <div class="article-tags"><a href="/blog/zh/" class="tag tag-{cat}" data-tag="{cat}">{cat_zh_display}</a></div>
             </article>'''
@@ -548,7 +583,7 @@ def main():
 
     with open(zh_index_path, 'w', encoding='utf-8') as f:
         f.write(zh_index)
-    print(f"✅ Updated zh/blog/index.html")
+    print(f"Updated zh/blog/index.html")
 
     # ── Update en/index.html ──
     en_index_path = os.path.join(BLOG_EN, "index.html")
@@ -556,20 +591,20 @@ def main():
         en_index = f.read()
 
     # Add utility category filter
-    utility_filter_en = '''            <button class="category-chip" data-category="utility">🔧 Tools</button>'''
+    utility_filter_en = '<button class="category-chip" data-category="utility">' + _icon("wrench") + 'Tools</button>'
     en_index = en_index.replace(
-        '<button class="category-chip" data-category="life">🏔 Lifestyle</button>',
-        '<button class="category-chip" data-category="life">🏔 Lifestyle</button>\n' + utility_filter_en
+        '<button class="category-chip" data-category="life">Lifestyle</button>',
+        '<button class="category-chip" data-category="life">Lifestyle</button>\n' + utility_filter_en
     )
 
     new_articles_html_en = ""
     for slug, cat, title, desc in en_entries:
         article_id = f"blog_{slug.replace('-', '_')}"
-        cat_en_display, _ = CATEGORY_EN_MAP.get(cat, ("🔧 Tools", "tag-utility"))
+        cat_en_display, _ = CATEGORY_EN_MAP.get(cat, ("Tools", "tag-utility"))
         new_articles_html_en += f'''
             <article class="article-item" data-category="{cat}">
                 <h2><a href="/blog/en/{slug}.html">{title}</a></h2>
-                <p class="article-meta">📰 {DATE}</p><button class="article-like" data-blog-id="{article_id}"><span class="heart">❤️</span> <span class="like-count">0</span></button>
+                <p class="article-meta">{_icon('newspaper')} {DATE}</p><button class="article-like" data-blog-id="{article_id}"><span class="heart">{_icon('heart')}</span> <span class="like-count">0</span></button>
                 <p class="article-summary">{desc}</p>
                 <div class="article-tags"><a href="/blog/en/" class="tag tag-{cat}" data-tag="{cat}">{cat_en_display}</a></div>
             </article>'''
@@ -581,11 +616,11 @@ def main():
 
     with open(en_index_path, 'w', encoding='utf-8') as f:
         f.write(en_index)
-    print(f"✅ Updated en/blog/index.html")
+    print(f"Updated en/blog/index.html")
 
     # ── Also update the existing static about/contact/privacy blog list if needed ──
     # Actually these are already in the index, the article-list div gets the new entries
-    print("\n✅ All done!")
+    print("\nAll done!")
 
 
 
@@ -595,24 +630,24 @@ def main():
         homepage = f.read()
 
     homepage_entries = [
-        ("equal-installment-vs-equal-principal", "finance", "等额本息 vs 等额本金怎么选？真实案例对比", "买房贷款选等额本息还是等额本金？通过真实案例对比两种还款方式的利息差异和适用人群。", "2026-06-25", "💰 财务", "finance"),
-        ("mortgage-rate-trend-2026", "finance", "2026 房贷利率最新趋势解读", "2026 年房贷利率最新政策解读，分析 LPR 走势和未来趋势，帮您把握购房时机。", "2026-06-25", "💰 财务", "finance"),
-        ("tax-deduction-guide-2026", "finance", "2026 个税抵扣全攻略，这样申报最省钱", "2026 年个税专项附加扣除全攻略，子女教育、房贷利息、赡养老人等抵扣项目详解。", "2026-06-25", "💰 财务", "finance"),
-        ("bmi-normal-range-guide", "health", "BMI 多少算正常？标准范围全面解读", "BMI 正常范围是多少？了解 BMI 指数标准和计算方法，附健康管理建议。", "2026-06-25", "🏥 健康", "health"),
-        ("housing-fund-loan-guide", "finance", "公积金贷款额度怎么算？2026 最新政策", "公积金贷款额度计算方法详解，缴存年限、账户余额、月缴存额对额度的影响。", "2026-06-25", "💰 财务", "finance"),
-        ("date-calculation-tips", "life", "日期计算实用技巧，工作生活都用得上", "日期计算在日常工作中非常实用，合同管理、项目排期、旅行规划等场景的日期计算方法。", "2026-06-25", "🏠 生活", "life"),
-        ("standard-weight-guide", "health", "标准体重对照表：男女身高体重标准范围", "标准体重是多少？男性和女性的标准体重对照表，体重标准计算公式参考。", "2026-06-26", "🏥 健康", "health"),
-        ("overtime-pay-guide", "finance", "加班工资怎么算？劳动法加班费计算标准", "加班工资计算标准详解，工作日1.5倍、休息日2倍、法定节假日3倍，附加班费计算方法。", "2026-06-26", "💰 财务", "finance"),
-        ("image-compression-guide", "image", "图片太大怎么压缩？在线图片压缩完全指南", "免费在线图片压缩指南，浏览器本地处理不上传，支持 JPG/PNG/WebP 压缩。", "2026-06-26", "🖼️ 图片", "image"),
-        ("discount-calculation-tips", "shopping", "打折怎么算？折扣计算公式与省钱技巧", "折扣计算公式、打折计算方法、满减和折扣的区别，帮你快速计算折后价格。", "2026-06-26", "🛒 购物", "shopping"),
-        ("compound-interest-guide", "finance", "复利是什么意思？复利计算公式与投资指南", "复利是什么意思？复利计算公式详解，如何利用复利进行长期投资理财。", "2026-06-26", "💰 财务", "finance"),
-        ("car-loan-calculator-guide", "finance", "买车贷款怎么算？车贷月供和利息全解析", "车贷月供计算、利息计算、首付比例选择，汽车贷款计算器帮你了解月供和总利息。", "2026-06-26", "💰 财务", "finance"),
+        ("equal-installment-vs-equal-principal", "finance", "等额本息 vs 等额本金怎么选？真实案例对比", "买房贷款选等额本息还是等额本金？通过真实案例对比两种还款方式的利息差异和适用人群。", "2026-06-25", _icon('coins') + "财务", "finance"),
+        ("mortgage-rate-trend-2026", "finance", "2026 房贷利率最新趋势解读", "2026 年房贷利率最新政策解读，分析 LPR 走势和未来趋势，帮您把握购房时机。", "2026-06-25", _icon('coins') + "财务", "finance"),
+        ("tax-deduction-guide-2026", "finance", "2026 个税抵扣全攻略，这样申报最省钱", "2026 年个税专项附加扣除全攻略，子女教育、房贷利息、赡养老人等抵扣项目详解。", "2026-06-25", _icon('coins') + "财务", "finance"),
+        ("bmi-normal-range-guide", "health", "BMI 多少算正常？标准范围全面解读", "BMI 正常范围是多少？了解 BMI 指数标准和计算方法，附健康管理建议。", "2026-06-25", _icon('heart-pulse') + "健康", "health"),
+        ("housing-fund-loan-guide", "finance", "公积金贷款额度怎么算？2026 最新政策", "公积金贷款额度计算方法详解，缴存年限、账户余额、月缴存额对额度的影响。", "2026-06-25", _icon('coins') + "财务", "finance"),
+        ("date-calculation-tips", "life", "日期计算实用技巧，工作生活都用得上", "日期计算在日常工作中非常实用，合同管理、项目排期、旅行规划等场景的日期计算方法。", "2026-06-25", _icon('flower') + "生活", "life"),
+        ("standard-weight-guide", "health", "标准体重对照表：男女身高体重标准范围", "标准体重是多少？男性和女性的标准体重对照表，体重标准计算公式参考。", "2026-06-26", _icon('heart-pulse') + "健康", "health"),
+        ("overtime-pay-guide", "finance", "加班工资怎么算？劳动法加班费计算标准", "加班工资计算标准详解，工作日1.5倍、休息日2倍、法定节假日3倍，附加班费计算方法。", "2026-06-26", _icon('coins') + "财务", "finance"),
+        ("image-compression-guide", "image", "图片太大怎么压缩？在线图片压缩完全指南", "免费在线图片压缩指南，浏览器本地处理不上传，支持 JPG/PNG/WebP 压缩。", "2026-06-26", _icon('image') + "图片", "image"),
+        ("discount-calculation-tips", "shopping", "打折怎么算？折扣计算公式与省钱技巧", "折扣计算公式、打折计算方法、满减和折扣的区别，帮你快速计算折后价格。", "2026-06-26", _icon('shopping-cart') + "购物", "shopping"),
+        ("compound-interest-guide", "finance", "复利是什么意思？复利计算公式与投资指南", "复利是什么意思？复利计算公式详解，如何利用复利进行长期投资理财。", "2026-06-26", _icon('coins') + "财务", "finance"),
+        ("car-loan-calculator-guide", "finance", "买车贷款怎么算？车贷月供和利息全解析", "车贷月供计算、利息计算、首付比例选择，汽车贷款计算器帮你了解月供和总利息。", "2026-06-26", _icon('coins') + "财务", "finance"),
     ]
 
-    cat_map = {"finance": ("💰 财务", "finance"), "health": ("🏥 健康", "health"), "life": ("🏠 生活", "life"), "utility": ("🔧 工具", "utility")}
+    cat_map = {"finance": (_icon("coins") + "财务", "finance"), "health": (_icon("heart-pulse") + "健康", "health"), "life": (_icon("flower") + "生活", "life"), "utility": (_icon("wrench") + "工具", "utility")}
     for blog in BLOGS:
         slug, cat_zh, cat_en, zh_title, zh_desc, zh_body, zh_cta, en_title, en_desc, en_body, en_cta, tool_zh, tool_en, name_zh, name_en = blog
-        tag_text, tag_cat = cat_map.get(cat_zh, ("🔧 工具", "utility"))
+        tag_text, tag_cat = cat_map.get(cat_zh, (_icon("wrench") + "工具", "utility"))
         homepage_entries.append((slug, cat_zh, zh_title, zh_desc, DATE, tag_text, tag_cat))
 
     new_articles = ""
@@ -621,7 +656,7 @@ def main():
         new_articles += f'''
             <article class="article-item" data-category="{cat}">
                 <h4><a href="/blog/zh/{slug}.html">{title}</a></h4>
-                <p class="article-meta">📅 {date}</p><button class="article-like" data-blog-id="{article_id}"><span class="heart">❤</span> <span class="like-count">0</span></button>
+                <p class="article-meta">{_icon('calendar')} {date}</p><button class="article-like" data-blog-id="{article_id}"><span class="heart">{_icon('heart')}</span> <span class="like-count">0</span></button>
                 <p class="article-summary">{desc}</p>
                 <div class="article-tags"><a href="/blog/zh/" class="tag tag-{cat}" data-tag="{tag_cat}">{tag_text}</a></div>
             </article>'''
@@ -630,10 +665,10 @@ def main():
     main_end = homepage.find('</main>', blog_start)
     before = homepage[:blog_start]
     after = homepage[main_end:]
-    new_homepage = before + '<div class="blog-section">\n            <h2>📖 工具指南</h2>\n            <div class="article-list">\n' + new_articles + '\n            </div>\n        </div>\n    ' + after
+    new_homepage = before + '<div class="blog-section">\n            <h2>' + _icon("book-open") + ' 工具指南</h2>\n            <div class="article-list">\n' + new_articles + '\n            </div>\n        </div>\n    ' + after
     with open(homepage_path, 'w', encoding='utf-8') as f:
         f.write(new_homepage)
-    print("✅ Updated homepage index.html")
+    print("Updated homepage index.html")
 
 
 if __name__ == "__main__":
