@@ -93,6 +93,7 @@ KV_URL / KV_REDIS_URL
 | `r4-screenshots.mjs` | R4 门禁截图回归 | `node scripts/r4-screenshots.mjs` |
 | `pre-work-check.sh` / `pre-work-check.ps1` | 会话前置防护：对齐基线 / 防漂移检查 | `sh scripts/pre-work-check.sh` |
 | `audit-a11y.mjs` | 全站 axe 扫描（WCAG 2.1 A/AA，msedge 通道；verify #22） | `node scripts/audit-a11y.mjs` |
+| `audit-visual.mjs` | 渲染级视觉审查（图标隐形/断裂引用/孤儿变体选择符 U+FE0E·FE0F/替换符 U+FFFD/未捕获异常，亮暗双主题；默认 chromium 通道） | `node scripts/audit-visual.mjs` |
 | `seo-batch-audit.mjs` | SEO 软指标批量审计（title/desc 长度等） | `node scripts/seo-batch-audit.mjs` |
 | `gen-allowed-ids.js` | 生成 API 白名单 ID | `node scripts/gen-allowed-ids.js` |
 | `inject-url-state.mjs` | 为计算器页注入 `js/url-state.js`（URL 参数预填，幂等） | `node scripts/inject-url-state.mjs [--dry-run]` |

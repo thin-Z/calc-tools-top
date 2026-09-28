@@ -18,8 +18,9 @@
     "test:e2e": "playwright test",
     "e2e:server": "node scripts/e2e-server.mjs",
     "audit:pre": "node scripts/pre-submit-audit.mjs",
-  "ci": "node scripts/build.mjs && node scripts/verify-site.mjs && npm run test:cov && npm run test:e2e && node scripts/audit-a11y.mjs && node scripts/audit-narrow-overflow.mjs",
-    "ci:quick": "node scripts/build.mjs && node scripts/verify-site.mjs && npm run test:cov && node scripts/audit-a11y.mjs && node scripts/audit-narrow-overflow.mjs"
+    "audit:visual": "node scripts/audit-visual.mjs",
+  "ci": "node scripts/build.mjs && node scripts/verify-site.mjs && npm run test:cov && npm run test:e2e && node scripts/audit-a11y.mjs && node scripts/audit-narrow-overflow.mjs && node scripts/audit-visual.mjs",
+    "ci:quick": "node scripts/build.mjs && node scripts/verify-site.mjs && npm run test:cov && node scripts/audit-a11y.mjs && node scripts/audit-narrow-overflow.mjs && node scripts/audit-visual.mjs"
   },
   "repository": {
     "type": "git",

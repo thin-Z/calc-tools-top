@@ -189,7 +189,7 @@ else info('（无改动，或改动类型无专项提示）');
 findings.push('[6] 必做清单（本脚本无法代跑，提交前逐项确认）');
 info('a. 门禁全绿: npm run ci:quick  (build + verify-site + test:cov + a11y + 窄屏)');
 info('b. a11y 必须按 CI 通道跑: E2E_CHANNEL=chromium node scripts/audit-a11y.mjs（默认 msedge 会假绿）');
-info('c. 视觉/行为改动: 浏览器实测（HTTP 起服务 + 等样式就绪 + 鼠标移开）');
+info('c. 视觉/行为改动: `npm run audit:visual`（渲染级视觉审查：图标隐形/断裂引用/孤儿变体选择符/替换符/未捕获异常，亮暗双主题，默认 chromium 通道）');
 info('d. 新增门禁/负向用例: 必须先证明装置有效（注入生效 + 改动前报得出）再断言「期望 0」');
 info('e. 文档同步: 报告就地校正 / todo-list / 日志 / MEMORY（结论被推翻的要删或改写，不加更正块）');
 
