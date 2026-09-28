@@ -760,17 +760,24 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
   }
 }
 
-// ---------- 35. 令牌纪律门禁（R1：box-shadow 值型令牌/length 混排，2026-09-23 V0 新增） ----------
-// 背景：P0-1 查明 10 处 `box-shadow` 把值型阴影令牌（--shadow-*，存完整值）与字面 length 混排，
+// ---------- 35. 令牌纪律门禁（R1 box-shadow 混排 + R3–R9 令牌阶梯纪律，2026-09-23 / 09-28） ----------
+// R1 背景：P0-1 查明 10 处 `box-shadow` 把值型阴影令牌（--shadow-*，存完整值）与字面 length 混排，
 // 单层 length 数超过 CSS 规范上限 4 → 整条声明语法无效、被浏览器**静默丢弃**。
 // 该类失效不报错、不崩溃，只是悄悄不生效，属最贵的「沉默逻辑错误」；既有门禁完全不覆盖
 // 声明级语义，故新增本项。命门：--shadow-* 是值型、--shadow-color-* 是颜色型，不得混同展开。
+// 批 0 扩展（R3–R9，2026-09-28）：令牌阶梯纪律七条 —— font-size / line-height / padding·margin·gap /
+// border-radius / 动效时长 / z-index / font-weight，扫描 css/*.css 并豁免 tokens.css 与
+// badge-maker.css（自成体系，站级待决项 S10）。每条规则有**两条独立信号**：
+//   ① 计数只降不升（基线在同脚本 BASELINES 常量；低于基线只提示可下调，不自动改）
+//   ② 白名单外**新值**独立阻断（防「旧值换新值」的等价交换：计数可纹丝不动，计数信号照不到）
+// 本项一次调用即返回全部 8 条规则结果（stdio 直通，逐条明细与 file:Lline 定位不受损），
+// 故**不拆成多个断言位**，保持断言总数 36 不变。
 {
   try {
     execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'check-token-discipline.mjs')], { stdio: 'inherit', cwd: ROOT });
-    console.log('[35] 令牌纪律门禁 (check-token-discipline R1): ✓');
+    console.log('[35] 令牌纪律门禁 (check-token-discipline R1 box-shadow 混排 + R3–R9 阶梯纪律, 共 8 条规则): ✓');
   } catch (e) {
-    fail('[token-discipline] scripts/check-token-discipline.mjs 退出码非 0（存在 box-shadow 值型令牌与字面 length 混排 → 单层 length 超上限，声明被浏览器静默丢弃）');
+    fail('[token-discipline] scripts/check-token-discipline.mjs 退出码非 0（R1：box-shadow 值型令牌与字面 length 混排 → 单层 length 超上限，声明被浏览器静默丢弃；或 R3–R9：阶梯计数超基线 / 出现白名单外新值。逐条明细见上方直通输出）');
   }
 }
 
