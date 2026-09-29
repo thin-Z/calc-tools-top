@@ -53,6 +53,54 @@
     }
     </script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"博客","item":"https://www.calc-tools.top/blog/zh/"},{"@type":"ListItem","position":3,"name":"图片格式怎么选? JPG、PNG、WebP、GIF对比与转换指南","item":"https://www.calc-tools.top/blog/zh/image-format-converter-guide"}]}</script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "PNG 转成 JPEG 后，透明区域为什么变成白块或黑块，而不是没有背景？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "因为 JPEG 没有 alpha 通道，每个像素都必须写出一个确定的颜色。透明像素本身通常也带着一个 RGB 值（常见是黑或白），转换器要么沿用这个值，要么按自己设定的底色填充，所以结果会随工具而变。要控制结果，就在转换前先把透明区域合成到指定底色上，网页素材通常选与页面相同的颜色。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "把照片转成 PNG 会更清晰吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "不会。PNG 的无损指的是不再新增损失，无法恢复已经在 JPEG 里丢掉的细节。JPEG 转 PNG 的典型后果是体积涨到数倍，而画面与转换前完全一样。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "AVIF 现在能用了吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "较新的浏览器已经支持，压缩效率通常也高于 WebP；但支持面比 WebP 窄，浏览器之外的软件更容易打不开，编码耗时也明显更长。稳妥做法是把它当作网页上的增益格式，同时保留 WebP 或 JPEG 作为回退。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "为什么转换后照片在电脑上变成横躺的？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "手机拍摄的照片通常不旋转像素，而是写一个方向标记，由显示端负责转正。转换过程如果丢掉了这个标记，或者按错误的方向重写了像素，照片就会横躺。批量转换前，先确认导出设置里保留元数据与自动旋转的处理方式。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "网页上只提供一种格式够不够？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "只考虑浏览器的话，一种现代格式通常够用；但同一张图还会被复制进文档、聊天窗口和上传框，那些环节的支持面窄得多。需要长期复用的图，建议同时留一份 JPEG 或 PNG，网页上再用多来源声明交给浏览器自行挑选。"
+                }
+            }
+        ]
+    }
+    </script>
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>
@@ -79,43 +127,110 @@
             </nav>
             <div class="article-tags"><a href="/tags/utility.html" class="tag tag-utility" data-tag="utility"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-wrench"></use></svg> 工具</a></div>
             <p class="blog-meta"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-newspaper"></use></svg> 2026-07-02 · Calc-Tools 编辑</p>
-            <h1>图片格式转换：JPG、PNG、WebP、GIF怎么选？</h1><p>不同的图片格式有不同的特点和适用场景，选择合适的格式可以在保证画质的同时减小文件体积。</p>
-<h2>常见图片格式对比</h2>
-<p><strong>JPG/JPEG</strong>：支持数百万颜色，有损压缩，文件小。适合照片、复杂图像，不适合需要透明背景的图片。</p>
-<p><strong>PNG</strong>：无损压缩，支持透明背景，文件较大。适合图标、截图、需要透明背景的设计素材。</p>
-<p><strong>WebP</strong>：Google推出的现代格式，支持有损和无损压缩，比JPG小25%-35%。适合网页使用，但部分老旧浏览器不支持。</p>
-<p><strong>GIF</strong>：支持动画，仅支持256色。适合简单动画和表情包，不适合存储照片。</p>
-<h2>什么时候需要格式转换</h2>
-<p>1. 上传到网站时用WebP或JPG减小加载时间；2. 设计素材需要透明背景时用PNG；3. 老旧系统可能只支持特定格式。</p>
-            <h2>如何使用格式转换工具</h2>
-<p>换格式前先明确用途，再按三步转换：</p>
-<ul>
-<li><strong>第一步</strong>：上传图片，工具会显示当前格式与体积。</li>
-<li><strong>第二步</strong>：选择目标格式（如网页用 WebP、透明用 PNG）。</li>
-<li><strong>第三步</strong>：确认质量与尺寸后导出，对比前后体积再决定是否替换。</li>
-</ul>
-<h2>常见问题（FAQ）</h2>
+            <h1>图片格式转换：JPG、PNG、WebP、GIF怎么选？</h1>
+<p>格式转换常被当成"把后缀名换掉"的动作，实际上它换掉的是一整套编码规则：像素怎么记录、颜色怎么描述、透明与动画能不能表达，以及文件之外还有哪些信息被一起丢掉。选错格式的代价往往不是"文件大一点"，而是截图里的文字长出彩色杂边、透明 LOGO 在深色背景上镶了一圈白边、手机竖拍的照片在别人的电脑上横躺着。</p>
+<p>本文不谈按哪个按钮，而是给出一条可以照着走的选型路径：先用四个问题把格式定到唯一，再看转换会不可逆地动到哪些数据，最后是那些"根本不该转换"的场景。文中出现的体积数字均为<strong>典型值</strong>，实际结果随图像内容与编码参数浮动。</p>
+<h2>一、六种格式的谱系：每种都在解决一个具体问题</h2>
+<p>这些格式不是同一件事的不同版本，而是不同年代针对不同问题给出的答案。搞清楚它们各自"为什么被造出来"，比背参数表更能支撑判断。</p>
+<p><strong>JPEG</strong>（1990 年代初由国际标准化组织与 ITU-T 联合制定，"JPEG"本身就是联合图像专家组的缩写）的前提假设是"照片相邻像素高度相关"，于是先做频率变换，再把大量高频系数按量化表取整抹掉。这是"用画质换体积"最成功的一次实践，也决定了它天生不擅长线条锐利、颜色数少的图形——对那些图来说，被抹掉的高频恰好是全部信息。</p>
+<p><strong>PNG</strong>（1990 年代中期）是为了回应 GIF 所用压缩算法引发的专利争议而设计的，定位是"无损、可透明、不带专利负担"。它保留每一个像素，所以拿它存照片体积会成倍膨胀；但它的透明度是真正的 alpha 通道，能表达半透明。</p>
+<p><strong>GIF</strong>（1980 年代由 CompuServe 提出）用 256 色调色板加字典压缩，动画能力让它在动图场景活到今天。它的透明只有 1 位——要么全透、要么不透，所以圆角、投影这类需要半透明的边缘转成 GIF 会出现锯齿。</p>
+<p><strong>WebP</strong>（谷歌在 2010 年前后推出，沿用其视频编码体系的帧内编码）同时提供有损与无损两套模式，并继承 alpha 与动画，是目前覆盖场景最广的现代格式。</p>
+<p><strong>AVIF</strong>（由开放媒体联盟的 AV1 编码衍生）压缩效率更高、支持更高位深，代价是编码耗时明显更长。</p>
+<p><strong>SVG</strong> 与前五种不是一类东西。它记录的是"怎么画"——形状、路径、文字指令，而不是"每个像素是什么颜色"，所以放大到任意倍数都不会模糊。这也意味着<strong>它不能作为照片的转换目标</strong>：把照片矢量化成 SVG，得到的通常是一个体积更大、还原度更差的近似结果，这是选型里最典型的方向性错误。</p>
+<h2>二、四个问题，把格式定到唯一</h2>
+<p>选型反复纠结，多半是因为问题问错了顺序。正确顺序是：先问内容类型（照片还是图形），再问要不要透明，再问要不要动画，最后才问兼容性底线。前两问就能排除掉大半选项，后两问只在剩下的候选里取舍。顺序颠倒的典型翻车是先认定"用 WebP 最省事"，到最后才发现这张图要交给一个打不开 WebP 的老系统。</p>
+<figure>
+<svg viewBox="0 0 660 205" width="100%" role="img" aria-label="图片格式选型决策树：第一问内容是照片还是图形，第二问是否需要透明背景，第三问是否需要动画，第四问兼容性底线在哪里">
+<text x="0" y="20" font-size="13" fill="currentColor">第一问　照片还是图形</text>
+<text x="228" y="20" font-size="12" fill="currentColor">照片 → JPEG / WebP 有损</text>
+<text x="0" y="66" font-size="13" fill="currentColor">第二问　需要透明背景吗</text>
+<text x="228" y="66" font-size="12" fill="currentColor">需要 → PNG / WebP（含 alpha）</text>
+<text x="0" y="112" font-size="13" fill="currentColor">第三问　需要动画吗</text>
+<text x="228" y="112" font-size="12" fill="currentColor">需要 → 动画 WebP / AVIF，兼容优先用 GIF</text>
+<text x="0" y="158" font-size="13" fill="currentColor">第四问　兼容底线在哪</text>
+<text x="228" y="158" font-size="12" fill="currentColor">老旧环境 → JPEG / PNG 兜底</text>
+<text x="0" y="196" font-size="12" fill="currentColor">四个问题按顺序问完，候选格式通常只剩一个；顺序颠倒会反复返工</text>
+</svg>
+<figcaption>图 1：格式选型的四问决策顺序，前一问的否定结果直接决定下一问是否还需要问。</figcaption>
+</figure>
+<p>把这条路径落到具体场景，"首选"未必等于"唯一可用"；当图片要离开浏览器，次选往往才是真正能用的那个：</p>
+<table>
+<tr><th>使用场景</th><th>首选</th><th>次选</th><th>需要避开的坑</th></tr>
+<tr><td>网页正文里的实拍照片</td><td>WebP 有损</td><td>JPEG</td><td>为了"无损"存成 PNG，体积成倍膨胀且画质并不会更好</td></tr>
+<tr><td>相机、手机原图归档</td><td>原格式或高质量 JPEG</td><td>PNG（仅当必须无损）</td><td>反复另存 JPEG，每存一次丢一代信息</td></tr>
+<tr><td>界面截图、图表、带文字的图</td><td>PNG</td><td>WebP 无损</td><td>转成 JPEG 后文字边缘出现彩色杂边</td></tr>
+<tr><td>带透明背景的图标与 LOGO</td><td>PNG 或 WebP（alpha）</td><td>SVG（本来就是矢量时）</td><td>转 JPEG 丢透明，转 GIF 只剩 1 位透明</td></tr>
+<tr><td>循环播放的短动画</td><td>动画 WebP 或 AVIF</td><td>GIF</td><td>GIF 只有 256 色，渐变与阴影会出现色带</td></tr>
+<tr><td>电商主图、需要送印的成品</td><td>高质量 JPEG 或 PNG</td><td>按印厂要求的交付格式</td><td>把网页压缩图直接送印，分辨率与色彩都不达标</td></tr>
+<tr><td>需要任意放大的图标与线稿</td><td>SVG</td><td>高分辨率 PNG</td><td>把照片矢量化成 SVG，体积更大且更像"描摹"</td></tr>
+</table>
+<p>表里"首选"一列 WebP 出现得最多，这符合它同时覆盖有损、无损、透明与动画的定位；但真正该记住的是最后一列。<strong>踩坑的成本通常远高于省下的那点体积</strong>：一次送印返工、一次上传被拒、一次素材在客户电脑上打不开，损失都不是几百 KB 能换回来的。</p>
+<h2>三、转换到底动了什么：三类不可逆的变化</h2>
+<p>转换分两种：无损重编码只换容器，像素值一模一样；有损重编码会重新量化，信息按编码器的判断被丢弃。无论哪一种，下面这些数据都可能在转换过程中悄悄消失，而且事后无法从结果文件里恢复。</p>
+<table>
+<tr><th>转换方向</th><th>通常保留</th><th>会丢失或改变</th><th>典型症状</th></tr>
+<tr><td>JPEG → PNG</td><td>像素值与构图</td><td>无（但也不会新增任何细节）</td><td>体积涨到数倍，被误以为"变清晰了"</td></tr>
+<tr><td>PNG → JPEG</td><td>尺寸与大致观感</td><td>alpha 通道、部分元数据</td><td>透明区域变成白块或黑块；深色背景上边缘泛出亮边</td></tr>
+<tr><td>有损 → 有损（如 JPEG → 有损 WebP）</td><td>尺寸与整体观感</td><td>又一代高频信息</td><td>放大后块状伪影与蚊式噪声逐代累积</td></tr>
+<tr><td>动图 → 静态格式</td><td>第一帧画面</td><td>后续所有帧与循环设置</td><td>动画只剩第一帧，播放器不再有动效</td></tr>
+<tr><td>24 位真彩 → GIF</td><td>大致轮廓与构图</td><td>色彩数量、半透明</td><td>渐变出现色带，圆角与阴影边缘出现锯齿</td></tr>
+<tr><td>带元数据的照片 → 精简导出</td><td>像素</td><td>色彩配置、拍摄参数、方向标记</td><td>广色域照片颜色变淡；手机竖拍照片变成横躺</td></tr>
+<tr><td>印刷用 CMYK 图 → 网页显示</td><td>文件本身可正常打开</td><td>色彩的正确呈现</td><td>浏览器普遍不能按印刷色彩空间呈现，颜色明显异常</td></tr>
+</table>
+<p>表里有两类损失最容易被低估。第一类是<strong>元数据</strong>：拍摄参数丢了只是可惜，方向标记丢了会让照片横躺，ICC 色彩配置丢了会让广色域照片整体变淡——它们都不影响像素数量，却直接影响"看起来对不对"。第二类是<strong>半透明</strong>：alpha 通道可以表达 50% 透明度这类中间值，而 GIF 的透明只有开与关两档，圆角图标的抗锯齿边缘一旦被"二值化"，就会出现一圈硬边。</p>
+<h2>四、三个真实算例</h2>
+<p><strong>算例一：带透明通道的 LOGO。</strong>一张 240 × 240 的圆形 LOGO，PNG 典型值约 18 KB，四角完全透明。转成 JPEG 后，透明区域必须被写入某个确定的颜色，实际填成什么取决于转换器：多数工具填白色，也有工具沿用透明像素自带的 RGB 值而填成黑色，于是圆形外面凭空多出一个方块。体积确实是变小了——JPEG 典型值约 6 KB，只有原来的三分之一；可只要素材底色不是白色，这个方块的边界就会露出来。要保留透明，正确出口是 WebP 有损（典型值约 9 KB，约原来的一半）或维持 PNG。</p>
+<p><strong>算例二：一张界面截图。</strong>1200 × 800 的 24 位真彩位图如果不做任何压缩，光像素数据就是 1200 × 800 × 3 = 2,880,000 字节，约 2.75 MB。同一张截图存成 PNG，典型值约 480 KB，相当于把原始数据压到约 1/5.9，因为截图里大片纯色与规则文字边缘的重复率极高，字典压缩非常有效。转成质量 85 的 JPEG，典型值约 120 KB，是 PNG 的 25%，也就是省下约 75%，压缩比约 23 倍——数字上赢得漂亮，代价却是文字边缘出现彩色杂边：JPEG 会降低色度通道的分辨率，黑白文字的轮廓因此在放大后泛出红蓝细线。截图、图表、带文字的图，首选仍然是 PNG 或 WebP 无损模式。</p>
+<p><strong>算例三：GIF 的 256 色意味着什么。</strong>24 位真彩可以表示 16,777,216 种颜色，GIF 的调色板只有 256 种，比例是 0.0015%。这就是渐变色块或人像存成 GIF 会出现明显色带的原因，也是同一段动画转成动画 WebP 或 AVIF 之后体积更小、过渡更平滑的原因。GIF 的价值在于兼容性与"哪里都能播"，不在画质。</p>
+<p>这三个算例指向同一件事：<strong>体积、画质、兼容性三者不可能同时最优</strong>，转换的价值在于明确放弃哪一个。若体积还有余量可压，先按实际显示宽度缩小尺寸通常比继续调编码参数更划算，具体做法见<a href="/blog/zh/image-resize-crop-guide">图片裁剪缩放实践</a>。</p>
+<h2>五、兼容性的正确做法：不是二选一，而是给回退</h2>
+<p>把"用 WebP 还是用 JPEG"当成二选一，是把问题看窄了。较新的浏览器已普遍支持 WebP，对 AVIF 的支持也在较新的版本中逐步铺开；但浏览器之外还有一大片环境——图片查看器、办公软件、社交平台的上传与转码、印刷流程——它们对新格式的支持面明显更窄。更关键的是这些环节你无法控制，也无法要求对方升级。</p>
+<p>网页上的标准做法是提供同一张图的多个来源：先给较新格式的 <code>&lt;source&gt;</code>（可以带 <code>type=&quot;image/webp&quot;</code> 这样的类型声明），最后放一张 JPEG 或 PNG 作为 <code>&lt;img&gt;</code> 的兜底地址。浏览器按顺序挑选第一个认识的格式，都不认识时就取兜底版本，整个过程不需要一行 JavaScript。这样较新的浏览器拿到更小的文件，老旧环境也不会看到破图。</p>
+<p>用回退方案时有两条纪律。第一，同一个 <code>&lt;picture&gt;</code> 里的各份文件必须来自<strong>同一次从原图导出</strong>，而不是把已经压过的 JPEG 再转成 WebP——后者等于在旧损失上叠加新损失，还换不来对应的体积收益。第二，CSS 背景图没有回退机制，用到背景图的地方要更保守，或者干脆接受稍大的 JPEG。同理，内联进 HTML 或 CSS 的 base64 图片既没有回退也没有独立缓存，格式选择上更没有试错空间，可以对照<a href="/zh/image/base64">图片转 Base64</a>里的取舍说明来定。</p>
+<h2>六、什么时候不该转换</h2>
+<p>转换是有代价的动作，下面这些场景里，正确的决定是"不转"：</p>
+<table>
+<tr><th>场景</th><th>为什么不该转</th><th>正确做法</th></tr>
+<tr><td>需要长期归档的母版</td><td>原件是之后所有导出的唯一来源，转一次就少一份可回溯的底</td><td>按原格式单独保存，所有成品从它导出</td></tr>
+<tr><td>还要反复编辑的中间稿</td><td>有损格式每保存一次就丢一代信息，多次编辑后劣化肉眼可见</td><td>中间稿用 PNG 或无损 WebP，只在最后交付时转一次</td></tr>
+<tr><td>需要送印的成品</td><td>印厂对分辨率与色彩空间另有要求，网页压缩图通常不达标</td><td>按印厂要求的格式与色彩空间交付，通常另有约定</td></tr>
+<tr><td>票据、合同等扫描件</td><td>有损伪影会影响数字、印章与手写签名的辨识</td><td>用无损格式，并保留足够高的分辨率</td></tr>
+<tr><td>体积已经达标的文件</td><td>再转一次既不会再小多少，又要多付一代损失</td><td>保留现有文件，把精力放在真正超标的那几张图上</td></tr>
+<tr><td>希望"变清晰"</td><td>无损格式只能保住已有像素，无法把丢掉的高频找回来</td><td>回到原图或重新拍摄，而不是换格式继续转</td></tr>
+</table>
+<h2>七、常见问题（FAQ）</h2>
 <dl>
-<dt>照片该用 JPG 还是 WebP？</dt>
-<dd>追求最小体积选 WebP，主流浏览器都支持；若需兼容老旧系统或软件，JPG 更稳妥。</dd>
-<dt>透明背景为什么变黑色？</dt>
-<dd>把 PNG 转成 JPG 时透明区域会被填成白色或黑色，因为 JPG 不支持透明。需要透明请保留 PNG 或改用 WebP。</dd>
-<dt>GIF 能转成视频吗？</dt>
-<dd>短动画可转成 MP4 等视频格式大幅瘦身，但静态图转 GIF 反而可能变大且限 256 色。</dd>
-<dt>转换会损失画质吗？</dt>
-<dd>转成有损格式（JPG/WebP 有损）会损失，转 PNG 无损则不会；反复在 JPG 间转存会累积损伤。</dd>
+<dt>PNG 转成 JPEG 后，透明区域为什么变成白块或黑块，而不是"没有背景"？</dt>
+<dd>因为 JPEG 没有 alpha 通道，每个像素都必须写出一个确定的颜色。透明像素本身通常也带着一个 RGB 值（常见是黑或白），转换器要么沿用这个值，要么按自己设定的底色填充，所以结果会随工具而变。要控制结果，就在转换前先把透明区域合成到指定底色上，网页素材通常选与页面相同的颜色。</dd>
+<dt>把照片转成 PNG 会更清晰吗？</dt>
+<dd>不会。PNG 的"无损"指的是不再新增损失，无法恢复已经在 JPEG 里丢掉的细节。JPEG 转 PNG 的典型后果是体积涨到数倍，而画面与转换前完全一样。</dd>
+<dt>AVIF 现在能用了吗？</dt>
+<dd>较新的浏览器已经支持，压缩效率通常也高于 WebP；但支持面比 WebP 窄，浏览器之外的软件更容易打不开，编码耗时也明显更长。稳妥做法是把它当作网页上的增益格式，同时保留 WebP 或 JPEG 作为回退。</dd>
+<dt>为什么转换后照片在电脑上变成横躺的？</dt>
+<dd>手机拍摄的照片通常不旋转像素，而是写一个"方向"标记，由显示端负责转正。转换过程如果丢掉了这个标记，或者按错误的方向重写了像素，照片就会横躺。批量转换前，先确认导出设置里"保留元数据"与"自动旋转"的处理方式。</dd>
+<dt>网页上只提供一种格式够不够？</dt>
+<dd>只考虑浏览器的话，一种现代格式通常够用；但同一张图还会被复制进文档、聊天窗口和上传框，那些环节的支持面窄得多。需要长期复用的图，建议同时留一份 JPEG 或 PNG，网页上再用多来源声明交给浏览器自行挑选。</dd>
 </dl>
-<h2>小贴士</h2>
+<h2>八、三个最常见的误区</h2>
+<p><strong>误区一：把"转换"当成"优化"。</strong>转换只改变编码方式，不会自动让文件变小或变清晰。PNG 转 PNG 体积不会下降，JPEG 转 PNG 也不会变清晰；真正决定体积的是内容类型、像素数量与编码参数，格式只是其中一个变量。</p>
+<p><strong>误区二：为了统一，把所有图都转成同一种格式。</strong>照片与图形对编码器的要求几乎相反：照片需要容忍细节损失来换取高频压缩，截图与图标则需要一个像素都不能错、同时又有极高重复率。统一转 JPEG 会毁掉截图文字与透明素材，统一转 PNG 则让照片体积成倍膨胀。按内容类型分别选格式才是正确做法。</p>
+<p><strong>误区三：以为后缀名说明了文件里的一切。</strong>一个 .jpg 文件里可能装着印刷用的 CMYK 色彩空间、可能是渐进式编码、也可能什么元数据都没有；反过来，把 .png 改名成 .jpg 并不会让文件变成 JPEG，只会让打开它的软件困惑，甚至在某些平台上直接判定为损坏文件。</p>
+<h2>九、五条实用建议</h2>
 <ul>
-<li><strong>网页优先 WebP</strong>：同画质下 WebP 比 JPG 小约三成，配合响应式图能明显提速。</li>
-<li><strong>原图留底</strong>：转换前保留原始文件，万一新格式不兼容还能重新导出。</li>
+<li><strong>原件与成品分开管理</strong>：把原图、原始截图单独归档，所有成品都是从原件一次导出的结果，需要返工时重新导出而不是在成品上继续改。</li>
+<li><strong>先定尺寸，再定格式</strong>：按实际显示宽度决定导出像素，再在候选格式里挑体积最小、兼容性够用的那个；顺序反了容易在一张远超显示尺寸的图上反复调参数。需要精确尺寸时可用<a href="/zh/image/resize">尺寸调整工具</a>。</li>
+<li><strong>按四条线索检查转换结果</strong>：透明区域有没有变色、文字边缘有没有杂边、元数据（方向与色彩配置）是否保留、体积是否真的下降。四项都过再替换原文件。</li>
+<li><strong>交付前在目标环境打开一次</strong>：网页素材在目标浏览器里看，文档素材在办公软件里看，送印文件在印厂的预检工具里看。同一张图在不同软件里的表现可能完全不同。</li>
+<li><strong>需要长期复用的图留两份</strong>：一份现代格式用于网页，一份 JPEG 或 PNG 用于其他场合，避免几年后某个环节打不开唯一那份文件。</li>
 </ul>
+<p>把选型路径走顺之后，"格式"就不再是每次都要重新纠结的问题：内容类型决定编码思路，透明与动画决定候选范围，兼容性决定要不要加回退。剩下的体积调优属于压缩环节，可以接着看<a href="/blog/zh/image-compression-guide">图片压缩完全指南</a>；需要把某张图实际转一次做对比，用<a href="/zh/image/convert">图片格式转换工具</a>即可，转换与体积对比都能在本地完成。</p>
 <div class="blog-cta">
                 <p><strong>在线使用 <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-image"></use></svg> 格式转换</strong></p>
                 <p>无需下载，打开即用</p>
                 <p><a href="/zh/image/convert"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-arrow-right"></use></svg> 立即使用 <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-image"></use></svg> 格式转换</a></p>
             </div>
-            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> 相关文章</h3><ul><li><a href="/blog/zh/image-resize-crop-guide">图片裁剪缩放：调整图片尺寸的最佳实践</a></li><li><a href="/blog/zh/image-to-base64-guide">图片转Base64：HTML和CSS中嵌入图片的最佳方式</a></li><li><a href="/blog/zh/color-picker-guide">在线取色器使用指南：屏幕取色与配色技巧</a></li><li><a href="/blog/zh/word-counter-guide">字数统计工具：准确统计字符、词语和段落</a></li></ul></div>
+            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> 相关文章</h3><ul><li><a href="/blog/zh/image-resize-crop-guide">图片裁剪缩放：调整图片尺寸的最佳实践</a></li><li><a href="/blog/zh/image-to-base64-guide">图片转Base64：HTML和CSS中嵌入图片的最佳方式</a></li><li><a href="/blog/zh/color-picker-guide">在线取色器使用指南：屏幕取色与配色技巧</a></li><li><a href="/blog/zh/image-compression-guide">图片太大怎么压缩？在线图片压缩完全指南</a></li></ul></div>
             <div class="article-bottom-tags"><a href="/tags/utility.html" class="tag tag-utility" data-tag="utility"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-wrench"></use></svg> 工具</a></div>
         </article>
 

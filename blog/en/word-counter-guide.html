@@ -33,6 +33,54 @@
 <link rel="stylesheet" href="../../css/style.css">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Word Counter: Count Characters, Words, and Paragraphs","description":"Word counting use cases, Chinese vs English differences, and SEO writing length recommendations.","author":{"@type":"Person","name":"Calc-Tools Editor"},"datePublished":"2026-07-02","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.calc-tools.top/blog/en/word-counter-guide"},"publisher":{"@type":"Organization","name":"ToolBox Inside"}}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.calc-tools.top/blog/en/"},{"@type":"ListItem","position":3,"name":"Word Counter: Count Characters, Words, and Paragraphs","item":"https://www.calc-tools.top/blog/en/word-counter-guide"}]}</script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Why does the same article have a different word count in Word and in a web tool?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Because the exclusions and the tokenization rules differ. A word processor's count dialog usually carries a switch for including text boxes, footnotes, and endnotes, and toggling it produces a different number, while the status bar shows another default. Web tools each decide for themselves whether punctuation, digits, and hyphenated compounds count. Align the conventions before comparing the numbers."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How many English words is 1,000 Chinese characters?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Across the three parallel text pairs measured for this article the ratio fell between 1.5 and 1.8 Hanzi per English word, so 1,000 Hanzi is roughly 560 to 645 English words. The spread depends on genre, terminology density, and how many digits and Latin abbreviations appear in the Chinese text, so a single fixed coefficient should not be used to promise a length."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do spaces count toward a word count?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "It depends on the convention. Character counts are normally reported both with and without spaces, and the without-spaces figure is the usual reference; the Hanzi metric never includes spaces or punctuation in the first place. In the measured sample here the with-spaces reading was 102 and the without-spaces reading 99, a 3% gap that widens as paragraphs get longer and more English is mixed in."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Should a translation quote be based on characters or words?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Into English, quotes are commonly based on the Chinese character count of the source; into Chinese, they are commonly based on the English word count of the source. Per thousand characters and per thousand words are therefore different units and cannot be compared directly. Confirm three things first: source or target language, whether glossaries and UI labels are included, and whether repeated segments are discounted."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does deleting spaces help when a draft is over the limit?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Only for the characters-with-spaces figure, and not at all for Hanzi or word counts. If the stated limit is a character count without spaces, a Hanzi count, or a word count, removing spaces changes nothing except the layout. Identify which figure the limit uses before deciding what to cut."
+                }
+            }
+        ]
+    }
+    </script>
 <script src="/js/i18n.js" defer></script><script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>
 <body>
@@ -57,30 +105,125 @@
             </nav>
 <div class="article-tags"><a href="/en/tags/utility.html" class="tag tag-utility" data-tag="utility"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-wrench"></use></svg> Tools</a></div>
 <p class="blog-meta"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-newspaper"></use></svg> 2026-07-02 · Calc-Tools Editor</p>
-<h1>Word Counter: Count Characters, Words, and Paragraphs</h1><p>A word counter is one of the most essential tools for writers. Whether you are writing articles, reports, or social media posts, knowing your word count matters—for deadlines, platform limits, and reading time.</p>
-<h2>Use Cases</h2>
-<p><strong>Content Writing</strong>: Most platforms have minimum requirements. Blog posts typically need 1500-3000 words.</p>
-<p><strong>SEO Writing</strong>: Tool articles 800-1500 words, in-depth guides 2000-4000 words.</p>
-<p><strong>Social Media</strong>: Titles perform best under 70 characters.</p>
-<h2>Chinese vs English Counting</h2>
-<p>Chinese counts by character, English counts by word. A good word counter supports both modes, which matters when you write bilingual content.</p>
-<h2>What Else the Counter Reports</h2>
-<p>Beyond words, useful counters report characters with and without spaces, sentences, paragraphs, and estimated reading time. These extra numbers help you match platform specs exactly.</p>
-<h2>Using Word Count for SEO</h2>
-<p>Length signals depth but isn't a ranking guarantee. Aim for the length the topic deserves, and use the counter to stay consistent across a content calendar.</p>
-<h2>Word Count in Academic Writing</h2>
-<p>Essays and theses often have strict word limits that exclude references and appendices. Count carefully against the stated rules, and leave a small buffer so final edits don't push you over.</p>
-<p>Track your word count as you draft, not just at the end. Staying aware while writing avoids painful rewrites to shrink or stretch the final text.</p>
-<h2>How to Count Words</h2>
-<ol><li>Paste or type your text into the counter.</li><li>Switch between word, character, sentence, and paragraph counts as needed.</li><li>Copy the numbers that match your platform or assignment requirement.</li></ol>
-<p>For bilingual text, confirm the tool counts Chinese characters correctly—that changes the result substantially.</p>
-<p><strong>Quick tip:</strong> set a per-article target before drafting. Checking the counter at the midpoint prevents the last-minute scramble to stretch or trim a finished piece. A small habit that prevents big rewrites when deadlines are tight.</p>
+<h1>Word Counter: Count Characters, Words, and Paragraphs</h1>
+<p>Paste the same draft into three different counting tools and you will probably get three different numbers. The tools are not lying. A word count is not a single quantity; it is an agreement about rules. Before any counter can return a number it has to settle three questions: <strong>what unit is counted, what gets excluded, and how the text is split</strong>. Change one answer and the reading changes, sometimes by more than three times.</p>
+<p>This guide builds that framework first, then maps it onto the situations where counts actually have consequences: thesis and journal limits, translation quotes, subtitle timing, speaking scripts, and form or database validation. It closes with worked examples you can reproduce in any counter, and with the two questions writers ask most often - why two tools disagree, and what to cut once a draft is over the limit.</p>
+<h2>1. Every count is decided by three questions</h2>
+<p>Treating a word count as one number is where most disagreements start. When two programs report different figures for the same file, the cause is almost always a different answer to one of these:</p>
+<ul>
+<li><strong>Unit</strong> - words, characters, characters without spaces, or encoded bytes?</li>
+<li><strong>Exclusions</strong> - are spaces, line breaks, punctuation, digits, the abstract, references, and figure captions counted?</li>
+<li><strong>Tokenization</strong> - how is an unbroken run of text split, and how are hyphens, apostrophes, and numeric strings treated?</li>
+</ul>
+<p>With two or three common answers per question there are more than a dozen defensible conventions, so the useful question is never "how long is this piece" but "how long is it, under which convention".</p>
+<h2>2. Units: words, characters, characters without spaces, and bytes</h2>
+<p>Writers usually blur "characters" and "words"; engineers trip over "characters" and "bytes". None of the four convert at a fixed rate, because the mix of punctuation, spaces, and Latin text changes from paragraph to paragraph.</p>
+<table>
+<tr><th>Unit</th><th>How it is counted</th><th>Where it matters</th><th>Most common failure</th></tr>
+<tr><td>Hanzi (CJK characters)</td><td>Matches the common CJK ideograph range U+4E00 to U+9FFF</td><td>Chinese submission minimums, per-character rates</td><td>Full-width punctuation, rare extension-range glyphs, and Japanese kanji all fall outside the common range</td></tr>
+<tr><td>Word</td><td>Split on whitespace; each run of letters counts as one</td><td>English journal limits, translation quotes, word ceilings</td><td>Hyphenated compounds, possessives, numeric strings, and CJK mixed into English text are handled differently by every tool</td></tr>
+<tr><td>Character</td><td>String length, reported with and without spaces</td><td>Meta descriptions, titles, database columns, API parameters</td><td>With-spaces and without-spaces differ by roughly 3% in prose and much more in code or tables</td></tr>
+<tr><td>Byte</td><td>Encoded length: one CJK character is 3 bytes in UTF-8 and 2 bytes in GBK</td><td>Storage, transfer, server-side form validation, SMS segmentation</td><td>The front end says 200 characters remain; the back end rejects on bytes and the user sees "but I did not go over"</td></tr>
+</table>
+<p>Put the four together and a common production bug explains itself. <strong>1,000 Hanzi occupy 3,000 bytes in UTF-8 and 2,000 bytes in GBK.</strong> Given a 5,000-byte column, a UTF-8 database holds 1,666 Hanzi while a GBK database holds 2,500. Same form, same helper text, different encoding, different capacity - which is why bytes belong on the debugging checklist even though almost no writer ever counts them.</p>
+<h2>3. Exclusions: the part that is not counted is usually the disagreement</h2>
+<p>If one side counts the abstract and the references and the other does not, the gap can reach a fifth of the document. The table below lines up common situations with their usual convention and with the items people forget:</p>
+<table>
+<tr><th>Situation</th><th>What is normally counted</th><th>What is usually missed</th><th>How to confirm</th></tr>
+<tr><td>Chinese thesis or dissertation</td><td>Characters without spaces</td><td>Whether the abstract, table of contents, captions, acknowledgements, appendices, and references count toward the body limit</td><td>Read the graduate school's definition of the body count item by item instead of trusting last year's habit</td></tr>
+<tr><td>English journal submission</td><td>Word count</td><td>Whether the abstract, references, captions, and footnotes have separate limits of their own</td><td>The author guidelines normally list each limit separately; the current text in the submission system beats an older PDF</td></tr>
+<tr><td>Translation and localisation quotes</td><td>Characters for Chinese, words for English</td><td>Glossaries, UI labels, placeholders, and repeated segments</td><td>Per thousand characters and per thousand words are different units - confirm whether the source or the target language is the basis</td></tr>
+<tr><td>Subtitles and dubbing</td><td>Characters per second (CPS), not the total</td><td>Pauses implied by punctuation, breathing time, line breaks</td><td>Divide each cue's character count by its duration; a matching total does not mean readable subtitles</td></tr>
+<tr><td>Speeches and voice-over scripts</td><td>Total words converted through a speaking rate</td><td>Pauses, audience interaction, slower delivery under pressure</td><td>Write to roughly 80% of the target duration and leave the rest for the room</td></tr>
+<tr><td>Web copy and forms</td><td>Characters or bytes</td><td>Byte differences in mixed Chinese and English text; astral-plane characters take 4 bytes</td><td>Client-side hints and server-side validation must share one convention, documented in the API contract</td></tr>
+</table>
+<p>This table settles what to count, not how long the result takes to deliver. To turn a count into a duration, pair it with a <a href="/en/text/reading-time">reading time estimator</a>, which consumes the same units; the fuller treatment of speed bands and scenario differences is in the <a href="/blog/en/reading-time-guide">reading time guide</a>.</p>
+<h2>4. Tokenization: why "word" is the hardest unit to align</h2>
+<p>Chinese has no tokenisation ambiguity - one character inside the common ideograph range is one count, and the rule is fully reproducible. English depends on a convention, and the conventions disagree:</p>
+<ul>
+<li><strong>Hyphens</strong>: <code>word-count</code> is one word in some tools and two in others.</li>
+<li><strong>Apostrophes</strong>: whitespace-based splitting keeps a contraction as one word, while punctuation-first splitting breaks it apart.</li>
+<li><strong>Numbers and mixed strings</strong>: <code>2.0</code>, <code>UTF-8</code>, and <code>v22.12.0</code> may count as one word, as two words, or only as their alphabetic part.</li>
+<li><strong>CJK mixed with English</strong>: because Chinese has no inter-word spaces, the English word metric normally counts letter runs only and ignores Chinese characters and digits - the main reason the same file reads differently in a Chinese tool and an English one.</li>
+</ul>
+<p>Office software adds a second, less obvious variable: <strong>the counting scope is a checkbox</strong>. In a typical word processor the count dialog carries a switch for including text boxes, footnotes, and endnotes, and toggling it produces two different numbers, while the status bar quietly shows a third default. One file, one machine, two readings - and that is before you change applications.</p>
+<p>There is only one reliable practice: <strong>pick one counter and one set of switches, and use them from first draft to submission</strong>. The <a href="/en/text/word-counter">word counter</a> on this site lists Hanzi, English words, characters with and without spaces, paragraphs, sentences, and lines on a single screen, which makes it a reasonable fixed baseline. If the submission rules name only one figure, that figure wins.</p>
+<h2>5. Measured: one paragraph, five readings, a 3.5x spread</h2>
+<p>The sample below deliberately packs numbers, hyphenated English, and Chinese punctuation into one short passage so the conventions have something to disagree about. It is the measured sample for this article, and it can be pasted into any counter to reproduce the numbers.</p>
+<blockquote>
+<p>字数统计不是一道算术题。同一段中英混排的稿件，粘进三个不同的工具，WordCounter 读到的数字可能相差四成：有的把空格算进去，有的把标点排除在外，还有的按 UTF-8 字节数给出一个完全不同的上限。</p>
+</blockquote>
+<table>
+<tr><th>Convention</th><th>Measured reading</th><th>Notes</th></tr>
+<tr><td>Hanzi</td><td>76</td><td>Only common-range ideographs; punctuation, spaces, and Latin text are ignored</td></tr>
+<tr><td>English words</td><td>2</td><td>Letter runs only (WordCounter, UTF); the 8 in UTF-8 is a digit and does not count</td></tr>
+<tr><td>Characters with spaces</td><td>102</td><td>Full string length, including three spaces and all full-width punctuation</td></tr>
+<tr><td>Characters without spaces</td><td>99</td><td>Length after removing those three spaces</td></tr>
+<tr><td>UTF-8 bytes</td><td>268</td><td>76 Hanzi at 3 bytes each, plus single-byte characters for the rest</td></tr>
+</table>
+<p>The lowest reading is 2 and the highest is 268. Even inside the single context of Chinese writing, <strong>76 Hanzi against 102 characters is already a third of a difference</strong>. "How long is my article" only has an answer once you add "under which convention".</p>
+<figure>
+<svg viewBox="0 0 660 152" width="100%" role="img" aria-label="Five readings of the same mixed-language paragraph: 76 Hanzi, 2 English words, 102 characters with spaces, 99 characters without spaces, and 268 UTF-8 bytes">
+<text x="0" y="20" font-size="13" fill="currentColor">Hanzi</text>
+<rect x="150" y="8" width="113" height="14" rx="3" fill="#0a84ff"></rect>
+<text x="271" y="20" font-size="12" fill="currentColor">76</text>
+<text x="0" y="48" font-size="13" fill="currentColor">English words</text>
+<rect x="150" y="36" width="4" height="14" rx="2" fill="#0a84ff"></rect>
+<text x="162" y="48" font-size="12" fill="currentColor">2</text>
+<text x="0" y="76" font-size="13" fill="currentColor">Chars with spaces</text>
+<rect x="150" y="64" width="152" height="14" rx="3" fill="#0a84ff"></rect>
+<text x="310" y="76" font-size="12" fill="currentColor">102</text>
+<text x="0" y="104" font-size="13" fill="currentColor">Chars no spaces</text>
+<rect x="150" y="92" width="148" height="14" rx="3" fill="#0a84ff"></rect>
+<text x="306" y="104" font-size="12" fill="currentColor">99</text>
+<text x="0" y="132" font-size="13" fill="currentColor">UTF-8 bytes</text>
+<rect x="150" y="120" width="400" height="14" rx="3" fill="#0a84ff"></rect>
+<text x="558" y="132" font-size="12" fill="currentColor">268</text>
+</svg>
+<figcaption>Figure 1: five readings of one paragraph, bar length drawn in proportion to value.</figcaption>
+</figure>
+<h2>6. Three worked examples you can reproduce</h2>
+<p><strong>Example 1: a short mixed sentence is the easiest thing to miscount.</strong> Take the sentence "我们发布了 WordCount 2.0 版本，它同时支持 UTF-8 与 GBK 编码，并新增了关键词密度分析。" and its English counterpart "We shipped WordCount 2.0, which supports both UTF-8 and GBK encoding and adds keyword density analysis." The Chinese version measures 26 Hanzi, 56 characters including spaces, and 114 UTF-8 bytes. The English version measures 103 characters and 103 UTF-8 bytes, and 15 words by letter runs - or 18 if the digits inside <code>2.0</code> and <code>UTF-8</code> are counted as well. Note the English split: <strong>one sentence yields 15 or 18 depending on the rule, a 20% swing.</strong> The Chinese version swings harder, from 26 Hanzi to 114 bytes, a factor of more than four.</p>
+<p><strong>Example 2: there is no fixed Chinese-to-English ratio, only a range.</strong> Using three genuinely parallel pairs measured for this article: pair one, 26 Hanzi against 15 English words, ratio 1.73; pair two, 76 Hanzi against 49 words, ratio 1.55; pair three, 34 Hanzi against 19 words, ratio 1.79. That gives <strong>roughly 1.5 to 1.8 Hanzi per English word</strong>, the landing point depending on genre and terminology density. At 1.55, 800 English words correspond to about 1,240 Hanzi and 1,500 Hanzi to about 968 English words. At 1.79 the same 800 words correspond to about 1,432 Hanzi, while 1,500 Hanzi correspond to only about 838 English words. Across a single 1,500-character article the two ratios differ by roughly 130 English words, which is why "how many English words is a thousand Chinese characters" can only be answered as a range.</p>
+<p><strong>Example 3: cutting 1,780 characters down to a 1,500 limit never lands on a round number.</strong> Suppose the draft is 1,780 characters against a 1,500 limit, so 280 must go, and the piece has 15 paragraphs averaging about 119 characters each. Deleting two paragraphs removes 238 characters and leaves 1,542, still 42 over. Deleting three removes 357 and lands at 1,423, which is 77 under. Paragraph-level cutting is too coarse, so order matters: <strong>remove whole standalone paragraphs first, then compress sentences inside the survivors and squeeze out those last 42 characters from filler, repeated transitions, and optional examples.</strong> That is exactly why writing to 105% to 110% of the target beats writing to the limit - a piece that arrives exactly on the line almost always needs its ending rewritten.</p>
+<h2>7. Frequently asked questions</h2>
+<dl>
+<dt>Why does the same article have a different word count in Word and in a web tool?</dt>
+<dd>Because the exclusions and the tokenization rules differ. A word processor's count dialog usually carries a switch for including text boxes, footnotes, and endnotes, and toggling it produces a different number, while the status bar shows another default. Web tools each decide for themselves whether punctuation, digits, and hyphenated compounds count. Align the conventions before comparing the numbers.</dd>
+<dt>How many English words is 1,000 Chinese characters?</dt>
+<dd>Across the three parallel text pairs measured for this article the ratio fell between 1.5 and 1.8 Hanzi per English word, so 1,000 Hanzi is roughly 560 to 645 English words. The spread depends on genre, terminology density, and how many digits and Latin abbreviations appear in the Chinese text, so a single fixed coefficient should not be used to promise a length.</dd>
+<dt>Do spaces count toward a word count?</dt>
+<dd>It depends on the convention. Character counts are normally reported both with and without spaces, and the without-spaces figure is the usual reference; the Hanzi metric never includes spaces or punctuation in the first place. In the measured sample here the with-spaces reading was 102 and the without-spaces reading 99, a 3% gap that widens as paragraphs get longer and more English is mixed in.</dd>
+<dt>Should a translation quote be based on characters or words?</dt>
+<dd>Into English, quotes are commonly based on the Chinese character count of the source; into Chinese, they are commonly based on the English word count of the source. Per thousand characters and per thousand words are therefore different units and cannot be compared directly. Confirm three things first: source or target language, whether glossaries and UI labels are included, and whether repeated segments are discounted.</dd>
+<dt>Does deleting spaces help when a draft is over the limit?</dt>
+<dd>Only for the characters-with-spaces figure, and not at all for Hanzi or word counts. If the stated limit is a character count without spaces, a Hanzi count, or a word count, removing spaces changes nothing except the layout. Identify which figure the limit uses before deciding what to cut.</dd>
+</dl>
+<h2>8. Three misconceptions</h2>
+<p><strong>Misconception one: a character count is a word count.</strong> English speakers often treat the two as interchangeable, but in limits and billing they are different units. In the measured sample the character count without spaces was 99 and the Hanzi count was 76, a gap of 23. Prepare against the wrong one and the piece comes in either short or over.</p>
+<p><strong>Misconception two: Chinese and English lengths convert at one fixed coefficient.</strong> The 1.5 to 1.8 range is a common band, not a constant. Terminology-heavy, abbreviation-heavy, or number-heavy text pushes the ratio away from it. Use the band for rough planning, never for a commitment to a client or an editor.</p>
+<p><strong>Misconception three: deleting spaces reduces the count.</strong> Removing spaces affects the characters-with-spaces figure only. Hanzi counts, word counts, and paragraph counts do not move at all. Real reduction means removing sentences, examples, and repeated transitions - which is precisely why the paragraph-first, sentence-second order in Example 3 holds.</p>
+<h2>9. Five practical recommendations</h2>
+<ul>
+<li><strong>Confirm the convention before drafting, not after.</strong> Translate whatever the guidelines call a word count into the three questions above - unit, exclusions, tokenization - and write down whether spaces, the abstract, and the references are included. That alone removes a rewrite cycle.</li>
+<li><strong>Draft to 105% to 110% of the target.</strong> Leave trimming room. At the granularity shown in Example 3, a single paragraph deletion is one to two hundred characters, so a piece written exactly to the limit usually gets its ending rewritten.</li>
+<li><strong>Use one counter from first draft to final.</strong> Switching tools mid-project makes the numbers incomparable. The <a href="/en/text/word-counter">word counter</a> lists Hanzi, English words, characters, paragraphs, sentences, and lines separately, which makes it a usable fixed baseline; for word frequency alongside the totals, see the conventions documented in the <a href="/blog/en/keyword-density-guide">keyword density guide</a>.</li>
+<li><strong>Clean the text before measuring it.</strong> Text pasted from the web or from collaborative editors often carries stray whitespace and invisible characters that inflate a reading or break an exact comparison. Run it through a <a href="/en/text/text-cleaner">text cleaner</a> first; the full inventory of those characters and the symptoms they cause is in the <a href="/blog/en/text-cleaner-guide">text cleaner guide</a>.</li>
+<li><strong>Automate bulk checks with a fixed script rather than reading numbers by eye.</strong> Once a content library passes ten pieces, manual counting is slow and irreproducible. The minimum viable approach is one fixed snippet, re-run after every edit, with the difference between two runs telling you how much changed; use a <a href="/en/text/text-diff">text diff</a> to compare two drafts line by line so compression does not silently delete a key figure.</li>
+</ul>
+<pre><code>// English words: split on whitespace (useless for Chinese, which has no spaces)
+const words = text.trim().split(/\s+/).filter(Boolean).length;
+// Hanzi: match the U+4E00 to U+9FFF range character by character, independent of spaces
+const hanzi = text.match(/[\u4e00-\u9fff]/g) || [];
+console.log(words, hanzi.length);</code></pre>
+<p><strong>Note:</strong> record the two readings as independent metrics. Do not add them together and do not derive one from the other - in mixed Chinese and English text they are counting entirely different things.</p>
+<p>That closes the loop: <strong>establish the unit, the exclusions, and the tokenization rule first, then fix one counter and keep using it, then plan content volume with a 5% to 10% trimming buffer.</strong> The next time two numbers refuse to match, walk the same three questions and you will usually find the disagreement within a few minutes.</p>
 <div class="blog-cta">
                 <p><strong>Online <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-type"></use></svg> Word Counter</strong></p>
                 <p>Free to use, no download required</p>
                 <p><a href="/en/text/word-counter"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-arrow-right"></use></svg> Use <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-type"></use></svg> Word Counter Now</a></p>
             </div>
-            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> Related Articles</h3><ul><li><a href="/blog/en/image-format-converter-guide">Image Format Converter: JPG vs PNG vs WebP vs GIF Guide</a></li><li><a href="/blog/en/image-resize-crop-guide">Image Resize and Crop: Best Practices for Image Sizing</a></li><li><a href="/blog/en/image-to-base64-guide">Image to Base64: Embed Images in HTML and CSS</a></li><li><a href="/blog/en/color-picker-guide">Online Color Picker Guide: Screen Color Picking and Palette Tips</a></li></ul></div>
+            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> Related Articles</h3><ul><li><a href="/blog/en/reading-time-guide">Reading Time Calculator: Estimate Article Reading and Speaking Time</a></li><li><a href="/blog/en/keyword-density-guide">Keyword Density Analyzer: Key Metric for SEO Optimization</a></li><li><a href="/blog/en/text-cleaner-guide">Text Cleaner: Remove Extra Spaces and Blank Lines</a></li><li><a href="/blog/en/text-diff-guide">Text Diff Tool: Quickly Find Differences Between Texts</a></li></ul></div>
 <div class="article-bottom-tags"><a href="/en/tags/utility.html" class="tag tag-utility" data-tag="utility"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-wrench"></use></svg> Tools</a></div>
 
         <div class="like-section">

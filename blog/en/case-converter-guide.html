@@ -122,8 +122,7 @@
 <h2>2. Choosing a Convention by Setting</h2>
 <p>The decision rule collapses into one sentence: <strong>follow the convention of the place the name lives in, and convert only once, explicitly, at the boundary</strong>. The table below lists the common settings, their convention, and the mistake that actually shows up in review.</p>
 <table>
-<thead><tr><th>Setting</th><th>Convention</th><th>Example</th><th>Common mistake</th></tr></thead>
-<tbody>
+<tr><th>Setting</th><th>Convention</th><th>Example</th><th>Common mistake</th></tr><tbody>
 <tr><td>JSON field names</td><td>camelCase, or snake_case on Python backends</td><td>userName / user_name</td><td>Mixing both in one payload, forcing clients to carry two lookup paths</td></tr>
 <tr><td>Database tables and columns</td><td>snake_case, tables often plural</td><td>order_items.order_id</td><td>Creating MixedCase tables that break when migrated across platforms</td></tr>
 <tr><td>REST URL paths</td><td>kebab-case, all lowercase</td><td>/api/user-profiles</td><td>Leaving capitals in the path, creating cache and route-matching ambiguity</td></tr>
@@ -159,8 +158,7 @@
 <p>The hard part of style conversion is not the substitution. It is <strong>tokenising the source</strong>.</p>
 <p><strong>Example 1: splitting a run of capitals.</strong> Take the input <code>HTTPServer</code>. The intended word list is [http, server]. Break on every lower-to-upper transition and you get <code>HTTPS</code> plus <code>erver</code>. Break on a run of capitals followed by a capital plus lowercase letters, and you get <code>HTTP</code> plus <code>Server</code>. The two rules give different answers, so the <strong>order they run in decides whether the output is correct</strong> — the capital-run rule has to run first.</p>
 <table>
-<thead><tr><th>Target style</th><th>Result for HTTPServer</th><th>Note</th></tr></thead>
-<tbody>
+<tr><th>Target style</th><th>Result for HTTPServer</th><th>Note</th></tr><tbody>
 <tr><td>camelCase</td><td>httpServer</td><td>First word lowercase, later words capitalised</td></tr>
 <tr><td>PascalCase</td><td>HttpServer</td><td>First word capitalised too; the original capital run is flattened</td></tr>
 <tr><td>snake_case</td><td>http_server</td><td>Separator removed, underscores inserted, all lowercase</td></tr>
@@ -172,8 +170,7 @@
 <p><strong>Example 2: abbreviation endings.</strong> Take <code>userID</code>. There is no capital run to anchor on, only two trailing capitals. The correct word list is [user, id], giving <code>user_id</code>. A naive rule that splits only on lower-to-upper transitions leaves the capitals attached and yields <code>userid</code>, or splits them into single letters. Before trusting an automated conversion on a real codebase, run it against a sample of genuine identifiers and check the abbreviated endings and any token sitting next to a digit.</p>
 <p><strong>Example 3: what the style costs in bytes.</strong> Style choice also lands in storage and network budgets, because JSON field names are <em>repeated with every record</em> rather than stored once.</p>
 <table>
-<thead><tr><th>Style</th><th>Field fragment</th><th>Characters</th></tr></thead>
-<tbody>
+<tr><th>Style</th><th>Field fragment</th><th>Characters</th></tr><tbody>
 <tr><td>camelCase</td><td><code>{"userName":1,"createdAt":2}</code></td><td>28</td></tr>
 <tr><td>snake_case</td><td><code>{"user_name":1,"created_at":2}</code></td><td>30</td></tr>
 </tbody>

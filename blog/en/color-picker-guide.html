@@ -33,6 +33,54 @@
 <link rel="stylesheet" href="../../css/style.css">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Online Color Picker Guide: Screen Color Picking and Palette Tips","description":"How to use a color picker, common color schemes, and HEX/RGB/HSL color code conversion.","author":{"@type":"Person","name":"Calc-Tools Editor"},"datePublished":"2026-07-02","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.calc-tools.top/blog/en/color-picker-guide"},"publisher":{"@type":"Organization","name":"ToolBox Inside"}}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.calc-tools.top/blog/en/"},{"@type":"ListItem","position":3,"name":"Color Picker Guide: Screen Color Picking and Palette Tips","item":"https://www.calc-tools.top/blog/en/color-picker-guide"}]}</script>
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Why does the color I recorded differ from the one the designer gave me?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "First check for the eight-digit form: #FF6B35 and #FF6B3580 look different on screen, and the latter composites over white to roughly #FFB59A. If both are six digits, work out whether the value came from a spec annotation or from sampling a screenshot — captures taken on wide-gamut displays are often converted by the capture tool."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why is HSL lightness not the same as HSV value?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Because they are defined differently. In HSL, 100% lightness is white and 0% is black, with saturated colors sitting near 50%. In HSV, 100% value is the saturated color itself and lowering it darkens. That is why the most vivid color in a Photoshop picker translates to roughly 50% lightness in HSL."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why does adding 20 to all three RGB channels shift the hue?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Because the channels contribute unevenly to perceived brightness: green carries 0.7152, red 0.2126 and blue just 0.0722, making green nearly ten times as influential as blue. An equal increase brightens blue far less than green, so the hue drifts toward yellow-green. To brighten while holding the hue, change HSL lightness, or move only L in OKLCH."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can dark mode just invert the colors?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. Inversion yields complements, so the hues change. Give each semantic token a dark value and verify it: #1D4ED8 scores 6.70:1 on white but only 2.80:1 on #121212, so dark mode needs a lighter blue instead."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why does a color keep failing 4.5:1 by a hair?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Because contrast changes fastest in the mid greys. #757575 scores 4.61:1 on white while #777777 scores 4.48:1 — a difference you cannot see, but one that flips the verdict. Fixing greys at #757575 or darker is more reliable than nudging values around the threshold."
+                }
+            }
+        ]
+    }
+    </script>
 <script src="/js/i18n.js" defer></script><script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>
 <body>
@@ -57,28 +105,107 @@
             </nav>
 <div class="article-tags"><a href="/en/tags/utility.html" class="tag tag-utility" data-tag="utility"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-wrench"></use></svg> Tools</a></div>
 <p class="blog-meta"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-newspaper"></use></svg> 2026-07-02 · Calc-Tools Editor</p>
-<h1>Online Color Picker Guide: Screen Color Picking and Palette Tips</h1><p>A color picker captures colors from your screen and converts them between HEX, RGB, and other models. It's a staple for designers, developers, and marketers.</p>
-<h2>Picking from Your Screen</h2>
-<p>The eyedropper samples any pixel on screen. Pick a color from a reference image, a competitor's site, or a brand asset and copy the exact value instantly.</p>
-<h2>Understanding Color Codes</h2>
-<p>HEX codes like #4A90D9 combine red, green, and blue values; RGB and HSL describe colors differently. Convert between them to match your design system's format.</p>
-<h2>Building a Palette</h2>
-<p>Start from one brand color and generate complementary shades. Consistent palettes make interfaces cohesive and marketing materials recognizable.</p>
-<h2>Accessibility Check</h2>
-<p>Before finalizing, check contrast between text and background. Tools that show contrast ratios help you meet accessibility standards for readability.</p>
-<h2>Working with Color Names</h2>
-<p>Beyond codes, colors have standard names and named palettes used in CSS and design tools. A color picker that shows the closest name helps you communicate with teammates who think in names rather than hex codes.</p>
-<p>When a brand's official color is defined in a different format than your project, convert it once and store the value in your design system so everyone uses the same token.</p>
-<h2>How to Pick a Color</h2>
-<ol><li>Use the eyedropper to sample any pixel on your screen.</li><li>Copy the value in the format your project needs—HEX, RGB, or HSL.</li><li>Generate complementary shades for the full palette.</li></ol>
-<p>Before finalizing, check the contrast against your text color to keep the design readable and accessible.</p>
-<p><strong>Quick tip:</strong> lock your brand palette in a design token file. When you sample a color, store it as a named token so every page uses the same value instead of scattered hex codes. Named tokens keep the whole site in sync and make future edits trivial.</p>
+<h1>Online Color Picker Guide: Screen Color Picking and Palette Tips</h1>
+<p>A color picker turns one pixel on your screen into a value you can copy. What decides whether that value survives contact with a real project is something else entirely: which model you use to describe it, what background it sits on, and which value replaces it in dark mode. The same declaration can look like two different colors on a designer's wide-gamut display and on a user's laptop.</p>
+<p>This guide skips the click-by-click instructions and covers the part that actually causes rework: the six color models and what each one describes, the four HEX notations browsers accept, why HSL is easier to tune than RGB, how a contrast ratio is calculated step by step, and how to name and theme colors inside a design system. Every figure below is shown with its arithmetic, so you can reproduce it with the tools on this site.</p>
+<h2>1. The Color Model Family: What Each Notation Actually Describes</h2>
+<p>Every color model answers the same question — how do I write this color as numbers — but they use completely different coordinate systems, and mixing them up is where most palette bugs start.</p>
+<p><strong>RGB is a device coordinate system.</strong> It splits color into red, green and blue light channels from 0 to 255. Screens are additive: all three channels at full power give white, all three at zero give black. <code>rgb(255,107,53)</code> is a typical orange. The catch is that RGB has no relationship to human intuition: to make that orange "a bit brighter" you have to change three numbers, and by how much is a matter of trial and error.</p>
+<p><strong>HEX is not a separate model — it is RGB written in hexadecimal.</strong> Each of the three 0–255 numbers becomes two hex digits, so <code>#FF6B35</code> and <code>rgb(255,107,53)</code> are the same color. It dominates web and design handoff because it is short, easy to copy, and never needs escaping inside markup.</p>
+<p><strong>HSL is the human coordinate system.</strong> Hue answers "which color", saturation answers "how vivid", lightness answers "how bright". You can build a full set of shades for one brand color by moving a single number, which is not possible in RGB.</p>
+<p><strong>HSV (also called HSB) is a variant of HSL.</strong> Hue is defined identically; the difference is what "light" means. In HSL, 100% lightness is pure white. In HSV, 100% value is the fully saturated color. Photoshop's picker uses HSV, so dragging value to the top gives you a vivid color, while setting HSL lightness to 100% in CSS gives you white — one of the most common sources of confusion when design and code are compared side by side.</p>
+<p><strong>CMYK is the print coordinate system.</strong> It is subtractive: the more ink you stack, the less light bounces back. It describes an ink recipe, and it does not map one-to-one onto emitted light. Vivid cyans and fluorescent oranges that a screen renders happily cannot be printed in four-color process, and certain spot inks cannot be simulated on screen at all.</p>
+<p><strong>Lab, OKLab and OKLCH are perceptual coordinate systems.</strong> Their goal is that equal numeric steps look like equal visual steps. In sRGB the three channels contribute very unevenly to brightness: at full value, green carries a relative luminance of 0.7152 while blue carries only 0.0722 — nearly a tenfold difference. That is why interpolating or brightening directly in RGB so often drifts the hue. The Lab family flattens that uneven perceptual space mathematically, at the cost of being hard to calculate in your head.</p>
+<h2>2. HEX Is More Than #RRGGBB</h2>
+<p>Every HEX notation has precise parsing rules, and a wrong digit never raises an error — it silently becomes a different color. These are the four forms CSS accepts:</p>
+<table>
+<tr><th>Notation</th><th>Meaning</th><th>Example</th><th>Expands to</th></tr>
+<tr><td>#RGB</td><td>Three-digit shorthand, each digit doubled</td><td>#F53</td><td>#FF5533, i.e. rgb(255,85,51)</td></tr>
+<tr><td>#RRGGBB</td><td>The standard six-digit form</td><td>#FF6B35</td><td>rgb(255,107,53)</td></tr>
+<tr><td>#RGBA</td><td>Four-digit shorthand, fourth digit is alpha</td><td>#F538</td><td>#FF553388</td></tr>
+<tr><td>#RRGGBBAA</td><td>Eight-digit form, last two digits are alpha</td><td>#FF6B3580</td><td>rgba(255,107,53,0.502)</td></tr>
+</table>
+<p>Three rules cause most of the damage. <strong>First, only six-digit values whose pairs repeat can be shortened.</strong> <code>#FF5533</code> becomes <code>#F53</code>, but <code>#FF6B35</code> has 6B in the middle, so the shorthand <code>#F63</code> would mean <code>#FF6633</code> — a different color. Browsers reject that shorthand, and the whole declaration is dropped.</p>
+<p><strong>Second, the last two digits of an eight-digit value are alpha, not extra precision.</strong> In <code>#FF6B3580</code>, 80 is 128 in decimal, so opacity is 128 ÷ 255 ≈ 50.2%. Composited over white that value renders as <code>#FFB59A</code>; over black it renders as <code>#80361B</code>. One value, two very different results — the most common reason a sampled color "does not look right" after being pasted into a project.</p>
+<p><strong>Third, six- and eight-digit HEX are case-insensitive</strong>, so <code>#ff6b35</code> and <code>#FF6B35</code> are identical. The real risk is misreading the letter O as a zero or the letter l as a one; that happens far more often than a genuine format error when values are copied by hand or rewritten in bulk. To validate a batch of color values, run them through the <a href="/en/text/regex-tester">regex tester</a> with a pattern such as <code>^#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$</code>.</p>
+<h2>3. Why HSL Is Easier to Tune, and Its Two Blind Spots</h2>
+<p>HSL earns its place because one number changes one thing. Drop lightness from 60% to 45% and hue and saturation stay put, so you get the same family of color, just calmer: <code>hsl(16,100%,60%)</code> is <code>#FF6933</code>, 45% gives <code>#E63D00</code>, and 30% gives <code>#992900</code>. A consistent set of brand shades falls out of that arithmetic. Approximating the same set by hand in RGB almost always drifts the hue.</p>
+<p><strong>Blind spot one: HSL lightness is not perceived brightness.</strong> At lightness 50%, yellow looks far brighter than blue. A scale built from evenly spaced HSL lightness values therefore looks unevenly spaced, with the ends visually compressed.</p>
+<p><strong>Blind spot two: HSL interpolation takes the short way around the hue wheel, and that path can cut through unrelated hues.</strong> Interpolate from red <code>#FF0000</code> to blue <code>#0000FF</code>. In RGB the midpoint is <code>#800080</code>, a dark purple with a relative luminance of about 0.0615. In HSL the midpoint is <code>hsl(300,100%,50%)</code>, which is <code>#FF00FF</code>, a vivid magenta with a luminance of about 0.2848. The reason is that the short path from 0° to 240° runs backwards through 120° and lands at 300°. The two midpoints differ in luminance by more than four times, and neither matches the intuition of "half red, half blue". Modern browsers can interpolate gradients in OKLab or OKLCH for a more perceptually even result; whether that is available to you depends on the browsers you must support.</p>
+<h2>4. Which Model to Use, and How It Usually Goes Wrong</h2>
+<table>
+<tr><th>Model</th><th>What it describes</th><th>Typical use</th><th>Common mistake</th></tr>
+<tr><td>HEX</td><td>RGB in hexadecimal</td><td>CSS declarations, design specs, design tokens</td><td>Treating the eight-digit form as "more precise" and ignoring that the last pair is alpha</td></tr>
+<tr><td>RGB / rgba</td><td>Device light channels plus alpha</td><td>Canvas and graphics APIs, per-channel math</td><td>Adding the same amount to all three channels to brighten a color, which shifts the hue</td></tr>
+<tr><td>HSL</td><td>Hue, saturation, lightness</td><td>Generating shade scales, tuning a theme color</td><td>Using HSL lightness as if it were perceived brightness</td></tr>
+<tr><td>HSV / HSB</td><td>Hue, saturation, value</td><td>Photoshop pickers and swatch panels</td><td>Confusing HSV value with CSS lightness and copying the number across</td></tr>
+<tr><td>CMYK</td><td>Print ink recipe</td><td>Print, packaging, stock and ink specifications</td><td>Sending screen values to a printer without specifying a color profile</td></tr>
+<tr><td>Lab / OKLCH</td><td>Perceptually uniform space</td><td>Palette algorithms, gradient interpolation, accessible scales</td><td>Writing the L value as a percentage into hsl(), since the two syntaxes are unrelated</td></tr>
+</table>
+<p>The selection rule compresses into three lines: use HEX for static values that go to browsers and design specs; use HSL when you need to generate shades programmatically; and when color has to match across devices and media, settle the color space first — sRGB or Display P3, embedded profile or not — before arguing about values.</p>
+<h2>5. Three Worked Examples</h2>
+<p><strong>Example one: one orange, four notations.</strong> The picker returns <code>#FF6B35</code>. Split it into FF, 6B and 35, convert to decimal and you get 255, 107 and 53, so the RGB form is <code>rgb(255,107,53)</code>. For HSL, the sum of the largest and smallest channels gives (255+53) ÷ 2 ÷ 255 ≈ 60.4% lightness, the hue sits near 16°, and saturation is 100%, so <code>hsl(16,100%,60%)</code>. Add alpha for the translucent version and you get <code>#FF6B3580</code>. All four describe the same color; none of them is more accurate than the others.</p>
+<p><strong>Example two: can that orange be body text on white?</strong> Using the WCAG relative luminance formula, <code>#FF6B35</code> has a luminance of about 0.3203. Against white (luminance 1) the ratio is (1+0.05) ÷ (0.3203+0.05) ≈ 2.84:1. Against black it is (0.3203+0.05) ÷ (0+0.05) ≈ 7.41:1. The verdict is unambiguous: on white this orange falls far short of the 4.5:1 required for body text and is only usable for large headings or graphics, while on a dark background it passes comfortably. The background, not the color, decides compliance.</p>
+<p><strong>Example three: darkening a brand blue until it passes.</strong> Suppose <code>#4A90D9</code> is the primary button color. On white it scores only 3.34:1, so body text on it fails. Hold the hue and reduce lightness: at <code>#3576B8</code> the ratio reaches 4.74:1, and at <code>#2F6FB0</code> it reaches 5.22:1. The first just clears the 4.5:1 bar, the second leaves headroom, and both are reasonable design token candidates. You can verify each figure with the <a href="/en/image/color-contrast">color contrast checker</a>.</p>
+<h2>6. How a Contrast Ratio Is Actually Calculated</h2>
+<p>A WCAG contrast ratio is not a guess about how different two colors look; it is a reproducible number. Linearize the three sRGB channels, weight them by 0.2126, 0.7152 and 0.0722 to get relative luminance, then compute (L1+0.05) ÷ (L2+0.05) with L1 as the lighter of the two. Because it is a ratio, it maxes out at 21:1 (white on black) and bottoms out at 1:1 (a color on itself).</p>
+<p>The thresholds are 4.5:1 for body text and 3:1 for large text (roughly 24px regular or 18.66px bold and up) and for interface graphics. Here is what a few neutral greys actually score:</p>
+<table>
+<tr><th>Color</th><th>Relative luminance</th><th>On white</th><th>On black</th><th>Verdict</th></tr>
+<tr><td>#000000</td><td>0.0000</td><td>21.00:1</td><td>1.00:1</td><td>The theoretical maximum on white, invisible on black</td></tr>
+<tr><td>#757575</td><td>0.1779</td><td>4.61:1</td><td>4.56:1</td><td>One of the few greys that passes 4.5:1 on both</td></tr>
+<tr><td>#777777</td><td>0.1845</td><td>4.48:1</td><td>4.69:1</td><td>Falls just short on white; not valid for body text</td></tr>
+<tr><td>#949494</td><td>0.2961</td><td>3.03:1</td><td>6.92:1</td><td>Large text, icons and decorative elements only</td></tr>
+</table>
+<p>This table explains why light grey text is the most common accessibility defect. Move from <code>#757575</code> one step lighter to <code>#777777</code> and the ratio falls from 4.61 to 4.48 — visually indistinguishable, yet the compliance verdict flips. The risk is highest for placeholders, captions and disabled states, the text that "looks secondary" and is therefore written in a grey somewhere around 3:1. Pinning that grey at <code>#757575</code> or darker is easier than fine-tuning near the threshold forever.</p>
+<h2>7. Design Tokens, Semantic Names and Dark Mode</h2>
+<p>Writing raw values into components is fastest on day one and unmanageable by month six: the same blue ends up in four notations across a dozen files, and a rebrand means find-and-replace everywhere. The durable pattern is two layers — a raw palette (<code>--blue-500</code>, <code>--orange-600</code>) and semantic tokens on top of it (<code>--color-primary</code>, <code>--color-success</code>, <code>--color-danger</code>, <code>--color-text-muted</code>). Components reference only the semantic layer, so theming and rebranding change a single mapping.</p>
+<p>The most common dark mode mistake is inverting colors. Inversion produces complements; the hue has changed, and that is not a dark theme. The correct move is to re-pick values by role, give every semantic token a value in each theme, and verify contrast for each one.</p>
+<table>
+<tr><th>Semantic token</th><th>Light value</th><th>Dark value</th><th>What copying over does</th></tr>
+<tr><td>Primary / link (blue)</td><td>#1D4ED8, 6.70:1 on white</td><td>#0A84FF, 5.14:1 on #121212</td><td>Reusing #1D4ED8 in dark mode leaves only 2.80:1</td></tr>
+<tr><td>Danger (error text)</td><td>#B91C1C, 6.47:1 on white</td><td>#FF453A, 5.50:1 on #121212</td><td>Dark red smears into a dark grey background at 2.90:1</td></tr>
+<tr><td>Divider / overlay</td><td>#0000001A over white gives #E5E5E5</td><td>#FFFFFF1F over #121212 gives #2F2F2F</td><td>Keeping the same alpha makes dividers look bright and dirty</td></tr>
+</table>
+<p>The third row deserves a note of its own: a translucent overlay looks different depending on what is underneath, so the alpha itself has to change with the theme. Carrying <code>#0000001A</code> (about 10.2% alpha) from a light theme into a dark one produces a line far brighter than its background — it reads as a smudge rather than a divider.</p>
+<h2>8. Five Reasons Design and Implementation Disagree</h2>
+<p>The sampled value matches the spec exactly, yet the page still looks off. These five causes cover almost every case, ordered by how often they occur.</p>
+<p><strong>Cause one: different color profiles.</strong> The same artwork exported with a Display P3 profile looks more saturated than the sRGB export. Browsers honor the profile when they find it and assume sRGB when they do not, so both the spec value and the code can be correct while the rendered color genuinely differs.</p>
+<p><strong>Cause two: the screenshot tool converted the color.</strong> When capturing a wide-gamut screen, some tools write the display profile and others convert back to sRGB. That is why sampling a design mockup can return a value that does not match its own annotation — the picker is fine; the screenshot already changed the pixels.</p>
+<p><strong>Cause three: lossy compression shifted the color.</strong> JPEG introduces noise around high-contrast edges and along gradients, so a sample taken from a JPEG can sit a step or two away from the original. Sample PNG or WebP originals when the value matters; see the <a href="/blog/en/image-format-converter-guide">image format converter guide</a> for the trade-offs between formats.</p>
+<p><strong>Cause four: alpha compositing.</strong> A foreground at 50% opacity over a card takes its final color from both layers. If the card background is itself a gradient, the same button is a different color at every position — in that case make the button opaque, or make the background a flat color.</p>
+<p><strong>Cause five: the display itself.</strong> An uncalibrated screen can be visibly off in white point and gamma, enough to shift the same code by several steps between two machines. That is not a code defect, but it is more than enough to make color review an argument. For brand deliverables, calibrate the display or work from a printed proof.</p>
+<h2>9. FAQ</h2>
+<dl>
+<dt>Why does the color I recorded differ from the one the designer gave me?</dt>
+<dd>First check for the eight-digit form: <code>#FF6B35</code> and <code>#FF6B3580</code> look different on screen, and the latter composites over white to roughly <code>#FFB59A</code>. If both are six digits, work out whether the value came from a spec annotation or from sampling a screenshot — captures taken on wide-gamut displays are often converted by the capture tool.</dd>
+<dt>Why is HSL lightness not the same as HSV value?</dt>
+<dd>Because they are defined differently. In HSL, 100% lightness is white and 0% is black, with saturated colors sitting near 50%. In HSV, 100% value is the saturated color itself and lowering it darkens. That is why the brightest, most vivid color in a Photoshop picker translates to roughly 50% lightness in HSL.</dd>
+<dt>Why does adding 20 to all three RGB channels shift the hue?</dt>
+<dd>Because the channels contribute unevenly to perceived brightness: green carries 0.7152, red 0.2126 and blue just 0.0722, making green nearly ten times as influential as blue. An equal increase brightens blue far less than green, so the hue drifts toward yellow-green. To brighten while holding the hue, change HSL lightness, or move only L in OKLCH.</dd>
+<dt>Can dark mode just invert the colors?</dt>
+<dd>No. Inversion yields complements, so the hues change. Give each semantic token a dark value and verify it: <code>#1D4ED8</code> scores 6.70:1 on white but only 2.80:1 on <code>#121212</code>, so dark mode needs a lighter blue instead.</dd>
+<dt>Why does a color keep failing 4.5:1 by a hair?</dt>
+<dd>Because contrast changes fastest in the mid greys. <code>#757575</code> scores 4.61:1 on white while <code>#777777</code> scores 4.48:1 — a difference you cannot see, but one that flips the verdict. Fixing greys at <code>#757575</code> or darker is more reliable than nudging values around the threshold.</dd>
+</dl>
+<h2>10. Four Common Misconceptions</h2>
+<p><strong>Misconception one: the same value means the same color.</strong> A value only describes numbers; the color space and embedded profile decide the rendering. Identical numbers with and without a Display P3 profile render as two different colors in any browser that performs color management.</p>
+<p><strong>Misconception two: a picker reveals the "true" color of a design.</strong> A picker reports the numbers of the current frame, and that frame may already have passed through display color management, a screenshot conversion, or scaling interpolation. To reproduce a brand color reliably, get the official value; sample only to cross-check.</p>
+<p><strong>Misconception three: more colors look more professional.</strong> A primary, an accent and a set of neutral greys usually cover an interface. Every value that never becomes a token is one more thing to miss during a rebrand.</p>
+<p><strong>Misconception four: passing contrast equals looking good.</strong> 4.5:1 is a readability floor, not an aesthetic target. Palettes that sit exactly on the line often look harsh, while pushing body text past 7:1 and saving light tones for decorative elements is both safer and calmer.</p>
+<h2>11. Four Practical Habits</h2>
+<ul>
+<li><strong>Settle the color space before the values</strong>: agree on sRGB as the baseline at kickoff and convert assets on export, so wide-gamut material never sneaks in and produces two renderings of one value.</li>
+<li><strong>Keep color in tokens, not components</strong>: components reference semantic names only, the raw palette lives in one place, and a rebrand touches a single mapping.</li>
+<li><strong>Run contrast checks per theme</strong>: whenever a foreground color changes, confirm 4.5:1 for body text and 3:1 for large text and icons with the <a href="/en/image/color-contrast">contrast checker</a>, separately for light and dark.</li>
+<li><strong>Name a color the moment you sample it</strong>: write it into the palette with a meaningful name instead of leaving a trail of <code>#FF6B35</code> duplicates. When you need an exact sample from artwork, take it from the original with the <a href="/en/image/color-picker">color picker</a> rather than from a recompressed screenshot.</li>
+</ul>
 <div class="blog-cta">
                 <p><strong>Online <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-image"></use></svg> Color Picker</strong></p>
                 <p>Free to use, no download required</p>
                 <p><a href="/en/image/color-picker"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-arrow-right"></use></svg> Use <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-image"></use></svg> Color Picker Now</a></p>
             </div>
-            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> Related Articles</h3><ul><li><a href="/blog/en/image-format-converter-guide">Image Format Converter: JPG vs PNG vs WebP vs GIF Guide</a></li><li><a href="/blog/en/image-resize-crop-guide">Image Resize and Crop: Best Practices for Image Sizing</a></li><li><a href="/blog/en/image-to-base64-guide">Image to Base64: Embed Images in HTML and CSS</a></li><li><a href="/blog/en/word-counter-guide">Word Counter: Count Characters, Words, and Paragraphs</a></li></ul></div>
+            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> Related Articles</h3><ul><li><a href="/blog/en/image-format-converter-guide">Image Format Converter: JPG vs PNG vs WebP vs GIF Guide</a></li><li><a href="/blog/en/image-compression-guide">How to Compress Images Online: Complete Guide</a></li><li><a href="/blog/en/image-resize-crop-guide">Image Resize and Crop: Best Practices for Image Sizing</a></li><li><a href="/blog/en/image-to-base64-guide">Image to Base64: Embed Images in HTML and CSS</a></li></ul></div>
 <div class="article-bottom-tags"><a href="/en/tags/utility.html" class="tag tag-utility" data-tag="utility"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-wrench"></use></svg> Tools</a></div>
 
         <div class="like-section">

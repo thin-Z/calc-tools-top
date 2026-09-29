@@ -137,8 +137,7 @@
 <h2>二、五类真实故障：从症状反推字符</h2>
 <p>不可见字符不会以"文本不太干净"这种温和的方式提醒你，它通常直接让某个环节报错，或者更糟 —— 静默地算错。按症状归纳，日常遇到的几乎都能落进下面五类：</p>
 <table>
-<thead><tr><th>故障类别</th><th>典型症状</th><th>高概率元凶</th><th>第一步定位动作</th></tr></thead>
-<tbody>
+<tr><th>故障类别</th><th>典型症状</th><th>高概率元凶</th><th>第一步定位动作</th></tr><tbody>
 <tr><td>解释器 / 编译器拒绝</td><td>首行报"非法字符""bad interpreter"，报错位置肉眼看不出异常</td><td>文件头 BOM（U+FEFF）；行尾多余的 U+000D</td><td>查看文件前三个字节是否为 EF BB BF</td></tr>
 <tr><td>等值比较失败</td><td>两条记录"明明一样"却不相等；去重后条数翻倍；令牌或密钥校验失败</td><td>U+200B / U+200C / U+200D / U+2060</td><td>逐码点比较两侧字符串，而不是比较外观</td></tr>
 <tr><td>结构化解析错列</td><td>CSV 导入后列数不对；按空格切分得到的字段数与预期不符</td><td>U+00A0 不间断空格；U+3000 全角空格；U+0009 制表符</td><td>用 <code>\s</code> 与字面空格各切分一次，对比结果</td></tr>
@@ -150,8 +149,7 @@
 <h2>三、逐字符清单：码点、字节与"算不算空白"</h2>
 <p>下面这张表是本文的核心。它逐个列出最常见的不可见字符，给出它们的 UTF-8 字节序列，并回答一个关键问题：<strong>标准的空白处理会不会把它们当作空白删掉</strong>。倒数第二列的实测结果来自 JavaScript 的 <code>/\s/</code> 与 <code>String.prototype.trim()</code>；其他语言对 Unicode 空白属性的判断遵循同一套标准，结论一致。</p>
 <table>
-<thead><tr><th>码点</th><th>名称</th><th>UTF-8 字节</th><th>常见来源</th><th>标准空白处理能否捕获</th><th>处置方式</th></tr></thead>
-<tbody>
+<tr><th>码点</th><th>名称</th><th>UTF-8 字节</th><th>常见来源</th><th>标准空白处理能否捕获</th><th>处置方式</th></tr><tbody>
 <tr><td>U+200B</td><td>零宽空格</td><td>E2 80 8B</td><td>网页折行标记、生成文本、IM 转发</td><td>否，<code>\s</code> 与 <code>trim()</code> 均无效</td><td>按码点显式删除</td></tr>
 <tr><td>U+200C</td><td>零宽非连接符</td><td>E2 80 8C</td><td>波斯语 / 印地语文本、富文本残留</td><td>否</td><td>按码点显式删除</td></tr>
 <tr><td>U+200D</td><td>零宽连接符</td><td>E2 80 8D</td><td>emoji 组合序列、阿拉伯语文本</td><td>否</td><td>先确认是否属于 emoji 组合序列，再决定删除</td></tr>
@@ -178,8 +176,7 @@ after trim(): 长度仍为 30，trim() 没有删掉任何字符</code></pre>
 <h2>五、四种检测手段与各自的盲区</h2>
 <p>发现不可见字符不靠"更仔细地看"，靠换一种表示方式。下面四种手段覆盖从"随手一查"到"写进流水线"的不同场景：</p>
 <table>
-<thead><tr><th>手段</th><th>能看到什么</th><th>盲区</th></tr></thead>
-<tbody>
+<tr><th>手段</th><th>能看到什么</th><th>盲区</th></tr><tbody>
 <tr><td>编辑器开启"显示不可见字符"</td><td>空格、制表符、行尾差异会渲染成可见符号；多数现代编辑器还会用方框标出零宽字符</td><td>只对当前打开的文件有效；不同编辑器渲染规则不同，容易漏判</td></tr>
 <tr><td>十六进制查看（<code>od -c</code>、<code>hexdump -C</code>、<code>cat -A</code>、PowerShell 的 <code>Format-Hex</code>）</td><td>字节级真相：BOM 显示为 <code>EF BB BF</code>，零宽空格显示为 <code>E2 80 8B</code></td><td>输出冗长，适合确认单行或文件头，不适合通读全文</td></tr>
 <tr><td>按码点扫描</td><td>一次性列出所有可疑码点及其位置，适合批量处理文件</td><td><code>\s</code> 抓不到零宽类字符，必须显式写出码点区间</td></tr>

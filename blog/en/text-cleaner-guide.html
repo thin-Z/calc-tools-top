@@ -115,8 +115,7 @@
 <h2>2. Five Failure Classes, Read Backwards from the Symptom</h2>
 <p>Invisible characters do not announce themselves politely. They either break a step outright or, worse, corrupt it silently. Almost everything you will meet falls into one of five classes:</p>
 <table>
-<thead><tr><th>Failure class</th><th>Typical symptom</th><th>Most likely culprit</th><th>First diagnostic step</th></tr></thead>
-<tbody>
+<tr><th>Failure class</th><th>Typical symptom</th><th>Most likely culprit</th><th>First diagnostic step</th></tr><tbody>
 <tr><td>Interpreter or compiler rejection</td><td>An "illegal character" or "bad interpreter" error on line one, pointing somewhere that looks normal</td><td>A leading BOM (U+FEFF); a stray U+000D at the end of the line</td><td>Check whether the first three bytes are EF BB BF</td></tr>
 <tr><td>Equality failure</td><td>Two records that "look the same" compare unequal; deduplication keeps both; token or key validation fails</td><td>U+200B / U+200C / U+200D / U+2060</td><td>Compare the code points of both sides instead of their appearance</td></tr>
 <tr><td>Broken field parsing</td><td>A CSV lands in the wrong columns; splitting on spaces yields more or fewer fields than expected</td><td>U+00A0 no-break space; U+3000 ideographic space; U+0009 tab</td><td>Split once on a literal space and once on <code>\s</code>, then compare</td></tr>
@@ -128,8 +127,7 @@
 <h2>3. Character by Character: Code Points, Bytes and What Counts as Whitespace</h2>
 <p>The table below is the core of this article. It lists the invisible characters you are most likely to meet, gives their UTF-8 byte sequences, and answers one key question: <strong>will standard whitespace handling treat this as blank and remove it?</strong> The measured column comes from JavaScript's <code>/\s/</code> and <code>String.prototype.trim()</code>; other languages follow the same Unicode whitespace property, so the conclusions carry over.</p>
 <table>
-<thead><tr><th>Code point</th><th>Name</th><th>UTF-8 bytes</th><th>Common source</th><th>Caught by standard whitespace handling</th><th>What to do</th></tr></thead>
-<tbody>
+<tr><th>Code point</th><th>Name</th><th>UTF-8 bytes</th><th>Common source</th><th>Caught by standard whitespace handling</th><th>What to do</th></tr><tbody>
 <tr><td>U+200B</td><td>Zero width space</td><td>E2 80 8B</td><td>Web line-break hints, generated text, chat forwarding</td><td>No — neither <code>\s</code> nor <code>trim()</code></td><td>Delete explicitly by code point</td></tr>
 <tr><td>U+200C</td><td>Zero width non-joiner</td><td>E2 80 8C</td><td>Persian and Indic text, rich text residue</td><td>No</td><td>Delete explicitly by code point</td></tr>
 <tr><td>U+200D</td><td>Zero width joiner</td><td>E2 80 8D</td><td>Emoji sequences, Arabic script</td><td>No</td><td>Check whether it belongs to an emoji sequence before deleting</td></tr>
@@ -156,8 +154,7 @@ after trim(): length is still 30, trim() removed nothing</code></pre>
 <h2>5. Four Detection Techniques and Their Blind Spots</h2>
 <p>Finding invisible characters is not a matter of looking more carefully; it is a matter of changing the representation. These four techniques cover everything from a quick check to a pipeline rule:</p>
 <table>
-<thead><tr><th>Technique</th><th>What it shows</th><th>Blind spot</th></tr></thead>
-<tbody>
+<tr><th>Technique</th><th>What it shows</th><th>Blind spot</th></tr><tbody>
 <tr><td>Turning on "show invisible characters" in an editor</td><td>Spaces, tabs and trailing differences render as visible marks; most modern editors also box zero width characters</td><td>Only applies to the file you have open; rendering rules differ between editors and can miss cases</td></tr>
 <tr><td>Hexadecimal view (<code>od -c</code>, <code>hexdump -C</code>, <code>cat -A</code>, PowerShell's <code>Format-Hex</code>)</td><td>Byte-level truth: a BOM appears as <code>EF BB BF</code>, a zero width space as <code>E2 80 8B</code></td><td>Verbose; good for a single line or the file header, impractical for reading a whole document</td></tr>
 <tr><td>Scanning by code point</td><td>Lists every suspect code point and its position in one pass; scales to batches of files</td><td><code>\s</code> cannot catch zero width characters, so the code point ranges must be written out explicitly</td></tr>

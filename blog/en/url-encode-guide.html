@@ -111,8 +111,7 @@
 <h2>1. Whether to Encode Depends on Where the Character Sits</h2>
 <p>RFC 3986 divides URI characters into unreserved, reserved and everything else. That answers what the grammar permits. The more useful engineering question is what you should do and what happens if you do not. The table below is organised by situation, and every row is a decision you will actually face.</p>
 <table>
-<thead><tr><th>Situation</th><th>Correct move</th><th>What goes wrong otherwise</th></tr></thead>
-<tbody>
+<tr><th>Situation</th><th>Correct move</th><th>What goes wrong otherwise</th></tr><tbody>
 <tr><td>A query value contains <code>&amp;</code> or <code>=</code></td><td>Encode as <code>%26</code> and <code>%3D</code></td><td>The value is cut short and the server parses an extra parameter</td></tr>
 <tr><td>A path segment contains <code>/</code></td><td>Encode as <code>%2F</code></td><td>One filename becomes two directory levels and the route 404s</td></tr>
 <tr><td>A value contains <code>#</code></td><td>Encode as <code>%23</code></td><td>The rest is treated as a fragment and never sent to the server</td></tr>
@@ -126,8 +125,7 @@
 <h2>2. Query Values and Path Segments: Two Rule Sets, One API Choice</h2>
 <p>Two common JavaScript entry points encode "a value", and they do not agree. Measured side by side:</p>
 <table>
-<thead><tr><th>Raw value</th><th><code>encodeURIComponent</code></th><th><code>new URLSearchParams</code></th></tr></thead>
-<tbody>
+<tr><th>Raw value</th><th><code>encodeURIComponent</code></th><th><code>new URLSearchParams</code></th></tr><tbody>
 <tr><td><code>a b</code></td><td><code>a%20b</code></td><td><code>q=a+b</code></td></tr>
 <tr><td><code>C++</code></td><td><code>C%2B%2B</code></td><td><code>q=C%2B%2B</code></td></tr>
 <tr><td><code>中文 教程</code></td><td><code>%E4%B8%AD%E6%96%87%20%E6%95%99%E7%A8%8B</code></td><td><code>q=%E4%B8%AD%E6%96%87+%E6%95%99%E7%A8%8B</code></td></tr>
@@ -139,8 +137,7 @@
 <h2>3. CJK Text, Emoji and IDNs: Three Different Routes</h2>
 <p>Non-ASCII content reaches a URL through more than one mechanism. Treating them as one thing leads to wrong conclusions. Each row below is a measured result.</p>
 <table>
-<thead><tr><th>Content</th><th>Mechanism</th><th>Measured result</th></tr></thead>
-<tbody>
+<tr><th>Content</th><th>Mechanism</th><th>Measured result</th></tr><tbody>
 <tr><td>CJK text in a path or query</td><td>Percent-encoding, one escape per UTF-8 byte</td><td><code>中</code> becomes <code>%E4%B8%AD</code></td></tr>
 <tr><td>Supplementary-plane characters</td><td>Same encoding, four bytes per character</td><td>Code point U+1F680 becomes <code>%F0%9F%9A%80</code></td></tr>
 <tr><td>A CJK domain name</td><td>IDNA to Punycode, labels prefixed <code>xn--</code></td><td><code>中文域名.中国</code> becomes <code>xn--fiq06l2rdsvs.xn--fiqs8s</code></td></tr>
@@ -154,8 +151,7 @@
 <h2>4. Double Encoding: Who Added the Second Layer</h2>
 <p><code>%2520</code> means exactly one thing: a <code>%</code> was encoded as <code>%25</code>, turning <code>%20</code> into <code>%2520</code>. The time goes into finding <strong>which layer encoded it one time too many</strong>. The clue is that each layer decodes at a different moment:</p>
 <table>
-<thead><tr><th>Layer</th><th>Decoding behaviour</th><th>Typical symptom</th></tr></thead>
-<tbody>
+<tr><th>Layer</th><th>Decoding behaviour</th><th>Typical symptom</th></tr><tbody>
 <tr><td>Browser address bar / <code>fetch</code></td><td>Normalises and escapes structural characters; does not decode the string you passed in</td><td>The <code>%25</code> shown in the address bar is genuinely what was sent</td></tr>
 <tr><td>Front-end concatenation</td><td>Depends on whether an already-encoded value is handed to an encoder again</td><td>The most common first extra layer</td></tr>
 <tr><td>Reverse proxy or gateway</td><td>May decode once before forwarding, depending on rewrite rules</td><td>Logged parameter values suddenly look "normal" or shorter</td></tr>
@@ -168,8 +164,7 @@
 <h2>5. Encoding and Security: The Gap Between Check and Use</h2>
 <p>Encoding is not a security control; it only changes how bytes are written. The real vulnerability appears when <strong>the value validation sees is not the value that gets used</strong>, with a decode sitting between them. Three payload families exploit that gap:</p>
 <table>
-<thead><tr><th>Payload</th><th>Which encoding gap it exploits</th><th>Defence</th></tr></thead>
-<tbody>
+<tr><th>Payload</th><th>Which encoding gap it exploits</th><th>Defence</th></tr><tbody>
 <tr><td><code>%2e%2e%2f</code></td><td>An upstream layer decodes and nothing re-validates the result before it becomes a path</td><td>Decode to a stable form, then reject any <code>..</code> segment</td></tr>
 <tr><td><code>%0d%0a</code></td><td>An unchecked value is concatenated into a response header</td><td>Allow only visible ASCII in header values and reject line breaks outright</td></tr>
 <tr><td><code>%2f%2fevil.example.com</code> or <code>//evil.example.com</code></td><td>Validation checks a string prefix and misses the protocol-relative form</td><td>Use an allowlist of redirect targets, never prefix matching</td></tr>

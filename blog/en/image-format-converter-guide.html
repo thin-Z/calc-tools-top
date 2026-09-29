@@ -33,6 +33,54 @@
 <link rel="stylesheet" href="../../css/style.css">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Image Format Converter: JPG vs PNG vs WebP vs GIF Guide","description":"Compare common image formats, their use cases, and when to convert between them.","author":{"@type":"Person","name":"Calc-Tools Editor"},"datePublished":"2026-07-02","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.calc-tools.top/blog/en/image-format-converter-guide"},"publisher":{"@type":"Organization","name":"ToolBox Inside"}}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.calc-tools.top/blog/en/"},{"@type":"ListItem","position":3,"name":"Image Format Converter: JPG vs PNG vs WebP vs GIF Guide","item":"https://www.calc-tools.top/blog/en/image-format-converter-guide"}]}</script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "After converting PNG to JPEG, why do transparent areas become white or black blocks instead of no background?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Because JPEG has no alpha channel, so every pixel must be written with a definite color. Transparent pixels usually still carry an RGB value underneath, often black or white, and a converter either keeps that value or substitutes its own fill color, which is why results vary between tools. To control the outcome, composite the transparent area onto a chosen background color before converting; for web assets, pick the same color as the page."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Will converting a photo to PNG make it sharper?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. Lossless in PNG means no further loss is added; it cannot recover detail already discarded inside a JPEG. A typical JPEG to PNG conversion multiplies the file size several times over while the picture stays exactly as it was."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is AVIF ready to use now?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Recent browsers support it and its compression is usually better than WebP, but support is narrower, software outside the browser is more likely to fail on it, and encoding takes noticeably longer. A safe approach is to treat it as a progressive enhancement on the web while keeping WebP or JPEG as the fallback."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why does a photo end up sideways on my computer after conversion?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Phone cameras usually do not rotate pixels; they write an orientation flag and leave the rotation to the viewer. If a conversion drops that flag, or rewrites pixels using the wrong orientation, the photo arrives sideways. Before batch converting, check how the export handles metadata retention and automatic rotation."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is one format per image enough on a website?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "For browsers alone, one modern format is usually sufficient. The same image, however, gets copied into documents, chat windows and upload forms, where support is much thinner. For assets reused over time, keep a JPEG or PNG alongside the modern format and let multiple source declarations pick the winner."
+                }
+            }
+        ]
+    }
+    </script>
 <script src="/js/i18n.js" defer></script><script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>
 <body>
@@ -57,28 +105,110 @@
             </nav>
 <div class="article-tags"><a href="/en/tags/utility.html" class="tag tag-utility" data-tag="utility"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-wrench"></use></svg> Tools</a></div>
 <p class="blog-meta"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-newspaper"></use></svg> 2026-07-02 · Calc-Tools Editor</p>
-<h1>Image Format Converter: JPG vs PNG vs WebP vs GIF Guide</h1><p>Image format conversion changes a file between JPG, PNG, WebP, GIF, and other formats. Picking the right format balances quality, size, and compatibility.</p>
-<h2>When to Convert</h2>
-<p>Convert when a format no longer fits its purpose—a transparent PNG used as a photo, or a heavy TIFF for the web. The right format reduces size without visible loss.</p>
-<h2>Format Cheat Sheet</h2>
-<p>JPG for photos, PNG for transparency and text, WebP for the best web balance, GIF for simple animations. Convert based on how the image will be used, not habit.</p>
-<h2>Batch Conversion</h2>
-<p>Converting one by one wastes time. Batch tools apply the same format and quality settings to every file, keeping a consistent result across a set of images.</p>
-<h2>Quality Settings</h2>
-<p>When converting to a lossy format, choose a quality level you can inspect visually. Start high and step down until the file size target is met.</p>
-<h2>Transparency and Backgrounds</h2>
-<p>PNG and WebP support transparency, while JPG always fills the frame with a background color. If your image needs a transparent background, convert to a format that preserves the alpha channel.</p>
-<p>When converting a transparent PNG to JPG, fill the background first—otherwise the transparent areas render as black or white unpredictably across viewers.</p>
-<h2>How to Convert an Image</h2>
-<ol><li>Upload or select the source image file.</li><li>Choose the target format and a quality setting that fits the use.</li><li>Convert and compare the output size and appearance with the original.</li></ol>
-<p>Convert from the original rather than from an already-compressed copy to avoid losing another generation of quality.</p>
-<p><strong>Quick tip:</strong> standardize on WebP for web images unless you need transparency in legacy tools. It consistently beats JPG and PNG on size at the same visual quality. Modern browsers render WebP perfectly at smaller sizes, with no visible quality loss.</p>
+<h1>Image Format Converter: JPG vs PNG vs WebP vs GIF Guide</h1>
+<p>Converting an image is rarely just a matter of changing the extension. What actually changes is the entire set of encoding rules: how pixels are stored, how color is described, whether transparency and animation can be expressed at all, and which information travels alongside the pixels. Choosing badly rarely means "a slightly larger file". It usually means text in a screenshot grows colored fringes, a transparent logo picks up a white box against a dark background, or a portrait shot on a phone arrives sideways on someone else's laptop.</p>
+<p>This guide is not about which button to press. It gives a selection path you can follow: four questions that narrow the format down to one, then a look at what conversion irreversibly changes, and finally the cases where the right decision is not to convert at all. All file sizes quoted here are <strong>typical values</strong>; real results depend on image content and encoder settings.</p>
+<h2>1. Six Formats, Six Problems They Were Built to Solve</h2>
+<p>These formats are not versions of one another. They are answers given in different decades to different problems, and knowing why each was created supports better decisions than memorizing a parameter table.</p>
+<p><strong>JPEG</strong> (standardized in the early 1990s by the international standards body together with the ITU-T; the name is the abbreviation of the Joint Photographic Experts Group) assumes that neighboring pixels in a photograph are highly correlated. It transforms the image into frequency components and quantizes away most of the high-frequency ones. That trade of detail for size was the first large-scale success of lossy compression, and it is exactly why JPEG is poor at sharp line art and flat-color graphics: for those images, the discarded high frequencies are the entire content.</p>
+<p><strong>PNG</strong> (mid-1990s) was designed as a response to the patent dispute surrounding the compression algorithm used by GIF. Its brief was "lossless, transparent, and free of licensing encumbrance". It preserves every pixel, which is why photographs stored as PNG balloon in size, but its transparency is a true alpha channel that can express partial opacity.</p>
+<p><strong>GIF</strong> (introduced by CompuServe in the 1980s) combines a 256-color palette with dictionary compression. Its animation support keeps it alive for short loops, but its transparency is a single bit: a pixel is either fully transparent or fully opaque. Rounded corners and soft shadows therefore turn into hard jagged edges when converted to GIF.</p>
+<p><strong>WebP</strong> (introduced by Google around 2010, reusing intra-frame coding from its video codec family) offers both lossy and lossless modes and inherits alpha and animation, which makes it the broadest modern format available today.</p>
+<p><strong>AVIF</strong> (derived from the AV1 codec of the open media alliance) compresses more efficiently and supports higher bit depths, at the cost of noticeably longer encoding time.</p>
+<p><strong>SVG</strong> is not the same kind of thing at all. It records instructions for how to draw, such as shapes, paths and text, rather than what color each pixel is, so it stays sharp at any scale. That also means <strong>it cannot serve as a conversion target for photographs</strong>. Tracing a photo into SVG usually produces a larger file that looks like an approximation, which is the classic directional mistake in format selection.</p>
+<h2>2. Four Questions That Narrow the Choice to One</h2>
+<p>Selection feels difficult mainly because the questions are asked in the wrong order. The workable order is: first, is this a photograph or a graphic? Second, does it need transparency? Third, does it need animation? Only then ask about the compatibility floor. The first two questions eliminate most candidates, and the last two only decide among what remains. The typical failure from reversing the order is deciding early that WebP is the obvious answer, then discovering the file has to be handed to an older system that cannot open it.</p>
+<figure>
+<svg viewBox="0 0 660 205" width="100%" role="img" aria-label="Image format decision tree: first whether the content is a photo or a graphic, then whether transparency is needed, then whether animation is needed, and finally where the compatibility floor sits">
+<text x="0" y="20" font-size="13" fill="currentColor">Question 1　Photo or graphic</text>
+<text x="248" y="20" font-size="12" fill="currentColor">Photo → lossy JPEG / WebP</text>
+<text x="0" y="66" font-size="13" fill="currentColor">Question 2　Transparency</text>
+<text x="248" y="66" font-size="12" fill="currentColor">Needed → PNG / WebP with alpha</text>
+<text x="0" y="112" font-size="13" fill="currentColor">Question 3　Animation</text>
+<text x="248" y="112" font-size="12" fill="currentColor">Needed → animated WebP / AVIF, GIF as fallback</text>
+<text x="0" y="158" font-size="13" fill="currentColor">Question 4　Compatibility floor</text>
+<text x="248" y="158" font-size="12" fill="currentColor">Legacy targets → JPEG / PNG fallback</text>
+<text x="0" y="196" font-size="12" fill="currentColor">Asked in this order, the four questions usually leave one candidate; reversing them causes rework</text>
+</svg>
+<figcaption>Figure 1: The four-question order for format selection. A negative answer at one step decides whether the next question still needs asking.</figcaption>
+</figure>
+<p>Applied to real scenarios, "first choice" does not always mean "the only usable option". Once an image leaves the browser, the second choice is often the one that actually works:</p>
+<table>
+<tr><th>Scenario</th><th>First choice</th><th>Second choice</th><th>Pitfall to avoid</th></tr>
+<tr><td>Photographs inside a web page</td><td>Lossy WebP</td><td>JPEG</td><td>Storing as PNG for "lossless" quality: much larger and no better looking</td></tr>
+<tr><td>Archiving camera or phone originals</td><td>Original format or high-quality JPEG</td><td>PNG only if lossless is required</td><td>Re-saving JPEG repeatedly, losing one generation each time</td></tr>
+<tr><td>Screenshots, charts and text-heavy images</td><td>PNG</td><td>Lossless WebP</td><td>Converting to JPEG, which adds colored fringes around text</td></tr>
+<tr><td>Icons and logos with transparency</td><td>PNG or WebP with alpha</td><td>SVG when the source is already vector</td><td>JPEG drops transparency; GIF keeps only one-bit transparency</td></tr>
+<tr><td>Short looping animations</td><td>Animated WebP or AVIF</td><td>GIF</td><td>GIF has only 256 colors, so gradients and shadows band</td></tr>
+<tr><td>E-commerce hero images and print delivery</td><td>High-quality JPEG or PNG</td><td>Whatever the printer specifies</td><td>Sending a web-compressed file to print, short on both resolution and color</td></tr>
+<tr><td>Icon and line art that must scale freely</td><td>SVG</td><td>High-resolution PNG</td><td>Tracing a photograph into SVG: larger file, approximate result</td></tr>
+</table>
+<p>WebP appears most often in the first-choice column, which reflects its coverage of lossy, lossless, transparency and animation at once. What matters more is the last column. <strong>The cost of a mistake is usually far higher than the bytes saved</strong>: a reprint, a rejected upload, or a client who cannot open a file all cost more than a few hundred kilobytes.</p>
+<h2>3. What Conversion Actually Changes</h2>
+<p>There are two kinds of conversion. Lossless re-encoding only swaps the container, leaving pixel values identical. Lossy re-encoding re-quantizes and discards information according to the encoder's judgement. Either way, the data listed below can disappear quietly, and none of it can be recovered from the output file afterwards.</p>
+<table>
+<tr><th>Conversion</th><th>Usually preserved</th><th>Lost or altered</th><th>Typical symptom</th></tr>
+<tr><td>JPEG to PNG</td><td>Pixel values and composition</td><td>Nothing, but no detail is added either</td><td>File grows several times larger and is mistaken for "sharper"</td></tr>
+<tr><td>PNG to JPEG</td><td>Dimensions and overall look</td><td>Alpha channel and some metadata</td><td>Transparent areas become white or black blocks; bright fringes on dark backgrounds</td></tr>
+<tr><td>Lossy to lossy, such as JPEG to lossy WebP</td><td>Dimensions and general appearance</td><td>Another generation of high-frequency detail</td><td>Block artifacts and mosquito noise accumulate with each pass</td></tr>
+<tr><td>Animated image to a static format</td><td>The first frame</td><td>All later frames and loop settings</td><td>The animation survives as a single still image</td></tr>
+<tr><td>24-bit color to GIF</td><td>Outline and composition</td><td>Color count and partial transparency</td><td>Gradients band and rounded edges turn jagged</td></tr>
+<tr><td>Photo with metadata to a stripped export</td><td>Pixels</td><td>Color profile, capture data, orientation flag</td><td>Wide-gamut photos look washed out; portrait shots arrive sideways</td></tr>
+<tr><td>Print-oriented CMYK image for the web</td><td>The file opens normally</td><td>Faithful color rendering</td><td>Browsers generally do not render print color spaces correctly, so colors look wrong</td></tr>
+</table>
+<p>Two categories in that table are routinely underestimated. The first is <strong>metadata</strong>. Lost capture settings are merely a pity, but a lost orientation flag turns a portrait photo sideways, and a lost ICC profile drains the color out of a wide-gamut image. Neither changes the pixel count, yet both change whether the result looks right. The second is <strong>partial transparency</strong>. An alpha channel can express values such as 50 percent opacity, while GIF transparency is strictly on or off; once the anti-aliased edge of a rounded icon is forced into those two states, a hard outline appears.</p>
+<h2>4. Three Worked Examples</h2>
+<p><strong>Example 1: a logo with transparency.</strong> A 240 by 240 circular logo saved as PNG is a typical 18 KB, with fully transparent corners. After conversion to JPEG, every transparent pixel must be written with a definite color, and what that color is depends on the converter: most tools fill white, while some carry over the RGB value hiding behind the transparency and produce black. Either way a square appears where the circle used to be. The file does get smaller, a typical 6 KB or one third of the original, but the moment the artwork sits on anything other than a white background, that square edge shows. The correct exit for keeping transparency is lossy WebP at a typical 9 KB, about half the original, or simply staying with PNG.</p>
+<p><strong>Example 2: an interface screenshot.</strong> A 1200 by 800 image at 24-bit color holds 1200 x 800 x 3 = 2,880,000 bytes of pixel data uncompressed, roughly 2.75 MB. The same screenshot saved as PNG is a typical 480 KB, about 1/5.9 of the raw data, because flat areas and repeated letter shapes give dictionary compression plenty to work with. Converted to JPEG at quality 85 it becomes a typical 120 KB, which is 25 percent of the PNG, or about 75 percent saved, and roughly a 23-fold reduction against the raw pixels. The numbers look excellent, and the price is colored fringing along every letter: JPEG lowers the resolution of the color channels, so black text on white picks up red and blue edges once you zoom in. For screenshots, charts and images with text, PNG or lossless WebP remains the first choice.</p>
+<p><strong>Example 3: what 256 colors really means.</strong> A 24-bit image can represent 16,777,216 colors. The GIF palette holds 256, which is 0.0015 percent of that. It explains why gradients and portraits band visibly when saved as GIF, and why the same animation converted to animated WebP or AVIF looks smoother as well as smaller. The value of GIF is compatibility, not image quality.</p>
+<p>All three examples point to the same conclusion: <strong>size, quality and compatibility cannot all be optimal at once</strong>, and the real job of conversion is deciding which one to give up. If bytes still need to come down, reducing dimensions to the actual display width usually beats further tweaking of encoder settings; see <a href="/blog/en/image-resize-crop-guide">image resize and crop practices</a> for that step.</p>
+<h2>5. Compatibility Done Properly: Fallbacks, Not Either/Or</h2>
+<p>Framing the decision as "WebP or JPEG" is too narrow. Recent browsers broadly support WebP, and AVIF support has been spreading across newer versions, but outside the browser there is a much wider world: image viewers, office suites, upload and transcoding pipelines on social platforms, and print workflows. Their support for newer formats is noticeably thinner, and you cannot control those environments or ask them to upgrade.</p>
+<p>The standard approach on the web is to offer several sources for one image. Put the newer format first as a <code>&lt;source&gt;</code> element, optionally declaring <code>type=&quot;image/webp&quot;</code>, and finish with a JPEG or PNG as the fallback address on the <code>&lt;img&gt;</code> element. The browser takes the first format it understands and falls back when it understands none, all without a single line of JavaScript. Newer browsers get the smaller file, older environments still see a picture.</p>
+<p>Two rules apply to fallbacks. First, every file inside one <code>&lt;picture&gt;</code> element must come from <strong>the same export of the original</strong>, never from re-encoding an already compressed JPEG into WebP, which stacks a second loss on top of the first without earning the size benefit. Second, CSS background images have no fallback mechanism at all, so be more conservative there, or accept the slightly larger JPEG. Inline base64 images are a similar case: they have neither fallback nor independent caching, leaving no room for trial and error, as the trade-offs in <a href="/en/image/base64">image to Base64</a> explain.</p>
+<h2>6. When Not to Convert</h2>
+<p>Conversion has a cost, and in the situations below the right decision is to leave the file alone:</p>
+<table>
+<tr><th>Situation</th><th>Why conversion hurts</th><th>What to do instead</th></tr>
+<tr><td>A master file kept for archiving</td><td>The original is the only source every later export comes from</td><td>Store it in its native format and export derivatives from it</td></tr>
+<tr><td>A working file that will be edited again</td><td>Each lossy save costs a generation, and the damage becomes visible after several rounds</td><td>Keep working copies as PNG or lossless WebP and convert once, at delivery</td></tr>
+<tr><td>A file going to a print house</td><td>Printers have their own requirements for resolution and color space</td><td>Deliver what the printer specifies, usually not a web-compressed file</td></tr>
+<tr><td>Scans of invoices or contracts</td><td>Compression artifacts interfere with reading digits, stamps and signatures</td><td>Use a lossless format and keep enough resolution</td></tr>
+<tr><td>Files already within their size budget</td><td>Another pass saves little and adds a generation of loss</td><td>Leave them and spend the effort on the images that actually exceed the limit</td></tr>
+<tr><td>A hope that the image will look sharper</td><td>Lossless formats only preserve the pixels that exist; they cannot restore lost detail</td><td>Go back to the original file or reshoot, rather than converting again</td></tr>
+</table>
+<h2>7. Frequently Asked Questions</h2>
+<dl>
+<dt>After converting PNG to JPEG, why do transparent areas become white or black blocks instead of no background?</dt>
+<dd>Because JPEG has no alpha channel, so every pixel must be written with a definite color. Transparent pixels usually still carry an RGB value underneath, often black or white, and a converter either keeps that value or substitutes its own fill color, which is why results vary between tools. To control the outcome, composite the transparent area onto a chosen background color before converting; for web assets, pick the same color as the page.</dd>
+<dt>Will converting a photo to PNG make it sharper?</dt>
+<dd>No. Lossless in PNG means no further loss is added; it cannot recover detail already discarded inside a JPEG. A typical JPEG to PNG conversion multiplies the file size several times over while the picture stays exactly as it was.</dd>
+<dt>Is AVIF ready to use now?</dt>
+<dd>Recent browsers support it and its compression is usually better than WebP, but support is narrower, software outside the browser is more likely to fail on it, and encoding takes noticeably longer. A safe approach is to treat it as a progressive enhancement on the web while keeping WebP or JPEG as the fallback.</dd>
+<dt>Why does a photo end up sideways on my computer after conversion?</dt>
+<dd>Phone cameras usually do not rotate pixels; they write an orientation flag and leave the rotation to the viewer. If a conversion drops that flag, or rewrites pixels using the wrong orientation, the photo arrives sideways. Before batch converting, check how the export handles metadata retention and automatic rotation.</dd>
+<dt>Is one format per image enough on a website?</dt>
+<dd>For browsers alone, one modern format is usually sufficient. The same image, however, gets copied into documents, chat windows and upload forms, where support is much thinner. For assets reused over time, keep a JPEG or PNG alongside the modern format and let multiple source declarations pick the winner.</dd>
+</dl>
+<h2>8. Three Common Misconceptions</h2>
+<p><strong>Misconception 1: conversion equals optimization.</strong> Conversion only changes the encoding; it does not automatically make a file smaller or sharper. PNG to PNG does not shrink anything, and JPEG to PNG does not improve quality. Content type, pixel count and encoder settings decide the size, and format is only one variable among them.</p>
+<p><strong>Misconception 2: standardizing everything on one format.</strong> Photographs and graphics want almost opposite things from an encoder. Photographs tolerate lost detail in exchange for high-frequency compression, while screenshots and icons need every pixel correct and happen to contain enormous repetition. Forcing everything to JPEG destroys text edges and transparency; forcing everything to PNG inflates photographs several times over. Choose per content type instead.</p>
+<p><strong>Misconception 3: assuming the extension describes the contents.</strong> A .jpg file may hold a CMYK color space meant for print, progressive encoding, or no metadata at all. Renaming a .png to .jpg does not turn it into a JPEG; it only confuses the software that opens it, and on some platforms the file is rejected as corrupt.</p>
+<h2>9. Five Practical Recommendations</h2>
+<ul>
+<li><strong>Separate originals from deliverables.</strong> Archive the source files, and treat every output as a fresh export from an original rather than a file to keep editing.</li>
+<li><strong>Fix the dimensions before the format.</strong> Decide the export width from the actual display size, then choose the smallest format that meets your compatibility floor; doing it the other way around means tuning parameters on an image far larger than it needs to be. Use the <a href="/en/image/resize">image resize tool</a> when exact pixels matter.</li>
+<li><strong>Check four things after every conversion.</strong> Whether transparent areas changed color, whether text edges picked up fringes, whether orientation and color profile survived, and whether the file actually got smaller. Replace the original only when all four pass.</li>
+<li><strong>Open the result in the target environment once.</strong> View web assets in the target browser, document assets in the office suite, and print files in the printer's preflight tool. The same image can behave differently in every one of them.</li>
+<li><strong>Keep two copies of anything long-lived.</strong> One modern format for the web and one JPEG or PNG for everywhere else, so a single unreadable file years from now never blocks the work.</li>
+</ul>
+<p>Once the selection path becomes routine, format stops being a recurring argument: content type decides the encoding approach, transparency and animation decide the candidate list, and compatibility decides whether a fallback is needed. What remains is size tuning, which belongs to the compression step covered in the <a href="/blog/en/image-compression-guide">complete image compression guide</a>. To convert a specific file and compare the results, the <a href="/en/image/convert">image format converter</a> runs entirely in the browser.</p>
 <div class="blog-cta">
                 <p><strong>Online <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-image"></use></svg> Format Converter</strong></p>
                 <p>Free to use, no download required</p>
                 <p><a href="/en/image/convert"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-arrow-right"></use></svg> Use <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-image"></use></svg> Format Converter Now</a></p>
             </div>
-            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> Related Articles</h3><ul><li><a href="/blog/en/image-resize-crop-guide">Image Resize and Crop: Best Practices for Image Sizing</a></li><li><a href="/blog/en/image-to-base64-guide">Image to Base64: Embed Images in HTML and CSS</a></li><li><a href="/blog/en/color-picker-guide">Online Color Picker Guide: Screen Color Picking and Palette Tips</a></li><li><a href="/blog/en/word-counter-guide">Word Counter: Count Characters, Words, and Paragraphs</a></li></ul></div>
+            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> Related Articles</h3><ul><li><a href="/blog/en/image-resize-crop-guide">Image Resize and Crop: Best Practices for Image Sizing</a></li><li><a href="/blog/en/image-to-base64-guide">Image to Base64: Embed Images in HTML and CSS</a></li><li><a href="/blog/en/color-picker-guide">Online Color Picker Guide: Screen Color Picking and Palette Tips</a></li><li><a href="/blog/en/image-compression-guide">How to Compress Images Online: Complete Guide</a></li></ul></div>
 <div class="article-bottom-tags"><a href="/en/tags/utility.html" class="tag tag-utility" data-tag="utility"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-wrench"></use></svg> Tools</a></div>
 
         <div class="like-section">

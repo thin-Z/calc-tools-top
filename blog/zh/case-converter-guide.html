@@ -144,8 +144,7 @@
 <h2>二、选型决策：不同场所该用哪种风格</h2>
 <p>选型原则可以收敛成一句话：<strong>跟随所在场所的既有惯例，只在系统边界上做一次显式映射</strong>。下面这张表把常见场所与它的惯例、以及最容易犯的错列在一起。</p>
 <table>
-<thead><tr><th>场所</th><th>惯例风格</th><th>典型示例</th><th>常见误用</th></tr></thead>
-<tbody>
+<tr><th>场所</th><th>惯例风格</th><th>典型示例</th><th>常见误用</th></tr><tbody>
 <tr><td>JSON 字段名</td><td>camelCase 为主，snake_case 常见于 Python 后端</td><td>userName / user_name</td><td>同一 API 里两种风格混用，客户端只能写两套取字段逻辑</td></tr>
 <tr><td>数据库表名与列名</td><td>snake_case（表名常用复数）</td><td>order_items.order_id</td><td>用 MixedCase 建表，跨平台迁移后报"表不存在"</td></tr>
 <tr><td>REST URL 路径</td><td>kebab-case，全小写</td><td>/api/user-profiles</td><td>路径里留下大写字母，造成缓存与路由匹配歧义</td></tr>
@@ -181,8 +180,7 @@
 <p>把命名风格转换做对，难点不在替换，而在<strong>分词</strong>。下面用同一个标识符走一遍完整的转换链。</p>
 <p><strong>算例一：拆开连续大写。</strong>输入 <code>HTTPServer</code>。直觉上它应该拆成 HTTP 与 Server 两个词。但如果先执行"小写字母后跟大写字母就断开"，得到的是 <code>HTTPS</code> 与 <code>erver</code>；如果先执行"连续大写后跟大写加小写就断开"，得到的是 <code>HTTP</code> 与 <code>Server</code>。两条规则的<strong>执行顺序决定了结果对错</strong>，正确写法必须把连续大写的规则放前面。拆出词列 [http, server] 之后，各风格的结果如下：</p>
 <table>
-<thead><tr><th>目标风格</th><th>HTTPServer 的结果</th><th>说明</th></tr></thead>
-<tbody>
+<tr><th>目标风格</th><th>HTTPServer 的结果</th><th>说明</th></tr><tbody>
 <tr><td>camelCase</td><td>httpServer</td><td>首词小写，后续词首字母大写</td></tr>
 <tr><td>PascalCase</td><td>HttpServer</td><td>首词也大写；原先的连续大写被压平</td></tr>
 <tr><td>snake_case</td><td>http_server</td><td>删除分隔符改为下划线，全小写</td></tr>
@@ -194,8 +192,7 @@
 <p><strong>算例二：识别边界比识别大小写更难。</strong>输入 <code>userID</code>。这里没有连续大写串，只有两个大写字母结尾。正确分词是 [user, id]，snake_case 得到 <code>user_id</code>；若按"大写前不断开"的粗糙规则处理，会得到 <code>userid</code> 或 <code>user_i_d</code>。所以自动化转换上线前，务必先用一批真实标识符做回归，重点看缩写词结尾与数字相邻的样本。</p>
 <p><strong>算例三：命名风格对数据体积的影响。</strong>风格选择不只是可读性问题，它直接进入存储与网络开销。以两个字段为例：</p>
 <table>
-<thead><tr><th>写法</th><th>字段名片段</th><th>字符数</th></tr></thead>
-<tbody>
+<tr><th>写法</th><th>字段名片段</th><th>字符数</th></tr><tbody>
 <tr><td>camelCase</td><td><code>{"userName":1,"createdAt":2}</code></td><td>28</td></tr>
 <tr><td>snake_case</td><td><code>{"user_name":1,"created_at":2}</code></td><td>30</td></tr>
 </tbody>

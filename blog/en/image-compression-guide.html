@@ -86,8 +86,7 @@
 <h2>3. Five Formats Side by Side</h2>
 <p>A format decides which compression techniques are even available, not how well they are applied. The table below lines up compression type, transparency, animation and the typical use case:</p>
 <table>
-<thead><tr><th>Format</th><th>Compression</th><th>Transparency</th><th>Animation</th><th>Typical use</th></tr></thead>
-<tbody>
+<tr><th>Format</th><th>Compression</th><th>Transparency</th><th>Animation</th><th>Typical use</th></tr><tbody>
 <tr><td>JPEG</td><td>Lossy, DCT plus quantization</td><td>None</td><td>No</td><td>Photographs, rich gradients, detailed real-world scenes</td></tr>
 <tr><td>PNG</td><td>Lossless, prediction filters plus DEFLATE</td><td>Yes, including partial alpha</td><td>No (APNG is an extension)</td><td>Screenshots, icons, line art, UI assets that need transparency</td></tr>
 <tr><td>WebP</td><td>Both lossy (intra-frame prediction) and lossless modes</td><td>Yes, including partial alpha</td><td>Yes</td><td>General web images; covers photos and transparent art in one format</td></tr>
@@ -101,8 +100,7 @@
 <p>Dragging quality from 100 down to 0 does not reduce the file at a steady rate. The quantization table explains why. At high quality the step sizes are tiny, so most high-frequency coefficients survive — they contribute little to what you see but cost a lot of bits. Widen the steps and those coefficients <strong>collapse to zero in whole blocks</strong>, producing a sudden drop in size. Widen them further and there is little left to zero out, so returns fall away sharply while visible damage starts to appear.</p>
 <p>The table below re-exports one 4000x3000 photograph at different quality levels, normalised against quality 80 (<strong>typical values, actual results vary with image content</strong>):</p>
 <table>
-<thead><tr><th>Quality</th><th>Typical size</th><th>Relative to 80</th><th>What the eye sees</th></tr></thead>
-<tbody>
+<tr><th>Quality</th><th>Typical size</th><th>Relative to 80</th><th>What the eye sees</th></tr><tbody>
 <tr><td>100</td><td>about 2.1 MB</td><td>about 3.1x</td><td>Indistinguishable from the original</td></tr>
 <tr><td>90</td><td>about 1.05 MB</td><td>about 1.5x</td><td>Very hard to tell apart; fine for large displays</td></tr>
 <tr><td>80</td><td>about 680 KB</td><td>1.0, baseline</td><td>No meaningful difference on a normal screen</td></tr>

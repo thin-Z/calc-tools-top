@@ -133,8 +133,7 @@
 <h2>一、编不编，取决于这个字符站在哪</h2>
 <p>RFC 3986 把 URI 字符分成未保留、保留与其他三类，回答的是"语法允许什么"。工程上更该问的是"我该做什么、做错会怎样"。下面这张表按处境组织，每一行都是一个真实的决策点。</p>
 <table>
-<thead><tr><th>处境</th><th>正确做法</th><th>做错的后果</th></tr></thead>
-<tbody>
+<tr><th>处境</th><th>正确做法</th><th>做错的后果</th></tr><tbody>
 <tr><td>查询参数的值里含 <code>&amp;</code> 或 <code>=</code></td><td>编码为 <code>%26</code>、<code>%3D</code></td><td>参数被截断，服务端多解析出一个参数</td></tr>
 <tr><td>路径段的文件名里含 <code>/</code></td><td>编码为 <code>%2F</code></td><td>一个文件名被当成两层目录，路由 404</td></tr>
 <tr><td>值里含 <code>#</code></td><td>编码为 <code>%23</code></td><td>后半段被浏览器当成片段，根本不发给服务端</td></tr>
@@ -148,8 +147,7 @@
 <h2>二、查询参数与路径段：两套规则，一次 API 选择</h2>
 <p>同样是"编码一个值"，JavaScript 里有两个常用入口，输出并不相同。实测一个含空格、加号与中文的值：</p>
 <table>
-<thead><tr><th>原始值</th><th><code>encodeURIComponent</code></th><th><code>new URLSearchParams</code></th></tr></thead>
-<tbody>
+<tr><th>原始值</th><th><code>encodeURIComponent</code></th><th><code>new URLSearchParams</code></th></tr><tbody>
 <tr><td><code>a b</code></td><td><code>a%20b</code></td><td><code>q=a+b</code></td></tr>
 <tr><td><code>C++</code></td><td><code>C%2B%2B</code></td><td><code>q=C%2B%2B</code></td></tr>
 <tr><td><code>中文 教程</code></td><td><code>%E4%B8%AD%E6%96%87%20%E6%95%99%E7%A8%8B</code></td><td><code>q=%E4%B8%AD%E6%96%87+%E6%95%99%E7%A8%8B</code></td></tr>
@@ -161,8 +159,7 @@
 <h2>三、中文、emoji 与中文域名：三条互不相同的路</h2>
 <p>非 ASCII 内容进 URL 时走的是几套不同机制，混起来谈就会得出错误结论。下面每一项都是实测结果。</p>
 <table>
-<thead><tr><th>内容</th><th>机制</th><th>实测结果</th></tr></thead>
-<tbody>
+<tr><th>内容</th><th>机制</th><th>实测结果</th></tr><tbody>
 <tr><td>路径或查询里的中文</td><td>UTF-8 字节逐字节百分号编码</td><td><code>中</code> 变成 <code>%E4%B8%AD</code></td></tr>
 <tr><td>辅助平面字符</td><td>同一套编码，但每字占 4 字节</td><td>码点 U+1F680 变成 <code>%F0%9F%9A%80</code></td></tr>
 <tr><td>域名里的中文</td><td>IDNA 转 Punycode，标签带 <code>xn--</code> 前缀</td><td><code>中文域名.中国</code> 变成 <code>xn--fiq06l2rdsvs.xn--fiqs8s</code></td></tr>
@@ -176,8 +173,7 @@
 <h2>四、双重编码：%2520 是谁编的</h2>
 <p><code>%2520</code> 的含义只有一个：某个 <code>%</code> 被编码成了 <code>%25</code>，于是 <code>%20</code> 变成 <code>%2520</code>。真正花时间的是找出<strong>是哪一层多编了一次</strong>。判断依据在于各层对 URL 的解码时机并不相同：</p>
 <table>
-<thead><tr><th>处理层</th><th>对 URL 的解码行为</th><th>典型表现</th></tr></thead>
-<tbody>
+<tr><th>处理层</th><th>对 URL 的解码行为</th><th>典型表现</th></tr><tbody>
 <tr><td>浏览器地址栏 / <code>fetch</code></td><td>只做规范化与结构字符转义，不解码你传入的字符串</td><td>地址栏显示的 <code>%25</code> 就是真实发出的内容</td></tr>
 <tr><td>前端拼接代码</td><td>取决于是否把已编码的值又交给编码函数</td><td>最常见的第一次多余编码</td></tr>
 <tr><td>反向代理 / 网关</td><td>按重写规则可能解码一次再转发</td><td>日志里的参数值突然"变正常"或"变短"</td></tr>
@@ -190,8 +186,7 @@
 <h2>五、编码与安全：编解码不一致打开的洞</h2>
 <p>编码本身不是安全措施，它只是把字节换个写法。真正的漏洞来自<strong>校验环节看到的值与最终使用的值不是同一个</strong>，中间隔着一次解码。三类载荷都建立在这个缝隙上：</p>
 <table>
-<thead><tr><th>载荷</th><th>依赖的编解码差异</th><th>防御要点</th></tr></thead>
-<tbody>
+<tr><th>载荷</th><th>依赖的编解码差异</th><th>防御要点</th></tr><tbody>
 <tr><td><code>%2e%2e%2f</code></td><td>上游解码后没有重新校验，下游把结果当路径用</td><td>解码归一化之后再判断路径，拒绝 <code>..</code> 段</td></tr>
 <tr><td><code>%0d%0a</code></td><td>值未经检查被拼进响应头</td><td>响应头的值只允许可见 ASCII，一律拒绝换行</td></tr>
 <tr><td><code>%2f%2fevil.example.com</code> 或 <code>//evil.example.com</code></td><td>只校验字符串前缀，没识别出协议相对地址</td><td>跳转目标用白名单，不用前缀匹配</td></tr>

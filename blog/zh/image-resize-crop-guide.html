@@ -53,6 +53,19 @@
     }
     </script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"博客","item":"https://www.calc-tools.top/blog/zh/"},{"@type":"ListItem","position":3,"name":"图片裁剪缩放指南 - 调整尺寸与保持比例技巧, 附平台尺寸建议","item":"https://www.calc-tools.top/blog/zh/image-resize-crop-guide"}]}</script>
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        { "@type": "Question", "name": "把 DPI 改成 300，图片就会变清晰吗？", "acceptedAnswer": { "@type": "Answer", "text": "不会。DPI 只是文件里的换算标签，改它不增加任何像素。1000 × 1000 的图无论标 72 DPI 还是 300 DPI 都是 100 万像素，只是默认打印尺寸从约 35.3 厘米变成约 8.5 厘米。要更清晰，只能回到像素更多的母版重新输出。" } },
+        { "@type": "Question", "name": "按平台要求裁好了，上传后为什么还是被切掉一角？", "acceptedAnswer": { "@type": "Answer", "text": "多数是主体贴边，撞上了平台的二次裁剪或圆形遮罩。把主体控制在画面中心约 80% 的区域内，四周各留余量即可避免；头像尤其要注意四角会被圆角切掉。" } },
+        { "@type": "Question", "name": "先裁剪再缩放，和先缩放再裁剪，差在哪里？", "acceptedAnswer": { "@type": "Answer", "text": "差在还剩多少像素可用。4000 × 3000 直接裁 9:16 还剩 1688 × 3000，可以缩到任意目标尺寸；若先把长边缩到 1920 再裁竖版，只剩 810 × 1440，反而要放大回去。正确顺序是先裁剪、后缩放到目标尺寸，全程只做一次重采样。" } },
+        { "@type": "Question", "name": "打印 A4 到底需要多少像素，手机照片够吗？", "acceptedAnswer": { "@type": "Answer", "text": "300 DPI 下 A4 需要 2480 × 3508 像素，约 8.7 兆像素，加 3 毫米出血是 2551 × 3579。手机主摄常见的 4000 × 3000 够用，铺满 A4 时有效分辨率约 342 DPI，但要接受裁掉约 6% 的短边。" } },
+        { "@type": "Question", "name": "一张图要发多个平台，每次重新处理还是做一份通用的？", "acceptedAnswer": { "@type": "Answer", "text": "做一份按最大需求准备的母版，再按各平台比例派生。母版取所有交付里最高的像素与最大的画幅，派生版本只做裁剪与缩小；用最小尺寸的版本往上套会一路放大，画质不可逆地变差。" } }
+    ]
+}
+    </script>
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>
@@ -79,43 +92,117 @@
             </nav>
             <div class="article-tags"><a href="/tags/utility.html" class="tag tag-utility" data-tag="utility"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-wrench"></use></svg> 工具</a></div>
             <p class="blog-meta"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-newspaper"></use></svg> 2026-07-02 · Calc-Tools 编辑</p>
-            <h1>图片裁剪缩放：调整图片尺寸的最佳实践</h1><p>图片裁剪和缩放是日常处理图片最常用的操作之一。无论是社交媒体发图，还是网站上传，都需要合适的图片尺寸。</p>
-<h2>裁剪 vs 缩放的区别</h2>
-<p><strong>裁剪</strong>：删除图片的部分区域，改变构图但不改变分辨率。适合去除不需要的边缘、调整主体位置。</p>
-<p><strong>缩放</strong>：改变图片整体尺寸，分辨率随之变化。适合缩小大图到指定尺寸。</p>
-<h2>保持宽高比</h2>
-<p>缩放时保持宽高比可以防止图片变形。常见比例的用途：1:1（头像）、4:3（普通照片）、16:9（视频封面/PPT）、3:4（手机竖屏）</p>
-<h2>各平台推荐图片尺寸</h2>
-<p>网站横幅：1920×1080px；微信公众号封面：900×500px；淘宝主图：800×800px；朋友圈配图：1080×1080px或1080×1920px。</p>
-            <h2>如何使用裁剪缩放工具</h2>
-<p>给社交平台或网站备图时，按以下步骤处理最稳妥：</p>
+            <h1>图片裁剪缩放：调整图片尺寸的最佳实践</h1>
+<p>把一张图"处理成合适的尺寸"，其实同时在做一个三层决定：<strong>留多少像素</strong>（信息上限）、<strong>保留哪块画面</strong>（构图）、<strong>按什么规格交付</strong>（平台或印刷方的硬约束）。三层混在一起谈，就会出现"照着攻略裁完还是糊""明明改成 300 DPI 了印刷厂却退稿"这类反复返工。本文按这三层逐级拆开，每个结论都给出可以复算的数字，并给出电商、社交、头像、印刷四类交付的取舍清单。</p>
+<p>先记住一句总原则：<strong>像素减少不可逆，比例改变要丢内容，而 DPI 只是一个标签。</strong>后面的判断都由它推导出来。</p>
+<h2>一、先把"尺寸"拆成三个独立问题</h2>
+<p>"尺寸"常被当成一个数字，实际它是三层信息，处理顺序错了就会白做一遍：</p>
+<table>
+<tr><th>层次</th><th>它决定什么</th><th>是否可逆</th><th>判断依据</th></tr>
+<tr><td>像素总量（宽 × 高）</td><td>画面能承载多少细节，决定可用的最大输出尺寸</td><td>减少后不可逆</td><td>最终用途需要的像素上限</td></tr>
+<tr><td>宽高比与构图</td><td>主体在画面中的位置，以及保留多少画面</td><td>比例可改，被裁掉的画面找不回</td><td>发布位置的显示比例与二次裁剪规则</td></tr>
+<tr><td>DPI / PPI 元数据</td><td>只影响打印时的默认物理尺寸</td><td>随时可改，且不改变任何像素</td><td>印刷方的输出要求</td></tr>
+</table>
+<p>正确的顺序是<strong>先定比例、再定像素、最后写元数据</strong>。反过来做最常见的后果是：先按屏幕宽度把图缩到 1920 像素，才发现发布位是竖版，只能再从横向素材里裁竖版，宽度直接腰斩。</p>
+<h2>二、裁剪是构图决策，不是"去掉多余的边"</h2>
+<p>裁剪的难点从来不在操作，而在判断<strong>主体能不能活下来</strong>。同一份素材要分发到多个位置时，真正的约束是其中最窄的那个比例，而不是手上这张图的原始比例。</p>
+<p>以一张 4000 × 3000（约 12 兆像素，4:3）的横拍照片为例：要裁出 9:16 的竖版封面，高度用满 3000 像素，宽度上限只有 3000 × 9 ÷ 16 = 1688 像素，<strong>只剩原宽的 42%</strong>，其余 58% 的画面必须舍弃。也就是说，横屏素材裁竖版不是修一下边，而是重新构图。需要精确框选时用<a href="/zh/image/image-crop">在线图片裁剪</a>按比例锁定选区，比在缩放工具里手填宽高更可控。</p>
 <ul>
-<li><strong>第一步</strong>：上传图片，工具会显示当前尺寸与比例。</li>
-<li><strong>第二步</strong>：需要改构图就选"裁剪"并拖出选区；需要改大小就选"缩放"并输入目标宽高。</li>
-<li><strong>第三步</strong>：勾选"锁定宽高比"避免变形，确认后导出到本地。</li>
+<li><strong>主体靠近画面中心</strong>：人像把眼睛放在偏上的位置更耐看，也给下方留出文字或按钮的余地。</li>
+<li><strong>远离四周边缘</strong>：主体控制在画面中心约 80% 的区域内。平台会做二次裁剪、圆角遮罩或叠加控件，贴边的主体随时会被切掉一角。</li>
+<li><strong>一次拍摄，多次裁剪</strong>：用最宽的原始素材做母版，1:1、4:3、16:9、9:16 各派生一份，而不是把同一个文件反复改比例。</li>
 </ul>
-<h2>常见问题（FAQ）</h2>
-<dl>
-<dt>缩小图片会损失画质吗？</dt>
-<dd>缩小一般会保持清晰，但放大超过原始尺寸会模糊，因为要插值补像素。建议先拍大图再按需缩小。</dd>
-<dt>为什么导出后体积反而变大？</dt>
-<dd>可能是格式变化，例如从压缩的 WebP 转成未压缩的 PNG。想减小体积可改用 JPG 或 WebP 并降低质量。</dd>
-<dt>锁定比例后只改一边可以吗？</dt>
-<dd>可以。锁定后输入宽度会自动算出高度，反之亦然，保证不变形。</dd>
-<dt>手机图和电脑图比例怎么选？</dt>
-<dd>竖屏内容用 3:4 或 9:16，横屏封面用 16:9，头像用 1:1，按发布位置对号入座即可。</dd>
-</dl>
-<h2>小贴士</h2>
+<h2>三、缩放算法的取舍：算错一次，画质就回不来</h2>
+<p>缩放不是把像素重新排一遍，而是用插值算法估算新像素的值。工具页讲的是各算法的原理差异，这里只讲<strong>什么素材必须配什么算法</strong>，以及用错之后画面会变成什么样。</p>
+<table>
+<tr><th>素材类型</th><th>该选什么</th><th>选错时的可见症状</th><th>代价</th></tr>
+<tr><td>像素画、图标、截图里的细线</td><td>最近邻，不做插值</td><td>硬边消失，细线发灰或糊成一团</td><td>放大时块状感明显</td></tr>
+<tr><td>普通照片</td><td>双三次或 Lanczos</td><td>最近邻会让皮肤与渐变出现色块</td><td>计算稍慢</td></tr>
+<tr><td>缩小幅度超过一半</td><td>分步缩，或选用带抗锯齿的重采样</td><td>用最近邻或简单抽样一次缩到 10%，会出现锯齿与摩尔纹</td><td>多一步操作</td></tr>
+<tr><td>任何放大的场景</td><td>先接受"不会变清晰"</td><td>边缘发软、轮廓出现光晕</td><td>算法无法弥补</td></tr>
+</table>
+<p>两条硬性事实值得单独记住：<strong>放大不会增加信息</strong>——把 800 × 600 放大到 1600 × 1200，像素数变成 4 倍，画面里的真实细节一点没多；<strong>往返不可逆</strong>——缩小过程中丢掉的细节，再放大回去也找不回来，所以"先缩小发出去、以后要用再放大"这条路走不通，母版必须留全尺寸。本站的<a href="/zh/image/resize">图片裁剪缩放工具</a>在缩放时使用平滑插值，导出前可以先用它对照原图确认边缘是否发虚。</p>
+<h2>四、交付场景的硬约束：先问"给谁用"</h2>
+<p>尺寸没有通用的最佳值，只有交付方给的约束。下表给的是不随平台改版而变的判断规则；具体像素门槛会不定期调整，<strong>以各平台官方创作者文档为准</strong>。</p>
+<table>
+<tr><th>交付场景</th><th>不可妥协的约束</th><th>推荐比例</th><th>常见失误</th></tr>
+<tr><td>电商主图</td><td>正方形、纯白背景、主体占画面大部分、最小边满足平台门槛</td><td>1:1</td><td>直接上传横版原图，被系统自动裁掉两侧</td></tr>
+<tr><td>社交平台封面</td><td>关键信息集中在中心安全区，横竖两套分开做</td><td>16:9 与 9:16</td><td>一张横图套用到所有位置，竖版里主体被切</td></tr>
+<tr><td>头像</td><td>主体居中，四周各留约 10% 余量</td><td>1:1</td><td>主体贴住边角，被圆形遮罩切掉</td></tr>
+<tr><td>印刷交付</td><td>像素满足输出分辨率，四周预留出血</td><td>按成品尺寸</td><td>只在文件属性里把 DPI 改成 300，像素没变</td></tr>
+<tr><td>网页配图</td><td>按显示宽度乘以设备像素比准备，并提供多档尺寸</td><td>按版式宽高</td><td>用 4000 像素宽的图去显示在 800 像素宽的栏里</td></tr>
+</table>
+<p>网页是唯一不看 DPI 的场景：浏览器只认像素，<strong>屏幕显示时 DPI 元数据完全被忽略</strong>。所以"网页用 72 DPI、印刷用 300 DPI"这句话只有印刷那一半成立；想控制网页清晰度，要控制的是像素数与设备像素比。</p>
+<h2>五、DPI 是标签，不是清晰度</h2>
+<p>DPI（每英寸点数）与 PPI（每英寸像素数）在交付语境里常被混用，它们描述的是<strong>同一批像素铺在多长的物理距离上</strong>，而不是像素本身有多少。由此得到两条推论：</p>
 <ul>
-<li><strong>留安全边距</strong>：裁剪时主体别贴边，不同平台会裁掉边缘，预留一点余量更稳妥。</li>
-<li><strong>导出前看像素</strong>：网页用 72-150 DPI 足够，印刷才需要 300 DPI，盲目拉高反而拖慢加载。</li>
+<li><strong>改 DPI 不改像素</strong>：一张 1000 × 1000 的图从 72 DPI 改成 300 DPI，像素还是 100 万，只是默认打印尺寸从约 35.3 厘米缩到约 8.5 厘米。</li>
+<li><strong>打印尺寸 = 像素 ÷ DPI</strong>：这个式子可以正着算，也可以反着算。反着算就是印刷前的备图公式。</li>
+</ul>
+<p>正着算：A4 纸是 210 × 297 毫米，换算成英寸是 8.27 × 11.69 英寸。210 ÷ 25.4 × 300 ≈ <strong>2480</strong>，297 ÷ 25.4 × 300 ≈ <strong>3508</strong>，所以 A4 在 300 DPI 下需要约 2480 × 3508 像素，也就是 <strong>8.7 兆像素</strong>；如果四周各留 3 毫米出血，成品尺寸变成 216 × 303 毫米，所需像素升到 <strong>2551 × 3579</strong>。</p>
+<p>反着算更有实用价值：手上已有的像素究竟能印多大。下面以一张 4000 × 3000 的照片为例，把常见成品尺寸需要的像素与它的有效分辨率放在一起对比。</p>
+<table>
+<tr><th>输出尺寸</th><th>长边所需像素（300 DPI）</th><th>这张图的有效分辨率</th><th>结论</th></tr>
+<tr><td>6 × 4.5 英寸</td><td>1800</td><td>约 667 DPI</td><td>远高于门槛，可放心输出</td></tr>
+<tr><td>8 × 6 英寸</td><td>2400</td><td>约 500 DPI</td><td>高于门槛，还留有裁切余量</td></tr>
+<tr><td>A4 满版</td><td>3508</td><td>约 342 DPI</td><td>刚好过线，但 4:3 素材铺满 A4 要裁掉约 6% 的短边</td></tr>
+<tr><td>A3 满版</td><td>4961</td><td>约 242 DPI</td><td>低于 300，适合远距离观看或按 200 DPI 输出</td></tr>
+</table>
+<figure>
+<svg viewBox="0 0 660 170" width="100%" role="img" aria-label="4000乘3000照片在不同输出尺寸下的有效分辨率：6乘4.5英寸约667DPI，8乘6英寸约500DPI，A4满版约342DPI，A3满版约242DPI，虚线为300DPI门槛">
+<line x1="270" y1="16" x2="270" y2="152" stroke="#ff9f0a" stroke-width="1" stroke-dasharray="4 3"></line>
+<text x="276" y="12" font-size="11" fill="currentColor">300 DPI 门槛</text>
+<text x="0" y="38" font-size="13" fill="currentColor">6 × 4.5 英寸</text>
+<rect x="150" y="26" width="267" height="14" rx="3" fill="#0a84ff"></rect>
+<text x="425" y="38" font-size="12" fill="currentColor">约 667 DPI</text>
+<text x="0" y="74" font-size="13" fill="currentColor">8 × 6 英寸</text>
+<rect x="150" y="62" width="200" height="14" rx="3" fill="#0a84ff"></rect>
+<text x="358" y="74" font-size="12" fill="currentColor">约 500 DPI</text>
+<text x="0" y="110" font-size="13" fill="currentColor">A4 满版</text>
+<rect x="150" y="98" width="137" height="14" rx="3" fill="#0a84ff"></rect>
+<text x="295" y="110" font-size="12" fill="currentColor">约 342 DPI</text>
+<text x="0" y="146" font-size="13" fill="currentColor">A3 满版</text>
+<rect x="150" y="134" width="97" height="14" rx="3" fill="#ff453a"></rect>
+<text x="255" y="146" font-size="12" fill="currentColor">约 242 DPI，不达标</text>
+</svg>
+</figure>
+<h2>六、四个可以复算的算例</h2>
+<p><strong>算例一：4000 × 3000 缩到 800 × 600。</strong>边长缩到 20%，像素总量从 1200 万降到 48 万，只剩 <strong>4%</strong>；未压缩的 RGB 数据量从 34.33 MB 降到 1.37 MB。这也是"先缩尺寸再压质量"总比"只调质量"管用的原因——压缩算法要处理的原始数据本身少了 25 倍。</p>
+<p><strong>算例二：横拍素材裁竖版。</strong>4000 × 3000 裁成 9:16，高度用满 3000，宽度只剩 3000 × 9 ÷ 16 = 1688，保留 <strong>42.2%</strong> 的像素。如果顺序反过来——先把长边缩到 1920（得到 1920 × 1440）再裁 9:16——高度用满 1440 时宽度只有 1440 × 9 ÷ 16 = 810，成品上限只有 810 × 1440，达不到常见的 1080 × 1920 交付尺寸，只能再放大一轮。顺序错了，就白丢一次分辨率。</p>
+<p><strong>算例三：A4 印刷备图。</strong>成品 A4 在 300 DPI 下需要 2480 × 3508 像素，约 8.7 兆像素；加 3 毫米出血后是 2551 × 3579。手机主摄常见的 4000 × 3000 铺满 A4 时有效分辨率约 342 DPI，够用，但要接受裁掉约 6% 的短边——4:3 素材和 A4 的比例并不一致。同一张图铺满 A3 只剩约 242 DPI，已经低于 300 DPI 门槛，适合挂在墙上远看，或干脆按 200 DPI 输出。</p>
+<p><strong>算例四：放大两倍。</strong>800 × 600 放大到 1600 × 1200，像素数从 48 万变成 192 万，是原来的 <strong>4 倍</strong>，但画面里的真实细节没有任何增加，文件体积还会同步变大。凡是需要放大的任务，正确做法都是回到母版重新输出。想进一步减小体积，可以在定完尺寸之后再用<a href="/zh/image/compress">图片压缩</a>处理一遍。</p>
+<h2>七、常见问题（FAQ）</h2>
+<dl>
+<dt>把 DPI 改成 300，图片就会变清晰吗？</dt>
+<dd>不会。DPI 只是写在文件里的换算标签，改它不增加任何像素。1000 × 1000 的图无论标 72 DPI 还是 300 DPI，像素都是 100 万，只是默认打印尺寸从约 35.3 厘米变成约 8.5 厘米。要真的更清晰，只能回到像素更多的母版重新输出。</dd>
+<dt>按平台要求裁好了，上传后为什么还是被切掉一角？</dt>
+<dd>多数是主体贴边，撞上了平台的二次裁剪或圆形遮罩。稳妥做法是把主体控制在画面中心约 80% 的区域内，四周各留一点余量；头像尤其要注意四角会被圆角切掉。</dd>
+<dt>先裁剪再缩放，和先缩放再裁剪，差在哪里？</dt>
+<dd>差在还剩多少像素可用。4000 × 3000 直接裁 9:16 还剩 1688 × 3000，可以缩到任意目标尺寸；若先把长边缩到 1920 再裁竖版，只剩 810 × 1440，反而要放大回去。正确顺序是先裁剪、后缩放到目标尺寸，全程只做一次重采样。</dd>
+<dt>打印 A4 到底需要多少像素，手机照片够吗？</dt>
+<dd>300 DPI 下 A4 需要 2480 × 3508 像素（约 8.7 兆像素），加 3 毫米出血是 2551 × 3579。手机主摄常见的 4000 × 3000 够用，铺满 A4 时有效分辨率约 342 DPI；但要接受裁掉约 6% 的短边，因为 4:3 素材和 A4 的比例并不一致。</dd>
+<dt>一张图要发多个平台，每次重新处理还是做一份通用的？</dt>
+<dd>做一份按最大需求准备的母版，再按各平台比例派生。母版取所有交付里最高的像素与最大的画幅，派生版本只做裁剪与缩小；反过来用最小尺寸的版本往上套，就会一路放大，画质不可逆地变差。</dd>
+</dl>
+<h2>八、四个最常见的误区</h2>
+<p><strong>误区一：先把小图发出去，需要大图时再放大。</strong>缩小丢掉的细节不会回来。正确做法是母版保持全尺寸原始格式，需要小的另存一份，两者并存。</p>
+<p><strong>误区二：用缩放代替裁剪。</strong>把 4:3 的图硬塞进 16:9 的版位，得到的是整体变形的画面。这种情况要么裁剪，要么留白填充，唯独不能拉伸。</p>
+<p><strong>误区三：认为缩小一定安全。</strong>缩小同样依赖重采样算法。用最近邻把一张截图一次缩到 10%，细线会出现锯齿和摩尔纹，比原图更难看；像素画与图标则相反，必须用最近邻才能保住硬边。</p>
+<p><strong>误区四：体积变大就是压缩没做好。</strong>改完尺寸后文件反而更大，常见原因是导出格式变了（例如把压缩过的 WebP 存成了 PNG），或者质量参数被重置。格式本身的取舍见<a href="/blog/zh/image-format-converter-guide">图片格式转换指南</a>。</p>
+<h2>九、五条实用建议</h2>
+<ul>
+<li><strong>母版永不覆盖</strong>：全尺寸、未压缩、原始格式的母版单独存放，所有交付都从母版派生，任何一次试验性操作都不动它。</li>
+<li><strong>固定处理顺序</strong>：先裁剪、后缩放、最后压缩。顺序固定下来，整条链路只会发生一次重采样，画质损失最小。</li>
+<li><strong>按最窄的版位定构图</strong>：同一张素材要投多个位置时，先看约束最紧的比例（通常是 9:16 或 1:1），确认主体能活下来再动手。</li>
+<li><strong>批处理统一规格与命名</strong>：批量输出同一目标尺寸，文件名带上用途与宽高，避免事后分不清哪份对应哪个平台。</li>
+<li><strong>交付前回看实际像素</strong>：不要相信文件名和文件属性里的 DPI，直接看像素数与宽高比。网页只认像素，印刷只认像素除以目标尺寸。需要继续减小体积时，可参考<a href="/blog/zh/image-compression-guide">图片压缩完整指南</a>。</li>
 </ul>
 <div class="blog-cta">
                 <p><strong>在线使用 <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-image"></use></svg> 裁剪缩放</strong></p>
                 <p>无需下载，打开即用</p>
                 <p><a href="/zh/image/resize"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-arrow-right"></use></svg> 立即使用 <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-image"></use></svg> 裁剪缩放</a></p>
             </div>
-            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> 相关文章</h3><ul><li><a href="/blog/zh/image-format-converter-guide">图片格式转换：JPG、PNG、WebP、GIF怎么选？</a></li><li><a href="/blog/zh/image-to-base64-guide">图片转Base64：HTML和CSS中嵌入图片的最佳方式</a></li><li><a href="/blog/zh/color-picker-guide">在线取色器使用指南：屏幕取色与配色技巧</a></li><li><a href="/blog/zh/word-counter-guide">字数统计工具：准确统计字符、词语和段落</a></li></ul></div>
+            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> 相关文章</h3><ul><li><a href="/blog/zh/image-compression-guide">图片太大怎么压缩？在线图片压缩完全指南</a></li><li><a href="/blog/zh/image-format-converter-guide">图片格式转换：JPG、PNG、WebP、GIF怎么选？</a></li><li><a href="/blog/zh/image-to-base64-guide">图片转Base64：HTML和CSS中嵌入图片的最佳方式</a></li><li><a href="/blog/zh/color-picker-guide">在线取色器使用指南：屏幕取色与配色技巧</a></li></ul></div>
             <div class="article-bottom-tags"><a href="/tags/utility.html" class="tag tag-utility" data-tag="utility"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-wrench"></use></svg> 工具</a></div>
         </article>
 
