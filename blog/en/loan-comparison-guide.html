@@ -38,12 +38,54 @@
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": [
-            { "@type": "Question", "name": "Which is genuinely cheaper, equal installment or equal principal?", "acceptedAnswer": { "@type": "Answer", "text": "At the same rate, equal principal always costs less interest: CNY 90,102.54 less on CNY 1,000,000 at 3.5% over 30 years. But its first payment is CNY 5,694.44 against CNY 4,490.45, which is 26.8% higher. So cheaper depends on whether roughly CNY 1,200 more each month is safe for your cash flow. If that money can reliably out-earn the loan rate, equal installment is the better choice." } },
-            { "@type": "Question", "name": "Does a larger loan make equal principal the obvious pick?", "acceptedAnswer": { "@type": "Answer", "text": "No. The gap scales with the principal: moving from CNY 1,000,000 to CNY 2,100,000, a factor of 2.1, widens the interest gap from CNY 90,102.54 to CNY 189,215.34, also 2.1 times, while the extra first-month payment scales the same way. A larger loan changes the absolute amounts, not the trade-off between early cash flow and total interest." } },
-            { "@type": "Question", "name": "When I prepay, should I shorten the term or reduce the payment?", "acceptedAnswer": { "@type": "Answer", "text": "Shorten the term. Prepaying CNY 200,000 at instalment 60 on a CNY 1,000,000, 3.5%, 30-year loan saves CNY 217,782 by shortening versus CNY 100,374 by reducing the payment, a difference of CNY 117,408. Compensation charges and limits vary by contract; typical clauses cover an annual cap on prepayment amount and frequency, a minimum period after drawdown, and a percentage charge on the amount prepaid." } },
-            { "@type": "Question", "name": "My LPR just fell — will my payment change next month?", "acceptedAnswer": { "@type": "Answer", "text": "Not immediately. Your payment is recalculated only on the contractual repricing date, usually 1 January or the anniversary of drawdown, and the spread stays fixed. Example: on CNY 1,000,000 over 30 years at 3.5%, after 60 instalments the balance is CNY 896,971 and the payment CNY 4,490.45; at 3.25% it becomes CNY 4,371.09, saving CNY 119.36 a month, or 12 instalments if you keep the payment and shorten the term." } },
-            { "@type": "Question", "name": "What share of income is a safe monthly payment?", "acceptedAnswer": { "@type": "Answer", "text": "Lenders usually cap the payment at 50% of monthly income, but that is an approval threshold rather than a comfortable level. A CNY 4,490.45 payment is 29.9% of CNY 15,000 and 22.5% of CNY 20,000. A safer target keeps the payment inside 40% of household income, with ownership costs adding 5% to 10% of the payment and an emergency reserve of six to twelve months of expenses held separately." } },
-            { "@type": "Question", "name": "When is an interest-first loan worth considering?", "acceptedAnswer": { "@type": "Answer", "text": "An interest-only structure pays just interest until maturity, then the full principal in one lump. The monthly burden is the lightest, but the whole principal accrues interest for the entire term, so total interest is the highest, and you must find the full balance at the end. It suits only short terms with a confirmed source of repayment; using it as a long-term mortgage option raises total cost sharply and adds refinancing risk at maturity." } }
+            {
+                "@type": "Question",
+                "name": "Which is genuinely cheaper, equal installment or equal principal?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "At the same rate, equal principal always costs less interest: CNY 90,102.54 less on CNY 1,000,000 at 3.5% over 30 years. But its first payment is CNY 5,694.44 against CNY 4,490.45 — 26.8% higher. So \"cheaper\" depends on whether roughly CNY 1,200 more each month is safe for your cash flow. If that money can reliably out-earn the loan rate, equal installment is the better choice."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does a larger loan make equal principal the obvious pick?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. The gap scales with the principal: moving from CNY 1,000,000 to CNY 2,100,000, a factor of 2.1, widens the interest gap from CNY 90,102.54 to CNY 189,215.34 — also 2.1 times — while the extra first-month payment scales the same way. A larger loan changes the absolute amounts, not the trade-off between early cash flow and total interest."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "When I prepay, should I shorten the term or reduce the payment?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Shorten the term. Prepaying CNY 200,000 at instalment 60 on a CNY 1,000,000, 3.5%, 30-year loan saves CNY 217,782 by shortening versus CNY 100,374 by reducing the payment — a difference of CNY 117,408. Compensation charges and limits vary by contract; typical clauses cover an annual cap on prepayment amount and frequency, a minimum period after drawdown, and a percentage charge on the amount prepaid."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "My LPR just fell — will my payment change next month?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Not immediately. Your payment is recalculated only on the contractual repricing date, usually 1 January or the anniversary of drawdown, and the spread stays fixed. Example: on CNY 1,000,000 over 30 years at 3.5%, after 60 instalments the balance is CNY 896,971 and the payment CNY 4,490.45; at 3.25% it becomes CNY 4,371.09, saving CNY 119.36 a month, or 12 instalments if you keep the payment and shorten the term."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What share of income is a safe monthly payment?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Lenders usually cap the payment at 50% of monthly income, but that is an approval threshold rather than a comfortable level. A CNY 4,490.45 payment is 29.9% of CNY 15,000 and 22.5% of CNY 20,000. A safer target keeps the payment inside 40% of household income, with ownership costs adding 5% to 10% of the payment and an emergency reserve of six to twelve months of expenses held separately."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "When is an interest-first loan worth considering?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "An interest-only structure pays just interest until maturity, then the full principal in one lump. The monthly burden is the lightest, but the whole principal accrues interest for the entire term, so total interest is the highest, and you must find the full balance at the end. It suits only short terms with a confirmed source of repayment; using it as a long-term mortgage option raises total cost sharply and adds refinancing risk at maturity."
+                }
+            }
         ]
     }
     </script>

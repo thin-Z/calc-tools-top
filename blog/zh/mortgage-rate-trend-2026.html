@@ -86,17 +86,52 @@
     </script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"博客","item":"https://www.calc-tools.top/blog/zh/"},{"@type":"ListItem","position":3,"name":"2026年房贷利率新趋势 - LPR走势分析与购房时机政策解读","item":"https://www.calc-tools.top/blog/zh/mortgage-rate-trend-2026"}]}</script>
     <script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-        { "@type": "Question", "name": "LPR 降了，为什么我的月供没有变？", "acceptedAnswer": { "@type": "Answer", "text": "因为月供不跟着报价公布日走，只跟着合同约定的重定价日走。比较常见的约定是每年 1 月 1 日，或者放款日在一年中的对应日期。在重定价日之前，还款仍按上一次重定价日采用的 LPR 计算，属于机制的正常结果，而不是银行算错，具体约定请查看贷款合同。" } },
-        { "@type": "Question", "name": "合同里的加点以后会变吗？", "acceptedAnswer": { "@type": "Answer", "text": "浮动利率下加点在合同期内通常固定不变，会变的是作为基准的 LPR。报价下行时月供会下降，但下降的只是基准那一部分，加点不会跟着降、也不会消失。加点调整属于合同要素变更，通常需要与贷款银行协商，能否办理以银行规定为准。" } },
-        { "@type": "Question", "name": "固定利率要不要转成浮动？", "acceptedAnswer": { "@type": "Answer", "text": "这是风险偏好问题。固定利率锁定确定性，代价是放弃跟随市场下行的空间；浮动利率保留下行空间，同时承担上行风险。可看三件事：剩余期限还有多长、月供占收入的比例、是否有提前还款计划。本文不预测利率走势，能否转换以贷款银行的规定为准。" } },
-        { "@type": "Question", "name": "提前还款和拿去投资怎么比较才算公平？", "acceptedAnswer": { "@type": "Answer", "text": "放在同一口径：提前还款的收益是确定的，等于按合同利率计算的利息节省；投资要比较的是税后、扣费后的年化收益率。投资收益低于贷款利率时，提前还款相当于一笔确定的无风险收益。还要注意流动性差异，还进去的钱通常取不回来，应急资金应当先留足。" } },
-        { "@type": "Question", "name": "存量房贷利率调整需要我自己去申请吗？", "acceptedAnswer": { "@type": "Answer", "text": "取决于通道。合同约定的重定价自动执行，不需要申请；政策引导下的批量调整由银行公布实施细则，可能需要在手机银行或网点确认；协商变更合同要素则要主动申请并经银行审批。具体以官方公布和贷款银行公告为准。" } }
-    ]
-}
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "LPR 降了，为什么我的月供没有变？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "因为月供不跟着报价公布日走，只跟着合同约定的重定价日走。比较常见的约定是每年 1 月 1 日，或者放款日在一年中的对应日期。在重定价日之前，你的还款仍然按上一次重定价日采用的 LPR 计算 —— 所以\"降了但还没轮到我\"是机制的正常结果，而不是银行算错。具体约定请查看你的贷款合同。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "合同里的\"加点\"以后会变吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "浮动利率下，加点在合同期内通常固定不变，会变的是作为基准的 LPR。所以报价下行时月供会下降，但下降的只是基准那一部分，加点不会跟着降、也不会消失。加点能否调整属于合同要素变更，通常需要与贷款银行协商，能否办理以银行规定为准。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "固定利率要不要转成浮动？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "这是风险偏好问题，不是算一次就能定的。固定利率锁定确定性，代价是放弃跟随市场下行的空间；浮动利率保留下行空间，同时承担上行风险。判断时看三件事：剩余期限还有多长（越短，利率变化的窗口越小）、月供占收入的比例（越紧，越需要确定性）、是否有提前还款计划。本文不预测利率走势；能否转换、如何转换以贷款银行的规定为准。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "提前还款和拿去投资，怎么比较才算公平？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "把两者放在同一口径：提前还款的收益是确定的，等于按合同利率计算的利息节省；投资要比较的是税后、扣费后的年化收益率。若投资收益低于贷款利率，提前还款相当于一笔确定的无风险收益；若更高，则要追问这个收益是否可持续、以及你能否承受过程中的波动。别忘了流动性差异：还进去的钱通常取不回来，应急资金应当先留足。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "存量房贷利率调整，需要我自己去申请吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "取决于通道。合同约定的重定价自动执行，不需要申请；政策引导下的批量调整通常由银行公布实施细则，可能需要你在手机银行或网点确认；协商变更合同要素（例如调整加点、变更重定价方式）则要主动申请并经银行审批。具体以官方公布和你的贷款银行公告为准。"
+                }
+            }
+        ]
+    }
     </script>
 <script src="/js/i18n.js" defer></script>
 

@@ -43,7 +43,7 @@
                 "name": "Why do numbers inside JSON change by themselves?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Because the specification defines only the syntax of a number, not its precision, while mainstream implementations — most notably the JSON.parse of JavaScript — carry every number as an IEEE 754 double. The safe integer ceiling is 9007199254740991, and beyond it values round silently: 9007199254740993 becomes 9007199254740992, and a 19-digit snowflake ID comes back with trailing zeros. Carry such values as strings."
+                    "text": "Because the specification defines only the syntax of a number, not its precision, while mainstream implementations — most notably JavaScript's JSON.parse — carry every number as an IEEE 754 double. The safe integer ceiling is 9007199254740991, and beyond it values round silently: 9007199254740993 becomes 9007199254740992, and a 19-digit snowflake ID comes back with trailing zeros. Carry such values as strings."
                 }
             },
             {
@@ -51,7 +51,7 @@
                 "name": "What is the actual difference between null and a missing field?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "A key present with the value null means explicitly emptied; an absent key means not mentioned this time. The two are fully distinguishable, so a contract has to define each separately. Update endpoints especially must say whether null clears or deletes the field, and whether omission leaves it alone or applies a default."
+                    "text": "A key present with the value null means \"explicitly emptied\"; an absent key means \"not mentioned this time\". The two are fully distinguishable, so a contract has to define each separately. Update endpoints especially must say whether null clears or deletes the field, and whether omission leaves it alone or applies a default."
                 }
             },
             {
@@ -59,7 +59,7 @@
                 "name": "How should a JSON file of tens of megabytes be read?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Change the shape of the data before changing the parser. Converting the document to NDJSON, one object per line, lets you parse line by line and keep memory independent of file size; if the document must stay whole and you only need a few fields, use event-driven streaming. Parsing everything at once is reasonable only in the tens of KB to a few MB range."
+                    "text": "Change the shape of the data before changing the parser. Converting the document to NDJSON, one object per line, lets you parse line by line and keep memory independent of file size; if the document must stay whole and you need only a few fields, use event-driven streaming. Parsing everything at once is only reasonable in the tens of KB to a few MB range."
                 }
             },
             {
@@ -75,7 +75,7 @@
                 "name": "Can JSON store dates and binary data directly?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Neither. There is no date type, so dates become ISO 8601 strings, preferably with a time zone and millisecond precision, and there is no binary type, so bytes become a Base64 string at a cost of roughly a third more size. Genuinely large files do not belong on a JSON channel at all."
+                    "text": "Neither. There is no date type, so dates become ISO 8601 strings — preferably with a time zone and millisecond precision — and there is no binary type, so bytes become a Base64 string at a cost of roughly a third more size. Genuinely large files do not belong on a JSON channel at all."
                 }
             }
         ]

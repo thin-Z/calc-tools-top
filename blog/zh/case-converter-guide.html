@@ -64,7 +64,7 @@
                 "name": "数据库字段名到底该用 camelCase 还是 snake_case？",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "看数据库本身的惯例，不要看你的应用层语言。PostgreSQL 对未加引号的标识符会折叠成小写，因此 snake_case 是稳妥选择；MySQL 在 Windows 上默认不区分表名大小写、在 Linux 上区分，混合大小写会带来迁移风险。同一个字段名在应用层再做一次风格映射，比让数据库迁就语言更可靠。"
+                    "text": "看数据库本身的惯例，不要看应用层语言。PostgreSQL 会把未加引号的标识符折叠成小写，因此 snake_case 是稳妥选择；MySQL 在 Windows 上默认不区分表名大小写、在 Linux 上区分，混合大小写会带来迁移风险。同一个字段名在应用层再做一次风格映射，比让数据库迁就语言更可靠。"
                 }
             },
             {

@@ -54,53 +54,53 @@
     </script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"博客","item":"https://www.calc-tools.top/blog/zh/"},{"@type":"ListItem","position":3,"name":"在线取色器使用指南 - 屏幕取色方法与配色方案技巧详解, 附色码转换","item":"https://www.calc-tools.top/blog/zh/color-picker-guide"}]}</script>
 <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "同一个颜色，为什么我记录的色值和设计师给的不一样？",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "先确认是不是八位写法：#FF6B35 与 #FF6B3580 在屏幕上就是两种观感，后者叠白底约等于 #FFB59A。如果两者都是六位，再分辨来源是设计稿标注值还是截图取色值——广色域屏幕上的截图常被工具做过一次色彩转换。"
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "HSL 的亮度和 HSV 的明度为什么不一样？",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "因为定义不同。HSL 的亮度 100% 是纯白、0% 是纯黑，饱和色大致落在 50% 附近；HSV 的明度 100% 就是饱和色本身，往下降才变暗。所以 Photoshop 拾色器里最亮最艳的颜色，写成 HSL 大约在亮度 50% 左右。"
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "在 RGB 里给三个通道同时加 20，为什么颜色会偏？",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "因为三个通道对感知亮度的权重并不相等：绿色 0.7152、红色 0.2126、蓝色 0.0722，绿色是蓝色的近 10 倍。等量加值对蓝色的提亮效果远不如绿色，整体色相就会朝黄绿方向漂移。要保着色相变亮，改用 HSL 调亮度，或在 OKLCH 里只动 L。"
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "暗色模式可以直接把颜色取反吗？",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "不可以。取反得到的是补色，色相已经改变。正确做法是给每个语义令牌准备暗色取值并逐项验证对比度：亮色主题下的 #1D4ED8 在白底是 6.70:1，直接搬到 #121212 上只剩 2.80:1，必须换成更亮的蓝。"
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "为什么 4.5:1 这个门槛总是差一点点过不去？",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "因为对比度在中灰附近变化最快。#757575 在白底是 4.61:1，往浅一点到 #777777 就掉到 4.48:1，两个颜色的视觉差异几乎看不出来，合规结论却相反。把这类灰固定在 #757575 或更深，比在临界点附近反复试探更可靠。"
-                }
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "同一个颜色，为什么我记录的色值和设计师给的不一样？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "先确认是不是八位写法： #FF6B35 与 #FF6B3580 在屏幕上就是两种观感，后者叠白底约等于 #FFB59A 。如果两者都是六位，再分辨来源是设计稿标注值还是截图取色值——广色域屏幕上的截图常被工具做过一次色彩转换。"
             }
-        ]
-    }
-    </script>
+        },
+        {
+            "@type": "Question",
+            "name": "HSL 的亮度和 HSV 的明度为什么不一样？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "因为定义不同。HSL 的亮度 100% 是纯白、0% 是纯黑，饱和色大致落在 50% 附近；HSV 的明度 100% 就是饱和色本身，往下降才变暗。所以 Photoshop 拾色器里\"最亮最艳\"的颜色，写成 HSL 大约在亮度 50% 左右。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "在 RGB 里给三个通道同时加 20，为什么颜色会偏？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "因为三个通道对感知亮度的权重并不相等：绿色 0.7152、红色 0.2126、蓝色 0.0722，绿色是蓝色的近 10 倍。等量加值对蓝色的提亮效果远不如绿色，整体色相就会朝黄绿方向漂移。要保着色相变亮，改用 HSL 调亮度，或在 OKLCH 里只动 L。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "暗色模式可以直接把颜色取反吗？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "不可以。取反得到的是补色，色相已经改变。正确做法是给每个语义令牌准备暗色取值并逐项验证对比度：亮色主题下的 #1D4ED8 在白底是 6.70:1，直接搬到 #121212 上只剩 2.80:1，必须换成更亮的蓝。"
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "为什么 4.5:1 这个门槛总是\"差一点点\"过不去？",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "因为对比度在中灰附近变化最快。 #757575 在白底是 4.61:1，往浅一点到 #777777 就掉到 4.48:1，两个颜色的视觉差异几乎看不出来，合规结论却相反。把这类灰固定在 #757575 或更深，比在临界点附近反复试探更可靠。"
+            }
+        }
+    ]
+}
+</script>
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>

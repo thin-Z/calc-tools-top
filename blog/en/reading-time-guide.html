@@ -38,11 +38,46 @@
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": [
-            { "@type": "Question", "name": "Why does a script scheduled at an average speaking speed always run over?", "acceptedAnswer": { "@type": "Answer", "text": "Because an average covers delivery only. Pauses for breath, emphasis and section changes, plus audience reaction and slide changes, typically add 15% to 25%. Multiply the literal time by 1.15 to 1.25, then add interaction time separately." } },
-            { "@type": "Question", "name": "How many words should a speech have?", "acceptedAnswer": { "@type": "Answer", "text": "Work backwards from the slot using a delivery pace: about 180 characters per minute in Chinese, 140 words per minute in English. A ten-minute talk is roughly 1,800 Chinese characters or 1,400 English words; with pauses included, cut to about 1,530 characters (1800 x 0.85)." } },
-            { "@type": "Question", "name": "How should I estimate time for code blocks and tables?", "acceptedAnswer": { "@type": "Answer", "text": "Word counts overshoot for code, because readers scan signatures and key branches rather than every line, so estimate by lines or modules. Tables behave the opposite way: few words, but line-by-line comparison keeps readers there longer than equivalent prose." } },
-            { "@type": "Question", "name": "Can mixed Chinese and English material be estimated with one speed?", "acceptedAnswer": { "@type": "Answer", "text": "No. Chinese is counted in characters and English in words, so merging them into a single total distorts the result. Time each part separately: 4,000 Chinese characters plus 600 English words is about 22.2 minutes plus 4.6 minutes, roughly 26.8 minutes." } },
-            { "@type": "Question", "name": "Is speaking always slower than silent reading, and by how much?", "acceptedAnswer": { "@type": "Answer", "text": "In direction, yes. Silent reading allows skipping, accelerating and jumping back, while speaking requires every word to be voiced with breath and pause allowances on top, so spoken delivery usually runs at roughly half the silent reading rate. Formal occasions run slower still." } }
+            {
+                "@type": "Question",
+                "name": "Why does a script scheduled at an average speaking speed always run over?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Because an average covers delivery only. Pauses for breath, emphasis and section changes, plus audience reaction and slide changes, are not in it, and together they typically add 15% to 25%. Multiply the literal time by 1.15 to 1.25, then add interaction time separately, based on the number of questions you expect."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How many words should a speech have?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Work backwards from the slot using a delivery pace: about 180 characters per minute in Chinese, 140 words per minute in English. A ten-minute talk is roughly 1,800 Chinese characters or 1,400 English words; if ten minutes is a hard limit, cut to about 1,530 characters (1800 × 0.85) so the pauses fit inside the slot."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How should I estimate time for code blocks and tables?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Word counts overshoot for code, because readers scan signatures and key branches rather than every line—estimate by lines or modules instead. Tables behave the opposite way: few words, but line-by-line comparison keeps readers there longer than equivalent prose would. For code- or chart-heavy material, use the computed figure as a ceiling."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can mixed Chinese and English material be estimated with one speed?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. Chinese is counted in characters and English in words, so merging them into a single total and dividing by one speed distorts the result. Time each part separately: 4,000 Chinese characters plus 600 English words is about 22.2 minutes plus 4.6 minutes at teaching pace, roughly 26.8 minutes in total."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is speaking always slower than silent reading, and by how much?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "In direction, yes. Silent reading allows skipping, accelerating and jumping back; speaking requires every word to be voiced, with breath and pause allowances on top, so spoken delivery usually runs at roughly half the silent reading rate. That is where the familiar rule of thumb—speaking takes about twice as long as reading—comes from. Formal occasions that need emphasis run slower still."
+                }
+            }
         ]
     }
     </script>

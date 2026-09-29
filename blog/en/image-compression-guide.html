@@ -39,11 +39,46 @@
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": [
-            { "@type": "Question", "name": "Does compression always cost image quality?", "acceptedAnswer": { "@type": "Answer", "text": "No. With a lossless format such as PNG, or WebP in lossless mode, the decoded image matches the original pixel for pixel; the trade-off is a more modest size reduction. Lossy compression does discard high-frequency detail, but around quality 80 that loss usually sits below what a screen can display. The real danger is repeated saving, because every lossy pass adds another layer of damage." } },
-            { "@type": "Question", "name": "How good is WebP support today?", "acceptedAnswer": { "@type": "Answer", "text": "Modern browsers widely support WebP, including lossy, lossless, partial transparency and animation. What still fails is older browsers and some desktop applications. The dependable pattern is to offer WebP first while keeping a JPEG or PNG fallback, so clients that cannot decode WebP take the fallback automatically." } },
-            { "@type": "Question", "name": "Why is the same screenshot so much bigger as PNG than as JPEG?", "acceptedAnswer": { "@type": "Answer", "text": "Because the two mechanisms are complementary. PNG relies on DEFLATE finding repeated byte sequences, and a screenshot's flat colour and regular text edges repeat heavily, until the image contains a photo, a gradient or noise, at which point the repeats disappear and the PNG balloons. JPEG ignores repetition and discards high frequencies through quantization, so it excels on photos but fringes sharp text with colour artefacts." } },
-            { "@type": "Question", "name": "Can a compressed image still be printed?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Compression changes encoding precision, not pixel dimensions; it is resizing that limits printing. At the conventional 300 dpi, 1600 pixels of width supports a print roughly 13 cm wide. For anything destined for print, archive a separate un-resized copy at quality 95 or above and use the compressed version only on the web." } },
-            { "@type": "Question", "name": "How much smaller does the file get if quality is pushed to the minimum?", "acceptedAnswer": { "@type": "Answer", "text": "Returns fall off fast. On a typical photo, going from quality 80 down to 40 removes only around another third, and block artefacts and banding are already obvious. Halving the dimensions cuts the pixel count to a quarter for a far larger reduction in bytes, while the only visible change is that the image is smaller. Shrink the dimensions before touching quality." } }
+            {
+                "@type": "Question",
+                "name": "Does compression always cost image quality?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. With a lossless format such as PNG, or WebP in lossless mode, the decoded image matches the original pixel for pixel; the trade-off is a more modest size reduction. Lossy compression does discard high-frequency detail, but around quality 80 that loss usually sits below what a screen can display. The real danger is repeated saving, because every lossy pass adds another layer of damage."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How good is WebP support today?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Modern browsers widely support WebP, including lossy, lossless, partial transparency and animation. What still fails is older browsers and some desktop applications. The dependable pattern is to offer WebP first while keeping a JPEG or PNG fallback, so clients that cannot decode WebP take the fallback automatically."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why is the same screenshot so much bigger as PNG than as JPEG?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Because the two mechanisms are complementary. PNG relies on DEFLATE finding repeated byte sequences, and a screenshot's flat colour and regular text edges repeat heavily — until the image contains a photo, a gradient or noise, at which point the repeats disappear and the PNG balloons. JPEG ignores repetition, discards high frequencies through quantization, and therefore excels on photos but fringes sharp text with colour artefacts."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can a compressed image still be printed?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. Compression changes encoding precision, not pixel dimensions — it is resizing that limits printing. At the conventional 300 dpi, 1600 pixels of width supports a print roughly 13 cm wide. For anything destined for print, archive a separate un-resized copy at quality 95 or above and use the compressed version only on the web."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How much smaller does the file get if quality is pushed to the minimum?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Returns fall off fast. On a typical photo, going from quality 80 down to 40 removes only around another third, and block artefacts and banding are already obvious. Halving the dimensions, by contrast, cuts the pixel count to a quarter for a far larger reduction in bytes while the only visible change is that the image is smaller. Shrink the dimensions before touching quality."
+                }
+            }
         ]
     }
     </script>

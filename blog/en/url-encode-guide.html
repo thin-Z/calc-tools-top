@@ -43,7 +43,7 @@
                 "name": "If the front end builds parameters with URLSearchParams and the back end parses strictly by RFC 3986, will something break?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Yes, and the break is concentrated in spaces. URLSearchParams serialises a space inside a value as +, while a strict RFC 3986 parser treats + as a literal plus, so a value arrives with + where a space used to be. There are only two fixes: agree on one convention across both ends, or switch to encodeURIComponent so spaces are always %20."
+                    "text": "Yes, and the break is concentrated in spaces. URLSearchParams serialises a space inside a value as + , while a strict RFC 3986 parser treats + as a literal plus, so a value arrives with + where a space used to be. There are only two fixes: agree on one convention across both ends, or switch to encodeURIComponent so spaces are always %20 ."
                 }
             },
             {
@@ -51,7 +51,7 @@
                 "name": "An internationalised domain shows CJK characters in the browser. What actually leaves the machine?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Punycode. IDNA converts 中文域名.中国 to xn--fiq06l2rdsvs.xn--fiqs8s, and DNS lookups plus the TLS handshake only ever see that ASCII form. The host uses Punycode while the path and query that follow it still use percent-encoding, so both mechanisms coexist inside a single URL."
+                    "text": "Punycode. IDNA converts 中文域名.中国 to xn--fiq06l2rdsvs.xn--fiqs8s , and DNS lookups plus the TLS handshake only ever see that ASCII form. The host uses Punycode while the path and query that follow it still use percent-encoding, so both mechanisms coexist inside a single URL."
                 }
             },
             {
@@ -59,7 +59,7 @@
                 "name": "A gateway rewrote the URL and the logs now show %2520. How do I find which layer encoded it?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Read the raw request line rather than the parameters your application prints. Capture one real request and record the parameter exactly as it appears on the request line, then compare it with the value the framework injects into the handler. Whichever layer shows one fewer level of escaping has an upstream that encoded the extra time. Fix it by re-establishing encode once at the outermost boundary, rather than adding a compensating decode downstream."
+                    "text": "Read the raw request line rather than the parameters your application prints. Capture one real request and record the parameter exactly as it appears on the request line, then compare it with the value the framework injects into the handler. Whichever layer shows one fewer level of escaping has an upstream that encoded the extra time. Fix it by re-establishing \"encode once, at the outermost boundary\" rather than adding a compensating decode downstream."
                 }
             },
             {
@@ -75,7 +75,7 @@
                 "name": "Is there a length limit for URLs, and when should a parameter travel another way?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "There is no single standard. The effective ceiling comes from the browser, the proxies in between and the web server, with typical limits ranging from a few kilobytes to a few tens of kilobytes, and any layer may refuse first. The practical rule: once a query string passes roughly 2,000 characters, send it in the request body instead. If it truly must stay in the URL, compress it first or Base64-encode it, remembering that encoding itself inflates the payload by about a third."
+                    "text": "There is no single standard. The effective ceiling comes from the browser, the proxies in between and the web server, with typical limits ranging from a few kilobytes to a few tens of kilobytes, and any layer may refuse first. The practical rule: once a query string passes roughly 2,000 characters, stop putting it in the URL and send it in the request body. If it truly must stay in the URL, compress it first or Base64-encode it, remembering that encoding itself inflates the payload by about a third."
                 }
             }
         ]

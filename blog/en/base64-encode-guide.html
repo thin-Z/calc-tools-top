@@ -75,7 +75,7 @@
             "name": "Is it risky to use Base64 as a form of obfuscation?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes, in both directions. Internally it destroys readability and makes incidents harder to diagnose; externally it can slip past detection rules that only match plaintext, with the PowerShell EncodedCommand pattern as the standard example. Anyone holding the string can restore it in a second, so never treat unreadable as secure, and never let it carry credentials."
+                "text": "Yes, in both directions. Internally it destroys readability and makes incidents harder to diagnose; externally it can slip past detection rules that only match plaintext, with the PowerShell -EncodedCommand pattern as the standard example. Anyone holding the string can restore it in a second, so never treat unreadable as secure, and never let it carry credentials."
             }
         }
     ]

@@ -34,53 +34,53 @@
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Online Color Picker Guide: Screen Color Picking and Palette Tips","description":"How to use a color picker, common color schemes, and HEX/RGB/HSL color code conversion.","author":{"@type":"Person","name":"Calc-Tools Editor"},"datePublished":"2026-07-02","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.calc-tools.top/blog/en/color-picker-guide"},"publisher":{"@type":"Organization","name":"ToolBox Inside"}}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.calc-tools.top/blog/en/"},{"@type":"ListItem","position":3,"name":"Color Picker Guide: Screen Color Picking and Palette Tips","item":"https://www.calc-tools.top/blog/en/color-picker-guide"}]}</script>
 <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-            {
-                "@type": "Question",
-                "name": "Why does the color I recorded differ from the one the designer gave me?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "First check for the eight-digit form: #FF6B35 and #FF6B3580 look different on screen, and the latter composites over white to roughly #FFB59A. If both are six digits, work out whether the value came from a spec annotation or from sampling a screenshot — captures taken on wide-gamut displays are often converted by the capture tool."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Why is HSL lightness not the same as HSV value?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Because they are defined differently. In HSL, 100% lightness is white and 0% is black, with saturated colors sitting near 50%. In HSV, 100% value is the saturated color itself and lowering it darkens. That is why the most vivid color in a Photoshop picker translates to roughly 50% lightness in HSL."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Why does adding 20 to all three RGB channels shift the hue?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Because the channels contribute unevenly to perceived brightness: green carries 0.7152, red 0.2126 and blue just 0.0722, making green nearly ten times as influential as blue. An equal increase brightens blue far less than green, so the hue drifts toward yellow-green. To brighten while holding the hue, change HSL lightness, or move only L in OKLCH."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Can dark mode just invert the colors?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "No. Inversion yields complements, so the hues change. Give each semantic token a dark value and verify it: #1D4ED8 scores 6.70:1 on white but only 2.80:1 on #121212, so dark mode needs a lighter blue instead."
-                }
-            },
-            {
-                "@type": "Question",
-                "name": "Why does a color keep failing 4.5:1 by a hair?",
-                "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Because contrast changes fastest in the mid greys. #757575 scores 4.61:1 on white while #777777 scores 4.48:1 — a difference you cannot see, but one that flips the verdict. Fixing greys at #757575 or darker is more reliable than nudging values around the threshold."
-                }
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Why does the color I recorded differ from the one the designer gave me?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "First check for the eight-digit form: #FF6B35 and #FF6B3580 look different on screen, and the latter composites over white to roughly #FFB59A . If both are six digits, work out whether the value came from a spec annotation or from sampling a screenshot — captures taken on wide-gamut displays are often converted by the capture tool."
             }
-        ]
-    }
-    </script>
+        },
+        {
+            "@type": "Question",
+            "name": "Why is HSL lightness not the same as HSV value?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Because they are defined differently. In HSL, 100% lightness is white and 0% is black, with saturated colors sitting near 50%. In HSV, 100% value is the saturated color itself and lowering it darkens. That is why the brightest, most vivid color in a Photoshop picker translates to roughly 50% lightness in HSL."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Why does adding 20 to all three RGB channels shift the hue?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Because the channels contribute unevenly to perceived brightness: green carries 0.7152, red 0.2126 and blue just 0.0722, making green nearly ten times as influential as blue. An equal increase brightens blue far less than green, so the hue drifts toward yellow-green. To brighten while holding the hue, change HSL lightness, or move only L in OKLCH."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can dark mode just invert the colors?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Inversion yields complements, so the hues change. Give each semantic token a dark value and verify it: #1D4ED8 scores 6.70:1 on white but only 2.80:1 on #121212 , so dark mode needs a lighter blue instead."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Why does a color keep failing 4.5:1 by a hair?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Because contrast changes fastest in the mid greys. #757575 scores 4.61:1 on white while #777777 scores 4.48:1 — a difference you cannot see, but one that flips the verdict. Fixing greys at #757575 or darker is more reliable than nudging values around the threshold."
+            }
+        }
+    ]
+}
+</script>
 <script src="/js/i18n.js" defer></script><script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>
 <body>

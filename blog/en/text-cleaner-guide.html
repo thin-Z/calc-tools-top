@@ -43,7 +43,7 @@
                 "name": "Why does code copied from a web page trigger an illegal character error when nothing looks wrong?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Because the error is about code points, not glyphs. To allow wrapping or typesetting, pages insert characters such as U+200B zero width space and U+00A0 no-break space, which draw no visible strokes but travel with the copied text, so a program comparing code point by code point rejects it. Print the suspect string by code point instead of zooming the font."
+                    "text": "Because the error is about code points, not glyphs. To allow wrapping or typesetting, pages insert characters such as U+200B zero width space and U+00A0 no-break space, which draw no visible strokes but travel with the copied text; a program comparing code point by code point then rejects it. Print the suspect string by code point instead of zooming the font — for example with [...s].map(c => c.codePointAt(0)) ."
                 }
             },
             {
@@ -51,15 +51,15 @@
                 "name": "Should a BOM be removed or kept?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "It depends on the consumer. Source code and configs read by script interpreters, JSON parsers, version control or build tools should be saved as UTF-8 without a BOM, because a BOM-prefixed JSON file throws SyntaxError. In office workflows a BOM sometimes acts as an encoding label: some versions of Excel rely on it to detect UTF-8 in a CSV, and removing it can turn Chinese text into mojibake. Strip it for programs, keep it for spreadsheet users."
+                    "text": "It depends on the consumer. Source code and configs read by script interpreters, JSON parsers, version control or build tools should be saved as UTF-8 without a BOM — a BOM-prefixed JSON file throws SyntaxError in testing. In office workflows, though, a BOM sometimes acts as an encoding label: some versions of Excel rely on it to detect UTF-8 in a CSV file, and removing it can turn the text into mojibake. Decide by consumer: strip it for programs, keep it for spreadsheet users."
                 }
             },
             {
                 "@type": "Question",
-                "name": "Why does the whitespace metacharacter fail to clean a zero width space?",
+                "name": "Why does \\s fail to clean a zero width space?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Because it matches the Unicode White_Space property, and U+200B does not carry that property despite having SPACE in its name — its purpose is to permit a line break, not to occupy a blank cell. A test against U+200B returns false. Cleaning it requires naming the code point explicitly, for example by matching a character group built from U+200B through U+200F plus U+FEFF and deleting the matches."
+                    "text": "Because \\s matches the Unicode White_Space property, and U+200B does not carry that property despite having SPACE in its name — its purpose is to permit a line break, not to occupy a blank cell. Measured: /\\s/.test('\\u200B') returns false. Cleaning it requires naming the code point explicitly, for example by matching [\\u200B-\\u200F\\uFEFF] and deleting the matches."
                 }
             },
             {
@@ -67,7 +67,7 @@
                 "name": "How do I clean a whole file instead of pasting fragments one by one?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Write a short script that works by code point: read the file, test whether the first three bytes are EF BB BF, delete zero width characters by code point range, normalise U+00A0 and U+3000 to ordinary spaces, unify line endings, and write back as UTF-8 without a BOM. Always keep a backup, because cleaning is lossy and deleted characters cannot be restored. For a small amount of text a text cleaner is faster; for hundreds of files, a script is the only sane option."
+                    "text": "Write a short script that works by code point: read the file, test whether the first three bytes are EF BB BF, delete zero width characters by code point range, normalise U+00A0 and U+3000 to ordinary spaces, unify line endings, and write back as UTF-8 without a BOM. Always keep a backup of the original , because cleaning is lossy and deleted characters cannot be restored. For a small amount of text, a text cleaner is faster; for hundreds of files, a script is the only sane option."
                 }
             },
             {
@@ -75,7 +75,7 @@
                 "name": "Two strings look identical but compare unequal — what should I check first?",
                 "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Compare code point sequences rather than appearances. Print both strings code point by code point: if the lengths match, look at the first position that differs; if they do not, look at what the extra character actually is. In practice the extra character is usually U+200B or U+00A0 — the first from copy and paste, the second from web typesetting. Then decide whether to delete it or normalise both sides."
+                    "text": "Compare code point sequences rather than appearances. Print both strings code point by code point: if the lengths match, look at the first position that differs; if they do not, look at what the extra character actually is. In practice the extra character is usually U+200B or U+00A0 — the first from copy and paste, the second from web typesetting. Once located, decide whether to delete it or to normalise both sides to the same representation."
                 }
             }
         ]

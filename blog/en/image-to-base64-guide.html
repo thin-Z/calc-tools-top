@@ -38,11 +38,46 @@
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
-        { "@type": "Question", "name": "Do Base64 images actually load faster?", "acceptedAnswer": { "@type": "Answer", "text": "Not necessarily, and it depends on which part you count as faster. Inlining removes one round trip and one request's fixed overhead, which is a genuine win on a cold cache when the image is small and appears once. But the byte count does not shrink, and once an image is reused across pages or grows beyond a few kilobytes, the repeated bytes outweigh the delay you saved." } },
-        { "@type": "Question", "name": "How large does an image have to be before it should not be inlined?", "acceptedAnswer": { "@type": "Answer", "text": "A size threshold is a shortcut, not the answer. The common 4 KB default comes from the fact that one request's header overhead equals roughly 3 KB of encoded image bytes. The reuse question matters more: any image that appears on multiple pages or might later be replaced should stay external no matter how small it is." } },
-        { "@type": "Question", "name": "What goes wrong with inlined CSS background images?", "acceptedAnswer": { "@type": "Answer", "text": "Three things. The stylesheet is render-blocking, so every inlined byte lands on the critical path to first paint. Changing one inlined background invalidates the whole stylesheet's hash, making returning visitors re-download all of it. And if that stylesheet is shared across pages while only one page uses the image, every other page pays for it too." } },
-        { "@type": "Question", "name": "Does inlining make an image blurry?", "acceptedAnswer": { "@type": "Answer", "text": "The encoding does not. Base64 is reversible, and the decoded bytes are identical to the source file. Blurriness usually comes from a different step: to keep the inlined size acceptable you compressed or scaled the image down first. Converting vector art to a Base64 bitmap is the real quality loss, because it degrades from sharp at any resolution to a fixed set of pixels." } },
-        { "@type": "Question", "name": "How much should be inlined for a single-file HTML deliverable?", "acceptedAnswer": { "@type": "Answer", "text": "In that situation inlining is the only option, so the focus shifts to total weight. Compress first, encode second, and never the other way round. Prefer vector wherever possible, because vector survives document compression while a bitmap is already-compressed bytes being inflated. If an offline document needs dozens of images, a separate archive is usually better than inlining them all." } }
+        {
+            "@type": "Question",
+            "name": "Do Base64 images actually load faster?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Not necessarily, and it depends on which part you count as faster. Inlining saves a round trip and one request's fixed overhead, which is a genuine win on a cold cache when the image is small and appears once. But the byte count does not shrink, and over a compressed connection it rises slightly. Once an image is reused across pages or grows beyond a few kilobytes, the repeated bytes outweigh the delay you saved."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How large does an image have to be before it should not be inlined?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A size threshold is a shortcut, not the answer. The common 4 KB default comes from the fact that one request's header overhead equals roughly 3 KB of encoded image bytes. The reuse question matters more: any image that appears on multiple pages or might later be replaced should stay external no matter how small it is. Reserve inlining for one-off, very small assets you are confident will never change."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What goes wrong with inlined CSS background images?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Three things. The stylesheet is render-blocking, so every inlined byte lands on the critical path to first paint. Changing one inlined background invalidates the whole stylesheet's hash, making returning visitors re-download all of it. And if that stylesheet is shared across pages while only one page actually uses the image, every other page pays for it too."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Does inlining make an image blurry?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The encoding does not. Base64 is reversible, and the decoded bytes match the file you started with exactly. Blurriness usually comes from a different step: to keep the inlined size acceptable you compressed the image or scaled it down, and the quality loss belongs to that step. Converting vector art to a Base64 bitmap is the real image-quality loss, because it degrades from sharp at any resolution to a fixed set of pixels."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How much should be inlined for a single-file HTML deliverable?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "In that situation inlining is the only option, so the focus shifts to total weight. Compress first, encode second, and never the other way round: run images through an image compressor to the target size, then convert. Prefer vector wherever possible, because vector survives document compression while a bitmap is already-compressed bytes being inflated. If an offline document needs dozens of images, a separate archive is usually better than inlining them all."
+            }
+        }
     ]
 }
 </script>

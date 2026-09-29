@@ -38,11 +38,46 @@
         "@context": "https://schema.org",
         "@type": "FAQPage",
         "mainEntity": [
-            { "@type": "Question", "name": "Will a logo in the middle break the code?", "acceptedAnswer": { "@type": "Answer", "text": "Not necessarily, but the covered area must stay inside the correction capability and must not touch the three corner finder patterns. Generate at level H, keep the logo well below the 30% correction limit, and scan-test the result on several phone models." } },
-            { "@type": "Question", "name": "Why will my printed code not scan?", "acceptedAnswer": { "@type": "Answer", "text": "Usually not the correction level. The frequent causes are a trimmed quiet zone, weak contrast and a code that is simply too small. Leave at least 4 modules of clear light space on all four sides, keep dark modules on a light background, and size the code from the ten-times viewing rule." } },
-            { "@type": "Question", "name": "Do QR codes expire?", "acceptedAnswer": { "@type": "Answer", "text": "Static codes do not. The content is encoded in the artwork, so it keeps working as long as the image can be read correctly. Dynamic codes do expire: the artwork points at a short link, and the redirect breaks when the service stops, the account lapses or the domain expires." } },
-            { "@type": "Question", "name": "Why is someone else's code for the same URL sparser than mine?", "acceptedAnswer": { "@type": "Answer", "text": "Three things usually explain it: a higher correction level, a longer payload, or a different encoding mode. Adding a few query parameters can push the version up by one to three steps. Shorten the link to a few dozen characters first, and lower the correction level second." } },
-            { "@type": "Question", "name": "Can a payment QR code be swapped?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. A static payment code is a sticker or a small stand, and covering it costs almost nothing. Merchants should keep it in sight, check it regularly and enable payment alerts; payers should verify the recipient name before confirming." } }
+            {
+                "@type": "Question",
+                "name": "Will a logo in the middle break the code?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Not necessarily, but the covered area must stay inside the correction capability and must not touch the three corner finder patterns. The usual approach is to generate at level H, keep the logo well below the 30% correction limit, and scan-test the result on several phone models. Once coverage approaches the limit, a slight angle or dim light is enough to fail."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why will my printed code not scan?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Usually not the correction level. The frequent causes are a trimmed quiet zone, weak contrast and a code that is simply too small. Leave at least 4 modules of clear, light space on all four sides, keep dark modules on a light background, and size the code from the ten-times viewing rule. Only after those three are ruled out should you suspect content that is long enough to make the grid too dense."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Do QR codes expire?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Static codes do not. The content is encoded in the artwork, so it works as long as the image can be read correctly. Dynamic codes do expire: the artwork points at a short link, and the redirect breaks when the service stops, the account lapses or the domain expires."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why is someone else's code for the same URL sparser than mine?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Three things usually explain it: a higher correction level, a longer payload, or a different encoding mode. Adding a few query parameters can push the version up by one to three steps. To get a sparser code, shorten the link to a few dozen characters first, and lower the correction level second."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can a payment QR code be swapped?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes. A static payment code is a sticker or a small stand, and covering it costs almost nothing. Merchants should keep it in sight, check it regularly and enable payment alerts; payers should verify the recipient name before confirming, which is far more effective than trying to recover the money afterwards."
+                }
+            }
         ]
     }
     </script>

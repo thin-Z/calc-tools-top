@@ -54,17 +54,52 @@
     </script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"博客","item":"https://www.calc-tools.top/blog/zh/"},{"@type":"ListItem","position":3,"name":"图片裁剪缩放指南 - 调整尺寸与保持比例技巧, 附平台尺寸建议","item":"https://www.calc-tools.top/blog/zh/image-resize-crop-guide"}]}</script>
     <script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-        { "@type": "Question", "name": "把 DPI 改成 300，图片就会变清晰吗？", "acceptedAnswer": { "@type": "Answer", "text": "不会。DPI 只是文件里的换算标签，改它不增加任何像素。1000 × 1000 的图无论标 72 DPI 还是 300 DPI 都是 100 万像素，只是默认打印尺寸从约 35.3 厘米变成约 8.5 厘米。要更清晰，只能回到像素更多的母版重新输出。" } },
-        { "@type": "Question", "name": "按平台要求裁好了，上传后为什么还是被切掉一角？", "acceptedAnswer": { "@type": "Answer", "text": "多数是主体贴边，撞上了平台的二次裁剪或圆形遮罩。把主体控制在画面中心约 80% 的区域内，四周各留余量即可避免；头像尤其要注意四角会被圆角切掉。" } },
-        { "@type": "Question", "name": "先裁剪再缩放，和先缩放再裁剪，差在哪里？", "acceptedAnswer": { "@type": "Answer", "text": "差在还剩多少像素可用。4000 × 3000 直接裁 9:16 还剩 1688 × 3000，可以缩到任意目标尺寸；若先把长边缩到 1920 再裁竖版，只剩 810 × 1440，反而要放大回去。正确顺序是先裁剪、后缩放到目标尺寸，全程只做一次重采样。" } },
-        { "@type": "Question", "name": "打印 A4 到底需要多少像素，手机照片够吗？", "acceptedAnswer": { "@type": "Answer", "text": "300 DPI 下 A4 需要 2480 × 3508 像素，约 8.7 兆像素，加 3 毫米出血是 2551 × 3579。手机主摄常见的 4000 × 3000 够用，铺满 A4 时有效分辨率约 342 DPI，但要接受裁掉约 6% 的短边。" } },
-        { "@type": "Question", "name": "一张图要发多个平台，每次重新处理还是做一份通用的？", "acceptedAnswer": { "@type": "Answer", "text": "做一份按最大需求准备的母版，再按各平台比例派生。母版取所有交付里最高的像素与最大的画幅，派生版本只做裁剪与缩小；用最小尺寸的版本往上套会一路放大，画质不可逆地变差。" } }
-    ]
-}
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "把 DPI 改成 300，图片就会变清晰吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "不会。DPI 只是写在文件里的换算标签，改它不增加任何像素。1000 × 1000 的图无论标 72 DPI 还是 300 DPI，像素都是 100 万，只是默认打印尺寸从约 35.3 厘米变成约 8.5 厘米。要真的更清晰，只能回到像素更多的母版重新输出。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "按平台要求裁好了，上传后为什么还是被切掉一角？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "多数是主体贴边，撞上了平台的二次裁剪或圆形遮罩。稳妥做法是把主体控制在画面中心约 80% 的区域内，四周各留一点余量；头像尤其要注意四角会被圆角切掉。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "先裁剪再缩放，和先缩放再裁剪，差在哪里？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "差在还剩多少像素可用。4000 × 3000 直接裁 9:16 还剩 1688 × 3000，可以缩到任意目标尺寸；若先把长边缩到 1920 再裁竖版，只剩 810 × 1440，反而要放大回去。正确顺序是先裁剪、后缩放到目标尺寸，全程只做一次重采样。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "打印 A4 到底需要多少像素，手机照片够吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "300 DPI 下 A4 需要 2480 × 3508 像素（约 8.7 兆像素），加 3 毫米出血是 2551 × 3579。手机主摄常见的 4000 × 3000 够用，铺满 A4 时有效分辨率约 342 DPI；但要接受裁掉约 6% 的短边，因为 4:3 素材和 A4 的比例并不一致。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "一张图要发多个平台，每次重新处理还是做一份通用的？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "做一份按最大需求准备的母版，再按各平台比例派生。母版取所有交付里最高的像素与最大的画幅，派生版本只做裁剪与缩小；反过来用最小尺寸的版本往上套，就会一路放大，画质不可逆地变差。"
+                }
+            }
+        ]
+    }
     </script>
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
