@@ -34,6 +34,20 @@
 <link rel="stylesheet" href="../../css/style.css">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Compress Images Online: Complete Guide","description":"Free online image compression guide. Browser-local processing, privacy guaranteed. Compress JPG/PNG/WebP.","author":{"@type":"Person","name":"Calc-Tools Editor"},"datePublished":"2026-06-26","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.calc-tools.top/blog/en/image-compression-guide"},"publisher":{"@type":"Organization","name":"ToolBox Inside"}}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.calc-tools.top/blog/en/"},{"@type":"ListItem","position":3,"name":"How to Compress Images Online: Complete Guide","item":"https://www.calc-tools.top/blog/en/image-compression-guide"}]}</script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            { "@type": "Question", "name": "Does compression always cost image quality?", "acceptedAnswer": { "@type": "Answer", "text": "No. With a lossless format such as PNG, or WebP in lossless mode, the decoded image matches the original pixel for pixel; the trade-off is a more modest size reduction. Lossy compression does discard high-frequency detail, but around quality 80 that loss usually sits below what a screen can display. The real danger is repeated saving, because every lossy pass adds another layer of damage." } },
+            { "@type": "Question", "name": "How good is WebP support today?", "acceptedAnswer": { "@type": "Answer", "text": "Modern browsers widely support WebP, including lossy, lossless, partial transparency and animation. What still fails is older browsers and some desktop applications. The dependable pattern is to offer WebP first while keeping a JPEG or PNG fallback, so clients that cannot decode WebP take the fallback automatically." } },
+            { "@type": "Question", "name": "Why is the same screenshot so much bigger as PNG than as JPEG?", "acceptedAnswer": { "@type": "Answer", "text": "Because the two mechanisms are complementary. PNG relies on DEFLATE finding repeated byte sequences, and a screenshot's flat colour and regular text edges repeat heavily, until the image contains a photo, a gradient or noise, at which point the repeats disappear and the PNG balloons. JPEG ignores repetition and discards high frequencies through quantization, so it excels on photos but fringes sharp text with colour artefacts." } },
+            { "@type": "Question", "name": "Can a compressed image still be printed?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Compression changes encoding precision, not pixel dimensions; it is resizing that limits printing. At the conventional 300 dpi, 1600 pixels of width supports a print roughly 13 cm wide. For anything destined for print, archive a separate un-resized copy at quality 95 or above and use the compressed version only on the web." } },
+            { "@type": "Question", "name": "How much smaller does the file get if quality is pushed to the minimum?", "acceptedAnswer": { "@type": "Answer", "text": "Returns fall off fast. On a typical photo, going from quality 80 down to 40 removes only around another third, and block artefacts and banding are already obvious. Halving the dimensions cuts the pixel count to a quarter for a far larger reduction in bytes, while the only visible change is that the image is smaller. Shrink the dimensions before touching quality." } }
+        ]
+    }
+    </script>
+
 <script src="/js/i18n.js" defer></script><script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>
 <body>
@@ -52,22 +66,100 @@
 <main id="main"><article class="blog-post">
 <div class="article-tags"><a href="/en/tags/image.html" class="tag tag-image" data-tag="image">Image</a></div>
 <p class="blog-meta"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-calendar"></use></svg> 2026-06-26 · Calc-Tools Editor</p>
-<h1>How to Compress Images Online: Complete Guide</h1><p>Image compression shrinks file sizes without destroying the look you need. Smaller images mean faster pages and lower bandwidth—important for websites, emails, and social media.</p>
-<h2>Lossless vs Lossy</h2>
-<p>Lossless compression keeps every pixel and is best for logos and text. Lossy compression discards subtle details and is best for photos, where the difference is barely visible at the right quality level.</p>
-<h2>Choosing the Right Format</h2>
-<p>JPEG works well for photos, PNG for graphics with transparency, and WebP often gives the best balance on the web today. Convert first, then compress at a quality you can tolerate.</p>
-<h2>Dimensions Matter More Than You Think</h2>
-<p>Halving an image's dimensions cuts its pixel count by four. Resizing to the actual display size often saves more than any compression setting.</p>
-<h2>Target Sizes for the Web</h2>
-<p>Aim for under 100 KB for blog images and under 200 KB for larger photos. Test with the tool until the size and quality feel right.</p>
-<h2>Compressing for Email and Messaging</h2>
-<p>Email servers reject attachments over a size limit, and messaging apps downscale large photos automatically. Compressing to a reasonable size before sending keeps your images intact and delivers faster.</p>
-<p>For documents with many images, compress each picture before inserting it. The total file size drops dramatically compared to compressing the finished document.</p>
-<h2>How to Compress an Image</h2>
-<ol><li>Upload the original image and choose a quality level that still looks acceptable.</li><li>Compare the output file size with your target—usually under 100 KB for the web.</li><li>Export the compressed version and keep the original untouched.</li></ol>
-<p>If the size is still too large, resize the dimensions before lowering quality further; dimension cuts save far more than quality tweaks.</p>
-<p><strong>Quick tip:</strong> aim for consistency across a set—compress all images in a gallery with the same settings so page feel and load behavior stay uniform.</p>
+<h1>How to Compress Images Online: Complete Guide</h1><p>Image compression comes down to one trade-off: getting the byte count as low as possible while the result still looks right on screen. Two things set that boundary — the <strong>pixel dimensions</strong> of the image and the <strong>high-frequency detail the encoder throws away</strong>. The first is usually decisive, and the second is usually overrated.</p>
+<p>This guide starts with the encoding itself: what JPEG's DCT and quantization actually discard, and why PNG's DEFLATE compression is helpless on a photograph. From there it covers a five-format comparison, the non-linear relationship between the quality slider and file size, worked examples you can reproduce, and how image weight feeds into Largest Contentful Paint. Every file size quoted here is a <strong>typical value and varies with image content</strong>.</p>
+<h2>1. Lossy and Lossless: Two Different Routes</h2>
+<p>Every image compression scheme answers the same question: <strong>can the decoder guess what is missing</strong>? Lossless compression only exploits patterns already present in the data, so the decoded result matches the original pixel for pixel. Lossy compression deliberately discards information and spends image quality to buy a smaller file.</p>
+<p><strong>JPEG takes the lossy route.</strong> It converts RGB into YCbCr, separating brightness from two colour channels, then applies <strong>chroma subsampling</strong> because the human eye resolves brightness far better than colour — the colour channels can be stored at half or even a quarter of the resolution. Each channel is then split into 8x8 blocks and run through a <strong>discrete cosine transform (DCT)</strong>, which converts pixel values into frequency coefficients. The top-left corner of a block holds the smooth, low-frequency content; the bottom-right holds fine detail and noise.</p>
+<p>Then comes the one genuinely irreversible step: <strong>quantization</strong>. Each coefficient is divided by a step size taken from a quantization table and rounded to an integer. Larger steps push more high-frequency coefficients to zero, and runs of zeros cost almost nothing after run-length and Huffman coding. This is why the JPEG quality setting is really just a <strong>scaling factor on that quantization table</strong>: lowering quality widens the steps, and the drop in quality and the drop in file size are the same action. It is also why JPEG is never truly lossless — at quality 100 the chroma subsampling and the rounding are still there, merely hard to see.</p>
+<p><strong>PNG takes the lossless route.</strong> Each pixel row is filtered against a prediction built from neighbouring pixels, storing only the prediction error, and the result is compressed with <strong>DEFLATE</strong> — LZ77 dictionary matching combined with Huffman coding, which saves space by finding repeated byte sequences and referencing them. That works brilliantly on <strong>flat colour, clean lines and text edges</strong>, where repetition is everywhere. It fails on <strong>photographs</strong>, where every pixel differs slightly from its neighbour and there is almost nothing to reference. That single fact explains why the same photo stored as PNG is several times larger than a JPEG.</p>
+<h2>2. When Compression Becomes Mandatory</h2>
+<p>Compression is not a matter of taste; it is the entry ticket for several hard limits:</p>
+<ul>
+<li><strong>Page speed:</strong> images are usually the heaviest resource on a page, so their weight sets the load time</li>
+<li><strong>Search performance:</strong> page speed is a ranking signal, so image weight indirectly affects how pages are indexed and ranked</li>
+<li><strong>Mobile data:</strong> visitors on metered connections pay for every byte, and smaller images cost them less</li>
+<li><strong>Upload caps:</strong> many platforms reject a single image above a fixed size, and submission simply fails</li>
+<li><strong>Email attachments:</strong> providers cap total attachment size, and a couple of unedited originals can push a message over the limit</li>
+</ul>
+<p>These five situations do not want the same settings. Web images should be as light as possible, archived files should keep quality headroom, and email attachments sit in between. Deciding the purpose first removes most of the guesswork.</p>
+<h2>3. Five Formats Side by Side</h2>
+<p>A format decides which compression techniques are even available, not how well they are applied. The table below lines up compression type, transparency, animation and the typical use case:</p>
+<table>
+<thead><tr><th>Format</th><th>Compression</th><th>Transparency</th><th>Animation</th><th>Typical use</th></tr></thead>
+<tbody>
+<tr><td>JPEG</td><td>Lossy, DCT plus quantization</td><td>None</td><td>No</td><td>Photographs, rich gradients, detailed real-world scenes</td></tr>
+<tr><td>PNG</td><td>Lossless, prediction filters plus DEFLATE</td><td>Yes, including partial alpha</td><td>No (APNG is an extension)</td><td>Screenshots, icons, line art, UI assets that need transparency</td></tr>
+<tr><td>WebP</td><td>Both lossy (intra-frame prediction) and lossless modes</td><td>Yes, including partial alpha</td><td>Yes</td><td>General web images; covers photos and transparent art in one format</td></tr>
+<tr><td>AVIF</td><td>Mainly lossy, based on AV1 intra-frame coding</td><td>Yes</td><td>Yes</td><td>Large web images where every kilobyte counts, high dynamic range material</td></tr>
+<tr><td>GIF</td><td>Lossless, LZW with a 256-colour palette</td><td>1-bit only, no partial alpha</td><td>Yes</td><td>Simple looping animations, legacy compatibility</td></tr>
+</tbody>
+</table>
+<p>Three details get overlooked. <strong>GIF's "lossless" label is relative to a 256-colour palette</strong> — if the source has more colours, the palette reduction is itself a lossy step. <strong>PNG transparency is a real alpha channel</strong>, so edges can be partly opaque, whereas GIF is either fully transparent or not at all; that is why rounded icons with soft shadows turn jagged when exported as GIF. And <strong>WebP and AVIF both ship lossy and lossless modes</strong>, so picking the wrong one can multiply the file size — lossless for a photo, or lossy for a flat icon, are the two classic mistakes.</p>
+<p>On browser support, only the direction matters: JPEG, PNG and GIF always work, while WebP and AVIF are now widely supported in modern browsers but still fail in older browsers and in some desktop software. The safe pattern is to serve the modern format first and keep a JPEG or PNG fallback alongside it.</p>
+<h2>4. The Quality Slider Is Not Linear</h2>
+<p>Dragging quality from 100 down to 0 does not reduce the file at a steady rate. The quantization table explains why. At high quality the step sizes are tiny, so most high-frequency coefficients survive — they contribute little to what you see but cost a lot of bits. Widen the steps and those coefficients <strong>collapse to zero in whole blocks</strong>, producing a sudden drop in size. Widen them further and there is little left to zero out, so returns fall away sharply while visible damage starts to appear.</p>
+<p>The table below re-exports one 4000x3000 photograph at different quality levels, normalised against quality 80 (<strong>typical values, actual results vary with image content</strong>):</p>
+<table>
+<thead><tr><th>Quality</th><th>Typical size</th><th>Relative to 80</th><th>What the eye sees</th></tr></thead>
+<tbody>
+<tr><td>100</td><td>about 2.1 MB</td><td>about 3.1x</td><td>Indistinguishable from the original</td></tr>
+<tr><td>90</td><td>about 1.05 MB</td><td>about 1.5x</td><td>Very hard to tell apart; fine for large displays</td></tr>
+<tr><td>80</td><td>about 680 KB</td><td>1.0, baseline</td><td>No meaningful difference on a normal screen</td></tr>
+<tr><td>70</td><td>about 600 KB</td><td>about 0.88x</td><td>Slight loss visible when zoomed in</td></tr>
+<tr><td>60</td><td>about 560 KB</td><td>about 0.82x</td><td>Banding can appear in flat areas</td></tr>
+<tr><td>40</td><td>about 480 KB</td><td>about 0.71x</td><td>Obvious block artefacts; placeholders only</td></tr>
+</tbody>
+</table>
+<p>The reading is blunt: <strong>going from quality 100 to 80 removes roughly two thirds of the file, while going from 80 to 60 removes less than a fifth more and introduces visible damage</strong>. So move quickly through the top of the range and settle somewhere between 70 and 85, rather than probing below 50. Past that point, blocking (squares in flat regions) and mosquito noise (fringing along sharp edges) become impossible to ignore.</p>
+<h2>5. Resize First, Compress Second</h2>
+<p>Size starts with the pixel count: <strong>halving each dimension cuts the pixel count to a quarter</strong>, and the compressed file typically shrinks in roughly the same proportion (<strong>typical value, actual results vary with image content</strong>). Dropping a 4000-pixel-wide photo into an 800-pixel-wide column wastes every extra pixel — they cannot make the on-screen image sharper, but they are fully paid for in download time.</p>
+<p>So the order has to be <strong>resize, then compress</strong>. Doing it the other way round means resampling an already-lossy image and compressing it a second time: two generations of loss, no size benefit. What matters is not the original width but the <strong>width it will actually be displayed at</strong>. Body images usually sit in a container 800 to 1200 pixels wide; allowing for 2x pixel-density screens, exporting at 1600 to 2400 pixels is enough, and anything beyond that never reaches the viewer.</p>
+<p>Two more decisions follow from dimensions. <strong>Cropping</strong> removes the parts of the frame nobody sees and saves more bytes than any quality setting. <strong>Matching the format to the content</strong> sends photos down the lossy path and icons and screenshots down the lossless one. Handle the geometry in <a href="/en/image/resize">resize and crop</a> first, then run the result through the <a href="/en/image/compress">image compressor</a>; if the source format is the wrong starting point, convert it first with the <a href="/en/image/convert">format converter</a>. For more on balancing dimensions against quality, see <a href="/blog/en/image-resize-crop-guide">best practices for image sizing</a>.</p>
+<h2>6. Three Worked Examples</h2>
+<p><strong>Example 1: a 4000x3000 phone photo.</strong> The original is about 5.2 MB. Re-exporting at quality 80 without touching the dimensions gives about 680 KB, roughly 13% of the original. Scaling the long edge to 1600x1200 — 16% of the original pixel count — and exporting at quality 80 brings it to about 180 KB. Together that is 5.2 MB down to 180 KB, or about 3.5% of the starting weight. One counter-intuitive detail: <strong>re-exporting that original at quality 100 will not bring back 5.2 MB</strong>. The high-frequency detail lost in the first lossy pass does not return; quality 100 only means "this pass discarded the least", not "restored".</p>
+<p><strong>Example 2: saving the same file repeatedly.</strong> Open a JPEG and save it five times at quality 80. The first export is about 680 KB and the size barely moves afterwards, yet the image keeps degrading: blocking deepens in flat areas and fringing spreads along sharp edges. This is <strong>generation loss</strong>. Compress once, keep the original archived, and never use an already-compressed file as the editing master.</p>
+<p><strong>Example 3: a 1200x800 interface screenshot.</strong> As PNG it is about 420 KB, because the text edges and any transparency have to stay exact. If no transparency is needed, quality 80 JPEG brings it to about 90 KB — <strong>but the high-contrast text edges pick up colour fringing</strong>, visible as red and blue speckles when zoomed, the signature artefact of chroma subsampling. When both a small file and clean text matter, lossless WebP is usually smaller than PNG (<strong>typical values, actual results vary with image content</strong>) and is the sturdier choice for this kind of image.</p>
+<h2>7. Image Weight and LCP</h2>
+<p>Largest Contentful Paint measures how long the biggest element in the viewport takes to render, and on most content pages that element is a hero image or a large product shot. Download time scales with byte count — <strong>taking a hero image from 1.2 MB down to 180 KB cuts its download time to roughly a seventh</strong> under the same network conditions. That ratio depends only on the size ratio, not on bandwidth, so "how small" converts directly into "how much faster".</p>
+<p>Four habits connect compression to LCP:</p>
+<ul>
+<li><strong>Do not lazy-load the hero image.</strong> Deferred loading makes the browser discover it later, which delays LCP by design; lazy loading belongs on images below the fold</li>
+<li><strong>Serve the right width.</strong> Export several widths and let responsive images pick one, so a phone stops downloading a 2400-pixel file for a 400-pixel viewport</li>
+<li><strong>Declare width and height, or the aspect ratio.</strong> The browser can then reserve space before the image arrives, preventing the page from jumping as it loads</li>
+<li><strong>Fix format and dimensions before touching quality.</strong> A photo saved as PNG, or a full-resolution file in a narrow column, cannot be rescued by the quality slider</li>
+</ul>
+<p>One connected cost is easy to miss: <a href="/blog/en/image-to-base64-guide">embedding images as Base64</a> in HTML or CSS inflates them by about a third, since Base64 spends four characters to carry three bytes, and it removes the file from independent caching. Reserve that for icons of a few kilobytes.</p>
+<h2>8. What to Check Before Trusting a Compression Tool</h2>
+<p><strong>Where the work happens.</strong> Many online compressors upload your image to a server first, which means photos, design files and screenshots containing personal information leave your machine. Browser-local processing avoids the upload entirely: no transfer wait, and no copy of your material on someone else's disk.</p>
+<p><strong>Whether the controls are separate.</strong> A single "compress" button cannot serve every case, because a web image wants quality around 80 while an archive or print master wants 95 or higher. You need independent control over <strong>quality</strong> and <strong>dimensions</strong>, not one fixed preset that bundles them together.</p>
+<p><strong>How transparency is handled.</strong> At minimum the tool should read and write JPEG, PNG and WebP, and handle an alpha channel correctly. Converting a transparent PNG to JPEG has to fill the empty area with a sensible solid colour, and a careless conversion leaves black edges behind.</p>
+<h2>9. Frequently Asked Questions</h2>
+<dl>
+<dt>Does compression always cost image quality?</dt>
+<dd>No. With a lossless format such as PNG, or WebP in lossless mode, the decoded image matches the original pixel for pixel; the trade-off is a more modest size reduction. Lossy compression does discard high-frequency detail, but around quality 80 that loss usually sits below what a screen can display. The real danger is repeated saving, because every lossy pass adds another layer of damage.</dd>
+<dt>How good is WebP support today?</dt>
+<dd>Modern browsers widely support WebP, including lossy, lossless, partial transparency and animation. What still fails is older browsers and some desktop applications. The dependable pattern is to offer WebP first while keeping a JPEG or PNG fallback, so clients that cannot decode WebP take the fallback automatically.</dd>
+<dt>Why is the same screenshot so much bigger as PNG than as JPEG?</dt>
+<dd>Because the two mechanisms are complementary. PNG relies on DEFLATE finding repeated byte sequences, and a screenshot's flat colour and regular text edges repeat heavily — until the image contains a photo, a gradient or noise, at which point the repeats disappear and the PNG balloons. JPEG ignores repetition, discards high frequencies through quantization, and therefore excels on photos but fringes sharp text with colour artefacts.</dd>
+<dt>Can a compressed image still be printed?</dt>
+<dd>Yes. Compression changes encoding precision, not pixel dimensions — it is <strong>resizing</strong> that limits printing. At the conventional 300 dpi, 1600 pixels of width supports a print roughly 13 cm wide. For anything destined for print, archive a separate un-resized copy at quality 95 or above and use the compressed version only on the web.</dd>
+<dt>How much smaller does the file get if quality is pushed to the minimum?</dt>
+<dd>Returns fall off fast. On a typical photo, going from quality 80 down to 40 removes only around another third, and block artefacts and banding are already obvious. Halving the dimensions, by contrast, cuts the pixel count to a quarter for a far larger reduction in bytes while the only visible change is that the image is smaller. Shrink the dimensions before touching quality.</dd>
+</dl>
+<h2>10. Three Common Misconceptions</h2>
+<p><strong>Misconception 1: quality 100 means lossless.</strong> It does not. JPEG still applies chroma subsampling and rounds coefficients at quality 100; the quantization steps are simply small enough that the damage is hard to see. True losslessness requires PNG or WebP's lossless mode. The reverse also holds — saving a PNG as a quality 100 JPEG is not a lossless conversion, it is a conversion that introduces loss.</p>
+<p><strong>Misconception 2: only the quality slider matters.</strong> Quality gains have a ceiling, while dimension gains track the pixel count almost directly. A 4000-pixel-wide photo does not need all of its pixels for a body column or an email attachment. Shrinking to the real display width first usually saves more than any amount of fiddling with quality afterwards.</p>
+<p><strong>Misconception 3: convert everything to one format.</strong> Photos and icons want opposite things. Photos tolerate detail loss in exchange for aggressive high-frequency compression; icons and screenshots need every pixel exact yet repeat heavily. Converting a whole asset set to JPEG destroys icon edges and transparency, while converting it all to PNG inflates every photograph. Pick the format per content type.</p>
+<h2>11. Practical Checklist</h2>
+<ul>
+<li><strong>Set parameters by purpose.</strong> Web images: lossy format, quality around 80, width no more than twice the display width. Social sharing: JPEG at 80 to 90. Anything for print or further editing: keep an un-resized original at quality 95 or above</li>
+<li><strong>Convert once, from the original.</strong> Archive the master and treat every export as a single pass from master to deliverable, so nothing is re-encoded on top of a previous result</li>
+<li><strong>Never send transparency to JPEG.</strong> Keep alpha-channel assets as PNG, or as WebP with an alpha channel, or the transparent area gets filled with a solid colour</li>
+<li><strong>Keep batch settings identical.</strong> Applying the same width and quality to a whole set keeps the page consistent and makes it easy to trace which image is slowing things down</li>
+<li><strong>Judge at the real size.</strong> Compare compressed and original side by side at the size they will actually be displayed, not zoomed to 100% hunting for differences</li>
+</ul>
+<p>Put those three decisions in order — format by content type, dimensions by display width, quality somewhere between 70 and 85 — and image handling stops being guesswork. For batches, start with the <a href="/en/image/compress">image compressor</a>; for the finer points of picking a format, continue with the <a href="/blog/en/image-format-converter-guide">format conversion guide</a>.</p>
 <div class="blog-cta">
                 <p><strong>Online <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-image"></use></svg> Image Compress</strong></p>
                 <p>Free to use, no download required</p>

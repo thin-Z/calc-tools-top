@@ -33,6 +33,19 @@
 <link rel="stylesheet" href="../../css/style.css">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Age Calculator Guide: How to Calculate Exact Age","description":"Calculate precise age in years, months, and days. Learn the difference between nominal age and actual age in Chinese and international contexts.","author":{"@type":"Person","name":"Calc-Tools Editor"},"datePublished":"2026-07-02","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.calc-tools.top/blog/en/age-calc-guide"},"publisher":{"@type":"Organization","name":"ToolBox Inside"}}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.calc-tools.top/blog/en/"},{"@type":"ListItem","position":3,"name":"Age Calculator Guide: How to Calculate Exact Age","item":"https://www.calc-tools.top/blog/en/age-calc-guide"}]}</script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            { "@type": "Question", "name": "How is the age of someone born on 29 February counted in common years?", "acceptedAnswer": { "@type": "Answer", "text": "There is no 29 February in a common year, so practice treats either 28 February or 1 March as the birthday, and the two readings differ by one day. For someone born on 29 February 1992, the completed years on 29 September 2026 are 34 either way; the choice only matters when the cut-off falls at the very end of February or the start of March." } },
+            { "@type": "Question", "name": "Is nominal age always one or two years ahead of exact age?", "acceptedAnswer": { "@type": "Answer", "text": "It stays within one or two years. Anyone whose birthday falls after Lunar New Year has a window each year where nominal age has risen and exact age has not, giving a two-year gap; after the birthday the gap returns to one year. On the day of birth the gap is also one year: 0 exact, 1 nominal." } },
+            { "@type": "Question", "name": "Do legal age thresholds use exact age or nominal age?", "acceptedAnswer": { "@type": "Answer", "text": "Exact age. School enrolment, capacity for civil conduct, criminal responsibility, marriage and driving licences are all judged on completed years, and the age is reached on the birthday itself. Nominal age belongs to custom and kinship language, not to legal eligibility." } },
+            { "@type": "Question", "name": "Why do two date calculators disagree by a day?", "acceptedAnswer": { "@type": "Answer", "text": "Three usual causes: whether the start day is included, since inclusive and exclusive counting differ by exactly one day; whether borrowing uses the real length of the previous month or a flat 30 days; and whether 29 February birthdays are mapped to 28 February or 1 March in common years." } },
+            { "@type": "Question", "name": "Do you reach an age on the birthday or the day after?", "acceptedAnswer": { "@type": "Answer", "text": "On the birthday itself. Someone born on 30 September turns 18 on 30 September and is still 17 on 29 September. That is why a deadline should always be written as a specific date rather than a year." } }
+        ]
+    }
+    </script>
 <script src="/js/i18n.js" defer></script><script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>
 <body>
@@ -57,28 +70,143 @@
             </nav>
 <div class="article-tags"><a href="/en/tags/health.html" class="tag tag-health" data-tag="health"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart-pulse"></use></svg> Health</a></div>
 <p class="blog-meta"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-newspaper"></use></svg> 2026-07-02 · Calc-Tools Editor</p>
-<h1>Age Calculator Guide: How to Calculate Exact Age</h1><p>An age calculator does more than count birthdays. It gives exact years, months, and days since birth, which is handy for applications, milestones, and planning.</p>
-<h2>Exact Age vs Calendar Age</h2>
-<p>Your exact age includes the days since your last birthday, which matters for insurance forms, school enrollment, and benefits eligibility that use precise dates.</p>
-<h2>Age Differences and Milestones</h2>
-<p>The same tool can compute the gap between two dates—useful for sibling ages, work anniversaries, or countdowns to major events like retirement.</p>
-<h2>Leap Years and Precision</h2>
-<p>Leap years add an extra day every four years. The calculator handles this automatically, so the result stays accurate for anyone born around February 29.</p>
-<h2>Beyond Age: Date Planning</h2>
-<p>Use the results to plan milestones—when you'll reach a savings target, when a visa or contract term ends, or how long until your next big birthday.</p>
-<h2>Legal Age and Age of Majority</h2>
-<p>Many rights and obligations start at a specific age that varies by country—driving, voting, drinking, and contractual capacity. Confirm the exact threshold for your region before relying on a birthday calculation.</p>
-<p>For legal documents, use the precise date rather than a rounded age. The calculator gives day-level precision that supports official forms and applications.</p>
-<h2>How to Calculate Exact Age</h2>
-<ol><li>Enter the birth date and, if needed, the reference date (defaults to today).</li><li>The result shows years, months, and days in one precise figure.</li><li>Use the date-difference mode for the span between any two dates.</li></ol>
-<p>Double-check the birth date when precision matters—a single digit changes official forms and eligibility calculations.</p>
-<p><strong>Quick tip:</strong> use the date-difference mode for contract deadlines too. The same precision that computes a birthday works for visa dates, warranties, and benefit windows. The same precision covers contracts, visas, and warranties, so one calculation serves many purposes.</p>
+<h1>Age Calculator Guide: How to Calculate Exact Age</h1>
+<p>An age calculator looks like a trivial subtraction, but two things trip people up: <strong>which convention you are using</strong>, and <strong>how the arithmetic handles month-end borrowing and leap days</strong>. In an official setting the wrong convention can change the answer by a whole year.</p>
+<p>This guide covers the three age conventions, the borrowing rule you can reproduce by hand, the day counts that leap years add or remove, and the age thresholds used in mainland China between 6 and 22. Every number below comes from a script and can be reproduced with the <a href="/en/calculators/date-calc">date calculator</a>.</p>
+
+<h2>1. Three Ways to Count Age</h2>
+<p><strong>Exact age</strong> — also called actual or completed age — is the international standard: you are 0 on the day you are born and gain a year on each birthday. It answers "how many birthdays have I completed?" Passports, school records, insurance forms and legal eligibility all use it.</p>
+<p><strong>Xusui</strong>, the Chinese nominal age, follows only two rules: <strong>you are 1 on the day you are born</strong>, and <strong>you gain a year at Lunar New Year</strong>, the first day of the first lunar month. Birthdays are irrelevant. Xusui counts how many calendar years you have lived through, not how many you have completed.</p>
+<p><strong>Mao sui</strong> is a northern colloquial term for the same idea, not a third convention. In casual speech it can also mean "roughly how old", so in a formal context it is worth asking whether the speaker means exact age or nominal age.</p>
+<table>
+<tr><th>Convention</th><th>Starting point</th><th>Increments on</th><th>Typical use</th></tr>
+<tr><td>Exact age</td><td>0 on the day of birth</td><td>Each birthday</td><td>Passports, school records, legal eligibility, benefits</td></tr>
+<tr><td>Xusui (nominal age)</td><td>1 on the day of birth</td><td>Lunar New Year</td><td>Family custom, traditional festivals, kinship terms</td></tr>
+<tr><td>Mao sui</td><td>Same as xusui</td><td>Same as xusui</td><td>Colloquial usage in northern China</td></tr>
+</table>
+<p>The gap between the two real conventions is <strong>not fixed</strong>. For someone born in November it swings between one and two years:</p>
+<table>
+<tr><th>Point in time</th><th>Exact age</th><th>Nominal age</th><th>Gap</th></tr>
+<tr><td>Day of birth</td><td>0</td><td>1</td><td>1 year</td></tr>
+<tr><td>After the next Lunar New Year, before the first birthday</td><td>0</td><td>2</td><td>2 years</td></tr>
+<tr><td>After the first birthday, before the following Lunar New Year</td><td>1</td><td>2</td><td>1 year</td></tr>
+<tr><td>After the second Lunar New Year, before the second birthday</td><td>1</td><td>3</td><td>2 years</td></tr>
+</table>
+<p>The two conventions increment at different moments: exact age on the birthday, nominal age at Lunar New Year. Anyone whose birthday falls after Lunar New Year passes through a window every year in which nominal age has already moved and exact age has not — and inside that window the gap is two years. "Nominal age is always exact age plus one" is simply wrong.</p>
+
+<h2>2. Exact Age in Years, Months and Days: The Borrowing Rule</h2>
+<p>An exact age describes an interval with three numbers, for example 34 years, 7 months and 0 days. The algorithm has three steps:</p>
+<ol>
+<li><strong>Subtract position by position</strong>: days from days, months from months, years from years.</li>
+<li><strong>If the days are negative, borrow from the months</strong>: reduce the months by one and add the <strong>actual length of the month preceding the reference date</strong> — the real number of days in that month, never a flat 30.</li>
+<li><strong>If the months are negative, borrow from the years</strong>: reduce the years by one and add 12 months.</li>
+</ol>
+<p>Step 2 is where nearly every discrepancy is born. Take someone born on <strong>30 November 1998</strong> and measured to <strong>29 September 2026</strong>. The day subtraction gives 29 - 30 = -1. Negative, so borrow a month: the month before the reference date is August 2026, which has <strong>31 days</strong>, so the days become -1 + 31 = 30. The months become 9 - 11 - 1 = -3, still negative, so borrow a year: -3 + 12 = 9, and the years become 2026 - 1998 - 1 = 27. The answer is <strong>27 years, 9 months and 30 days</strong>.</p>
+<p>The reverse check confirms it: 30 November 1998 plus 27 years is 30 November 2025, plus 9 months is 30 August 2026, plus 30 days is <strong>29 September 2026</strong>. The span is <strong>10,165 days</strong>. Estimating the same interval with averages — 365.25 days a year, 30.44 days a month — gives about 10,165.7 days, which here lands less than a day away; but the error grows with longer spans and more leap years, so do not convert through averages when the answer has to be exact.</p>
+
+<h2>3. Age Thresholds in Chinese Law: 6 to 22</h2>
+<p>Age calculations do real work at these boundaries. Eligibility is always judged on <strong>exact age</strong>, and <strong>you reach an age on the birthday itself</strong>: someone born on 30 September turns 18 on 30 September, and is still 17 on 29 September.</p>
+<table>
+<tr><th>Age</th><th>What changes</th><th>Source</th></tr>
+<tr><td>6</td><td>Compulsory education begins; areas without the required conditions may defer to 7</td><td>Compulsory Education Law, art. 11</td></tr>
+<tr><td>8</td><td>Becomes a person with limited capacity for civil conduct, able to perform purely beneficial acts or acts suited to age and intelligence</td><td>Civil Code, art. 19</td></tr>
+<tr><td>12</td><td>Criminal responsibility for intentional killing or injury causing death, or serious disability by especially cruel means, where the Supreme People's Procuratorate approves prosecution</td><td>Criminal Law, art. 17</td></tr>
+<tr><td>14</td><td>Criminal responsibility for intentional killing, intentional injury causing serious harm or death, rape, robbery, drug trafficking, arson, explosion and similar listed offences</td><td>Criminal Law, art. 17</td></tr>
+<tr><td>16</td><td>Full criminal responsibility; may apply for a resident identity card independently (under-16s may also apply, with a shorter validity period)</td><td>Criminal Law, art. 17; Resident Identity Card Law</td></tr>
+<tr><td>16+</td><td>Someone who lives mainly on their own labour income is treated as having full capacity for civil conduct</td><td>Civil Code, art. 18</td></tr>
+<tr><td>18</td><td>Reaches majority and full capacity for civil conduct; may apply for a passenger car driving licence</td><td>Civil Code, art. 17; driving licence regulations</td></tr>
+<tr><td>20 (women)<br>22 (men)</td><td>Minimum legal age for marriage</td><td>Civil Code, art. 1047</td></tr>
+<tr><td>Retirement</td><td>The statutory retirement age is being raised gradually; the current policy defines the exact schedule</td><td>Current policy</td></tr>
+</table>
+<p>The threshold most often misread is <strong>school enrolment</strong>. The law sets the age at six, but the cut-off date is decided locally and most places use 31 August. One day makes a full year of difference for children born in the same year — section 7 works through the numbers. Readers outside mainland China can treat the table as an illustration of how threshold rules are written, and should check their own jurisdiction for cut-off dates and the age of majority.</p>
+<p>Identity cards follow the same logic: a resident ID card can be applied for before 16 as well, but its validity period is shorter and tiered by age band. Whether a card needs renewing is a question about exact age, never about nominal age.</p>
+
+<h2>4. Born on 29 February</h2>
+<p>People born on a leap day have no birthday in common years. Practice splits two ways: treat <strong>28 February</strong> as the birthday, or treat <strong>1 March</strong> as the birthday. The two readings differ by one day — and that day can sit exactly on an eligibility cut-off.</p>
+<p>Take someone born on <strong>29 February 1992</strong> (1992 was a leap year) measured to <strong>29 September 2026</strong>:</p>
+<table>
+<tr><th>Measure</th><th>Result</th><th>Note</th></tr>
+<tr><td>Exact age</td><td>34 years, 7 months, 0 days</td><td>Day difference is 29 - 29 = 0, so no borrowing</td></tr>
+<tr><td>Completed years</td><td>34</td><td>The 2026 birthday has passed</td></tr>
+<tr><td>Total days since birth</td><td>12,631 days</td><td>Measured</td></tr>
+<tr><td>Nominal age (xusui)</td><td>35</td><td>Born in the ren-shen (Monkey) lunar year, 34 lunar years to the bing-wu (Horse) year of 2026, plus 1</td></tr>
+<tr><td>2026 birthday taken as 28 February</td><td>12,418 days from birth</td><td>Common-year reading A</td></tr>
+<tr><td>2026 birthday taken as 1 March</td><td>12,419 days from birth</td><td>Common-year reading B, one day later</td></tr>
+</table>
+<p>One persistent myth is that leap-day babies "lose days". They do not. Someone born on 28 February 1992 measures <strong>12,632 days</strong> to the same reference date — one day more, simply because their birth date sits one day later in the calendar. The age arithmetic is not the cause.</p>
+<p>What really is fewer is <strong>actual birthdays</strong>. Between 1992 and 2026 there are nine leap years (1992, 1996, 2000, 2004, 2008, 2012, 2016, 2020 and 2024). Leaving out the year of birth, our subject had lived through only <strong>eight real 29 Februaries</strong> by 29 September 2026; every other year's birthday was constructed from 28 February or 1 March. Where a contract runs on birthdays — subscription renewals, membership cycles, review periods — state in writing which date applies in common years, and the argument never has to happen again.</p>
+
+<h2>5. Leap Years and Day Counts: Where the Extra Day Comes From</h2>
+<p>The Gregorian leap rule has three parts: <strong>a year divisible by 4 is a leap year; a year divisible by 100 is not, unless it is also divisible by 400</strong>. So 2000 was a leap year, while 1900 and 2100 are not. A leap year has 29 days in February and 366 days in total.</p>
+<p>These are measured day counts, all computed as end date minus start date, excluding the start day:</p>
+<table>
+<tr><th>Interval</th><th>Days</th><th>Why</th></tr>
+<tr><td>2024-02-28 to 2025-02-28</td><td>366</td><td>The interval contains 2024-02-29</td></tr>
+<tr><td>2024-02-29 to 2025-02-28</td><td>365</td><td>The start is already the leap day; no further leap day inside</td></tr>
+<tr><td>2023-03-01 to 2024-03-01</td><td>366</td><td>Crosses 2024-02-29</td></tr>
+<tr><td>2024-03-01 to 2025-03-01</td><td>365</td><td>No leap day inside the interval</td></tr>
+<tr><td>2024-01-01 to 2025-01-01</td><td>366</td><td>A complete leap year</td></tr>
+</table>
+<p>One year apart can mean 365 days or 366. <strong>Whenever a cost is prorated by the day — rent, interest, warranty periods, length of service — confirm the actual day count of the interval instead of multiplying months by 30.</strong> When you need working days rather than calendar days, the <a href="/en/calculators/workday-calculator">workday calculator</a> removes weekends and public holidays, which is a different measure entirely.</p>
+
+<h2>6. From Age Back to the Zodiac</h2>
+<p>The zodiac sign is fixed by the lunar year. The conversion is short: <strong>Heavenly Stem index = (year - 4) mod 10</strong> and <strong>Earthly Branch index = (year - 4) mod 12</strong>, both counted from 0. The stems run jia, yi, bing, ding, wu, ji, geng, xin, ren, gui; the branches run zi, chou, yin, mao, chen, si, wu, wei, shen, you, xu, hai, matching rat, ox, tiger, rabbit, dragon, snake, horse, goat, monkey, rooster, dog and pig.</p>
+<p>Check it against 1992: 1992 - 4 = 1988; 1988 mod 10 = 8 gives the ninth stem, <strong>ren</strong>; 1988 mod 12 = 8 gives the ninth branch, <strong>shen</strong>. So 1992 was a ren-shen year, the year of the Monkey. For 2026: 2026 - 4 = 2022; mod 10 = 2 gives <strong>bing</strong>, mod 12 = 6 gives <strong>wu</strong>. So 2026 is a bing-wu year, the year of the Horse.</p>
+<p>That also lets you work in the other direction. Someone born in 1992 is 34 years older in 2026, and 34 mod 12 = 10; counting ten places on from the Monkey (rooster, dog, pig, rat, ox, tiger, rabbit, dragon, snake, horse) lands on the Horse, matching the formula. <strong>A benming year — the "zodiac year" people treat as unlucky — only occurs when the sign repeats, that is every 12 years.</strong> For someone born in the Monkey year of 1992 those are 2004, 2016 and 2028, so 2026 is not one.</p>
+<figure>
+<svg viewBox="0 0 660 175" width="100%" role="img" aria-label="Bar chart: the same birth date gives 34 completed years, an exact age of 34 years 7 months 0 days, and a nominal age of 35">
+<text x="0" y="20" font-size="13" fill="currentColor">Exact age (birthdays)</text>
+<rect x="196" y="8" width="332" height="14" rx="3" fill="#0a84ff"></rect>
+<text x="538" y="20" font-size="12" fill="currentColor">34 years</text>
+<text x="0" y="62" font-size="13" fill="currentColor">To the day</text>
+<rect x="196" y="50" width="350" height="14" rx="3" fill="#0a84ff"></rect>
+<text x="556" y="62" font-size="12" fill="currentColor">34y 7m 0d</text>
+<text x="0" y="104" font-size="13" fill="currentColor">Nominal age (lunar)</text>
+<rect x="196" y="92" width="350" height="14" rx="3" fill="#0a84ff"></rect>
+<text x="556" y="104" font-size="12" fill="currentColor">35 years</text>
+<text x="0" y="150" font-size="12" fill="currentColor">Born 1992-02-29　Reference date 2026-09-29　12,631 days from birth</text>
+</svg>
+<figcaption>Figure 1: three conventions, three answers for the same birth date, because each one increments at a different moment.</figcaption>
+</figure>
+
+<h2>7. Four Worked Examples</h2>
+<p><strong>Example 1: a leap-day birth in full.</strong> Born 29 February 1992, reference date 29 September 2026. Years give 34, months give 7, days give 0, and no borrowing is needed: the exact age is <strong>34 years, 7 months and 0 days</strong>. Completed years are <strong>34</strong>, total days measured <strong>12,631</strong>, and nominal age is <strong>35</strong> — a one-year gap.</p>
+<p><strong>Example 2: a calculation that has to borrow.</strong> Born 30 November 1998, reference date 29 September 2026. Days: 29 - 30 = -1, so borrow August 2026's 31 days to get 30. Months: 9 - 11 - 1 = -3, so borrow a year to get 9, with years at 2026 - 1998 - 1 = 27. The result is <strong>27 years, 9 months and 30 days</strong>, or <strong>10,165 days</strong>.</p>
+<p><strong>Example 3: one day short of 18.</strong> Someone born on 30 September 2008 measures <strong>17 years, 11 months and 30 days</strong> on 29 September 2026 — <strong>6,573 days</strong> — and is not yet an adult. They turn 18 the next day. If an application window closes on 29 September, that single day decides the outcome.</p>
+<p><strong>Example 4: one day apart, a year of school apart.</strong> Where the enrolment cut-off is 31 August, a child born on 31 August 2019 measures <strong>6 years, 0 months and 0 days</strong> on 31 August 2025 (<strong>2,192 days</strong>) and can start school that year. A child born on 1 September 2019 measures <strong>5 years, 11 months and 30 days</strong> the same day (<strong>2,191 days</strong>) and must wait another year. Using the <a href="/en/calculators/date-calc">date calculator</a>, set the reference date to the cut-off itself to see the difference immediately.</p>
+
+<h2>8. Frequently Asked Questions</h2>
+<dl>
+<dt>How is the age of someone born on 29 February counted in common years?</dt>
+<dd>There is no 29 February in a common year, so practice treats either 28 February or 1 March as the birthday, and the two readings differ by one day. For someone born on 29 February 1992, the completed years on 29 September 2026 are 34 either way; the choice only matters when the cut-off falls at the very end of February or the start of March.</dd>
+<dt>Is nominal age always one or two years ahead of exact age?</dt>
+<dd>It stays within one or two years. Anyone whose birthday falls after Lunar New Year has a window each year where nominal age has risen and exact age has not, giving a two-year gap; after the birthday the gap returns to one year. On the day of birth the gap is also one year — 0 exact, 1 nominal.</dd>
+<dt>Do legal age thresholds use exact age or nominal age?</dt>
+<dd>Exact age. School enrolment, capacity for civil conduct, criminal responsibility, marriage and driving licences are all judged on completed years, and the age is reached on the birthday itself. Nominal age belongs to custom and kinship language, not to legal eligibility.</dd>
+<dt>Why do two date calculators disagree by a day?</dt>
+<dd>Three usual causes: whether the start day is included, since inclusive and exclusive counting differ by exactly one day; whether borrowing uses the real length of the previous month or a flat 30 days; and whether 29 February birthdays are mapped to 28 February or 1 March in common years. Check all three before assuming a tool is wrong.</dd>
+<dt>Do you reach an age on the birthday or the day after?</dt>
+<dd>On the birthday itself. Someone born on 30 September turns 18 on 30 September and is still 17 on 29 September. That is why a deadline should always be written as a specific date rather than a year.</dd>
+</dl>
+
+<h2>9. Three Common Mistakes</h2>
+<p><strong>Mistake 1: adding one to exact age to get nominal age.</strong> The two conventions increment at different moments, so the gap moves between one and two years. Adding one always breaks in the window between Lunar New Year and the birthday. The stable formula is nominal age = the lunar year of the reference date - the lunar year of birth + 1.</p>
+<p><strong>Mistake 2: assuming any year divisible by 4 is a leap year.</strong> The rule is four, then a hundred, then four hundred: 1900 is divisible by 4 and by 100 but not by 400, so it was not a leap year, while 2000 was. From 28 February 1900 to 28 February 1901 there are 365 days, but from 28 February 2000 to 28 February 2001 there are 366.</p>
+<p><strong>Mistake 3: subtracting years to decide an age.</strong> 2026 - 2008 = 18, yet someone born on 30 September 2008 is only 17 on 29 September 2026 — one day short. Any decision that hangs on a deadline needs the years-months-days measure, not the year difference.</p>
+
+<h2>10. Three Practical Tips</h2>
+<ul>
+<li><strong>Fix the convention before choosing a mode.</strong> Use exact age for documents, applications and contracts, nominal age for family and festival contexts, and the years-months-days figure when a cost is prorated. Once the convention is settled, the mode selection is unambiguous.</li>
+<li><strong>Use the deadline as the reference date.</strong> Do not measure from today and then count days in your head — enter the cut-off directly and let the result tell you how many days remain. This is what prevents the one-day miss in Example 3.</li>
+<li><strong>Double-check the birth date itself.</strong> One wrong digit propagates through every result. When legal eligibility or a settlement is involved, rerun the figure with the <a href="/en/calculators/date-calc">date calculator</a> and keep a record of the calculation.</li>
+</ul>
+<p>For more on intervals, see <a href="/blog/en/date-calculation-tips">date calculation tips</a> and <a href="/blog/en/workday-calculator-guide">how working days between two dates are counted</a>. Pregnancy weeks and due dates follow a related counting logic, covered in the <a href="/blog/en/ovulation-calculator-guide">ovulation and safe period guide</a>, and body-metric age bands are explained in the <a href="/blog/en/bmi-normal-range-guide">comparison of Chinese, WHO and Asia-Pacific BMI standards</a>.</p>
 <div class="blog-cta">
                 <p><strong>Online <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-calculator"></use></svg> Age Calculator</strong></p>
                 <p>Free to use, no download required</p>
                 <p><a href="/en/calculators/date-calc"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-arrow-right"></use></svg> Use <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-calculator"></use></svg> Age Calculator Now</a></p>
             </div>
-            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> Related Articles</h3><ul><li><a href="/blog/en/ovulation-calculator-guide">Ovulation Calculator: Predict Ovulation and Safe Periods</a></li></ul></div>
+            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> Related Articles</h3><ul><li><a href="/blog/en/date-calculation-tips">Date Calculation Tips</a></li><li><a href="/blog/en/workday-calculator-guide">How Many Working Days Between Two Dates?</a></li><li><a href="/blog/en/ovulation-calculator-guide">Ovulation Calculator: Predict Ovulation and Safe Periods</a></li><li><a href="/blog/en/bmi-normal-range-guide">What Is a Normal BMI? Comparing Chinese, WHO and Asia-Pacific Standards</a></li></ul></div>
 <div class="article-bottom-tags"><a href="/en/tags/health.html" class="tag tag-health" data-tag="health"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart-pulse"></use></svg> Health</a></div>
 
         <div class="like-section">

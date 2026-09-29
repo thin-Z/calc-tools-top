@@ -34,6 +34,19 @@
 <link rel="stylesheet" href="../../css/style.css">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Overtime Pay Calculation: Complete Guide","description":"How to calculate overtime pay. Weekday 150%, weekend 200%, holiday 300% rates explained with formula.","author":{"@type":"Person","name":"Calc-Tools Editor"},"datePublished":"2026-06-26","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.calc-tools.top/blog/en/overtime-pay-guide"},"publisher":{"@type":"Organization","name":"ToolBox Inside"}}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.calc-tools.top/blog/en/"},{"@type":"ListItem","position":3,"name":"Overtime Pay Calculation: 1.5x 2x 3x Guide","item":"https://www.calc-tools.top/blog/en/overtime-pay-guide"}]}</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        { "@type": "Question", "name": "Does the overtime base include performance bonuses?", "acceptedAnswer": { "@type": "Answer", "text": "Not automatically. Wage items paid every month in step with normal attendance are normally included, while one-off bonuses, reimbursement-style allowances and non-cash benefits vary by jurisdiction." } },
+        { "@type": "Question", "name": "Can time off in lieu replace holiday overtime pay?", "acceptedAnswer": { "@type": "Answer", "text": "No. A statutory holiday is paid whether or not you work, so working it earns an additional payment of at least 300 percent, and neither compensatory rest nor a reshuffled holiday can replace it. Only rest-day overtime may be offset with equal time off." } },
+        { "@type": "Question", "name": "Where does the 21.75 figure come from?", "acceptedAnswer": { "@type": "Answer", "text": "It is 365 days minus 104 weekend days, leaving 261, divided by 12 months, per the 2008 circular on monthly paid days. The fixed constant keeps the daily rate identical in every month." } },
+        { "@type": "Question", "name": "How is overtime assessed under comprehensive working hours?", "acceptedAnswer": { "@type": "Answer", "text": "Check whether the role has been approved by the local human resources and social security authority. Where it has, hours beyond the statutory total within a settlement cycle are normally paid at 150 percent, and statutory holiday work remains at 300 percent." } },
+        { "@type": "Question", "name": "Is overtime pay taxed?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Overtime is wage income, combined with the month's salary and taxed under the cumulative withholding method, so take-home pay is slightly below the nominal overtime figure." } }
+    ]
+}
+</script>
 <script src="/js/i18n.js" defer></script><script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>
 <body>
@@ -52,22 +65,98 @@
 <main id="main"><article class="blog-post">
 <div class="article-tags"><a href="/en/tags/finance.html" class="tag tag-finance" data-tag="finance">Finance</a></div>
 <p class="blog-meta"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-calendar"></use></svg> 2026-06-26 · Calc-Tools Editor</p>
-<h1>Overtime Pay Calculation: Complete Guide</h1><p>Overtime pay rules decide how much extra you earn beyond your regular hours. Understanding the formulas—and your local rules—keeps you from leaving money on the table.</p>
-<h2>How Overtime Is Usually Calculated</h2>
-<p>The standard formula multiplies your hourly rate by a multiplier for each overtime hour. Many places require 1.5x for weekday overtime, 2x for rest days, and 3x for holidays. Your location's labor law defines the exact rates.</p>
-<h2>Know Your Base Hourly Rate</h2>
-<p>Divide your monthly salary by the number of working days and then by the daily hours to get your base hourly rate. Bonuses and allowances may or may not count toward the overtime base.</p>
-<h2>Tracking Your Hours</h2>
-<p>Keep your own log in addition to the company system. When discrepancies appear, a personal record is the fastest way to resolve them.</p>
-<h2>Budgeting the Extra Income</h2>
-<p>Overtime income is taxed like regular income and can push you into a higher bracket. Set aside the estimated tax portion before spending the rest.</p>
-<h2>Overtime and Labor Rights</h2>
-<p>Overtime rules are usually set by labor law, not by company preference. Know the maximum weekly hours and the required multipliers in your jurisdiction, and keep evidence of hours worked.</p>
-<p>If an employer miscalculates overtime, raise it with written documentation first. If unresolved, official labor complaint channels exist in most regions.</p>
-<h2>How to Calculate Overtime Pay</h2>
-<ol><li>Enter your monthly salary and the standard working days and hours.</li><li>Add the overtime hours and the applicable multiplier for the day type.</li><li>Read the extra amount and check it against your payslip.</li></ol>
-<p>Calculate weekday, rest-day, and holiday overtime separately—they usually use different multipliers.</p>
-<p><strong>Quick tip:</strong> screenshot or export your attendance records monthly. If a dispute arises, contemporaneous evidence beats memory every time. Keep the records even when everything looks right, because patterns only show up over time.</p>
+<h1>Overtime Pay Calculation: Complete Guide</h1>
+<p>Overtime is the line item most likely to be underpaid on a payslip. The same eight hours can be worth three different amounts depending on which day they fall on, yet attendance sheets routinely lump all of them together under a single word. The second problem is quieter: the base wage an employer uses to turn a monthly salary into an hourly rate is often not your actual salary, and a gap of a few hundred yuan a month compounds well past CNY 10,000 over a year.</p>
+<p>This guide works through Article 44 of China's Labor Law, which sets the 150 percent, 200 percent and 300 percent tiers, and the 21.75-day divisor that comes from the 2008 circular issued by the Ministry of Human Resources and Social Security. It covers how the base is fixed, how daily and hourly rates are derived, when compensatory rest may replace payment, and how the three working-hour systems differ. Every figure below can be reproduced with the <a href="/en/calculators/overtime">overtime calculator</a>.</p>
+<h2>1. Three Situations, Three Multipliers</h2>
+<p>Article 44 splits overtime into three situations, each with its own floor. The word "wage" here means the converted daily or hourly rate. Because each floor is expressed as "not less than," 150, 200 and 300 percent are minimums: a contract may promise more, and an agreement promising less has no effect.</p>
+<table>
+<tr><th>Situation</th><th>Minimum payable</th><th>Can compensatory rest replace it?</th><th>Legal basis</th></tr>
+<tr><td>Extended hours on a working day</td><td>150% of the hourly rate</td><td>No, payment is required</td><td>Labor Law, Article 44(1)</td></tr>
+<tr><td>Work on a rest day</td><td>200% of the daily or hourly rate</td><td>Yes, if equal time off is granted</td><td>Labor Law, Article 44(2)</td></tr>
+<tr><td>Work on a statutory holiday</td><td>300% of the daily or hourly rate</td><td>No, time off cannot substitute</td><td>Labor Law, Article 44(3)</td></tr>
+</table>
+<p>The distinction that trips people up is rest day versus statutory holiday. A <strong>rest day</strong> is the ordinary weekly break, usually Saturday and Sunday, and overtime on it can be offset by granting equal time off. A <strong>statutory holiday</strong> is a paid public holiday: you are paid for it whether or not you work, so working that day triggers an additional payment of at least 300 percent on top of normal pay, with no substitution allowed. Which calendar dates count as statutory holidays is set by the official annual holiday notice, so this guide deliberately names no specific dates.</p>
+<p><strong>Note:</strong> whether 200 percent and 300 percent are "in addition to" or "inclusive of" the day's wage is the single most misread point in practice. Take a statutory holiday: the day is paid even if you stay home, so working it earns normal monthly pay plus a 300 percent overtime payment. You receive normal pay plus three times the daily rate, not "three times pay with the base already inside it."</p>
+<h2>2. Where the Overtime Base Comes From</h2>
+<p>The multiplier is only a factor; the base decides the money. The base should follow the normal working-time wage agreed in the labor contract and must not fall below the local minimum wage. Shrinking the base down to a "basic wage" while stripping out position pay, performance pay, allowances and attendance bonuses is the most common source of overtime disputes. The table below uses a CNY 8,000 salary with two rest days worked to show the gap between the two approaches.</p>
+<table>
+<tr><th>Base used</th><th>Overtime for two rest days worked</th><th>Comment</th></tr>
+<tr><td>Contractual normal working-time wage, CNY 8,000</td><td>CNY 1,471.26</td><td>Meets the statutory floor; the usual compliant approach</td></tr>
+<tr><td>Basic wage only, assumed CNY 4,000</td><td>CNY 735.63</td><td>Performance and allowances stripped out; high-risk practice</td></tr>
+<tr><td>Difference</td><td>CNY 735.63</td><td>Half the stripped amount, lost every month</td></tr>
+</table>
+<p>Which items belong in the base is not decided identically everywhere. Fixed monthly position pay and skill pay are normally included; whether a one-off bonus, a reimbursement-style allowance or a non-cash benefit counts varies by jurisdiction. A workable <strong>rule of thumb</strong> is to ask whether the item is paid every month in step with normal attendance. The more fixed it is and the more it tracks attendance, the more likely it is treated as part of wages. If the contract names only a basic wage without stating the full amount, payslips and bank statements still serve as evidence of what was actually paid.</p>
+<p>A second point is easily missed: whatever method is used, the resulting base must not drop below the level implied by the local minimum wage, or the arrangement itself may be held ineffective. Because pay structures differ between roles, bases should be set role by role rather than forced into one company-wide number.</p>
+<h2>3. Why the Divisor Is 21.75 Days</h2>
+<p>Overtime cannot be computed as monthly salary divided by 30, nor by the number of days actually worked in a particular month. The first understates the daily rate; the second produces a different overtime figure for the same salary depending on whether the month has 28 or 31 days. Under the 2008 circular, the monthly paid-day figure is fixed at <strong>21.75 days</strong>.</p>
+<p>The 21.75 comes from taking the 365 days of the year, removing the 104 weekend days to leave 261, and dividing by 12: 261 divided by 12 equals 21.75. Statutory holidays are paid days and therefore are not removed, which is exactly why "monthly paid days" and "monthly working days" are separate concepts: the first converts wages, the second determines whether overtime has occurred at all.</p>
+<table>
+<tr><th>Step</th><th>Formula</th><th>Result at a CNY 8,000 monthly salary</th></tr>
+<tr><td>Daily rate</td><td>Monthly salary divided by 21.75</td><td>8,000 / 21.75 = CNY 367.82</td></tr>
+<tr><td>Hourly rate</td><td>Daily rate divided by 8</td><td>367.82 / 8 = CNY 45.98</td></tr>
+<tr><td>Working-day extension</td><td>Hourly rate × hours × 150%</td><td>45.98 × 2 × 1.5 = CNY 137.93 for two hours</td></tr>
+<tr><td>Rest-day work</td><td>Daily rate × days × 200%</td><td>367.82 × 1 × 2 = CNY 735.63 for one day</td></tr>
+<tr><td>Statutory holiday work</td><td>Daily rate × days × 300%</td><td>367.82 × 1 × 3 = CNY 1,103.45 for one day</td></tr>
+</table>
+<p>Under the standard system a working day is eight hours, so dividing the daily rate by eight gives the hourly rate. Even where a roster spreads hours differently across the week, 21.75 and 8 remain the statutory conversion constants; substituting 22 or 26 days is not permitted. To pin down how many days of a given month are working days, list the month with the <a href="/en/calculators/workday-calculator">workday calculator</a> first, then check each overtime entry against the converted rates.</p>
+<h2>4. Compensatory Rest and the Three Working-Hour Systems</h2>
+<p>Compensatory rest and the reshuffled holidays announced each year are often treated as the same thing, but the money differs. <strong>Compensatory rest</strong> applies to rest-day work: if the employer later grants equal time off, the 200 percent payment is not owed; if no such time off is granted, it is. <strong>Reshuffled holiday arrangements</strong> are the annual calendar adjustments. Neither device can replace the 300 percent owed for work on a statutory holiday.</p>
+<p>The working-hour system also changes what can be claimed. There are three:</p>
+<table>
+<tr><th>System</th><th>Approval needed</th><th>How overtime is treated</th></tr>
+<tr><td>Standard working hours</td><td>None; applies by default</td><td>All three tiers apply: 150%, 200%, 300%</td></tr>
+<tr><td>Comprehensive working hours</td><td>Yes, from the local human resources and social security authority</td><td>Hours beyond the statutory total within a settlement cycle are normally paid at 150%; statutory holiday work still at 300%</td></tr>
+<tr><td>Flexible (non-fixed) working hours</td><td>Yes, from the same authority</td><td>Extension and rest-day overtime generally do not apply; treatment of statutory holiday work varies locally</td></tr>
+</table>
+<p>Two things need stating plainly. First, <strong>comprehensive and flexible systems both require approval</strong>; a single sentence in a labor contract does not remove the obligation to pay overtime, and an unapproved role is normally assessed under standard hours. Second, approval attaches to <strong>specific roles</strong>, not to the company as a whole, so different roles in one employer can sit under different systems. In a dispute, attendance records, rosters, overtime approval forms and work messages are the material that establishes what happened; because attendance data usually sits with the employer, the person asserting a claim should secure their own copies early.</p>
+<p>On time limits, overtime pay is a remuneration dispute, and when the clock starts depends on whether the employment relationship is still running, with local practice varying. The practical answer is not to wait: check the payslip in the month the shortfall appears and raise a written objection while the records are still intact.</p>
+<h2>5. Worked Examples</h2>
+<p><strong>Example 1: CNY 8,000 salary, one eight-hour day compared.</strong> Daily rate = 8,000 / 21.75 = CNY 367.82; hourly rate = 367.82 / 8 = CNY 45.98. For the same eight hours: working-day extension = 45.98 × 8 × 1.5 = <strong>CNY 551.72</strong>; rest-day work = 367.82 × 2 = <strong>CNY 735.63</strong>; statutory holiday work = 367.82 × 3 = <strong>CNY 1,103.45</strong>. The three amounts stand in a clean 1.5 : 2 : 3 ratio, with the highest exactly double the lowest.</p>
+<p><strong>Example 2: CNY 8,000 salary, ten hours of weekday extension plus one rest day in the same month.</strong> Weekday portion = 45.98 × 10 × 1.5 = CNY 689.66; rest-day portion = 367.82 × 2 = CNY 735.63; total for the month = <strong>CNY 1,425.29</strong>. Rounding the hourly rate to CNY 46 before multiplying yields the familiar CNY 1,426 approximation. The difference comes from rounding, so an official calculation should carry the unrounded base through every line and handle the final rounding once.</p>
+<p><strong>Example 3: CNY 20,000 salary, one statutory holiday worked.</strong> Daily rate = 20,000 / 21.75 = CNY 919.54, so the payment is 919.54 × 3 = <strong>CNY 2,758.62</strong>. Doubling the salary doubles that single day exactly. The multiplier never depends on how much you earn; it depends only on which kind of day the work falls on.</p>
+<figure>
+<svg viewBox="0 0 660 170" width="100%" role="img" aria-label="At a monthly salary of 8000 CNY and eight hours of work, weekday overtime pays 551.72, rest day work pays 735.63 and statutory holiday work pays 1103.45, a ratio of 1.5 to 2 to 3">
+<text x="0" y="20" font-size="13" fill="currentColor">Weekday, 8 hours</text>
+<rect x="170" y="8" width="150" height="14" rx="3" fill="#0a84ff"></rect>
+<text x="330" y="20" font-size="12" fill="currentColor">CNY 551.72 at 150%</text>
+<text x="0" y="62" font-size="13" fill="currentColor">Rest day, 8 hours</text>
+<rect x="170" y="50" width="200" height="14" rx="3" fill="#0a84ff"></rect>
+<text x="380" y="62" font-size="12" fill="currentColor">CNY 735.63 at 200%</text>
+<text x="0" y="104" font-size="13" fill="currentColor">Public holiday, 8 hours</text>
+<rect x="170" y="92" width="300" height="14" rx="3" fill="#0a84ff"></rect>
+<text x="480" y="104" font-size="12" fill="currentColor">CNY 1,103.45 at 300%</text>
+<text x="0" y="146" font-size="12" fill="currentColor">Monthly salary CNY 8,000; bars drawn to scale by amount payable</text>
+</svg>
+<figcaption>Figure 1: The same eight hours at a CNY 8,000 monthly salary, priced across the three day types.</figcaption>
+</figure>
+<p>Read together, the three figures make one point: <strong>the same eight hours is worth twice as much on a statutory holiday as on an ordinary weekday evening</strong>. That is why rosters must record holiday duty and weekend duty as separate entries. Once a month has been logged as generic overtime, reconstructing which hours were holidays later is close to impossible.</p>
+<h2>6. Frequently Asked Questions</h2>
+<dl>
+<dt>Does the overtime base include performance bonuses?</dt>
+<dd>Not automatically. Wage items paid every month in step with normal attendance are normally included, while one-off bonuses, reimbursement-style allowances and non-cash benefits vary by jurisdiction. The test is whether the item is paid steadily for showing up, and the contract, payslip structure and actual payment records should be read together.</dd>
+<dt>Can time off in lieu replace holiday overtime pay?</dt>
+<dd>No. A statutory holiday is paid whether or not you work, so working it earns an additional payment of at least 300 percent, and neither compensatory rest nor a reshuffled holiday can replace it. Only rest-day overtime may first be offset with equal time off, after which the 200 percent payment is no longer owed.</dd>
+<dt>Where does the 21.75 figure come from, and why not use the days actually worked?</dt>
+<dd>It is 365 days minus 104 weekend days, giving 261, divided by 12 months, per the 2008 circular. A fixed constant ensures the same monthly salary produces the same daily rate in every month, instead of two different overtime figures for a 28-day and a 31-day month.</dd>
+<dt>How is overtime assessed under comprehensive working hours?</dt>
+<dd>Start by checking whether the role has been approved by the local human resources and social security authority. Where it has, hours beyond the statutory total within a settlement cycle are normally paid at 150 percent and statutory holiday work remains at 300 percent; where it has not, the standard three tiers generally apply.</dd>
+<dt>Is overtime pay taxed?</dt>
+<dd>Yes. Overtime is wage income, combined with the month's salary and taxed under the cumulative withholding method, so take-home is slightly below the nominal figure. To estimate the net amount, run salary plus overtime through the <a href="/en/calculators/tax2026">tax calculator</a> as the month's income.</dd>
+</dl>
+<h2>7. Four Common Misconceptions</h2>
+<p><strong>Misconception 1: overtime equals monthly salary divided by 30.</strong> A 30-day month contains rest days, so using 30 as the denominator understates the daily rate. The statutory figure is 21.75 days: at a CNY 8,000 salary the daily rate is CNY 367.82, not CNY 266.67 — a difference of about a hundred yuan per day.</p>
+<p><strong>Misconception 2: granting time off settles all overtime.</strong> Compensatory rest only offsets rest-day work. Extended hours on working days and work on statutory holidays must be paid. Treating time off as a universal substitute is the most common defense in disputes and the easiest one to defeat.</p>
+<p><strong>Misconception 3: a contract clause on flexible hours removes overtime pay.</strong> A flexible-hours system requires approval and applies to specific roles. A sentence in the contract does not by itself remove the obligation, and an unapproved role is still assessed under standard working hours.</p>
+<p><strong>Misconception 4: overtime is untaxed extra income.</strong> It is part of wage income, taxed together with the month's salary, and it can lift the cumulative withholding rate for that month. Budgeting on the assumption that it arrives tax-free tends to end badly at the annual settlement.</p>
+<h2>8. Practical Checklist</h2>
+<ul>
+<li><strong>Reconcile the payslip every month</strong>: match the recorded overtime hours and dates against the month's converted rates, and check specifically whether the three day types were collapsed into one. Raise a written objection in the same month rather than saving everything for an exit claim.</li>
+<li><strong>Keep your own attendance trail</strong>: archive clock-in screenshots, rosters, overtime approval forms and task messages month by month. Attendance data usually sits with the employer, so your own copies are both the checking tool and the evidence base.</li>
+<li><strong>Confirm the working-hour system before arguing multipliers</strong>: ask which of the three systems covers your role and whether an approval document exists. The system determines what can be claimed at all.</li>
+<li><strong>Cross-check with two tools</strong>: map the month's working and rest days with the <a href="/en/calculators/workday-calculator">workday calculator</a>, then price each entry at all three multipliers with the <a href="/en/calculators/overtime">overtime calculator</a>, and compare both results line by line with the payslip.</li>
+</ul>
+<p>Overtime is not the only line on a payslip that changes what actually lands in your account. To work through the full-year tax position, continue with the <a href="/blog/en/tax-deduction-guide-2026">2026 tax deduction guide</a>; to plan how many days a given month really contains, the <a href="/blog/en/workday-calculator-guide">workday calculator guide</a> walks through the month-by-month count.</p>
 <div class="blog-cta">
                 <p><strong>Online <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-calculator"></use></svg> Overtime Calculator</strong></p>
                 <p>Free to use, no download required</p>
