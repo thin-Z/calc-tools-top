@@ -33,6 +33,56 @@
 <link rel="stylesheet" href="../../css/style.css">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Case Converter: UPPERCASE, lowercase, Capitalize, camelCase and More","description":"English case conversion methods including uppercase, lowercase, capitalize, camelCase, and snake_case.","author":{"@type":"Person","name":"Calc-Tools Editor"},"datePublished":"2026-07-02","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.calc-tools.top/blog/en/case-converter-guide"},"publisher":{"@type":"Organization","name":"ToolBox Inside"}}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.calc-tools.top/blog/en/"},{"@type":"ListItem","position":3,"name":"Case Converter Guide: UPPERCASE, lowercase and camelCase","item":"https://www.calc-tools.top/blog/en/case-converter-guide"}]}</script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "What naming convention should I use for JSON fields?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "camelCase is the JavaScript and REST default, while snake_case stays common where the backend is written in Python or Ruby. The mistake is not the choice but mixing both inside one payload. Pick one, enforce it in the serializer, and document it in the API contract."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why do URLs use hyphens instead of underscores?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Reasons usually cited are that hyphens read as word separators while underscores are often treated as part of the word, and that underscores can be hidden by the text-decoration underline on links. The widely repeated guidance from Google is to use hyphens in URLs. RFC 3986 allows both characters in a path segment, so this is a convention rather than a protocol rule."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why does lowercasing Turkish text produce the wrong letters?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Turkish maps i and I the opposite way round from English: capital I lowercases to the dotless i (U+0131) and lowercase i uppercases to the dotted capital I (U+0130). Without a Turkish locale, I lowercases to plain i, so a name like Istanbul loses its dotted capital letter. Pass the Turkish locale explicitly, or verify dotted and dotless i after converting."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is a full file rename safe on a case-insensitive file system?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Not reliably. On NTFS and on default APFS, renaming Readme.md to readme.md may be treated as the same path and skipped, so the change never reaches the index. Renaming through an intermediate name, or forcing the staged rename, avoids publishing a commit that only looks correct on one platform."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why is userID a hard input for a case converter?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Because there is no run of consecutive capitals to anchor the split. The correct word list is user plus id, giving user_id. A naive rule that only splits on lower-to-upper transitions leaves the trailing capitals attached and produces userid or splits them into separate single letters. Test abbreviated endings before trusting an automated conversion."
+                }
+            }
+        ]
+    }
+    </script>
+
 <script src="/js/i18n.js" defer></script><script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>
 <body>
@@ -57,22 +107,106 @@
             </nav>
 <div class="article-tags"><a href="/en/tags/utility.html" class="tag tag-utility" data-tag="utility"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-wrench"></use></svg> Tools</a></div>
 <p class="blog-meta"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-newspaper"></use></svg> 2026-07-02 · Calc-Tools Editor</p>
-<h1>Case Converter: UPPERCASE, lowercase, Capitalize, camelCase and More</h1><p>A case converter switches text between UPPERCASE, lowercase, Title Case, and more. It's a small tool with a surprisingly large impact on writing consistency.</p>
-<h2>When Case Matters</h2>
-<p>Programming identifiers, file names, and database fields are case-sensitive. Converting to the right style—camelCase, snake_case, or kebab-case—prevents bugs and naming errors.</p>
-<h2>Writing and Titles</h2>
-<p>Headlines and document titles often need Title Case for a polished look. Paste your draft and convert the headings in one click instead of retyping.</p>
-<h2>Shouting and Emphasis</h2>
-<p>ALL CAPS reads as shouting in messages. Use sentence case or title case for normal communication and reserve uppercase for acronyms and labels.</p>
-<h2>Batch Cleanup</h2>
-<p>Paste a list of names, email addresses, or product labels and convert them all at once. Consistent case makes data easier to search and compare.</p>
-<h2>Programming Naming Conventions</h2>
-<p>Different languages and teams prefer different identifier styles: camelCase for JavaScript and Java, snake_case for Python and Ruby, kebab-case for URLs and file names, and PascalCase for class names.</p>
-<p>Convert a batch of field names to the target convention before writing code, and keep a style guide so the whole codebase stays consistent.</p>
-<h2>How to Convert Case</h2>
-<ol><li>Paste or type the text into the input box.</li><li>Choose the target style—uppercase, lowercase, title case, or a code style like camelCase.</li><li>Copy the converted result and verify a few words match what you intended.</li></ol>
-<p>For bulk edits, paste the whole list at once and convert everything in a single pass to keep formatting consistent.</p>
-<p><strong>Quick tip:</strong> choose your naming convention before writing code, not after. Converting a hundred field names retroactively invites typos—decide camelCase or snake_case upfront and stay consistent across the whole project. A consistent convention saves hours of cleanup later and keeps every developer on the same page.</p>
+<h1>Case Converter: UPPERCASE, lowercase, Capitalize, camelCase and More</h1>
+<p>Naming style looks like a matter of taste until it breaks a build. A CI job fails only on Linux, an API silently changes <code>userName</code> to <code>user_name</code>, and a config payload grows by tens of kilobytes on a round trip between two systems. Those failures share one root cause: <strong>case and word-boundary conventions that differ between the places a name travels through</strong>.</p>
+<p>This guide skips the mechanics of the eight conversion modes and takes an engineering view instead. Where each naming style actually came from, which convention belongs in which setting, how case sensitivity turns into production outages, how casing behaves outside English, and how to move one identifier between styles without corrupting it.</p>
+
+<h2>1. Where Each Naming Style Came From</h2>
+<p>Naming styles are not aesthetics. They are sediment left by history and by what each language's grammar allows.</p>
+<p><strong>camelCase and PascalCase</strong> grew out of C, where identifiers cannot contain spaces and leading underscores were reserved for the standard library. Java formalised the split — PascalCase for types, camelCase for methods and variables — and the convention travelled with the Java ecosystem into JavaScript, C#, Swift and TypeScript.</p>
+<p><strong>snake_case</strong> comes from the C standard library, where multi-word function names were written with underscores, and was inherited by the scripting languages that followed. Python's PEP 8 names snake_case as the style for functions and variables, and Ruby followed. It is also the SQL convention by default, since SQL is case-insensitive and generally will not accept a hyphen inside an identifier at all.</p>
+<p><strong>SCREAMING_SNAKE_CASE</strong> survives as the constant style, and as the environment-variable style on Unix, where it provides a visual signal that a value does not change.</p>
+<p><strong>kebab-case</strong> is the exception that proves the rule about grammar. It is impossible inside code identifiers because <code>user-name</code> parses as "variable user minus variable name" nearly everywhere. So it migrated to the places where no parser is subtracting anything: CSS properties and class names, HTML attributes, URL paths, and npm package names. The tool in front of you writes it as the hyphen style for exactly that reason.</p>
+<p>It is also worth remembering a style that lost. <strong>Hungarian notation</strong> was designed to encode a value's type in its name (<code>strName</code>) at a time when compilers checked little. Once IDEs and type systems could express the same information in a declaration, the prefix became noise, and almost every modern style guide dropped it.</p>
+
+<h2>2. Choosing a Convention by Setting</h2>
+<p>The decision rule collapses into one sentence: <strong>follow the convention of the place the name lives in, and convert only once, explicitly, at the boundary</strong>. The table below lists the common settings, their convention, and the mistake that actually shows up in review.</p>
+<table>
+<thead><tr><th>Setting</th><th>Convention</th><th>Example</th><th>Common mistake</th></tr></thead>
+<tbody>
+<tr><td>JSON field names</td><td>camelCase, or snake_case on Python backends</td><td>userName / user_name</td><td>Mixing both in one payload, forcing clients to carry two lookup paths</td></tr>
+<tr><td>Database tables and columns</td><td>snake_case, tables often plural</td><td>order_items.order_id</td><td>Creating MixedCase tables that break when migrated across platforms</td></tr>
+<tr><td>REST URL paths</td><td>kebab-case, all lowercase</td><td>/api/user-profiles</td><td>Leaving capitals in the path, creating cache and route-matching ambiguity</td></tr>
+<tr><td>Query parameters</td><td>Usually aligned with the JSON fields</td><td>?pageSize=20</td><td>snake_case parameters with camelCase response bodies, so the docs drift</td></tr>
+<tr><td>CSS class names</td><td>kebab-case</td><td>card-header-title</td><td>camelCase classes that clash with the rest of the stylesheet</td></tr>
+<tr><td>Source file names</td><td>Ecosystem-dependent: PascalCase for components, kebab-case for modules</td><td>UserCard.tsx / http-client.ts</td><td>Ignoring file-system case rules, so builds fail on one platform only</td></tr>
+<tr><td>Environment variables</td><td>SCREAMING_SNAKE_CASE</td><td>DATABASE_URL</td><td>camelCase names that some shells will not export at all</td></tr>
+<tr><td>Git branch names</td><td>kebab-case</td><td>fix/login-timeout</td><td>Two machines creating the same branch with different casing</td></tr>
+</tbody>
+</table>
+<p>The first two rows deserve the most attention. <strong>JSON field style is part of the published contract.</strong> Client parsing code, cache keys and log-field queries may all depend on it, so it cannot be changed unilaterally after release. Mature teams configure the naming policy once in the serializer, mapping snake_case storage to camelCase output automatically, rather than converting by hand in each layer. The database row raises the case-sensitivity problem covered in the next section.</p>
+
+<h2>3. Case Sensitivity: Works Locally, Breaks on Deploy</h2>
+<p>Every failure in this family shares one property: <strong>it cannot be reproduced on the developer's machine</strong>, because that machine's file system ignores case.</p>
+<p><strong>File systems.</strong> Linux ext4 is strictly case-sensitive, so <code>User.js</code> and <code>user.js</code> are two files. Windows NTFS is case-insensitive by default, and APFS on macOS is case-insensitive unless formatted otherwise. The consequence is that <code>import User from "./user"</code> against a file called <code>User.js</code> works on two of those platforms and fails the moment it reaches a Linux container. That is the entire reason the "import paths must match file names byte for byte" rule exists.</p>
+<p><strong>Databases.</strong> Whether MySQL table and schema names are case-sensitive is decided by <code>lower_case_table_names</code>. On Linux it defaults to 0, meaning case-sensitive; on Windows and macOS the default is case-insensitive. Create a table called <code>UserOrders</code> on Windows, query it as <code>userorders</code>, and everything works — until the same migration runs on Linux and reports that the table does not exist. Creating tables in all-lowercase snake_case removes the whole class of problem.</p>
+<p><strong>HTTP.</strong> Header field names are case-insensitive, but that is not permission to be careless. <strong>HTTP/2 and HTTP/3 require header field names to be lowercase</strong>, so reusing an HTTP/1.1 style <code>Content-Type</code> in a frame is rejected as a protocol error. Meanwhile several header <em>values</em> are case-sensitive: media type parameters, ETag comparison, and bearer tokens all fail validation if a single letter changes.</p>
+<p><strong>Git.</strong> On a case-insensitive file system, renaming <code>Readme.md</code> to <code>readme.md</code> may be treated as the same path and silently skipped, so the change never reaches the index even though the file looks renamed on disk. Renaming through an intermediate name is more reliable than trusting a forced rename, and it keeps the published commit honest on every platform.</p>
+
+<h2>4. When Casing Is Not One-to-One</h2>
+<p>Unicode case mapping is <strong>not a simple flip</strong>, and that is the source of international failures. Three cases cover most of them.</p>
+<p><strong>Turkish i.</strong> Turkish and Azerbaijani map i and I the opposite way round from English: <code>I</code> lowercases to the dotless <code>&#305;</code> (U+0131), and <code>i</code> uppercases to the dotted <code>&#304;</code> (U+0130). Without a Turkish locale, <code>I</code> lowercases to a plain <code>i</code>, so a place name such as Istanbul loses the dotted capital it started with. This shows up in the most ordinary code there is: the line that lowercases an email address before storing or comparing it.</p>
+<p><strong>German sharp s.</strong> <code>&#223;</code> has no single-character uppercase form, so uppercasing has to expand it into two letters. <code>stra&#223;e</code> becomes <code>STRASSE</code> and the length grows from 6 to 7. Lowercasing that back gives <code>strasse</code>, a different string from the original, which makes <strong>casing an irreversible operation in German</strong>. It cannot be used as a normalise-compare-restore step.</p>
+<p><strong>Greek final sigma.</strong> Lowercase sigma is written <code>&#963;</code> in the middle of a word and <code>&#962;</code> at the end, while both uppercase to <code>&#931;</code>. Converting uppercase to lowercase therefore requires knowing whether the character sits at a word ending, which no character-by-character mapping can decide on its own.</p>
+<p>The shared lesson: <strong>treating case conversion as a stateless character substitution is safe only in ASCII</strong>. For multilingual text, the correct order is to normalise first (NFC or NFKC), then apply case mapping under the target locale, and only then compare.</p>
+
+<h2>5. Title Case Is a House Style, Not a Rule</h2>
+<p>"Capitalise every word" is only a rough description. The real rules come from style manuals, and the two best-known manuals <strong>do not agree</strong>.</p>
+<p>The classic example is <code>to</code>. Chicago capitalises it when it marks an infinitive, as in "How to Play Chess", while AP lowercases it. For short words such as and, of, the and in, both manuals lean lowercase — unless the word is the first or last word of the title, where both capitalise it again. That is why one article can carry three visibly different headlines at three different publications while all three are technically correct.</p>
+<p>Harder than the manual differences are <strong>acronyms and brand names</strong>. Words with established internal capitals, such as NASA, iPhone and macOS, come out of a mechanical pass as Nasa, Iphone and Macos. The engineering answer is a preserve-list: any token that matches it is copied through untouched. It is also why an automatic title-case pass still deserves a human read before publication.</p>
+
+<h2>6. Worked Examples: Moving One Identifier Between Styles</h2>
+<p>The hard part of style conversion is not the substitution. It is <strong>tokenising the source</strong>.</p>
+<p><strong>Example 1: splitting a run of capitals.</strong> Take the input <code>HTTPServer</code>. The intended word list is [http, server]. Break on every lower-to-upper transition and you get <code>HTTPS</code> plus <code>erver</code>. Break on a run of capitals followed by a capital plus lowercase letters, and you get <code>HTTP</code> plus <code>Server</code>. The two rules give different answers, so the <strong>order they run in decides whether the output is correct</strong> — the capital-run rule has to run first.</p>
+<table>
+<thead><tr><th>Target style</th><th>Result for HTTPServer</th><th>Note</th></tr></thead>
+<tbody>
+<tr><td>camelCase</td><td>httpServer</td><td>First word lowercase, later words capitalised</td></tr>
+<tr><td>PascalCase</td><td>HttpServer</td><td>First word capitalised too; the original capital run is flattened</td></tr>
+<tr><td>snake_case</td><td>http_server</td><td>Separator removed, underscores inserted, all lowercase</td></tr>
+<tr><td>kebab-case</td><td>http-server</td><td>Hyphen separated; the style used for packages and URLs</td></tr>
+<tr><td>SCREAMING_SNAKE_CASE</td><td>HTTP_SERVER</td><td>Constant style, all uppercase</td></tr>
+</tbody>
+</table>
+<p>Look at the PascalCase row: <strong>the original HTTPServer and the converted HttpServer are not the same string</strong>. The information that a word was an all-caps acronym is gone, which makes automated conversion one-way. Do not expect a round trip to return the original identifier. The same holds for <code>XMLHttpRequest</code>, which tokenises to [xml, http, request] and converts to camelCase as <code>xmlHttpRequest</code> rather than the string you started with.</p>
+<p><strong>Example 2: abbreviation endings.</strong> Take <code>userID</code>. There is no capital run to anchor on, only two trailing capitals. The correct word list is [user, id], giving <code>user_id</code>. A naive rule that splits only on lower-to-upper transitions leaves the capitals attached and yields <code>userid</code>, or splits them into single letters. Before trusting an automated conversion on a real codebase, run it against a sample of genuine identifiers and check the abbreviated endings and any token sitting next to a digit.</p>
+<p><strong>Example 3: what the style costs in bytes.</strong> Style choice also lands in storage and network budgets, because JSON field names are <em>repeated with every record</em> rather than stored once.</p>
+<table>
+<thead><tr><th>Style</th><th>Field fragment</th><th>Characters</th></tr></thead>
+<tbody>
+<tr><td>camelCase</td><td><code>{"userName":1,"createdAt":2}</code></td><td>28</td></tr>
+<tr><td>snake_case</td><td><code>{"user_name":1,"created_at":2}</code></td><td>30</td></tr>
+</tbody>
+</table>
+<p>Two characters per record sounds irrelevant until you multiply. Across a million records the difference reaches the million-character range before any compression, and it repeats on every response the API serves. It is one of the reasons columnar formats and Protobuf, which separate field names from field values, become attractive as data volumes grow.</p>
+
+<h2>7. Frequently Asked Questions</h2>
+<dl>
+<dt>What naming convention should I use for JSON fields?</dt>
+<dd>camelCase is the JavaScript and REST default, while snake_case stays common where the backend is written in Python or Ruby. The mistake is not the choice but mixing both inside one payload. Pick one, enforce it in the serializer, and document it in the API contract.</dd>
+<dt>Why do URLs use hyphens instead of underscores?</dt>
+<dd>Reasons usually cited are that hyphens read as word separators while underscores are often treated as part of the word, and that underscores can be hidden by the text-decoration underline on links. The widely repeated guidance from Google is to use hyphens in URLs. RFC 3986 allows both characters in a path segment, so this is a convention rather than a protocol rule.</dd>
+<dt>Why does lowercasing Turkish text produce the wrong letters?</dt>
+<dd>Turkish maps i and I the opposite way round from English: capital I lowercases to the dotless i (U+0131) and lowercase i uppercases to the dotted capital I (U+0130). Without a Turkish locale, I lowercases to plain i, so a name like Istanbul loses its dotted capital letter. Pass the Turkish locale explicitly, or verify dotted and dotless i after converting.</dd>
+<dt>Is a full file rename safe on a case-insensitive file system?</dt>
+<dd>Not reliably. On NTFS and on default APFS, renaming Readme.md to readme.md may be treated as the same path and skipped, so the change never reaches the index. Renaming through an intermediate name, or forcing the staged rename, avoids publishing a commit that only looks correct on one platform.</dd>
+<dt>Why is userID a hard input for a case converter?</dt>
+<dd>Because there is no run of consecutive capitals to anchor the split. The correct word list is user plus id, giving user_id. A naive rule that only splits on lower-to-upper transitions leaves the trailing capitals attached and produces userid or splits them into separate single letters. Test abbreviated endings before trusting an automated conversion.</dd>
+</dl>
+
+<h2>8. Four Mistakes Worth Avoiding</h2>
+<p><strong>Assuming file-name case does not matter because "the system ignores it".</strong> Whether it matters is a property of the file system, not the language. NTFS ignores case by default, ext4 does not, and APFS sits in between depending on how the volume was formatted. The same repository can therefore behave differently on three machines, and the difference only surfaces at deployment.</p>
+<p><strong>Treating the Turkish problem as an edge case for an edge language.</strong> It affects any code path that lowercases input before comparing or storing it: email normalisation, username deduplication, search indexes, URL slug generation. One Turkish user is enough to break the path, and it will often go untested for years.</p>
+<p><strong>Equating all caps with emphasis.</strong> Capitals flatten the word shapes readers rely on, so long passages slow down noticeably. Some screen readers also spell out runs of capitals letter by letter, turning a word into a string of letters. Emphasis belongs to weight, colour and spacing.</p>
+<p><strong>Believing naming style is pure preference and needs no written rule.</strong> No style is objectively best, but <strong>inconsistency has a measurable cost</strong>: two styles side by side break code search, bulk renaming and generated documentation, which are the tools that make a large codebase maintainable at all.</p>
+
+<h2>9. Three Practical Recommendations</h2>
+<ul>
+<li><strong>Write the naming table into the project docs, and write only one.</strong> State which style each layer uses — database, API, frontend, CSS, file names — and who owns the conversion at each boundary. One authoritative table removes the gap where every layer assumes another layer already converted, which is where double and missing conversions both come from. When a converted batch has to land in a structured config file, validate it first with a <a href="/en/text/json-formatter">JSON formatter</a>.</li>
+<li><strong>Always pass the locale explicitly when normalising case.</strong> Any code that lowercases user input for comparison or storage should state the locale rather than inherit a runtime default, and the suite should carry two assertions: Turkish I against its lowercase form, and the German sharp s against its uppercase expansion. Those two lines catch most international regressions.</li>
+<li><strong>Do bulk renames and bulk conversions under version control.</strong> Convert a batch of field names with the <a href="/en/text/case-converter">case converter</a>, review the diff with a <a href="/en/text/text-diff">text diff tool</a>, and commit the whole change in one pass. Half by hand and half by script is the state that is hardest to review. If you are also tracking how much text a rename touches, a <a href="/en/text/word-counter">word counter</a> confirms the size of the change before you commit it.</li>
+</ul>
+<p>A naming convention ships no features, but it decides whether a codebase stays legible to tooling and to the next developer. Fixing it as a written decision once is far cheaper than repairing it with scripts later. For the other class of copy-and-paste failure, the one caused by characters you cannot see, continue with <a href="/blog/en/text-cleaner-guide">invisible characters and text cleanup</a>.</p>
 <div class="blog-cta">
                 <p><strong>Online <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-type"></use></svg> Case Converter</strong></p>
                 <p>Free to use, no download required</p>

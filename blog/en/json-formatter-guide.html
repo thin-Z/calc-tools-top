@@ -33,6 +33,54 @@
 <link rel="stylesheet" href="../../css/style.css">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"JSON Formatter: Beautify, Minify, and Validate JSON","description":"JSON formatting, validation, common errors and how to fix them for developers working with APIs and config files.","author":{"@type":"Person","name":"Calc-Tools Editor"},"datePublished":"2026-07-02","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.calc-tools.top/blog/en/json-formatter-guide"},"publisher":{"@type":"Organization","name":"ToolBox Inside"}}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.calc-tools.top/blog/en/"},{"@type":"ListItem","position":3,"name":"JSON Formatter: Beautify, Minify, and Validate JSON","item":"https://www.calc-tools.top/blog/en/json-formatter-guide"}]}</script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Why do numbers inside JSON change by themselves?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Because the specification defines only the syntax of a number, not its precision, while mainstream implementations — most notably the JSON.parse of JavaScript — carry every number as an IEEE 754 double. The safe integer ceiling is 9007199254740991, and beyond it values round silently: 9007199254740993 becomes 9007199254740992, and a 19-digit snowflake ID comes back with trailing zeros. Carry such values as strings."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What is the actual difference between null and a missing field?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "A key present with the value null means explicitly emptied; an absent key means not mentioned this time. The two are fully distinguishable, so a contract has to define each separately. Update endpoints especially must say whether null clears or deletes the field, and whether omission leaves it alone or applies a default."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How should a JSON file of tens of megabytes be read?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Change the shape of the data before changing the parser. Converting the document to NDJSON, one object per line, lets you parse line by line and keep memory independent of file size; if the document must stay whole and you only need a few fields, use event-driven streaming. Parsing everything at once is reasonable only in the tens of KB to a few MB range."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "The file looks completely normal, so why does parsing still fail?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Most often because the file begins with a UTF-8 BOM. A BOM is invisible to the eye but is a real character sitting in front of the first brace or bracket, and the parser stops on it, usually reporting only an unexpected token. Cleaning invisible characters out of the head of the text normally resolves it."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Can JSON store dates and binary data directly?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Neither. There is no date type, so dates become ISO 8601 strings, preferably with a time zone and millisecond precision, and there is no binary type, so bytes become a Base64 string at a cost of roughly a third more size. Genuinely large files do not belong on a JSON channel at all."
+                }
+            }
+        ]
+    }
+    </script>
 <script src="/js/i18n.js" defer></script><script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>
 <body>
@@ -57,22 +105,126 @@
             </nav>
 <div class="article-tags"><a href="/en/tags/utility.html" class="tag tag-utility" data-tag="utility"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-wrench"></use></svg> Tools</a></div>
 <p class="blog-meta"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-newspaper"></use></svg> 2026-07-02 · Calc-Tools Editor</p>
-<h1>JSON Formatter: Beautify, Minify, and Validate JSON</h1><p>A JSON formatter turns compressed or messy JSON into readable, indented structure—and catches syntax errors before they break your code.</p>
-<h2>Why Format JSON</h2>
-<p>APIs return minified JSON that's hard to read. Pretty-printing with indentation makes nested data comprehensible at a glance, which speeds up debugging and documentation.</p>
-<h2>Validate Before You Trust</h2>
-<p>Formatting only works on valid JSON. A good tool flags missing commas, unclosed braces, or trailing commas, so you fix the structure before it reaches production.</p>
-<h2>Common JSON Mistakes</h2>
-<p>Trailing commas, single quotes, and unquoted keys are invalid in strict JSON. Use a validator to catch these differences between JSON and JavaScript object syntax.</p>
-<h2>Minify for Delivery</h2>
-<p>The same tool can minify JSON for storage or transmission. Smaller payloads load faster, and round-tripping through the tool keeps your data intact.</p>
-<h2>JSON vs XML vs YAML</h2>
-<p>JSON is the default for web APIs because it is compact and maps directly to programming language structures. XML supports attributes and namespaces but is wordier; YAML is readable for config files but less strict.</p>
-<p>Choosing a format depends on your ecosystem. When an API returns one format and your tooling expects another, use a converter to move between them without manual editing.</p>
-<h2>How to Format JSON</h2>
-<ol><li>Paste the raw JSON response or file content into the input.</li><li>Choose pretty-print for readability or minify for compact delivery.</li><li>Run it and fix any validation errors the tool reports before using the data.</li></ol>
-<p>Keep the original raw version beside the formatted one so you can compare and confirm nothing was lost in the process.</p>
-<p><strong>Quick tip:</strong> validate on paste, not after integration. A malformed JSON blob that fails in production costs far more than the second it takes to check it in a formatter first.</p>
+<h1>JSON Formatter: Beautify, Minify, and Validate JSON</h1>
+<p>JSON is the default choice when machines exchange data, and it is also a format that looks universally applicable while carrying hard edges everywhere. A formatter answers one question — is this text syntactically valid — and leaves three harder ones untouched: will this structure survive a trip through another language unchanged? Can it express the types you actually need? And what should the protocol layer do once the payload grows?</p>
+<p>This article deals only with JSON's engineering boundaries: which numbers get silently rewritten during parsing, which fields vanish during serialization, why the same file can produce different results in different languages, and what to do with very large payloads. Every figure below was measured on Node 22 and can be reproduced.</p>
+<h2>1. When JSON Is the Wrong Answer: Choosing Among Five Formats</h2>
+<p>Four questions decide a data format: <strong>who writes it, who reads it, does it need comments, does it need types</strong>. JSON has almost no rival in the "machine writes, machine reads" cell. The moment a human writes the file, or comments and type information matter, it starts to strain.</p>
+<table>
+<tr><th>Format</th><th>Comments</th><th>Types and precision</th><th>Hand-editing</th><th>Typical use</th><th>Main cost</th></tr>
+<tr><td>JSON</td><td>Not supported</td><td>Strings, numbers, booleans, null, objects, arrays only; numeric precision is implementation-defined</td><td>Low: mandatory double quotes, no trailing commas</td><td>Web APIs, message queues, document stores</td><td>Weakest expressiveness; everything missing must be reconstructed by convention</td></tr>
+<tr><td>YAML</td><td>Supported</td><td>Dates, binary, anchors and references</td><td>High</td><td>Kubernetes manifests, CI pipelines, hand-maintained config</td><td>Indentation-sensitive; implicit typing bites — a bare date becomes a date type</td></tr>
+<tr><td>XML</td><td>Supported</td><td>All text; typing comes from a schema</td><td>Medium</td><td>Enterprise contracts, documents that need namespaces or mixed content</td><td>Most verbose; high parsing and human cost</td></tr>
+<tr><td>TOML</td><td>Supported</td><td>Date-times, integers, floats, arrays, tables</td><td>High</td><td>Project configuration such as Cargo or pyproject</td><td>Poor fit for deeply nested data interchange</td></tr>
+<tr><td>CSV</td><td>Not supported</td><td>Text only; types rest entirely on convention</td><td>Medium</td><td>Tabular data, report exports, bulk imports</td><td>No hierarchy; quotes, line breaks and encodings are all hazards</td></tr>
+</table>
+<p>It compresses into three sentences: <strong>data produced by a program and consumed by a program belongs in JSON</strong>; <strong>configuration that a human writes, that needs comments and stays shallow, belongs in TOML or YAML</strong>; <strong>flat tables belong in CSV, and XML earns its place only when namespaces and strict schema validation are required</strong>. JSON's real advantage is not that it is pleasant to write — it is that it is <strong>unambiguous</strong>. A parser in any language reads the same text into the same structure, which is exactly why interface layers picked it, and exactly what it gave up comments and types to buy.</p>
+<h2>2. Numbers: JSON Has Exactly One Numeric Type</h2>
+<p>RFC 8259 defines only the <strong>syntax</strong> of a number — optional minus sign, integer part, optional fraction, optional exponent. It says <strong>nothing about range or precision</strong>; section 6 explicitly lets each implementation set its own limits on the numbers it will accept. So "how large is this JSON number" is not a specification question but an <strong>implementation</strong> question: the same text handed to parsers in different languages can yield different values.</p>
+<p>JavaScript is the most familiar implementation of that latitude. <code>JSON.parse</code> puts every number into an IEEE 754 double. The largest integer a double represents exactly is 2^53 − 1, which is <strong>9007199254740991</strong> (about 9.007 × 10^15, sixteen decimal digits). Past that line, representable values are spaced apart, and a number is <strong>silently rounded to the nearest representable value</strong> — no error, no warning.</p>
+<p>The table below was measured value by value on Node 22:</p>
+<table>
+<tr><th>Number in the source text</th><th>After JSON.parse</th><th>Lossy?</th><th>Why</th></tr>
+<tr><td>9007199254740991</td><td>9007199254740991</td><td>No</td><td>Exactly 2^53 − 1, the safe upper bound</td></tr>
+<tr><td>9007199254740992</td><td>9007199254740992</td><td>No</td><td>2^53 itself is representable</td></tr>
+<tr><td>9007199254740993</td><td><strong>9007199254740992</strong></td><td>Yes, one less</td><td>Midway between two representable values; rounds to the even mantissa</td></tr>
+<tr><td>9007199254740995</td><td><strong>9007199254740996</strong></td><td>Yes, one more</td><td>Same rule, rounding the other way this time</td></tr>
+<tr><td>1234567890123456789</td><td><strong>1234567890123456800</strong></td><td>Yes, last digits rewritten</td><td>The typical failure of a 19-digit snowflake ID</td></tr>
+<tr><td>9876543210987654321</td><td><strong>9876543210987655000</strong></td><td>Yes, last four digits rewritten</td><td>The spacing between representable values has grown to 1024</td></tr>
+<tr><td>99999999999999.99</td><td><strong>99999999999999.98</strong></td><td>Yes, one cent short</td><td>Sixteen significant digits exceed the decimal accuracy of a double</td></tr>
+</table>
+<p>The <code>9007199254740993</code> case has a quieter second half: the damage is not confined to parsing. In JavaScript, <code>9007199254740993 - 9007199254740992</code> evaluates to <strong>0</strong>, because both literals are already the same double before the subtraction happens. In other words you cannot detect this loss at runtime — you can only block it before the data enters the system.</p>
+<p>Money is the second danger zone, but it fails differently. A decimal such as 19.9 has no exact binary form, so <code>JSON.parse</code> returns the double closest to 19.9; that value drifts the moment it takes part in arithmetic. <strong>19.9 × 3 = 59.699999999999996</strong>, and 0.1 + 0.2 = 0.30000000000000004. The industry answer is to <strong>carry money as an integer in the smallest currency unit</strong>: 19.9 yuan becomes 1990 cents, times three gives 5970, divided by 100 gives 59.70 — the whole path stays in integer territory and nothing rounds.</p>
+<p>Timestamps, by contrast, sit comfortably inside the boundary. A 13-digit millisecond timestamp (currently around 1.78 × 10^12) has three orders of magnitude of headroom; a 16-digit microsecond timestamp (about 1.78 × 10^15) is still safe and, extrapolating from the measured ceiling, would not overflow until roughly the year <strong>2255</strong>. What is genuinely dangerous is never time — it is identifiers that are really encodings but get treated as quantities.</p>
+<p><strong>Two hard conventions follow. Identifiers beyond fifteen significant digits — order numbers, snowflake IDs, database primary keys — and all monetary amounts are carried as strings or integers, never as JSON numbers.</strong> A bigint column does not make a JSON number safe; the double in the middle makes that decision for you and does not announce it.</p>
+<h2>3. Three Things JSON Does Not Have, and What to Use Instead</h2>
+<p>JSON's type system has six entries: string, number, boolean, null, object, array. The other three things real systems constantly need — comments, dates, and the state of "this field does not exist at all" — can only be expressed by convention.</p>
+<h3>Comments: inside the data or outside it</h3>
+<p>Standard JSON cannot hold comments, so they have exactly two places to live. The first is <strong>an ordinary sibling field</strong>, conventionally underscore-prefixed, for example <code>_comment</code>, <code>_note</code> or <code>_schema</code>. The advantage is that the note travels with the data and survives copy-paste; the price is that the field really exists in the payload, so consumers must either ignore it explicitly or start asking whether an extra field counts as a contract change. The second place is <strong>outside the data</strong>: a separate schema file, interface documentation, or JSONC and JSON5 handled only at build time. The test is simple: <strong>will some other system pass this JSON through or store it verbatim? If yes, keep the note outside.</strong> As for double-slash comments, they work only inside your own build chain — the instant a standard parser reads the file, those two characters are illegal tokens.</p>
+<h3>Dates: an ISO 8601 string, with a time zone attached</h3>
+<p>JSON has no date type, so a date can only be a string. The accepted form is ISO 8601 and it <strong>must carry an offset or a Z</strong>, for example <code>2026-09-29T08:30:00Z</code>. In testing, <code>JSON.stringify(new Date())</code> emits exactly that shape with milliseconds, <code>2026-09-29T08:30:00.000Z</code>, and parsing it back yields a <strong>string</strong>, not a date object — conversion responsibility always sits in the application layer.</p>
+<p>Two differences are easy to miss. The first is <strong>precision</strong>: mixing second-level and millisecond-level values produces strange ordering and deduplication results, so a team should standardise on milliseconds. The second is the <strong>bare date string</strong>: <code>2026-09-29</code> is an ordinary string in JSON, but YAML will infer a date type from the same characters, so moving one value between formats can change its type without notice. When you mean a calendar day rather than an instant, define it explicitly as a date string with no time part and write that into the schema.</p>
+<h3>null versus a missing key: two different meanings</h3>
+<p>This is the softest spot in most API designs. A <strong>key that exists with the value null</strong> means "this field was explicitly emptied". A <strong>key that is absent</strong> means "this field was not mentioned this time". The two are fully distinguishable at the data level — in testing, <code>"nickname" in {"nickname":null}</code> is true while <code>"nickname" in {}</code> is false.</p>
+<table>
+<tr><th>Form</th><th>Meaning</th><th>What the consumer should do</th></tr>
+<tr><td><code>{"nickname":"Tom"}</code></td><td>Explicit assignment</td><td>Set the field to Tom</td></tr>
+<tr><td><code>{"nickname":null}</code></td><td>Explicitly emptied</td><td>Clear it; in merge-patch style APIs this usually means delete the field</td></tr>
+<tr><td><code>{}</code> without the key</td><td>Not mentioned this time</td><td>Leave the existing value untouched</td></tr>
+<tr><td>Value came from JavaScript <code>undefined</code></td><td>The key disappears during serialization</td><td>Behaves exactly like "not mentioned"; the receiver cannot tell the difference</td></tr>
+</table>
+<p>The last row deserves its own paragraph. In JavaScript, when an object property holds <code>undefined</code>, <code>JSON.stringify</code> <strong>drops the entire key</strong> rather than writing null: <code>JSON.stringify({a: undefined, b: 1})</code> produces <code>{"b":1}</code>. Put the same value in an array and <code>undefined</code> is written as <code>null</code> instead. One notion of "empty" vanishes inside objects, turns into null inside arrays, and at the top level serializing <code>undefined</code> produces no string at all. Downstream, "the field was never sent" and "the field was sent as undefined" are indistinguishable, and only an explicit null can separate them.</p>
+<p><strong>Write null and omission into the contract instead of leaving callers to guess.</strong> Update endpoints in particular must state whether null clears or deletes a field, and whether omission leaves the value alone or resets it to a default.</p>
+<h2>4. The Silent-Rewrite Checklist</h2>
+<p>Beyond numeric precision, serialization performs a set of moves that preserve meaning while changing text. Each one is reasonable on its own; together they make up the hardest part of production debugging, because the data looks "fine" on both sides and still differs.</p>
+<table>
+<tr><th>Symptom</th><th>Trigger</th><th>Consequence</th><th>Avoidance</th></tr>
+<tr><td>Integer-like keys move to the front and sort ascending</td><td>Object keys are numeric strings, e.g. <code>{"2":"b","1":"a","name":"x"}</code></td><td>Order becomes <code>{"1":"a","2":"b","name":"x"}</code>, unlike the written order</td><td>Never encode meaning in key order; use an array when order matters</td></tr>
+<tr><td>Duplicate keys silently keep the last one</td><td>The same field appears twice, e.g. <code>{"a":1,"a":2}</code></td><td>The result is <code>{"a":2}</code> with no error raised</td><td>Validate before merging config files, so one manual edit cannot silently overwrite another</td></tr>
+<tr><td>NaN and Infinity become null</td><td>A value comes from a computation and is not finite</td><td>Serialized as <code>null</code>, indistinguishable from a genuine empty value</td><td>Test finiteness first; use an explicit marker or refuse to write the record</td></tr>
+<tr><td>Overflow still parses</td><td>The text contains a syntactically legal but out-of-range number such as <code>1e999</code></td><td>Legal syntax, result is Infinity, and re-serializing turns it into null</td><td>Range-check numeric fields; syntax validation is not enough</td></tr>
+<tr><td>Date objects become strings</td><td>The value came from a built-in date type or a date library</td><td>Written as an ISO 8601 string and read back as a string, not a date</td><td>State in the contract that dates are always ISO 8601 strings</td></tr>
+<tr><td>A leading BOM breaks the whole document</td><td>The file came from an editor or spreadsheet that writes a UTF-8 BOM</td><td>Parsing throws an error mentioning an unexpected token, while the file looks perfectly normal</td><td>Strip invisible characters from the head of the file before parsing</td></tr>
+<tr><td>Circular references throw immediately</td><td>An object property points back at its owner</td><td>Throws "Converting circular structure to JSON" — a hard failure, not a silent rewrite</td><td>Break back-references before serializing, or pick only the fields you need</td></tr>
+</table>
+<p>The BOM row is the one worth memorising. It is the most common cause of "the file is obviously fine but parsing fails", and a BOM is the hardest kind of character to see: it is indistinguishable from the start of an empty file. When a parse failure makes no sense, inspect the head of the text for invisible characters first — running it through a <a href="/en/text/text-cleaner">text cleaner</a> and then formatting it again usually resolves the case.</p>
+<h2>5. Three Reproducible Worked Examples</h2>
+<p><strong>Example one: how an order number changes on its way from the database to the browser.</strong> An orders table uses a 19-digit snowflake primary key, <code>1234567890123456789</code>. The API returns it as a JSON number. After the browser parses the response the value is <code>1234567890123456800</code>, with the last two digits rewritten. The user opens the order detail, the front end requests it by that ID, the server finds nothing and returns 404 — and if the lookup ever falls back to nearest-match behaviour, it can <strong>return somebody else's order</strong>. Use <code>9876543210987654321</code> instead and the damage is larger still: the last four digits become 5000. There is exactly one fix: <strong>IDs are always strings in JSON</strong>, converted explicitly during serialization rather than left to default behaviour.</p>
+<p><strong>Example two: why a money total comes out one cent short.</strong> A product costs 19.9 yuan and the customer buys three. If the JSON carries the number 19.9, parsing and multiplying yields <code>59.699999999999996</code>; add rounding, accumulation and a percentage discount and the error compounds until reconciliation shows a difference of one to several cents. Switch to <strong>integer cents</strong>: unit price 1990, quantity 3, subtotal 5970, discounts computed on integers, and a single division by 100 at the very end. Nothing floats, so nothing drifts. The same reasoning applies to tax allocation and to splitting a coupon proportionally across line items.</p>
+<p><strong>Example three: how much minifying actually saves.</strong> Take an order object with twelve line items — product names, quantities, unit prices, tags and shipping details — serialize it both ways, and gzip each result:</p>
+<table>
+<tr><th>Form</th><th>Raw bytes</th><th>After gzip</th><th>gzip ratio</th></tr>
+<tr><td>Pretty-printed (2-space indent)</td><td>2141</td><td>397</td><td>18.5%</td></tr>
+<tr><td>Minified (no whitespace at all)</td><td>1192</td><td>345</td><td>28.9%</td></tr>
+<tr><td>Savings from minifying</td><td>44.3% saved</td><td>only 13.1% more saved</td><td>—</td></tr>
+</table>
+<p>The conclusion is mildly counter-intuitive: <strong>on an uncompressed channel, stripping whitespace saves 44.3%; on a channel that already runs gzip, the same operation saves only another 13.1%</strong> — 397 bytes against 345 bytes, a gap of 52 bytes. gzip has already absorbed those highly regular spaces and repeated key names. Repeat the test on a 5000-row array: 200281 bytes minified, 24565 bytes after gzip, a mere 12.3%. So "we have to minify JSON to save bandwidth" is a weak argument on modern transport. What is actually worth optimising is <strong>post-parse memory footprint and object count</strong>, not the raw byte count.</p>
+<h2>6. How to Read a Large JSON Document</h2>
+<p>Quantify "large" first, or the discussion is meaningless. The 5000-row array above is 200281 bytes, roughly 196 KB, which no parser considers large; the real threshold sits in the tens of megabytes to gigabytes. At that scale, parsing everything in one call holds <strong>both the source text and the resulting object tree</strong> in memory at once, peaks well above the raw byte count, and cannot be undone halfway.</p>
+<table>
+<tr><th>Strategy</th><th>How it works</th><th>Where it fits</th><th>Cost</th></tr>
+<tr><td>Parse everything</td><td>Read and parse in a single call</td><td>Tens of KB to a few MB with random access needed</td><td>Peak memory equals the text plus the object tree</td></tr>
+<tr><td>Line-delimited chunks</td><td>One JSON object per line, parsed line by line (NDJSON style)</td><td>Logs, bulk exports, streaming imports</td><td>Cannot express nested documents that span lines</td></tr>
+<tr><td>Event-driven streaming</td><td>Fire a callback per field instead of building a whole tree</td><td>Extracting a few fields from a very large file</td><td>Substantially more complex code; no random rewind</td></tr>
+<tr><td>Paging or cursors</td><td>Limit the size of a single response and page with a cursor</td><td>List endpoints</td><td>Needs server support; the caller tracks paging state</td></tr>
+<tr><td>Field projection</td><td>Request only the fields you need, shrinking the payload at the source</td><td>Front ends that use a handful of fields</td><td>Requires API support for field selection</td></tr>
+</table>
+<p>Two measured facts help set priorities. First, <strong>nesting depth is usually not the bottleneck</strong>: on Node 22 an array nested 10000 levels deep still parses normally, so volume fails long before depth does. Second, <strong>chunking beats compression</strong>, because gzip shrinks transmitted bytes but not the number of objects you must hold afterwards. Where records are processed one at a time, store the data as NDJSON and use a <a href="/en/text/text-diff">text diff tool</a> to compare two exports — far more reliable than reading a whole file by eye.</p>
+<h2>7. Six Conventions Worth Freezing in an API Contract</h2>
+<ul>
+<li><strong>Pick one field-naming style and write it down.</strong> camelCase and snake_case are equally defensible; mixing them is the disaster, because a consumer then has to remember two spellings for every field. When crossing language boundaries, a <a href="/en/text/case-converter">case converter</a> can normalise a whole codebase at once.</li>
+<li><strong>IDs are always strings.</strong> See example one. There are no exceptions.</li>
+<li><strong>Money is always an integer in the smallest unit, with an explicit currency.</strong> <code>{"amount":5970,"currency":"CNY"}</code> is far safer than <code>{"amount":59.7}</code>.</li>
+<li><strong>Dates are always ISO 8601 strings, standardised to milliseconds.</strong> Do not mix second-level and millisecond-level values.</li>
+<li><strong>Error objects have a fixed shape.</strong> Keep one stable machine-readable field, such as an error code, and put human-readable prose somewhere separate; never make callers match on message text.</li>
+<li><strong>Binary data does not go inside JSON.</strong> Base64 inflates a payload by roughly a third, so large files belong on a dedicated binary channel. The trade-offs are covered in the <a href="/blog/en/base64-encode-guide">Base64 encoding guide</a> and the <a href="/en/text/base64-encode">Base64 encoder</a>.</li>
+</ul>
+<p>Two smaller conventions are worth adding. URL paths conventionally use hyphens while JSON keys use camelCase or underscores; do not let one style leak into the other, and always percent-encode reserved characters in URLs as described in the <a href="/en/text/url-encode">URL encoder</a>. For field-level format validation — phone numbers, reference codes, time formats — prove the pattern in a <a href="/en/text/regex-tester">regex tester</a> before committing it to the server.</p>
+<h2>8. Frequently Asked Questions</h2>
+<dl>
+<dt>Why do numbers inside JSON change by themselves?</dt>
+<dd>Because the specification defines only the syntax of a number, not its precision, while mainstream implementations — most notably JavaScript's JSON.parse — carry every number as an IEEE 754 double. The safe integer ceiling is 9007199254740991, and beyond it values round silently: 9007199254740993 becomes 9007199254740992, and a 19-digit snowflake ID comes back with trailing zeros. Carry such values as strings.</dd>
+<dt>What is the actual difference between null and a missing field?</dt>
+<dd>A key present with the value null means "explicitly emptied"; an absent key means "not mentioned this time". The two are fully distinguishable, so a contract has to define each separately. Update endpoints especially must say whether null clears or deletes the field, and whether omission leaves it alone or applies a default.</dd>
+<dt>How should a JSON file of tens of megabytes be read?</dt>
+<dd>Change the shape of the data before changing the parser. Converting the document to NDJSON, one object per line, lets you parse line by line and keep memory independent of file size; if the document must stay whole and you need only a few fields, use event-driven streaming. Parsing everything at once is only reasonable in the tens of KB to a few MB range.</dd>
+<dt>The file looks completely normal, so why does parsing still fail?</dt>
+<dd>Most often because the file begins with a UTF-8 BOM. A BOM is invisible to the eye but is a real character sitting in front of the first brace or bracket, and the parser stops on it, usually reporting only an unexpected token. Cleaning invisible characters out of the head of the text normally resolves it.</dd>
+<dt>Can JSON store dates and binary data directly?</dt>
+<dd>Neither. There is no date type, so dates become ISO 8601 strings — preferably with a time zone and millisecond precision — and there is no binary type, so bytes become a Base64 string at a cost of roughly a third more size. Genuinely large files do not belong on a JSON channel at all.</dd>
+</dl>
+<h2>9. Three Counter-Intuitive Mistakes</h2>
+<p><strong>Mistake one: assuming the same JSON parses identically everywhere.</strong> The syntax is universal; the numerics are not. The specification leaves range and precision to the implementation, so a 19-digit integer is rounded in JavaScript and preserved exactly in an implementation with arbitrary-precision integers. A payload that passed validation on the server may therefore no longer be the same value in the browser. Stringifying those values is what makes "identical" actually true.</p>
+<p><strong>Mistake two: reasoning that a bigint column justifies a JSON number.</strong> A database bigint has its own range; a JSON number's range belongs to whichever language parses it. Mapping bigint straight onto a JSON number hands the precision decision to the consumer, and the consumer is usually the least controlled part of the system. Identifiers such as IDs, card numbers and reference codes are encodings rather than quantities, and they should never have taken part in arithmetic in the first place.</p>
+<p><strong>Mistake three: expecting minification to save meaningful bandwidth.</strong> Measured: 44.3% on an uncompressed channel, only 13.1% more once gzip is in play. Browsers, CDNs and gateways compress text responses by default, so stripping whitespace buys far less than it appears to. Sending fewer fields, returning fewer rows, and paginating large responses all pay off much more directly.</p>
+<h2>10. Four Actions You Can Take Today</h2>
+<ul>
+<li><strong>Put the precision rules on the first page of the API spec.</strong> IDs as strings, money as integer minor units, times as ISO 8601 with milliseconds. Once those three are settled, most "the data changed by itself" reports disappear at the source.</li>
+<li><strong>Define null and omission explicitly.</strong> Leave no room for interpretation between the two meanings, and state in every update endpoint what a null and a missing key each do.</li>
+<li><strong>Validate and format unfamiliar JSON before comparing it.</strong> Faced with an error report, confirm the syntax and expand the structure in the <a href="/en/text/json-formatter">JSON formatter</a> first, then decide whether to fix the data or the parsing code; when comparing two responses, format both before diffing so a shift in key order does not flood the view with false differences.</li>
+<li><strong>Attack large payloads at the data-shape level.</strong> Do not expect compression to solve a memory problem; moving to a streaming or chunked shape pays off far more than tuning a compression level.</li>
+</ul>
+<p>JSON's boundary comes down to one sentence: <strong>it carries structure well and carries types and precision badly</strong>. Treat it as a neutral text transport, express everything that needs precision — IDs, money, time — as strings or integers, fill in everything that needs a type — dates, binary — by convention, and the only problem left is volume. Volume is a chunking problem, not a format problem.</p>
 <div class="blog-cta">
                 <p><strong>Online <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-type"></use></svg> JSON Formatter</strong></p>
                 <p>Free to use, no download required</p>

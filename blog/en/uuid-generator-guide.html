@@ -33,6 +33,57 @@
 <link rel="stylesheet" href="../../css/style.css">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"UUID Generator: What is UUID and How to Generate Unique Identifiers","description":"UUID version differences, format explanation, use cases, and batch generation for developers.","author":{"@type":"Person","name":"Calc-Tools Editor"},"datePublished":"2026-07-02","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.calc-tools.top/blog/en/uuid-generator-guide"},"publisher":{"@type":"Organization","name":"ToolBox Inside"}}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.calc-tools.top/blog/en/"},{"@type":"ListItem","position":3,"name":"UUID Generator Guide: What is UUID and How to Generate","item":"https://www.calc-tools.top/blog/en/uuid-generator-guide"}]}</script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "How many UUID v4 values before collisions matter?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "By the birthday bound, generating 3.26×10^15 IDs gives roughly a one-in-a-million chance of a single collision, and it takes 10^18 IDs to reach about 9%. Every real system is far below that, so the risk worth defending against is not random collision but duplicate writes, degraded entropy sources and truncated UUIDs."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What does using UUIDs as MySQL primary keys actually cost?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Two bills. Random inserts split pages and drop the fill factor from about 93.75% to about 50%, inflating the index to roughly 1.875 times a sequential one and writing extra redo; and wider keys inflate everything else, with CHAR(36) coming to about 21.6 GB against 9.6 GB for BINARY(16) at 100 million rows with five secondary indexes. Switching to v7 or ULID for ordering and storing BINARY(16) removes most of it."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Should I choose UUID v4 or v7?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Ask one question: will this ID enter a database index? If yes, use v7, whose leading 48 bits are a millisecond timestamp so inserts stay close to sequential. If no, use v4, which leaks no creation time and needs no input. Remember that v7 writes the creation time into the ID, so when that time is sensitive, v4 is the right answer."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "How do ULID and UUID v7 differ?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Both start with a 48-bit millisecond timestamp and both sort correctly; the difference is the written form. ULID uses Crockford Base32 and fits in 26 characters, while v7 keeps the standard 36-character UUID layout. ULID is shorter and easier to read but cannot be stored in a native database UUID type; v7 is an RFC 9562 standard that virtually every UUID library and database type accepts. Choose v7 for native database support and ULID when the value only travels through application code and length matters."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Is truncating a UUID to 8 characters safe for invite codes?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. Cutting it to 8 hex characters leaves 32 bits of randomness, about 4.3 billion values; a direct calculation gives roughly a 1.2% collision rate at 10,000 codes and about 69% at 100,000. Enumeration is cheap enough for one ordinary machine. Short codes need their own design with a wider alphabet and a server-side uniqueness check, and truncation is not a generation method."
+                }
+            }
+        ]
+    }
+    </script>
+
+
 <script src="/js/i18n.js" defer></script><script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>
 <body>
@@ -57,28 +108,122 @@
             </nav>
 <div class="article-tags"><a href="/en/tags/utility.html" class="tag tag-utility" data-tag="utility"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-wrench"></use></svg> Tools</a></div>
 <p class="blog-meta"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-newspaper"></use></svg> 2026-07-02 · Calc-Tools Editor</p>
-<h1>UUID Generator: What is UUID and How to Generate Unique Identifiers</h1><p>A UUID (Universally Unique Identifier) generator creates IDs that are effectively unique across systems—no central server required. It's the standard solution for database keys and API identifiers.</p>
-<h2>What Makes a UUID Unique</h2>
-<p>UUIDs combine random bits with version and variant fields. Version 4 UUIDs use 122 random bits, making collisions vanishingly unlikely even across billions of IDs.</p>
-<h2>When to Use UUIDs</h2>
-<p>Use UUIDs for records that sync across databases, public API identifiers, and session tokens. They work offline and merge cleanly between systems.</p>
-<h2>Versions at a Glance</h2>
-<p>Version 4 is fully random; version 1 embeds a timestamp and node id. Choose v4 for most applications unless you need time-ordering, in which case v7 is a modern choice.</p>
-<h2>Generating in Bulk</h2>
-<p>Generate as many IDs as you need at once and paste them into a file or spreadsheet. Consistent lowercase hyphenated format keeps your data uniform.</p>
-<h2>Storing and Indexing UUIDs</h2>
-<p>Random UUIDs perform poorly as database primary keys on large tables because inserts land in scattered pages. Storing them as binary or using ordered UUID variants keeps indexes efficient.</p>
-<p>For analytics and logs, generate the ID at write time and keep it in a dedicated indexed column. Uniform lowercase format also makes joins and debugging predictable.</p>
-<h2>How to Generate UUIDs</h2>
-<ol><li>Choose the UUID version that fits your case—v4 random for most, v7 if you want time order.</li><li>Set the count you need, from one to hundreds.</li><li>Copy the list in lowercase hyphenated form into your database or config.</li></ol>
-<p>Generate at write time rather than reusing stored IDs, and keep them in a dedicated indexed column for fast lookups.</p>
-<p><strong>Quick tip:</strong> never generate UUIDs by hand or reuse IDs across environments. Always generate fresh ones with the tool at the moment you create the record.</p>
+<h1>UUID Generator: What is UUID and How to Generate Unique Identifiers</h1>
+<p>Choosing an ID scheme is a five-minute decision you pay for over the next three years. It gets baked into table definitions, API contracts, log fields and cache keys, and once traffic is live the migration cost is far higher than it looked at design time. Auto-increment integers, UUID v4, UUID v7, ULID, Snowflake IDs and database sequences can all "generate a unique string", but they diverge sharply on <strong>sortability, storage footprint, index friendliness and guessability</strong>, and those differences only become visible past ten million rows.</p>
+<p>This page does not repeat how UUID versions are computed or how the 8-4-4-4-12 format breaks down; that belongs to the <a href="/en/text/uuid-generator">UUID Generator</a> tool page. The question here is narrower and more practical: <strong>which scheme should you pick for your case, and what does it cost once you have picked it.</strong> Every probability and size figure below is calculated directly from the birthday bound and raw byte counts, so you can reproduce them.</p>
+<h2>1. Five Questions That Eliminate Most Options</h2>
+<p>Line the candidates up against one ruler and ask five questions in order:</p>
+<ul>
+<li><strong>Sortability</strong> — does the ID carry a time order? This decides whether it can serve as the clustered key, and whether range scans and cursor pagination need a separate timestamp column.</li>
+<li><strong>Length and storage</strong> — 8 bytes for an integer, 16 for binary, 36 for a string. The gap gets multiplied inside every index.</li>
+<li><strong>Distributed generation</strong> — can any machine mint an ID independently, with no central allocator? This decides whether active-active regions, edge writes and offline imports are possible.</li>
+<li><strong>Guessability</strong> — given one ID, can someone derive its neighbours or infer your volume? That is a privacy problem and an access-control problem at the same time.</li>
+<li><strong>Index friendliness</strong> — does a new value append to the end of the index, or land in the middle of an existing page? This is the most expensive dimension at the database layer.</li>
+</ul>
+<p><strong>Sortability and guessability pull in opposite directions.</strong> An ordered ID is easier to enumerate; an unguessable random ID is inherently unordered. UUID v7 and ULID exist to split the difference: a millisecond timestamp up front for order, random bits behind it so values inside the same millisecond cannot be predicted.</p>
+<h2>2. Six ID Schemes Side by Side</h2>
+<p>The table below places all six candidates on the same dimensions. The length column gives both the string form and the binary storage form, because that distinction lands directly in index size:</p>
+<table>
+<tr><th>Scheme</th><th>Length</th><th>Sortability</th><th>Distributed generation</th><th>Guessability</th><th>Index friendliness</th></tr>
+<tr><td>Auto-increment BIGINT</td><td>8 bytes</td><td>Fully ordered</td><td>Needs a central allocator</td><td>Very high, just add one</td><td>Best; appends at the tail</td></tr>
+<tr><td>Database sequence</td><td>8 bytes</td><td>Fully ordered</td><td>Needs a centre; step sizes can spread it</td><td>Very high</td><td>Good, but per-node steps leave gaps</td></tr>
+<tr><td>UUID v4</td><td>36 chars / 16 bytes</td><td>Fully unordered</td><td>Fully independent</td><td>Very low; 122 random bits</td><td>Worst; random inserts trigger page splits</td></tr>
+<tr><td>UUID v7</td><td>36 chars / 16 bytes</td><td>Ordered to the millisecond</td><td>Fully independent</td><td>Low; creation time is readable</td><td>Good; close to a tail append</td></tr>
+<tr><td>ULID</td><td>26 chars / 16 bytes</td><td>Ordered to the millisecond</td><td>Fully independent</td><td>Low; creation time is readable</td><td>Good; same as v7</td></tr>
+<tr><td>Snowflake ID</td><td>8 bytes</td><td>Ordered to the millisecond</td><td>Fully independent; needs a node id</td><td>Medium; time and node id readable</td><td>Good, but can fall out of order within one millisecond</td></tr>
+</table>
+<p>The last row and the v4 row are the two that get misread most often. <strong>A Snowflake ID is only 8 bytes but is not strictly ordered</strong>: within a single millisecond it counts up through a 12-bit sequence, so a sequence wrap or a clock step backwards can produce an ID smaller than one already issued. And <strong>the v4 row's "fully unordered" is not a minor footnote</strong> — it means every insert may land at a random position in the index tree, which is the entire subject of the next section.</p>
+<p>One more counter-intuitive point: <strong>order buys you more than length does.</strong> A 16-byte v7 and an 8-byte Snowflake ID differ by a factor of two in width, but if both insert close to sequentially they will both outperform a 16-byte v4 that inserts randomly.</p>
+<h2>3. Why Random Primary Keys Slow a Database Down</h2>
+<p>InnoDB's clustered index stores rows in primary key order, 16 KB to a page. When each new key is larger than every existing key, the insert simply appends to the rightmost page, a fresh page opens when it fills, and average page fill stays around 15/16, roughly 93.75%. When keys are fully random, every insert first has to locate the page the key belongs to; if that page is already full, the engine splits it in two. That is a <strong>page split</strong>. Afterwards each half is about half full, so average fill drops to roughly 50%.</p>
+<p>For the same index and the same number of rows, <strong>random inserts take about 93.75% ÷ 50% ≈ 1.875 times the space of sequential inserts</strong>, and each split writes additional redo and undo records while random page reads churn the buffer pool. The conclusion is not that UUIDs are unusable — it is that a randomly ordered primary key carries a bill of its own.</p>
+<p>The second bill arrives with secondary indexes. Every InnoDB secondary index entry carries the primary key, so a wider primary key makes every secondary index wider. Take a 100-million-row orders table with five secondary indexes:</p>
+<table>
+<tr><th>Primary key storage</th><th>Bytes per key</th><th>Key column, 100M rows</th><th>Carried by 5 secondary indexes</th><th>Total</th></tr>
+<tr><td>BIGINT</td><td>8</td><td>0.8 GB</td><td>4 GB</td><td>4.8 GB</td></tr>
+<tr><td>BINARY(16)</td><td>16</td><td>1.6 GB</td><td>8 GB</td><td>9.6 GB</td></tr>
+<tr><td>CHAR(36) with utf8mb4</td><td>36 for real values; the row-format ceiling is 144, at 4 bytes per character</td><td>3.6 to 14.4 GB</td><td>18 to 72 GB</td><td>21.6 to 86.4 GB</td></tr>
+</table>
+<p>These figures count only the key bytes themselves, without B-tree page overhead or fill-factor loss; apply the 1.875 factor above and a random key grows again. Three fixes, in order of impact: <strong>first, switch to a time-ordered version such as UUID v7 or ULID so inserts become sequential again; second, store BINARY(16) instead of CHAR(36) everywhere, which alone more than halves the affected index size; third, if a random key is unavoidable, demote it to a unique index column and cluster on a separate auto-increment integer.</strong></p>
+<h2>4. What Each UUID Version Leaks</h2>
+<p>The versions differ not only in how they are computed but in what the result exposes. For selection purposes the second question matters more than the first.</p>
+<p><strong>The v1 problem gets worse in the cloud.</strong> It encodes the moment of generation together with a node identifier. On physical hardware that reveals a network card address; on a cloud instance the card is virtual, so what leaks is the host-assigned identity, enough to tell an observer that two records came from the same instance and, on metered billing, enough to infer instance counts and scaling patterns. v1 timestamps also tick in 100-nanosecond units, so a clock stepping backwards can produce an ID smaller than an earlier one and silently break anything that sorts by it. The remaining good fit for v1 is narrow: a private network, a strict time-order requirement, and a willingness to accept hardware identity inside that boundary.</p>
+<p><strong>The v4 boundary is whether you need order and whether you can leak time.</strong> If the ID never enters a B-tree index, v4 is the least fuss: public API resource identifiers, idempotency keys, log trace ids, lock holder identifiers. If it will be a database or log primary key, v4 is the wrong version. One related misconception is worth clearing up: <strong>122 random bits do not automatically make a v4 string a secure token.</strong> Whether the randomness is adequate depends on the source. <code>crypto.randomUUID()</code> or a language's cryptographic random API is fine; a "UUID" assembled from <code>Math.random()</code>, C's <code>rand()</code> or any predictable PRNG has the same shape and none of the strength. For what actually happens inside a random generator, see the <a href="/blog/en/random-number-guide">random number generator guide</a>; when you need random strings at a specific scale, use the <a href="/en/calculators/random-gen">random number generator</a> and confirm it draws from a secure source.</p>
+<p><strong>The v5 value and its risk are the same property.</strong> It hashes a namespace plus a name, so identical input always yields an identical UUID, which makes it ideal for mapping a stable natural key (a URL, a username, an external order reference) onto an internal ID: synchronisation between systems then deduplicates for free. The flip side is that <strong>determinism means predictability</strong>, so anyone who knows your namespace and naming rule can compute your IDs. Never use v5 for invitation codes, redemption codes or password reset tokens. A namespace is also permanent in practice: change it and every derived ID changes with it.</p>
+<p><strong>v7 was formalised in RFC 9562, published in 2024</strong>, which superseded RFC 4122 from 2005. Its layout is a 48-bit millisecond timestamp plus 74 random bits: the first 48 bits keep values increasing over time so inserts stay close to sequential, and the remaining 74 keep IDs generated in the same millisecond both unique and unpredictable. It removes both v4 weaknesses at once, random insertion and the absence of ordering, at the price of <strong>a readable creation time</strong>. If that timestamp is sensitive, a signup time or an order time being business intelligence in its own right, v7 needs extra handling.</p>
+<p><strong>The hard part of Snowflake IDs is operational, not algorithmic.</strong> The 64 bits split into a 41-bit millisecond timestamp, a 10-bit node id and a 12-bit sequence: 41 bits of milliseconds last about 69.7 years, and 12 bits of sequence allow 4,096 IDs per node per millisecond. <strong>The first hazard is clock rollback.</strong> When NTP corrects a node's clock backwards, the new timestamp is smaller than the previous one, and an implementation without a guard can issue duplicates. <strong>The second hazard is node id reuse.</strong> Instances cloned from a VM snapshot or restored from a container image carry the same configuration, so two nodes running the same node id turn collisions from a probability into a certainty. Both hazards are removed by configuration management and explicit detection, not by luck.</p>
+<h2>5. How Large Is the Collision Risk, Really?</h2>
+<p>UUID v4 carries 122 random bits, a space of 2^122, about 5.317×10^36 values. But "the chance that this next ID collides" and "the chance that at least one collision has happened after generating a large batch" are very different numbers, and the second one comes from the birthday bound: <strong>p ≈ 1 - e^(-n² / 2N)</strong>, where n is the number generated so far and N is the size of the space. The table below evaluates it for N = 2^122:</p>
+<table>
+<tr><th>IDs generated (n)</th><th>Probability of at least one collision</th><th>Real-world scale</th></tr>
+<tr><td>10^9 (one billion)</td><td>about 9.4×10^-20, or one in 10^19</td><td>A mid-size marketplace's annual order volume</td></tr>
+<tr><td>10^12 (one trillion)</td><td>about 9.4×10^-14</td><td>Several years of records for a large platform</td></tr>
+<tr><td>10^15 (one quadrillion)</td><td>about 9.4×10^-8, roughly one in a hundred million</td><td>Beyond the data volume of almost any single system</td></tr>
+<tr><td>3.26×10^15</td><td>10^-6, one in a million</td><td>Still inside the engineering "ignore it" band</td></tr>
+<tr><td>10^18 (one quintillion)</td><td>about 9.0%</td><td>No longer safe to call impossible</td></tr>
+<tr><td>2.71×10^18</td><td>about 50%</td><td>The birthday bound's theoretical coin flip</td></tr>
+<tr><td>3.16×10^18</td><td>about 61%</td><td>Equivalent to a billion IDs per second for 100 years; no real system reaches it</td></tr>
+</table>
+<p>Two things follow. <strong>First, below roughly 10^15 records random collisions are negligible</strong> — 10^15 rows at even 100 bytes each is already on the order of a hundred million gigabytes, and no system gets there. <strong>Second, "UUIDs never collide" has a precondition</strong>: the random source really supplies 122 bits of entropy. Degrade the source and the digit count looks unchanged while the safety margin collapses.</p>
+<p>The next table is the one worth remembering. Suppose a "UUID" in your system actually provides only 32 bits of randomness, the width of an 8-character hex code and the practical strength of many convenience random APIs:</p>
+<table>
+<tr><th>Effective random bits</th><th>Collision risk at 10,000 IDs</th><th>Collision risk at 100,000 IDs</th></tr>
+<tr><td>122 bits, a standard v4</td><td>about 9.4×10^-30</td><td>about 9.4×10^-28</td></tr>
+<tr><td>32 bits, an 8-character hex code</td><td>about 1.2%</td><td>about 69%</td></tr>
+</table>
+<p>Truncating a UUID, or using a random 8-character hex string as an invite code, cuts the space from 2^122 to 2^32, about 4.3 billion values. The collision rate climbs fast, and the enumeration cost drops to something a single ordinary machine can work through. Short codes need separate design: a wider alphabet and a server-side uniqueness check, both of them.</p>
+<h2>6. Three Worked Examples</h2>
+<p><strong>Example 1: index footprint for 100 million orders under three key schemes.</strong> Take 100 million rows with five secondary indexes. Scheme A uses an auto-increment BIGINT: 8 bytes × 100M = 0.8 GB for the key column, plus 8 bytes carried by each of five secondary indexes = 4 GB, for <strong>4.8 GB</strong> in total. Scheme B stores UUID v4 as CHAR(36): 3.6 GB for the key column plus 36 bytes × 5 indexes = 18 GB, for <strong>21.6 GB</strong>. Scheme C stores UUID v7 as BINARY(16): 1.6 GB plus 8 GB, for <strong>9.6 GB</strong>. On that dimension alone Scheme B is 4.5 times Scheme A and 2.25 times Scheme C. Add the split penalty and Scheme B's random key multiplies by roughly 1.875, landing near 40 GB, while Scheme C inserts close to sequentially and pays almost none of it. That is what "v4 and v7 are both UUIDs but the bill differs by a factor of two" looks like in practice.</p>
+<figure>
+<svg viewBox="0 0 660 165" width="100%" role="img" aria-label="Bar chart of primary key related index footprint for 100 million orders with five secondary indexes: auto-increment BIGINT 4.8 GB, UUID v7 as BINARY 16 9.6 GB, UUID v4 as CHAR 36 21.6 GB">
+<text x="0" y="20" font-size="13" fill="currentColor">BIGINT auto-inc</text>
+<rect x="150" y="8" width="48" height="14" rx="3" fill="#0a84ff"></rect>
+<text x="206" y="20" font-size="12" fill="currentColor">4.8 GB</text>
+<text x="0" y="62" font-size="13" fill="currentColor">v7 as BINARY(16)</text>
+<rect x="150" y="50" width="96" height="14" rx="3" fill="#0a84ff"></rect>
+<text x="254" y="62" font-size="12" fill="currentColor">9.6 GB</text>
+<text x="0" y="104" font-size="13" fill="currentColor">v4 as CHAR(36)</text>
+<rect x="150" y="92" width="216" height="14" rx="3" fill="#0a84ff"></rect>
+<text x="374" y="104" font-size="12" fill="currentColor">21.6 GB</text>
+<text x="0" y="148" font-size="12" fill="currentColor">100M orders plus 5 secondary indexes　Key bytes only　Bar length scaled to GB</text>
+</svg>
+<figcaption>Figure 1: the same 100 million rows, with index footprint differing by 4.5 times depending on how the key is stored.</figcaption>
+</figure>
+<p><strong>Example 2: throughput per millisecond.</strong> A Snowflake node has only 4,096 sequence values per millisecond, so beyond that it must block until the next millisecond. Peak single-node throughput is therefore capped at about 4.096 million IDs per second, and it cannot be raised by adding CPUs, only by adding node ids. A ULID has 80 random bits inside each millisecond, a space of about 1.209×10^24, and UUID v7 has 74, a space of about 1.889×10^22. By the birthday bound, generating one million v7 IDs inside the same millisecond carries a collision probability of roughly 2.6×10^-11. The time-ordered random formats have no per-millisecond ceiling; the trade is that node-id and sequence management is replaced by a requirement on random quality.</p>
+<p><strong>Example 3: a Snowflake ID changes when it passes through JSON.</strong> A Snowflake ID is a 64-bit integer, typically in the 10^18 range, while JavaScript's <code>Number</code> is exact only up to 2^53 - 1, or 9007199254740991. When a browser parses an API response, everything above that limit is silently flattened: the three distinct integers 1234567890123456789, 1234567890123456790 and 1234567890123456800 all become the same value, 1234567890123456800. Nothing throws. Two different orders simply collapse into one identifier, and the damage surfaces later as unreproducible mix-ups in cache keys, client-side routes or idempotency checks. There is exactly one fix: <strong>64-bit integer IDs must be serialised as strings in JSON payloads</strong>, and the same rule covers any integer above 2^53, such as minor currency units or nanosecond timestamps. When tracking this down, pasting the raw response into a <a href="/blog/en/json-formatter-guide">JSON formatter and validator</a> is usually faster than setting a breakpoint, and IDs must always be compared as strings, since anything that converts them to numbers first hits the same trap.</p>
+<h2>7. Frequently Asked Questions</h2>
+<dl>
+<dt>How many UUID v4 values before collisions matter?</dt>
+<dd>By the birthday bound, generating 3.26×10^15 IDs gives roughly a one-in-a-million chance of a single collision, and it takes 10^18 IDs to reach about 9%. Every real system is far below that, so the risk worth defending against is not random collision but duplicate writes, degraded entropy sources and truncated UUIDs.</dd>
+<dt>What does using UUIDs as MySQL primary keys actually cost?</dt>
+<dd>Two bills. Random inserts split pages and drop the fill factor from about 93.75% to about 50%, inflating the index to roughly 1.875 times a sequential one and writing extra redo; and wider keys inflate everything else, with CHAR(36) coming to about 21.6 GB against 9.6 GB for BINARY(16) at 100 million rows with five secondary indexes. Switching to v7 or ULID for ordering and storing BINARY(16) removes most of it.</dd>
+<dt>Should I choose UUID v4 or v7?</dt>
+<dd>Ask one question: will this ID enter a database index? If yes, use v7, whose leading 48 bits are a millisecond timestamp so inserts stay close to sequential. If no, use v4, which leaks no creation time and needs no input. Remember that v7 writes the creation time into the ID, so when that time is sensitive, v4 is the right answer.</dd>
+<dt>How do ULID and UUID v7 differ?</dt>
+<dd>Both start with a 48-bit millisecond timestamp and both sort correctly; the difference is the written form. ULID uses Crockford Base32 and fits in 26 characters, while v7 keeps the standard 36-character UUID layout. ULID is shorter and easier to read but cannot be stored in a native database UUID type; v7 is an RFC 9562 standard that virtually every UUID library and database type accepts. Choose v7 for native database support and ULID when the value only travels through application code and length matters.</dd>
+<dt>Is truncating a UUID to 8 characters safe for invite codes?</dt>
+<dd>No. Cutting it to 8 hex characters leaves 32 bits of randomness, about 4.3 billion values; a direct calculation gives roughly a 1.2% collision rate at 10,000 codes and about 69% at 100,000. Enumeration is cheap enough for one ordinary machine. Short codes need their own design with a wider alphabet and a server-side uniqueness check, and truncation is not a generation method.</dd>
+</dl>
+<h2>8. Four Misconceptions</h2>
+<p><strong>Misconception 1: a UUID is absolutely unique.</strong> It is probabilistically unique, not mathematically unique. What actually puts duplicates into production is almost never randomness: it is the same ID written twice, a random source that has degraded to a predictable PRNG, or a truncation added for cosmetic reasons.</p>
+<p><strong>Misconception 2: using UUIDs makes you distributed-friendly at no cost.</strong> The distribution benefit is real; the zero cost is not. The cost sits in the index: random insertions, wider keys, and amplification through every secondary index. Choosing v7 over v4 and BINARY(16) over CHAR(36) keeps the distributed property and pays most of the bill down.</p>
+<p><strong>Misconception 3: v5 is the more advanced choice because it is reproducible.</strong> Reproducible means predictable. Anyone who knows the namespace and the naming rule can compute your IDs, so v5 must never back anything that has to be unguessable. Its real home is synchronisation, where the same natural key derives the same ID in every system and deduplication comes for free.</p>
+<p><strong>Misconception 4: a longer ID only looks different.</strong> The difference between 36 characters and 16 bytes is the difference between 21.6 GB and 9.6 GB at 100 million rows with five secondary indexes, and the fill-factor penalty on top of that means more pages read per query. Key width is an architectural parameter, not a formatting preference.</p>
+<h2>9. Five Practical Recommendations</h2>
+<ul>
+<li><strong>Decide whether the ID enters a B-tree first.</strong> If it will be indexed, as a database key, a log key or a time-series key, pick an ordered scheme such as UUID v7, ULID or Snowflake. If it will not, as a public resource identifier, an idempotency key, a trace id or a lock holder, v4 is the least fuss.</li>
+<li><strong>Store binary, not text.</strong> Keep UUIDs in BINARY(16) rather than CHAR(36) and convert in the application layer. This needs no change of scheme and still more than halves the affected index size.</li>
+<li><strong>Separate internal keys from public identifiers.</strong> Cluster on a compact ordered key for join and index efficiency, and expose a second, unguessable random column to the outside world. You then avoid trading index performance for public safety, or the reverse.</li>
+<li><strong>Put two safety nets under ID generation.</strong> Keep a unique constraint in the database so a collision surfaces as an error instead of a silent overwrite, and confirm the random source is cryptographic, using <code>crypto.randomUUID()</code> or its equivalents rather than <code>Math.random()</code> or a stock PRNG.</li>
+<li><strong>If Snowflake is unavoidable, manage node ids as configuration.</strong> Hand node ids out from a configuration service, never bake them into images, and handle clock rollback explicitly by refusing to mint or by waiting for the clock to catch up. Cloned VMs and restored container snapshots are the most common source of duplicate node ids.</li>
+</ul>
+<p>Treating an ID as part of the data contract reduces the choice to three steps: decide whether it is indexed, decide whether it must be unguessable, then pick the implementation by width and operational cost. To mint a batch of IDs for an import or a load test, use the <a href="/en/text/uuid-generator">UUID Generator</a>; if those IDs will then be signed or transported as encoded text, read the <a href="/blog/en/base64-encode-guide">Base64 encoding explainer</a> first so the encoding step does not add size and escaping problems of its own.</p>
 <div class="blog-cta">
                 <p><strong>Online <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-type"></use></svg> UUID Generator</strong></p>
                 <p>Free to use, no download required</p>
                 <p><a href="/en/text/uuid-generator"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-arrow-right"></use></svg> Use <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-type"></use></svg> UUID Generator Now</a></p>
             </div>
-            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> Related Articles</h3><ul><li><a href="/blog/en/image-format-converter-guide">Image Format Converter: JPG vs PNG vs WebP vs GIF Guide</a></li><li><a href="/blog/en/image-resize-crop-guide">Image Resize and Crop: Best Practices for Image Sizing</a></li><li><a href="/blog/en/image-to-base64-guide">Image to Base64: Embed Images in HTML and CSS</a></li><li><a href="/blog/en/color-picker-guide">Online Color Picker Guide: Screen Color Picking and Palette Tips</a></li></ul></div>
+            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> Related Articles</h3><ul><li><a href="/blog/en/random-number-guide">Random Number Generator Guide: Online Random Number Applications</a></li><li><a href="/blog/en/json-formatter-guide">JSON Formatter: Beautify, Minify, and Validate JSON</a></li><li><a href="/blog/en/base64-encode-guide">Base64 Encoder Decoder: What is Base64 and How to Use It</a></li><li><a href="/blog/en/password-security-guide">Password Generator Guide: How to Create Strong Passwords</a></li></ul></div>
 <div class="article-bottom-tags"><a href="/en/tags/utility.html" class="tag tag-utility" data-tag="utility"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-wrench"></use></svg> Tools</a></div>
 
         <div class="like-section">

@@ -33,6 +33,46 @@
 <link rel="stylesheet" href="../../css/style.css">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"HTML Stripper: Remove HTML Tags, Get Clean Text","description":"Strip HTML tags from web content to extract plain text for analysis, storage, or display.","author":{"@type":"Person","name":"Calc-Tools Editor"},"datePublished":"2026-07-02","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.calc-tools.top/blog/en/html-stripper-guide"},"publisher":{"@type":"Organization","name":"ToolBox Inside"}}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.calc-tools.top/blog/en/"},{"@type":"ListItem","position":3,"name":"HTML Stripper: Remove HTML Tags, Get Clean Text","item":"https://www.calc-tools.top/blog/en/html-stripper-guide"}]}</script>
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "JavaScript identifiers keep appearing in my corpus. What actually fixes it?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "It is almost always an ordering bug: tags were stripped before scripts were removed, so script bodies were already treated as body text. Remove script and style elements as whole blocks first, then strip tags. Adding function, var and px to a noise blocklist and measuring the hit rate before loading catches regressions."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Where is the line when crawling public pages for a corpus?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Start with robots.txt and the site terms, keep the request rate conservative, and extract only the content region you need. Research, indexing and reasonable quotation carry lower risk; mirroring a site, republishing stripped text, or commercial use after training carries substantially higher risk and needs permission first."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How should tables and lists be handled in plain text?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Plain text has no notion of column width, so cell boundaries are lost. Accept the loss, route tables through a separate Markdown pipe-table pass, or pad to fixed width and keep the header row."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "The same HTML produces different output on two runs. Why?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Three common causes: the page is client-rendered, so two crawls genuinely fetch different HTML; charset detection is unstable and the same bytes are decoded differently; or entity decoding and whitespace normalisation run at inconsistent strength. Pin the encoding, pin the parser version, and keep the rules in the pipeline to make runs reproducible."
+            }
+        }
+    ]
+}
+</script>
 <script src="/js/i18n.js" defer></script><script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>
 <body>
@@ -57,22 +97,102 @@
             </nav>
 <div class="article-tags"><a href="/en/tags/utility.html" class="tag tag-utility" data-tag="utility"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-wrench"></use></svg> Tools</a></div>
 <p class="blog-meta"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-newspaper"></use></svg> 2026-07-02 · Calc-Tools Editor</p>
-<h1>HTML Stripper: Remove HTML Tags, Get Clean Text</h1><p>An HTML stripper removes tags and markup, leaving clean plain text. It's the fastest way to repurpose web content for emails, documents, or analysis.</p>
-<h2>What Gets Removed</h2>
-<p>Tags, attributes, and inline styles are stripped, leaving headings and paragraphs as plain text. Some tools also let you keep links or strip them entirely.</p>
-<h2>Use Cases</h2>
-<p>Convert a webpage to a readable draft, clean copied text before pasting into a CMS, or extract article text for summaries and word counts.</p>
-<h2>Watch Out for Entity Characters</h2>
-<p>HTML entities like &amp;amp; and &amp;nbsp; need decoding to appear correctly. A good stripper handles entities, otherwise you'll see raw codes in your output.</p>
-<h2>Check the Output</h2>
-<p>After stripping, scan for orphaned text fragments from scripts or navigation. A quick review keeps the cleaned text genuinely usable.</p>
-<h2>Security and Privacy Note</h2>
-<p>When you paste HTML into an online stripper, the content is processed by that service. Avoid pasting sensitive or proprietary markup unless you trust the tool and its privacy policy.</p>
-<p>For sensitive documents, run the strip locally instead. The same process is simple to repeat with any local script, and your text never leaves your machine.</p>
-<h2>How to Strip HTML</h2>
-<ol><li>Copy the HTML source or paste text with embedded markup into the tool.</li><li>Choose whether to keep links and line breaks or remove everything.</li><li>Run the strip and read the plain-text output for leftover fragments.</li></ol>
-<p>If the result still shows raw codes like entity references, run a second pass that decodes them before using the text.</p>
-<p><strong>Quick tip:</strong> strip before you archive. Saving a clean plain-text copy of a page alongside the HTML makes future searches, quoting, and reuse much faster than re-cleaning the original markup every time. Clean copies make future reuse effortless and keep your archive searchable.</p>
+<h1>HTML Stripper: Remove HTML Tags, Get Clean Text</h1>
+<p>Almost every pipeline that consumes web text starts by stripping HTML. It looks like a one-line job — delete the angle brackets — but it is really a <strong>dimensionality reduction</strong>: a document with structure, scripts and entity references collapses into a single stream of characters. Information is always lost. The only real question is which information you choose to lose, and who downstream has to live without it.</p>
+<p>This guide works backwards from the consumer of the text to pick a stripping depth, then walks through a reproducible sample that compares three strategies side by side, and finishes with the ordering trap and the compliance boundary that cause most batches to be redone. If you only need one fragment converted right now, the <a href="/en/text/html-stripper">HTML stripper tool</a> is enough; the problem this article solves is discovering, after an entire corpus is built, that the output is unusable.</p>
+<h2>1. Four Downstream Consumers, Four Hard Constraints</h2>
+<p>A stripping strategy should not be chosen by feel. It is dictated by what the output has to support.</p>
+<ul>
+<li><strong>NLP corpus building.</strong> The model sees term frequencies and sequences. A single <code>var t=Date.now()</code> pushes <code>var</code> and <code>function</code> into the high-frequency list, and once noise enters the statistics, tokenisation, vectorisation and keyword extraction are all biased.</li>
+<li><strong>Translation and localisation.</strong> Translation memories align by segment. If paragraph boundaries collapse into one line, the sentence breaks between <code>&lt;p&gt;</code> elements are gone and translated segments get reinserted in the wrong place.</li>
+<li><strong>Search and content analytics.</strong> Index size and token quality both suffer from noise. Leave navigation, footers and cookie banners in place and "Login", "Sign up" and "Home" become the most frequent terms on your site.</li>
+<li><strong>Archival and migration.</strong> The output has to be human-readable, diffable and durable. A plain-text archive that loses heading levels can only be rebuilt by re-crawling the source years later.</li>
+</ul>
+<p>All four constraints reduce to one rule: <strong>choose the stripping depth by working backwards from the consumer, never from the tool's default output.</strong></p>
+<h2>2. Three Stripping Depths</h2>
+<table>
+<tr><th>Depth</th><th>Output shape</th><th>Kept</th><th>Lost</th><th>Fits</th></tr>
+<tr><td>Plain text</td><td>One continuous character stream</td><td>Every visible character</td><td>Heading levels, list and table boundaries, link targets</td><td>Term frequency, simple search, word counts</td></tr>
+<tr><td>Structure preserved</td><td>Text split into paragraphs</td><td>Line breaks at headings and paragraphs</td><td>List markers, table column relationships, link targets</td><td>Human-readable archives, segment splitting, text diffs</td></tr>
+<tr><td>Markdown</td><td>Text with lightweight markup</td><td>Heading levels, lists, link targets, table columns</td><td>Original classes and ids, attributes, inline styles</td><td>Docs sites, static publishing, fine-tuning corpora</td></tr>
+</table>
+<p>The three depths differ not in how clean they are — all of them remove tags — but in <strong>the direction of the loss</strong>. Plain text discards structure; Markdown discards rendering detail. The trap is a mismatch in either direction. Link targets cannot be recovered from a plain-text output, because the URL only ever existed inside an attribute and disappeared at the moment of stripping. Conversely, if the consumer only counts terms, the extra parsing cost of preserving structure buys nothing.</p>
+<p>A useful ordering question: <strong>will anything render this text again?</strong> If yes, choose Markdown or structure-preserving output. If no — statistics, indexing, warehousing — plain text is enough, provided you sanitise first.</p>
+<h2>3. Real Failure Modes, Their Causes and How to Locate Them</h2>
+<p>The six problems below recur in batch corpora, and they share one trait: a single page looks perfectly fine, and the defect only appears after the whole batch runs.</p>
+<table>
+<tr><th>Symptom</th><th>Usual cause</th><th>How to locate it</th><th>Fix</th></tr>
+<tr><td><code>function</code>, <code>var</code>, <code>px</code> appear in the term list</td><td>Script and style contents were not removed before stripping</td><td>Measure the hit rate of noise terms in the output</td><td>Move the sanitising step ahead of stripping</td></tr>
+<tr><td>An entire article becomes one line</td><td>Block-level tags were not mapped to line breaks</td><td>Check line count and average line length</td><td>Build an explicit block-element to newline map</td></tr>
+<tr><td>Two visibly identical passages fail an equality check</td><td>Entities left undecoded, or different whitespace (U+00A0 versus U+0020)</td><td>Print code points, or enable the editor's invisible-character view</td><td>Decode entities, then normalise whitespace uniformly</td></tr>
+<tr><td>Table cells fuse, e.g. "Digital goods15 days"</td><td>Plain text has no cell boundary</td><td>Sample pages that contain tables</td><td>Route tables through a Markdown pipe table or fixed-width padding</td></tr>
+<tr><td>Chinese tokenisation behaves strangely on CJK pages</td><td>Ideographic space U+3000 or no-break space U+00A0 mixed in</td><td>Count whitespace characters by code point</td><td>Replace explicitly; do not judge by eye</td></tr>
+<tr><td>"Login Sign up Home" leaks into the body</td><td>No main-content selection, so navigation and footer entered the corpus</td><td>Cross-check frequent terms against page templates</td><td>Extract the content container first, then strip</td></tr>
+</table>
+<p>The most valuable column here is not the fix but the detection method: <strong>almost all of these surface through statistical signals rather than through reading the text.</strong> In a 100,000-page corpus, manual sampling covers the first few hundred pages; noise-term hit rate, average line length and whitespace distribution can be scanned across every page.</p>
+<h2>4. Worked Example: One Fragment, Three Outputs</h2>
+<p>The sample below is a policy block from a product page. It is <strong>440 characters</strong> long, of which script and style account for <strong>97 characters</strong>, or <strong>22.0%</strong> of the raw size:</p>
+<pre><code>&lt;div class=&quot;post&quot;&gt;
+  &lt;h2&gt;Refund policy&lt;/h2&gt;
+  &lt;script&gt;var t=Date.now();track('view',t);&lt;/script&gt;
+  &lt;style&gt;.note{color:#888;font-size:12px}&lt;/style&gt;
+  &lt;p&gt;Refunds within 7 days&amp;nbsp;&amp;mdash;&amp;nbsp;keep the packaging.&lt;/p&gt;
+  &lt;table&gt;
+    &lt;tr&gt;&lt;th&gt;Category&lt;/th&gt;&lt;th&gt;Window&lt;/th&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Digital goods&lt;/td&gt;&lt;td&gt;15 days&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Food&lt;/td&gt;&lt;td&gt;Not eligible&lt;/td&gt;&lt;/tr&gt;
+  &lt;/table&gt;
+  &lt;p&gt;See &lt;a href=&quot;/refund&quot;&gt;refund details&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+<p><strong>Strategy one: blunt regex.</strong> Delete everything matching <code>&lt;[^&gt;]+&gt;</code>, then collapse runs of whitespace into single spaces. The result is <strong>217 characters</strong> on one line, of which <strong>65 characters</strong> are leftover script and style — <strong>30.0%</strong> of the output. Entities stay undecoded, so <code>&amp;nbsp;&amp;mdash;&amp;nbsp;</code> remains as literal text. Half cleaned, half contaminated.</p>
+<p><strong>Strategy two: sanitise, map block tags to newlines, decode entities.</strong> The output drops to <strong>130 characters across 6 lines</strong>, entities resolve correctly to a space and an em dash, and the ratio to the raw HTML is about <strong>29.5%</strong>. But the table exposes the ceiling of plain text: the two header cells fuse into "CategoryWindow", and the data row becomes "Digital goods15 days". <strong>Cell boundaries simply do not exist in plain text.</strong></p>
+<p><strong>Strategy three: convert to Markdown.</strong> The output is <strong>174 characters across 6 lines</strong>, a ratio of about <strong>39.5%</strong>. The heading becomes <code>## Refund policy</code>, the table becomes a pipe table, and the link survives as <code>[refund details](/refund)</code>. The cost is that the artifact is no longer plain text, so the consumer must accept lightweight markup.</p>
+<p>Scale those ratios up: <strong>100,000 pages at an average of 180 KB of HTML each is roughly 17.17 GB raw, and about 5.07 GB after strategy two</strong>. Storage was never the bottleneck. The real cost is cleaning and rework — and rework is almost always caused by getting the order wrong.</p>
+<h2>5. Batch Ordering: Sanitise Before You Strip</h2>
+<p>Scale the 30.0% figure to a whole corpus and the ordering question answers itself. The pipeline that holds up is:</p>
+<ol>
+<li><strong>Normalise encoding</strong> to UTF-8 first, so mixed charsets cannot corrupt everything downstream.</li>
+<li><strong>Sanitise</strong>: remove <code>script</code>, <code>style</code>, <code>noscript</code>, comments and hidden elements as whole blocks.</li>
+<li><strong>Parse</strong> with a DOM parser rather than matching tags with regular expressions.</li>
+<li><strong>Strip or convert</strong> according to the depth chosen in section 2.</li>
+<li><strong>Normalise text</strong>: decode entities, unify line endings, collapse whitespace, handle ideographic and no-break spaces.</li>
+<li><strong>Validate</strong>: scan noise-term hit rate, average line length and leftover entities across the entire batch before loading.</li>
+</ol>
+<p>Steps 2 and 4 cannot be swapped. Once stripping has run, the information about which characters came from a script is gone; removing <code>var t=Date.now()</code> afterwards is guesswork, because it looks exactly like an ordinary English sentence. Regex replacement is unreliable for a second reason: a <code>&gt;</code> inside an attribute value, prose that discusses tag syntax, or angle brackets inside a comment will all make <code>&lt;[^&gt;]+&gt;</code> cut in the wrong place.</p>
+<h2>6. Compliance: Feasible Is Not the Same as Permitted</h2>
+<p>The table below is directional guidance, not legal advice; check the target site's terms and your local law for any real project.</p>
+<table>
+<tr><th>Source</th><th>Typical constraint</th><th>Risk</th><th>Recommended practice</th></tr>
+<tr><td>Your own sites and client deliverables</td><td>None beyond internal policy</td><td>Low</td><td>Strip and load in bulk</td></tr>
+<tr><td>Public web pages for research or indexing</td><td>robots.txt, site terms, request rate</td><td>Medium</td><td>Honour robots.txt, limit concurrency, do not mirror a whole site</td></tr>
+<tr><td>Competitor content for republication</td><td>Copyright, unfair competition</td><td>High</td><td>Quote and summarise; do not republish in full</td></tr>
+<tr><td>Public corpus datasets</td><td>The dataset's own licence and terms</td><td>Medium</td><td>Verify the licence scope and attribution requirements item by item</td></tr>
+<tr><td>Paid APIs and subscription feeds</td><td>Terms often restrict storage and redistribution</td><td>High</td><td>Read the terms before deciding what you may store and for how long</td></tr>
+</table>
+<p>Three rules of thumb: <strong>robots.txt is a floor, not a licence</strong>; <strong>leave headroom in your request rate</strong>; and <strong>stripped text is still protected expression</strong> — republishing someone's article as plain text does not make it original simply because the tags are gone.</p>
+<h2>7. FAQ</h2>
+<dl>
+<dt>JavaScript identifiers keep appearing in my corpus. What actually fixes it?</dt>
+<dd>It is almost always an ordering bug: tags were stripped before scripts were removed, so script bodies were already treated as body text. Remove script and style elements as whole blocks first, then strip tags. Adding function, var and px to a noise blocklist and measuring the hit rate before loading catches regressions.</dd>
+<dt>Where is the line when crawling public pages for a corpus?</dt>
+<dd>Start with robots.txt and the site terms, keep the request rate conservative, and extract only the content region you need. Research, indexing and reasonable quotation carry lower risk; mirroring a site, republishing stripped text, or commercial use after training carries substantially higher risk and needs permission first.</dd>
+<dt>How should tables and lists be handled in plain text?</dt>
+<dd>Plain text has no notion of column width, so cell boundaries are lost. Accept the loss, route tables through a separate Markdown pipe-table pass, or pad to fixed width and keep the header row.</dd>
+<dt>The same HTML produces different output on two runs. Why?</dt>
+<dd>Three common causes: the page is client-rendered, so two crawls genuinely fetch different HTML; charset detection is unstable and the same bytes are decoded differently; or entity decoding and whitespace normalisation run at inconsistent strength. Pin the encoding, pin the parser version, and keep the rules in the pipeline to make runs reproducible.</dd>
+</dl>
+<h2>8. Three Counter-Intuitive Traps</h2>
+<p><strong>Trap one: decoding entities before stripping tags.</strong> It feels more thorough, but it destroys prose that discusses markup. Content written as <code>&amp;lt;script&amp;gt;</code> in the source decodes into a literal <code>&lt;script&gt;</code> string, and the tag-stripping pass that follows deletes it. Decode after stripping, never before.</p>
+<p><strong>Trap two: using Unicode normalisation to "tidy up punctuation".</strong> NFKC maps full-width commas and parentheses onto their half-width forms. That helps search normalisation but is lossy for CJK typography. Corpora that must preserve CJK punctuation should use NFC; NFKC belongs in a search key, not in the final artifact.</p>
+<p><strong>Trap three: assuming a small sample needs no statistics.</strong> Noise arrives in template-sized batches, so ten clean pages say nothing about the rest of the site. Scanning three metrics across the whole batch costs far less than discovering the contamination after a model has already been trained on it.</p>
+<h2>9. Four Practical Rules</h2>
+<ul>
+<li><strong>Put the order in a script, not in a document.</strong> Sanitise, parse, strip and normalise as one repeatable command so that anyone re-running it gets identical output.</li>
+<li><strong>Keep the mapping from source HTML to artifact.</strong> When something looks wrong you can re-run from the source instead of patching from memory.</li>
+<li><strong>Run three checks before loading.</strong> Noise-term hit rate, average line length, and leftover entities — search for an ampersand followed by letters.</li>
+<li><strong>Decide the depth before you start.</strong> Anything that will be rendered again needs Markdown; statistics and indexing need plain text, and that route only works when sanitising happens first.</li>
+</ul>
+<p>Stripping is only the first stage of a text pipeline; character-level cleaning and format conversion come next. If zero-width characters, a BOM or ideographic spaces survive into your output, the <a href="/en/text/text-cleaner">text cleaner</a> removes them, and <a href="/blog/en/text-cleaner-guide">the guide to invisible-character failures</a> explains how to track them down. When the stripped result should keep headings and lists, check the rendering with the <a href="/en/text/markdown-preview">Markdown preview</a>, and use the <a href="/en/text/word-counter">word counter</a> to size the artifact before loading it.</p>
 <div class="blog-cta">
                 <p><strong>Online <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-type"></use></svg> HTML Stripper</strong></p>
                 <p>Free to use, no download required</p>

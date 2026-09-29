@@ -53,6 +53,56 @@
     }
     </script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"博客","item":"https://www.calc-tools.top/blog/zh/"},{"@type":"ListItem","position":3,"name":"大小写转换指南 - 8种英文大小写转换方法详解, 附在线工具","item":"https://www.calc-tools.top/blog/zh/case-converter-guide"}]}</script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "数据库字段名到底该用 camelCase 还是 snake_case？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "看数据库本身的惯例，不要看你的应用层语言。PostgreSQL 对未加引号的标识符会折叠成小写，因此 snake_case 是稳妥选择；MySQL 在 Windows 上默认不区分表名大小写、在 Linux 上区分，混合大小写会带来迁移风险。同一个字段名在应用层再做一次风格映射，比让数据库迁就语言更可靠。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "URL 路径为什么普遍用短横线而不是下划线？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "两个原因。其一是历史惯例：早期搜索引擎把连字符识别为词分隔符，而下划线常被当成词内字符，于是 word-counter 比 word_counter 更容易被切词。其二是可读性：下划线在小字号、带下划线的链接文本里会被文本装饰线盖住。Google 官方建议 URL 使用连字符，这也是主流做法。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "土耳其语文本大小写转换为什么会出错？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "因为土耳其语的大小写映射与英语相反：i 的大写是带点的 İ（U+0130），I 的小写是无点的 ı（U+0131）。不使用语言环境时，I 的小写一律得到 i，İstanbul 这样的地名会被改写成 istanbul 而丢掉原有的点。解决方式是显式指定土耳其语区域，或在转换后人工核对带点与无点的 i。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "标题里的小词该不该大写？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "取决于你遵循哪套规范，两套主流规范的结论并不一致。Chicago 风格把 to 视为不定式标记时大写，AP 风格则一律小写；对于 and、of、the 这类词，两套规范都倾向小写。真正的风险是整个页面混用两套规范，所以先选一套再统一执行。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "为什么同一个文件名在同事电脑上能跑，到我这里就报找不到？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "这是文件系统大小写敏感性差异的典型症状。Linux 的 ext4 严格区分大小写，Windows 默认不区分，macOS 默认不区分但可格式化为区分。代码里写 import User 而文件名是 user.js，在 Windows 上不会报错，部署到 Linux 才会暴露。排查时应先用文件名与导入路径的逐字对比确认大小写一致。"
+                }
+            }
+        ]
+    }
+    </script>
+
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>
@@ -79,38 +129,106 @@
             </nav>
             <div class="article-tags"><a href="/tags/utility.html" class="tag tag-utility" data-tag="utility"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-wrench"></use></svg> 工具</a></div>
             <p class="blog-meta"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-newspaper"></use></svg> 2026-07-02 · Calc-Tools 编辑</p>
-            <h1>大小写转换工具：英文大小写转换的几种方式</h1><p>大小写转换在写作和编程中经常用到。了解不同的大小写转换方式，可以提高工作效率。</p>
-<h2>常见的转换方式</h2>
-<p><strong>全部大写（UPPERCASE）</strong>：适用于标题、缩写词、警示文字。</p>
-<p><strong>全部小写（lowercase）</strong>：适用于URL、邮箱地址、文件名。</p>
-<p><strong>首字母大写（Capitalize）</strong>：每个单词首字母大写，适用于文章标题。</p>
-<p><strong>驼峰命名（camelCase）</strong>：第一个单词小写，后续单词首字母大写，JavaScript变量命名常用。</p>
-<p><strong>蛇形命名（snake_case）</strong>：全小写，单词间用下划线分隔，Python变量命名常用。</p>
-<h2>什么时候需要大小写转换</h2>
-<p>1. 文案写作时统一格式；2. 编程时变量名命名规范要求；3. 数据库查询时大小写敏感性处理；4. 英文写作时专有名词规范化。</p>
-            <h2>如何使用大小写转换工具</h2>
-<p>处理英文文案或代码变量时，按三步快速统一格式：</p>
-<ul>
-<li><strong>第一步</strong>：粘贴或输入待转换的英文文本。</li>
-<li><strong>第二步</strong>：选择目标格式，如大写、小写、首字母大写或驼峰。</li>
-<li><strong>第三步</strong>：复制结果，直接用于标题、文件名或代码。</li>
-</ul>
-<h2>常见问题（FAQ）</h2>
+            <h1>大小写转换工具：英文大小写转换的几种方式</h1>
+<p>命名风格这件事，写业务逻辑时几乎感觉不到它的存在，但它每年都在真实项目里制造故障：CI 在 Linux 上构建失败而本地一切正常，接口返回的字段名突然从 <code>userName</code> 变成 <code>user_name</code>，一份 JSON 配置在两个系统间往返之后多出几十 KB。这些问题全都属于同一类，源头是<strong>大小写与词边界的约定在系统之间不一致</strong>。</p>
+<p>本文不重复工具页已经讲过的八种模式用法，而是换一个工程师视角：命名风格各自从哪个生态长出来，跨语言、跨平台、跨语种时会在哪里断裂，以及怎么把一个标识符在不同风格之间可靠地搬来搬去。</p>
+
+<h2>一、命名风格谱系：每种写法都有它的生态来源</h2>
+<p>命名风格不是审美偏好，而是历史与语言约束留下的沉淀。理解来源才能理解"为什么这里必须这么写"。</p>
+<p><strong>camelCase 与 PascalCase</strong> 来自 C 语言传统与早期标识符不允许空格的限制。C 把"下划线开头的标识符"保留给标准库，于是应用层自然转向大小写分词。Java 把它制度化：类名用 PascalCase、方法与变量用 camelCase，这套约定随 Java 生态扩散到 JavaScript、C#、Swift 和 TypeScript。</p>
+<p><strong>snake_case</strong> 的来源是 C 标准库自身的命名习惯（如 <code>str_to_lower</code> 一类的函数名），被 C 之后的脚本语言继承。Python 的 PEP 8 明确把 snake_case 定为函数与变量风格，Ruby 跟随同一路线；它还是 SQL 的通行风格，因为 SQL 既不区分大小写、又几乎不允许标识符里出现连字符。</p>
+<p><strong>kebab-case</strong> 能从代码标识符里出局，唯一原因是算术运算符的存在：<code>user-name</code> 在几乎所有编程语言里都会被解析成"变量 user 减去变量 name"。但它换了个场地存活下来，成为 CSS 属性与类名、HTML 属性、URL 路径和 npm 包名的通用风格。</p>
+<p><strong>SCREAMING_SNAKE_CASE</strong> 是常量与宏的约定，用来在阅读代码时提供一个"这个值不会变"的视觉信号。</p>
+<p>值得记住的失败案例是<strong>匈牙利命名法</strong>。它最初的设计目标是在弱类型语言里把"类型"编进变量名（如 <code>strName</code>），但随着 IDE 和类型系统普及，声明能表达的信息远多于前缀，它退化成了一种噪声，最终被绝大多数现代规范弃用。</p>
+
+<h2>二、选型决策：不同场所该用哪种风格</h2>
+<p>选型原则可以收敛成一句话：<strong>跟随所在场所的既有惯例，只在系统边界上做一次显式映射</strong>。下面这张表把常见场所与它的惯例、以及最容易犯的错列在一起。</p>
+<table>
+<thead><tr><th>场所</th><th>惯例风格</th><th>典型示例</th><th>常见误用</th></tr></thead>
+<tbody>
+<tr><td>JSON 字段名</td><td>camelCase 为主，snake_case 常见于 Python 后端</td><td>userName / user_name</td><td>同一 API 里两种风格混用，客户端只能写两套取字段逻辑</td></tr>
+<tr><td>数据库表名与列名</td><td>snake_case（表名常用复数）</td><td>order_items.order_id</td><td>用 MixedCase 建表，跨平台迁移后报"表不存在"</td></tr>
+<tr><td>REST URL 路径</td><td>kebab-case，全小写</td><td>/api/user-profiles</td><td>路径里留下大写字母，造成缓存与路由匹配歧义</td></tr>
+<tr><td>查询参数</td><td>通常与 JSON 字段保持一致</td><td>?pageSize=20</td><td>参数用 snake_case 而响应体用 camelCase，文档失真</td></tr>
+<tr><td>CSS 类名</td><td>kebab-case</td><td>card-header-title</td><td>写成 camelCase，与其他选择器风格割裂</td></tr>
+<tr><td>文件名</td><td>依生态而定：React 组件 PascalCase、普通模块 kebab-case</td><td>UserCard.tsx / http-client.ts</td><td>忽略文件系统大小写差异，跨平台构建失败</td></tr>
+<tr><td>环境变量</td><td>SCREAMING_SNAKE_CASE</td><td>DATABASE_URL</td><td>用 camelCase，在某些 shell 里根本无法导出</td></tr>
+<tr><td>Git 分支名</td><td>kebab-case</td><td>fix/login-timeout</td><td>同一分支在不同机器上大小写不同，推上去变成两条分支</td></tr>
+</tbody>
+</table>
+<p>表里最需要留意的是前两行。<strong>JSON 字段风格是契约的一部分</strong>，一旦发布就很难单方面修改：客户端解析代码、缓存键、日志字段都可能依赖它。企业级实践通常是在网关或序列化层配置一次命名策略（例如后端 snake_case 自动映射为 camelCase），而不是让每一层各自手工转换。数据库这一行则涉及下一节要展开的大小写敏感问题。</p>
+
+<h2>三、大小写敏感陷阱：本地能跑、线上就炸</h2>
+<p>这类故障的共同特征是<strong>在开发机上永远无法复现</strong>，因为开发机的文件系统不区分大小写。</p>
+<p><strong>文件系统层面。</strong> Linux 的 ext4 严格区分大小写，<code>User.js</code> 与 <code>user.js</code> 是两个不同文件；Windows 的 NTFS 默认不区分；macOS 的 APFS 默认不区分但可以格式化为区分。后果是代码里写 <code>import User from "./user"</code> 而磁盘上是 <code>User.js</code> 时，macOS 与 Windows 都不会报错，一旦部署到 Linux 容器就立刻失败。这也是"文件名与导入路径必须逐字一致"这条规范存在的唯一原因。</p>
+<p><strong>数据库层面。</strong> MySQL 的表名与库名是否区分大小写由 <code>lower_case_table_names</code> 决定：Linux 上默认取值为 0（区分），Windows 与 macOS 上默认不区分。这意味着在 Windows 上开发时用 <code>UserOrders</code> 建表、代码里写 <code>userorders</code> 也能正常查询，迁移到 Linux 后立刻报"表不存在"。稳妥做法是建表时统一全小写加下划线，让代码在任何平台上都只有一种写法。</p>
+<p><strong>HTTP 协议层面。</strong> 头字段名本身是大小写不敏感的，但这不代表可以随手写。<strong>HTTP/2 与 HTTP/3 要求头字段名必须全小写</strong>，把 HTTP/1.1 风格的 <code>Content-Type</code> 直接塞进 HTTP/2 帧会被判定为协议错误。反过来，一些<em>值</em>是大小写敏感的：媒体类型里的参数、ETag 比较、Bearer 令牌，改动任何一个字母都会导致校验失败。</p>
+<p><strong>Git 层面。</strong> 在不区分大小写的文件系统上，<code>git mv Readme.md readme.md</code> 可能被静默忽略，即使 <code>git status</code> 显示重命名成功，实际改动也可能没有进入索引。需要改名时，用两段式操作（先改成中间名再改成目标名）比依赖强制重命名更可靠。</p>
+
+<h2>四、国际化陷阱：映射不是一一对应</h2>
+<p>大小写映射在 Unicode 里<strong>不是简单的"翻转"</strong>，这正是转换在国际文本上出错的根源。三个最典型的例子：</p>
+<p><strong>土耳其语的 i 问题。</strong> 土耳其语与阿塞拜疆语的大小写关系与英语完全相反：<code>i</code> 的大写是带点的 <code>İ</code>（U+0130），<code>I</code> 的小写是无点的 <code>ı</code>（U+0131）。在不指定语言环境时，<code>I</code> 一律转成 <code>i</code>，于是土耳其地名 İstanbul 会被改写成 istanbul，原有的点被永久丢掉。这类问题最常出现在"把用户邮箱按小写归一"的代码里——土耳其用户的地址本地部分被破坏后，邮件就再也匹配不上。</p>
+<p><strong>德语的 ß。</strong> <code>ß</code> 没有对应的单字符大写形式，转大写时必须展开成两个字母：<code>straße</code> 变成 <code>STRASSE</code>，长度从 6 变成 7。反过来 STRASSE 转小写得到 strasse，与原始拼写不同，这说明<strong>大小写转换在德语里是不可逆操作</strong>，不能用作"归一后比较再还原"的中间步骤。</p>
+<p><strong>希腊语的词尾 sigma。</strong> 希腊语的小写 σ 在词尾写作 ς，两者的大写形式都是 Σ。因此大写转小写需要知道字符是否处于词尾，这已经不是逐字符映射能完成的工作，必须依赖分词。</p>
+<p>这几例的共同教训是：<strong>把大小写转换当成无状态的字符替换，只在纯 ASCII 环境下安全</strong>。要做多语言归一，正确顺序是先规范化（NFC 或 NFKC），再按目标语言环境做大小写映射，最后再比较。</p>
+
+<h2>五、Title Case 的规则差异</h2>
+<p>"每个词首字母大写"只是 Title Case 的粗略描述。真正的规则由风格手册规定，而主流的两套手册<strong>结论并不一致</strong>。</p>
+<p>最常被引用的例子是 <code>to</code>：Chicago 风格在它作为不定式标记时要求大写（How to Play Chess），AP 风格则一律小写（How to Play Chess 的 AP 版本仍是小写）。对于 and、of、the、in 这类短词，两套规范都倾向小写，但如果它出现在标题开头或结尾，又都要大写。这就是同一篇文章在不同媒体上呈现出不同标题的原因。</p>
+<p>比规范差异更容易出错的是<strong>缩写词与复合词</strong>。像 NASA、iPhone、macOS 这类已经固化了内部大小写的专有名词，机械地按"首字母大写"处理会得到 Nasa、Iphone、Macos，把品牌写法改坏了。因此工程上的正确做法是维护一份"保留原样"的白名单，凡是命中白名单的词一律跳过转换。这也是自动 Title Case 永远需要人工复核一遍的原因。</p>
+
+<h2>六、真实算例：一个标识符在六种风格之间的搬迁</h2>
+<p>把命名风格转换做对，难点不在替换，而在<strong>分词</strong>。下面用同一个标识符走一遍完整的转换链。</p>
+<p><strong>算例一：拆开连续大写。</strong>输入 <code>HTTPServer</code>。直觉上它应该拆成 HTTP 与 Server 两个词。但如果先执行"小写字母后跟大写字母就断开"，得到的是 <code>HTTPS</code> 与 <code>erver</code>；如果先执行"连续大写后跟大写加小写就断开"，得到的是 <code>HTTP</code> 与 <code>Server</code>。两条规则的<strong>执行顺序决定了结果对错</strong>，正确写法必须把连续大写的规则放前面。拆出词列 [http, server] 之后，各风格的结果如下：</p>
+<table>
+<thead><tr><th>目标风格</th><th>HTTPServer 的结果</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td>camelCase</td><td>httpServer</td><td>首词小写，后续词首字母大写</td></tr>
+<tr><td>PascalCase</td><td>HttpServer</td><td>首词也大写；原先的连续大写被压平</td></tr>
+<tr><td>snake_case</td><td>http_server</td><td>删除分隔符改为下划线，全小写</td></tr>
+<tr><td>kebab-case</td><td>http-server</td><td>连字符分隔，常用于包名与 URL</td></tr>
+<tr><td>SCREAMING_SNAKE_CASE</td><td>HTTP_SERVER</td><td>常量风格，全大写</td></tr>
+</tbody>
+</table>
+<p>请注意 PascalCase 那一行：<strong>原始写法 HTTPServer 与转换结果 HttpServer 并不相同</strong>。这说明自动转换会丢掉"这个词本来是全大写缩写"这一信息，因此它是单向的——不要指望对同一字符串来回转换能回到原样。同一个规律在 <code>XMLHttpRequest</code> 上同样成立：拆分为 [xml, http, request] 之后，camelCase 得到 xmlHttpRequest，与原写法也不一致。</p>
+<p><strong>算例二：识别边界比识别大小写更难。</strong>输入 <code>userID</code>。这里没有连续大写串，只有两个大写字母结尾。正确分词是 [user, id]，snake_case 得到 <code>user_id</code>；若按"大写前不断开"的粗糙规则处理，会得到 <code>userid</code> 或 <code>user_i_d</code>。所以自动化转换上线前，务必先用一批真实标识符做回归，重点看缩写词结尾与数字相邻的样本。</p>
+<p><strong>算例三：命名风格对数据体积的影响。</strong>风格选择不只是可读性问题，它直接进入存储与网络开销。以两个字段为例：</p>
+<table>
+<thead><tr><th>写法</th><th>字段名片段</th><th>字符数</th></tr></thead>
+<tbody>
+<tr><td>camelCase</td><td><code>{"userName":1,"createdAt":2}</code></td><td>28</td></tr>
+<tr><td>snake_case</td><td><code>{"user_name":1,"created_at":2}</code></td><td>30</td></tr>
+</tbody>
+</table>
+<p>单条记录只差 2 个字符，看起来无关紧要。但字段名在 JSON 里是<strong>随每条记录重复存储</strong>的：一百万条记录就意味着差值累积到百万字符量级，再叠加 gzip 之前的网络传输，就变成一个需要认真对待的数字。这也是列式存储、Protobuf 这类"字段名与数据分离"的方案在数据量上来之后更受欢迎的原因。</p>
+
+<h2>七、常见问题（FAQ）</h2>
 <dl>
-<dt>驼峰和帕斯卡命名有什么区别？</dt>
-<dd>驼峰（camelCase）首字母小写，帕斯卡（PascalCase）首字母大写，后者常用于类名，前者常用于变量名。</dd>
-<dt>中文会受影响吗？</dt>
-<dd>不会。大小写转换只针对英文字母，中文、数字和标点保持原样。</dd>
-<dt>连字符和空格会保留吗？</dt>
-<dd>取决于模式。转蛇形或串形时会用下划线/连字符替换空格；转驼峰时会去掉分隔符并大写后续词首字母。</dd>
-<dt>批量处理多个字段怎么办？</dt>
-<dd>可整段粘贴，工具通常逐词处理；若字段间有固定分隔，先用分隔符拆分再分别转换更稳妥。</dd>
+<dt>数据库字段名到底该用 camelCase 还是 snake_case？</dt>
+<dd>看数据库本身的惯例，不要看应用层语言。PostgreSQL 会把未加引号的标识符折叠成小写，因此 snake_case 是稳妥选择；MySQL 在 Windows 上默认不区分表名大小写、在 Linux 上区分，混合大小写会带来迁移风险。同一个字段名在应用层再做一次风格映射，比让数据库迁就语言更可靠。</dd>
+<dt>URL 路径为什么普遍用短横线而不是下划线？</dt>
+<dd>两个原因。其一是历史惯例：早期搜索引擎把连字符识别为词分隔符，而下划线常被当成词内字符，于是 word-counter 比 word_counter 更容易被切词。其二是可读性：下划线在小字号、带下划线的链接文本里会被文本装饰线盖住。Google 官方建议 URL 使用连字符，这也是主流做法。</dd>
+<dt>土耳其语文本大小写转换为什么会出错？</dt>
+<dd>因为土耳其语的大小写映射与英语相反：i 的大写是带点的 İ（U+0130），I 的小写是无点的 ı（U+0131）。不使用语言环境时，I 的小写一律得到 i，İstanbul 这样的地名会被改写成 istanbul 而丢掉原有的点。解决方式是显式指定土耳其语区域，或在转换后人工核对带点与无点的 i。</dd>
+<dt>标题里的小词该不该大写？</dt>
+<dd>取决于你遵循哪套规范，两套主流规范的结论并不一致。Chicago 风格把 to 视为不定式标记时大写，AP 风格则一律小写；对于 and、of、the 这类词，两套规范都倾向小写。真正的风险是整个页面混用两套规范，所以先选一套再统一执行。</dd>
+<dt>为什么同一个文件名在同事电脑上能跑，到我这里就报找不到？</dt>
+<dd>这是文件系统大小写敏感性差异的典型症状。Linux 的 ext4 严格区分大小写，Windows 默认不区分，macOS 默认不区分但可格式化为区分。代码里写 import User 而文件名是 user.js，在 Windows 上不会报错，部署到 Linux 才会暴露。排查时应先用文件名与导入路径的逐字对比确认大小写一致。</dd>
 </dl>
-<h2>小贴士</h2>
+
+<h2>八、四个常见误区</h2>
+<p><strong>误区一：文件名大小写不重要，反正系统不区分。</strong>区分与否取决于文件系统而不是语言。Windows 默认不区分、Linux 严格区分、macOS 默认不区分但可格式化为区分，于是同一个仓库在不同平台上可以表现出完全不同的行为，而这类差异只在部署时才暴露。</p>
+<p><strong>误区二：土耳其语问题是"边缘语言"的边缘问题。</strong>实际上它影响任何做了"统一转小写再比较"的场景：邮箱归一、用户名去重、搜索索引、URL slug 生成。只要用户里有一个土耳其用户，这条路径就会出问题，而它往往几年都不会被测到。</p>
+<p><strong>误区三：全大写等于强调，所以标题和按钮都该全大写。</strong>全大写会抹掉词形轮廓，长文本的阅读速度明显下降；在无障碍规范里，屏幕阅读器还可能把连续大写字母逐字母朗读，把单词读成字母串。强调应当交给字重、颜色或留白。</p>
+<p><strong>误区四：命名风格是个人偏好，不需要写进规范。</strong>风格本身确实没有绝对优劣，但<strong>不一致是有成本的</strong>。同一个系统里并存两种风格，会让代码搜索、批量重命名、自动生成文档全部失效，而这些工具恰恰是规模化维护的前提。</p>
+
+<h2>九、三条实用建议</h2>
 <ul>
-<li><strong>按语言选规范</strong>：JavaScript 用 camelCase，Python 用 snake_case，CSS 自定义属性多用 kebab-case。</li>
-<li><strong>标题别全大写</strong>：全大写英文在正文里阅读费力，标题可用首字母大写而非全大写。</li>
+<li><strong>建议一：把命名对照表写进项目文档，并且只写一张。</strong>明确列出数据库、API、前端、CSS、文件各自采用哪种风格，以及边界上由谁负责转换。这份表的价值在于消除"每层都以为别人会转"的空档，那是重复转换与漏转换的共同来源。</li>
+<li><strong>建议二：归一化操作一律显式指定语言环境。</strong>凡是把用户输入转小写用于比较或存储的代码，都应当在参数里写明语言环境，不要依赖运行时默认值。写完顺手加一条测试：土耳其语的 I 与其小写形式，德语的 ß 与其大写展开。这两条断言能拦住绝大多数国际文本回归。</li>
+<li><strong>建议三：批量改名与批量转换都在版本控制里做。</strong>先用<a href="/zh/text/case-converter">大小写转换工具</a>把一批字段名转换出来，再用<a href="/zh/text/text-diff">文本对比工具</a>核对差异，确认无误后一次性提交。避免"手工改一半、脚本改一半"这种最难排查的中间状态。字段名最终要落进结构化的配置文件时，可以先用<a href="/zh/text/json-formatter">JSON 格式化工具</a>校验格式是否合法；如果你还在边写边统计文本量，<a href="/zh/text/word-counter">字数统计工具</a>可以顺手确认改动规模。</li>
 </ul>
+<p>命名规范本身不产生功能，但它决定了代码库能不能被工具和新人理解。把它当成一次性的约定写清楚，比事后用脚本补救便宜得多；如果你还想看看不可见字符在复制粘贴时造成的另一类故障，可以接着读<a href="/blog/zh/text-cleaner-guide">文本清理与不可见字符排查</a>。</p>
 <div class="blog-cta">
                 <p><strong>在线使用 <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-type"></use></svg> 大小写转换</strong></p>
                 <p>无需下载，打开即用</p>

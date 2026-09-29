@@ -53,6 +53,57 @@
     }
     </script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"博客","item":"https://www.calc-tools.top/blog/zh/"},{"@type":"ListItem","position":3,"name":"UUID生成器指南 - 什么是UUID、版本区别与批量生成唯一标识方法","item":"https://www.calc-tools.top/blog/zh/uuid-generator-guide"}]}</script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "生成多少条 UUID v4 才需要担心碰撞？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "按生日悖论实算，累计生成 3.26×10^15 条时至少碰撞一次的概率约为百万分之一，到 10^18 条才升到约 9%。现实中任何系统的记录量都远低于这个量级，所以真正需要防的不是随机碰撞，而是重复写入、熵源退化和把 UUID 截断成短码这三类人为问题。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "用 UUID 当 MySQL 主键到底有什么代价？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "两笔账。一是随机插入导致页分裂，页填充率从约 93.75% 掉到约 50%，索引体积约为顺序插入的 1.875 倍，并额外产生 redo 写入；二是宽度放大，在 1 亿行加 5 个二级索引的规模下，CHAR(36) 主键形态约 21.6 GB，而 BINARY(16) 形态约 9.6 GB。改用 v7 或 ULID 恢复顺序性、并统一存 BINARY(16)，可以把大部分代价消掉。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "UUID v4 和 v7 应该怎么选？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "只问一句：这个 ID 会不会进入数据库索引。会，就选 v7，因为它的前 48 位是毫秒时间戳，插入近似顺序追加；不会，就选 v4，它不泄露生成时间也不依赖任何输入。要注意 v7 会把创建时间写在 ID 里，如果这个时间本身敏感，就该用 v4。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "ULID 和 UUID v7 有什么区别，该选哪个？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "两者的前 48 位都是毫秒时间戳，都可排序，区别在书写形式：ULID 用 Crockford Base32 写成 26 个字符，UUID v7 是标准 36 字符格式。ULID 更短、可读性更好，但无法直接存进数据库的原生 UUID 类型；v7 是 RFC 9562 标准，几乎所有语言的 UUID 库和数据库类型都认。要在数据库层原生支持就选 v7，只在应用层传递且长度敏感就选 ULID。"
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "把 UUID 截断成 8 位当邀请码安全吗？",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "不安全。截断到 8 个十六进制字符等于只剩 32 位随机性，空间约 43 亿种，实算生成 1 万条时碰撞概率约 1.2%、生成 10 万条时约 69%；同时枚举成本低到用普通机器就能跑完。短码必须另外设计：更长的字符集、服务端唯一性校验，并且不能把 UUID 截断当作生成方式。"
+                }
+            }
+        ]
+    }
+    </script>
+
+
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>
@@ -79,48 +130,122 @@
             </nav>
             <div class="article-tags"><a href="/tags/utility.html" class="tag tag-utility" data-tag="utility"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-wrench"></use></svg> 工具</a></div>
             <p class="blog-meta"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-newspaper"></use></svg> 2026-07-02 · Calc-Tools 编辑</p>
-            <h1>UUID生成器：什么是UUID？批量生成唯一标识符</h1><p>UUID（Universally Unique Identifier）是一种标准化的唯一标识符格式，在软件开发中广泛应用。</p>
-<h2>UUID的版本</h2>
-<p><strong>UUID v4</strong>：基于随机数生成，最常用的版本。约5.3×10^36个可能值，重复概率极低。</p>
-<p><strong>UUID v1</strong>：基于时间戳和MAC地址生成，可追溯生成时间和设备。</p>
-<p><strong>UUID v5</strong>：基于命名空间和名称生成，同样的输入产生同样的UUID。</p>
-<h2>UUID的格式</h2>
-<p>标准的UUID格式为32个十六进制数字，分为5组：8-4-4-4-12</p>
-<p>例如：550e8400-e29b-41d4-a716-446655440000</p>
-<h2>UUID的应用场景</h2>
-<p><strong>数据库主键</strong>：分布式系统中作为主键，无需自增ID。</p>
-<p><strong>会话标识</strong>：用户会话的唯一标识。</p>
-<p><strong>资源标识</strong>：API中资源的唯一ID。</p>
-<p><strong>文件名</strong>：防止文件重名。</p>
-            <h2>如何使用UUID生成器</h2>
-<p>需要为系统或文件生成唯一标识时，用生成器比手写更可靠：</p>
+            <h1>UUID生成器：什么是UUID？批量生成唯一标识符</h1>
+<p>选 ID 方案是一件"当时只花五分钟、以后要还三年债"的决定。它写进表结构、写进接口契约、写进日志和缓存键，一旦线上跑起来，改造成本远高于做决定时的想象。自增整数、UUID v4、UUID v7、ULID、雪花 ID、数据库序列都能"生成一个不重复的标识"，但它们在<strong>可排序性、存储开销、索引友好度和可猜测性</strong>上的差异，会在数据量过千万之后以完全不同的方式显现出来。</p>
+<p>本文不重复 UUID 的版本定义与格式拆解，那部分内容属于<a href="/zh/text/uuid-generator">UUID 生成器</a>工具页。这里只回答一个工程问题：<strong>在你的场景下该选哪一种 ID，选完之后要付出什么代价。</strong>文中的碰撞概率与体积数据全部由生日悖论公式和字节数直接实算，可以自行复现。</p>
+<h2>一、用五个维度筛掉不合适的方案</h2>
+<p>把候选方案放在同一套尺子下，只需要依次问五个问题：</p>
 <ul>
-<li><strong>第一步</strong>：选择 UUID 版本，多数场景用 v4（随机），需要可复现则用 v5。</li>
-<li><strong>第二步</strong>：设置生成数量，例如一次生成 100 个用于批量导入。</li>
-<li><strong>第三步</strong>：点击生成并复制结果，可整段粘贴到代码、数据库或配置文件。</li>
+<li><strong>可排序性</strong>：ID 本身是否携带时间顺序。它决定了 ID 能否直接充当聚簇索引，也决定了范围查询和游标分页要不要额外的时间列。</li>
+<li><strong>长度与存储</strong>：整数 8 字节、二进制 16 字节、字符串 36 字节，差距会在索引里被放大数倍。</li>
+<li><strong>分布式生成</strong>：能否在任意一台机器上独立生成，而不依赖中心发号器。它决定了多活架构、边缘写入和离线导入是否可行。</li>
+<li><strong>可猜测性</strong>：拿到一个 ID，能否推出相邻 ID 或业务规模。这既是隐私问题，也是越权访问的入口。</li>
+<li><strong>索引友好度</strong>：新值是追加到索引末尾，还是随机插进已有页的中间。这是数据库层面代价最大的一个维度。</li>
 </ul>
-<h2>常见问题（FAQ）</h2>
+<p>五个维度里，<strong>可排序性与可猜测性天然对立</strong>：有序的 ID 更容易被枚举，不可猜测的随机 ID 天生无序。UUID v7 与 ULID 的价值，正是在这对矛盾之间取折中——前段用毫秒时间戳保证有序，后段用随机位保证同一毫秒内不可预测。</p>
+<h2>二、六种 ID 方案的横向对比</h2>
+<p>下表把这六个候选方案放到同一组维度上。长度一栏同时给出字符串形态与二进制存储形态，因为这两者的差别会直接落到索引体积上：</p>
+<table>
+<tr><th>方案</th><th>长度</th><th>可排序性</th><th>分布式生成</th><th>可猜测性</th><th>索引友好度</th></tr>
+<tr><td>BIGINT 自增</td><td>8 字节</td><td>完全有序</td><td>需要中心发号</td><td>极高，加一即可枚举</td><td>最好，尾部顺序追加</td></tr>
+<tr><td>数据库序列</td><td>8 字节</td><td>完全有序</td><td>需要中心，可用步长分摊</td><td>极高</td><td>好，多节点步长会留下空洞</td></tr>
+<tr><td>UUID v4</td><td>36 字符 / 16 字节</td><td>完全无序</td><td>完全独立</td><td>极低，122 位随机</td><td>最差，随机插入触发页分裂</td></tr>
+<tr><td>UUID v7</td><td>36 字符 / 16 字节</td><td>毫秒级有序</td><td>完全独立</td><td>低，生成时间可读</td><td>好，近似尾部追加</td></tr>
+<tr><td>ULID</td><td>26 字符 / 16 字节</td><td>毫秒级有序</td><td>完全独立</td><td>低，生成时间可读</td><td>好，同上</td></tr>
+<tr><td>雪花 ID</td><td>8 字节</td><td>毫秒级有序</td><td>完全独立，需分配机器号</td><td>中，时间与机器号可读</td><td>好，但同一毫秒内可能乱序</td></tr>
+</table>
+<p>表里最容易被忽略的是最后一行和第三行。<strong>雪花 ID 虽然只有 8 字节，却并不是严格有序的</strong>：同一毫秒内靠 12 位序列号递增，一旦序列号回绕或发生时钟回拨，新生成的 ID 反而可能小于已经存在的 ID。而 <strong>UUID v4 的"完全无序"也不是一个小缺点</strong>，它意味着每一次插入都可能落在索引树的随机位置，这是第三节要展开的核心代价。</p>
+<p>另一个反直觉之处是：<strong>有序性带来的收益比长度带来的收益更大</strong>。16 字节的 v7 与 8 字节的雪花 ID 在体积上相差一倍，但如果两者都近似顺序插入，它们在索引上的表现都会明显好于同样 16 字节、却随机插入的 v4 二进制形态。</p>
+<h2>三、随机主键为什么拖慢数据库：页分裂与二级索引放大</h2>
+<p>InnoDB 的聚簇索引按主键顺序组织数据，每一页默认 16 KB。当新主键总是大于已有主键时，插入只会追加到最右侧的页，写满后再开新页，此时页的平均填充率可以维持在 15/16，也就是约 93.75%。而当主键完全随机时，每次插入都要先找到它该去的那一页；如果目标页已经写满，数据库必须把这一页拆成两半，这就是<strong>页分裂</strong>。分裂之后两页各占约一半空间，平均填充率掉到约 50%。</p>
+<p>同一个索引、同样多的记录，<strong>随机插入的理论体积约为顺序插入的 93.75% ÷ 50% ≈ 1.875 倍</strong>；此外每次分裂都要额外写 redo 日志与 undo 记录，随机读页也会增加缓冲池的换入换出。所以结论不是"UUID 不能用"，而是"随机顺序的主键要单独付一笔账"。</p>
+<p>第二笔账落在二级索引上。InnoDB 的每个二级索引条目都要附带主键值，主键有多宽，二级索引就得跟着宽多少。以一张 1 亿行的订单表、外加 5 个二级索引为例：</p>
+<table>
+<tr><th>主键存储形态</th><th>单条主键占用</th><th>1 亿行主键列</th><th>5 个二级索引额外携带</th><th>合计</th></tr>
+<tr><td>BIGINT</td><td>8 字节</td><td>0.8 GB</td><td>4 GB</td><td>4.8 GB</td></tr>
+<tr><td>BINARY(16)</td><td>16 字节</td><td>1.6 GB</td><td>8 GB</td><td>9.6 GB</td></tr>
+<tr><td>CHAR(36)，utf8mb4 字符集</td><td>实际值 36 字节；按行格式每字符 4 字节计的上限为 144 字节</td><td>3.6 至 14.4 GB</td><td>18 至 72 GB</td><td>21.6 至 86.4 GB</td></tr>
+</table>
+<p>表里的数字只统计主键值本身的字节，不含 B+ 树的页开销与填充率损失；把上一条的 1.875 倍也算进去，随机主键的实际占用还要再放大一轮。三条缓解手段按效果排序：<strong>第一，改用 UUID v7 或 ULID 这类时间有序的版本，从源头恢复顺序插入；第二，数据库里一律存 BINARY(16) 而不是 CHAR(36)，相关索引体积直接减半以上；第三，如果必须保留随机主键，就把它降级为唯一索引列，另外用一个自增整数充当聚簇主键。</strong></p>
+<h2>四、版本语义如何决定选型边界</h2>
+<p>UUID 各版本的差别不只是"怎么算出来的"，更是"算出来的结果泄露了什么"。这一点在选型时比生成算法本身更重要。</p>
+<p><strong>v1 的问题在今天的云上被放大了。</strong>它把生成时刻和节点标识一起编进 ID。在物理机上，这泄露的是一台设备的硬件地址；在云主机上，网卡是虚拟的，泄露的往往是宿主机分配的虚拟标识，它能告诉你"这两条记录来自同一台实例"，在按量计费的场景里足以被用来推断实例数量和扩容节奏。另外 v1 的时间戳精度是 100 纳秒，时钟一旦回拨，新生成的 ID 可能小于旧 ID，依赖它排序的逻辑会静默出错。今天仍然适合 v1 的场景很少：纯内网、需要严格时间序、并且可以接受硬件标识在边界内可见。</p>
+<p><strong>v4 的边界在"是否需要顺序"和"是否泄露时间"。</strong>如果这个 ID 不进入任何 B+ 树索引，v4 是最省心的选择：对外 API 的资源标识、幂等键、日志追踪号、分布式锁的持有者标识，全都适合。反过来，如果它会成为数据库主键或日志主键，那么选 v4 就是选错了版本。这里还有一个常见误解需要澄清：<strong>v4 的 122 位随机性不等于它天然是一个安全令牌</strong>。随机性够不够，取决于随机源是不是密码学安全的。用 <code>crypto.randomUUID()</code> 或语言标准库的密码学随机接口没有问题；用 <code>Math.random()</code>、C 的 <code>rand()</code> 或任何可预测的伪随机数生成器拼出来的"UUID"，位数看着一样，强度完全不值一提。随机数内部到底发生了什么，可以看<a href="/blog/zh/random-number-guide">随机数生成器使用指南</a>；需要按数量级生成随机串时，用<a href="/zh/calculators/random-gen">随机数生成器</a>并确认它基于安全随机源。</p>
+<p><strong>v5 的价值与风险是同一件事。</strong>它用"命名空间加名称"做哈希，同样的输入永远得到同样的输出，因此特别适合把稳定的自然键（一个 URL、一个用户名、一个外部系统的单号）映射成内部 ID，做数据同步时天然去重。反过来说，<strong>确定性就意味着可预测</strong>：只要外部知道你的命名空间和名称规则，他就能自己算出你的 ID。所以 v5 绝不能用于邀请码、兑换码、重置令牌这类"必须猜不到"的标识。另外命名空间一旦投入使用就不能再改，改了等于全部派生 ID 重算一遍。</p>
+<p><strong>v7 是 2024 年发布的 RFC 9562 正式纳入的版本</strong>（该标准取代了 2005 年的 RFC 4122）。它的结构是 48 位毫秒时间戳加 74 位随机数：前 48 位保证按时间递增、近似顺序插入，后 74 位保证同一毫秒内生成的多条 ID 互不冲突且不可预测。它一次性解决了 v4 的两个痛点——索引随机插入与不可排序——代价是<strong>生成时间对外可读</strong>，一条 ID 就能被推出"这条记录是什么时候创建的"。如果创建时间本身属于敏感信息（比如用户注册时间、订单创建时间就是商业情报），v7 需要配合额外的处理。</p>
+<p><strong>雪花 ID 的坑不在算法，在运维。</strong>它把 64 位拆成 41 位毫秒时间戳、10 位机器号、12 位序列号：41 位毫秒足够用约 69.7 年，12 位序列号意味着每台机器每毫秒最多生成 4096 个 ID。<strong>第一个风险是时钟回拨</strong>，机器时间被 NTP 往回校正时，新的时间戳会小于上一个，如果实现里没有检测逻辑，就可能生成重复 ID。<strong>第二个风险是机器号重复</strong>：用虚拟机克隆、容器快照恢复出来的实例会带着同一份配置，两台机器同时使用同一个机器号，碰撞立刻从概率问题变成必然事件。这两个风险都必须靠配置管理和显式检测来消除，而不是靠运气。</p>
+<h2>五、碰撞概率的真实数量级</h2>
+<p>UUID v4 有 122 位随机数，总量是 2 的 122 次方，约 5.317×10^36 种可能。但"每生成一条 ID 就撞车的概率"和"生成一大批之后至少撞一次的概率"是两个完全不同的数，后者要用生日悖论来算：<strong>p ≈ 1 - e^(-n² / 2N)</strong>，其中 n 是累计生成数量，N 是随机空间大小。下表按这个公式以 N = 2^122 实算：</p>
+<table>
+<tr><th>累计生成数量 n</th><th>至少碰撞一次的概率 p</th><th>现实对照</th></tr>
+<tr><td>10^9（十亿）</td><td>约 9.4×10^-20，约 10^19 分之一</td><td>一个中型电商平台一年的订单量级</td></tr>
+<tr><td>10^12（一万亿）</td><td>约 9.4×10^-14</td><td>大型平台数年积累的记录总量级</td></tr>
+<tr><td>10^15（一千万亿）</td><td>约 9.4×10^-8，约一亿分之一</td><td>已超过绝大多数单一系统的数据规模</td></tr>
+<tr><td>3.26×10^15</td><td>10^-6，百万分之一</td><td>工程上仍属于可忽略区间</td></tr>
+<tr><td>10^18（一百亿亿）</td><td>约 9.0%</td><td>已经不能当作"不会发生"</td></tr>
+<tr><td>2.71×10^18</td><td>约 50%</td><td>生日悖论的理论抛硬币点</td></tr>
+<tr><td>3.16×10^18</td><td>约 61%</td><td>相当于每秒生成 10 亿个连跑 100 年，任何现实系统都达不到</td></tr>
+</table>
+<p>这组数字要说清两件事。<strong>第一，在 10^15 这个量级以下，随机碰撞是可以忽略的</strong>：10^15 条记录意味着即使每条只占 100 字节，总量也已经是一亿 GB 级别，没有系统会跑到那里。<strong>第二，"UUID 不会重复"是有前提的</strong>，前提是随机源真的提供了 122 位熵。一旦熵源退化，位数看着没变，安全边际却会塌方式下降。</p>
+<p>下面这张对照表才是真正值得记住的部分。假设某个"UUID"实际上只提供 32 位随机性——这是 8 位十六进制短码的宽度，也是不少语言里简易随机接口的实际强度：</p>
+<table>
+<tr><th>ID 的有效随机位数</th><th>生成 1 万条时的碰撞概率</th><th>生成 10 万条时的碰撞概率</th></tr>
+<tr><td>122 位，v4 的标准形态</td><td>约 9.4×10^-30</td><td>约 9.4×10^-28</td></tr>
+<tr><td>32 位，8 位十六进制短码</td><td>约 1.2%</td><td>约 69%</td></tr>
+</table>
+<p>把 UUID 截断成短码、或者直接用 8 位十六进制随机串当邀请码，等价于把随机空间从 2^122 砍到 2^32，只剩约 43 亿种可能。这个空间不但让碰撞概率迅速抬高，枚举成本也低到可以用一台普通机器在合理时间内跑完。短码必须另外设计：更长的字符集、服务端唯一性校验，两者缺一不可。</p>
+<h2>六、三个真实算例</h2>
+<p><strong>算例一：1 亿行订单表，三种主键方案的索引占地。</strong>取 1 亿行订单，主键之外建 5 个二级索引。方案 A 用 BIGINT 自增：主键列 8 字节乘 1 亿等于 0.8 GB，每个二级索引附带 8 字节主键，5 个共 4 GB，合计 <strong>4.8 GB</strong>。方案 B 用 CHAR(36) 存 UUID v4：主键列 3.6 GB，5 个二级索引各带 36 字节共 18 GB，合计 <strong>21.6 GB</strong>。方案 C 用 BINARY(16) 存 UUID v7：主键列 1.6 GB，二级索引共 8 GB，合计 <strong>9.6 GB</strong>。单看这一项，方案 B 是方案 A 的 4.5 倍、是方案 C 的 2.25 倍。再把页分裂的填充率损失算进去：方案 B 的主键随机插入，索引体积还要再乘约 1.875，实际接近 40 GB；方案 C 近似顺序插入，填充率接近顺序主键，几乎不承担这部分损失。这就是"同样是 UUID，v4 和 v7 的账差一倍"的具体形态。</p>
+<figure>
+<svg viewBox="0 0 660 165" width="100%" role="img" aria-label="1亿行订单表加5个二级索引的主键相关占地对比：BIGINT自增4.8GB，BINARY16存UUIDv7为9.6GB，CHAR36存UUIDv4为21.6GB">
+<text x="0" y="20" font-size="13" fill="currentColor">BIGINT 自增</text>
+<rect x="150" y="8" width="48" height="14" rx="3" fill="#0a84ff"></rect>
+<text x="206" y="20" font-size="12" fill="currentColor">4.8 GB</text>
+<text x="0" y="62" font-size="13" fill="currentColor">BINARY(16) 存 v7</text>
+<rect x="150" y="50" width="96" height="14" rx="3" fill="#0a84ff"></rect>
+<text x="254" y="62" font-size="12" fill="currentColor">9.6 GB</text>
+<text x="0" y="104" font-size="13" fill="currentColor">CHAR(36) 存 v4</text>
+<rect x="150" y="92" width="216" height="14" rx="3" fill="#0a84ff"></rect>
+<text x="374" y="104" font-size="12" fill="currentColor">21.6 GB</text>
+<text x="0" y="148" font-size="12" fill="currentColor">1 亿行订单表加 5 个二级索引，仅计主键相关字节　条长按 GB 等比绘制</text>
+</svg>
+<figcaption>图 1：同样的 1 亿行数据，主键存储形态让索引占地相差 4.5 倍。</figcaption>
+</figure>
+<p><strong>算例二：每毫秒的生成上限。</strong>雪花 ID 每台机器每毫秒只有 4096 个序列号，超过就必须阻塞到下一毫秒，因此单机峰值吞吐被硬性限制在约 409.6 万个每秒，而且这个数字无法靠加 CPU 提升，只能靠增加机器号分摊。ULID 在同一毫秒内有 80 位随机数，空间约 1.209×10^24；UUID v7 在同一毫秒内有 74 位随机数，空间约 1.889×10^22。按生日悖论估算，v7 在同一毫秒内生成 100 万条，碰撞概率约为 2.6×10^-11。也就是说，时间有序的随机版本没有"每毫秒上限"这个约束，代价是把机器号和序列号的管理复杂度，换成了对随机数质量的要求。</p>
+<p><strong>算例三：雪花 ID 进了 JSON 会变。</strong>雪花 ID 是 64 位整数，取值通常在 10^18 量级，而 JavaScript 的 <code>Number</code> 只能精确表示到 2^53 - 1，即 9007199254740991。前端解析接口返回的雪花 ID 时，超过这个上限的部分会被静默抹平：1234567890123456789、1234567890123456790、1234567890123456800 这三个不同的整数，在 JavaScript 里会全部变成同一个值 1234567890123456800。它不报错，只是把两笔不同订单的 ID 合并成一个，然后在缓存键、前端路由或幂等判断上引发难以复现的错乱。解法只有一条：<strong>64 位整数 ID 在 JSON 接口里必须序列化成字符串</strong>，这条规则同样适用于其他超过 2^53 的整数，比如金额最小单位、纳秒时间戳。排查这类问题时，把原始响应贴进<a href="/blog/zh/json-formatter-guide">JSON 格式化与校验工具</a>看一眼通常比打断点更快；同时记住比较 ID 一律按字符串比较，任何先转成数字的写法都会踩同一个坑。</p>
+<h2>七、常见问题（FAQ）</h2>
 <dl>
-<dt>UUID v4 会重复吗？</dt>
-<dd>理论上可能，但 2^122 的随机空间使重复概率低到可忽略，实际项目中无需担心碰撞。</dd>
-<dt>v1 和 v4 该选哪个？</dt>
-<dd>不关心生成时间、只要唯一就选 v4；若需从 ID 反推生成时间或设备，则用 v1。注意 v1 会暴露 MAC 地址。</dd>
-<dt>UUID 能当数据库主键吗？</dt>
-<dd>可以，尤其适合分布式系统。不过 UUID 无序，作为聚簇索引时插入性能不如自增整数，可改用 UUID v7 这类带时间有序的版本。</dd>
-<dt>UUID 里的横线能去掉吗？</dt>
-<dd>可以。部分系统要求 32 位无分隔符，生成后删除连字符即可，值本身不变。</dd>
+<dt>生成多少条 UUID v4 才需要担心碰撞？</dt>
+<dd>按生日悖论实算，累计生成 3.26×10^15 条时至少碰撞一次的概率约为百万分之一，到 10^18 条才升到约 9%。现实中任何系统的记录量都远低于这个量级，所以真正需要防的不是随机碰撞，而是重复写入、熵源退化和把 UUID 截断成短码这三类人为问题。</dd>
+<dt>用 UUID 当 MySQL 主键到底有什么代价？</dt>
+<dd>两笔账。一是随机插入导致页分裂，页填充率从约 93.75% 掉到约 50%，索引体积约为顺序插入的 1.875 倍，并额外产生 redo 写入；二是宽度放大，在 1 亿行加 5 个二级索引的规模下，CHAR(36) 主键形态约 21.6 GB，而 BINARY(16) 形态约 9.6 GB。改用 v7 或 ULID 恢复顺序性、并统一存 BINARY(16)，可以把大部分代价消掉。</dd>
+<dt>UUID v4 和 v7 应该怎么选？</dt>
+<dd>只问一句：这个 ID 会不会进入数据库索引。会，就选 v7，因为它的前 48 位是毫秒时间戳，插入近似顺序追加；不会，就选 v4，它不泄露生成时间也不依赖任何输入。要注意 v7 会把创建时间写在 ID 里，如果这个时间本身敏感，就该用 v4。</dd>
+<dt>ULID 和 UUID v7 有什么区别，该选哪个？</dt>
+<dd>两者的前 48 位都是毫秒时间戳，都可排序，区别在书写形式：ULID 用 Crockford Base32 写成 26 个字符，UUID v7 是标准 36 字符格式。ULID 更短、可读性更好，但无法直接存进数据库的原生 UUID 类型；v7 是 RFC 9562 标准，几乎所有语言的 UUID 库和数据库类型都认。要在数据库层原生支持就选 v7，只在应用层传递且长度敏感就选 ULID。</dd>
+<dt>把 UUID 截断成 8 位当邀请码安全吗？</dt>
+<dd>不安全。截断到 8 个十六进制字符等于只剩 32 位随机性，空间约 43 亿种，实算生成 1 万条时碰撞概率约 1.2%、生成 10 万条时约 69%；同时枚举成本低到用普通机器就能跑完。短码必须另外设计：更长的字符集、服务端唯一性校验，并且不能把 UUID 截断当作生成方式。</dd>
 </dl>
-<h2>小贴士</h2>
+<h2>八、四个常见误区</h2>
+<p><strong>误区一：UUID 是绝对唯一的。</strong>它是概率唯一，不是数学唯一。真正把重复带进生产环境的，几乎都不是随机碰撞，而是同一个 ID 被写了两遍、随机源退化成伪随机、或者为了让 ID 好看而做了截断。</p>
+<p><strong>误区二：用 UUID 就等于分布式友好，而且没有代价。</strong>分布式友好是真的，没有代价是假的。代价集中在索引：随机主键的插入代价、字符串主键的宽度代价、二级索引的放大代价。选 v7 而不是 v4，选 BINARY(16) 而不是 CHAR(36)，都是在不放弃分布式能力的前提下把这笔账压下去。</p>
+<p><strong>误区三：v5 比 v4 更高级，因为它可复现。</strong>可复现意味着可预测。只要外部知道命名空间和名称的构造规则，他就能自己算出你的 ID，因此 v5 绝不能用于任何需要"猜不到"的标识。它真正的用武之地是数据同步：同一个自然键在不同系统里派生出同一个 ID，天然去重。</p>
+<p><strong>误区四：ID 长一点只影响外观，不影响性能。</strong>36 字符和 16 字节的差别，在 1 亿行加 5 个二级索引的规模下就是 21.6 GB 与 9.6 GB 的差别；再叠加随机插入的填充率损失，同一条查询要读的页数会明显变多。ID 宽度是架构级参数，不是格式偏好。</p>
+<h2>九、五条实用建议</h2>
 <ul>
-<li><strong>别用 UUID 做用户可见 ID</strong>：过长且不友好，对外展示建议用短码或自增号。</li>
-<li><strong>前端不要生成安全令牌</strong>：UUID v4 不是密码学安全的随机源替代品，密钥请用专门库。</li>
+<li><strong>建议一：先判断这个 ID 会不会进 B+ 树。</strong>会进索引的，比如数据库主键、日志主键、时序表键，一律选有序方案（UUID v7、ULID、雪花 ID）；不进索引的，比如对外资源标识、幂等键、追踪号、锁标识，用 v4 最省心。</li>
+<li><strong>建议二：数据库里统一存二进制。</strong>UUID 用 BINARY(16) 而不是 CHAR(36)，读写时在应用层转换。这一步不需要更换 ID 方案，就能把相关索引的占用砍掉一半以上。</li>
+<li><strong>建议三：内部主键与对外标识分开。</strong>内部用紧凑有序的主键保证连接与索引效率，对外暴露另一列不可猜测的随机 ID。这样既不用为了对外安全牺牲索引性能，也不用为了索引性能暴露可枚举的编号。</li>
+<li><strong>建议四：给 ID 生成加两道保险。</strong>一是数据库层保留唯一约束，让碰撞以报错的形式暴露而不是静默覆盖；二是确认随机源是密码学安全的，比如 <code>crypto.randomUUID()</code> 这类接口，而不是 <code>Math.random()</code> 或语言自带的伪随机函数。</li>
+<li><strong>建议五：如果必须用雪花 ID，把机器号纳入配置管理。</strong>机器号从配置中心统一下发，禁止写死在镜像里，并对时钟回拨做显式处理：检测到时间倒退时拒绝生成或等待追上，而不是继续发号。虚拟机克隆和容器快照是机器号重复最常见的来源。</li>
 </ul>
+<p>把 ID 当成数据契约的一部分来看，选型其实只有三步：先确定它是否进入索引，再确定它是否必须不可猜测，最后按宽度和运维成本挑具体实现。需要批量生成一批 ID 用于导入或压测，可以直接用<a href="/zh/text/uuid-generator">UUID 生成器</a>；如果这批 ID 之后还要参与签名或传输编码，可以先看一眼<a href="/blog/zh/base64-encode-guide">Base64 编解码说明</a>，避免在编码环节引入额外的体积和转义问题。</p>
 <div class="blog-cta">
                 <p><strong>在线使用 <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-type"></use></svg> UUID生成器</strong></p>
                 <p>无需下载，打开即用</p>
                 <p><a href="/zh/text/uuid-generator"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-arrow-right"></use></svg> 立即使用 <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-type"></use></svg> UUID生成器</a></p>
             </div>
-            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> 相关文章</h3><ul><li><a href="/blog/zh/image-format-converter-guide">图片格式转换：JPG、PNG、WebP、GIF怎么选？</a></li><li><a href="/blog/zh/image-resize-crop-guide">图片裁剪缩放：调整图片尺寸的最佳实践</a></li><li><a href="/blog/zh/image-to-base64-guide">图片转Base64：HTML和CSS中嵌入图片的最佳方式</a></li><li><a href="/blog/zh/color-picker-guide">在线取色器使用指南：屏幕取色与配色技巧</a></li></ul></div>
+            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> 相关文章</h3><ul><li><a href="/blog/zh/random-number-guide">随机数生成器使用指南：在线生成随机数的多种应用</a></li><li><a href="/blog/zh/json-formatter-guide">JSON格式化工具：美化、压缩和校验JSON数据</a></li><li><a href="/blog/zh/base64-encode-guide">Base64编解码工具：什么是Base64？怎么用？</a></li><li><a href="/blog/zh/password-security-guide">密码生成器使用指南：如何创建强密码保护账号安全</a></li></ul></div>
             <div class="article-bottom-tags"><a href="/tags/utility.html" class="tag tag-utility" data-tag="utility"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-wrench"></use></svg> 工具</a></div>
         </article>
 

@@ -57,7 +57,7 @@
             "name": "Is UUID v4 truly unique? What is the collision probability?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "v4 uses 122 random bits, a space of roughly 5.3x10^36. Even generating a billion UUIDs every second for 100 years, the chance of a single collision stays far below being struck by a meteor. It is not mathematically impossible, but safe to treat as unique across any practical timeframe."
+                "text": "v4 uses 122 random bits, a space of roughly 5.3x10^36. In verifiable terms: generating a billion UUIDs per second for a full year yields about 3.15x10^16 UUIDs, with a collision probability of roughly 9.4x10^-5; reaching a 50% chance would take about 86 years of continuous generation. It is not mathematically impossible, but it is safe to treat as unique at any practical scale."
             }
         },
         {
@@ -197,7 +197,7 @@
             <h3>Frequently Asked Questions Specific to UUIDs</h3>
 
             <h3>Is UUID v4 truly unique? What is the collision probability?</h3>
-            <p>v4 has 122 random bits, a space of 2 to the 122nd power, roughly 5.3 times 10 to the 36th. To grasp that scale: even if you generated one billion UUIDs every second for 100 years straight, the chance of a single collision would still be far lower than being struck by a meteor. So it is not "mathematically impossible to repeat," but "safe to treat as unique across any practical timeframe." The real risk is not random collision but your own code writing the same UUID twice, which has nothing to do with the algorithm.</p>
+            <p>v4 has 122 random bits, a space of 2 to the 122nd power, roughly 5.3 times 10 to the 36th. In verifiable terms: generating one billion UUIDs every second for a full year yields about 3.15 times 10 to the 16th UUIDs, with a collision probability of roughly 9.4 times 10 to the -5th (about one in ten thousand); reaching a 50% chance would take about 86 years of continuous generation. So it is not "mathematically impossible to repeat," but "safe to treat as unique across any practical timeframe." The real risk is not random collision but your own code writing the same UUID twice, which has nothing to do with the algorithm.</p>
 
             <h3>UUID v1 leaks the MAC address. What is the privacy risk?</h3>
             <p>v1 encodes the generating machine's MAC address directly into the fifth group of the UUID. That means anyone holding a v1 UUID can, in theory, reverse-engineer which network card produced it, tying the value to a specific device or even a physical location. Inside trusted internal networks of the past this was acceptable, but in today's public, multi-tenant cloud environments, writing a hardware address into an externally visible ID is clearly undesirable. This is why new projects overwhelmingly switch to v4, which carries no hardware information, and why v1 survives mainly in internal systems that need time ordering and trust their network boundary.</p>
