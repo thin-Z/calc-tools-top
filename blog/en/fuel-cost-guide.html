@@ -33,6 +33,54 @@
 <link rel="stylesheet" href="../../css/style.css">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Fuel Cost Calculator: How to Calculate Car Fuel Consumption","description":"Fuel consumption formula, cost per kilometer estimation, and fuel-saving tips for car owners.","author":{"@type":"Person","name":"Calc-Tools Editor"},"datePublished":"2026-07-02","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.calc-tools.top/blog/en/fuel-cost-guide"},"publisher":{"@type":"Organization","name":"ToolBox Inside"}}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.calc-tools.top/blog/en/"},{"@type":"ListItem","position":3,"name":"Fuel Cost Calculator: How to Calculate Car Fuel Consumption","item":"https://www.calc-tools.top/blog/en/fuel-cost-guide"}]}</script>
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Why does my car cost noticeably more per kilometre than an identical one?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "First check which basis you are both using. If you mean fuel only, the difference can only come from consumption and pump price. If you mean annual spending divided by distance, the deciding factors are annual mileage and the fixed items: when insurance, parking and depreciation are similar, the driver covering fewer kilometres spreads them over a shorter distance. Same city, same model, double the mileage, and the all-in cost per kilometre can differ by more than thirty percent."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I use the trip computer reading as my real consumption?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Not as an absolute value. It derives fuel quantity from injector open time and divides by an odometer that relies on an assumed tyre circumference, so injector deposits and tyre-size changes both introduce systematic bias, and the figure usually flatters the car. As a trend indicator it is reliable: on a fixed route with a consistent driving style, a clear rise means the car, the tyre pressures or the conditions have changed."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Does a higher octane grade really give better economy or more range?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. The grade expresses knock resistance, and the base fuel plus energy content are essentially the same across grades at one station. Use what the manufacturer specifies: a car rated for the lower grade gains nothing from the higher one, while a car rated for the higher grade run long-term on the lower one loses power and can burn more fuel because knock forces the ignition timing to retard."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "I drive under 10,000 km a year - is an electric car still worth it?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Check it against the break-even distance: divide the purchase premium by the energy cost difference per kilometre to see how far you must drive to recover it. At low annual mileage that distance can take many years to cover, and the premium may never be recovered during ownership. Charging access matters just as much: with a home charger both cost and time stay controllable, and without one they rise a step."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Does coasting in neutral save fuel?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Usually not in a fuel-injected car. Coasting in gear lets the engine cut injection entirely under deceleration, whereas neutral requires idle fuel to keep the engine running; you also lose engine braking, which loads the brakes on long descents. It saves nothing and removes a safety margin."
+            }
+        }
+    ]
+}
+    </script>
 <script src="/js/i18n.js" defer></script><script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>
 <body>
@@ -57,28 +105,124 @@
             </nav>
 <div class="article-tags"><a href="/en/tags/life.html" class="tag tag-life" data-tag="life"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-flower"></use></svg> Lifestyle</a></div>
 <p class="blog-meta"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-newspaper"></use></svg> 2026-07-02 · Calc-Tools Editor</p>
-<h1>Fuel Cost Calculator: How to Calculate Car Fuel Consumption</h1><p>A fuel cost calculator turns distance and consumption into a real trip budget. It helps you plan road trips, compare vehicles, and manage commuting costs.</p>
-<h2>What You Need to Calculate</h2>
-<p>Enter the distance, your car's fuel consumption (L/100 km or MPG), and the fuel price. The tool converts between units so the result works in any market.</p>
-<h2>City vs Highway Consumption</h2>
-<p>Real-world consumption differs from the sticker. City driving with stops burns more fuel per kilometer than steady highway cruising, so use your actual average for accurate budgets.</p>
-<h2>Comparing Vehicles</h2>
-<p>When comparing a fuel-efficient car with a hybrid or EV, calculate the cost per 100 km including energy prices—not just the fuel economy numbers.</p>
-<h2>Trip Budgeting Tips</h2>
-<p>Add a 10% buffer for detours and traffic, and check current prices at your route's stops. Small habits like steady speeds and proper tire pressure genuinely lower fuel use.</p>
-<h2>Fuel Prices and Regional Differences</h2>
-<p>Fuel prices vary significantly between regions and over time due to taxes, supply, and local competition. Use a realistic local price in the calculator rather than a national average for accurate trip budgets.</p>
-<p>If your route crosses regions with different prices, calculate each segment separately. The savings from fueling at a cheaper stop can be meaningful on long trips.</p>
-<h2>How to Calculate Trip Fuel Cost</h2>
-<ol><li>Enter the trip distance and your car's real-world consumption.</li><li>Add the current fuel price at your local station.</li><li>Read the total cost and add a buffer for detours and traffic.</li></ol>
-<p>Use your own average consumption from recent fill-ups instead of the manufacturer figure for a budget you can rely on.</p>
-<p><strong>Quick tip:</strong> log your fill-ups for a month to get a real consumption figure. The difference between your actual and the sticker number can change a trip budget by ten percent or more.</p>
+<h1>Fuel Cost Calculator: How to Calculate Car Fuel Consumption</h1>
+<p>Buying a car is a one-off payment; running one is an ongoing account. Fuel is the most visible line in that account — every fill-up takes money out of your pocket — but it is usually not the largest line, and it is not always the one that decides whether a car is expensive to own. Depreciation, insurance, a fixed parking space, and mileage-based servicing and tyres often add up to more than the fuel itself.</p>
+<p>This article does not repeat the fuel-cost formulas. It answers four questions that are easy to skip: how big a share of the whole ownership bill fuel really is; why the same car can burn nearly twice as much fuel in different conditions; how the trip computer arrives at its number and why it disagrees with reality; and what an octane rating actually means. Every worked example shows the arithmetic so you can substitute your own figures.</p>
+<h2>1. Fuel Is Only the Visible Part of the Bill</h2>
+<p>Running costs split into two groups by whether they change with distance. Fixed costs do not: insurance, road tax, the annual inspection, a rented parking space, and depreciation. Variable costs do: fuel, oil and filter changes, tyre and brake wear, and the tolls and short-term parking a trip generates.</p>
+<p>The easiest fixed cost to overlook is depreciation. It never appears on a monthly statement; it settles once, on the day you sell, as the gap between what you paid and what you got back. Depreciation is steepest in a car’s first years, and over that period it frequently exceeds every litre of fuel you burned. So a claim like “my car only costs me 1,200 a year in fuel” has not yet answered what the year of motoring actually cost, because it omits the largest item.</p>
+<p>A fixed parking space is the other item that varies enormously by city. Where space is scarce, a rented bay can cost more per month than the fuel for the same month; where space is plentiful it is almost free. Two households with the same car and the same mileage can therefore have completely different ownership costs.</p>
+<p>Once the split is clear, one thing follows: fuel is the only major line that grows every time you drive. Most of the rest is indifferent to whether the car moves at all.</p>
+<table>
+<tr><th>Cost item</th><th>Changes with distance</th><th>When you actually pay</th><th>Mainly driven by</th></tr>
+<tr><td>Depreciation</td><td>Barely</td><td>Settled once, on sale</td><td>Price, age, mileage, model resale strength</td></tr>
+<tr><td>Insurance</td><td>No</td><td>Annually</td><td>Vehicle value, cover, claims history, region</td></tr>
+<tr><td>Fixed parking space</td><td>No</td><td>Monthly or annually</td><td>City and local parking scarcity</td></tr>
+<tr><td>Road tax and inspection</td><td>No</td><td>Annually</td><td>Engine size and vehicle age</td></tr>
+<tr><td>Fuel</td><td>Entirely</td><td>Every fill-up</td><td>Consumption, pump price, distance</td></tr>
+<tr><td>Oil and filters</td><td>By distance or time</td><td>At each service</td><td>Whichever comes first, mileage or interval</td></tr>
+<tr><td>Tyres and brake pads</td><td>Yes</td><td>When replaced</td><td>Driving style, road surface, tyre pressure</td></tr>
+<tr><td>Tolls and short-term parking</td><td>Per trip</td><td>Each journey</td><td>Route and destination</td></tr>
+</table>
+<p>The last two columns are what make the table useful. “When you actually pay” explains why depreciation gets ignored — it is absent from the monthly statement. “Mainly driven by” tells you which items are worth optimising and which you simply have to accept.</p>
+<h2>2. “Cost per Kilometre” Has Two Answers</h2>
+<p>The same sentence — “my car costs me about half a unit per kilometre” — can mean two completely different things.</p>
+<p>The first is <strong>marginal cost</strong>: what one more kilometre costs me. It covers only the items that grow with distance — mainly fuel, plus the mileage-based share of servicing and tyres. It answers the question “should I drive for this trip?”</p>
+<p>The second is <strong>all-in cost</strong>: everything spent on the car in a year, divided by the kilometres driven. It spreads insurance, parking and depreciation across every kilometre too. It answers “should I own a car at all, and which one?”</p>
+<p>The two can diverge widely, because the all-in figure divides by distance. The fixed total does not change, so the more you drive, the smaller the fixed share per kilometre — <strong>the more you drive, the cheaper each kilometre becomes</strong>.</p>
+<p>That is easily misread as “driving more saves money”. It does not. As cost per kilometre falls, total spending always rises, because the extra fuel is real money. The accurate statement is that once the car is bought, its fixed costs are already sunk; driving more merely spreads that sunk amount over more kilometres.</p>
+<p>A practical rule follows. Decide whether to drive a given trip with the marginal figure. Decide whether the car is affordable with the all-in figure. Vetoing every journey with an all-in number lets insurance and depreciation you have already paid veto the decision a second time.</p>
+<h2>3. Why the Same Car Can Burn Nearly Twice the Fuel</h2>
+<p>Fuel consumption is simply how much fuel each kilometre costs you. That fuel’s energy goes to four places: overcoming rolling resistance at the tyres, overcoming air resistance, accelerating the vehicle, and driving accessories such as air conditioning and the alternator. The mix of those four changes completely with conditions.</p>
+<p>In city traffic the waste happens at the brake discs. Every deceleration turns the kinetic energy you just paid to create into heat; the next stretch of road requires burning fuel to build it again. The denser the junctions, the more often that cost repeats. Idling at a red light is the extreme case: the odometer does not move while the engine keeps consuming, so fuel per kilometre tends towards infinity.</p>
+<p>On the highway the limit is air. Drag rises with the square of speed, and the power needed to overcome it rises with the cube — so a ten percent increase in speed raises drag power by roughly thirty percent. That is why faster is not more economical on the open road.</p>
+<p>Put the two curves together and you get the idea of a most-efficient cruising speed. At low speed the engine is lightly loaded and inefficient, so consumption per kilometre is high; at high speed drag eats the gains. The sweet spot sits where the curves cross, and its position depends on the car’s drag coefficient, gear count and engine characteristics. No single number works for every vehicle.</p>
+<p>Cold starts are the other underrated factor. The engine and its exhaust after-treatment must reach operating temperature before they run efficiently, and a cold engine runs rich. On a three-kilometre errand the engine may never warm through at all, which is why short trips consume so much for the distance covered.</p>
+<p>The table below gives the relationships as relative multiples, using steady highway cruising as the baseline. The multiples are indicative values that vary with model, temperature, load and traffic — but they show why the same car can return nearly double the consumption reading.</p>
+<table>
+<tr><th>Driving condition</th><th>Relative fuel use (indicative)</th><th>Main reason</th></tr>
+<tr><td>Steady highway cruising</td><td>1.0 (baseline)</td><td>Stable speed, high engine load, no repeated acceleration</td></tr>
+<tr><td>Suburban arterial road</td><td>About 1.1 - 1.2</td><td>Few stops; speed still near the efficient band</td></tr>
+<tr><td>Free-flowing city traffic</td><td>About 1.3 - 1.5</td><td>Junction stops begin to accumulate kinetic losses</td></tr>
+<tr><td>Congested city traffic</td><td>About 1.6 - 2.0</td><td>High idle share; energy repeatedly discarded at the brakes</td></tr>
+<tr><td>Very short cold-start trips</td><td>Can exceed 2.0</td><td>Engine and after-treatment below operating temperature, rich mixture</td></tr>
+</table>
+<h2>4. How the Trip Computer Arrives at Its Number</h2>
+<p>Many drivers treat the fuel-economy readout on the dashboard as the car’s real consumption. It is an estimate, and three links in the estimating chain can each drift.</p>
+<p>The first is the fuel quantity itself. The engine control unit has no idea how much fuel you actually put in the tank. It derives an injected quantity from injector open time, fuel pressure and a calibrated flow rate, then accumulates it. Injectors accumulate deposits over the years, so the real flow rate drifts away from the calibrated value, and that drift goes straight into the reading.</p>
+<p>The second is the denominator, the distance. An odometer does not measure distance; it multiplies wheel rotations from the speed sensors by an <em>assumed</em> tyre circumference. Once the real circumference departs from that assumption, the distance carries a systematic error. Fit larger wheels or fresh tyres with deeper tread and the real circumference is bigger, so the car travels further than the odometer claims; dividing by that understated distance inflates the indicated consumption. Let the tread wear down and the circumference shrinks, the odometer overstates distance, and the consumption reading comes out low.</p>
+<p>The third is calibration policy. Manufacturers handle the readout differently, but an indicated figure that flatters the car slightly is common enough to explain why so many owners feel short-changed after measuring for themselves.</p>
+<p>The conclusion is not that the readout is useless, but that <strong>its two jobs must be judged separately</strong>. As an absolute value it carries all three distortions and should not go straight into a budget. As a trend signal it is excellent: on the same route with the same driver, a reading that climbs from one level to another is reliable evidence that the car, the tyre pressures or the conditions have changed.</p>
+<p>One further detail: most dashboards offer two averages. A trip average resets at every start or fill-up and swings widely; a long-term average that is never reset is far closer to the truth. Judging whether a car is economical from a short-trip figure usually produces the wrong answer. When you do need an absolute number, log actual fuel added and distance covered, and let a <a href="/en/calculators/fuel-cost">fuel cost calculator</a> convert litres and kilometres into consumption per 100 km.</p>
+<h2>5. Octane Ratings: What 92, 95 and 98 Really Mean</h2>
+<p>Petrol grades such as 92, 95 and 98 denote the <strong>octane rating</strong>, which is resistance to knock. They do not denote purity, and they do not denote energy content. At one station the base fuel is the same across grades; what changes is the blend and additive package that brings knock resistance to the required level.</p>
+<p>There is exactly one criterion for choosing: what the manufacturer specifies. The filler flap or the handbook states a minimum grade. That requirement comes from the engine’s compression ratio and ignition strategy; it is not a choice you can freely upgrade or downgrade.</p>
+<p>The two mistakes are not symmetrical. Putting a higher grade into a car rated for the lower one normally gives no economy benefit and no noticeable power gain — the energy per litre is essentially identical, and the ignition timing is already calibrated for the lower grade, leaving no headroom to exploit. Running a car rated for the higher grade on the lower one for a long period is the damaging direction: the knock sensor detects knock and retards ignition timing, so power falls and consumption can actually rise, with long-term risk to the engine.</p>
+<p>There is also a phenomenon often mistaken for a fault. Ethanol-blended petrol, such as an E10 grade, contains roughly a tenth ethanol, and ethanol carries noticeably less energy per litre than petrol. On the same route the consumption reading therefore creeps up slightly and a tank covers slightly less distance. That is a property of the fuel — a few percent, not a dramatic drop — and it does not mean the car has developed a problem.</p>
+<p>So the widespread claim that a higher grade is more economical or goes further does not hold up. The money saved by using the specified grade is better spent on checking tyre pressures and keeping to the service schedule, where the return is far more certain.</p>
+<h2>6. Three Situations, Three Right Ways to Cost Them</h2>
+<p><strong>Monthly commuting cost.</strong> Add the month’s fuel, the mileage-based share of servicing and tyres, and parking at the destination. That total is the marginal cost of commuting by car. The classic error here is folding insurance and depreciation in as well and then comparing the result with a transit fare — neither of those costs disappears because you take the train tomorrow, so including them systematically exaggerates the cost of driving. If you want to know whether the car is affordable overall, run the all-in figure separately.</p>
+<p><strong>Long-distance trip budget.</strong> Estimate fuel from the round-trip distance and your real consumption, then list motorway tolls, destination parking and a margin of roughly ten percent — detours, traffic and changes of plan all add distance. Where a route crosses regions with different pump prices, costing it in segments by planned fill-up point beats using an average. On a long drive, deliberately choosing cheaper stops produces genuine savings.</p>
+<p><strong>Petrol versus electric, total cost.</strong> This comparison only works if both sides use the same basis. On energy alone an electric car is usually clearly cheaper per kilometre, but the purchase-price gap, the insurance difference and weaker residual values pull the other way. The decisive variable is annual mileage: the energy cost difference per kilometre multiplied by annual distance gives the yearly saving, and dividing the purchase premium by that figure gives the break-even distance. For a low-mileage driver the premium may never be recovered within the ownership period. One non-monetary variable matters just as much — whether you can charge at home. With a fixed parking space and a home charger, both the cost and the time involved are controllable; without one, you depend on public charging and both rise a step. For the electricity side of the comparison, see <a href="/blog/en/electricity-cost-guide">appliance power consumption and electricity cost</a>.</p>
+<table>
+<tr><th>The decision you are making</th><th>The right basis</th><th>Most commonly omitted item</th></tr>
+<tr><td>Whether to drive for this particular trip</td><td>Marginal cost</td><td>Destination parking, tolls</td></tr>
+<tr><td>Drive to work or take public transport</td><td>Marginal cost</td><td>Parking at work, mileage-based servicing share</td></tr>
+<tr><td>Whether to own a car, and at what price</td><td>All-in cost</td><td>Depreciation, fixed parking, insurance</td></tr>
+<tr><td>Which of two cars is cheaper to run</td><td>All-in cost, at your own mileage</td><td>Resale gap, insurance gap, parts pricing</td></tr>
+<tr><td>Petrol or electric</td><td>All-in cost, at your own mileage</td><td>Purchase premium, residual gap, home charging</td></tr>
+<tr><td>Business or self-employed vehicle costing</td><td>All-in cost</td><td>Depreciation treatment depends on local accounting rules</td></tr>
+</table>
+<h2>7. Three Worked Examples</h2>
+<p>The consumption and distance figures can be reproduced directly in the <a href="/en/calculators/fuel-cost">fuel cost calculator</a>. <strong>The pump price is a placeholder of 1.50 per litre — substitute your own local price and every money figure scales in proportion.</strong> The fixed costs are placeholders too, chosen to demonstrate the method rather than to predict your bill. To work out what share any single item takes, check the percentages with the <a href="/en/calculators/percentage-calc">percentage calculator</a>.</p>
+<p><strong>Example 1: putting fuel back into the whole account.</strong> 15,000 km a year at 8 L/100 km, priced at the placeholder 1.50 per litre, gives a fuel cost of 8 × 1.50 ÷ 100 = <strong>0.12 per kilometre</strong>, and 15,000 ÷ 100 × 8 × 1.50 = <strong>1,800 a year</strong>. Take the fixed items as placeholders: insurance 800, a fixed parking space 1,200, annual servicing 300 and depreciation 3,000 — <strong>5,300</strong> in total. Spread over the distance that is 5,300 ÷ 15,000 ≈ <strong>0.35 per kilometre</strong>. Add the fuel and the all-in cost is about <strong>0.47 per kilometre</strong>, with total annual spending of <strong>7,100</strong>. Fuel now accounts for roughly <strong>25%</strong> of the all-in cost — so cutting fuel by thirty percent moves the total bill by under eight percent.</p>
+<figure>
+<svg viewBox="0 0 660 120" width="100%" role="img" aria-label="All-in cost of 0.47 per kilometre splits into 0.35 of fixed costs and 0.12 of fuel, so fuel is about 25 percent of the total">
+<text x="0" y="20" font-size="13" fill="currentColor">All-in 0.47 per km (15,000 km a year)</text>
+<rect x="0" y="30" width="358" height="20" rx="3" fill="#0a84ff"></rect>
+<rect x="358" y="30" width="122" height="20" rx="3" fill="currentColor" opacity="0.3"></rect>
+<text x="8" y="45" font-size="12" fill="#ffffff">Fixed items 0.35</text>
+<text x="367" y="45" font-size="12" fill="currentColor">Fuel 0.12</text>
+<text x="0" y="76" font-size="12" fill="currentColor">Bar length scaled to each amount　Unit: cost per kilometre</text>
+<text x="0" y="100" font-size="12" fill="currentColor">Fixed items cover insurance, parking, annual servicing and depreciation; the pump price is a placeholder</text>
+</svg>
+<figcaption>Figure 1: what the all-in cost per kilometre is made of — fuel is only about a quarter, while depreciation and insurance dominate.</figcaption>
+</figure>
+<p><strong>Example 2: doubling the mileage.</strong> Same car, same fixed items, annual distance raised from 15,000 km to 30,000 km. The fixed share per kilometre falls to about 0.18 and the all-in cost drops to roughly <strong>0.30 per kilometre</strong>, a reduction of about <strong>37%</strong>. But total annual spending rises from 7,100 to <strong>8,900</strong>, and the extra 1,800 is exactly the fuel for the additional distance. Cheaper per kilometre, more expensive overall — which is the real meaning of “it pays to drive a lot”, and the reason a commercial vehicle’s cost per kilometre can sit well below a private car’s.</p>
+<p><strong>Example 3: the petrol-versus-electric break-even.</strong> Keep the petrol car at 0.12 per kilometre. Price the electric car from your local tariff and its consumption; take a placeholder of 0.03 per kilometre, a difference of 0.09 per kilometre. If the purchase premium is 8,000, the break-even distance is 8,000 ÷ 0.09 ≈ <strong>88,889 km</strong> — about <strong>5.9 years</strong> at 15,000 km a year, but only about <strong>3.0 years</strong> at 30,000 km a year. The same question produces answers that differ by a factor of two, and the variable is not the car but how far you drive. None of this yet includes the residual-value gap, the insurance gap or charging conditions.</p>
+<h2>8. Frequently Asked Questions</h2>
+<dl>
+<dt>Why does my car cost noticeably more per kilometre than an identical one?</dt>
+<dd>First check which basis you are both using. If you mean fuel only, the difference can only come from consumption and pump price. If you mean annual spending divided by distance, the deciding factors are annual mileage and the fixed items: when insurance, parking and depreciation are similar, the driver covering fewer kilometres spreads them over a shorter distance. Same city, same model, double the mileage, and the all-in cost per kilometre can differ by more than thirty percent.</dd>
+<dt>Can I use the trip computer reading as my real consumption?</dt>
+<dd>Not as an absolute value. It derives fuel quantity from injector open time and divides by an odometer that relies on an assumed tyre circumference, so injector deposits and tyre-size changes both introduce systematic bias — and the figure usually flatters the car. As a trend indicator it is reliable: on a fixed route with a consistent driving style, a clear rise means the car, the tyre pressures or the conditions have changed.</dd>
+<dt>Does a higher octane grade really give better economy or more range?</dt>
+<dd>No. The grade expresses knock resistance, and the base fuel plus energy content are essentially the same across grades at one station. Use what the manufacturer specifies: a car rated for the lower grade gains nothing from the higher one, while a car rated for the higher grade run long-term on the lower one loses power and can burn more fuel because knock forces the ignition timing to retard.</dd>
+<dt>I drive under 10,000 km a year — is an electric car still worth it?</dt>
+<dd>Check it against the break-even distance: divide the purchase premium by the energy cost difference per kilometre to see how far you must drive to recover it. At low annual mileage that distance can take many years to cover, and the premium may never be recovered during ownership. Charging access matters just as much — with a home charger both cost and time stay controllable, and without one they rise a step.</dd>
+<dt>Does coasting in neutral save fuel?</dt>
+<dd>Usually not in a fuel-injected car. Coasting in gear lets the engine cut injection entirely under deceleration, whereas neutral requires idle fuel to keep the engine running; you also lose engine braking, which loads the brakes on long descents. It saves nothing and removes a safety margin.</dd>
+</dl>
+<h2>9. Five Common Mistakes</h2>
+<p><strong>Mistake 1: counting only fuel and treating depreciation as if it never happened.</strong> Depreciation is absent from the monthly statement, settles in one lump on the day you sell, and is usually the largest item of all. Leaving it out excludes the biggest piece of the puzzle. To keep it manageable, weigh resale strength when buying; monthly payment and interest structure are covered in <a href="/blog/en/car-loan-calculator-guide">car loan payments explained</a>.</p>
+<p><strong>Mistake 2: treating the trip computer as real consumption.</strong> It is an estimate whose denominator comes from an assumed tyre circumference. Use it for trends, not as an absolute budget input — keeping those two jobs apart is the whole point.</p>
+<p><strong>Mistake 3: assuming a higher grade saves fuel.</strong> Octane governs knock resistance, not energy content. Buy the specified grade and put the difference into tyre pressure checks and scheduled servicing.</p>
+<p><strong>Mistake 4: using the all-in cost per kilometre to decide a single trip.</strong> Insurance and depreciation do not change because of that trip, so such decisions belong to the marginal figure. Letting sunk costs veto marginal decisions is the most common way this account gets misread.</p>
+<p><strong>Mistake 5: assuming that leaving the car parked is the same as saving money.</strong> Parked, the car still consumes insurance, parking and depreciation in full; only the variable costs stop, so the cost per kilometre actually rises. What genuinely helps is cutting low-value mileage — combining several errands into one trip, for instance — rather than leaving the car idle. If it truly is not needed, the decision to make is disposal, not “drive less”.</p>
+<h2>10. Four Practical Suggestions</h2>
+<ul>
+<li><strong>Build your own cost sheet.</strong> One line per year for fixed items, one line per event for variable ones, filled in once a year. With that sheet, any question about how much fuel savings are worth can be answered against the real total, and you can see where the money actually goes.</li>
+<li><strong>Keep the two bases apart.</strong> Marginal cost for trip decisions (fuel, mileage-based wear, destination parking); all-in cost for ownership decisions (the fixed items plus every kilometre of the year). Mixing them distorts in both directions, and the two errors point opposite ways.</li>
+<li><strong>Read consumption as a trend only.</strong> Fix one regular route and record the indicated and measured figures each quarter. A single reading is noise; two or three consecutive quarters of increase justify checking tyre pressures, the air filter and carbon build-up. A <a href="/en/calculators/unit-converter">unit converter</a> helps when consumption is quoted in different units.</li>
+<li><strong>Spend fuel savings where the return is certain.</strong> Tyre pressures, scheduled servicing and clearing out weight you no longer carry all pay back reliably. Buying a higher octane grade for economy, or coasting in neutral, does not.</li>
+</ul>
+<p>Once these bases are second nature, any advertised consumption or energy figure can be judged against your own wallet. To compare consumption quoted in different unit systems, see the <a href="/blog/en/unit-converter-guide">unit conversion reference</a>; if a purchase is on the table, <a href="/blog/en/loan-comparison-guide">the interest gap between loan plans</a> is the other account that has to be settled at the same time.</p>
 <div class="blog-cta">
                 <p><strong>Online <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-calculator"></use></svg> Fuel Cost Calculator</strong></p>
                 <p>Free to use, no download required</p>
                 <p><a href="/en/calculators/fuel-cost"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-arrow-right"></use></svg> Use <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-calculator"></use></svg> Fuel Cost Calculator Now</a></p>
             </div>
-            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> Related Articles</h3><ul><li><a href="/blog/en/electricity-cost-guide">Electricity Cost Calculator: Appliance Power Consumption Guide</a></li><li><a href="/blog/en/unit-converter-guide">Unit Converter Guide: Common Unit Conversion Reference</a></li></ul></div>
+            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> Related Articles</h3><ul><li><a href="/blog/en/electricity-cost-guide">Electricity Cost Calculator: Appliance Power Consumption Guide</a></li><li><a href="/blog/en/unit-converter-guide">Unit Converter Guide: Common Unit Conversion Reference</a></li><li><a href="/blog/en/car-loan-calculator-guide">Car Loan Calculator: Understanding Payments</a></li><li><a href="/blog/en/loan-comparison-guide">Loan Comparison Calculator: Compare Different Loan Plans</a></li></ul></div>
 <div class="article-bottom-tags"><a href="/en/tags/life.html" class="tag tag-life" data-tag="life"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-flower"></use></svg> Lifestyle</a></div>
 
         <div class="like-section">

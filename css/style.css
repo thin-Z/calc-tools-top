@@ -792,10 +792,20 @@ footer .footer-links a:hover {
 .tool-content p a,
 .tool-content li a,
 .seo-content p a,
-.seo-content li a {
+.seo-content li a,
+.blog-post p a,
+.blog-post li a,
+.blog-post td a {
     text-decoration: underline;
     text-underline-offset: 0.15em;
     text-decoration-thickness: 1px;
+}
+/* a11y(2026-09-29)：博客正文此前无正文内联链接，故历史规则未覆盖 .blog-post；
+   本轮内容加厚引入大量段内链接后 password-security-guide 触发 axe link-in-text-block，
+   故与工具页同口径补齐。相关文章/相关工具列表属导航性质，显式排除。 */
+.blog-post .related-posts a,
+.blog-post .related-tools a {
+    text-decoration: none;
 }
 /* a11y(2026-09-21)：深色下正文块底色为 --bg-elevated（= --surface-dark），
    此处 --link-color（accent 蓝）实测仅 3.82:1、未达 AA 4.5；正文内联链接改用更亮的达标蓝（5.45:1）。
@@ -803,7 +813,10 @@ footer .footer-links a:hover {
 [data-theme="dark"] .tool-content p a,
 [data-theme="dark"] .tool-content li a,
 [data-theme="dark"] .seo-content p a,
-[data-theme="dark"] .seo-content li a {
+[data-theme="dark"] .seo-content li a,
+[data-theme="dark"] .blog-post p a,
+[data-theme="dark"] .blog-post li a,
+[data-theme="dark"] .blog-post td a {
     color: var(--link-color-elevated);
 }
 .tool-content ul,.seo-content ul {

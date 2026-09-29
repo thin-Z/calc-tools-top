@@ -54,7 +54,21 @@
         }
     }
     </script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.calc-tools.top/blog/en/"},{"@type":"ListItem","position":3,"name":"2026 Mortgage Rate Trends and Outlook","item":"https://www.calc-tools.top/blog/en/mortgage-rate-trend-2026"}]}</script><script src="/js/i18n.js" defer></script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.calc-tools.top/blog/en/"},{"@type":"ListItem","position":3,"name":"2026 Mortgage Rate Trends and Outlook","item":"https://www.calc-tools.top/blog/en/mortgage-rate-trend-2026"}]}</script>
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        { "@type": "Question", "name": "The benchmark fell - why is my mortgage payment unchanged?", "acceptedAnswer": { "@type": "Answer", "text": "Because payments follow the repricing date in your contract, not the publication date of the quotation. The usual arrangements are 1 January or the disbursement date's equivalent day in the year. Until that date arrives, instalments still use the value applied at the previous repricing date, which is the mechanism working normally rather than a bank error." } },
+        { "@type": "Question", "name": "Can the spread in my mortgage contract change?", "acceptedAnswer": { "@type": "Answer", "text": "Under a floating rate the spread is normally fixed for the life of the loan and the benchmark is what moves. When the benchmark falls, only the benchmark portion falls; the spread neither shrinks nor disappears. Changing the spread is a change to contract terms and normally requires agreement with the lender." } },
+        { "@type": "Question", "name": "Should I switch from a fixed rate to a floating rate?", "acceptedAnswer": { "@type": "Answer", "text": "That is a risk-appetite decision rather than a one-off calculation. A fixed rate buys certainty and gives up exposure to declines; a floating rate keeps the declines and carries the increases. Weigh the remaining term, the payment as a share of income, and any prepayment plan. This article does not forecast rate direction." } },
+        { "@type": "Question", "name": "How do I compare prepaying a mortgage with investing?", "acceptedAnswer": { "@type": "Answer", "text": "Put both on one yardstick. Prepayment returns a certain saving computed at the contract rate; the investment must be measured after tax and after fees. If the investment return is below the loan rate, prepaying is a certain risk-free return. Also account for liquidity: money repaid is generally locked away, so keep an emergency fund first." } },
+        { "@type": "Question", "name": "Do I have to apply for an adjustment to an existing mortgage rate?", "acceptedAnswer": { "@type": "Answer", "text": "It depends on the channel. Contractual repricing runs automatically with no application. A policy-driven bulk adjustment follows the bank's published rules and may need confirmation through mobile banking or a branch. Renegotiating terms such as the spread requires an application and the lender's approval. Rely on official publication." } }
+    ]
+}
+    </script>
+<script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>
 <body>
@@ -81,28 +95,125 @@
             </nav>
             <div class="article-tags"><a href="/en/tags/finance.html" class="tag tag-finance" data-tag="finance"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-coins"></use></svg> Finance</a></div>
     <p class="blog-meta"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-calendar"></use></svg> 2026-06-25 · Calc-Tools Editorial</p>
-            <h1>2026 Mortgage Rate Trends</h1><p>Mortgage rates move with central-bank policy, inflation expectations, and bond-market yields. Tracking the trend helps homebuyers time applications and refinances. This guide summarizes what drove 2026 rates and how to read the outlook.</p>
-<h2>What Moves Mortgage Rates?</h2>
-<p>Rates follow the yield on government bonds more closely than the central bank's headline number. When inflation cools and growth slows, bond yields fall and fixed mortgage rates usually follow within weeks.</p>
-<h2>2026 Drivers</h2>
-<p>In 2026, the rate direction depended on disinflation progress and labor-market softening. Periods of calm inflation pushed lenders to trim quotes, while surprise data caused brief spikes. Regional policy differences also widened the gap between local markets.</p>
-<h2>Fixed vs Floating</h2>
-<p>A fixed rate locks your payment and removes reinvestment risk; a floating rate tracks a benchmark and can fall if markets ease. Borrowers expecting lower rates often prefer floating or short fixed terms to stay flexible.</p>
-<h2>How to Decide</h2>
-<p>Compare the all-in cost over your expected holding period, not just the headline rate. Use a mortgage calculator to model payments under different rates before you commit to a lender.</p>
-<h2>Refinancing in a Falling Market</h2>
-<p>When rates fall, refinancing can lower monthly payments or shorten the term. The math works when the savings exceed the closing costs within your planned holding period.</p>
-<p>Use a refinance calculation with the new rate, remaining balance, and costs included. A small rate drop on a large balance is often worth modeling even if the monthly saving looks modest.</p>
-<h2>How to Model Mortgage Scenarios</h2>
-<ol><li>Enter the loan amount, term, and the current quoted rate.</li><li>Compare fixed and floating scenarios to see the payment range.</li><li>Add a possible future rate to stress-test your budget.</li></ol>
-<p>Model both the best and worst cases—a rate that fits now should still be manageable if the market moves against you.</p>
-<div class="blog-cta">
+            <h1>2026 Mortgage Rate Trends</h1>
+<p>Mortgage-rate headlines arrive almost every month, but they are not what sets your monthly payment. Three lines in your loan contract do: the benchmark tenor your rate is tied to, the spread your lender added on top, and the repricing date written into the agreement.</p>
+<p>This guide does not forecast where rates go. Building a repayment plan on a forecast is itself a risk. Instead it follows the mechanism end to end - how the benchmark is quoted, how it reaches your contract, how it changes your payment, and finally the decision it feeds: prepaying the loan or investing the money. No specific rate levels appear below, and anything policy-related is subject to official publication.</p>
+
+<h2>1. How LPR Is Actually Formed</h2>
+<p>LPR (Loan Prime Rate) is not a price set unilaterally by any one body. It is the output of a quoting mechanism: a panel of designated quoting banks each submits the rate it considers appropriate, the highest and lowest submissions are discarded, and the rest are averaged arithmetically and published on a regular schedule. Two tenors are published - one year, and over five years.</p>
+<p>A mortgage runs for one to three decades, so residential mortgage pricing references the <strong>over-five-year tenor</strong>, not the one-year figure. This is missed constantly: a headline about the one-year rate moving has no direct bearing on your mortgage.</p>
+<p>The point of the mechanism is to move the anchor for loan pricing away from an administratively fixed benchmark and towards a quoted rate that tracks funding costs more closely. The panel, the quoting method and the publication schedule are set by the competent authorities - <strong>the exact rules and figures are subject to official publication</strong>. You do not need to memorise any of them. You need one fact: the quoted rate moves, and the contract alone decides when a move reaches you.</p>
+
+<h2>2. Your Rate = Over-Five-Year LPR + a Spread That Barely Moves</h2>
+<p>A floating-rate mortgage is priced by a single formula: <strong>contract rate = over-five-year LPR + spread</strong>. The spread is fixed at signing. The lender sets it from your credit record, down-payment ratio, property count, local policy and its own lending capacity, then writes it into the contract.</p>
+<p>The most common misunderstanding: <strong>the spread is not a discount, it is a margin</strong>. When the benchmark falls, only the benchmark portion falls. The spread does not shrink with it and does not disappear. The effect of a benchmark cut on your payment is therefore always the effect on the benchmark portion - never a proportional cut to the whole rate.</p>
+<p>The spread is measured in basis points, where <strong>one basis point is 0.01 of a percentage point</strong> - a unit definition, not a quotation. A contract reading "LPR plus N basis points" keeps that spread fixed for the life of the loan in the ordinary case. It changes only if borrower and lender renegotiate the contract, or if a policy-driven adjustment rewrites it for a group of loans.</p>
+<p>Other contracts are not floating at all: they fix one rate for the entire term and ignore the benchmark. That trade-off is the next section.</p>
+
+<h2>3. Repricing Dates: Why a Cut Has to Wait</h2>
+<p>Floating-rate contracts contain two terms that are easy to confuse. The <strong>repricing period</strong> says how often the latest quotation is read. The <strong>repricing date</strong> says which day the switch happens. A period of one year is typical, and the date is usually 1 January, or the disbursement date's equivalent day in the year.</p>
+<p>A quotation change reaches your payment in four steps:</p>
+<ol>
+    <li>The quoting panel publishes the latest LPR on schedule.</li>
+    <li>On <strong>your repricing date</strong>, the bank takes the quotation current on that day and replaces the value the contract has been using.</li>
+    <li>The bank recalculates the payment from the <strong>outstanding principal</strong> and the <strong>remaining number of instalments</strong>.</li>
+    <li>The new payment starts from the next repayment cycle.</li>
+</ol>
+<p>Step two is the one that matters: <strong>payments follow the repricing date, not the publication date</strong>. So when someone says the benchmark fell and their payment did not move, the usual explanation is not an error - it is simply that their repricing date has not arrived.</p>
+<p>How long the wait lasts depends entirely on the contract. Two mechanism-level illustrations, with no rate figures attached. If the repricing date is 1 January and the quotation changes in March, roughly <strong>ten repayment cycles</strong> - March through December - still run on the value applied at the previous repricing date, and the new one only enters the calculation the following 1 January. If the change instead lands in December, the wait is one month. Tie repricing to the disbursement anniversary and a loan disbursed in May ignores a June change until May of the following year, a gap of nearly eleven months. The same change, applied to different contracts, can arrive anywhere between one month and about a year later.</p>
+
+<h2>4. Fixed vs Floating: Who Carries the Risk</h2>
+<p>Fixed and floating is not a question of which is cheaper. It is a question of <strong>who carries the risk of rates rising</strong>.</p>
+<table>
+<tr><th>Arrangement</th><th>Who bears the upside risk</th><th>Payment predictability</th><th>Where it fits</th></tr>
+<tr><td>Floating (LPR + spread)</td><td>The borrower</td><td>Lower; moves on each repricing date</td><td>Long remaining term, wants exposure to market declines, can absorb payment swings</td></tr>
+<tr><td>Fixed rate</td><td>The lender</td><td>High; the whole term can be budgeted precisely</td><td>Stable income, a hard need for certainty, no appetite for upside uncertainty</td></tr>
+<tr><td>Staged or hybrid fixed</td><td>Split by contract stage</td><td>Predictable in stages</td><td>A defined transition, for example fixed first and floating later</td></tr>
+<tr><td>Housing fund loan</td><td>Adjusted under national rules</td><td>Changes on the prescribed adjustment schedule</td><td>Eligible for a fund loan, with a limit that covers most of the price</td></tr>
+</table>
+<p>Read the table this way: <strong>a fixed rate sells the uncertainty to the bank and gives up the benefit of future declines; a floating rate keeps the declines and carries the increases yourself.</strong> Both are rational. It comes down to whether you need certainty more than flexibility. Whether a fixed option exists at all, and whether the two can be switched between, <strong>depends on the lender's rules and local policy</strong> - the menu differs by bank and by period.</p>
+
+<h2>5. Existing Mortgages: Which Channels Can Change the Rate</h2>
+<p>A loan already drawn down is not locked forever. Four channels can move the rate, and they behave very differently.</p>
+<table>
+<tr><th>Channel</th><th>Initiated by</th><th>Borrower action needed</th><th>When it takes effect</th></tr>
+<tr><td>Contractual repricing</td><td>Runs automatically</td><td>None</td><td>On each repricing date</td></tr>
+<tr><td>Policy-driven bulk adjustment</td><td>Authorities set it, banks implement it</td><td>Depends on the bank's rules; confirmation or an application may be required</td><td>The date announced by the bank</td></tr>
+<tr><td>Renegotiating contract terms</td><td>Borrower requests, lender approves</td><td>An application is required</td><td>The date agreed once approved</td></tr>
+<tr><td>Prepayment</td><td>The borrower</td><td>An application is required, and contract terms apply</td><td>The debit date set in the contract</td></tr>
+</table>
+<p>The timelines differ too. <strong>Repricing</strong> is automatic - all you need to know is your repricing date. A <strong>bulk adjustment</strong> normally runs as a chain: policy publication, then the bank's implementing rules, then borrower confirmation through the bank's channels, then a single switch on the announced date. Whether you must apply, which loans are covered and when it starts can each vary by bank. <strong>Renegotiation</strong> is the route you can pursue actively, but approval is the lender's call. <strong>Prepayment</strong> may carry a penalty, a minimum amount, or an appointment queue.</p>
+<p><strong>Note:</strong> the details of existing-mortgage policy are the kind of information that changes, so this article covers only the channels and the mechanics. For who qualifies, when it starts and where to apply, <strong>rely on official publication and your lender's announcements</strong> rather than second-hand reports. One mechanical point is worth keeping: if the spread itself is reduced, the new spread becomes the starting point for later repricing - every subsequent repricing date still floats that new spread against the latest quotation.</p>
+
+<h2>6. Translating a Move into a Payment: The Arithmetic That Needs No Rate</h2>
+<p>Most people want to know what a small move costs or saves each month. There is a clean relationship here: <strong>interest for the period = outstanding principal x periodic rate</strong>. So for any given size of rate move, the change in that month's interest is <strong>exact</strong> - outstanding principal multiplied by the size of the move, divided by twelve. It <strong>does not depend on what your rate was</strong>, only on the balance and the size of the move.</p>
+<table>
+<tr><th>Outstanding principal</th><th>Move of 0.05 pp</th><th>Move of 0.10 pp</th><th>Move of 0.25 pp</th></tr>
+<tr><td>CNY 500,000</td><td>CNY 20.83 / month</td><td>CNY 41.67 / month</td><td>CNY 104.17 / month</td></tr>
+<tr><td>CNY 1,000,000</td><td>CNY 41.67 / month</td><td>CNY 83.33 / month</td><td>CNY 208.33 / month</td></tr>
+<tr><td>CNY 2,000,000</td><td>CNY 83.33 / month</td><td>CNY 166.67 / month</td><td>CNY 416.67 / month</td></tr>
+</table>
+<p>Those figures are the change in the <strong>interest portion</strong>, not the change in the payment, and the gap between the two matters. For mental arithmetic, one extra line: on CNY 1,000,000 of outstanding principal, the three moves above are worth roughly <strong>CNY 500, CNY 1,000 and CNY 2,500 over a full year</strong>.</p>
+<p>Why is the payment reduction <strong>smaller</strong> than the interest reduction? Because a payment is interest plus principal. On recalculation the term is stretched back to the original remaining instalment count, so if less interest is due, part of what used to service interest must be redirected to principal in order to clear the same balance within the same number of instalments. The interest reduction is exact; the payment reduction is discounted. The discount grows as the remaining term shortens - with fewer instalments left, principal dominates the payment and the rate matters less. That is how "the rate fell a lot" and "the payment barely moved" can both be true.</p>
+
+<h2>7. Three Worked Examples (Substitute Your Own Numbers)</h2>
+<p><strong>Example 1: the interest change needs no rate.</strong> Take CNY 1,000,000 of outstanding principal and a move of 0.10 percentage point. The change in that month's interest is 1,000,000 x 0.10% / 12 = <strong>CNY 83.33</strong>, or about <strong>CNY 1,000</strong> over a year. No rate level appears anywhere in the calculation, because none is needed.</p>
+<p><strong>Example 2: double the move, double the result.</strong> On the same balance, a move of 0.25 percentage point gives 1,000,000 x 0.25% / 12 = <strong>CNY 208.33 per month</strong>, about <strong>CNY 2,500</strong> over a year. The relationship is strictly linear - with the balance fixed, the interest change is proportional to the size of the move. Keep one conversion factor: <strong>every CNY 1,000,000 of outstanding principal is worth about CNY 83 per month for each 0.10 percentage point.</strong></p>
+<p><strong>Example 3: the repricing date decides how long the benefit runs.</strong> Take a 240-instalment (20-year) loan with 60 instalments paid, leaving 180, and a repricing date of 1 January. If the quotation changes in March, the new value only enters the calculation the following 1 January - by which point about ten more instalments have been paid, leaving <strong>170 instalments</strong>. The change therefore applies to the remaining 170, not the 180. Ten months of waiting costs ten instalments of benefit. In this mechanism, <strong>timing matters as much as magnitude</strong>.</p>
+
+<h2>8. Prepaying vs Investing: Put Both on One Yardstick</h2>
+<p>Prepayment is usually framed as saving interest and investing as chasing return, but the two are directly comparable.</p>
+<p>Call the prepaid amount P and the rate written in your contract X% - a symbol, so substitute the annual rate from your own contract. Call the after-tax, after-fee annual return on the investment Y%. Assuming the rate stays put and the remaining term is unchanged:</p>
+<ul>
+    <li>Prepaying P saves roughly <strong>P x X%</strong> in interest over the first year, and less afterwards as the balance falls;</li>
+    <li>The same P invested earns roughly <strong>P x Y%</strong> over a year;</li>
+    <li>So the question reduces to <strong>which of X% and Y% is larger</strong>. Where Y% clearly exceeds X%, keeping the money invested may win. Where Y% is below X%, prepaying is effectively a <strong>certain, risk-free investment paying X%</strong>.</li>
+</ul>
+<p>Two numbers are not enough, though. Three asymmetries remain:</p>
+<ul>
+    <li><strong>Liquidity.</strong> Money repaid to the bank generally cannot be withdrawn again, or only through refinancing or a secured loan at a higher cost. Money in an investment account is available on demand. An emergency fund comes before yield.</li>
+    <li><strong>Certainty.</strong> The interest saved is guaranteed by contract; the investment return is not. A certain X% and a volatile X% are not the same thing to the same person - the volatile one needs a higher headline figure to be worth the swap.</li>
+    <li><strong>Fees and taxes.</strong> Investing may carry subscription, redemption and tax costs; prepayment may carry a penalty or a minimum amount, <strong>as set out in the contract</strong>.</li>
+</ul>
+<p>Two mechanics-based judgements are also worth making. First, <strong>when you prepay changes the result</strong>: early on, more principal is outstanding and more term remains, so the same amount removes more interest; late in the schedule the balance is largely repaid and the effect fades. Second, lenders usually offer two treatments - keep the payment and shorten the remaining term, or keep the term and reduce the payment. The first shortens the period over which principal is outstanding and therefore removes more interest; which one you may choose <strong>depends on the contract and the lender</strong>. To see both outcomes for your own numbers, enter the amount, term and repayment method into the <a href="/en/calculators/mortgage">mortgage calculator</a> and run them separately; to compare prepaying against carrying on, place the two plans side by side in the <a href="/en/calculators/loan-compare">loan comparison calculator</a>.</p>
+
+<h2>9. Frequently Asked Questions</h2>
+<dl>
+<dt>The benchmark fell - why is my payment unchanged?</dt>
+<dd>Because payments follow the repricing date in your contract, not the publication date of the quotation. The usual arrangements are 1 January or the disbursement date's equivalent day in the year. Until that date arrives, your instalments still use the value applied at the previous repricing date. "It fell but has not reached me yet" is the mechanism working normally, not a bank error; the contract states your own date.</dd>
+<dt>Can the spread in my contract change?</dt>
+<dd>Under a floating rate the spread is normally fixed for the life of the loan; what moves is the benchmark. So when the benchmark falls, only the benchmark portion falls - the spread neither shrinks nor disappears. Changing the spread is a change to contract terms and normally requires agreement with the lender, on that lender's terms.</dd>
+<dt>Should I switch from a fixed rate to a floating one?</dt>
+<dd>That is a risk-appetite decision, not a one-off calculation. A fixed rate buys certainty and gives up exposure to declines; a floating rate keeps the declines and carries the increases. Weigh three things: how long the remaining term is, the payment as a share of income, and whether you plan to prepay. This article does not forecast rate direction; whether a switch is possible depends on your lender.</dd>
+<dt>How do I compare prepaying with investing fairly?</dt>
+<dd>Put both on one yardstick. Prepayment returns a certain saving computed at the contract rate; the investment must be measured after tax and after fees. If the investment return is below the loan rate, prepaying is a certain risk-free return. Do not skip liquidity: money repaid is generally locked away, so keep an emergency fund first.</dd>
+<dt>Do I have to apply for an adjustment to an existing mortgage rate?</dt>
+<dd>It depends on the channel. Contractual repricing runs automatically with no application. A policy-driven bulk adjustment is implemented under the bank's published rules and may need confirmation through mobile banking or a branch. Renegotiating terms - the spread, or the repricing arrangement - does require an application and the lender's approval. Rely on official publication and your lender's announcements.</dd>
+</dl>
+
+<h2>10. Four Common Misconceptions</h2>
+<p><strong>One: treating the benchmark as an administratively set rate that changes your payment the same month.</strong> The quotation is the output of a quoting mechanism, and the contract decides when it reaches you. When you see a headline, the first question is: when is my repricing date?</p>
+<p><strong>Two: reading the interest saved as the payment saved.</strong> The interest change is exact - balance x size of move / 12 - while the payment falls by less, because the term is stretched back and part of the interest saving is redirected to principal. Estimating a payment from an interest figure will always overshoot.</p>
+<p><strong>Three: comparing prepayment with investment on headline yields alone.</strong> Returns need fees and taxes stripped out and a premium for volatility; the interest saved is certain. A risky Y% and a risk-free X% are not the same unit.</p>
+<p><strong>Four: acting on second-hand news about existing-mortgage adjustments.</strong> Eligible loans, application requirements and effective dates differ by bank, contract and period, and are set out in formal announcements. Do not rearrange your repayment plan on the strength of a forwarded message.</p>
+
+<h2>11. Four Practical Steps</h2>
+<ul>
+    <li><strong>Find the contract and confirm three terms.</strong> Which benchmark tenor you are tied to, what the spread is, and how the repricing date and period are defined. These three determine your real sensitivity, far more directly than any market commentary.</li>
+    <li><strong>Use balance x move / 12 as mental arithmetic.</strong> To see what a move means for you, multiply and divide - no knowledge of the current rate required. Keep the conversion factor handy: CNY 1,000,000 of balance is about CNY 83 a month per 0.10 percentage point.</li>
+    <li><strong>Read the change against annual cash flow, not one month.</strong> A single instalment looks small, but the effect accumulates across a repricing period into a three- or four-figure sum that belongs in the household budget.</li>
+    <li><strong>Model both prepayment treatments before deciding.</strong> Shortening the term and reducing the payment give different results; add any penalty and your emergency-fund requirement on top. Investing assumptions can be checked against the <a href="/en/calculators/compound-interest">compound interest calculator</a> before you compare them with the loan.</li>
+</ul>
+
+<p>Rate direction cannot be forecast, but contract terms can be read. Know your benchmark tenor, your spread, your repricing date, your outstanding balance and your remaining instalments, and the uncontrollable part shrinks to the minimum. Start by running your own numbers through the <a href="/en/calculators/mortgage">mortgage calculator</a>, compare plans side by side in the <a href="/en/calculators/loan-compare">loan comparison calculator</a>, and if a housing fund loan is part of the picture, size that portion with the <a href="/en/calculators/housing-fund">housing fund calculator</a>. For the wider background on loan types and rate structures, see the <a href="/blog/en/loan-comparison-guide">loan comparison guide</a>.</p>
+
+            <div class="blog-cta">
                 <p><strong>Online <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-calculator"></use></svg> Mortgage Calculator</strong></p>
                 <p>Free to use, no download required</p>
                 <p><a href="/en/calculators/mortgage"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-arrow-right"></use></svg> Use <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-calculator"></use></svg> Mortgage Calculator Now</a></p>
             </div>
         <div class="article-bottom-tags"><a href="/en/tags/finance.html" class="tag tag-finance" data-tag="finance"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-coins"></use></svg> Finance</a></div>
-                    <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> Related Articles</h3><ul><li><a href="/blog/en/compound-interest-guide">Compound Interest: Formula & Investment Guide</a></li><li><a href="/blog/en/car-loan-calculator-guide">Car Loan Calculator Guide: Rates & Monthly Payment</a></li><li><a href="/blog/en/equal-installment-vs-equal-principal">Equal Installment vs Equal Principal: Real Case Comparison</a></li><li><a href="/blog/en/tax-deduction-guide-2026">2026 Tax Deduction Guide: Complete Overview</a></li></ul></div>
+                    <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> Related Articles</h3><ul><li><a href="/blog/en/loan-comparison-guide">Loan Comparison Calculator: Compare Different Loan Plans</a></li><li><a href="/blog/en/equal-installment-vs-equal-principal">Equal Installment vs Equal Principal: Which to Choose?</a></li><li><a href="/blog/en/housing-fund-loan-guide">Housing Fund Loan Guide 2026: Limits, Balances and City Comparison</a></li><li><a href="/blog/en/compound-interest-guide">Compound Interest vs Simple Interest: How Big Is the Gap?</a></li></ul></div>
             </article>
 
         <div class="like-section">

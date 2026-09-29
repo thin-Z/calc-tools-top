@@ -33,6 +33,54 @@
 <link rel="stylesheet" href="../../css/style.css">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Electricity Cost Calculator: Appliance Power Consumption Guide","description":"Electricity bill formula, appliance power consumption reference, and energy saving tips to help estimate monthly costs.","author":{"@type":"Person","name":"Calc-Tools Editor"},"datePublished":"2026-07-02","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.calc-tools.top/blog/en/electricity-cost-guide"},"publisher":{"@type":"Organization","name":"ToolBox Inside"}}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.calc-tools.top/blog/en/"},{"@type":"ListItem","position":3,"name":"Electricity Cost Calculator Guide: Appliance Power Usage","item":"https://www.calc-tools.top/blog/en/electricity-cost-guide"}]}</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "How many kWh does an air conditioner really use overnight?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Start with the rated ceiling: a 1.5 HP unit at 1250 W for 8 hours is about 10 kWh. An inverter model reduces frequency at setpoint and typically averages only about 60 percent of the rating, which lands near 6 kWh. The reliable answer comes from running that unit alone and taking an 8-hour meter difference."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is standby power worth bothering about?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, but judge it in aggregate. Six devices averaging 3 W each draw 18 W continuously: 0.432 kWh a day, about 157.68 kWh a year, roughly 94.61 at the illustrative 0.6 rate. Individually trivial, collectively equal to about half a month of full-load air conditioning."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "The bill jumped compared with last month. What should I check first?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Pricing before consumption. First check whether cumulative use crossed a tier threshold and whether the period covers more days; then recall any newly added high-power device; then run an isolation test with everything switchable turned off to see whether the meter still advances. Suspect metering or a neighbour's load only after that."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is time-of-use pricing worthwhile, and how do I judge it with my own data?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Ignore the monthly total and look at the daily curve. Record or export a week of per-period energy, work out what share of it can be completed in the off-peak window (washing, water heating, EV charging), then compare the local peak-to-off-peak spread against the peak-hour load you cannot move. Window definitions and prices are published by your own utility."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Why does the nameplate rating disagree with real consumption?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The nameplate states rated or maximum input power, an upper bound. Intermittent loads such as fridges and washers and modulating loads such as inverter air conditioners all run below it. Ageing equipment can run at or above the rating for long stretches because of dust, frost or worn seals, and that kind of fault-driven consumption only shows up in an isolation test."
+            }
+        }
+    ]
+}
+</script>
 <script src="/js/i18n.js" defer></script><script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>
 <body>
@@ -57,28 +105,119 @@
             </nav>
 <div class="article-tags"><a href="/en/tags/life.html" class="tag tag-life" data-tag="life"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-flower"></use></svg> Lifestyle</a></div>
 <p class="blog-meta"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-newspaper"></use></svg> 2026-07-02 · Calc-Tools Editor</p>
-<h1>Electricity Cost Calculator: Appliance Power Consumption Guide</h1><p>Electricity cost depends on power draw, usage time, and your tariff. Estimating an appliance's running cost helps you cut waste and budget accurately.</p>
-<h2>Power, Time, and Cost</h2>
-<p>Cost equals power in kilowatts times hours used times the price per kWh. A 2 kW heater running 3 hours at ¥0.6/kWh costs about ¥3.6 per day. The calculator does this for any device.</p>
-<h2>Finding an Appliance's Wattage</h2>
-<p>Check the label or manual for watts. Common references: a fridge runs 100-200 W, a laptop 50-90 W, and an air conditioner often 1-2.5 kW while cooling.</p>
-<h2>Standby Power Adds Up</h2>
-<p>Devices left on standby still draw a little power 24/7. A few watts across many devices can equal a full appliance running a couple of hours a day.</p>
-<h2>Cutting the Bill</h2>
-<p>Shift heavy loads to off-peak hours if your tariff is time-of-use, unplug rarely used devices, and prioritize efficient replacements for items you use daily.</p>
-<h2>Appliances Ranked by Running Cost</h2>
-<p>The biggest costs usually come from heating and cooling: air conditioners, water heaters, space heaters, and electric ovens. Small electronics cost little individually but add up when used daily.</p>
-<p>Rank your own devices with the calculator and target the top three for changes first. Fixing the biggest consumers delivers most of the savings with the least effort.</p>
-<h2>How to Estimate an Appliance's Cost</h2>
-<ol><li>Find the wattage on the appliance label or manual.</li><li>Enter the power, the hours you use it per day, and your price per kWh.</li><li>Read the daily and monthly estimates, then rank your appliances by cost.</li></ol>
-<p>Use your real usage pattern rather than the rated maximum—an air conditioner running intermittently costs far less than one running flat out.</p>
-<p><strong>Quick tip:</strong> revisit your estimate each season. Heating and cooling dominate costs, so the ranking of your appliances shifts between summer and winter.</p>
+<h1>Electricity Cost Calculator: Appliance Power Consumption Guide</h1>
+<p>When a bill looks wrong, two questions matter: which appliance is actually responsible, and how would you know? This guide answers both by focusing on <strong>measurement</strong> rather than tariff tables. Tier thresholds, time-of-use windows and unit prices differ by region and are published by your own utility; the <a href="/en/calculators/electricity">electricity cost calculator</a> already applies whatever rate you type in. What no calculator can verify is whether the watts and hours you entered are real. That part is a job for your meter and a short checklist.</p>
+<p>Every wattage below is a <strong>typical value, so check your own nameplate</strong>. Every cost figure uses an <strong>illustrative rate of 0.6 per kWh</strong>, which is not a real tariff anywhere; substitute the unit price printed on your bill and recompute.</p>
+<h2>1. Four Quantities That Get Mixed Up</h2>
+<p>Confusing these four is the single most common source of wrong household estimates.</p>
+<ul>
+<li><strong>Power (W or kW)</strong>: how fast a device draws energy at a given instant. It is printed on the nameplate and describes a capability ceiling, not actual consumption.</li>
+<li><strong>Runtime (hours)</strong>: the time the device is genuinely running. A plugged-in appliance is not necessarily an operating one.</li>
+<li><strong>Energy (kWh)</strong>: the combined result of power and runtime. It is the only thing your bill actually charges for.</li>
+<li><strong>Cost</strong>: energy multiplied by the unit price. The price is set by your local tariff and is not a variable you control.</li>
+</ul>
+<p>The conversion is a single line, but the units must be respected: <strong>energy (kWh) = power (W) x runtime (hours) / 1000</strong>. The division by 1000 exists because one kWh equals one kilowatt-hour while nameplates are printed in watts; if the figure is already in kW, multiply directly. For the underlying watt-to-kilowatt and joule conversions, a <a href="/en/calculators/unit-converter">unit converter</a> is useful for double-checking.</p>
+<p><strong>Why does the nameplate usually overstate real draw?</strong> Because it lists the <strong>rated or maximum input power</strong>, taken under the least favourable operating condition. A fridge compressor is not running 24 hours a day, an inverter air conditioner drops to a low frequency once the setpoint is reached, and a washing machine only approaches its rating during wash and spin. The exception runs the other way: ageing appliances with dust build-up, heavy frost or worn seals can sit at or above the rated figure for hours on end. The practical rule is therefore: <strong>use the nameplate as the upper bound, then adjust for how the device actually runs.</strong></p>
+<h2>2. Verify the Estimate Against Your Own Meter</h2>
+<p>Multiplying power by time gives an estimate; the meter gives evidence. A verification takes three steps:</p>
+<ol>
+<li><strong>Write down the starting reading</strong> during a steady period, avoiding cooking and shower peaks, and record the date and time alongside it.</li>
+<li><strong>Change one thing only</strong> — for example, skip the air conditioner tonight — and otherwise keep your habits identical.</li>
+<li><strong>Read again after 24 hours and subtract</strong>. The difference is the real energy used in that window; multiply by your unit price to get the cost.</li>
+</ol>
+<p>The same method isolates a single appliance: overnight, leave only one device running (the fridge, for instance) and the 8 to 10 hour difference becomes its measured consumption. Note that mechanical and smart meters do not present readings the same way. Many smart meters cycle through total energy and per-period figures on the display, so confirm which value is on screen first; otherwise it is easy to record a peak-period figure as if it were the total.</p>
+<p>A less tedious route is the usage detail in your utility app, which in many regions offers daily or even hourly curves. Compare a hot day's curve against your per-appliance estimates: <strong>the residual gap is the load you never listed</strong> — router, set-top box, lighting, shared areas. That gap is usually larger than expected, and it is where an investigation should begin.</p>
+<h2>3. Typical Appliance Power and Hourly Consumption</h2>
+<p>The table below lists typical power and the energy used during one hour of continuous operation. Pay attention to the last column: <strong>only for continuously running loads does "hourly energy x hours" hold directly</strong>. Intermittent loads must be scaled to their real runtime. All figures are <strong>typical values; check your own nameplate</strong>.</p>
+<table>
+<tr><th>Appliance</th><th>Typical power (W)</th><th>Energy per hour running (kWh)</th><th>How it actually behaves</th></tr>
+<tr><td>1.5 HP air conditioner (cooling, full load)</td><td>about 1250</td><td>about 1.25</td><td>Inverter models reduce frequency at setpoint, so average draw is lower</td></tr>
+<tr><td>Electric water heater (heating)</td><td>about 2000</td><td>about 2.00</td><td>Full power only while heating; standby keeps a low but constant draw</td></tr>
+<tr><td>Refrigerator (compressor running)</td><td>about 150</td><td>about 0.15</td><td>Compressor cycles on and off, so daily energy is far below "0.15 x 24"</td></tr>
+<tr><td>Washing machine (wash phase)</td><td>about 400</td><td>about 0.40</td><td>Wash and spin differ; a standard cycle usually stays under 1 kWh</td></tr>
+<tr><td>Rice cooker (heating)</td><td>about 700</td><td>about 0.70</td><td>Switches to low-power warming after boiling, below the rating</td></tr>
+<tr><td>Microwave oven</td><td>about 1200</td><td>about 1.20</td><td>Used for minutes at a time, so the daily total is small</td></tr>
+<tr><td>Induction hob</td><td>about 2000</td><td>about 2.00</td><td>Power is selectable, so real use depends on the setting chosen</td></tr>
+<tr><td>Desktop computer with monitor</td><td>about 300</td><td>about 0.30</td><td>Idle and full-load differ widely; machines left on deserve their own line</td></tr>
+<tr><td>Laptop</td><td>about 65</td><td>about 0.065</td><td>Draw falls sharply once the battery is full</td></tr>
+<tr><td>55-inch LED television</td><td>about 120</td><td>about 0.12</td><td>Higher brightness costs more; volume has almost no effect</td></tr>
+<tr><td>Router and optical modem</td><td>about 10</td><td>about 0.01</td><td>Never switched off, so count it over 24 hours</td></tr>
+<tr><td>LED light bulb</td><td>about 9</td><td>about 0.009</td><td>Tiny individually, but worth counting where many burn for hours</td></tr>
+<tr><td>Electric fan</td><td>about 60</td><td>about 0.06</td><td>Far cheaper than air conditioning and a good companion to it</td></tr>
+<tr><td>Set-top box (standby)</td><td>about 5</td><td>about 0.005</td><td>Standby never reaches zero, and the annual total is not negligible</td></tr>
+</table>
+<p>Read the table as one sentence: <strong>the magnitude of a bill is set by high-power heating and cooling appliances, not by the appliances you own most of.</strong> One hour of a 1.5 HP air conditioner at full load equals running 125 nine-watt LED bulbs for the same hour. Saving effort should therefore go to air conditioning, water heating and space heating first, not to counting light bulbs.</p>
+<h2>4. Three Worked Examples</h2>
+<p><strong>Example one: a 1.5 HP air conditioner running 8 hours.</strong> At the rated 1250 W: 1250 x 8 / 1000 = <strong>10 kWh</strong>. At the illustrative rate of 0.6 per kWh, that night costs <strong>6.00</strong>; over 30 days it reaches 300 kWh and <strong>180</strong>. But an inverter unit reduces frequency at setpoint. If average draw is only 60 percent of the rating, that is 750 W, giving 6 kWh a night, 180 kWh a month and <strong>108</strong> — a gap of <strong>72 per month</strong> from the same machine. Because the assumptions change the answer that much, pair "rated power x hours" with a runtime correction, and if you want certainty, measure one night with the meter method.</p>
+<p><strong>Example two: standby power over a full year.</strong> Suppose six devices sit on standby permanently — set-top box, television, desktop, monitor, speaker and a charger — averaging 3 W each, so 18 W together. Then <strong>18 x 24 / 1000 = 0.432 kWh per day</strong>, which over 365 days becomes <strong>157.68 kWh</strong>, roughly <strong>94.61</strong> at the illustrative 0.6 rate. It looks trivial, yet it equals about <strong>15.8 days</strong> of the air conditioner running at 10 kWh a day. That is the true scale of the phantom load: a few watts each, multiplied by 8760 hours.</p>
+<p><strong>Example three: a fridge nameplate must not be multiplied by 24.</strong> A fridge rated at 150 W, wrongly treated as continuous, gives 150 x 24 / 1000 = 3.6 kWh per day, 108 kWh a month and 64.80 at the illustrative rate. Compressors cycle, though: if the compressor accumulates 8 hours a day, 150 x 8 / 1000 = 1.2 kWh per day, 36 kWh a month and <strong>21.60</strong>. The two answers differ by <strong>exactly three times</strong>, which is why nameplate-based fridge estimates routinely overstate the bill by more than double.</p>
+<h2>5. What Else Appears on a Bill</h2>
+<p>Residential bills are mostly energy charges, plus tier surcharges, time-of-use differences and statutory levies collected in proportion to consumption. Commercial bills carry more lines, and two of them barely depend on how many kWh were used, which makes them easy to misread. A <strong>capacity charge</strong> is billed on transformer capacity or maximum demand, in effect paying for supply being available at any moment. A <strong>power-factor adjustment</strong> reflects the measured power factor: a compliant installation earns a reduction and a poor one is surcharged. How each is calculated and assessed is published by your local utility; this section only helps you recognise what the lines mean.</p>
+<table>
+<tr><th>Bill line</th><th>Usually applies to</th><th>When it appears</th><th>Relation to consumption</th></tr>
+<tr><td>Energy charge</td><td>All customers</td><td>Every billing period</td><td>Proportional to kWh and normally the bulk of the bill</td></tr>
+<tr><td>Tier surcharge</td><td>Residential customers on tiered pricing</td><td>Once cumulative use passes a threshold</td><td>Only the excess above the threshold is repriced, not the whole bill</td></tr>
+<tr><td>Time-of-use difference</td><td>Customers who opted into peak and off-peak pricing</td><td>Applied across peak, standard and off-peak windows</td><td>Depends on when energy was used, not how much</td></tr>
+<tr><td>Capacity charge</td><td>More common for commercial customers</td><td>Billed on transformer capacity or maximum demand</td><td>Barely related to the kWh used in the period</td></tr>
+<tr><td>Power-factor adjustment</td><td>More common for commercial customers</td><td>Triggered by the measured power factor</td><td>A credit or surcharge that does not map directly to kWh</td></tr>
+<tr><td>Statutory levies</td><td>Collected with energy charges</td><td>Every period, in proportion to use</td><td>Scales with kWh at rates set locally</td></tr>
+<tr><td>Shared-area and resold energy</td><td>Master-metered buildings and rentals</td><td>When a landlord or management resells power</td><td>Depends on the resale arrangement and may not match your own meter</td></tr>
+</table>
+<p>Read a bill in a fixed order: first the <strong>energy for the period</strong> against last month and the same month last year; then whether the <strong>unit price changed</strong>, through a tier threshold or a higher time window; and only then the <strong>non-energy lines</strong>. Most "why did my bill go up" puzzles are already answered by the first two steps.</p>
+<h2>6. Investigating a Sudden Increase</h2>
+<ol>
+<li><strong>Rule out pricing first.</strong> Check whether cumulative use crossed a tier threshold, whether this period covers more days, and whether the season has changed. No appliance needs to be touched for this step.</li>
+<li><strong>Look for a new load.</strong> Recall whether a space heater, dryer, EV charger or dehumidifier was added or started being used. Such devices often add tens of kWh in one month.</li>
+<li><strong>Run an isolation test.</strong> Switch off everything that can be switched off while keeping essentials such as the fridge running, then watch the meter for an hour or two. If it still advances noticeably, restore circuits one at a time to locate the culprit.</li>
+<li><strong>Check for fault-driven consumption.</strong> These faults never raise an alarm, they just quietly consume: a worn fridge door seal or heavy frost keeps the compressor running far longer; low refrigerant makes an air conditioner run at high frequency continuously; a drifting water-heater thermostat reheats repeatedly; a leaking pipe or cistern triggers a booster pump again and again.</li>
+<li><strong>Suspect metering and neighbours last.</strong> In master-metered or resold settings, shared areas, line losses and a neighbour's use can all land on your bill. At that point, ask how the main and sub-meters are read rather than hunting further inside your home.</li>
+</ol>
+<p>The order matters because it separates "the pricing changed" from "the consumption changed". Only the second is worth your effort. To see how much each load contributes, convert monthly kWh per appliance into shares with a <a href="/en/calculators/percentage-calc">percentage calculator</a>; the largest share is the first thing to act on.</p>
+<h2>7. Rank Savings Actions by Payback</h2>
+<p>Saving advice often fails because it arrives unsorted: replacing a major appliance may cost thousands, while raising an air-conditioner setpoint costs nothing. The test is simply <strong>payback = cost / annual saving</strong>, and an action is worth taking only when its payback is clearly shorter than the remaining life of the equipment.</p>
+<table>
+<tr><th>Action</th><th>Cost</th><th>Speed of effect</th><th>Limits and caveats</th></tr>
+<tr><td>Raise the air-conditioner setpoint and add a fan</td><td>None</td><td>Immediate</td><td>Comfort depends on humidity; a dirty filter cancels much of the gain</td></tr>
+<tr><td>Unplug rarely used devices and switch off power strips</td><td>None</td><td>Immediate</td><td>Excludes the router, fridge and anything that must stay on</td></tr>
+<tr><td>Move shiftable loads to off-peak hours</td><td>None</td><td>Next billing period</td><td>Only works once time-of-use pricing is active; shifting alone saves nothing otherwise</td></tr>
+<tr><td>Clean filters, defrost the freezer, replace door seals</td><td>Low</td><td>Days to weeks</td><td>Restorative maintenance; the gain depends on how degraded the unit was</td></tr>
+<tr><td>Replace lighting with LEDs</td><td>Low</td><td>Immediate</td><td>Small per unit; limited benefit where lighting was never a large share</td></tr>
+<tr><td>Replace a major appliance with a top-efficiency model</td><td>High</td><td>Over the unit's life</td><td>Compute payback first: cost divided by annual saving, shorter than remaining life to be worthwhile</td></tr>
+</table>
+<p>Use that table together with your meter readings: quantify, rank, then do only what sits at the top. If a major replacement is on the table, the reasoning about paying now and recovering over later years resembles the arithmetic in the <a href="/blog/en/compound-interest-guide">compound versus simple interest</a> guide. Running costs for a car and for a home often sit in the same budget, so the method in the <a href="/blog/en/fuel-cost-guide">fuel cost calculator</a> guide is worth comparing. For watt, kilowatt and joule conversions, the <a href="/blog/en/unit-converter-guide">unit converter guide</a> has a fuller reference.</p>
+<h2>8. Frequently Asked Questions</h2>
+<dl>
+<dt>How many kWh does an air conditioner really use overnight?</dt>
+<dd>Start with the rated ceiling: a 1.5 HP unit at 1250 W for 8 hours is about 10 kWh. An inverter model reduces frequency at setpoint and typically averages only about 60 percent of the rating, which lands near 6 kWh. The reliable answer comes from running that unit alone and taking an 8-hour meter difference.</dd>
+<dt>Is standby power worth bothering about?</dt>
+<dd>Yes, but judge it in aggregate. Six devices averaging 3 W each draw 18 W continuously: 0.432 kWh a day, about 157.68 kWh a year, roughly 94.61 at the illustrative 0.6 rate. Individually trivial, collectively equal to about half a month of full-load air conditioning.</dd>
+<dt>The bill jumped compared with last month. What should I check first?</dt>
+<dd>Pricing before consumption. First check whether cumulative use crossed a tier threshold and whether the period covers more days; then recall any newly added high-power device; then run an isolation test with everything switchable turned off to see whether the meter still advances. Suspect metering or a neighbour's load only after that.</dd>
+<dt>Is time-of-use pricing worthwhile, and how do I judge it with my own data?</dt>
+<dd>Ignore the monthly total and look at the daily curve. Record or export a week of per-period energy, work out what share of it can be completed in the off-peak window (washing, water heating, EV charging), then compare the local peak-to-off-peak spread against the peak-hour load you cannot move. Window definitions and prices are published by your own utility.</dd>
+<dt>Why does the nameplate rating disagree with real consumption?</dt>
+<dd>The nameplate states rated or maximum input power, an upper bound. Intermittent loads such as fridges and washers and modulating loads such as inverter air conditioners all run below it. Ageing equipment can run at or above the rating for long stretches because of dust, frost or worn seals, and that kind of fault-driven consumption only shows up in an isolation test.</dd>
+</dl>
+<h2>9. Four Common Misconceptions</h2>
+<p><strong>Misconception one: treating power as consumption.</strong> A 150 W fridge calculated over 24 continuous hours gives 3.6 kWh a day, while the real figure is about 1.2 kWh, an overstatement of exactly three times. The corrective question is always whether the device really runs at full power the whole time.</p>
+<p><strong>Misconception two: equating saving energy with switching off lights.</strong> Now that LEDs dominate, lighting is a modest share of household energy, and effort spent there returns far less than effort spent on cooling, heating and hot water. The big loads are thermal, not luminous.</p>
+<p><strong>Misconception three: assuming a better efficiency grade always means lower consumption.</strong> Efficiency grades compare units of similar capacity and performance; they are not absolute consumption figures. A large top-grade fridge can easily out-consume a small second-grade one. Match capacity to need first, then compare grades.</p>
+<p><strong>Misconception four: watching the unit price instead of the kWh.</strong> The price is an external variable set by your local tariff. Consumption is the part you can influence, so reducing kilowatt-hours pays more reliably than following price movements.</p>
+<h2>10. Five Practical Recommendations</h2>
+<ul>
+<li><strong>Inventory the house once.</strong> List appliances as high-power, always-on or intermittent, estimate each with the table in section 3, and identify the top three by monthly energy.</li>
+<li><strong>Measure those top three.</strong> Run one isolation test each; within a couple of weeks you will have credible numbers behind every later decision.</li>
+<li><strong>Order actions with zero-cost first.</strong> Do the free ones (setpoints, unplugging, shifting load), then low-cost maintenance, and consider replacement last.</li>
+<li><strong>Re-rank every season.</strong> Cooling and heating dominate annual use and swap places between summer and winter, so a ranking made in spring no longer holds in July.</li>
+<li><strong>Read every bill the same way.</strong> Energy for the period, whether the unit price moved, then the non-energy lines — that habit catches anomalies early.</li>
+</ul>
+<p>The controllable part of a bill is never the price but the kilowatt-hours. Separate power from runtime, energy and cost; anchor your estimates to real meter readings; then rank the actions by payback, and most households find no more than three appliances genuinely need attention. To work through every appliance and total up a month quickly, use the <a href="/en/calculators/electricity">electricity cost calculator</a>; to turn those results into shares of the total, the method described in the <a href="/blog/en/percentage-calculation-tips">percentage calculator guide</a> does the arithmetic.</p>
 <div class="blog-cta">
                 <p><strong>Online <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-calculator"></use></svg> Electricity Cost Calculator</strong></p>
                 <p>Free to use, no download required</p>
                 <p><a href="/en/calculators/electricity"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-arrow-right"></use></svg> Use <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-calculator"></use></svg> Electricity Cost Calculator Now</a></p>
             </div>
-            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> Related Articles</h3><ul><li><a href="/blog/en/fuel-cost-guide">Fuel Cost Calculator: How to Calculate Car Fuel Consumption</a></li><li><a href="/blog/en/unit-converter-guide">Unit Converter Guide: Common Unit Conversion Reference</a></li></ul></div>
+            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> Related Articles</h3><ul><li><a href="/blog/en/fuel-cost-guide">Fuel Cost Calculator: How to Calculate Car Fuel Consumption</a></li><li><a href="/blog/en/percentage-calculation-tips">Percentage Calculator Guide: Common Percentage Calculation Tips</a></li><li><a href="/blog/en/unit-converter-guide">Unit Converter Guide: Common Unit Conversion Reference</a></li><li><a href="/blog/en/compound-interest-guide">Compound Interest vs Simple Interest: How Big Is the Gap?</a></li></ul></div>
 <div class="article-bottom-tags"><a href="/en/tags/life.html" class="tag tag-life" data-tag="life"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-flower"></use></svg> Lifestyle</a></div>
 
         <div class="like-section">

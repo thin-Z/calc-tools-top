@@ -53,6 +53,19 @@
     }
     </script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"博客","item":"https://www.calc-tools.top/blog/zh/"},{"@type":"ListItem","position":3,"name":"图片转Base64指南 - HTML与CSS嵌入图片的最佳方式与优缺点","item":"https://www.calc-tools.top/blog/zh/image-to-base64-guide"}]}</script>
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        { "@type": "Question", "name": "Base64 图片加载会更快吗？", "acceptedAnswer": { "@type": "Answer", "text": "不一定，取决于你把哪一段算进「更快」。内联省掉的是一个往返延迟和一次请求的固定开销，在冷启动、图片很小、且只出现一次时确实更快。但字节总量没有变少，一旦图片在多页复用或者体积偏大，省下的延迟会被重复下载的字节反超。" } },
+        { "@type": "Question", "name": "多大的图不该内联？", "acceptedAnswer": { "@type": "Answer", "text": "只按体积定阈值是权宜之计，4 KB 这个常见默认值来自「一次请求的头部开销约等于 3 KB 图片的编码增量」。更该先问复用：凡是会出现在多个页面、或者以后可能被替换的图片，无论多小都建议外链；只有一次性的、极小的、且确定不会改的资源，内联才划算。" } },
+        { "@type": "Question", "name": "CSS 里内联背景图有什么坑？", "acceptedAnswer": { "@type": "Answer", "text": "三个。样式表是渲染阻塞资源，内联进去的字节全部落在首屏关键路径上；改一个内联背景图会让整份样式表的哈希失效，回访用户重下整份文件；如果样式表被多个页面共用而只有一页用到这张图，其余页面都在为它付费。" } },
+        { "@type": "Question", "name": "内联会让图片变模糊吗？", "acceptedAnswer": { "@type": "Answer", "text": "编码本身不会，Base64 是可逆的，解码后与源文件逐字节相同。看起来模糊通常来自之前那一步：为了让内联体积可以接受而先压缩或缩小了图片尺寸。把矢量图转成 Base64 位图才是真正的画质损失，它从任意分辨率都清晰退化成了固定像素。" } },
+        { "@type": "Question", "name": "单文件 HTML 交付时该内联多少？", "acceptedAnswer": { "@type": "Answer", "text": "此时内联是唯一选择，重点转向总量控制。先压后编是硬顺序：图片先用压缩工具处理到目标体积，再转 Base64；能换成矢量的一律换矢量，因为矢量内联后还能跟着文档一起被压缩。离线文档里如果有几十张图，放进一个单独的压缩包通常比全部内联更合适。" } }
+    ]
+}
+</script>
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>
@@ -79,44 +92,88 @@
             </nav>
             <div class="article-tags"><a href="/tags/utility.html" class="tag tag-utility" data-tag="utility"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-wrench"></use></svg> 工具</a></div>
             <p class="blog-meta"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-newspaper"></use></svg> 2026-07-02 · Calc-Tools 编辑</p>
-            <h1>图片转Base64：HTML和CSS中嵌入图片的最佳方式</h1><p>Base64编码可以将图片转换为纯文本格式，直接嵌入到HTML、CSS或JavaScript中，无需额外的HTTP请求。</p>
-<h2>什么是Base64图片编码？</h2>
-<p>Base64是一种将二进制数据转换为文本字符串的编码方式。图片Base64编码后可以直接写在HTML的src属性或CSS的background-image中。</p>
-<h2>适用场景</h2>
-<p><strong>小图标（<10KB）</strong>：减少HTTP请求，提升页面加载速度。</p>
-<p><strong>CSS Sprites替代方案</strong>：将多张小图标合并为一个Base64字符串。</p>
-<p><strong>邮件HTML</strong>：邮件客户端不支持外部资源引用，Base64嵌入是常用方案。</p>
-<h2>局限性</h2>
-<p>Base64编码会使图片体积增加约33%。大图不适合用Base64，因为会增加HTML/CSS文件大小，反而拖慢加载速度。一般建议10KB以下的小图标才考虑使用。</p>
-            <h2>如何使用图片转Base64工具</h2>
-<p>想减少小图请求时，按以下步骤生成嵌入代码：</p>
-<ul>
-<li><strong>第一步</strong>：上传或拖入图片，工具会读取其二进制内容。</li>
-<li><strong>第二步</strong>：选择输出格式，如直接可用的 data URI 或纯编码文本。</li>
-<li><strong>第三步</strong>：复制结果，粘贴到 HTML 的 src 或 CSS 的 url() 中。</li>
-</ul>
-<h2>常见问题（FAQ）</h2>
+            <h1>图片转Base64：HTML和CSS中嵌入图片的最佳方式</h1>
+<p>关于图片内联，流传最广的两句话是「Base64 会让体积膨胀三分之一」和「内联能减少请求、加快加载」。前一句只在某一种口径下成立，后一句在 HTTP/2 普及之后已经不再可靠。真正决定该不该内联的，其实不是图片有多大，而是三个很少被放在一起讨论的量：这张图由谁缓存、它的字节落在渲染路径的哪一段、以及它会在多少个页面里重复出现。本文把这三笔账分开算，并给出可以直接套用的临界点。</p>
+<p>文中的实测数据都可以复现：用 Node 内置的 zlib 读取本仓库里的真实资源即可，文件路径与字节数都写在正文里，结论不依赖任何一句「据说」。</p>
+<h2>一、内联省下的是一次请求，付出的却是三笔账</h2>
+<p>把一张图片写成 data URI，本质是把一次网络请求换成了字节：浏览器不必再为这个 URL 发起请求、等待响应，但这段字节必须跟着宿主文件一起到达。这笔交换有三项独立的成本，而多数文章只讨论第一项。</p>
+<p><strong>第一笔是体积。</strong>Base64 把每 3 字节编码成 4 个字符，源文件因此变长。源文件躺在仓库和磁盘上，它的大小有代价，但那个代价不是用户付的。</p>
+<p><strong>第二笔是缓存。</strong>外部图片有自己的 URL、自己的缓存条目、自己的失效时机。内联进 HTML 的图片没有独立身份，宿主文档一过期，它就得跟着重新下载一遍。</p>
+<p><strong>第三笔是路径。</strong>外部图片可以懒加载、可以调下载优先级、可以按屏幕宽度换一个分辨率。写在 HTML 或 CSS 里的字节，在浏览器读到它的那一刻就已经下载完了，上面这些手段一个都用不上。</p>
+<p>三笔账里，体积是被引用得最多的一项，而它对决策的影响恰恰最小。下一节用实测数字说明为什么。</p>
+<h2>二、同一张图的三种口径：文件字节、传输字节、解析字节</h2>
+<p>「膨胀 33%」描述的是文件字节。但文件不会被单独计费，真正被付费的是传输字节，而 HTML 与 CSS 在传输时几乎总是开着压缩。压缩算法面对一段 Base64 文本能做的事，比大多数人以为的多：Base64 每个字符只携带 6 位信息，却占了 8 位，这 2 位冗余正是压缩算法可以收回的部分。</p>
+<p>下面这组数字是在本机用 Node 22 的 zlib 实测的。数据源取不可压缩的随机字节，用来模拟「已经压缩过」的图片（PNG、JPEG、WebP 都属于这一类）；宿主文档取本文所在的这个博客页：</p>
+<table>
+<tr><th>图片原始大小</th><th>data URI 字符数</th><th>未压缩传输增量</th><th>gzip 传输增量</th><th>brotli 传输增量</th></tr>
+<tr><td>1 KB</td><td>1,390</td><td>+1,390 字节</td><td>+1,321 字节</td><td>+1,070 字节</td></tr>
+<tr><td>4 KB</td><td>5,486</td><td>+5,486 字节</td><td>+4,770 字节</td><td>+4,174 字节</td></tr>
+<tr><td>8 KB</td><td>10,946</td><td>+10,946 字节</td><td>+9,127 字节</td><td>+8,287 字节</td></tr>
+<tr><td>20 KB</td><td>27,330</td><td>+27,330 字节</td><td>+21,823 字节</td><td>+20,646 字节</td></tr>
+<tr><td>100 KB</td><td>136,558</td><td>+136,558 字节</td><td>+104,342 字节</td><td>+102,545 字节</td></tr>
+</table>
+<p>把传输增量除以原图大小，会得到一个反直觉的结果：1 KB 的图在 gzip 下要花掉自身大小的 1.29 倍来传输，4 KB 降到 1.16 倍，20 KB 是 1.07 倍，100 KB 只剩 1.02 倍；换用 brotli，100 KB 那一行几乎看不出差别（1.001 倍）。<strong>「内联会让页面变重三分之一」这句话，只在几百字节的尺度上近似成立，图越大越不成立。</strong></p>
+<p>可压缩的图则完全相反。同一个仓库里的 <code>assets/favicon.svg</code> 是 892 字节，转成 Base64 是 1,192 个字符；原文件 gzip 后只有 418 字节，而这段 Base64 文本 gzip 后仍有 700 字节 —— 传输量反而涨了 67%。矢量图和未压缩位图本来就压得很好，Base64 先把它们变成难压的 6 位符号，等于主动放弃了本来就有的压缩收益。这也解释了为什么矢量图标应该直接内联 SVG 标记，而不是转成 Base64。</p>
+<h2>三、临界点估算：把一次请求换算成字节</h2>
+<p>既然传输口径下体积不是主要矛盾，临界点就不该只按体积定，而应该先问「一次请求值多少字节」。换算关系只有一句：Base64 每多出 1 个字符，就对应 3 个原始字节，所以 <strong>1 KB 的请求开销等价于 3 KB 的图片字节</strong>。</p>
+<p>一次额外请求的固定开销是多少？在 HTTP/2 复用连接、头部压缩生效的前提下，剩下的是无法被压缩的那部分请求头（Cookie 等少量字段）加上响应头，量级在几百字节到 1 KB 出头。按上面的换算倒推，内联的字节临界点落在 <strong>3 KB 上下</strong>。</p>
+<p>主流构建工具的默认阈值正好在同一区间：Vite 的 <code>build.assetsInlineLimit</code> 默认 <strong>4,096 字节</strong>，webpack 5 的 asset 模块默认 <strong>8 KB</strong>。4,096 字节的图内联后是 5,464 个字符，多出 1,368 字节；8,192 字节的图多出 2,732 字节 —— 和一次带 Cookie 的图片请求的头部开销确实是同一个量级，不是拍脑袋定的。</p>
+<p>但要注意这些默认值是什么时候定下的。HTTP/1.1 时代浏览器对同一域名只开 6 条连接，第 7 张图必须排队等一个往返，请求数是真的瓶颈；多路复用把这个瓶颈挪走了，头部压缩又把重复头部的成本从每次上千字节压到几十字节。<strong>所以在今天的网络条件下，合理的阈值应该比这些默认值更低，而不是更高。</strong>继续照抄 4 KB 或 8 KB，最常见的后果是把本该独立缓存的资源塞进了文档。</p>
+<h2>四、四个真实算例</h2>
+<p><strong>算例一：一个 4 KB 的图标，正好卡在临界点上。</strong>4,096 字节的 PNG 内联后是 5,486 个字符（含 <code>data:image/png;base64,</code> 这 22 个字符的前缀），源文件多出 1,390 字节；在 gzip 链路上只多 4,770 字节。它换来的是省掉一次请求。如果这个图标只在一页出现、访客也只来一次，这笔交易是划算的。</p>
+<p><strong>算例二：同一个图标出现在 40 个页面上。</strong>这是内联最容易翻车的地方。外链时，访客在任意一页下载 4 KB，此后 40 个页面在缓存有效期内全部命中；内联之后，每个页面的 HTML 都各自带着 5,486 个字符，访客读了 6 页就下载了 6 份，合计 32,916 字节，是外链方案的 8 倍。图越小越不痛（几 KB 的差距只是噪声），图越大越致命。所以「这个资源被多少页面共用」这条判据，比「这个图标有多大」更值得先问。</p>
+<p><strong>算例三：12 个图标内联进同一份 CSS。</strong>假设每个图标 5 KB，内联后合计 81,936 字节（约 80 KB），全部落在一份渲染阻塞、带内容哈希长期缓存的样式表里。某天要改其中一个图标的一个像素：外链方案只需重新下载那 1 个图标（5 KB）；内联方案里整份样式表的哈希都会变，所有回访用户要重下 80 KB —— <strong>为了一处改动付出 16 倍的代价</strong>。构建工具能自动内联小于阈值的资源，但没有任何工具能替你判断「这个图标以后还会不会改」。</p>
+<p><strong>算例四：一张 57 KB 的分享图。</strong>仓库里的 <code>assets/og-image.png</code> 是 57,954 字节，转成 Base64 是 77,272 个字符（1.3333 倍）。实测它的传输代价：原文件 gzip 后 56,004 字节，Base64 文本 gzip 后 56,401 字节，只差 397 字节，也就是 0.7%。也就是说，只看传输，把这张 57 KB 的图内联进 HTML 几乎不花钱。但它绝不该被内联：它被多个页面共用、可以长期缓存、也不必进首屏关键路径；一旦塞进某份 HTML，那份 HTML 每次都会被完整重下。这个例子把结论压成一句话 —— <strong>体积不是判据，缓存与复用才是</strong>。</p>
+<h2>五、替代方案：多数场景根本轮不到 Base64</h2>
+<p>在动手编码之前，先确认没有更省事的做法。下面四类方案覆盖了绝大多数「想让图片不占一次请求」的需求。</p>
+<table>
+<tr><th>方案</th><th>适合什么</th><th>与 Base64 内联的差别</th></tr>
+<tr><td>SVG 精灵（sprite）</td><td>成套的界面图标</td><td>全部图标收在一个文件里：一次请求、一份缓存；改一个图标只失效这一个文件；符号可继承 currentColor，跟随文字颜色</td></tr>
+<tr><td>直接内联 SVG 标记</td><td>少量矢量图标</td><td>不需要编码，标记随 HTML 一起压缩；矢量可任意缩放，不受位图分辨率限制</td></tr>
+<tr><td>字体图标</td><td>早期项目的遗留方案</td><td>体积小但需要子集化，加载有空窗期，无障碍还要额外提供文本替代</td></tr>
+<tr><td>独立文件 + 长缓存</td><td>照片、内容图、所有大图</td><td>体积不膨胀、可单独失效、可懒加载、可按屏幕宽度切换分辨率</td></tr>
+</table>
+<p>本站自己的做法就是一个现成的对照：全部界面图标收在一个 SVG 精灵文件里，53,475 字节、115 个 symbol，平均每个图标 465 字节；gzip 后 7,469 字节，brotli 后 6,310 字节。它是一次请求、一份缓存，颜色跟随主题。如果把这 115 个图标换成 1 KB 的 Base64 位图内联，每个页面光是图标就要多背 154 KB，而且颜色被烧死在像素里，暗色模式还得再准备一套。这就是「不用 Base64」最直观的收益。</p>
+<p>反过来，Base64 真正不可替代的场合只有两类：一是通道只接受文本，例如 JSON 接口里必须携带一张小图，或者需要一个不依赖外部资源的单文件 HTML；二是宿主环境禁止外部引用，例如某些邮件模板。即便是第二类也要留个心眼 —— 主流邮箱客户端对 <code>data:</code> 图像的支持并不统一，不少会直接剥离，所以发信前必须在真实客户端里验证，不能只看本地预览。</p>
+<p>编码本身的操作很直接，把图片交给<a href="/zh/image/base64">图片转 Base64 工具</a>就能拿到可直接粘贴的字符串；纯文本的编码需求则用<a href="/zh/text/base64-encode">Base64 编解码工具</a>。</p>
+<h2>六、四个容易被忽略的连带问题</h2>
+<p><strong>禁用 data: 的 CSP 会让内联图静默失效。</strong>内联图和外部图片受同一条 img-src 规则管辖，但只有内联图依赖 <code>data:</code> 这个来源。安全策略一旦收紧、把 <code>data:</code> 从 img-src 里去掉，外链图照常显示，内联图会直接变成裂图，而且在控制台之外看不到任何异常。反过来，本站在 img-src 里同时保留了 <code>data:</code> 和 <code>blob:</code>，所以编码预览和结果都能正常渲染 —— 这不是巧合，而是一项必须显式声明的许可。</p>
+<p><strong>内联图无法懒加载。</strong>HTML 里的 data URI 会随文档一起到达，无论它在首屏还是第二十屏，无论用户是否会滚动到那里。一个折叠面板里藏着的十张内联小图，每个访客都要付满全价；换成外部文件加 <code>loading=&quot;lazy&quot;</code>，不展开就不下载。</p>
+<p><strong>内联图无法响应式切换。</strong>同一个 data URI 对所有设备生效，手机拿到的字节和高分屏桌面完全一样。想让高分屏不模糊，就得内联 2 倍甚至 3 倍像素的版本，而这份额外的字节会强加给所有设备；外链方案可以用 srcset 让浏览器自己挑，这种取舍在内联之后就不存在了。</p>
+<p><strong>颜色与主题被固化在字节里。</strong>Base64 位图解码后是一张固定像素的图，CSS 改不了它的颜色。深色模式、品牌换色、悬停反白，这些需求落到位图上都得再内联一份。矢量方案（精灵里的 symbol、直接内联的 SVG 标记）可以直接继承 currentColor，一份资源适配所有主题。</p>
+<h2>七、常见问题（FAQ）</h2>
 <dl>
-<dt>Base64 图片能在所有浏览器用吗？</dt>
-<dd>能。所有现代浏览器都支持 data URI，IE8 及以上也支持，放心用于主流项目。</dd>
-<dt>为什么文件反而变大了？</dt>
-<dd>Base64 编码体积约为原图的 1.33 倍，所以只适合小图标；大图请继续用普通文件引用。</dd>
-<dt>可以直接嵌在 CSS 里吗？</dt>
-<dd>可以。写法为 background-image: url("data:image/png;base64,...")，适合做背景小图或占位。</dd>
-<dt>转换后图片模糊了吗？</dt>
-<dd>不会。Base64 只是编码，不改变像素，解码后与原图完全一致。</dd>
+<dt>Base64 图片加载会更快吗？</dt>
+<dd>不一定，取决于你把哪一段算进「更快」。内联省掉的是一个往返延迟和一次请求的固定开销，在冷启动、图片很小、且只出现一次时确实更快。但字节总量没有变少（传输口径下还会轻微增加），一旦图片在多页复用或者体积偏大，省下的那点延迟会被重复下载的字节反超。</dd>
+<dt>多大的图不该内联？</dt>
+<dd>只按体积定阈值是权宜之计。4 KB 是构建工具的常见默认值，它的依据是「一次请求的头部开销约等于 3 KB 图片的编码增量」。更该先问的是复用问题：凡是会出现在多个页面、或者以后可能被替换的图片，无论多小都建议外链；只有一次性的、极小的、且确定不会改的资源，内联才划算。</dd>
+<dt>CSS 里内联背景图有什么坑？</dt>
+<dd>三个。其一，样式表是渲染阻塞资源，内联进去的字节全部落在首屏关键路径上；其二，改一个内联背景图会让整份样式表的哈希失效，所有回访用户重下整份文件；其三，这份样式表如果被多个页面共用，而其中只有一页真正用到这张图，其余页面都在为它付费。</dd>
+<dt>内联会让图片变模糊吗？</dt>
+<dd>编码本身不会。Base64 是可逆的，解码后与源文件逐字节相同。看起来模糊通常是另一个原因：为了让内联后的体积可以接受，你先把图压小或者缩小了尺寸，损失的画质来自那一步，不是来自编码。反过来说，把矢量图转成 Base64 位图才是真正的画质损失 —— 它从「任意分辨率都清晰」退化成了固定像素。</dd>
+<dt>单文件 HTML 交付时该内联多少？</dt>
+<dd>这种情况下内联是唯一选择，重点转向总量控制。先压后编是硬顺序：图片先用压缩工具处理到目标体积，再转 Base64；能换成矢量的一律换矢量，因为矢量内联后还能跟着文档一起被压缩，位图内联则是把已经压好的字节再吹大一遍。离线文档里如果有几十张图，与其全部内联，不如考虑把它们放进一个单独的压缩包。</dd>
 </dl>
-<h2>小贴士</h2>
+<h2>八、四个常见误区</h2>
+<p><strong>误区一：把图片大小当成唯一判据。</strong>「小于 10 KB 就内联」这类规则只回答了体积问题，没有回答复用问题。一张 4 KB 的图标若出现在 40 个页面上，内联会让每位访客重复下载它；一张 57 KB 的分享图若只在一个位置出现，内联的传输代价几乎为零。判据的顺序应该是先看复用、再看大小。</p>
+<p><strong>误区二：构建工具的默认阈值是行业共识，照抄就行。</strong>4 KB 和 8 KB 是 HTTP/1.1 时代的产物，那时同域名连接数被限制在个位数，请求之间会互相排队。多路复用让请求可以并行，头部压缩让单次请求的头部成本从上千字节降到几十字节，临界点因此下移。照抄默认值，最常见的后果是把本该独立缓存的资源内联进了文档。</p>
+<p><strong>误区三：Base64 之后的体积是原来的 1.33 倍，所以页面就重了三分之一。</strong>这里混淆了文件口径和传输口径。Base64 引入的是每字符 2 位的表示冗余，压缩链路能收回大部分：实测 100 KB 的不可压缩数据，gzip 传输增量只有 1.9%，brotli 只有 0.1%。真正让页面变重的，往往是同一个资源在多个页面里被重复内联。</p>
+<p><strong>误区四：既然压缩能收回膨胀，那内联大图也没问题。</strong>这个推论漏掉了缓存。传输口径的结论只说明「第一次下载没有明显变贵」，它没有解决「第二次下载本来可以免费」这件事。压缩能收回编码的代价，收不回缓存的代价。</p>
+<h2>九、实用建议</h2>
 <ul>
-<li><strong>控制体积上限</strong>：建议 10KB 以内的图标才转 Base64，超过会让 HTML/CSS 文件臃肿、拖慢首屏。</li>
-<li><strong>配合构建工具</strong>：项目里可用 webpack、Vite 等自动把小图转成 Base64，不必手贴长串编码。</li>
+<li><strong>先问复用，再问大小</strong>：会跨页面出现、或以后可能被替换的图片一律外链，只把一次性的极小资源内联。</li>
+<li><strong>矢量的归矢量</strong>：图标优先用 SVG 精灵或直接内联 SVG 标记，不要转成 Base64 位图，否则等于主动放弃压缩收益和主题适配能力。</li>
+<li><strong>把阈值从默认值往下调</strong>：构建工具的 4 KB 与 8 KB 来自 HTTP/1.1 时代，在多路复用和头部压缩之下实际临界点更低。动手前可以用<a href="/zh/text/base64-encode">Base64 编解码工具</a>量出真实字符数再决定。</li>
+<li><strong>一定要先压缩再编码</strong>：内联的体积与源图体积成正比，先用<a href="/zh/image/compress">图片压缩</a>把图压到目标大小再转 Base64；需要精确控制像素就先走<a href="/zh/image/resize">裁剪缩放</a>。想比较不同格式在同等画质下的体积差异，可以看<a href="/blog/zh/image-format-converter-guide">图片格式转换怎么选</a>。</li>
+<li><strong>别忘了 CSP</strong>：采用内联图之前确认站点的 img-src 里包含 <code>data:</code>，否则上线之后是静默裂图。</li>
+<li><strong>把内联交给构建流程</strong>：让构建工具按阈值自动处理，比手工粘贴长串编码可靠得多 —— 手工内联的字符串既无法审阅，也无法搜索。想弄懂编码本身的来龙去脉，可以读<a href="/blog/zh/base64-encode-guide">Base64 编解码指南</a>。</li>
 </ul>
 <div class="blog-cta">
                 <p><strong>在线使用 <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-image"></use></svg> 图片转Base64</strong></p>
                 <p>无需下载，打开即用</p>
                 <p><a href="/zh/image/base64"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-arrow-right"></use></svg> 立即使用 <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-image"></use></svg> 图片转Base64</a></p>
             </div>
-            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> 相关文章</h3><ul><li><a href="/blog/zh/image-format-converter-guide">图片格式转换：JPG、PNG、WebP、GIF怎么选？</a></li><li><a href="/blog/zh/image-resize-crop-guide">图片裁剪缩放：调整图片尺寸的最佳实践</a></li><li><a href="/blog/zh/color-picker-guide">在线取色器使用指南：屏幕取色与配色技巧</a></li><li><a href="/blog/zh/word-counter-guide">字数统计工具：准确统计字符、词语和段落</a></li></ul></div>
+            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> 相关文章</h3><ul><li><a href="/blog/zh/image-compression-guide">图片太大怎么压缩？在线图片压缩完全指南</a></li><li><a href="/blog/zh/image-format-converter-guide">图片格式转换：JPG、PNG、WebP、GIF怎么选？</a></li><li><a href="/blog/zh/image-resize-crop-guide">图片裁剪缩放：调整图片尺寸的最佳实践</a></li><li><a href="/blog/zh/base64-encode-guide">Base64编解码工具：什么是Base64？怎么用？</a></li></ul></div>
             <div class="article-bottom-tags"><a href="/tags/utility.html" class="tag tag-utility" data-tag="utility"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-wrench"></use></svg> 工具</a></div>
         </article>
 

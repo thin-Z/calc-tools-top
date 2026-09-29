@@ -52,6 +52,19 @@
     }
     </script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.calc-tools.top/blog/en/"},{"@type":"ListItem","position":3,"name":"How Many Working Days Between Two Dates? | Practical Guide","item":"https://www.calc-tools.top/blog/en/workday-calculator-guide"}]}</script>
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        { "@type": "Question", "name": "Is a make-up workday a working day?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. It is a normal working day designated by the holiday arrangement, so attendance records, deducted leave days and overtime multipliers all treat it as one. Counting it as a rest day is what produces understated attendance and overstated schedule slack." } },
+        { "@type": "Question", "name": "Why does a seven-day break usually cost two make-up days?", "acceptedAnswer": { "@type": "Answer", "text": "Because such a break normally contains only three statutory holidays. Stretching it to seven continuous days means absorbing two adjacent weekend days, and the weekdays those weekends contain have to be repaid with two make-up days. The net extra rest always equals the statutory holidays - the scheme relocates rest, it does not add any." } },
+        { "@type": "Question", "name": "How is annual leave prorated - in calendar days or working days?", "acceptedAnswer": { "@type": "Answer", "text": "The proration itself is computed in calendar days: calendar days remaining in the year divided by calendar days in the year, multiplied by the full entitlement, with any fraction under one day disregarded. The leave is then booked in working days - five days of leave spanning a weekend occupies seven calendar days." } },
+        { "@type": "Question", "name": "Are credit card grace periods counted in calendar days or working days?", "acceptedAnswer": { "@type": "Answer", "text": "Consumer credit runs on calendar days: repayment dates, interest-free periods and instalment counts are all calendar arithmetic, so an early repayment must be made before the repayment date. Bank settlement, T+N transfers and interest start dates follow the clearing calendar, which is closer to a working-day convention and is governed by what the institution publishes. Mixing the two is why a ledger ends up short by exactly a day or two." } },
+        { "@type": "Question", "name": "Is untaken annual leave paid at the same 300% as statutory holiday overtime?", "acceptedAnswer": { "@type": "Answer", "text": "No. For untaken annual leave, the 300% payment already includes the normal wage for the days worked, so the additional amount payable is 200%. For work performed on a statutory holiday, the 300% is paid on top of the normal monthly wage. The two figures look identical and mean entirely different things." } }
+    ]
+}
+</script>
 </head>
 <body>
     <header>
@@ -81,165 +94,88 @@
             <p class="blog-meta"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-calendar"></use></svg> 2026-08-23 · Calc-Tools Editorial</p>
             
             <h1>How Many Working Days Between Two Dates?</h1>
-            
-            <p>In project management, leave approval, and contract duration calculations, you often need to determine the number of working days between two dates. Manual calculation is time-consuming and error-prone. This guide explains working day calculation methods, formulas, and practical tips, along with a free online working day calculator.</p>
-
-            <h2>What is a Working Day?</h2>
-            <p>A working day typically refers to Monday through Friday, excluding Saturday and Sunday. However, in practice, you also need to consider:</p>
-            <ul>
-                <li><strong>Public Holidays</strong>: New Year, Spring Festival, Qingming, Labor Day, Dragon Boat, Mid-Autumn, National Day, etc.</li>
-                <li><strong>Holiday Swaps</strong>: Some weekends may become working days due to holiday adjustments</li>
-                <li><strong>Company Policies</strong>: Some companies may have additional holiday arrangements</li>
-            </ul>
-
-            <h2>Working Day Calculation Methods</h2>
-            
-            <h3>Method 1: Manual Calculation (Simple Scenarios)</h3>
-            <p>For simple scenarios without holidays, follow these steps:</p>
-            <ol>
-                <li>Calculate total days between the two dates</li>
-                <li>Count the number of Saturdays and Sundays</li>
-                <li>Working days = Total days - Weekend days</li>
-            </ol>
-            
-            <p><strong>Example:</strong> August 3, 2026 (Monday) to August 7, 2026 (Friday)</p>
-            <ul>
-                <li>Total days: 5</li>
-                <li>Weekend days: 0</li>
-                <li>Working days: 5</li>
-            </ul>
-
-            <h3>Method 2: Including Holidays (Complex Scenarios)</h3>
-            <p>When date ranges include public holidays, additional deductions are needed:</p>
-            <ol>
-                <li>Calculate base working days (excluding weekends)</li>
-                <li>Identify public holidays within the range</li>
-                <li>Deduct holiday days</li>
-                <li>Add back any swapped working days</li>
-            </ol>
-
-            <h2>Working Day Calculation Formula</h2>
-            <p>General working day calculation formula:</p>
-            <p><strong>Working Days = Total Days - Weekend Days - Holiday Days + Swapped Working Days</strong></p>
-            
-            <h3>JavaScript Implementation</h3>
-            <pre><code>function calculateWorkdays(startDate, endDate, holidays = []) {
-    let workdays = 0;
-    const current = new Date(startDate);
-    
-    while (current <= endDate) {
-        const dayOfWeek = current.getDay();
-        const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
-        const isHoliday = holidays.some(h => 
-            h.toDateString() === current.toDateString()
-        );
-        
-        if (!isWeekend && !isHoliday) {
-            workdays++;
-        }
-        
-        current.setDate(current.getDate() + 1);
-    }
-    
-    return workdays;
-}</code></pre>
-
-            <h2>Common Use Cases</h2>
-            
-            <h3>1. Project Scheduling</h3>
-            <p>Project managers need to estimate task durations in working days to create realistic project plans. For example:</p>
-            <ul>
-                <li>Requirements analysis: 5 working days</li>
-                <li>Development phase: 15 working days</li>
-                <li>Testing phase: 5 working days</li>
-                <li>Total duration: 25 working days (approximately 5 weeks)</li>
-            </ul>
-
-            <h3>2. Leave Approval</h3>
-            <p>When employees request leave, HR needs to calculate the number of working days. For example:</p>
-            <ul>
-                <li>Leave period: August 11, 2026 (Monday) to August 15, 2026 (Friday)</li>
-                <li>Working days: 5 days</li>
-                <li>If holidays are included, actual leave days may be fewer</li>
-            </ul>
-
-            <h3>3. Contract Duration</h3>
-            <p>Contract durations are often specified in working days. For example:</p>
-            <ul>
-                <li>Contract signing date: August 1, 2026</li>
-                <li>Duration: 30 working days</li>
-                <li>Expected completion date: September 11, 2026 (approximately 6 weeks)</li>
-            </ul>
-
-            <h3>4. Financial Settlements</h3>
-            <p>Some financial settlement cycles use working days, such as:</p>
-            <ul>
-                <li>T+1 settlement: Arrives on the next working day</li>
-                <li>T+3 settlement: Arrives three working days later</li>
-            </ul>
-
-            <h2>2026 Public Holiday Schedule</h2>
-            <p>2026 public holidays are as follows (specific swap arrangements subject to official announcements):</p>
-            
-            <table class="holiday-table">
-                <thead>
-                    <tr>
-                        <th>Holiday</th>
-                        <th>Dates</th>
-                        <th>Days</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>New Year</td>
-                        <td>January 1</td>
-                        <td>1 day</td>
-                    </tr>
-                    <tr>
-                        <td>Spring Festival</td>
-                        <td>January 28 - February 3</td>
-                        <td>7 days</td>
-                    </tr>
-                    <tr>
-                        <td>Qingming Festival</td>
-                        <td>April 4 - April 6</td>
-                        <td>3 days</td>
-                    </tr>
-                    <tr>
-                        <td>Labor Day</td>
-                        <td>May 1 - May 5</td>
-                        <td>5 days</td>
-                    </tr>
-                    <tr>
-                        <td>Dragon Boat Festival</td>
-                        <td>May 31 - June 2</td>
-                        <td>3 days</td>
-                    </tr>
-                    <tr>
-                        <td>Mid-Autumn Festival</td>
-                        <td>September 25</td>
-                        <td>1 day</td>
-                    </tr>
-                    <tr>
-                        <td>National Day</td>
-                        <td>October 1 - October 7</td>
-                        <td>7 days</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h2>Frequently Asked Questions</h2>
-            
-            <h3>Q: Does working day calculation include the start and end dates?</h3>
-            <p>A: Yes. The calculation includes both the start and end dates, as long as they are working days.</p>
-            
-            <h3>Q: How do you handle holiday swaps?</h3>
-            <p>A: Holiday swaps refer to adjusting weekends to working days. Calculation requires: 1) Deducting public holidays; 2) Adding back swapped working days.</p>
-            
-            <h3>Q: Do working day calculations differ between countries?</h3>
-            <p>A: Yes. Different countries have different weekend arrangements (e.g., Friday-Saturday rest) and public holidays, so adjustments are needed based on specific circumstances.</p>
-
-            <div class="blog-cta">
+<p>The same stretch of calendar can be counted three different ways: calendar days, nominal working days, and actual working days. Missed deadlines, leave that gets prorated down, and ledgers that fail to reconcile are rarely arithmetic errors. They happen because the two sides are not counting the same kind of day.</p>
+<p>This article covers the rules and the edges of that count: how the three kinds of day differ, how a make-up workday scheme balances its own books, why a seven-day break usually costs two make-up days, and which convention fits contract deadlines, annual leave proration, credit terms, probation periods and final settlements. Every date below is written as a hypothetical week; for any specific year, the official holiday arrangement published by the authorities governs.</p>
+<h2>1. Three kinds of day, and how far apart they drift</h2>
+<p>When people say "how many days", they normally mean <strong>calendar days</strong>: every day from start to finish, weekends and public holidays included. Contracts, leave approvals, delivery windows and project milestones usually mean working days instead - and working days themselves come in two flavours.</p>
+<ul>
+<li><strong>Calendar days</strong>: every date in the range, no exceptions.</li>
+<li><strong>Nominal working days</strong>: Monday to Friday only. Weekends are removed, holiday arrangements ignored. Easiest to compute and easiest to overstate.</li>
+<li><strong>Actual working days</strong>: nominal working days minus public holidays that fall on weekdays, plus the weekend days that have been reassigned as make-up workdays. This is the number of days people are actually at work.</li>
+</ul>
+<p>The three conventions diverge most around a long holiday. Take a 31-day month with 21 weekdays, in which 3 public holidays fall on weekdays and 2 weekend days are designated make-up workdays. Calendar days: 31. Nominal working days: 21. Actual working days: 21 − 3 + 2 = <strong>20</strong>.</p>
+<p>The important consequence: <strong>nominal working days can be counted off a calendar, but actual working days require a year-by-year table.</strong> Software that subtracts weekends only will keep reporting the nominal figure and overstate capacity across long holidays. Software that subtracts holidays but forgets to add make-up days understates it. When two tools disagree by a day or two on the same range, the algorithm is usually identical - the holiday table is not.</p>
+<h2>2. The working-day formula and the error in a ratio estimate</h2>
+<p>Written as a formula, there is only one line:</p>
+<p><strong>Actual working days = weekdays in range − public holidays falling on weekdays + make-up workdays</strong></p>
+<p>All three terms matter. The first can be computed directly as whole weeks × 5 plus the weekdays left in the remainder - no day-by-day loop needed. The second and third can only be looked up in the arrangement published for that year, which is why <strong>counting working days is half arithmetic and half table lookup</strong>.</p>
+<p>Scheduling usually asks the reverse question: given a number of working days, how much calendar time will it occupy? Multiplying by seven and dividing by five (the same as multiplying by 1.4) is the common shortcut. It is not wrong, but you need to know how much it can be off and why.</p>
+<table>
+<tr><th>Working days</th><th>× 7 ÷ 5 estimate</th><th>Spread from the start weekday</th><th>Typical use</th></tr>
+<tr><td>10 working days</td><td>14 calendar days</td><td>13 to 16 days</td><td>Two full weeks - the widest relative spread</td></tr>
+<tr><td>20 working days</td><td>28 calendar days</td><td>26 to 30 days</td><td>About a month; a long holiday may fall inside</td></tr>
+<tr><td>30 working days</td><td>42 calendar days</td><td>40 to 44 days</td><td>Six full weeks - the classic delivery window</td></tr>
+<tr><td>60 working days</td><td>84 calendar days</td><td>82 to 88 days</td><td>Twelve weeks; the usual quarterly planning unit</td></tr>
+<tr><td>250 working days</td><td>350 calendar days</td><td>348 to 352 days</td><td>A full year of capacity, for annual planning</td></tr>
+</table>
+<p>The estimate only holds when no long holiday falls inside and the start day is arbitrary. Three factors do the real damage: <strong>which weekday the range starts on</strong>, <strong>whether a long holiday sits inside it</strong>, and <strong>whether make-up workdays were added back</strong>. Take 90 calendar days: that is 12 whole weeks (60 working days) plus 6 days, and those 6 days contain either one or two weekend days, so the true count lands between <strong>64 and 65 working days</strong>. The direct ratio gives 90 × 5 ÷ 7 ≈ 64.3, inside that band. But if those 90 days contain a seven-day holiday, deduct the public holidays that fall on weekdays and add the make-up days back, and the total drops by roughly 3 - to around 61 or 62. <strong>The ratio estimate overstates by two or three days, and that is exactly the slack that scheduling loses.</strong></p>
+<p>So use the ratio for capacity planning and never for a contractual date. Anything that ends up in a clause should be checked day by day against the real calendar, for example with the <a href="/en/calculators/workday-calculator">working day calculator</a>.</p>
+<h2>3. Why a seven-day break usually costs two make-up days</h2>
+<p>A make-up workday scheme does not create extra holiday. It <strong>relocates rest days</strong>. The mechanism has three steps: statutory holidays are welded to the adjacent weekends to form a continuous break; weekdays are then borrowed back from the weekends on either side of it; and the books are balanced so that the net gain in rest days equals the number of statutory holidays - no more.</p>
+<p>Working through a few hypothetical break shapes makes the accounting visible:</p>
+<table>
+<tr><th>Shape of the break</th><th>Statutory days</th><th>Continuous days off</th><th>Weekend days absorbed</th><th>Make-up days</th><th>Net extra rest</th></tr>
+<tr><td>Short break, no make-up day needed (statutory day lands on a weekend and is compensated)</td><td>1</td><td>3</td><td>2</td><td>0</td><td>1</td></tr>
+<tr><td>Three days off, one make-up day</td><td>1</td><td>3</td><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>Five days off, one make-up day</td><td>1</td><td>5</td><td>3</td><td>1</td><td>1</td></tr>
+<tr><td>Seven days off, two make-up days</td><td>3</td><td>7</td><td>2</td><td>2</td><td>3</td></tr>
+<tr><td>Nine days off, two make-up days</td><td>3</td><td>9</td><td>4</td><td>2</td><td>3</td></tr>
+</table>
+<p>The last two rows explain the question everyone asks. A seven-day break contains only three statutory holidays. To stretch it to seven continuous days off, two adjacent weekend days have to be absorbed; the weekdays those weekends would normally contain cannot simply vanish, so two make-up days are assigned to repay them. Once the books balance, the net gain is the three statutory days - <strong>a make-up scheme never adds a rest day to the year, it only moves rest days around.</strong></p>
+<p>Three practical consequences follow. First, <strong>a make-up day is a normal working day</strong> in both attendance and legal terms: clock-in records, deducted leave days and overtime multipliers all treat it as a working day, and counting it as a weekend is the single most common source of schedule slippage. Second, <strong>statutory holidays and make-up days must be recorded separately</strong>, because overtime on a statutory holiday and overtime on a rest day follow completely different rules - see <a href="/blog/en/overtime-pay-guide">the 150%, 200% and 300% overtime rules</a>. Third, <strong>never use a ratio estimate for a range that crosses a long holiday</strong>: that is the thinnest stretch of working days in the whole year.</p>
+<h2>4. Which convention each scenario actually needs</h2>
+<p>The table below lines common scenarios up with the convention they require. Any date convention that ends up in a contract or an internal policy should match this table; once two conventions live in the same document, disputes are almost guaranteed.</p>
+<table>
+<tr><th>Scenario</th><th>Convention</th><th>Include make-up days?</th><th>Usual mistake</th></tr>
+<tr><td>Contract deadlines, delivery windows, milestones</td><td>Actual working days</td><td>Yes - make-up days count as working days</td><td>Estimating in calendar or nominal working days and overstating progress across a holiday</td></tr>
+<tr><td>Annual leave, leave approval, attendance</td><td>Working days, per company policy</td><td>Yes - staff are expected to work them</td><td>Treating a make-up weekend as a rest day, understating attendance</td></tr>
+<tr><td>Credit card grace periods, repayment dates, instalments</td><td>Calendar days</td><td>No</td><td>Pushing a repayment date by working-day logic and paying a day late</td></tr>
+<tr><td>Bank settlement, T+N transfers, interest start dates</td><td>Clearing days</td><td>Per the institution's published clearing calendar</td><td>Counting a make-up day as a clearing day and expecting funds a day early</td></tr>
+<tr><td>Probation periods, employment terms, leases</td><td>Calendar days, in whole months</td><td>No</td><td>Reading "a three-month probation" as three months of working days</td></tr>
+</table>
+<p>A single test separates the two families: <strong>are these days for people to work in, or for money and time to travel through?</strong> People work in working days; money and time travel through calendar days. For the other boundaries that bite in date arithmetic - whether the first and last days count, month-end and leap years, time zones and daylight saving - see <a href="/blog/en/date-calculation-tips">date calculation conventions and edge cases</a>.</p>
+<h2>5. Annual leave: tiers by cumulative service, prorated in the first year</h2>
+<p>Annual leave is where the working-day convention is applied most strictly, because the unit is a day of leave but the rule counts it in working days. Under the paid annual leave rules for employees, entitlement is tiered by cumulative years of service:</p>
+<table>
+<tr><th>Cumulative service</th><th>Annual leave</th><th>Proration</th></tr>
+<tr><td>At least 1 year, under 10 years</td><td>5 days</td><td rowspan="3">An employee joining mid-year is prorated by the calendar days remaining in the year divided by the calendar days in the year; any fraction shorter than one full day is disregarded</td></tr>
+<tr><td>At least 10 years, under 20 years</td><td>10 days</td></tr>
+<tr><td>20 years or more</td><td>15 days</td></tr>
+</table>
+<p>Three things are routinely got wrong. First, <strong>cumulative service adds up every previous employer</strong>, not just the current one; social insurance records or employment certificates submitted at onboarding decide whether the entitlement is 5 days or 10. Second, <strong>proration uses calendar days remaining, not working days remaining</strong>: with 243 calendar days left in the year and an entitlement of 5 days, the prorated figure is 243 ÷ 365 × 5 ≈ 3.3 days, the fraction under a full day is disregarded, and <strong>3 days</strong> may be taken. Third, the unit of leave is a working day, so one day of leave spanning a weekend can occupy three calendar days - which is why HR converts the range into working days before counting, rather than counting squares on a wall calendar.</p>
+<h2>6. Three worked examples</h2>
+<p><strong>Example 1: a 30-working-day delivery window.</strong> The ratio gives 30 × 7 ÷ 5 = <strong>42 calendar days</strong>, exactly six weeks; starting on a Monday, day 42 lands on the Friday of the sixth week - the smoothest possible alignment. If a seven-day break falls inside, deduct the working days it consumes and add the make-up days back: the net extra rest is 3 days, so the delivery point moves about 3 working days later. A workable tolerance is to treat 42 to 44 calendar days as normal and to require an explanation beyond 46.</p>
+<p><strong>Example 2: how many working days are in 90 calendar days?</strong> That is 12 whole weeks plus 6 days. The 12 weeks contribute 60 working days; the remaining 6 days contribute 4 or 5 depending on the start weekday, so the total is <strong>64 or 65</strong>. The direct ratio, 90 × 5 ÷ 7 ≈ 64.3, sits inside that band. Put a seven-day holiday inside those 90 days, deduct the public holidays that fall on weekdays and add the make-up days back, and the net reduction is about 3 days - bringing the true figure to roughly 61 or 62. <strong>The ratio overstates by two to three days, and that is the time scheduling quietly loses.</strong></p>
+<p><strong>Example 3: annual leave prorated for a mid-year start.</strong> An employee with 5 years of cumulative service joins with 243 calendar days left in the year. Prorated leave = 243 ÷ 365 × 5 ≈ 3.33 days, the fraction under a full day is disregarded, and <strong>3 days</strong> may be taken. Granting the full 5 days over-provides; granting 3.33 days over-provides as well, because leave is booked in whole working days. Both the numerator and the denominator of the proration are calendar days, while the unit being granted is a working day - that mismatch is exactly what gets lost during handovers.</p>
+<h2>7. Frequently asked questions</h2>
+<dl>
+<dt>Is a make-up workday a working day?</dt>
+<dd>Yes. It is a normal working day designated by the holiday arrangement, so attendance records, deducted leave days and overtime multipliers all treat it as one. Counting it as a rest day is what produces understated attendance and overstated schedule slack.</dd>
+<dt>Why does a seven-day break usually cost two make-up days?</dt>
+<dd>Because such a break normally contains only three statutory holidays. Stretching it to seven continuous days means absorbing two adjacent weekend days, and the weekdays those weekends contain have to be repaid with two make-up days. The net extra rest always equals the statutory holidays - the scheme relocates rest, it does not add any.</dd>
+<dt>How is annual leave prorated - in calendar days or working days?</dt>
+<dd>The proration itself is computed in calendar days: calendar days remaining in the year divided by calendar days in the year, multiplied by the full entitlement, with any fraction under one day disregarded. The leave is then booked in working days - five days of leave spanning a weekend occupies seven calendar days.</dd>
+<dt>Are credit card grace periods counted in calendar days or working days?</dt>
+<dd>Consumer credit runs on calendar days: repayment dates, interest-free periods and instalment counts are all calendar arithmetic, so an early repayment must be made before the repayment date. Bank settlement, T+N transfers and interest start dates follow the clearing calendar, which is closer to a working-day convention and is governed by what the institution publishes. Mixing the two is why a ledger ends up short by exactly a day or two.</dd>
+<dt>Is untaken annual leave paid at the same 300% as statutory holiday overtime?</dt>
+<dd>No. For untaken annual leave, the 300% payment already includes the normal wage for the days worked, so the additional amount payable is 200%. For work performed on a statutory holiday, the 300% is paid on top of the normal monthly wage. The two figures look identical and mean entirely different things.</dd>
+</dl>
+<h2>8. Three common mistakes</h2>
+<p><strong>Mistake 1: treating calendar days as working days.</strong> "Delivered within 30 days" and "delivered within 30 working days" are roughly 12 calendar days apart, and the gap widens with the length of the window. A contract that states a number without stating the convention hands the interpretation to whoever argues hardest later. And when the clause does say working days, add one sentence about whether long holidays extend the deadline.</p>
+<p><strong>Mistake 2: subtracting holidays but never adding make-up days.</strong> A make-up scheme has two sides: public holidays come out, reassigned weekend days go back in. Doing only the subtraction understates attendance and stretches the schedule; doing only the holiday lookup and ignoring make-up days will not reconcile with HR records either. An "actual working day" calendar has to carry both kinds of date.</p>
+<p><strong>Mistake 3: putting a ratio estimate into a contract.</strong> The × 7 ÷ 5 conversion is off by about a day when no long holiday falls inside and the start day is arbitrary, and by three days or more when one does. It is fine for capacity planning and expectations, not for a delivery commitment. Any date that becomes a promise should be checked day by day against the real calendar.</p>
+<p>Related reading: how the daily and hourly wage used in overtime is derived from the monthly pay figure is covered in <a href="/blog/en/overtime-pay-guide">overtime pay: legal multipliers and the base</a>; and for adding days or months to a date, the <a href="/en/calculators/date-calc">date calculator</a> and the <a href="/en/calculators/timestamp">timestamp converter</a> are useful cross-checks on either side of the working-day count.</p>
+<div class="blog-cta">
                 <p><strong>Use Online <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-calculator"></use></svg> Working Day Calculator</strong></p>
                 <p>Quickly calculate working days between two dates, with public holiday exclusion option</p>
                 <a href="/en/calculators/workday-calculator" class="btn btn-primary">Calculate Now →</a>
@@ -248,11 +184,11 @@
             <div class="related-tools">
                 <h3>Related Tools</h3>
                 <ul>
-                    <li><a href="/en/calculators/date-calc">Date Calculator - Date Addition & Interval Calculation</a></li>
-                    <li><a href="/en/calculators/date-calc">Age Calculator - Precise Age Calculation</a></li>
-                    <li><a href="/en/calculators/percentage-calc">Percentage Calculator - Quick Proportion Calculations</a></li>
-                </ul>
-            </div>
+                <li><a href="/blog/en/date-calculation-tips">Date Calculation Tips: Conventions, Month-End and Working Days</a></li>
+                <li><a href="/blog/en/overtime-pay-guide">Overtime Pay: Legal Multipliers and How the Base Is Set</a></li>
+                <li><a href="/blog/en/age-calc-guide">How to Calculate Age Accurately: Methods Compared</a></li>
+                <li><a href="/blog/en/compound-interest-guide">Compound vs Simple Interest: Formulas and Worked Examples</a></li>
+            </ul></div>
         </article>
 
         <div class="like-section">

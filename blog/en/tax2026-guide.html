@@ -52,6 +52,54 @@
     }
     </script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.calc-tools.top/blog/en/"},{"@type":"ListItem","position":3,"name":"2026 Tax Brackets & Deductions Guide and Tax Calculator","item":"https://www.calc-tools.top/blog/en/tax2026-guide"}]}</script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is the 5,000 yuan threshold a monthly gate you must clear before paying tax?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Not exactly. The basic deduction is 60,000 yuan a year, accumulated as 5,000 yuan multiplied by the number of months elapsed. So if you earn 8,000 yuan in one month and nothing in another, and annual comprehensive income stays under 60,000 yuan, anything withheld comes back at reconciliation. Reading it as a monthly 5,000 yuan gate is wrong."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why does the same salary leave more in hand in January than in December?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Because salary is withheld cumulatively. Early in the year cumulative taxable income is low and sits in the 3% bracket, so less is withheld; as the cumulative total rises the withholding rate steps up and later months withhold more. On a 15,000 yuan salary with 3,000 yuan of social insurance and 2,000 yuan of deductions, January withholds 150 yuan and December 500 yuan, a 350 yuan gap, while the annual total stays 3,480 yuan."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "If my income rises by exactly 1 yuan, will the bracket step cost me much more tax?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "No. The annual table is a continuous progressive function: 36,000 yuan of taxable income gives 1,080 yuan of tax and 36,001 yuan gives 1,080.1 yuan, only 0.1 yuan more. What steps is the intermediate withholding rate. Cliffs where a single extra yuan costs thousands exist only in separately taxed year-end bonuses."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "A 36,000 yuan bonus or a 36,001 yuan bonus: which leaves more in hand?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The 36,000 yuan one. Dividing by 12 gives 3,000 yuan, inside the 3% bracket, so tax is 1,080 yuan and take-home is 34,920 yuan. Dividing 36,001 yuan by 12 gives 3,000.08 yuan, crossing into the 10% bracket, so tax is 3,390.1 yuan and take-home is 32,610.9 yuan. One extra yuan costs 2,309.1 yuan after tax. Keeping the bonus at or below the threshold, or moving the difference into a pooled allowance, avoids the cliff."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "When is a top-up unavoidable at annual reconciliation?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "The two most common cases are changing employer mid-year and receiving salary from two or more employers at once, because both cause the 5,000 yuan monthly basic deduction to be counted more than once and tax to be under-withheld. Inadequate withholding on service remuneration can also produce a top-up. Where the amount due is small, or annual comprehensive income is no more than 120,000 yuan, current rules exempt some taxpayers from filing; confirm the conditions with the tax authority each year."
+                }
+            }
+        ]
+    }
+    </script>
 </head>
 <body>
     <header>
@@ -81,145 +129,152 @@
             <p class="blog-meta"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-calendar"></use></svg> 2026-08-23 · Calc-Tools Editorial</p>
             
             <h1>2026 Tax Brackets & Deductions Guide</h1>
-            
-            <p>Understanding personal income tax is essential for every working professional. This comprehensive guide covers the 2026 tax brackets, standard deductions, and special deductions to help you calculate your tax liability accurately and optimize your tax planning.</p>
+            <p>Most confusion about Chinese personal income tax is not about how much is withheld, but about how the number is produced. The same gross monthly salary of ¥15,000 leaves ¥350 more in hand in January than in December. A ¥36,000 year-end bonus is worth ¥2,309.1 more after tax than a ¥36,001 bonus. Two colleagues on identical contracts can end the annual reconciliation with one receiving a refund and the other owing ¥2,520. None of that is a payroll error. All of it follows from one set of calculation rules.</p>
+            <p>This guide covers the mechanics only: why four types of income were merged into comprehensive income, how the cumulative withholding method creates a visible rate step mid-year, where the quick deductions in the annual rate table come from, how the two year-end bonus methods diverge at hard cliff edges, and who ends up topping up or being refunded at annual reconciliation. The seven special additional deductions and how to claim them are covered separately in our <a href="/blog/en/tax-deduction-guide-2026">tax deduction guide</a>. To check your own numbers, run them through the <a href="/en/calculators/tax2026">tax calculator</a>.</p>
 
-            <h2>2026 Tax Exemption Threshold</h2>
-            <p>The 2026 personal income tax exemption threshold remains at <strong>¥5,000 per month</strong> (¥60,000 per year). This means:</p>
-            <ul>
-                <li>Monthly income ≤ ¥5,000: No personal income tax required</li>
-                <li>Monthly income > ¥5,000: Tax applies only to the excess amount</li>
-                <li>Annual income ≤ ¥60,000: No annual tax liability</li>
-            </ul>
-
-            <h2>2026 Tax Brackets (7-Tier Progressive System)</h2>
-            <p>China uses a 7-tier progressive tax system for personal income tax:</p>
-            
-            <table class="tax-table">
-                <thead>
-                    <tr>
-                        <th>Tier</th>
-                        <th>Annual Taxable Income</th>
-                        <th>Tax Rate</th>
-                        <th>Quick Deduction</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Up to ¥36,000</td>
-                        <td>3%</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>¥36,001 - ¥144,000</td>
-                        <td>10%</td>
-                        <td>¥2,520</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>¥144,001 - ¥300,000</td>
-                        <td>20%</td>
-                        <td>¥16,920</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>¥300,001 - ¥420,000</td>
-                        <td>25%</td>
-                        <td>¥31,920</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>¥420,001 - ¥660,000</td>
-                        <td>30%</td>
-                        <td>¥52,920</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>¥660,001 - ¥960,000</td>
-                        <td>35%</td>
-                        <td>¥85,920</td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td>Over ¥960,000</td>
-                        <td>45%</td>
-                        <td>¥181,920</td>
-                    </tr>
-                </tbody>
+            <h2>1. First, Get the Scope Right: Comprehensive vs Schedular Income</h2>
+            <p>The defining change of the 2018 reform, effective from 2019, was to move China from pure schedular taxation to a combined comprehensive-plus-schedular system. Previously wages, remuneration for services and author remuneration were each taxed in isolation. Now <strong>employment income, remuneration for personal services, author remuneration and royalties</strong> are pooled into one category: comprehensive income, assessed annually, withheld monthly or per payment, and trued up at year end.</p>
+            <p>Why merge them? Under schedular taxation, ¥200,000 earned entirely as salary from one employer and the same ¥200,000 split across four income types produced very different tax bills. Once pooled, person-level allowances such as the ¥60,000 basic deduction and social insurance contributions can only be used once, so splitting income across sources no longer pushes the tax burden down.</p>
+            <table>
+                <tr><th>Income type</th><th>Pooled into comprehensive income</th><th>Withholding basis</th><th>Annual treatment</th></tr>
+                <tr><td>Employment income (wages and salary)</td><td>Yes</td><td>Cumulative withholding method</td><td>Pooled, then refunded or topped up</td></tr>
+                <tr><td>Remuneration for personal services</td><td>Yes</td><td>Per payment, three tiers at 20% / 30% / 40%</td><td>Only 80% of the gross is counted</td></tr>
+                <tr><td>Author remuneration</td><td>Yes</td><td>Per payment at 20%</td><td>80% of gross, then a further 70% factor</td></tr>
+                <tr><td>Royalties</td><td>Yes</td><td>Per payment at 20%</td><td>Only 80% of the gross is counted</td></tr>
+                <tr><td>Business income</td><td>No</td><td>Annual, five tiers from 5% to 35%</td><td>Separate filing, costs deductible</td></tr>
+                <tr><td>Interest, dividends, rent, property transfers, incidental income</td><td>No</td><td>20% flat rate per payment</td><td>Separately taxed, no reconciliation</td></tr>
             </table>
+            <p>The column most people overlook is the taxable-income conversion. For ¥10,000 of service remuneration, only ¥10,000 x 80% = ¥8,000 enters comprehensive income. For ¥10,000 of author remuneration, only ¥10,000 x 80% x 70% = ¥5,600 does. That ¥2,400 gap is the structural reason writing is taxed more lightly than taking on equivalent freelance work.</p>
+            <p>Service remuneration is withheld using a different table from the annual one:</p>
+            <table>
+                <tr><th>Tier</th><th>Withholding taxable income</th><th>Withholding rate</th><th>Quick deduction</th></tr>
+                <tr><td>1</td><td>Up to ¥20,000</td><td>20%</td><td>0</td></tr>
+                <tr><td>2</td><td>¥20,000 to ¥50,000</td><td>30%</td><td>¥2,000</td></tr>
+                <tr><td>3</td><td>Over ¥50,000</td><td>40%</td><td>¥7,000</td></tr>
+            </table>
+            <p>A high withholding rate is not the same as a high final liability. Someone with modest total income has service remuneration withheld at 20% first, then recomputed at 3% or 10% when it is pooled at year end, and the difference is refunded. <strong>This is one of the most common sources of refunds, and the single most useful table for freelancers and part-time workers to understand.</strong></p>
 
-            <h2>How to Calculate Personal Income Tax</h2>
-            <p>The formula for calculating personal income tax is:</p>
-            <p><strong>Tax = (Monthly Income - ¥5,000 - Special Deductions - Special Additional Deductions) × Tax Rate - Quick Deduction</strong></p>
-            
-            <h3>Calculation Steps</h3>
-            <ol>
-                <li>Calculate monthly taxable income = Monthly Income - ¥5,000</li>
-                <li>Subtract special deductions (social insurance, housing fund, etc.)</li>
-                <li>Subtract special additional deductions</li>
-                <li>Determine applicable tax rate and quick deduction from the table</li>
-                <li>Calculate tax liability</li>
-            </ol>
+            <h2>2. The Cumulative Withholding Method: Spreading the Annual Tax Over 12 Months</h2>
+            <p>Many people assume each month is taxed on its own, which was the pre-2019 rule. The current formula for salary withholding is:</p>
+            <p><strong>Tax withheld this month = (cumulative taxable income x applicable withholding rate - quick deduction) - tax already withheld year to date</strong></p>
+            <p>Cumulative taxable income equals cumulative income minus tax-exempt income, the <strong>cumulative basic deduction</strong>, cumulative special deductions (social insurance and housing fund), cumulative special additional deductions and other allowable deductions. The decisive detail is that the basic deduction is <strong>¥5,000 multiplied by the number of months elapsed this year</strong>, not a standalone monthly threshold. That corrects a widespread misreading: the threshold is not a ¥5,000 gate you must clear each month.</p>
+            <p>Take an extreme case: someone earns ¥12,000 in January and nothing for the rest of the year. On a cumulative basis the January basic deduction is only ¥5,000, so tax is withheld that month. But annual income of ¥12,000 is well below the ¥60,000 annual allowance, so the whole amount comes back at reconciliation. <strong>The threshold is an annual ¥60,000 allowance that accumulates month by month, not a monthly gate.</strong></p>
+            <p>Spread the formula across 12 months and the mid-year rate step becomes visible. Assume a ¥15,000 monthly salary, ¥3,000 of social insurance and housing fund each month, and ¥2,000 of special additional deductions, so cumulative taxable income grows by ¥5,000 per month:</p>
+            <table>
+                <tr><th>Month</th><th>Cumulative taxable income</th><th>Cumulative tax</th><th>Tax withheld this month</th><th>Withholding rate</th></tr>
+                <tr><td>January</td><td>¥5,000</td><td>¥150</td><td>¥150</td><td>3%</td></tr>
+                <tr><td>February</td><td>¥10,000</td><td>¥300</td><td>¥150</td><td>3%</td></tr>
+                <tr><td>March</td><td>¥15,000</td><td>¥450</td><td>¥150</td><td>3%</td></tr>
+                <tr><td>April</td><td>¥20,000</td><td>¥600</td><td>¥150</td><td>3%</td></tr>
+                <tr><td>May</td><td>¥25,000</td><td>¥750</td><td>¥150</td><td>3%</td></tr>
+                <tr><td>June</td><td>¥30,000</td><td>¥900</td><td>¥150</td><td>3%</td></tr>
+                <tr><td>July</td><td>¥35,000</td><td>¥1,050</td><td>¥150</td><td>3%</td></tr>
+                <tr><td>August</td><td>¥40,000</td><td>¥1,480</td><td>¥430</td><td>10%</td></tr>
+                <tr><td>September</td><td>¥45,000</td><td>¥1,980</td><td>¥500</td><td>10%</td></tr>
+                <tr><td>October</td><td>¥50,000</td><td>¥2,480</td><td>¥500</td><td>10%</td></tr>
+                <tr><td>November</td><td>¥55,000</td><td>¥2,980</td><td>¥500</td><td>10%</td></tr>
+                <tr><td>December</td><td>¥60,000</td><td>¥3,480</td><td>¥500</td><td>10%</td></tr>
+            </table>
+            <p>The step happens between July and August, when cumulative taxable income crosses ¥36,000: the withholding rate moves from 3% to 10% and the monthly figure jumps from ¥150 to ¥430, settling at ¥500 thereafter. <strong>The salary did not change, yet take-home pay fell by ¥350 a month.</strong> The annual total of ¥3,480 is exactly ¥60,000 x 10% minus the ¥2,520 quick deduction.</p>
 
-            <h3>Example Calculation</h3>
-            <p>Assume Xiao Wang has a monthly income of ¥15,000, special deductions of ¥3,000, and special additional deductions of ¥2,000:</p>
+            <h2>3. The Annual Rate Table and Where Quick Deductions Come From</h2>
+            <p>Comprehensive income uses seven progressive brackets. The table has been unchanged since 2019; any 2026 adjustment would be announced officially:</p>
+            <table>
+                <tr><th>Tier</th><th>Annual taxable income</th><th>Rate</th><th>Quick deduction</th></tr>
+                <tr><td>1</td><td>Up to ¥36,000</td><td>3%</td><td>0</td></tr>
+                <tr><td>2</td><td>Over ¥36,000 to ¥144,000</td><td>10%</td><td>¥2,520</td></tr>
+                <tr><td>3</td><td>Over ¥144,000 to ¥300,000</td><td>20%</td><td>¥16,920</td></tr>
+                <tr><td>4</td><td>Over ¥300,000 to ¥420,000</td><td>25%</td><td>¥31,920</td></tr>
+                <tr><td>5</td><td>Over ¥420,000 to ¥660,000</td><td>30%</td><td>¥52,920</td></tr>
+                <tr><td>6</td><td>Over ¥660,000 to ¥960,000</td><td>35%</td><td>¥85,920</td></tr>
+                <tr><td>7</td><td>Over ¥960,000</td><td>45%</td><td>¥181,920</td></tr>
+            </table>
+            <p>Two details separate a correct reading of this table from a wrong one.</p>
+            <p><strong>First, quick deductions are computed, not granted.</strong> Each tier's quick deduction equals that tier's lower bound multiplied by the rate difference from the tier below, plus the previous tier's quick deduction. Rebuilding the column from the bottom up confirms it:</p>
+            <table>
+                <tr><th>Tier</th><th>Lower bound</th><th>Rate difference</th><th>Prior quick deduction</th><th>This tier's quick deduction</th></tr>
+                <tr><td>2</td><td>¥36,000</td><td>10% - 3% = 7%</td><td>0</td><td>¥36,000 x 7% + 0 = ¥2,520</td></tr>
+                <tr><td>3</td><td>¥144,000</td><td>20% - 10% = 10%</td><td>¥2,520</td><td>¥144,000 x 10% + ¥2,520 = ¥16,920</td></tr>
+                <tr><td>4</td><td>¥300,000</td><td>25% - 20% = 5%</td><td>¥16,920</td><td>¥300,000 x 5% + ¥16,920 = ¥31,920</td></tr>
+                <tr><td>5</td><td>¥420,000</td><td>30% - 25% = 5%</td><td>¥31,920</td><td>¥420,000 x 5% + ¥31,920 = ¥52,920</td></tr>
+                <tr><td>6</td><td>¥660,000</td><td>35% - 30% = 5%</td><td>¥52,920</td><td>¥660,000 x 5% + ¥52,920 = ¥85,920</td></tr>
+                <tr><td>7</td><td>¥960,000</td><td>45% - 35% = 10%</td><td>¥85,920</td><td>¥960,000 x 10% + ¥85,920 = ¥181,920</td></tr>
+            </table>
+            <p>Its job is to give back the amount already taxed at lower rates in earlier tiers, so that annual taxable income times the top applicable rate minus one quick deduction produces the answer directly.</p>
+            <p><strong>Second, salary income has no cliff edge.</strong> Progressive taxation is continuous: taxable income of ¥36,000 gives tax of ¥1,080, and ¥36,001 gives ¥1,080.1, an increase of ¥0.1. What changes at a bracket boundary is only the withholding rate, an intermediate parameter. The extra yuan is never taxed entirely at 10%. Genuine earn-one-yuan-lose-thousands cliffs exist only in separately taxed year-end bonuses, explained next.</p>
+
+            <h2>4. Year-End Bonuses: Two Paths and Their Cliff Edges</h2>
+            <p>An annual one-off bonus can be handled in one of two ways: <strong>taxed separately</strong>, or <strong>pooled into comprehensive income</strong>. Neither is always better; the right answer depends on your income structure.</p>
+            <p><strong>Separate taxation</strong> divides the bonus by 12, uses that quotient to locate the bracket in the monthly converted rate table, then applies that bracket's rate to the <strong>full bonus</strong> and subtracts that bracket's quick deduction once. The mechanism that matters is that the <strong>quick deduction is applied once, not twelve times.</strong></p>
+            <p>That single application creates the bonus-specific cliff. At ¥36,000, dividing by 12 gives ¥3,000, which sits exactly on the 3% bracket, so tax is ¥36,000 x 3% = ¥1,080. At ¥36,001, dividing by 12 gives ¥3,000.08, which crosses into the 10% bracket, so tax is ¥36,001 x 10% - ¥210 = ¥3,390.1. <strong>One extra yuan of bonus costs ¥2,310.1 more tax and leaves ¥2,309.1 less in hand.</strong></p>
+            <p>The six cliff values and their jumps (the jump equals 11 x threshold / 12 x the rate difference between brackets):</p>
+            <table>
+                <tr><th>Bonus threshold</th><th>Bracket after dividing by 12</th><th>Tax at the threshold</th><th>Tax one yuan above</th><th>Jump</th></tr>
+                <tr><td>¥36,000</td><td>3%</td><td>¥1,080</td><td>¥3,390.1</td><td>¥2,310.1</td></tr>
+                <tr><td>¥144,000</td><td>10%</td><td>¥14,190</td><td>¥27,390.2</td><td>¥13,200.2</td></tr>
+                <tr><td>¥300,000</td><td>20%</td><td>¥58,590</td><td>¥72,340.25</td><td>¥13,750.25</td></tr>
+                <tr><td>¥420,000</td><td>25%</td><td>¥102,340</td><td>¥121,590.3</td><td>¥19,250.3</td></tr>
+                <tr><td>¥660,000</td><td>30%</td><td>¥193,590</td><td>¥223,840.35</td><td>¥30,250.35</td></tr>
+                <tr><td>¥960,000</td><td>35%</td><td>¥328,840</td><td>¥416,840.45</td><td>¥88,000.45</td></tr>
+            </table>
+            <p>The choice comes down to one comparison: <strong>the bracket your bonus lands in after dividing by 12, versus the bracket your salary already occupies.</strong> If salary already sits in a higher bracket, tax the bonus separately so it gets its own low bracket. If salary taxable income is low or zero, pool the bonus so it absorbs the unused ¥60,000 allowance and 3% bracket.</p>
+            <table>
+                <tr><th>Dimension</th><th>Taxed separately</th><th>Pooled into comprehensive income</th></tr>
+                <tr><td>How the rate is located</td><td>Bonus divided by 12 sets the bracket; the full bonus is taxed at that rate</td><td>Combined with annual income and run through the seven-tier annual table</td></tr>
+                <tr><td>Quick deduction</td><td>Applied once, which creates the cliff at bracket boundaries</td><td>Applied once under the annual table; the tax curve stays continuous</td></tr>
+                <tr><td>Usually better when</td><td>Salary marginal rate exceeds the bracket located by dividing the bonus by 12</td><td>Salary taxable income is very low or zero</td></tr>
+                <tr><td>How often it can be used</td><td>Once per tax year</td><td>No limit; it is the default treatment</td></tr>
+            </table>
+            <p>One caution: the rules and the period for which both options remain available are set by tax policy. <strong>Confirm the current official position before each reconciliation.</strong> This section explains the logic, not the calendar.</p>
+
+            <h2>5. Annual Reconciliation: Who Gets a Refund and Who Owes More</h2>
+            <p>Withholding is only a prepayment. After the year ends, the whole year is recomputed on actual figures and the difference is settled, usually between 1 March and 30 June of the following year.</p>
+            <table>
+                <tr><th>Typical situation</th><th>Likely outcome</th><th>Why</th></tr>
+                <tr><td>Changed employer during the year</td><td>Usually a top-up</td><td>The new employer restarts the cumulative count, so the ¥5,000 monthly basic deduction is counted twice</td></tr>
+                <tr><td>Salary from two or more employers at once</td><td>Usually a top-up</td><td>Each employer applies its own cumulative deduction, the same double-counting effect</td></tr>
+                <tr><td>Service or author remuneration withheld at 20%</td><td>Usually a refund</td><td>Pooling recomputes it at the annual rate, which may be only 3% or 10%</td></tr>
+                <tr><td>Special additional deductions claimed mid-year</td><td>Usually a refund</td><td>Earlier months were over-withheld and the excess is returned at reconciliation</td></tr>
+                <tr><td>Annual comprehensive income under ¥60,000 but tax was withheld</td><td>Refund</td><td>The annual allowance covers the entire income</td></tr>
+            </table>
+            <p>Current rules also exempt several situations from filing, for example where annual comprehensive income is no more than ¥120,000 and a top-up is due, where the amount due is no more than ¥400, where tax already withheld equals the annual liability, or where the taxpayer chooses not to claim a refund. The exact conditions and filing channels follow the tax authority's guidance for that year.</p>
+            <p><strong>Note:</strong> reconciliation is not a refund queue. Failing to pay an amount due on time can trigger a late-payment surcharge and affect your tax credit record, whereas waiving a refund simply waives a right. Also remember that separate taxation of a bonus is available only once per year; if it has already been used, a later bonus must be pooled.</p>
+
+            <h2>6. Three Worked Examples</h2>
+            <p><strong>Example 1: monthly withholding on a ¥15,000 salary.</strong> Mr Wang earns ¥15,000 a month, pays ¥3,000 into social insurance and the housing fund, and claims ¥2,000 of special additional deductions, so cumulative taxable income rises by ¥5,000 a month. Following the table in section 2, the first seven months withhold ¥150 each; from August the rate steps to 10% and the monthly figure becomes ¥430, then ¥500 a month, for an annual total of <strong>¥3,480</strong>. Treating it as a monthly calculation, ¥5,000 x 3% x 12 = ¥1,800, understates the liability by <strong>¥1,680</strong> - the classic artifact of the pre-2019 method.</p>
+            <p><strong>Example 2: a ¥36,000 bonus versus ¥36,001.</strong> Staying with Mr Wang, whose salary side produces ¥60,000 of annual taxable income and ¥3,480 of tax. A ¥36,000 bonus taxed separately adds ¥1,080, for a total of <strong>¥4,560</strong>. Pooled instead, annual taxable income becomes ¥96,000 and tax is ¥96,000 x 10% - ¥2,520 = ¥7,080, which is <strong>¥2,520 more</strong>. Now raise the bonus to ¥36,001: separate taxation gives ¥3,480 + ¥3,390.1 = <strong>¥6,870.1</strong>, while pooling gives ¥96,001 x 10% - ¥2,520 = <strong>¥7,080.1</strong>. The advantage of separate taxation collapses from ¥2,520 to ¥210. <strong>That single extra yuan burns ¥2,310 of the saving.</strong></p>
+            <p><strong>Example 3: why changing jobs can create a tax bill.</strong> Ms Zhang works at company A from January to June and company B from July to December, earning ¥15,000 a month throughout, paying ¥3,000 a month into social insurance and the housing fund and claiming no special additional deductions, so cumulative taxable income rises by ¥7,000 a month. Company A withholds on six months of accumulation: ¥42,000 x 10% - ¥2,520 = ¥1,680. Company B restarts the cumulative count from zero and withholds the same ¥1,680, for a total of <strong>¥3,360</strong>. The true annual liability is ¥84,000 x 10% - ¥2,520 = <strong>¥5,880</strong>, leaving <strong>¥2,520</strong> to pay at reconciliation. The bill is not caused by earning more; it is caused by counting twelve months of allowances twice.</p>
+            <p>All three examples point the same way: <strong>what you pay depends on scope, timing and bracket, not only on how much you earn.</strong> To recheck your own figures, enter gross salary, social insurance and deductions into the <a href="/en/calculators/tax2026">tax calculator</a>. Overtime pay on your payslip follows a separate multiplier rule, covered by the <a href="/en/calculators/overtime">overtime calculator</a>.</p>
+
+            <h2>7. Frequently Asked Questions</h2>
+            <dl>
+                <dt>Is the ¥5,000 threshold a monthly gate you must clear before paying tax?</dt>
+                <dd>Not exactly. The basic deduction is ¥60,000 a year, accumulated as ¥5,000 multiplied by the number of months elapsed. So if you earn ¥8,000 in one month and nothing in another, and annual comprehensive income stays under ¥60,000, anything withheld comes back at reconciliation. Reading it as a monthly ¥5,000 gate is wrong.</dd>
+                <dt>Why does the same salary leave more in hand in January than in December?</dt>
+                <dd>Because salary is withheld cumulatively. Early in the year cumulative taxable income is low and sits in the 3% bracket, so less is withheld; as the cumulative total rises the withholding rate steps up and later months withhold more. On a ¥15,000 salary with ¥3,000 of social insurance and ¥2,000 of deductions, January withholds ¥150 and December ¥500, a ¥350 gap, while the annual total stays ¥3,480.</dd>
+                <dt>If my income rises by exactly ¥1, will the bracket step cost me a lot more tax?</dt>
+                <dd>No. The annual table is a continuous progressive function: ¥36,000 of taxable income gives ¥1,080 of tax and ¥36,001 gives ¥1,080.1, only ¥0.1 more. What steps is the intermediate withholding rate. Cliffs where a single extra yuan costs thousands exist only in separately taxed year-end bonuses.</dd>
+                <dt>A ¥36,000 bonus or a ¥36,001 bonus: which leaves more in hand?</dt>
+                <dd>The ¥36,000 one. Dividing by 12 gives ¥3,000, inside the 3% bracket, so tax is ¥1,080 and take-home is ¥34,920. Dividing ¥36,001 by 12 gives ¥3,000.08, crossing into the 10% bracket, so tax is ¥3,390.1 and take-home is ¥32,610.9. One extra yuan costs ¥2,309.1 after tax. Keeping the bonus at or below the threshold, or moving the difference into a pooled allowance, avoids the cliff.</dd>
+                <dt>When is a top-up unavoidable at annual reconciliation?</dt>
+                <dd>The two most common cases are changing employer mid-year and receiving salary from two or more employers at once, because both cause the ¥5,000 monthly basic deduction to be counted more than once and tax to be under-withheld. Inadequate withholding on service remuneration can also produce a top-up. Where the amount due is small, or annual comprehensive income is no more than ¥120,000, current rules exempt some taxpayers from filing; confirm the conditions with the tax authority each year.</dd>
+            </dl>
+
+            <h2>8. Five Common Misconceptions</h2>
+            <p><strong>Misconception 1: the threshold is a ¥5,000 monthly gate.</strong> It is a ¥60,000 annual allowance accumulated month by month. Anyone whose income fluctuates will misjudge their tax by testing each month against ¥5,000 in isolation.</p>
+            <p><strong>Misconception 2: a mid-year rate step means payroll made a mistake.</strong> Cumulative withholding advances the annual liability month by month, so the step is by design. The right check is not to recompute one month, but to compare cumulative tax withheld against the annual tax implied by cumulative taxable income.</p>
+            <p><strong>Misconception 3: a 45% bracket means high earners pay half their income.</strong> The 45% rate is the marginal rate on the top tier only, applying solely to income above ¥960,000. Earlier tiers were already taxed at lower rates, and the quick deduction gives exactly that back.</p>
+            <p><strong>Misconception 4: separate taxation of a bonus is always better.</strong> When salary-side taxable income is low, pooling absorbs unused allowances and low brackets. And when a bonus sits just above a threshold, the cliff erases most of the benefit of separate taxation.</p>
+            <p><strong>Misconception 5: reconciliation only produces refunds.</strong> Changing jobs, drawing two salaries, or receiving service remuneration from several sources can all create a top-up. Failing to pay an amount due on time may trigger a late-payment surcharge and affect your tax credit record.</p>
+
+            <h2>9. Four Practical Suggestions</h2>
             <ul>
-                <li>Monthly taxable income = ¥15,000 - ¥5,000 = ¥10,000</li>
-                <li>After special deductions = ¥10,000 - ¥3,000 = ¥7,000</li>
-                <li>After special additional deductions = ¥7,000 - ¥2,000 = ¥5,000</li>
-                <li>Applicable tax rate: ¥5,000 falls within ¥36,000, so 3% rate applies</li>
-                <li>Tax = ¥5,000 × 3% = ¥150</li>
+                <li><strong>Audit your payslip on a cumulative basis</strong>: stop looking only at this month's withholding and pull out three columns - cumulative income, cumulative basic deduction and cumulative tax withheld. The month in which your rate steps depends on when cumulative taxable income crosses ¥36,000 and ¥144,000.</li>
+                <li><strong>Stress-test a bonus against the thresholds before it is paid</strong>: run the amount just below the threshold and the actual amount through both taxation methods and compare take-home figures before the payroll decision is locked. The zone just above a threshold is where earning more leaves you with less.</li>
+                <li><strong>Claim deductions during withholding, not at reconciliation</strong>: claiming special additional deductions through payroll reduces tax in the same month, while waiting until reconciliation amounts to lending the money interest-free for a year. For longer-term planning around mortgages and the housing fund, see our <a href="/blog/en/housing-fund-loan-guide">housing fund loan guide</a>; employee housing fund contributions are deductible before tax, and the <a href="/en/calculators/housing-fund">housing fund calculator</a> works out the monthly amount.</li>
+                <li><strong>Put the reconciliation window in your calendar</strong>: filing usually runs from 1 March to 30 June of the following year, and anyone owing a top-up should not leave it to the final week. The <a href="/en/calculators/date-calc">date calculator</a> will tell you how many days remain, which beats guessing.</li>
             </ul>
-
-            <h2>Special Additional Deductions</h2>
-            <p>The 2026 special additional deductions include 7 categories:</p>
-            
-            <h3>1. Children's Education</h3>
-            <p>¥2,000 per child per month, from preschool to doctoral studies.</p>
-            
-            <h3>2. Continuing Education</h3>
-            <p>¥400 per month for degree education, ¥3,600 per year for professional qualifications.</p>
-            
-            <h3>3. Serious Illness Medical Expenses</h3>
-            <p>Expenses exceeding ¥15,000 annually can be deducted, up to ¥80,000 maximum.</p>
-            
-            <h3>4. Housing Loan Interest</h3>
-            <p>¥1,000 per month for first-time home purchase, up to 240 months.</p>
-            
-            <h3>5. Housing Rent</h3>
-            <p>¥800-1,500 per month depending on city size:</p>
-            <ul>
-                <li>Direct-administered municipalities, provincial capitals: ¥1,500</li>
-                <li>Cities with population over 1 million: ¥1,100</li>
-                <li>Cities with population ≤ 1 million: ¥800</li>
-            </ul>
-            
-            <h3>6. Elderly Care</h3>
-            <p>¥3,000 per month for only children, shared among siblings for non-only children.</p>
-            
-            <h3>7. Infant Care (Under 3 Years)</h3>
-            <p>¥2,000 per infant per month.</p>
-
-            <h2>Tax Planning Tips</h2>
-            <ol>
-                <li><strong>Maximize Special Additional Deductions</strong>: Ensure all eligible deductions are declared</li>
-                <li><strong>Optimize Income Timing</strong>: Avoid concentrating income in a single month</li>
-                <li><strong>Year-End Bonus Strategy</strong>: Choose between separate or combined taxation based on your situation</li>
-                <li><strong>Leverage Tax Incentives</strong>: Personal pension accounts, commercial health insurance, etc.</li>
-            </ol>
-
-            <h2>Frequently Asked Questions</h2>
-            
-            <h3>Q: Will the tax exemption threshold change in 2026?</h3>
-            <p>A: As of August 2026, the threshold remains at ¥5,000/month. Any future changes will depend on government policy announcements.</p>
-            
-            <h3>Q: How should I handle year-end bonuses for tax optimization?</h3>
-            <p>A: Year-end bonuses can be taxed separately or combined with regular income. Generally, if your regular income tax rate is higher than the bonus tax rate, separate taxation is more favorable.</p>
-            
-            <h3>Q: How do I declare special additional deductions?</h3>
-            <p>A: You can declare through the "Individual Income Tax" app or web portal. Confirmation for the next year is available each December.</p>
+            <p>Once these mechanics are clear, personal income tax comes down to three things worth watching: scope (comprehensive or schedular), progress (how far the cumulative withholding has advanced), and payout design (which path a year-end bonus takes). Everything else can be confirmed by running the numbers once.</p>
 
             <div class="blog-cta">
                 <p><strong>Use Online <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-calculator"></use></svg> Tax Calculator 2026</strong></p>
@@ -227,14 +282,8 @@
                 <a href="/en/calculators/tax2026" class="btn btn-primary">Calculate Now →</a>
             </div>
 
-            <div class="related-tools">
-                <h3>Related Tools</h3>
-                <ul>
-                    <li><a href="/en/calculators/compound-interest">Compound Interest Calculator - Calculate Investment Returns</a></li>
-                    <li><a href="/en/calculators/percentage-calc">Percentage Calculator - Quick Proportion Calculations</a></li>
-                    <li><a href="/en/calculators/unit-converter">Unit Converter - Length/Weight/Area</a></li>
-                </ul>
-            </div>
+            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> Related Articles</h3><ul><li><a href="/blog/en/tax-deduction-guide-2026">2026 Tax Deduction Guide: All Seven Allowances Explained</a></li><li><a href="/blog/en/overtime-pay-guide">Overtime Pay Calculation: Complete Guide</a></li><li><a href="/blog/en/housing-fund-loan-guide">Housing Fund Loan Guide 2026: Limits, Balances and City Comparison</a></li><li><a href="/blog/en/workday-calculator-guide">How Many Working Days Between Two Dates?</a></li></ul></div>
+
         </article>
 
         <div class="like-section">
@@ -258,5 +307,6 @@
     </div>
     <p>© 2026 Online Calculators | Free Online Calculators</p>
 </footer>
+        <p class="related-tools"><a href="/en/calculators/tax2026">Tax Calculator 2026</a> · <a href="/en/calculators/overtime">Overtime Calculator</a> · <a href="/en/calculators/housing-fund">Housing Fund Calculator</a></p>
 </body>
 </html>

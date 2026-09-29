@@ -33,6 +33,19 @@
 <link rel="stylesheet" href="../../css/style.css">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Unit Converter Guide: Common Unit Conversion Reference","description":"Length, weight, temperature, area, and volume conversion formulas for daily life and work.","author":{"@type":"Person","name":"Calc-Tools Editor"},"datePublished":"2026-07-02","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.calc-tools.top/blog/en/unit-converter-guide"},"publisher":{"@type":"Organization","name":"ToolBox Inside"}}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.calc-tools.top/blog/en/"},{"@type":"ListItem","position":3,"name":"Unit Converter Guide: Common Unit Conversion Reference","item":"https://www.calc-tools.top/blog/en/unit-converter-guide"}]}</script>
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        { "@type": "Question", "name": "Why is 1 inch such a tidy 25.4 mm while a gallon is an awkward 3.785411784 litres?", "acceptedAnswer": { "@type": "Answer", "text": "Different origins. The 25.4 figure was chosen: the 1959 International Yard and Pound Agreement defined 1 yard as exactly 0.9144 m, and dividing by 36 gives 25.4 mm. The US gallon descends from the historical definition of 231 cubic inches, and 231 times 16.387064 cubic centimetres is exactly 3785.411784 cubic centimetres. The awkward decimals are inherited history, not measurement error." } },
+        { "@type": "Question", "name": "How far apart are the US and imperial gallons?", "acceptedAnswer": { "@type": "Answer", "text": "The imperial gallon is 4.54609 L and the US gallon is 3.785411784 L, making the imperial gallon 20.1% larger. Concretely, a tank labelled 50 litres holds 13.2086 US gallons but only 10.9985 imperial gallons." } },
+        { "@type": "Question", "name": "How many grams are in a recipe's cup?", "acceptedAnswer": { "@type": "Answer", "text": "A cup is a volume unit, so the answer depends on the ingredient. One US cup is 236.5882365 mL: about 236.6 g of water, but only about 120 to 130 g of flour depending on the source. Converting cups to millilitres is the safe move; if you need grams, look up each ingredient's own bulk density." } },
+        { "@type": "Question", "name": "How do short tons, long tons and metric tonnes differ?", "acceptedAnswer": { "@type": "Answer", "text": "A metric tonne is 1000 kg, a short ton is 907.18474 kg (2000 lb) and a long ton is 1016.0469088 kg (2240 lb), exactly 1.12 short tons. When a document says ton, confirm which one; ocean freight also uses a freight ton that takes the larger of weight and volume, as defined by the carrier's tariff." } },
+        { "@type": "Question", "name": "Why is converting a Celsius difference with the Fahrenheit temperature formula so far off?", "acceptedAnswer": { "@type": "Answer", "text": "Because temperature has an absolute zero and a difference does not. Temperature needs the offset (0 degrees Celsius = 32 degrees Fahrenheit); a difference only scales, so 1 degree Celsius of difference equals 1.8 degrees Fahrenheit of difference. Applying the temperature formula to a 20-degree Celsius difference gives 68 degrees Fahrenheit when the correct answer is 36 degrees Fahrenheit." } }
+    ]
+}
+    </script>
 <script src="/js/i18n.js" defer></script><script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>
 <body>
@@ -57,28 +70,88 @@
             </nav>
 <div class="article-tags"><a href="/en/tags/life.html" class="tag tag-life" data-tag="life"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-flower"></use></svg> Lifestyle</a></div>
 <p class="blog-meta"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-newspaper"></use></svg> 2026-07-02 · Calc-Tools Editor</p>
-<h1>Unit Converter Guide: Common Unit Conversion Reference</h1><p>A unit converter removes the mental math from everyday tasks—cooking, travel, construction, and schoolwork. Knowing how conversions work helps you spot errors before they cost you.</p>
-<h2>Metric vs Imperial</h2>
-<p>Most of the world uses metric, but recipes, tires, and real estate listings often mix units. Convert length, weight, volume, and temperature with confidence using the tool.</p>
-<h2>Temperature Conversions</h2>
-<p>To convert Celsius to Fahrenheit, multiply by 9/5 and add 32. A quick reference: 0°C = 32°F, 20°C is about 68°F, and 37°C is body temperature.</p>
-<h2>Common Cooking Conversions</h2>
-<p>A cup is 240 ml in most modern measurements, a tablespoon is 15 ml, and a teaspoon is 5 ml. Scales are more reliable than volume for baking.</p>
-<h2>Precision and Rounding</h2>
-<p>Choose the number of decimal places that fits the task. Construction tolerances need millimeters; a recipe is fine with whole grams.</p>
-<h2>Speed, Area, and Data Units</h2>
-<p>Less obvious conversions trip people up too. Speed comes in km/h or mph, area in square meters or square feet, and data in MB, GB, or GiB. Each field has its own convention, so convert with the right unit set.</p>
-<p>For data, be careful with binary prefixes: a "1 TB" drive may report as 931 GiB because manufacturers use decimal units while operating systems use binary. The converter can show both.</p>
-<h2>How to Convert Units</h2>
-<ol><li>Choose the category—length, weight, volume, temperature, speed, or data.</li><li>Enter the value and select the source and target units.</li><li>Read the result and set the decimal precision the task requires.</li></ol>
-<p>For mixed-unit problems, convert everything to one system first, then do the calculation to avoid unit-mixing errors.</p>
-<p><strong>Quick tip:</strong> when a recipe or blueprint mixes units, convert everything to one system before starting. Mixing systems mid-task is the classic source of kitchen and workshop disasters. One system keeps every number consistent, so mistakes surface immediately.</p>
+<h1>Unit Converter Guide: Common Unit Conversion Reference</h1>
+<p>The arithmetic of unit conversion is trivial: you multiply by a factor. What actually breaks is <strong>naming</strong>, because the same word means different quantities in different systems. "One gallon" is 3.785411784 litres in the United States and 4.54609 litres in the United Kingdom. "One ton" can be 1000 kg, 907.18474 kg, or 1016.0469088 kg. This guide skips the basic how-to and covers the part that causes real errors: where the ambiguity came from, how much precision a conversion deserves, and four situations where a single factor is not enough.</p>
+<h2>1. Three Systems, Not Two</h2>
+<p>Metric versus imperial is shorthand, and a misleading one. Three systems are still in play: the <strong>International System of Units (SI)</strong>, <strong>Imperial</strong> units, and <strong>US customary</strong> units. Britain re-standardised its capacity units through the Weights and Measures Act of 1824. The United States had already declared independence and kept the older British standards it had inherited, so the two countries' gallons drifted apart and never converged again.</p>
+<p>The counter-intuitive part is that <strong>not every shared name diverged</strong>. In 1959 the United States, the United Kingdom, Canada, Australia, New Zealand and South Africa signed the <strong>International Yard and Pound Agreement</strong>, fixing 1 yard at exactly 0.9144 metres and 1 pound at exactly 453.59237 grams. An inch is therefore 25.4 millimetres in both countries, and a pound weighs the same in London and New York.</p>
+<p>Divergence is concentrated in exactly two places: <strong>liquid capacity</strong> (gallon, quart, pint, fluid ounce, cup) and <strong>the ton</strong>. Remember that rule and you can tell at a glance which conversions are safe and which need a question asked first.</p>
+<h2>2. Same Name, Different Value</h2>
+<p>Several entries below are definitional rather than measured, so they can be substituted into a calculation at full precision.</p>
+<table>
+<tr><th>Unit</th><th>System</th><th>Value</th><th>Note</th></tr>
+<tr><td>Gallon (gal)</td><td>US</td><td>3.785411784 L</td><td>Defined as 231 cubic inches</td></tr>
+<tr><td>Gallon (gal)</td><td>Imperial</td><td>4.54609 L</td><td>20.1% larger than the US gallon</td></tr>
+<tr><td>Quart (qt, liquid)</td><td>US</td><td>946.352946 mL</td><td>One quarter of a US gallon</td></tr>
+<tr><td>Quart (qt, liquid)</td><td>Imperial</td><td>1136.5225 mL</td><td>One quarter of an imperial gallon</td></tr>
+<tr><td>Pint (pt, liquid)</td><td>US</td><td>473.176473 mL</td><td>One eighth of a US gallon</td></tr>
+<tr><td>Pint (pt, liquid)</td><td>Imperial</td><td>568.26125 mL</td><td>20.1% larger than the US pint</td></tr>
+<tr><td>Fluid ounce (fl oz)</td><td>US</td><td>29.5735295625 mL</td><td>1/128 of a US gallon</td></tr>
+<tr><td>Fluid ounce (fl oz)</td><td>Imperial</td><td>28.4130625 mL</td><td>About 3.9% smaller than the US fluid ounce</td></tr>
+<tr><td>Cup</td><td>US</td><td>236.5882365 mL</td><td>8 US fluid ounces</td></tr>
+<tr><td>Cup</td><td>Imperial</td><td>284.130625 mL</td><td>10 imperial fluid ounces</td></tr>
+<tr><td>Cup</td><td>Metric</td><td>250 mL</td><td>Used on nutrition labels and in some countries</td></tr>
+<tr><td>Ounce (oz)</td><td>Avoirdupois (mass)</td><td>28.349523125 g</td><td>1/16 of a pound</td></tr>
+<tr><td>Ton</td><td>Metric tonne</td><td>1000 kg</td><td>Metric system</td></tr>
+<tr><td>Ton</td><td>Short ton</td><td>907.18474 kg</td><td>2000 lb, common in the US</td></tr>
+<tr><td>Ton</td><td>Long ton</td><td>1016.0469088 kg</td><td>2240 lb, exactly 1.12 short tons</td></tr>
+</table>
+<p>The fluid ounce is the entry most people skim past. One letter separates it from the avoirdupois ounce, but one measures volume and the other measures mass. The US fluid ounce (29.57 mL) sits close to the avoirdupois ounce in grams (28.35), and that coincidence is why the mnemonic "an ounce is 28.35" gets misapplied to volume. As for the 20.1% gap between the two gallons, a relative-error view makes it concrete: a tank labelled 50 litres holds 13.2086 US gallons but only 10.9985 imperial gallons. You can check that ratio with the <a href="/en/calculators/percentage-calc">percentage calculator</a>. It is not a difference that rounding will absorb.</p>
+<h2>3. A Conversion Should Never Add Precision</h2>
+<p>Writing 1 mile as 1.609344 km is correct, because that is the definitional value from the 1959 agreement. But if the number you started with was "about 8 inches", printing 203.2 mm invents precision that never existed: one significant figure going in, four coming out.</p>
+<p>The working rule is that <strong>the output should carry no more significant figures than the input</strong>. A recipe calling for an 8-inch pan only needs "about 20 cm". A drawing that specifies a 0.01-inch tolerance must be treated as 0.254 mm, because there the fourth decimal place is a real constraint. The same word, convert, implies opposite precision requirements in those two settings.</p>
+<p>Chained conversions compound the problem. Pounds to kilograms, then kilograms to some local unit, means two separate rounding steps and two layers of error. The safer sequence is to <strong>carry exact factors through the whole calculation and round once, at the end</strong>, rather than rounding after every unit change.</p>
+<h2>4. Shipping: A Parcel Has Three Weights</h2>
+<p>Cross-border carriers price on two different weights. One is the <strong>actual weight</strong> on the scale. The other is <strong>dimensional weight</strong>, computed from the carton's length times width times height divided by a divisor that encodes the carrier's assumed cargo density. Metric tariffs commonly divide by 5000 to get kilograms; imperial tariffs commonly divide by 139 to get pounds. The two are the same density line: roughly 200 kg per cubic metre.</p>
+<p>The carrier charges on whichever figure is larger, the <strong>billable weight</strong>. That is why bulky-but-light items such as puffer jackets, sneakers and cushions are billed on volume, while dense-but-small items such as books and hardware are billed on the scale. Estimating dimensional weight before you buy tells you more than the sticker price does. When you compare prices, remember the currency leg as well; the <a href="/en/calculators/currency-converter">currency converter</a> covers that part.</p>
+<p>One warning: US, UK and EU clothing and shoe sizes are <strong>three separate labelling systems</strong>. There is no formula linking them to inches or centimetres, and only the brand's own size chart is authoritative. Treating sizes as a conversion problem does not work.</p>
+<h2>5. Recipes: What Is a Cup, Really?</h2>
+<p>The cup in an American recipe is a <strong>volume</strong> unit, not a drinking cup. A US cup is 236.5882365 mL, a metric cup is 250 mL, and an imperial cup is 284.130625 mL. The smaller units differ too: a US tablespoon is 14.7868 mL and a US teaspoon is 4.9289 mL.</p>
+<p>The real trap is converting cups straight to grams. Volume and mass are separated by density. One cup of water is about 236.6 g, but one cup of flour is only about 120 to 130 g depending on the source, and one cup of granulated sugar is about 200 g. The same volume of different ingredients can differ in mass by a factor of two. So <strong>converting an American recipe wholesale into millilitres is safe, while converting it wholesale into grams is not</strong>. If you need grams, look up each ingredient's own bulk density; never apply the one-to-one water ratio.</p>
+<h2>6. Drawings: Inches, Tolerances and Pipe Sizes</h2>
+<p>Inch dimensions on mechanical and architectural drawings are usually written as fractions. Because 1 inch is exactly 25.4 mm, these convert without any rounding at all: 1/2 inch is 12.7 mm, 3/4 inch is 19.05 mm, and 1-1/2 inches is 38.1 mm.</p>
+<p>But exact and adequate are different questions. A 0.01-inch tolerance on a drawing is 0.254 mm, not 0.25 mm. On precision parts, quietly rounding 0.254 down to 0.25 is a 1.6% deviation, enough to scrap a batch. Working the other way is just as careless: 19 mm is about 0.748 inch, only 0.05 mm away from 0.75 inch, invisible to the eye but capable of causing an assembly failure.</p>
+<p>Pipe sizing hides a subtler version of the same problem. The DN marking on a pipe is a <strong>nominal diameter</strong>: it is neither the outside diameter nor the inside diameter, and it does not stand in a simple multiple relationship to the inch designation. What people call a one-inch pipe has exact dimensions defined by the standard being followed. Assuming DN converts directly into a real diameter is one of the most common engineering misreadings.</p>
+<h2>7. Temperature Difference Is Not Temperature</h2>
+<p>Temperature conversion has two formulas, and using the wrong one produces wildly wrong answers. Converting a <strong>temperature</strong> requires the offset: Fahrenheit = Celsius x 1.8 + 32, so 0 degrees Celsius is 32 degrees Fahrenheit. Converting a <strong>temperature difference</strong> drops the 32 entirely: a rise of 1 degree Celsius equals a rise of 1.8 degrees Fahrenheit.</p>
+<p>Cooling loads, heat transfer and thermal expansion all work in differences. Treat a 20-degree Celsius difference as a temperature and you get 68 degrees Fahrenheit; the correct answer is 36 degrees Fahrenheit, nearly double. The test for which formula applies is simple: <strong>does the quantity have an absolute zero?</strong> Temperature does, so it needs an offset. A difference does not, so it only scales.</p>
+<p>Kelvin and Celsius, incidentally, use degrees of identical size and differ only by an offset: Kelvin = Celsius + 273.15. A difference of 1 degree Celsius is therefore also a difference of 1 kelvin.</p>
+<h2>8. Three Worked Examples</h2>
+<p><strong>Example 1: an American recipe converted to metric.</strong> The recipe calls for 2 cups flour, 1 cup milk, 1/2 cup butter, 1 tablespoon vanilla and 1 teaspoon salt. Converting each and rounding to four decimals: 2 cups = 473.1765 mL; 1 cup = 236.5882 mL; 1/2 cup = 118.2941 mL; 1 tablespoon = 14.7868 mL; 1 teaspoon = 4.9289 mL. The total is <strong>847.7745 mL</strong>, about 0.8478 L. This is volume-to-volume only and assumes no ingredient density, so the numbers are usable as they stand. Writing the flour in grams would require a separate bulk-density lookup.</p>
+<p><strong>Example 2: the same fuel economy figure, 20% apart.</strong> Take a rating of 30 MPG. On US gallons: 30 x 1.609344 / 3.785411784 = 12.7543 km/L, which is 7.84 L per 100 km. On imperial gallons: 30 x 1.609344 / 4.54609 = 10.6202 km/L, which is 9.42 L per 100 km. One figure, two systems, roughly 20% apart, which is exactly why cross-system data needs its convention confirmed first. To price it at your own fuel cost, use the <a href="/en/calculators/fuel-cost">fuel cost calculator</a>.</p>
+<p><strong>Example 3: billable shipping weight.</strong> A carton measures 40 x 30 x 25 cm, a volume of 30,000 cubic centimetres. Dividing by 5000 gives a dimensional weight of 6 kg; the scale reads 4.2 kg. The carrier takes the larger figure, so you pay for 6 kg, which is 1.8 kg more than the parcel actually weighs. All of that extra is air. Switch to the imperial convention and you divide by 139 to get pounds; it is the same 200 kg per cubic metre line.</p>
+<h2>9. Five Common Misconceptions</h2>
+<p><strong>Misconception 1: conversion factors are round numbers.</strong> Apart from deliberately defined values such as 1 inch = 25.4 mm, most factors are products of historical dimension chains: 1 US gallon = 3.785411784 L, 1 long ton = 1016.0469088 kg. You cannot round them off and memorise the result.</p>
+<p><strong>Misconception 2: a fluid ounce is an ounce.</strong> The fluid ounce is volume (29.5735295625 mL in the US); the avoirdupois ounce is mass (28.349523125 g). Only water near 4 degrees Celsius even approximates 1 mL = 1 g.</p>
+<p><strong>Misconception 3: a local unit of mass works for international trade.</strong> The Chinese market catty is 500 g, the Taiwanese catty is 600 g, and other regions have their own. Cross-border trade, customs paperwork and export formulas should use kilograms, never a regional mass unit.</p>
+<p><strong>Misconception 4: temperature-difference math uses the temperature formula.</strong> Differences multiply by 1.8 and never add 32. This single mistake is remarkably common in HVAC, refrigeration and materials work.</p>
+<p><strong>Misconception 5: chained conversions can be rounded as you go.</strong> Pounds to kilograms to a third unit means two rounding steps and two accumulated errors. Keep intermediate precision and round once.</p>
+<h2>10. Four Practical Rules</h2>
+<ul>
+<li><strong>Rule 1: ask which gallon, which ton, which ounce.</strong> These three are the worst offenders for name collisions. Until the convention is confirmed, any converted figure is only half trustworthy.</li>
+<li><strong>Rule 2: keep one recipe in one system.</strong> All volume (cups, tablespoons, teaspoons) or all mass (grams). Mixing the two introduces both sets of errors at once.</li>
+<li><strong>Rule 3: multiply by exact factors first, round last.</strong> Finish the whole calculation at definitional precision, then round once to whatever the situation needs.</li>
+<li><strong>Rule 4: save four factors in your notes.</strong> 1 inch = 25.4 mm, 1 pound = 453.59237 g, 1 US gallon = 3.785411784 L, 1 long ton = 1016.0469088 kg. With those, more than nine out of ten everyday conversions need no lookup at all.</li>
+</ul>
+<h2>11. FAQ</h2>
+<dl>
+<dt>Why is 1 inch such a tidy 25.4 mm while a gallon is an awkward 3.785411784 litres?</dt>
+<dd>Different origins. The 25.4 figure was chosen: the 1959 International Yard and Pound Agreement defined 1 yard as exactly 0.9144 m, and dividing by 36 gives 25.4 mm. The US gallon descends from the historical definition of 231 cubic inches, and 231 times 16.387064 cubic centimetres is exactly 3785.411784 cubic centimetres. The awkward decimals are inherited history, not measurement error.</dd>
+<dt>How far apart are the US and imperial gallons?</dt>
+<dd>The imperial gallon is 4.54609 L and the US gallon is 3.785411784 L, making the imperial gallon 20.1% larger. Concretely, a tank labelled 50 litres holds 13.2086 US gallons but only 10.9985 imperial gallons.</dd>
+<dt>How many grams are in a recipe's cup?</dt>
+<dd>A cup is a volume unit, so the answer depends on the ingredient. One US cup is 236.5882365 mL: about 236.6 g of water, but only about 120 to 130 g of flour depending on the source. Converting cups to millilitres is the safe move; if you need grams, look up each ingredient's own bulk density.</dd>
+<dt>How do short tons, long tons and metric tonnes differ?</dt>
+<dd>A metric tonne is 1000 kg, a short ton is 907.18474 kg (2000 lb) and a long ton is 1016.0469088 kg (2240 lb), exactly 1.12 short tons. When a document says ton, confirm which one; ocean freight also uses a freight ton that takes the larger of weight and volume, as defined by the carrier's tariff.</dd>
+<dt>Why is converting a Celsius difference with the Fahrenheit temperature formula so far off?</dt>
+<dd>Because temperature has an absolute zero and a difference does not. Temperature needs the offset (0 degrees Celsius = 32 degrees Fahrenheit); a difference only scales, so 1 degree Celsius of difference equals 1.8 degrees Fahrenheit of difference. Applying the temperature formula to a 20-degree Celsius difference gives 68 degrees Fahrenheit when the correct answer is 36 degrees Fahrenheit.</dd>
+</dl>
 <div class="blog-cta">
                 <p><strong>Online <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-calculator"></use></svg> Unit Converter</strong></p>
                 <p>Free to use, no download required</p>
                 <p><a href="/en/calculators/unit-converter"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-arrow-right"></use></svg> Use <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-calculator"></use></svg> Unit Converter Now</a></p>
             </div>
-            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> Related Articles</h3><ul><li><a href="/blog/en/electricity-cost-guide">Electricity Cost Calculator: Appliance Power Consumption Guide</a></li><li><a href="/blog/en/fuel-cost-guide">Fuel Cost Calculator: How to Calculate Car Fuel Consumption</a></li></ul></div>
+            <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-map-pin"></use></svg> Related Articles</h3><ul><li><a href="/blog/en/fuel-cost-guide">Fuel Cost Calculator: How to Calculate Car Fuel Consumption</a></li><li><a href="/blog/en/electricity-cost-guide">Electricity Cost Calculator: Appliance Power Consumption Guide</a></li><li><a href="/blog/en/discount-calculation-tips">How to Calculate Discounts: Formula and Tips</a></li><li><a href="/blog/en/percentage-calculation-tips">Percentage Calculator Guide: Common Percentage Calculation Tips</a></li></ul></div>
 <div class="article-bottom-tags"><a href="/en/tags/life.html" class="tag tag-life" data-tag="life"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-flower"></use></svg> Lifestyle</a></div>
 
         <div class="like-section">

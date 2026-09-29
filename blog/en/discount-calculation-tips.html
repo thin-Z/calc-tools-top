@@ -34,6 +34,55 @@
 <link rel="stylesheet" href="../../css/style.css">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"How to Calculate Discounts: Formula and Tips","description":"Discount formula, percentage off calculation, sale price and savings tips.","author":{"@type":"Person","name":"Calc-Tools Editor"},"datePublished":"2026-06-26","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.calc-tools.top/blog/en/discount-calculation-tips"},"publisher":{"@type":"Organization","name":"ToolBox Inside"}}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.calc-tools.top/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://www.calc-tools.top/blog/en/"},{"@type":"ListItem","position":3,"name":"How to Calculate Discounts: Formula and Tips","item":"https://www.calc-tools.top/blog/en/discount-calculation-tips"}]}</script>
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "Is a threshold discount or a percentage discount better?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "It depends on where the basket lands. Spending 300 to save 50 pays 83.3% at exactly $300, then decays to 87.5% at $399 and 90.0% at $500, while 20% off stays flat at 80.0%. On a $399 item that is $319.20 against $349, a $29.80 difference. Write both totals down and compare them."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "What does second item half price really work out to?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "75.0% when both items cost the same: two $199 items list at $398 and you pay $298.50. When prices differ, check which item gets the half-price treatment. Buying a $199 and a $299 item pays $348.50, about 70%, if the half price applies to the more expensive one, and $398.50, about 80%, if it applies to the cheaper one, a $50 swing."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why is discounting first worse than taking the threshold discount first?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Because the threshold is recalculated on the amount payable. On a $1,000 order combining 20% off with save $50 per $300, discounting first cuts the base to $800, which holds only two $300 blocks, so you pay $700. Taking the $150 threshold discount first leaves $850, and 20% off that is $680."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Does store credit count as a discount?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Only if you spend it within the expiry window on something you already planned to buy. Spend $600 and get $200 back, and a second order of exactly $200 makes the pair a 75.0% paid ratio; a second order of $300 makes it 77.8%; an expired credit leaves the first order at full price."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Why does padding a basket to reach a threshold feel like it saves less?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Because the $50 saved is measured against the padded $300 rather than the $260 you were going to spend. Adding a $40 item to reach the threshold and paying $250 reduces your cash outlay by only $10 while adding a $40 item. Against the item you actually wanted, the effective rate is $250 divided by $260, or 96.2%."
+                }
+            }
+        ]
+    }
+    </script>
+
 <script src="/js/i18n.js" defer></script><script src="/js/like.js" defer></script><script src="/js/site-core.js" defer></script>
 </head>
 <body>
@@ -52,29 +101,82 @@
 <main id="main"><article class="blog-post">
 <div class="article-tags"><a href="/en/tags/shopping.html" class="tag tag-shopping" data-tag="shopping">Shopping</a></div>
 <p class="blog-meta"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-calendar"></use></svg> 2026-06-26 · Calc-Tools Editor</p>
-<h1>How to Calculate Discounts: Formula and Tips</h1><p>Discount math is everywhere—sales, coupons, and price negotiations. A small calculation mistake can make you think you're saving more than you are.</p>
-<h2>The Basic Discount Formula</h2>
-<p>Final price equals original price times (1 minus the discount rate). A 20% discount on $80 means paying 80% of $80, or $64. Work in the percentage you pay, not the percentage off.</p>
-<h2>Stacked Discounts</h2>
-<p>Two 10% discounts are not 20%. The second discount applies to the already-reduced price, so 10% then 10% totals only 19% off.</p>
-<h2>What You Actually Pay</h2>
-<p>Focus on the final price and the after-tax total. A heavily discounted item with high shipping can cost more than a smaller discount with free delivery.</p>
-<h2>Comparing Deals</h2>
-<p>Convert each deal to a price per unit or a percentage off the same baseline. Then the best value becomes obvious without guesswork.</p>
-<h2>Discounts and Sales Tax</h2>
-<p>Remember that most discounts apply before sales tax is added. A 30% discount on an item still carries tax on the reduced price, so the final checkout total may differ from your quick mental math.</p>
-<p>When comparing prices across regions, always compare the after-tax totals. Some markets show tax-inclusive prices and others do not, which can flip which deal is actually cheaper.</p>
-<h2>How to Calculate a Discount</h2>
-<ol><li>Enter the original price and the discount percentage offered.</li><li>The tool shows both the savings and the final price after the discount.</li><li>Add tax or shipping if you want the true out-of-pocket total.</li></ol>
-<p>For stacked promotions, enter the discounts in sequence—the second applies to the first result, not the original price.</p>
-<p><strong>Quick tip:</strong> when a store advertises 'up to 50% off', always calculate the actual item you want. Clearance signs often mix tiers, and only the final price tells you if the deal is real. The final price is the only number that counts when you are at the register.</p>
+<h1>How to Calculate Discounts: Formula and Tips</h1><p>Discount arithmetic is easy. Comparing discounts is not. The same $399 item costs $349 under "spend $300, save $50" but only $319.20 at 20% off, and the $29.80 gap comes entirely from the shape of the promotion rather than its headline. This guide puts every common promotion format onto a single yardstick, then works through stacking order, threshold padding, store credit and volume tiers, using numbers you can check on a calculator.</p>
+<h2>1. One Yardstick: Price Paid Divided by Original Price</h2>
+<p>Sale price equals original price times the discount rate, which means the discount rate is simply price paid divided by original price. That is the only denominator that lets a threshold discount and a straight percentage sit in the same comparison. Advertised percentages describe what the merchant gives up; the paid ratio describes what leaves your account.</p>
+<p>If you shop across markets, note that Chinese retail writes discounts as a fraction of ten, so "8 折" means paying 80%, which is the same as 20% off. The conversion is discount number = (1 − percent off) × 10, and it is worth doing in your head before you trust a translated banner.</p>
+<p>There is a second, harder yardstick: unit price. A 500 g pack at $39.90 works out to $79.80 per kilogram, while a 1 kg pack at $69.90 is $69.90 per kilogram, so the smaller pack is about 14% more expensive per unit and a "second item half price" offer may still not close the gap. When sizes and units are mixed, convert them first with a <a href="/en/calculators/unit-converter">unit converter</a> or the <a href="/blog/en/unit-converter-guide">unit conversion reference</a>.</p>
+<h2>2. Four Promotion Formats on One Scale</h2>
+<p>The table below converts the standard promotion formats into the same paid ratio. Pay attention to the final column: every format has a range where it is strongest, and outside that range the effective rate decays quickly.</p>
+<table>
+<tr><th>Promotion format</th><th>How to convert it</th><th>Worked example</th><th>Where it is strongest</th></tr>
+<tr><td>Straight percent off</td><td>price paid ÷ original price</td><td>20% off: $399 becomes $319.20 (you pay 80.0%)</td><td>Any basket size; the rate never changes</td></tr>
+<tr><td>Spend X, save Y</td><td>(basket − Y) ÷ basket</td><td>Spend 300 save 50: $300 pays $250 (83.3%); $399 pays $349 (87.5%)</td><td>Right at the threshold; weakens as the basket grows</td></tr>
+<tr><td>Second item half price</td><td>(two-item total − half-price item ÷ 2) ÷ two-item total</td><td>Two $199 items: $398 becomes $298.50 (you pay 75.0%)</td><td>Identical prices, and a genuine need for two</td></tr>
+<tr><td>Buy one get one free / third free</td><td>items paid ÷ items received</td><td>$199 BOGO: 50.0%; third item free: $398 ÷ $597 = 66.7%</td><td>Consumables you will actually use up</td></tr>
+<tr><td>Store credit on the next order</td><td>total paid ÷ total list price across both orders</td><td>Spend $600, get $200 back: if the next order is exactly $200, $600 ÷ $800 = 75.0%</td><td>A second purchase you had already planned</td></tr>
+<tr><td>Volume tier pricing</td><td>tier unit price ÷ first-tier unit price</td><td>$100 down to $85 down to $78 per unit: the 10-unit tier pays 85%</td><td>Quantity lands exactly inside a tier</td></tr>
+</table>
+<p>Threshold discounts are the format people misread most often, because they are not a rate at all but a curve that decays with the basket. Spending 300 to save 50 pays 83.3% at exactly $300, 87.5% at $399, and 90.0% at $500. A straight percentage stays flat, so the larger the basket, the better "20% off" performs against it.</p>
+<p>Store credit hides its weakness in the denominator. A $200 credit for a $600 order only delivers 75.0% if you spend the credit on something you were going to buy anyway. Push the second order to $300, pay $100 after the credit, and two orders costing $700 for $900 of goods work out to 77.8%. Let the credit expire and the first order was bought at full price.</p>
+<h2>3. Stacking Order: Percent Off First, or Threshold First?</h2>
+<p>When a single order qualifies for both a percentage discount and a threshold discount, the order of operations changes the total. The reason is that most threshold rules are recalculated on the amount payable, so applying the percentage first shrinks the base and can drop the basket out of a reward tier.</p>
+<p><strong>Example one:</strong> a $1,000 order with both "20% off" and "save $50 for every $300 spent". Discount first: $1,000 × 0.8 = $800, which holds two full $300 blocks, so $100 comes off and you pay $700. Threshold first: $1,000 holds three $300 blocks, so $150 comes off, leaving $850, and 20% off that is $680. Same order, same two offers, $20 apart.</p>
+<p><strong>Example two:</strong> swap in "10% off" plus "save $30 for every $200 spent" on a $600 order and the pattern holds: discount first pays $480, threshold first pays $459, a $21 gap. The rule of thumb is that whenever the threshold is recalculated on the payable amount, taking the threshold first is better. If the threshold is locked to the list price instead, the order makes no difference, and the question to check becomes whether the two offers are even allowed to combine.</p>
+<h2>4. Four Ways to Buy the Same $399 Item</h2>
+<p>Running the same $399 item through four different offers shows how wide the spread gets.</p>
+<p><strong>Route one (threshold):</strong> "spend $300, save $50" triggers once, so you pay $349, the equivalent of 87.5% of list.</p>
+<p><strong>Route two (percentage):</strong> 20% off pays $319.20, which is $29.80 less than the threshold offer. At this basket size the straight discount wins.</p>
+<p><strong>Route three (second item half price):</strong> two items list at $798 and you pay $598.50, bringing the per-item cost to $299.25, or 75.0% overall. That is the lowest rate of the four, and the price of it is a second item. If the second item is of no use, the cash you actually handed over for the first one is still $598.50, not $299.25.</p>
+<p><strong>Route four (padding for a bigger coupon):</strong> a "$100 off $400" coupon is $1 out of reach. Add a $1 item, the order reaches $400, and you pay $300. Measured against the item you actually wanted, the effective rate is $300 ÷ $399 = 75.2%; measured against the order total, it is a clean 75.0%. Padding did not weaken the deal here, but only because the $1 item was worth having.</p>
+<h2>5. Three Ways a Deal Is Made to Look Bigger</h2>
+<p><strong>One: an inflated list price.</strong> Raise the ticket from $299 to $399 before the sale, then advertise 30% off and charge $279.30. Against the real $299 price you saved $19.70, an effective rate of $279.30 ÷ $299 = 93.4%, not the 70% on the sign. The denominator is what the item normally sells for, never the number typed in the week the sale started, which is why price history beats discount headlines.</p>
+<p><strong>Two: threshold padding.</strong> Your basket is $260 and the banner says "spend $300, save $50", so you add a $40 item, reach $300 and pay $250. The receipt says you saved $50, but against the $260 you were already going to pay, your cash outlay fell by only $10 and a $40 item came along with it. Measured against what you actually wanted, the effective rate is $250 ÷ $260 = 96.2%, not the 83.3% on the banner. Padding is an expense and the reward is an offset; only the difference between them is real savings.</p>
+<p><strong>Three: countdown pressure.</strong> Timers, remaining-stock counters and "first 100 orders" bonuses exist to compress your comparison time to nearly zero. If a deal cannot survive a look at its own price history, the honest move is to leave it in the cart and check the price again after the timer runs out.</p>
+<p>Interest-free instalments are the fourth format that gets mispriced, because the benefit is not the sticker price but the timing of the cash. A $6,000 purchase split into 12 monthly payments of $500 has a present value of about $5,903.60 if your capital costs 3% a year, a benefit worth roughly $96.40 and an effective rate of 98.4%. The same item with an instant $300 discount costs $5,700, or 95.0% of list, which is clearly better. The value of free financing depends on your own cost of capital rather than on a fixed percentage, and the full cost structure of instalment debt is worked through in <a href="/blog/en/car-loan-calculator-guide">the car loan payment guide</a>.</p>
+<h2>6. Tiered Pricing: Where the Break Points Hide</h2>
+<p>Wholesale and B2B quotes usually arrive as volume tiers, where the number that matters is not the rate but the point at which a larger order costs less. Take a supplier quoting $100 per unit for 1 to 9, $85 for 10 to 49, and $78 from 50 up.</p>
+<table>
+<tr><th>Quantity</th><th>Unit price</th><th>Order total</th><th>Paid ratio vs first tier</th></tr>
+<tr><td>9 units</td><td>$100</td><td>$900</td><td>100% (list price)</td></tr>
+<tr><td>10 units</td><td>$85</td><td>$850</td><td>85.0%</td></tr>
+<tr><td>49 units</td><td>$85</td><td>$4,165</td><td>85.0%</td></tr>
+<tr><td>50 units</td><td>$78</td><td>$3,900</td><td>78.0%</td></tr>
+</table>
+<p>Two break points stand out. Ten units cost $50 less than nine while delivering one more unit, and 50 units cost $265 less than 49 while also delivering one more. When your requirement sits just below a tier, stepping up into it is usually cheaper than adding units inside the current tier. The reverse also holds: if you need 12 units, buying 38 extra to reach the 50-unit tier only pays off if that stock will genuinely be consumed.</p>
+<h2>7. Frequently Asked Questions</h2>
+<dl>
+<dt>Is a threshold discount or a percentage discount better?</dt>
+<dd>It depends on where the basket lands. Spending 300 to save 50 pays 83.3% at exactly $300, then decays to 87.5% at $399 and 90.0% at $500, while 20% off stays flat at 80.0%. On a $399 item that is $319.20 against $349, a $29.80 difference. Write both totals down and compare them rather than comparing the headlines.</dd>
+<dt>What does "second item half price" really work out to?</dt>
+<dd>75.0% when both items cost the same: two $199 items list at $398 and you pay $298.50. When prices differ, check which item gets the half-price treatment. Buying a $199 and a $299 item pays $348.50, about 70%, if the half price applies to the more expensive one, and $398.50, about 80%, if it applies to the cheaper one, a $50 swing. Reading it as a flat 50% is the most common mistake.</dd>
+<dt>Why is discounting first worse than taking the threshold discount first?</dt>
+<dd>Because the threshold is recalculated on the amount payable. On a $1,000 order combining 20% off with "save $50 per $300", discounting first cuts the base to $800, which holds only two $300 blocks, so you pay $700. Taking the $150 threshold discount first leaves $850, and 20% off that is $680. The same two offers end $20 apart.</dd>
+<dt>Does store credit count as a discount?</dt>
+<dd>Only if you spend it within the expiry window on something you already planned to buy. Spend $600 and get $200 back, and a second order of exactly $200 makes the pair a 75.0% paid ratio; a second order of $300 makes it 77.8%; an expired credit leaves the first order at full price. Extra items bought just to unlock the credit push the effective rate back up.</dd>
+<dt>Why does padding a basket to reach a threshold feel like it saves less?</dt>
+<dd>Because the "$50 saved" is measured against the padded $300 rather than the $260 you were going to spend. Adding a $40 item to reach the threshold and paying $250 reduces your cash outlay by only $10 while adding a $40 item. Against the item you actually wanted, the effective rate is $250 ÷ $260 = 96.2%, not the 83.3% advertised.</dd>
+</dl>
+<h2>8. Three Common Mistakes</h2>
+<p><strong>Mistake one: assuming the lowest rate is the best deal.</strong> A rate is a ratio against list price, not an amount of money. Paying 75% for two items can drain more cash than paying 80% for one, and buying something you will never use is a net loss at any discount. Decide what you need first, then compare the cash total for that same item across the offers.</p>
+<p><strong>Mistake two: assuming the threshold will apply.</strong> Threshold offers come with conditions: whether the tier is measured on list or discounted prices, whether it is limited to certain categories or sellers, whether it combines with platform coupons, whether it applies once or repeats, and whether the coupon stock and time window still hold. The banner figure is a ceiling; the checkout total is the answer.</p>
+<p><strong>Mistake three: mixing percentages with discount numbers.</strong> Paying 80% is a 20% reduction, and "down 20 percentage points" is not the same as "down 20%". Whenever a banner mixes "save 20%" with "extra 2 off", convert both into the same paid ratio first. For the arithmetic behind percentage points and the asymmetry of rises and falls, see the <a href="/blog/en/percentage-calculation-tips">percentage calculation guide</a>.</p>
+<h2>9. A Pre-Checkout Checklist</h2>
+<ul>
+<li><strong>Put every option on one yardstick.</strong> Write down the checkout total for each candidate, then divide by the original price. Mental arithmetic quietly drops shipping, tax and padding. A <a href="/en/calculators/percentage-calc">percentage calculator</a> handles the division once you have both numbers.</li>
+<li><strong>Check the price history.</strong> The denominator is what the item normally sells for, not the price printed when the promotion started. If a history chart exists, read it; if not, at least confirm the item has not been sitting at a permanent "sale" price for months.</li>
+<li><strong>Decide on need before adding padding.</strong> A padding item that is not needed cancels out its own reward. Net saving = what you were going to pay − cash actually paid, and that number matters more than the size of the headline reward.</li>
+<li><strong>Compare unit prices.</strong> Across pack sizes, convert to a price per kilogram, litre or dose before applying any offer. Cross-border shopping needs a currency step first, which a <a href="/en/calculators/currency-converter">currency converter</a> handles before you compare anything.</li>
+<li><strong>Value large offers over time.</strong> Store credit, membership rates and interest-free instalments are only worth what you actually use. Discounting their cash flows to a common point in time is the same logic that explains the gap between <a href="/blog/en/compound-interest-guide">compound and simple interest</a>.</li>
+</ul>
+<p>The hard part of discount math was never the multiplication. It is converting offers of different shapes into numbers that can be compared. Use price paid divided by original price as the only yardstick, decide before you calculate, and most promotional language stops working on you.</p>
 <div class="blog-cta">
                 <p><strong>Online <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-calculator"></use></svg> Discount Calculator</strong></p>
                 <p>Free to use, no download required</p>
                 <p><a href="/en/calculators/percentage-calc"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-arrow-right"></use></svg> Use <svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-calculator"></use></svg> Discount Calculator Now</a></p>
             </div>
 <div class="article-bottom-tags"><a href="/en/tags/shopping.html" class="tag tag-shopping" data-tag="shopping">Shopping</a></div>
-                    <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-link"></use></svg> Related Articles</h3><ul><li><a href="/blog/en/date-calculation-tips">Date Calculator: Add/Subtract Days & Date Difference</a></li><li><a href="/blog/en/electricity-cost-guide">Electricity Cost Calculator: Appliance Power Consumption Guide</a></li><li><a href="/blog/en/fuel-cost-guide">Fuel Cost Calculator: Calculate Gas Cost for Your Trip</a></li><li><a href="/blog/en/unit-converter-guide">Unit Converter Guide: Length, Weight, Temperature Conversion</a></li></ul></div>
+                    <div class="related-posts"><h3><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-link"></use></svg> Related Articles</h3><ul><li><a href="/blog/en/percentage-calculation-tips">Percentage Calculator Guide: Common Percentage Calculation Tips</a></li><li><a href="/blog/en/unit-converter-guide">Unit Converter Guide: Common Unit Conversion Reference</a></li><li><a href="/blog/en/compound-interest-guide">Compound Interest vs Simple Interest: How Big Is the Gap?</a></li><li><a href="/blog/en/car-loan-calculator-guide">Car Loan Calculator: Understanding Payments</a></li></ul></div>
 
         <div class="like-section">
             <button class="article-like" data-blog-id="blog_discount_calculation_tips">
