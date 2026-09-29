@@ -1587,8 +1587,18 @@ svg.ic {
    此处对文本容器放开断行点——只在必要时折行，不影响正常文本的既有换行位置。 */
 .article-item h2,
 .ref-table th,.ref-table td,
-.blog-post th,.blog-post td {
+.blog-post th,.blog-post td,
+/* S17（2026-09-29）：B3–B7 新建的 base64 / url-encode 长串指南页，正文内联 <code>
+   内含无空格长串（Base64 串、percent-encoding 串），390px 下实测撑破容器
+   ——base64 zh/en 各溢出 1002px、url-encode zh 240px / en 176px（文档级横向滚动）。
+   内联 code 放开断行点即可收敛；<pre> 代码块保持原横滚语义（见下方覆写）。 */
+.blog-post code {
     overflow-wrap: anywhere;
+}
+/* 代码块 <pre> 自身已有 overflow-x:auto 横滚，窄屏横滑优于折断长行（保可读性），
+   故覆写回 normal，不继承上面的 anywhere。 */
+.blog-post pre code {
+    overflow-wrap: normal;
 }
 .article-meta {
     color: var(--text-secondary);
