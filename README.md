@@ -6,7 +6,7 @@
 
 | 部分 | 说明 |
 |------|------|
-| 前端 | 纯静态 HTML/CSS/JS（无框架），`zh/`、`en/` 双语，`blog/` 博客（**dist 222 页**（实测 2026-09-16）；**51 工具 ×2 语言 = 102 工具页**，栏目分布 `calculators 28 / image 8 / text 15`（`tools.json` 的 `dir` 已与语义分类对齐），其中 4 个 stub 存根工具（discount / age-calc / password-strength / keyword-density）共 8 页 noindex → sitemap 工具 URL 94；+ 80 博客 + 16 标签聚合页 + 结构页/首页；sitemap 总 210 条。**滚动数字以 vault `.workbuddy/memory/todo-list.md` 基准行为唯一事实源**） |
+| 前端 | 纯静态 HTML/CSS/JS（无框架），`zh/`、`en/` 双语，`blog/` 博客（**dist 222 页**（实测 2026-09-29）；**51 工具 ×2 语言 = 102 工具页**，栏目分布 `calculators 28 / image 8 / text 15`（`tools.json` 的 `dir` 已与语义分类对齐），其中 4 个 stub 存根工具（discount / age-calc / password-strength / keyword-density）共 8 页 noindex → sitemap 工具 URL 94；+ 80 博客 + 16 标签聚合页 + 结构页/首页；sitemap 总 210 条。**滚动数字以 vault `.workbuddy/memory/todo-list.md` 基准行为唯一事实源**） |
 | 构建 | Vercel `buildCommand = node scripts/build.mjs`，`outputDirectory = dist`（复制站点 → GA4/AdSense 注入 → 版本号 → 卫生转换 → CSS 压缩 → CMP 横幅） |
 | API | `api/likes.js`（点赞）、`api/clicks.js`（点击），Node Serverless Function |
 | 存储 | **Vercel KV（Upstash Redis）**，点赞/点击计数 + 限速/防刷均存于此 |
