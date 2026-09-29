@@ -15,10 +15,14 @@
  *
  * 用法：
  *   npm run build && node scripts/audit-narrow-overflow.mjs
- *   node scripts/audit-narrow-overflow.mjs --strict   # 有任何问题即 exit 1
+ *   node scripts/audit-narrow-overflow.mjs --block-overflow  # 仅「横向溢出」阻断（ci:quick 接线口径）
+ *   node scripts/audit-narrow-overflow.mjs --strict          # 溢出 + 卡片缺陷 + 加载错误 全阻断
  *
- * 说明：默认报告模式（exit 0），供人工核查；不接入 verify 门禁，
- *       以避免已知历史遗留页阻塞主干（当前已知遗留见交付报告）。
+ * 阻断口径（2026-09-30，`7899f91` 后全站 0 溢出）：
+ *   - 默认报告模式（exit 0），供人工核查。
+ *   - `--block-overflow`：**只看溢出**。卡片结构缺陷与页面加载错误保持「报告不阻断」——
+ *     加载错误多由本地静态服务资源争用引起（flaky），若一并阻断会把偶发问题固化成假红，
+ *     比无门禁更糟（与 `audit-visual` 的 pageerror 降为告警同族判据）。
  */
 import { spawn } from 'node:child_process';
 import fs from 'node:fs';
@@ -31,6 +35,8 @@ const DIST = path.join(ROOT, 'dist');
 const PORT = Number(process.env.SCAN_PORT || 4188);
 const BASE = `http://127.0.0.1:${PORT}`;
 const STRICT = process.argv.includes('--strict');
+// 只把「横向溢出」升级为阻断项（ci:quick 接线）；缺陷类仍报告不阻断，防 flaky 假红
+const BLOCK_OVERFLOW = process.argv.includes('--block-overflow');
 const VIEW = { width: 390, height: 844 };
 // 导航超时与重试（可用 env 覆盖，便于 CI 调参）
 const NAV_TIMEOUT = Number(process.env.SCAN_TIMEOUT || 30000);
@@ -141,6 +147,11 @@ try {
     console.log('\n提示：横向溢出多为「长无空格串不可断行」所致，修法见 css/style.css 内');
     console.log('      「窄屏长文本防溢出」规则块（overflow-wrap: anywhere）。');
     if (STRICT) exitCode = 1;
+    else if (BLOCK_OVERFLOW && overflow.length) {
+      exitCode = 1;
+      console.log(`\n[BLOCK] --block-overflow：横向溢出 ${overflow.length} 页 → 阻断（exit 1）`);
+      console.log('   （卡片缺陷 / 加载错误为告警，不阻断：避免本地服务 flaky 固化成假红）');
+    }
   } else {
     console.log('\n✅ 无非预期横向溢出，无卡片结构缺陷');
   }
