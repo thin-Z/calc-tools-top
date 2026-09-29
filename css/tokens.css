@@ -46,6 +46,10 @@
     --space-6: 32px;
     --space-7: 48px;
     --space-8: 64px;
+    /* 阅读宽度令牌（批2·组C3 · 2026-09-29）：博客正文与工具页说明区统一的阅读宽度，
+     * 取 680px ≈ 38 全角字/行（AC-11）。此为阅读宽度的唯一权威锚点，
+     * 消除 design-tokens.md 380px 漂移；工具页说明区后续复用本令牌，勿硬编码 680px。 */
+    --measure: 680px;
     --radius-sm: 8px;
     --radius-md: 10px;
     --radius-lg: 12px;
