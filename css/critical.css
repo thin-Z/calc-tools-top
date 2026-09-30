@@ -235,7 +235,7 @@ body {
     font-family: var(--font-sans);
     background: var(--bg);
     color: var(--text-primary);
-    line-height: 1.6;
+    line-height: var(--lh-body);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -244,7 +244,7 @@ body {
     scroll-behavior: smooth;
 }
 
-a { color: var(--link-color); text-decoration: none; transition: opacity 0.2s; }
+a { color: var(--link-color); text-decoration: none; transition: opacity var(--dur-base); }
 a:hover { text-decoration: underline; }
 
 /* Inline SVG sprite 容器：隐藏，避免 FOUC / 占位 */
@@ -272,7 +272,7 @@ header {
     top: 0;
     z-index: 100;
     box-shadow: var(--shadow-sm);
-    transition: box-shadow 0.3s;
+    transition: box-shadow var(--dur-slow);
 }
 header .logo {
     font-size: 1.15rem;
@@ -291,7 +291,7 @@ header nav a {
     font-weight: 500;
     padding: 7px 14px;
     border-radius: var(--radius-md);
-    transition: background 0.2s, color 0.2s;
+    transition: background var(--dur-base), color var(--dur-base);
 }
 header nav a:hover { background: var(--primary-light); color: var(--primary); text-decoration: none; }
 .lang-switch {
@@ -302,7 +302,7 @@ header nav a:hover { background: var(--primary-light); color: var(--primary); te
     cursor: pointer;
     background: var(--bg-card);
     color: var(--text-primary);
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color var(--dur-base), box-shadow var(--dur-base);
     appearance: none;
     -webkit-appearance: none;
 }
@@ -322,8 +322,8 @@ header nav a:hover { background: var(--primary-light); color: var(--primary); te
     align-items: center;
     justify-content: center;
     font-size: 1.1rem;
-    transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
-    line-height: 1;
+    transition: background var(--dur-base), border-color var(--dur-base), box-shadow var(--dur-base);
+    line-height: var(--lh-tight);
     padding: 0;
 }
 .theme-toggle:hover { border-color: var(--primary); background: var(--primary-light); box-shadow: 0 0 0 3px var(--primary-light); }
@@ -360,7 +360,7 @@ main { flex: 1; max-width: 1280px; margin: 0 auto; padding: 48px 28px; width: 10
         text-shadow: none;
     }
 }
-.page-header p { font-size: 1.05rem; color: var(--text-secondary); max-width: 620px; margin: 0 auto; line-height: 1.6; }
+.page-header p { font-size: 1.05rem; color: var(--text-secondary); max-width: 620px; margin: 0 auto; line-height: var(--lh-body); }
 
 /* ===== Search Bar ===== */
 .search-bar { max-width: 480px; margin: 0 auto 1.5rem; position: relative; }
@@ -375,7 +375,7 @@ main { flex: 1; max-width: 1280px; margin: 0 auto; padding: 48px 28px; width: 10
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     outline: none;
-    transition: all 0.2s ease;
+    transition: all var(--dur-base) ease;
     box-sizing: border-box;
 }
 .search-bar input:focus { border-color: var(--brand-blue); box-shadow: 0 0 0 3px var(--blue-15); }
@@ -401,15 +401,15 @@ main { flex: 1; max-width: 1280px; margin: 0 auto; padding: 48px 28px; width: 10
 /* P1-1：热点卡布局与 style.css 对齐（首帧即样式化，避免 style.css 应用时的未样式化→样式化 CLS） */
 .hot-tool-card {
     position: relative; display: flex; flex-direction: column; background: var(--bg-card);
-    border: 1.5px solid var(--hot-tool-border); border-radius: var(--radius-xl); box-shadow: var(--shadow-sm); transition: all 0.3s ease;
+    border: 1.5px solid var(--hot-tool-border); border-radius: var(--radius-xl); box-shadow: var(--shadow-sm); transition: all var(--dur-slow) ease;
 }
 .hot-tool-card .tool-card { display: block; padding: 24px 24px 0; cursor: pointer; }
-.hot-tool-card .tool-card .icon { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 12px; border-radius: 12px; }
+.hot-tool-card .tool-card .icon { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 12px; border-radius: var(--radius-lg); }
 .hot-tool-card .tool-card h3 { font-size: 15px; font-weight: 600; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 4px; }
-.hot-tool-card .tool-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 10px; }
-.hot-tool-card .hot-badge { position: absolute; top: -1px; left: -1px; background: linear-gradient(135deg, var(--hot-badge-from), var(--hot-badge-to)); color: var(--white); font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: 12px 0 12px 0; z-index: 1; }
-.hot-tool-card .hot-score { background: var(--danger-alpha); position: absolute; z-index: 2; top: 38px; right: 10px; font-size: var(--fs-xs); color: var(--hot-score-fg); font-weight: 700; display: flex; align-items: center; gap: 2px; padding: 2px 7px; border-radius: 8px; }
-.hot-tool-card .like-btn { position: absolute; top: 10px; right: 10px; z-index: 2; display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: var(--radius-full); border: 1.5px solid var(--border); background: var(--glass-white-90); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); font-size: 12px; color: var(--text-secondary); cursor: pointer; transition: all 0.2s ease; line-height: 1; }
+.hot-tool-card .tool-card p { font-size: 13px; color: var(--text-secondary); line-height: var(--lh-snug); margin-bottom: 10px; }
+.hot-tool-card .hot-badge { position: absolute; top: -1px; left: -1px; background: linear-gradient(135deg, var(--hot-badge-from), var(--hot-badge-to)); color: var(--white); font-size: 0.7rem; font-weight: 700; padding: 2px 10px; border-radius: var(--radius-lg) 0 var(--radius-lg) 0; z-index: 1; }
+.hot-tool-card .hot-score { background: var(--danger-alpha); position: absolute; z-index: 2; top: 38px; right: 10px; font-size: var(--fs-xs); color: var(--hot-score-fg); font-weight: 700; display: flex; align-items: center; gap: 2px; padding: 2px 7px; border-radius: var(--radius-lg); }
+.hot-tool-card .like-btn { position: absolute; top: 10px; right: 10px; z-index: 2; display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: var(--radius-full); border: 1.5px solid var(--border); background: var(--glass-white-90); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); font-size: 12px; color: var(--text-secondary); cursor: pointer; transition: all var(--dur-base) ease; line-height: var(--lh-tight); }
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 .tool-card-wrap {
     background: var(--bg-card);
@@ -419,9 +419,9 @@ main { flex: 1; max-width: 1280px; margin: 0 auto; padding: 48px 28px; width: 10
     position: relative;
     display: flex;
     flex-direction: column;
-    transition: transform 0.3s cubic-bezier(0.175,0.885,0.32,1.275), box-shadow 0.3s cubic-bezier(0.175,0.885,0.32,1.275), border-color 0.3s ease;
+    transition: transform var(--dur-slow) cubic-bezier(0.175,0.885,0.32,1.275), box-shadow var(--dur-slow) cubic-bezier(0.175,0.885,0.32,1.275), border-color var(--dur-slow) ease;
     box-shadow: var(--shadow-sm);
-    animation: fadeInUp 0.5s cubic-bezier(0.175,0.885,0.32,1.275) both;
+    animation: fadeInUp var(--dur-slow) cubic-bezier(0.175,0.885,0.32,1.275) both;
     animation-iteration-count: 1;
 }
 .tool-grid .tool-card-wrap:nth-child(1){ animation-delay: 0.05s; }
@@ -445,7 +445,7 @@ main { flex: 1; max-width: 1280px; margin: 0 auto; padding: 48px 28px; width: 10
 .tool-grid .tool-card-wrap:nth-child(19){ animation-delay: 0.95s; }
 .tool-grid .tool-card-wrap:nth-child(20){ animation-delay: 1.00s; }
 .tool-card-wrap:hover { transform: translateY(-4px) scale(1.02); box-shadow: var(--shadow-lg); border-color: var(--primary-light); }
-.tool-card-wrap:active { transform: translateY(-1px) scale(0.99); transition-duration: 0.1s; }
+.tool-card-wrap:active { transform: translateY(-1px) scale(0.99); transition-duration: var(--dur-fast); }
 .tool-card { flex: 1; text-decoration: none; color: inherit; }
 .tool-card:hover { text-decoration: none; }
 .tool-card .icon {
@@ -457,11 +457,11 @@ main { flex: 1; max-width: 1280px; margin: 0 auto; padding: 48px 28px; width: 10
     justify-content: center;
     font-size: 1.3rem;
     margin-bottom: 12px;
-    transition: transform 0.3s;
+    transition: transform var(--dur-slow);
 }
 .tool-card-wrap:hover .icon { transform: scale(1.08); }
-.tool-card h3 { font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; line-height: 1.4; }
-.tool-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; }
+.tool-card h3 { font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; line-height: var(--lh-snug); }
+.tool-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: var(--lh-snug); }
 /* D2 (2026-09-27)：分类色描边 + 浅色 tint 底板（P1-5a；暗色由 --icon-*-fg 令牌自动切换） */
 .tool-card .icon.icon-finance { background: var(--icon-finance-bg); color: var(--icon-finance-fg); }
 .tool-card .icon.icon-health { background: var(--icon-health-bg); color: var(--icon-health-fg); }
@@ -483,17 +483,17 @@ main { flex: 1; max-width: 1280px; margin: 0 auto; padding: 48px 28px; width: 10
     position: absolute;
     left: -9999px;
     top: 0;
-    z-index: 9999;
+    z-index: var(--z-toast);
     background: linear-gradient(135deg, var(--brand-blue), var(--brand-blue-dark) 30%);
     color: var(--white);
     padding: 10px 18px;
-    border-radius: 0 0 10px 0;
+    border-radius: 0 0 var(--radius-lg) 0;
     font-weight: 600;
     text-decoration: none;
     transition: none;
 }
 .skip-link:focus { left: 0; outline: none; }
-:focus-visible { outline: 3px solid var(--primary, var(--blue-600)); outline-offset: 2px; border-radius: 4px; }
+:focus-visible { outline: 3px solid var(--primary, var(--blue-600)); outline-offset: 2px; border-radius: var(--radius-sm); }
 /* V4 (2026-09-24)：鼠标点击聚焦不显示默认 outline，键盘聚焦仍由上方 :focus-visible 提供 3px 指示。
    解耦「鼠标无丑环」与「键盘有可见焦点」，修复此前 :focus{outline:none} 覆盖全局兜底导致搜索框等键盘焦点不可见。 */
 :focus:not(:focus-visible) { outline: none; }
@@ -594,7 +594,7 @@ header .logo img.logo-dark { display: none; }
     background: var(--bg-muted);
     color: var(--text-secondary);
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all var(--dur-base) ease;
 }
 .category-chip.active {
     /* 批1·组A3 收口（2026-09-28）：与 style.css 同名规则逐字节相同，两处必须同改（只改一份会首帧闪）；依据见 style.css .btn-primary 首处注释 */

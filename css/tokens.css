@@ -55,6 +55,18 @@
     --radius-lg: 12px;
     --radius-xl: 16px;
     --radius-full: 999px;
+    /* 视觉二期·批3b（2026-09-30）：行高 4 档语义令牌，替代散落的 14 种 unitless 值（R4 ≤5）。
+     * 全部 unitless，可继承、不随字号漂移；映射：tight≤1.2 / snug≤1.4 / body≤1.7 / loose≤1.9。 */
+    --lh-tight: 1.2;
+    --lh-snug: 1.4;
+    --lh-body: 1.7;
+    --lh-loose: 1.9;
+    /* 视觉二期·批3b（2026-09-30）：动效时长 3 档（G1），替代 13 种散落时长（R7 ≤3）。
+     * animation-delay 族**不收敛**（错峰入场为有意设计，且不在 R7 口径内），本令牌仅用于
+     * transition / animation(-duration) 的时长值。 */
+    --dur-fast: 150ms;
+    --dur-base: 200ms;
+    --dur-slow: 300ms;
     --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
     --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
     --shadow-lg: 0 12px 30px rgba(0,0,0,0.08);
