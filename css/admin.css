@@ -7,7 +7,7 @@
 }
 
 .admin-dash h1 {
-  font-size: 1.6rem;
+  font-size: var(--fs-2xl);
   margin-bottom: 4px;
 }
 
@@ -32,7 +32,7 @@
 }
 
 .stat-num {
-  font-size: 2.6rem;
+  font-size: var(--fs-4xl);
   font-weight: 700;
   color: var(--text);
   line-height: var(--lh-tight);
@@ -42,7 +42,7 @@
 .stat-label {
   margin-top: 8px;
   color: var(--text-tertiary);
-  font-size: 0.95rem;
+  font-size: var(--fs-md);
 }
 
 .stat-card.is-likes .stat-num {
@@ -55,13 +55,13 @@
 
 .admin-meta {
   color: var(--text-tertiary);
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   margin-top: 6px;
 }
 
 .admin-note {
   color: var(--text-tertiary);
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   margin-top: 18px;
   border-top: 1px solid var(--border);
   padding-top: 14px;
@@ -73,7 +73,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 1px 6px;
-  font-size: 0.82rem;
+  font-size: var(--fs-sm);
 }
 
 @media (max-width: 480px) {
