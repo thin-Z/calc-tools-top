@@ -69,9 +69,10 @@ function toolCardHtml(t, lang, cat) {
     const href = lang === 'zh' ? `/tags/${c}.html` : `/en/tags/${c}.html`;
     return `<a href="${href}" class="tag tag-${c}" data-tag="${c}">${esc(lbl)}</a>`;
   }).join('');
-  // 图标与首页卡片同构：sprite 引用 + .icon 容器（缺失 icon 时优雅降级为无图标）
+  // 图标与首页 / 栏目页卡片同构：分类 tint 类 + sprite 引用 + .icon 容器（第三阶段 2026-09-30 图标语言统一）
+  const primaryCat = (t.cats && t.cats[0]) || 'utility';
   const iconHtml = t.icon
-    ? `\n            <div class="icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-${escAttr(t.icon)}"></use></svg></div>`
+    ? `\n            <div class="icon icon-${primaryCat}"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-${escAttr(t.icon)}"></use></svg></div>`
     : '';
   return `        <div class="tool-card-wrap">
           <a href="${escAttr(t.url)}" class="tool-card" data-category="${escAttr(t.cats.join(','))}">${iconHtml}

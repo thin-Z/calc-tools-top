@@ -11,9 +11,10 @@
  *        （例：calculators 页实有 23 卡、标注 18，而 tools.json 有 32 个工具）。
  *
  * 本生成器把栏目页的「工具计数 + 卡片网格」纳入 tools.json 单一数据源，
- * 复用 lib/tool-card.mjs 的共享卡片模板（输出素色 .icon），仅替换标记区间；
- *   ⚠️ 注意：首页 generate-home.mjs 已私有化自己的卡片模板并额外输出 icon-${cat}
- *   tint 类名，两者**不再同构**（全站 316 个素色 .icon 即由此分叉产生）。
+ * 复用 lib/tool-card.mjs 的共享卡片模板（generateCardHTML 已统一输出
+ * `icon-${primaryCat}` 分类 tint 类，与 generate-home.mjs 的私有模板同构），仅替换标记区间；
+ *   ✅ 2026-09-30 第三阶段「图标语言统一」：generateCardHTML 接入分类 tint 类后，
+ *   首页 / 栏目页 / 标签页工具卡图标语言已全站一致（均带分类色描边 + 浅色 tint 底板）。
  * **不改动各页原创 SEO 正文**（category-header / 正文 section / footer 原样保留）。
  *
  * 接管规则：
