@@ -135,10 +135,22 @@ function checkCssColors() {
 // ═══════════════════════════════════════════════════════════════
 // Emoji ranges — exclude arrows (2190-21FF), box-drawing (2500-257F),
 // misc technical (2300-23FF), and FE0F variation selector
-// ⚠️ 该区间表不得改动（历史踩坑：误纳入非 emoji 符号 → 箭头被误报）。
-const EMOJI_RE = /[\u{1F000}-\u{1FAFF}\u{2600}-\u{26FF}\u{2B00}-\u{2BFF}\u{1F1E6}-\u{1F1FF}]/gu;
+// ⚠️ 区间表新增须谨慎（历史踩坑：误纳入非 emoji 符号 → 箭头被误报）。
+//   S7 补丁(2026-09-30)：新增 U+2700–U+27BF（Dingbats，含 ✅❌✨↔ 等），
+//   该区间**不含**箭头 U+2190–U+21FF，不会误伤合规图形箭头。
+//   ⚠️ 范围限定（S7 二次裁定，2026-09-30）：Dingbats 区间**仅对「内容型文件」生效**
+//   （.html/.css/.py/.svg）；**脚本文件**（.js/.mjs/.cjs）仍用下方 EMOJI_RE_SCRIPT
+//   （不含 Dingbats）。理由：仓库内 176 个 Dingbats 字符 100% 落在脚本的 CLI 状态字形
+//   （✓/✗/✅/❌，终端输出用），并非渲染到页面的图形 emoji；若对脚本也启用，会一次性新增
+//   143 行阻断项、击穿既有 CI 绿。P0 emoji 禁令的真实目标是「计算器页面零图形 emoji」，
+//   内容型文件已全覆盖；脚本侧是否纳入属独立决策（需先清理 143 行，不在本次范围）。
+const EMOJI_RE = /[\u{1F000}-\u{1FAFF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{2B00}-\u{2BFF}\u{1F1E6}-\u{1F1FF}]/gu;
+// 脚本专用（不含 Dingbats）：与旧版 EMOJI_RE 等价，仅作用于 .js/.mjs/.cjs。
+const EMOJI_RE_SCRIPT = /[\u{1F000}-\u{1FAFF}\u{2600}-\u{26FF}\u{2B00}-\u{2BFF}\u{1F1E6}-\u{1F1FF}]/gu;
 // A2(2026-09-23)：后缀由 .js/.html 扩为下列六种，覆盖模板生成器（.py）与样式（.css）
-const EMOJI_EXTS = ['.js', '.mjs', '.cjs', '.html', '.py', '.css'];
+// A3(2026-09-30)：S7 补丁 —— 增加 .svg，使源内 .svg（含内联注释/文本）也被扫描，与 .css 同源；
+//   经核验仓库内 5 个 .svg 均无 emoji，不会引入假阳性。
+const EMOJI_EXTS = ['.js', '.mjs', '.cjs', '.html', '.py', '.css', '.svg'];
 
 function walkDir(dir, cb) {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -177,11 +189,15 @@ function checkEmoji() {
     // 注释里的符号不是「功能图标」，计入会制造噪声底噪；功能位（HTML 结构 / CSS 声明 /
     // 模板字符串 / Python 字符串字面量）一律扫描。
     const isHtml = ext === '.html';
+    // S7(2026-09-30)：脚本文件（.js/.mjs/.cjs）用不含 Dingbats 的 EMOJI_RE_SCRIPT；
+    //   内容型文件（.html/.css/.py/.svg）用含 Dingbats 的 EMOJI_RE（见上方范围限定说明）。
+    const isScript = ext === '.js' || ext === '.mjs' || ext === '.cjs';
+    const emojiRe = isScript ? EMOJI_RE_SCRIPT : EMOJI_RE;
     const lines = fs.readFileSync(filepath, 'utf8').split('\n');
     lines.forEach((ln, i) => {
       const t = ln.trim();
       if (!isHtml && (t.startsWith('//') || t.startsWith('*') || t.startsWith('#'))) return;
-      const m = ln.match(EMOJI_RE);
+      const m = ln.match(emojiRe);
       if (m) {
         emojiCount += m.length;
         const item = { file: rel, line: i + 1, emoji: [...new Set(m)].join(''), context: t.slice(0, 100) };

@@ -139,7 +139,7 @@ header {
 header .logo {
     font-size: var(--fs-lg);
     font-weight: 700;
-    color: var(--primary);
+    color: var(--brand-blue-dark);
     display: flex;
     align-items: center;
     gap: var(--space-2);
@@ -160,7 +160,7 @@ header nav a {
 
 header nav a:hover {
     background: var(--primary-light);
-    color: var(--primary);
+    color: var(--brand-blue-dark);
     text-decoration: none;
 }
 

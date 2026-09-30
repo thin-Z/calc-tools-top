@@ -514,18 +514,35 @@ function checkR1() {
       }
 
       const expanded = expandShadowTokens(rawValue, valueShadowTokens);
-      const perLayer = countLengthsPerLayer(expanded);
-      const maxLayer = perLayer.length ? Math.max(...perLayer) : 0;
-      if (maxLayer > MAX_LENGTHS_PER_LAYER) {
-        violations.push({
-          file: `css/${cssFile}`,
-          line: src.slice(0, start).split('\n').length,
-          layers: perLayer,
-          maxLayer,
-          limit: MAX_LENGTHS_PER_LAYER,
-          expanded: expanded.trim().replace(/\s+/g, ' ').slice(0, 140),
-          context: rawValue.trim().replace(/\s+/g, ' ').slice(0, 140),
-        });
+      const normExpanded = expanded.trim().toLowerCase().replace(/!important/g, '').trim();
+      // S8(2026-09-30)：<shadow> 规范要求的 length 数为 2–4；单层 <2（如 `box-shadow: 5px`
+      //   仅 1 个 length）或 >4 均被浏览器**静默丢弃**（同属最贵的「沉默逻辑错误」失效类）。
+      //   排除 none/initial/unset/inherit 这类合法非 length 值（`box-shadow: none`）；
+      //   同时 skip 仍含未展开 `var()` 的声明（如 `var(--toast-shadow)` / `var(--shadow)`
+      //   等非 --shadow-* 令牌，门禁无法静态解析其 length，不在此判定，交由 R1 既有的
+      //   unresolved 信息性提示覆盖），避免假阳性。
+      const isNoneLike = /^(?:none|initial|unset|inherit)$/.test(normExpanded);
+      // 含无法静态解析的自定义属性引用（非 --shadow-* 值型令牌，如 `var(--toast-shadow)` /
+      //   `var(--shadow)` / `var(--primary-light)` / `var(--shadow-color-*)` 等）——长度无法静态
+      //   判定，skip 以避免假阳性（unresolved 信息性提示已覆盖）。
+      const hasUnresolvableVar = /var\(\s*--(?!shadow-(?!color-))/.test(rawValue);
+      if (!isNoneLike && !hasUnresolvableVar) {
+        const perLayer = countLengthsPerLayer(expanded);
+        const maxLayer = perLayer.length ? Math.max(...perLayer) : 0;
+        const minLayer = perLayer.length ? Math.min(...perLayer) : 0;
+        if (maxLayer > MAX_LENGTHS_PER_LAYER || minLayer < 2) {
+          violations.push({
+            file: `css/${cssFile}`,
+            line: src.slice(0, start).split('\n').length,
+            layers: perLayer,
+            maxLayer,
+            minLayer,
+            limit: MAX_LENGTHS_PER_LAYER,
+            minLimit: 2,
+            expanded: expanded.trim().replace(/\s+/g, ' ').slice(0, 140),
+            context: rawValue.trim().replace(/\s+/g, ' ').slice(0, 140),
+          });
+        }
       }
     }
   }
@@ -1145,7 +1162,10 @@ if (jsonMode) {
 } else {
   console.log(`[token-discipline] R1 box-shadow 值型令牌/length 混排 (扫描 css/*.css 共 ${r1.scannedFiles} 文件, ${r1.declarations} 条 box-shadow 声明, 豁免 ${TOKENS_FILE}): ${r1.ok ? '✓ 0' : '✗ ' + r1.violations} 违规`);
   r1.detail.forEach((v) => {
-    console.log(`  ${v.file}:L${v.line} 单层 length ${v.maxLayer} > ${v.limit}（各层 ${v.layers.join('/')}）`);
+    const tag = v.maxLayer > v.limit
+      ? `单层 length ${v.maxLayer} > ${v.limit}`
+      : `单层 length ${v.minLayer} < ${v.minLimit}`;
+    console.log(`  ${v.file}:L${v.line} ${tag}（各层 ${v.layers.join('/')}）`);
     console.log(`      源码: ${v.context}`);
     console.log(`      展开: ${v.expanded}`);
   });

@@ -277,7 +277,7 @@ header {
 header .logo {
     font-size: var(--fs-lg);
     font-weight: 700;
-    color: var(--primary);
+    color: var(--brand-blue-dark);
     display: flex;
     align-items: center;
     gap: var(--space-2);
@@ -293,7 +293,7 @@ header nav a {
     border-radius: var(--radius-md);
     transition: background var(--dur-base), color var(--dur-base);
 }
-header nav a:hover { background: var(--primary-light); color: var(--primary); text-decoration: none; }
+header nav a:hover { background: var(--primary-light); color: var(--brand-blue-dark); text-decoration: none; }
 .lang-switch {
     padding: var(--space-2) var(--space-3);
     border: 1px solid var(--border);
