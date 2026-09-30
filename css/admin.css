@@ -8,26 +8,26 @@
 
 .admin-dash h1 {
   font-size: var(--fs-2xl);
-  margin-bottom: 4px;
+  margin-bottom: var(--space-1);
 }
 
 .admin-sub {
   color: var(--text-tertiary);
-  margin-bottom: 20px;
+  margin-bottom: var(--space-4);
 }
 
 .stat-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin: 20px 0;
+  gap: var(--space-4);
+  margin: var(--space-4) 0;
 }
 
 .stat-card {
   background: var(--bg-card);
   border: 1.5px solid var(--border);
   border-radius: var(--radius-xl);
-  padding: 24px;
+  padding: var(--space-5);
   text-align: center;
 }
 
@@ -40,7 +40,7 @@
 }
 
 .stat-label {
-  margin-top: 8px;
+  margin-top: var(--space-2);
   color: var(--text-tertiary);
   font-size: var(--fs-md);
 }
@@ -50,21 +50,21 @@
 }
 
 .admin-actions {
-  margin: 18px 0 8px;
+  margin: var(--space-4) 0 var(--space-2);
 }
 
 .admin-meta {
   color: var(--text-tertiary);
   font-size: var(--fs-sm);
-  margin-top: 6px;
+  margin-top: var(--space-1);
 }
 
 .admin-note {
   color: var(--text-tertiary);
   font-size: var(--fs-sm);
-  margin-top: 18px;
+  margin-top: var(--space-4);
   border-top: 1px solid var(--border);
-  padding-top: 14px;
+  padding-top: var(--space-3);
   line-height: var(--lh-body);
 }
 
@@ -72,7 +72,7 @@
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
-  padding: 1px 6px;
+  padding: var(--space-1) var(--space-1);
   font-size: var(--fs-sm);
 }
 
