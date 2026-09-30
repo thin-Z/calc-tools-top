@@ -681,4 +681,25 @@ if (existsSync(distJs)) {
 }
 console.log(`[build] 版本戳兜底: HTML 补齐 ${restampedHtml} 页 | JS 动态引用补齐 ${stampedJs} 个文件`);
 
+// 9) 防御：剥离内部导航链接的 .html 扩展名（GSC「Page with redirect」根因修复 · 2026-09-30）
+//    站内任何指向 X.html 的内部 href（不含外部 http/https///）统一改写为 X（clean URL）。
+//    Vercel cleanUrls 已使 X.html 308→X（X 为 200 canonical），故内部链接应直接用 X，避免产生 redirect。
+//    此步为「防御网」：既覆盖手写源文件，也兜住任何遗漏的生成器输出，杜绝回归。
+const HTML_LINK_RE = /(href)="([^"]*?)\.html([?#][^"]*)?"/g;
+function stripHtmlExtLink(html) {
+  return html.replace(HTML_LINK_RE, (m, attr, url, tail) => {
+    if (/^(?:https?:)?\/\//i.test(url) || /^https?:/i.test(url)) return m; // 外部链接跳过
+    return `${attr}="${url}${tail || ''}"`;
+  });
+}
+let linkStripped = 0;
+walkHtml(dist, (f) => {
+  const raw = readFileSync(f);
+  let text = raw.toString('utf8');
+  if (raw[0] === 0xef && raw[1] === 0xbb && raw[2] === 0xbf) text = text.slice(1);
+  const newText = stripHtmlExtLink(text);
+  if (newText !== text) { writeFileSync(f, newText, 'utf8'); linkStripped++; }
+});
+console.log(`[build] 内部链接去 .html: ${linkStripped} 个文件`);
+
 process.exit(0);

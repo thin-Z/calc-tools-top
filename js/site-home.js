@@ -761,13 +761,13 @@ function initHotTools() {
         html += '<div class="hot-tool-card">'
             + '<div class="hot-badge">#' + (idx + 1) + '</div>'
             + '<span class="hot-score">' + entry.score + '</span>'
-            + '<a href="' + prefix + entry.id + '.html" class="tool-card" data-like-id="' + entry.id + '" data-category="' + cats.join(',') + '" data-keywords-zh="' + (TOOL_KEYWORDS_ZH[entry.id] || '') + '">'
+            + '<a href="' + prefix + entry.id + '" class="tool-card" data-like-id="' + entry.id + '" data-category="' + cats.join(',') + '" data-keywords-zh="' + (TOOL_KEYWORDS_ZH[entry.id] || '') + '">'
             + '<div class="icon icon-' + firstCat + '"><svg class="ic" aria-hidden="true"><use href="#icon-' + tool.icon + '"></use></svg></div>'
             + '<h3>' + name + ' ' + trendBadge + '</h3>'
             + '<p>' + (tool.desc ? (tool.desc[lang] || tool.desc['zh']) : '') + '</p>'
             + '</a>'
             + '<div class="tool-tags">' + cats.map(function(c) {
-                return '<a href="' + (isZh ? '/tags/' : '/en/tags/') + c + '.html" class="tag tag-' + c + '" data-tag="' + c + '">' + (catTexts[c] || c) + '</a>';
+                return '<a href="' + (isZh ? '/tags/' : '/en/tags/') + c + '" class="tag tag-' + c + '" data-tag="' + c + '">' + (catTexts[c] || c) + '</a>';
             }).join('') + '</div>'
             + '<button class="like-btn" data-like-id="' + entry.id + '"><span class="heart"><svg class="ic" aria-hidden="true"><use href="#icon-heart"></use></svg></span><span class="count">0</span></button>'
             + '</div>';

@@ -66,7 +66,7 @@ function escAttr(s) { return esc(s).replace(/"/g, '&quot;'); }
 function toolCardHtml(t, lang, cat) {
   const tagLinks = t.cats.map((c) => {
     const lbl = (LABELS[lang][c] || c);
-    const href = lang === 'zh' ? `/tags/${c}.html` : `/en/tags/${c}.html`;
+    const href = lang === 'zh' ? `/tags/${c}` : `/en/tags/${c}`;
     return `<a href="${href}" class="tag tag-${c}" data-tag="${c}">${esc(lbl)}</a>`;
   }).join('');
   // 图标与首页 / 栏目页卡片同构：分类 tint 类 + sprite 引用 + .icon 容器（第三阶段 2026-09-30 图标语言统一）
@@ -85,7 +85,7 @@ function toolCardHtml(t, lang, cat) {
 
 function articleItemHtml(a, lang, cat) {
   const lbl = (EMOJI[cat] || '') + ' ' + (LABELS[lang][cat] || cat);
-  const href = lang === 'zh' ? `/tags/${cat}.html` : `/en/tags/${cat}.html`;
+  const href = lang === 'zh' ? `/tags/${cat}` : `/en/tags/${cat}`;
   return `          <article class="article-item" data-category="${escAttr(cat)}">
             <h2><a href="${escAttr(a.url)}">${esc(a.title)}</a></h2>
             <p class="article-summary">${esc(a.summary)}</p>
@@ -130,7 +130,7 @@ ${articles.map((a) => articleItemHtml(a, lang, cat)).join('\n')}
   const otherCats = Object.keys(LABELS[lang]).filter((c) => c !== cat);
   const navHeading = lang === 'zh' ? '浏览其他分类' : 'Browse other categories';
   const catLinks = otherCats.map((c) => {
-    const href = lang === 'zh' ? `/tags/${c}.html` : `/en/tags/${c}.html`;
+    const href = lang === 'zh' ? `/tags/${c}` : `/en/tags/${c}`;
     const lbl = (EMOJI[c] || '') + ' ' + LABELS[lang][c];
     return `          <li><a href="${href}" class="tag tag-${c}" data-tag="${c}">${esc(lbl)}</a></li>`;
   }).join('\n');
