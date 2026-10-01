@@ -5,13 +5,13 @@
 
 /**
  * 读取表单并计算油耗结果（UI 入口）。
- * @returns {void} 无返回值；距离或油耗缺失时弹出提示并中断。
+ * @returns {void} 无返回值；距离或油耗缺失/为零/为负数时弹出提示并中断。
  */
 function doCalculate() {
     const distance = parseFloat(document.getElementById('distance').value);
     const fuelPer100 = parseFloat(document.getElementById('fuelPer100').value);
     const pricePerLiter = parseFloat(document.getElementById('pricePerLiter').value);
-    if (!distance || !fuelPer100) { window.showError('请输入行驶距离和油耗'); return; }
+    if (!(distance > 0) || !(fuelPer100 > 0)) { window.showError('请输入大于 0 的行驶距离和油耗'); return; }
     const fuelUsed = distance * fuelPer100 / 100;
     const totalCost = pricePerLiter ? fuelUsed * pricePerLiter : 0;
     const costPerKm = pricePerLiter ? totalCost / distance : 0;

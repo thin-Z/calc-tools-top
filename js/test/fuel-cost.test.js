@@ -1,6 +1,6 @@
 /* fuel-cost 单测（fake-DOM harness，零源码改动）
  * 覆盖分支：耗油量/总油费/每公里成本常规值、油价缺失时归零、
- * 距离或油耗缺失报错、零值与非法字符报错、resetForm 清空。
+ * 距离或油耗缺失报错、零值与非法字符报错、负数报错（10-01 修 S19 ①）、resetForm 清空。
  */
 const test = require('node:test');
 const assert = require('node:assert');
@@ -43,6 +43,19 @@ test('油费: 距离或百公里油耗缺失/为零/非法 -> showError', () => 
   assert.ok(mk().run(Object.assign({}, base, { fuelPer100: '' })).error(), '油耗为空应报错');
   assert.ok(mk().run(Object.assign({}, base, { fuelPer100: 0 })).error(), '油耗为 0 应报错');
   assert.ok(mk().run(Object.assign({}, base, { distance: 'abc' })).error(), '距离非法字符应报错');
+});
+
+test('油费: 负数距离或百公里油耗为非法输入 -> showError（10-01 修 S19 ①）', () => {
+  const base = { distance: 500, fuelPer100: 8, pricePerLiter: 7.5 };
+  const mk = () => loadCalculator('fuel-cost');
+  // 修复前 `!distance` 放过负数 → 算出 -40L / -300 元 的负账
+  const negDist = mk().run(Object.assign({}, base, { distance: -500 }));
+  assert.ok(negDist.error(), '负距离应报错');
+  assert.strictEqual(negDist.error(), '请输入大于 0 的行驶距离和油耗');
+  assert.ok(mk().run(Object.assign({}, base, { fuelPer100: -8 })).error(), '负油耗应报错');
+  // 正数边界不受影响
+  const tiny = mk().run(Object.assign({}, base, { distance: 1, fuelPer100: 1 }));
+  assert.strictEqual(tiny.error(), null);
 });
 
 test('油费: resetForm 清空三个输入', () => {

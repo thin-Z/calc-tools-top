@@ -1,7 +1,7 @@
 /* unit-converter 单测（fake-DOM harness，零源码改动）
  * 入口函数是 doConvert（非 doCalculate）。覆盖分支：七类倍率表换算
  * （长度/重量/面积/体积/速度/数据量/时间）、温度带偏移公式（C/F/K 六向）、
- * 结果文案 resultLabel、空值/零值/非法字符报错、updateUnits 刷新单位选项
+ * 结果文案 resultLabel、空值与非法字符报错（零值为合法输入）、updateUnits 刷新单位选项
  * 并把「到」单位落到第二项后重新换算。
  */
 const test = require('node:test');
@@ -102,12 +102,22 @@ test('单位换算: 数据量 / 时间 / 体积 / 面积 / 速度 倍率表', ()
   );
 });
 
-test('单位换算: 空值 / 零值 / 非法字符 -> showError', () => {
+test('单位换算: 空值 / 非法字符 -> showError；零值正常换算（10-01 修 S19 ②）', () => {
   const base = { category: 'length', fromUnit: 'm', toUnit: 'cm' };
   assert.ok(convert(Object.assign({}, base, { inputValue: '' })).error(), '空值应报错');
-  assert.ok(convert(Object.assign({}, base, { inputValue: 0 })).error(), '零值应报错');
   assert.ok(convert(Object.assign({}, base, { inputValue: 'abc' })).error(), '非法字符应报错');
   assert.match(convert(Object.assign({}, base, { inputValue: '' })).error(), /请输入数值/);
+  // 修复前 `if (!val)` 把 0 当空值 → 输入 0 误报「请输入数值」
+  const zero = convert(Object.assign({}, base, { inputValue: 0 }));
+  assert.strictEqual(zero.error(), null, '零值不应报错');
+  assert.strictEqual(zero.text('resultValue'), '0.0000');
+  // 0°C -> °F = 32（温度偏移分支同样必须接受 0）
+  const zf = convert({ inputValue: 0, category: 'temp', fromUnit: 'c', toUnit: 'f' });
+  assert.strictEqual(zf.error(), null);
+  assert.strictEqual(zf.text('resultValue'), '32.0000');
+  // 负值本就应可换算（-40°C -> °F = -40）
+  const nf = convert({ inputValue: -40, category: 'temp', fromUnit: 'c', toUnit: 'f' });
+  assert.strictEqual(nf.text('resultValue'), '-40.0000');
 });
 
 test('单位换算: updateUnits 刷新单位选项并把「到」单位落到第二项', () => {

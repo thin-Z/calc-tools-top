@@ -1,6 +1,6 @@
 /* electricity 单测（fake-DOM harness，零源码改动）
  * 覆盖分支：常规日/月耗电与电费、days/rate 缺省回退（30 天 / 0.6 元）、
- * 功率或时长缺失报错、零值与非法字符报错、负数当前行为记录、resetForm 回填。
+ * 功率或时长缺失报错、零值与非法字符报错、负数报错（10-01 修 S19 ①）、resetForm 回填。
  */
 const test = require('node:test');
 const assert = require('node:assert');
@@ -46,14 +46,19 @@ test('电费: 功率或时长缺失/为零/非法 -> showError', () => {
   assert.ok(mk().run(Object.assign({}, base, { power: 'abc' })).error(), '功率非法字符应报错');
 });
 
-test('电费: 负数输入按当前实现照常参与运算（无符号校验，记录行为）', () => {
-  const c = loadCalculator('electricity').run({
-    power: -100, hours: 10, days: 30, rate: 0.6,
-  });
-  // -100*10/1000 = -1 kWh/日; -30 kWh/月; -18 元
-  assert.strictEqual(c.text('dailyKwh'), '-1.00');
-  assert.strictEqual(c.text('monthlyKwh'), '-30.00');
-  assert.strictEqual(c.text('monthlyCost'), '-18.00');
+test('电费: 负数功率或时长为非法输入 -> showError（10-01 修 S19 ①）', () => {
+  const base = { power: 1000, hours: 5, days: 30, rate: 0.6 };
+  const mk = () => loadCalculator('electricity');
+  // 修复前 `!power` 只对 0/NaN 生效，负数照算 -1 度/日、-18 元 —— 用户可见的错误账目
+  const negPower = mk().run(Object.assign({}, base, { power: -100 }));
+  assert.ok(negPower.error(), '负功率应报错');
+  assert.match(negPower.error(), /大于 0/, '错误文案应说明须大于 0');
+  assert.strictEqual(negPower.error(), '请输入大于 0 的功率和使用时间');
+  assert.ok(mk().run(Object.assign({}, base, { hours: -10 })).error(), '负时长应报错');
+  // 正数边界不受影响：极小正值仍应正常出结果
+  const tiny = mk().run(Object.assign({}, base, { power: 1, hours: 1 }));
+  assert.strictEqual(tiny.error(), null);
+  assert.strictEqual(tiny.text('dailyKwh'), '0.00');
 });
 
 test('电费: resetForm 清空功率/时长并回填默认 30 天 / 0.6 元', () => {

@@ -5,14 +5,14 @@
 
 /**
  * 读取表单并计算电费结果（UI 入口）。
- * @returns {void} 无返回值；功率或时长缺失时弹出提示并中断。
+ * @returns {void} 无返回值；功率或时长缺失/为零/为负数时弹出提示并中断。
  */
 function doCalculate() {
     const power = parseFloat(document.getElementById('power').value);
     const hours = parseFloat(document.getElementById('hours').value);
     const days = parseFloat(document.getElementById('days').value) || 30;
     const rate = parseFloat(document.getElementById('rate').value) || 0.6;
-    if (!power || !hours) { window.showError('请输入功率和使用时间'); return; }
+    if (!(power > 0) || !(hours > 0)) { window.showError('请输入大于 0 的功率和使用时间'); return; }
     const dailyKwh = power * hours / 1000;
     const monthlyKwh = dailyKwh * days;
     const monthlyCost = monthlyKwh * rate;
