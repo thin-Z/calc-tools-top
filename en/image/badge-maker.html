@@ -123,17 +123,20 @@
         <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode"><span class="theme-icon"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-sun"></use></svg></span></button>
     </nav>
 </header>
-    <header class="bm-hero-bar" role="none">
+    <!-- [W3-9/S12] 原 role="none" 为压 banner landmark 3→1（提交 a4ad24c），副作用是 h1 所在容器脱离
+         地标 → axe best-practice「region」违规。改 role="region" + aria-label：仍是地标（非 banner），
+         既不引入第二个 banner，又让标题条内容重新落在地标内 → region 违规归零。 -->
+    <div class="bm-hero-bar" role="region" aria-label="Tool header">
         <div class="bm-hero-inner">
             <a class="bm-back" href="/en/image/">
                 <svg class="ic bm-back-ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-arrow-right"></use></svg>Image Tools
             </a>
             <h1 class="bm-title">Badge Maker</h1>
             <span class="bm-privacy">No upload - processed locally in your browser</span>
+            <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="badge-maker"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
         </div>
-    </header>
+    </div>
     <main id="main">
-        <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="badge-maker"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
         <div class="badge-maker-root">
 
 <!-- ============================ Top bar ============================ -->
@@ -146,10 +149,6 @@
           <circle cx="12" cy="12" r="6" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2.4 2.4" opacity="0.65"/>
           <circle cx="12" cy="12" r="1.7" fill="currentColor"/>
         </svg>
-      </span>
-      <span class="brand-text">
-        <strong>Badge Maker</strong>
-        <small>Tinplate badges · circular crop · A4 layout</small>
       </span>
     </div>
 
@@ -542,12 +541,11 @@
       <div class="editor-stage" id="editorStage">
         <canvas id="editorCanvas" class="editor-canvas"></canvas>
         <div class="editor-empty" id="editorEmpty">
-          <svg width="42" height="42" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <!-- [W3-5] 本图标画在 canvas 深色棋盘之上，棋盘与主题无关（亮暗一致），
-                 故此处色值有意保留字面值，不改为主题令牌 —— 改令牌反而会在亮色下失去对比。 -->
-            <path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5" stroke="#7C879B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" stroke="#7C879B" stroke-width="1.6" stroke-linecap="round"/>
-          </svg>
+          <!-- [W3-4] 自绘「箭头+托槽」迁入锁定图标库（Lucide upload：箭头 + 托槽，字形等价）→ R1 单一来源。
+               色值仍保留字面色：本图标画在 canvas 深色棋盘之上，棋盘与主题无关（亮暗一致），
+               改主题令牌反而会在亮色下失去对比（沿 [W3-5] 既定结论）。
+               用 color 表现属性而非内联 style：CSP style-src 无 unsafe-inline，新增内联 style 会被拦截。 -->
+          <svg width="42" height="42" fill="none" color="#7C879B" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-upload"></use></svg>
           <p><strong>Drop an image</strong> or <strong>click "Choose image"</strong></p>
           <p class="dim">Or press Ctrl + V to paste from the clipboard</p>
         </div>
