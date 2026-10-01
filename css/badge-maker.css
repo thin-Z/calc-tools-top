@@ -28,7 +28,10 @@
   --radius-xs:10px;
   --shadow:0 12px 32px rgba(var(--bm-ink-rgb), .09), 0 2px 8px rgba(var(--bm-ink-rgb), .05);
   --shadow-sm:0 4px 16px rgba(var(--bm-ink-rgb), .07);
-  --font:-apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  /* [W1-6] 蓝色强调文字（含 hover）：亮色用深蓝 6.56:1；暗色块内覆盖为更亮的蓝 */
+  --link-ink:var(--brand-blue-dark);
+  /* [W3-3] 统一到站点字体栈（Inter 优先）：原为系统栈，Windows 落 Segoe UI，与站点 chrome 不同字体 */
+  --font:var(--font-sans);
 }
 
 .badge-maker-root, .badge-maker-root *{ box-sizing:border-box; }
@@ -123,9 +126,9 @@
   font-family:inherit; cursor:pointer; min-height:34px;
   transition:background .18s ease, color .18s ease, border-color .18s ease, box-shadow .18s ease;
 }
-.dock-tabs button:hover:not(.active){ color:var(--blue); border-color:rgba(var(--bm-blue-rgb), .45); background:var(--bg-card); }
+.dock-tabs button:hover:not(.active){ color:var(--link-ink); border-color:rgba(var(--bm-blue-rgb), .45); background:var(--bg-card); }
 .dock-tabs button:focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
-.badge-maker-root .dock-tabs button.active{ background:var(--blue); color:var(--bg-card); border-color:var(--blue); }
+.badge-maker-root .dock-tabs button.active{ background:linear-gradient(135deg, var(--brand-blue), var(--brand-blue-dark) 30%); color:var(--white); border-color:var(--brand-blue-dark); }
 
 /* 按钮 / 药丸文案一律不换行 —— 换行只发生在「控件之间」，不发生在控件内部 */
 .dock-tabs button,
@@ -282,7 +285,7 @@
 .badge-maker-root .btn-sm{ padding:8px 12px; font-size:13px; border-radius:var(--radius-xs); min-width:68px; }
 .badge-maker-root .btn-block{ width:100%; margin-top:8px; min-width:0; }
 .badge-maker-root .btn-primary{
-  background:var(--blue); color:var(--bg-card);
+  background:linear-gradient(135deg, var(--brand-blue), var(--brand-blue-dark) 30%); color:var(--white);
   box-shadow:0 6px 16px rgba(var(--bm-blue-rgb), .28);
 }
 .badge-maker-root .btn-primary:hover:not(:disabled){ background:var(--blue-dark); transform:translateY(-1px); }
@@ -296,7 +299,7 @@
 .badge-maker-root .pill:focus-visible{
   outline:2px solid var(--blue); outline-offset:2px;
 }
-.badge-maker-root .btn-ghost:hover:not(:disabled){ background:var(--bg-card); border-color:rgba(var(--bm-blue-rgb), .45); color:var(--blue); }
+.badge-maker-root .btn-ghost:hover:not(:disabled){ background:var(--bg-card); border-color:rgba(var(--bm-blue-rgb), .45); color:var(--link-ink); }
 .badge-maker-root .btn-ghost:active:not(:disabled){ transform:scale(.985); }
 
 /* --------------------------- 表单控件 --------------------------- */
@@ -319,7 +322,7 @@
 }
 .slider-row:first-of-type{ margin-top:0; }
 .slider-row label{ font-size:13px; font-weight:600; color:var(--text-2); }
-.slider-row .value{ font-size:12.5px; font-weight:600; color:var(--blue); font-variant-numeric:tabular-nums; }
+.slider-row .value{ font-size:12.5px; font-weight:600; color:var(--link-ink); font-variant-numeric:tabular-nums; }
 
 .badge-maker-root input[type="range"]{
   -webkit-appearance:none; appearance:none;
@@ -406,10 +409,10 @@
   padding:8px 0; min-height:34px; min-width:56px; cursor:pointer; text-align:center;
   transition:background .18s ease, color .18s ease, border-color .18s ease, box-shadow .18s ease, transform .12s ease;
 }
-.badge-maker-root .pill:hover:not(.active){ border-color:rgba(var(--bm-blue-rgb), .45); color:var(--blue); }
+.badge-maker-root .pill:hover:not(.active){ border-color:rgba(var(--bm-blue-rgb), .45); color:var(--link-ink); }
 .badge-maker-root .pill:active:not(.active){ transform:scale(.97); }
 .badge-maker-root .pill.active{
-  background:var(--blue); border-color:var(--blue); color:var(--bg-card);
+  background:linear-gradient(135deg, var(--brand-blue), var(--brand-blue-dark) 30%); border-color:var(--brand-blue-dark); color:var(--white);
   box-shadow:0 4px 12px rgba(var(--bm-blue-rgb), .26);
 }
 /* 药丸内的小图标（边框样式预览用）：带图标的药丸转 inline-flex 并加宽，
@@ -450,7 +453,7 @@
   border-color:rgba(var(--bm-blue-rgb), .55);
 }
 .spec-info{
-  margin:12px 0 0; font-size:12.5px; font-weight:600; color:var(--blue);
+  margin:12px 0 0; font-size:12.5px; font-weight:600; color:var(--link-ink);
   background:var(--blue-soft); padding:8px 10px; border-radius:var(--radius-xs);
   font-variant-numeric:tabular-nums;
 }
@@ -467,7 +470,7 @@
   border-radius:6px; color:var(--text-2); text-align:center;
 }
 .spec-th{ color:var(--text-3); font-weight:700; }
-.badge-maker-root .spec-tr.active{ background:var(--blue-soft); color:var(--blue); font-weight:700; }
+.badge-maker-root .spec-tr.active{ background:var(--blue-soft); color:var(--link-ink); font-weight:700; }
 
 /* 折叠卡 */
 .card-collapse{ padding:0; overflow:hidden; }
@@ -477,7 +480,7 @@
   padding:16px; display:flex; align-items:center; justify-content:space-between;
   transition:color .18s ease;
 }
-.collapse-head:hover{ color:var(--blue); }
+.collapse-head:hover{ color:var(--link-ink); }
 .collapse-head .caret{ transition:transform .25s ease; font-size:11px; }
 .collapse-head[aria-expanded="true"] .caret{ transform:rotate(180deg); }
 .collapse-body{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
@@ -515,7 +518,7 @@ kbd{
 }
 .editor-head .card-title{ margin:0; }
 .badge-live{
-  font-size:12px; font-weight:700; color:var(--blue);
+  font-size:12px; font-weight:700; color:var(--link-ink);
   background:var(--blue-soft); border-radius:999px; padding:4px 12px;
   font-variant-numeric:tabular-nums;
 }
@@ -552,6 +555,17 @@ kbd{
 .editor-empty strong{ color:var(--bm-line-strong); }
 
 /* --------------------------- 预览区 --------------------------- */
+
+/* [W3-8] 预览台空态：与编辑器侧 .editor-empty 对称，避免空态下 418px 纯空白无引导。
+   文字色用 --text-2 / --text-3（均已按对比度门禁校验）。 */
+.preview-empty{
+  position:absolute; inset:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:6px; pointer-events:none; text-align:center; padding:24px;
+}
+.preview-empty p{ margin:0; font-size:13px; color:var(--text-2); }
+.preview-empty p.dim{ font-size:11.5px; color:var(--text-3); }
+.preview-empty strong{ color:var(--text); }
 .badge-maker-root .preview-card{ padding:16px; }
 .preview-head{
   display:flex; align-items:center; justify-content:space-between;
@@ -560,6 +574,7 @@ kbd{
 .preview-head .card-title{ margin:0; }
 .preview-head .hint{ margin:0; }
 .preview-stage{
+  position:relative;   /* [W3-8] 供 .preview-empty 绝对定位覆盖 */
   display:flex; align-items:center; justify-content:center;
   padding:16px 8px;
   border-radius:var(--radius);
@@ -602,7 +617,7 @@ kbd{
   border:2px dashed var(--blue);
   border-radius:20px;
   padding:32px 48px;
-  font-size:16px; font-weight:700; color:var(--blue);
+  font-size:16px; font-weight:700; color:var(--link-ink);
   box-shadow:var(--shadow);
 }
 
@@ -610,7 +625,7 @@ kbd{
 .toast{
   position:fixed; left:50%; bottom:32px; transform:translate(-50%, 16px);
   z-index:300;
-  background:rgba(var(--bm-panel-rgb), .92); color:var(--bg-card);
+  background:rgba(var(--bm-panel-rgb), .92); color:var(--white);
   font-size:13px; font-weight:600;
   padding:11px 20px; border-radius:999px;
   box-shadow:0 10px 32px rgba(var(--bm-black-rgb), .3);
@@ -686,7 +701,7 @@ kbd{
   position:fixed; top:16px; right:16px; z-index:200;
   display:none; align-items:center; gap:6px;
   font-family:inherit; font-size:13px; font-weight:600;
-  color:var(--bg-card); background:rgba(var(--bm-ink-rgb), .62);
+  color:var(--white); background:rgba(var(--bm-ink-rgb), .62);
   border:1px solid rgba(var(--bm-glass-rgb), .18);
   border-radius:999px; padding:9px 14px; cursor:pointer;
   backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
@@ -755,7 +770,7 @@ body.is-fullscreen .preview-card{ display:flex; flex-direction:column; min-heigh
 .queue-item img{ width:100%; height:100%; object-fit:cover; display:block; }
 .queue-item .q-remove{
   position:absolute; top:1px; right:1px; width:18px; height:18px; line-height:16px; text-align:center;
-  border:none; border-radius:50%; background:rgba(var(--bm-panel2-rgb), .72); color:var(--bg-card); font-size:12px; cursor:pointer; padding:0;
+  border:none; border-radius:50%; background:rgba(var(--bm-panel2-rgb), .72); color:var(--white); font-size:12px; cursor:pointer; padding:0;
 }
 .queue-empty{ font-size:12px; color:var(--text-3); margin-top:10px; }
 
@@ -825,28 +840,12 @@ body:has(.badge-maker-root) > header.bm-hero-bar{ position:sticky; top:64px; z-i
 .bm-hero-inner{ max-width:1280px; margin:0 auto; display:flex; align-items:center; gap:12px; padding:10px 20px; }
 .bm-back{ display:inline-flex; align-items:center; gap:6px; color:var(--text-secondary,#6b7280); text-decoration:none;
   font-size:14px; font-weight:500; padding:6px 10px; border-radius:8px; transition:background .15s,color .15s; white-space:nowrap; }
-.bm-back:hover{ background:var(--bg-hover,rgba(0,122,255,.08)); color:var(--primary,#007AFF); }
+.bm-back:hover{ background:rgba(var(--bm-blue-rgb), .08); color:var(--link-ink); }   /* [W3-7] 原 --bg-hover 未定义（永远走兜底）；原用 --primary 作 hover 文字色，白底仅 4.02:1 → 统一改 --link-ink */
 .bm-back-ic{ transform:rotate(180deg); width:15px; height:15px; }
 .bm-title{ margin:0; font-size:17px; font-weight:600; letter-spacing:-.01em; color:var(--text,#111827); white-space:nowrap; }
 .bm-privacy{ font-size:12px; color:var(--text-secondary,#6b7280); padding:4px 10px; border:1px solid var(--border,#e5e7eb);
   border-radius:999px; white-space:nowrap; }
 @media (max-width:720px){ .bm-privacy{ display:none; } .bm-hero-inner{ padding:8px 12px; gap:8px; } }
-.bm-seo{ max-width:1080px; margin:28px auto 48px; padding:0 16px; }
-.bm-seo > summary{ list-style:none; cursor:pointer; user-select:none; display:flex; align-items:center; justify-content:space-between;
-  gap:12px; padding:14px 18px; border:1px solid var(--border,#e5e7eb); border-radius:12px; background:var(--bg-card,#fff);
-  font-weight:600; font-size:15px; color:var(--text,#111827); transition:border-color .15s; }
-.bm-seo > summary:hover{ border-color:color-mix(in srgb, var(--primary,#007AFF) 40%, var(--border,#e5e7eb)); }
-.bm-seo > summary::-webkit-details-marker{ display:none; }
-.bm-seo > summary::after{ content:'+'; font-size:20px; font-weight:500; color:var(--text-secondary,#6b7280);
-  transition:transform .18s; line-height:1; }
-.bm-seo[open] > summary::after{ transform:rotate(45deg); }
-.bm-seo-body{ padding-top:20px; }
-.bm-lead{ color:var(--text-secondary,#6b7280); font-size:15px; line-height:1.7; margin:0 0 18px; }
-.bm-faq-title{ font-size:20px; margin:26px 0 14px; }
-.bm-faq-item{ border:1px solid var(--border,#e5e7eb); border-radius:10px; margin-bottom:10px; padding:12px 16px;
-  background:var(--bg-card,#fff); }
-.bm-faq-item summary{ cursor:pointer; font-weight:600; font-size:14px; color:var(--text,#111827); }
-.bm-faq-item p{ margin:10px 0 2px; font-size:14px; line-height:1.75; color:var(--text-secondary,#4b5563); }
 
 /* -------------------------------------------------------------------------
    2026-09-12 工作台改版：flex 链桥接（站点专属）
@@ -878,16 +877,17 @@ body.is-fullscreen:has(.badge-maker-root) > main > .badge-maker-root{ flex:1 1 0
    ========================================================================= */
 [data-theme="dark"] .badge-maker-root{
   --blue:var(--accent-blue);                          /* 站点 accent 蓝（暗底更亮） */
-  --blue-dark:var(--bm-accent-dark);                     /* 暗色下 hover 提亮而非压暗 */
+  --blue-dark:var(--primary-hover);                      /* [W1-4] 原为 bm-accent-dark（暗色下提亮）：改白字后仅 3.05:1，改用深色底 */
   --blue-soft:rgba(var(--bm-accent-rgb), .16);
   --bg-1:var(--surface-darker);                          /* surface-darker */
   --bg-2:var(--black);                             /* black */
   --card:rgba(var(--bm-surface-rgb), .62);
   --card-border:rgba(var(--bm-glass-rgb), .08);
   --line:rgba(var(--bm-glass-rgb), .12);
-  --text:var(--bg);                          /* text-on-dark */
+  --text:var(--text-on-dark);                /* [W1-1] 原 var(--bg) 在暗色下=#000，致基础文字纯黑 */
   --text-2:var(--bm-ink-2-dark);
   --text-3:var(--bm-ink-3-dark);
+  --link-ink:var(--blue-300);                     /* [W1-6] 暗底需更亮的蓝（blue-300）：hover 底 6.21:1 / 浅蓝底 7.88:1 */
   --warn:var(--amber-400);
   --warn-soft:rgba(var(--bm-amber-rgb), .14);
   --shadow:0 12px 32px rgba(var(--bm-black-rgb), .5), 0 2px 8px rgba(var(--bm-black-rgb), .35);
@@ -903,9 +903,9 @@ body.is-fullscreen:has(.badge-maker-root) > main > .badge-maker-root{ flex:1 1 0
   box-shadow:0 1px 4px rgba(var(--bm-black-rgb), .45);
 }
 /* 次级按钮 / 分类标签 / 药丸：白底 → 白 7% 玻璃；hover 提到 13% */
-[data-theme="dark"] .badge-maker-root .dock-tabs button,
+[data-theme="dark"] .badge-maker-root .dock-tabs button:not(.active),
 [data-theme="dark"] .badge-maker-root .btn-ghost,
-[data-theme="dark"] .badge-maker-root .pill{ background:rgba(var(--bm-glass-rgb), .07); }
+[data-theme="dark"] .badge-maker-root .pill:not(.active){ background:rgba(var(--bm-glass-rgb), .07); }
 [data-theme="dark"] .badge-maker-root .dock-tabs button:hover:not(.active),
 [data-theme="dark"] .badge-maker-root .btn-ghost:hover:not(:disabled),
 [data-theme="dark"] .badge-maker-root .pill:hover:not(.active){ background:rgba(var(--bm-glass-rgb), .13); }
@@ -948,4 +948,22 @@ body.is-fullscreen:has(.badge-maker-root) > main > .badge-maker-root{ flex:1 1 0
     --bg-1:var(--bg-card); --bg-2:var(--bg-card);
     --shadow:none; --shadow-sm:none;
   }
+}
+
+/* --------------------------- [W3-10] 减动效降级 ---------------------------
+   原缺 prefers-reduced-motion 分支，而本文件含 15 处 transition / 13 处 transform（hover 位移、
+   active 缩放等）。站点 style.css 已有该分支，此处补齐。
+   说明：本工具核心是 canvas 即时预览，无自动播放类动效，故不构成 SC 2.3.3 阻断。 */
+@media (prefers-reduced-motion: reduce){
+  .badge-maker-root *,
+  .badge-maker-root *::before,
+  .badge-maker-root *::after{
+    transition-duration:.01ms !important;
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+  }
+  /* 关闭位移/缩放类反馈（保留背景与边框变化作为状态提示）*/
+  .badge-maker-root button,
+  .badge-maker-root .pill,
+  .badge-maker-root .btn{ transform:none !important; }
 }

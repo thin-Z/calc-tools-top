@@ -94,6 +94,7 @@ KV_URL / KV_REDIS_URL
 | `pre-work-check.sh` / `pre-work-check.ps1` | 会话前置防护：对齐基线 / 防漂移检查 | `sh scripts/pre-work-check.sh` |
 | `audit-a11y.mjs` | 全站 axe 扫描（WCAG 2.1 A/AA，msedge 通道；verify #22） | `node scripts/audit-a11y.mjs` |
 | `audit-visual.mjs` | 渲染级视觉审查（图标隐形/断裂引用/孤儿变体选择符 U+FE0E·FE0F/替换符 U+FFFD/未捕获异常，亮暗双主题；默认 chromium 通道） | `node scripts/audit-visual.mjs` |
+| `audit-contrast.mjs` | **文字对比度门禁（渲染级直测，补 axe 的 `incomplete` 盲区）**：判据 A 常规口径（computed 文字色 × 祖先合成背景，纯色背景可信判定）· 判据 B 字形盒口径（元素级截图 + `Range` 取字形包围盒，四缘外侧采样）—— 后者专治毛玻璃/渐变背景让 axe 放弃判定的场景。亮暗双主题；`ci`/`ci:quick` 已接入 | `node scripts/audit-contrast.mjs` |
 | `seo-batch-audit.mjs` | SEO 软指标批量审计（title/desc 长度等） | `node scripts/seo-batch-audit.mjs` |
 | `gen-allowed-ids.js` | 生成 API 白名单 ID | `node scripts/gen-allowed-ids.js` |
 | `inject-url-state.mjs` | 为计算器页注入 `js/url-state.js`（URL 参数预填，幂等） | `node scripts/inject-url-state.mjs [--dry-run]` |

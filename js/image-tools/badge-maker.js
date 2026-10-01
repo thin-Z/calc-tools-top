@@ -1346,6 +1346,8 @@
 
     updateSpecTable();
     $('editorEmpty').style.display = state.hasImage ? 'none' : 'flex';
+    /* [W3-8] 预览台空态：编辑器侧原有空态引导，预览侧原先是一块空白卡片（实测 418px 无任何提示） */
+    if ($('previewEmpty')) { $('previewEmpty').style.display = state.hasImage ? 'none' : 'flex'; }
 
     // 文字层控件
     if ($('swText')) { $('swText').checked = !!state.text.enabled; }
@@ -2605,7 +2607,7 @@
     for (var b = 0; b < btns.length; b++) {
       var on = btns[b].getAttribute('data-cat') === cat;
       btns[b].classList.toggle('active', on);
-      btns[b].setAttribute('aria-selected', on ? 'true' : 'false');
+      btns[b].setAttribute('aria-pressed', on ? 'true' : 'false');
     }
   }
 

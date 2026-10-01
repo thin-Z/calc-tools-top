@@ -66,6 +66,8 @@ const PAGES = [
   '/en/text/word-counter.html',
   '/zh/image/compress.html',
   '/en/image/compress.html',
+  '/zh/image/badge-maker.html',
+  '/en/image/badge-maker.html',
   '/zh/calculators/index.html',
   '/en/calculators/index.html',
   '/zh/image/index.html',

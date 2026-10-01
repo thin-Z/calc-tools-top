@@ -49,6 +49,8 @@ const PAGES = [
   '/zh/image/compress.html',
   '/en/image/compress.html',
   '/zh/image/color-picker.html',
+  '/zh/image/badge-maker.html',
+  '/en/image/badge-maker.html',
   // 栏目索引页（2026-09-15 补入：此前是 a11y 覆盖盲区，正文区 .seo-content 样式即为本次修复项）
   '/zh/calculators/index.html',
   '/en/calculators/index.html',

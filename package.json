@@ -19,8 +19,8 @@
     "e2e:server": "node scripts/e2e-server.mjs",
     "audit:pre": "node scripts/pre-submit-audit.mjs",
     "audit:visual": "node scripts/audit-visual.mjs",
-  "ci": "node scripts/build.mjs && node scripts/verify-site.mjs && npm run test:cov && npm run test:e2e && node scripts/audit-a11y.mjs && node scripts/audit-narrow-overflow.mjs --block-overflow && node scripts/audit-visual.mjs",
-    "ci:quick": "node scripts/build.mjs && node scripts/verify-site.mjs && npm run test:cov && node scripts/audit-a11y.mjs && node scripts/audit-narrow-overflow.mjs --block-overflow && node scripts/audit-visual.mjs"
+  "ci": "node scripts/build.mjs && node scripts/verify-site.mjs && npm run test:cov && npm run test:e2e && node scripts/audit-a11y.mjs && node scripts/audit-narrow-overflow.mjs --block-overflow && node scripts/audit-visual.mjs && node scripts/audit-contrast.mjs",
+    "ci:quick": "node scripts/build.mjs && node scripts/verify-site.mjs && npm run test:cov && node scripts/audit-a11y.mjs && node scripts/audit-narrow-overflow.mjs --block-overflow && node scripts/audit-visual.mjs && node scripts/audit-contrast.mjs"
   },
   "repository": {
     "type": "git",

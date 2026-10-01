@@ -141,10 +141,10 @@
   <div class="topbar-inner">
     <div class="brand">
       <span class="brand-mark" aria-hidden="true">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-          <circle cx="12" cy="12" r="9.2" stroke="#007AFF" stroke-width="1.8"/>
-          <circle cx="12" cy="12" r="6" stroke="#007AFF" stroke-width="1.2" stroke-dasharray="2.4 2.4" opacity="0.65"/>
-          <circle cx="12" cy="12" r="1.7" fill="#007AFF"/>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="color:var(--blue)">
+          <circle cx="12" cy="12" r="9.2" stroke="currentColor" stroke-width="1.8"/>
+          <circle cx="12" cy="12" r="6" stroke="currentColor" stroke-width="1.2" stroke-dasharray="2.4 2.4" opacity="0.65"/>
+          <circle cx="12" cy="12" r="1.7" fill="currentColor"/>
         </svg>
       </span>
       <span class="brand-text">
@@ -543,6 +543,8 @@
         <canvas id="editorCanvas" class="editor-canvas"></canvas>
         <div class="editor-empty" id="editorEmpty">
           <svg width="42" height="42" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <!-- [W3-5] 本图标画在 canvas 深色棋盘之上，棋盘与主题无关（亮暗一致），
+                 故此处色值有意保留字面值，不改为主题令牌 —— 改令牌反而会在亮色下失去对比。 -->
             <path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5" stroke="#7C879B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" stroke="#7C879B" stroke-width="1.6" stroke-linecap="round"/>
           </svg>
@@ -564,6 +566,10 @@
         <div class="preview-duo hidden" id="printDuo">
           <canvas id="singleCanvas" class="preview-canvas-sm"></canvas>
           <canvas id="a4Canvas" class="preview-canvas-a4"></canvas>
+        </div>
+        <div class="preview-empty" id="previewEmpty">
+          <p><strong>No badge to preview yet</strong></p>
+          <p class="dim">Import an image on the left — the realistic preview shows up here</p>
         </div>
       </div>
     </div>

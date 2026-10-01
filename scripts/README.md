@@ -26,6 +26,7 @@
 | `check-csp-fns.mjs` | verify #7/8/9 | CSP 函数级断言 | 自动 |
 | `audit-a11y.mjs` | verify #22 | 全站 axe 扫描（默认跳过，E2E_A11Y=1 启用） | 自动 |
 | `audit-visual.mjs` | 本地 CI 链 | 渲染级视觉审查（图标隐形/断裂引用/孤儿变体选择符/替换符/未捕获异常，亮暗双主题，默认 chromium 通道）；`ci:quick` 已接入 | 手动 |
+| `audit-contrast.mjs` | 本地 CI 链 | 文字对比度门禁（渲染级直测）：判据 A computed 文字色 × 祖先合成背景（纯色可信判定 + 渐变/canvas 归入不可判定不阻断）· 判据 B 元素级截图 + `Range` 字形包围盒四缘采样（专治 axe 遇毛玻璃/渐变降级 `incomplete` 的盲区）；亮暗双主题，阻断项 exit 1；`ci` / `ci:quick` 已接入 | 自动 |
 | `audit-narrow-overflow.mjs` | 本地 CI 链 | 全站 390px 横向溢出 + 卡片结构缺陷审计（GitHub Actions 不含此作业，需本地 `npm run ci` / `ci:quick`）；**2026-09-30 起 `ci`/`ci:quick` 以 `--block-overflow` 接线 = 溢出阻断、缺陷与加载错误仅告警** | 自动（ci / ci:quick） |
 | `check-embed.mjs` | verify #27 | embed 可嵌入性门禁（XFO 冲突 / frame-ancestors / 接线） | 自动 |
 | `check-redirects.mjs` | verify #24 | 重定向门禁（通配须置末 + companion） | 自动 |
