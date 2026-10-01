@@ -71,7 +71,8 @@
   border-radius:11px;
   background:var(--blue-soft);
 }
-/* [W3-2] 原 .brand-text / .brand-text strong / .brand-text small 三条规则已随元素一并删除：
+/* [W3-2] 原 .brand-text / .brand-text strong / .brand-text small 三条规则已随元素一并删除，
+   全屏段那条 `body.is-fullscreen .topbar .brand-text` 规则也一并移除（否则留死样式）：
    同屏出现两个产品名（h1「在线吧唧制作」与 .brand-text「吧唧制作工具」），
    站点模板页工具区并无品牌块（身份由 h1 承担）→ 工具顶栏降级为「标记 + 操作区」。 */
 .topbar-actions{ margin-left:auto; display:flex; gap:8px; align-items:center; white-space:nowrap; }
@@ -713,7 +714,6 @@ kbd{
 body.is-fullscreen:has(.badge-maker-root){ display:flex; flex-direction:column; height:100vh; overflow:hidden; }
 body.is-fullscreen .fs-exit{ display:inline-flex; }
 body.is-fullscreen .topbar{ flex:0 0 auto; }
-body.is-fullscreen .topbar .brand-text{ display:none; }
 body.is-fullscreen .topbar-inner{ padding:8px 128px 8px 16px; gap:12px; }
 body.is-fullscreen .layout{
   flex:1 1 auto; height:0; min-height:0;
