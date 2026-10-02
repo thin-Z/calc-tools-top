@@ -123,7 +123,7 @@ KV_URL / KV_REDIS_URL
 
 > **运维 / 发布类脚本已迁出**（2026-09-23）：`gsc-submit-daily.sh`、`baidu-push.mjs`、`submit-indexnow.mjs`、`push-any.sh`、`deploy-like-system.ps1` 因本仓库为 **public**，已迁至知识库 `_ObsidianVault/90-运维工具/`（附用法与依赖说明）。工作区只保留构建 / 校验链。
 
-内容审计操作手册见 `docs/content-audit-sop.md`；构建/校验与回滚见 `docs/rollback.md`。
+内容审计操作手册、构建/校验与回滚文档见知识库 `02-个人项目/projects/2_AI建站项目/docs/`（原仓库 `docs/` 目录已于 **2026-10-02** 迁出，权威源统一到知识库）。
 
 ## 构建 + 验证
 
@@ -165,7 +165,7 @@ node scripts/check-links.js
 ## 相关文档
 
 - AGENTS.md — 仓库约定
-- docs/ — 设计文档与决策记录
+- 设计文档与决策记录 — **已迁出仓库（2026-10-02）**，见知识库 `02-个人项目/projects/2_AI建站项目/docs/`
 
 ## 安全规范（敏感凭据）
 

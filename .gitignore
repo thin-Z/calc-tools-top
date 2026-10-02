@@ -13,7 +13,8 @@ Thumbs.db
 .DS_Store
 
 .git_backup
-# 知识库文档（存于 Obsidian 知识库躺平计划/projects/2_AI建站项目/docs/）
+# 知识库文档（权威源 = Obsidian 知识库 02-个人项目/projects/2_AI建站项目/docs/）
+# 2026-10-02：仓库 docs/ 目录已删除（与知识库分叉 5 周后统一到知识库单源）；本规则保留以防误放回
 AGENTS.md
 _project_memory.md
 使用说明书.md

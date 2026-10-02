@@ -106,12 +106,12 @@ curl -I https://www.calc-tools.top/js/web-vitals-report.js
 | 文件 | 用途 |
 |------|------|
 | `scripts/build.mjs` | Vercel 构建入口 |
-| `scripts/verify-site.mjs` | 集成校验 26 项 |
+| `scripts/verify-site.mjs` | 集成校验 **36 项**（2026-10-02 实测） |
 | `scripts/audit-a11y.mjs` | 全站 axe 扫描 |
 | `includes/adsense-head.html` | GA4/AdSense 注入单源 |
-| `js/tools.json` | 工具权威数据源（49 工具） |
-| `docs/` | 设计/决策文档（Obsidian 知识库镜像） |
+| `tools.json`（仓库根） | 工具权威数据源（**51 条** = 28 calculators + 8 image + 15 text；其中 4 条带 `mergedInto` → 展示集 **47**） |
+| ~~`docs/`~~ | **已迁出仓库（2026-10-02）**：设计/决策文档权威源 = 知识库 `02-个人项目/projects/2_AI建站项目/docs/`（本目录曾为其镜像，已分叉 5 周 → 统一到知识库单源） |
 
 ---
 
-*Last updated: 2026-08-28（Phase 5）*
+*Last updated: 2026-10-02（仓库 docs/ 迁出收尾）*
