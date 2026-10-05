@@ -737,6 +737,22 @@ footer .footer-links a:hover {
     line-height: var(--lh-loose);
     font-size: var(--fs-md);
 }
+/* 阅读宽度（批2·组C3 · 2026-10-05）：正文块收敛到 --measure(680px)，
+ * 补齐 C3「博客与工具页说明区统一」——此前 --measure 只有 .blog-post 一处消费者。
+ * 实测（1440px，chromium）：改前正文 73 全角字/行（超 AC-11 的 40）→ 改后 43。
+ * 只限**文字块**、不限卡片本身：工具页正文含多张宽数据表（pregnancy 单页 6 张、最宽 5 列），
+ * 收窄整卡会让表格列严重换行、并与上方 1280px 表单卡形成宽度落差（已截图比对否决）。
+ * 表格 / pre / h2-h4 保持卡片全宽，宽内容仍能用满可用空间。 */
+.tool-content > p,
+.tool-content > ul,
+.tool-content > ol,
+.tool-content > blockquote,
+.seo-content > p,
+.seo-content > ul,
+.seo-content > ol,
+.seo-content > blockquote {
+    max-width: var(--measure);
+}
 /* 顶部品牌渐变装饰条 */
 .tool-content > h2:first-child,.seo-content > h2:first-child {
     margin-top: 0;
