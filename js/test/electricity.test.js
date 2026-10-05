@@ -1,6 +1,7 @@
-/* electricity 单测（fake-DOM harness，零源码改动）
+/* electricity 单测（fake-DOM harness，零结构改动）
  * 覆盖分支：常规日/月耗电与电费、days/rate 缺省回退（30 天 / 0.6 元）、
- * 功率或时长缺失报错、零值与非法字符报错、负数报错（10-01 修 S19 ①）、resetForm 回填。
+ * 功率或时长缺失报错、零值与非法字符报错、负数报错（10-01 修 S19 ①）、
+ * 可选字段 days/rate 的 0 值与负数语义（10-05 修 S21）、resetForm 回填。
  */
 const test = require('node:test');
 const assert = require('node:assert');
@@ -68,4 +69,37 @@ test('电费: resetForm 清空功率/时长并回填默认 30 天 / 0.6 元', ()
   assert.strictEqual(c.get('hours').value, '');
   assert.strictEqual(c.get('days').value, '30');
   assert.strictEqual(c.get('rate').value, '0.6');
+});
+
+test('电费: days 填 0 或负数必须报错，不得静默回退 30 天（10-05 修 S21 ①）', () => {
+  const base = { power: 1000, hours: 5, rate: 0.6 };
+  const mk = () => loadCalculator('electricity');
+  // 修复前 `parseFloat(v) || 30` 是短路写法：0 被 || 吃掉 -> 静默按 30 天出结果，
+  // 负数则一路放行 -> 算出负耗电量与负电费，用户输入被无视且无任何提示。
+  const zero = mk().run(Object.assign({}, base, { days: 0 }));
+  assert.ok(zero.error(), 'days 填 0 应报错而非静默按 30 天计算');
+  assert.ok(!zero.text('monthlyKwh'), '报错时不得写出结果');
+  assert.ok(mk().run(Object.assign({}, base, { days: -5 })).error(), '负天数应报错');
+  // 留空仍走默认值 30（默认回退语义不受影响）
+  const blank = mk().run(Object.assign({}, base, { days: '' }));
+  assert.strictEqual(blank.error(), null);
+  assert.strictEqual(blank.text('monthlyKwh'), '150.00');
+});
+
+test('电费: rate 填 0 输出 0 元；填负数报错（10-05 修 S21 ①）', () => {
+  const base = { power: 1000, hours: 5, days: 30 };
+  const mk = () => loadCalculator('electricity');
+  // 修复前 `parseFloat(v) || 0.6`：rate=0 被吃掉 -> 仍按 0.6 元出 90 元，用户输入被无视；
+  // rate=-0.6 则算出 -90 元负电费。rate 允许为 0（免费用电），故不能简单拦 0。
+  const free = mk().run(Object.assign({}, base, { rate: 0 }));
+  assert.strictEqual(free.error(), null, 'rate 填 0 是合法输入（免费用电）');
+  assert.strictEqual(free.text('monthlyKwh'), '150.00');
+  assert.strictEqual(free.text('monthlyCost'), '0.00');
+  const neg = mk().run(Object.assign({}, base, { rate: -0.6 }));
+  assert.ok(neg.error(), '负电价应报错');
+  assert.ok(!neg.text('monthlyCost'), '报错时不得写出结果');
+  // 留空仍走默认 0.6
+  const blank = mk().run(Object.assign({}, base, { rate: '' }));
+  assert.strictEqual(blank.error(), null);
+  assert.strictEqual(blank.text('monthlyCost'), '90.00');
 });

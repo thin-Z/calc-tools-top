@@ -5,14 +5,21 @@
 
 /**
  * 读取表单并计算电费结果（UI 入口）。
- * @returns {void} 无返回值；功率或时长缺失/为零/为负数时弹出提示并中断。
+ * @returns {void} 无返回值；功率/时长缺失、为零或为负数，以及天数不为正数、电价为负数时弹出提示并中断。
  */
 function doCalculate() {
     const power = parseFloat(document.getElementById('power').value);
     const hours = parseFloat(document.getElementById('hours').value);
-    const days = parseFloat(document.getElementById('days').value) || 30;
-    const rate = parseFloat(document.getElementById('rate').value) || 0.6;
+    // 可选字段：仅「留空」才取默认值。禁用 `parseFloat(v) || 默认值` 短路写法——
+    // 它会把用户输入的 0 静默改写成默认值（输入被无视且无任何提示）。
+    const daysRaw = document.getElementById('days').value;
+    const rateRaw = document.getElementById('rate').value;
+    const days = daysRaw.trim() === '' ? 30 : parseFloat(daysRaw);
+    const rate = rateRaw.trim() === '' ? 0.6 : parseFloat(rateRaw);
     if (!(power > 0) || !(hours > 0)) { window.showError('请输入大于 0 的功率和使用时间'); return; }
+    // 天数须为正数（0 天无意义）；电价允许 0（免费用电），但负电价会算出负电费。
+    if (!(days > 0)) { window.showError('使用天数需为大于 0 的数字 / Days must be a positive number'); return; }
+    if (!(rate >= 0)) { window.showError('电价不能为负数 / Rate must not be negative'); return; }
     const dailyKwh = power * hours / 1000;
     const monthlyKwh = dailyKwh * days;
     const monthlyCost = monthlyKwh * rate;

@@ -1,6 +1,7 @@
-/* fuel-cost 单测（fake-DOM harness，零源码改动）
+/* fuel-cost 单测（fake-DOM harness，零结构改动）
  * 覆盖分支：耗油量/总油费/每公里成本常规值、油价缺失时归零、
- * 距离或油耗缺失报错、零值与非法字符报错、负数报错（10-01 修 S19 ①）、resetForm 清空。
+ * 距离或油耗缺失报错、零值与非法字符报错、负数报错（10-01 修 S19 ①）、
+ * 可选字段 pricePerLiter 的 0 值与负数语义（10-05 修 S21 ②）、resetForm 清空。
  */
 const test = require('node:test');
 const assert = require('node:assert');
@@ -64,4 +65,19 @@ test('油费: resetForm 清空三个输入', () => {
   assert.strictEqual(c.get('distance').value, '');
   assert.strictEqual(c.get('fuelPer100').value, '');
   assert.strictEqual(c.get('pricePerLiter').value, '');
+});
+
+test('油费: 油价填 0 输出 0 元；填负数必须报错（10-05 修 S21 ②）', () => {
+  const base = { distance: 500, fuelPer100: 8 };
+  const mk = () => loadCalculator('fuel-cost');
+  // 修复前 `pricePerLiter ? … : 0` 短路：负油价 -7.5 是 truthy -> 直接算出 -300 元 / -0.60 元每公里
+  // 的负账，用户无从察觉。油价填 0 与留空结果等价（0 元成本），属合法输入，不得拦。
+  const free = mk().run(Object.assign({}, base, { pricePerLiter: 0 }));
+  assert.strictEqual(free.error(), null, '油价填 0 是合法输入（不算钱）');
+  assert.strictEqual(free.text('fuelUsed'), '40.0');
+  assert.strictEqual(free.text('totalCost'), '0.00');
+  assert.strictEqual(free.text('costPerKm'), '0.00');
+  const neg = mk().run(Object.assign({}, base, { pricePerLiter: -7.5 }));
+  assert.ok(neg.error(), '负油价应报错');
+  assert.ok(!neg.text('totalCost'), '报错时不得写出结果');
 });
