@@ -55,18 +55,19 @@
     }
     </script>
             <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": [
-                { "@type": "Question", "name": "How do I tell seconds from milliseconds in a Unix timestamp?", "acceptedAnswer": { "@type": "Answer", "text": "Count the digits. In the 2020s a second-level timestamp has 10 digits while a millisecond-level one has 13. The tool defaults to a boundary of 100000000000, and you can force a unit manually." } },
-                { "@type": "Question", "name": "Why do timestamps look different across timezones?", "acceptedAnswer": { "@type": "Answer", "text": "A timestamp is an absolute instant and is timezone-independent. Only the human-readable representation is affected by the timezone. The tool shows local and UTC side by side so you can verify." } },
-                { "@type": "Question", "name": "What is the 2038 problem?", "acceptedAnswer": { "@type": "Answer", "text": "Systems storing a timestamp in a signed 32-bit integer cannot represent values above 2147483647, which occurs at 2038-01-19T03:14:07Z. Using 64-bit storage avoids the issue entirely." } },
-                { "@type": "Question", "name": "Do leap seconds affect Unix time?", "acceptedAnswer": { "@type": "Answer", "text": "No. Unix time counts 86400-second days since the epoch and does not insert leap seconds, which is why adding 86400 to a timestamp always advances exactly one day in UTC." } },
-                { "@type": "Question", "name": "Can a Unix timestamp be negative?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Negative values represent instants before 1 January 1970 and are converted the same way as positive ones." } }
-            ]
-        }
-        </script>
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            { "@type": "Question", "name": "Why do some APIs return 10 digits and others 13?", "acceptedAnswer": { "@type": "Answer", "text": "Because they come from different runtimes. Unix time(), Java's System.currentTimeMillis(), and MySQL's UNIX_TIMESTAMP() produce seconds (10 digits), while JavaScript's Date.now(), .NET's ToUnixTimeMilliseconds(), and Go's UnixMilli() produce milliseconds (13 digits). Storing both in one column without recording the unit produces values that differ by 1000×. Name the unit explicitly — created_at_ms — or document it in the API contract." } },
+            { "@type": "Question", "name": "Where does the 10^11 boundary come from, and how are edge values classified?", "acceptedAnswer": { "@type": "Answer", "text": "The constant is derived by asking how long a second-level timestamp would take to reach 1e11: roughly 3169 years, so the year 5138. Meanwhile 1e11 milliseconds is only about 1157 days — 3 March 1973 — a value that has existed for decades. Hence \"≥ 1e11 means milliseconds\". At the edge: 99999999999 sits just below and is read as seconds, giving 5138-11-16T09:46:39Z; 100000000000 equals the boundary and is read as milliseconds, giving 1973-03-03T09:46:40Z; 100000000001 is read as milliseconds, giving 1973-03-03T09:46:40.001Z. If your data really does contain a millisecond timestamp below 1e11 (a" } },
+            { "@type": "Question", "name": "Why does Unix time exclude leap seconds, and where did they go?", "acceptedAnswer": { "@type": "Answer", "text": "Unix time's design goal is that a day is always 86400 seconds, which keeps date arithmetic deterministic; inserting a leap second would break that invariant. The seconds are not discarded — POSIX folds each leap second into an adjacent second, usually the preceding or following one, and leaves the exact placement to each implementation. A Unix timestamp therefore counts uniform seconds and can drift tens of seconds from atomic time. That gap is irrelevant for everyday scheduling but matters for timestamping, clock discipline, and any comparison against a reference clock." } },
+            { "@type": "Question", "name": "What do MySQL's DATETIME and TIMESTAMP actually store?", "acceptedAnswer": { "@type": "Answer", "text": "TIMESTAMP stores seconds since the epoch with automatic timezone conversion on both write and read, spanning roughly 1970 to 2038 — it carries UTC semantics. DATETIME stores the literal date and time with no conversion and reaches back to the year 1000, which makes it the right choice for data with no timezone meaning such as business hours. For precision plus range, use DATETIME(3) or store milliseconds in a BIGINT. Writing a 13-digit millisecond value into a TIMESTAMP column overruns the supported range and is truncated or rejected outright." } },
+            { "@type": "Question", "name": "Why does new Date(1700000000) need dividing by 1000 in Node?", "acceptedAnswer": { "@type": "Answer", "text": "JavaScript's Date represents instants in milliseconds internally, and the constructor argument is milliseconds too, so 1700000000 is interpreted as a moment in January 1970 rather than 2023. Use new Date(1700000000 * 1000) for 2023-11-14T22:13:20Z, and Math.floor(date.getTime() / 1000) to go back to seconds. Python inverts the convention, which is why this is such a common cross-language bug: time.time() returns float seconds, datetime.utcfromtimestamp() assumes seconds, and only the multiplied form gives milliseconds." } },
+            { "@type": "Question", "name": "What should I watch for when turning a timestamp into \"N days ago\"?", "acceptedAnswer": { "@type": "Answer", "text": "Subtract the current timestamp first — dividing the target alone tells you its distance from the epoch, not from now. Then round down: a gap of 23 hours and 59 minutes is not yet a day, and rounding to nearest would display it as \"1 day ago\". Across a daylight saving transition one day is not 86400 seconds — it is 23 or 25 hours in local time — so fixed-86400 arithmetic drifts by an hour twice a year. And if you anchor to a fixed baseline such as \"today at midnight\", make sure the baseline uses the same timezone convention as the target, otherwise a morning entry already reads as a full day el" } }
+        ]
+    }
+</script>
 </head>
 <body>
     <header>
@@ -91,12 +92,13 @@
         <div class="detail-like-wrap"><button class="like-btn detail-like" data-like-id="timestamp"><span class="heart"><svg class="ic" aria-hidden="true"><use href="/assets/icons/icons.svg#icon-heart"></use></svg></span> <span class="count">0</span></button></div>
 
         <div class="related-tools">
-    <h3>Related Tools</h3>
+    <h3>Related tools</h3>
     <ul>
         <li><a href="/en/calculators/date-calc">Date Calculator</a></li>
         <li><a href="/en/calculators/workday-calculator">Workday Calculator</a></li>
-        <li><a href="/en/calculators/unit-converter">Unit Converter</a></li>
+        <li><a href="/en/calculators/percentage-calc">Percentage Calculator</a></li>
     </ul>
+</div>
 </div>
 
         <div class="tool-form">
@@ -132,46 +134,88 @@
 
         <section class="tool-content">
             <h2>What is a Unix Timestamp?</h2>
-            <p>A Unix timestamp counts seconds since 00:00:00 UTC on 1 January 1970, excluding leap seconds. It is an absolute instant rather than a local clock reading: the number is the same everywhere on Earth, and only the human-readable rendering changes with timezone. That property is why logs, databases, and APIs prefer timestamps over formatted date strings — they sort correctly and need no timezone metadata to compare.</p>
+            <p>A Unix timestamp counts seconds since 00:00:00 UTC on 1 January 1970, excluding leap seconds. That origin is called the <strong>epoch</strong>. The value is a plain integer carrying no timezone, no format, and no locale: the same number describes the same absolute instant on every machine in every country.</p>
+            <p>That property is why logs, databases, cache expiry values, and API fields such as <code>created_at</code> carry timestamps instead of formatted date strings. A string has to be parsed before it can be compared, needs a separate timezone field, and means different things in different locales. An integer sorts directly, differences are meaningful, and it can be indexed.</p>
+            <p>One consequence is easy to miss: <strong>Unix time contains no leap seconds</strong>. Every day is exactly 86400 seconds long even when the physical day was 86401 seconds, which is what makes "add one day = add 86400 seconds" exact.</p>
 
             <h3>Seconds versus Milliseconds</h3>
-            <p>The most common conversion mistake is unit confusion. Second-level values in the 2020s have 10 digits; millisecond-level values have 13. This tool detects the unit automatically and also lets you force one.</p>
+            <p>The most common conversion mistake is unit confusion, not timezones. Second-level values in the 2020s have 10 digits; millisecond-level values have 13. Mixing them puts the result a factor of 1000 off, which shows up either as a date in 1970 or a five-digit year.</p>
             <table class="ref-table">
                 <caption>Recognising the unit by digit count</caption>
-                <thead><tr><th>Unit</th><th>Typical length</th><th>Example value</th></tr></thead>
+                <thead><tr><th>Unit</th><th>Typical length</th><th>Example value</th><th>If misread as the other unit</th></tr></thead>
                 <tbody>
-                    <tr><td>Seconds (10 digits)</td><td>10 digits</td><td>1790090593</td></tr>
-                    <tr><td>Milliseconds (13 digits)</td><td>13 digits</td><td>1790090593958</td></tr>
+                    <tr><td>Seconds (10 digits)</td><td>10 digits</td><td>1790090593</td><td>Read as ms → 1970-01-21</td></tr>
+                    <tr><td>Milliseconds (13 digits)</td><td>13 digits</td><td>1790090593958</td><td>Read as s → year 58695</td></tr>
                 </tbody>
             </table>
-            <p><strong>Note:</strong> the tool treats values at or above 100000000000 as milliseconds, since no second-level timestamp reaches that size until the year 5138.</p>
+            <p>Forcing a unit manually has a second use beyond double-checking: when a system emits <strong>non-standard precision</strong> — microseconds, or a counter in half-second steps — automatic detection guesses wrong, and switching the unit by hand is how you work out what the producer actually meant.</p>
+
+            <h3>Why the 10^11 Boundary Exists</h3>
+            <p>The tool treats any value <strong>at or above 100000000000 (10^11)</strong> as milliseconds and anything below it as seconds. The constant is not arbitrary; it is derived from how long a second-level timestamp would take to reach that size.</p>
+            <p>10^11 seconds is roughly <strong>3169 years</strong>, so a second-level timestamp that large would not appear until the year 5138. But 10^11 milliseconds is only about 1157 days, which lands on <strong>3 March 1973</strong> — a millisecond value that has existed for half a century. For any foreseeable future, everything above the line is milliseconds and everything below is seconds.</p>
+            <table class="ref-table">
+                <caption>How values around the boundary are classified</caption>
+                <thead><tr><th>Input</th><th>Digits</th><th>Classified as</th><th>Result (UTC)</th><th>Why</th></tr></thead>
+                <tbody>
+                    <tr><td>99999999999</td><td>11</td><td>Seconds</td><td>5138-11-16T09:46:39Z</td><td>Below the boundary</td></tr>
+                    <tr><td>100000000000</td><td>12</td><td>Milliseconds</td><td>1973-03-03T09:46:40Z</td><td>Equal to the boundary, so ms wins</td></tr>
+                    <tr><td>100000000001</td><td>12</td><td>Milliseconds</td><td>1973-03-03T09:46:40.001Z</td><td>One millisecond past it</td></tr>
+                </tbody>
+            </table>
+            <p>Note the tie-breaking: <strong>the boundary value itself is read as milliseconds</strong>, because the test is "greater than or equal". And 99999999999, despite having only 11 digits, falls below the line and is read as seconds — producing the year 5138, which looks absurd but demonstrates that the threshold sits comfortably high.</p>
 
             <h3>Landmark Timestamps</h3>
+            <p>The values below work as reference points for sanity-checking magnitude and estimating an unfamiliar timestamp by eye.</p>
             <table class="ref-table">
                 <caption>Reference instants (UTC)</caption>
-                <thead><tr><th>Moment</th><th>Timestamp</th><th>UTC rendering</th></tr></thead>
+                <thead><tr><th>Moment</th><th>Seconds</th><th>Milliseconds</th><th>UTC rendering</th></tr></thead>
                 <tbody>
-                    <tr><td>Unix epoch</td><td>0</td><td>1970-01-01T00:00:00Z</td></tr>
-                    <tr><td>Start of 2000</td><td>946684800</td><td>2000-01-01T00:00:00Z</td></tr>
-                    <tr><td>Start of 2020</td><td>1577836800</td><td>2020-01-01T00:00:00Z</td></tr>
-                    <tr><td>Start of 2026</td><td>1767225600</td><td>2026-01-01T00:00:00Z</td></tr>
-                    <tr><td>Start of 2030</td><td>1893456000</td><td>2030-01-01T00:00:00Z</td></tr>
-                    <tr><td>32-bit signed limit</td><td>2147483647</td><td>2038-01-19T03:14:07Z</td></tr>
+                    <tr><td>Unix epoch</td><td>0</td><td>0</td><td>1970-01-01T00:00:00Z</td></tr>
+                    <tr><td>One second before</td><td>-1</td><td>-1000</td><td>1969-12-31T23:59:59Z</td></tr>
+                    <tr><td>Start of 2000</td><td>946684800</td><td>946684800000</td><td>2000-01-01T00:00:00Z</td></tr>
+                    <tr><td>Start of 2020</td><td>1577836800</td><td>1577836800000</td><td>2020-01-01T00:00:00Z</td></tr>
+                    <tr><td>Start of 2026</td><td>1767225600</td><td>1767225600000</td><td>2026-01-01T00:00:00Z</td></tr>
+                    <tr><td>32-bit signed limit</td><td>2147483647</td><td>Overflows</td><td>2038-01-19T03:14:07Z</td></tr>
                 </tbody>
             </table>
-
-            <h3>The 2038 Problem</h3>
-            <p>Systems that store a timestamp in a signed 32-bit integer cannot represent values above 2147483647, which occurs at 2038-01-19T03:14:07Z. One second later the counter wraps to a negative number. Modern 64-bit storage and 64-bit database columns avoid the issue entirely, but embedded devices and legacy file formats still surface it.</p>
-
-            <h3>Timezones and Offsets</h3>
-            <p>A timestamp is timezone-independent; the offset belongs to the display layer. The same instant rendered in UTC and in UTC+8 differs by eight hours on the wall clock while the underlying number stays identical — which is why a timestamp is the safest way to store an event time.</p>
+            <p>Two constants cover most mental arithmetic: <strong>one day is 86400 seconds</strong> and <strong>a common year is 31536000 seconds</strong>. Dividing a timestamp by 86400 gives whole days since the epoch; the remainder is seconds since midnight UTC.</p>
 
             <h3>Worked Examples</h3>
             <ol>
-                <li><strong>Default input:</strong> 1600000000 converts to 2020-09-13T12:26:40Z in UTC — the value used as the placeholder in the input field.</li>
-                <li><strong>Unit detection:</strong> a 10-digit value is read as seconds and a 13-digit value as milliseconds; 1600000000 (10 digits) therefore means 2020, not 1970.</li>
-                <li><strong>Day arithmetic:</strong> adding 86400 to a timestamp moves exactly one day forward in UTC, because Unix time ignores leap seconds and daylight saving changes.</li>
+                <li><strong>Seconds to a readable date:</strong> <strong>1600000000</strong> resolves to <strong>2020-09-13T12:26:40Z</strong>, which is <strong>2020-09-13 20:26:40</strong> at UTC+8. Dividing by 86400 gives 18518.518 days and the remainder is 44800 seconds — exactly 12:26:40 — matching the tool output.</li>
+                <li><strong>Milliseconds to the same instant:</strong> <strong>1600000000000</strong> is auto-detected as milliseconds and yields the same <strong>2020-09-13T12:26:40Z</strong>. Two values a thousand times apart describing one instant is the clearest demonstration that seconds and milliseconds are two graduations on a single axis.</li>
+                <li><strong>What a unit mistake looks like:</strong> reading <strong>1600000000</strong> as milliseconds gives <strong>1970-01-19T12:26:40Z</strong> — the classic "it jumped back to 1970" report. Reading <strong>1600000000000</strong> as seconds gives the year <strong>+057971</strong>. Counting the digits before you convert rules out both.</li>
+                <li><strong>Date back to timestamp:</strong> picking <strong>2026-01-01 00:00:00</strong> UTC yields <strong>1767225600</strong> seconds and <strong>1767225600000</strong> milliseconds. Adding 28800 seconds (the UTC+8 offset) to the same instant yields <strong>2026-01-01 08:00:00</strong> Beijing time.</li>
+                <li><strong>Negative values:</strong> <strong>-1</strong> gives <strong>1969-12-31T23:59:59Z</strong>, one second before the epoch. Negative timestamps are not errors; they are legitimate pre-1970 instants and show up when auditing old log files.</li>
+                <li><strong>Elapsed-day arithmetic:</strong> 2026-10-09T00:00:00Z is <strong>1791504000</strong>, and dividing by 86400 divides exactly to <strong>20735 days</strong>. To compute "days ago", subtract the target from the current timestamp <em>before</em> dividing, and <strong>round down</strong> rather than to nearest, otherwise a 23-hour-old gap displays as "1 day ago".</li>
             </ol>
+
+            <h3>The 2038 Problem</h3>
+            <p>The canonical Unix timestamp type is a signed 32-bit integer, and its maximum value <strong>2147483647</strong> corresponds to <strong>2038-01-19T03:14:07Z</strong>. One second later the counter wraps negative and the date falls back into 1970. This is the <strong>Year 2038 problem</strong>, and the fix is 64-bit storage: a signed 64-bit integer reaches about 9.22 × 10^18 seconds, comfortably past the year 290 million. Modern language and database date types are 64-bit, so the survivors are <strong>older embedded devices, legacy file formats, and database columns still typed int32</strong>. Migrate those before 2038 rather than after.</p>
+
+            <h3>Timezones and Offsets</h3>
+            <p>A timestamp is timezone-independent; the offset belongs to the display layer. The same instant rendered in three zones gives <strong>12:26:40</strong> at UTC, <strong>20:26:40</strong> at UTC+8, and <strong>07:26:40</strong> at UTC−5 for 1600000000 — the number never changes, only the wall clock does.</p>
+            <p>Offsets are whole seconds, so timezone arithmetic is simple addition: UTC+8 adds <strong>28800</strong> seconds, UTC+9 adds <strong>32400</strong>, UTC−5 subtracts <strong>18000</strong>. Fractional zones follow the same rule — India at UTC+5:30 is <strong>19800</strong> seconds and Nepal at UTC+5:45 is <strong>20700</strong>. This is exactly why servers and databases store offsets in <strong>minutes rather than hours</strong>.</p>
+            <p>Daylight saving is the complication worth planning for. In regions that observe it, the offset changes twice a year, so "28800 seconds" is stable for China but not for Europe or North America. The safe pattern is to <strong>store UTC and convert only for display</strong> rather than baking a local offset into stored data.</p>
+
+            <h3>Where Leap Seconds Went</h3>
+            <p>Leap seconds exist because Earth's rotation is not uniform, and UTC has inserted them repeatedly. Unix time <strong>never does</strong>: it fixes every day at 86400 seconds even when the real physical day was 86401 seconds long.</p>
+            <p>The leap seconds are not lost — under POSIX convention they are <strong>folded into a neighbouring second</strong>, usually the one before or the one after, and each system picks its own placement. So a Unix timestamp is not a count of elapsed SI seconds: the timeline is <strong>uniform seconds</strong>, and it can sit tens of seconds away from atomic time. For orders, logs, and monitoring that gap is irrelevant; for tidal, clock-discipline, or atomic-clock work it is a real caveat.</p>
+
+            <h3>Converting Without a Tool</h3>
+            <p>Two constants cover most quick checks: one day is 86400 seconds and a common year is 31536000 seconds. Dividing a timestamp by 86400 gives the number of days since the epoch, and the remainder is the time of day in seconds — so the hour is the remainder divided by 3600. For 1600000000 that yields 18518 days plus 44800 seconds, or 12:26:40 UTC.</p>
+            <p>Offsets are then simple additions: UTC+8 adds 28800 seconds and UTC−5 subtracts 18000, with half-hour and three-quarter-hour zones following the same rule. That is why most systems store offsets in minutes rather than hours.</p>
+            <table class="ref-table">
+                <caption>Common zone offsets in seconds</caption>
+                <thead><tr><th>Zone</th><th>Offset seconds</th><th>Applied to 1600000000 (UTC)</th></tr></thead>
+                <tbody>
+                    <tr><td>UTC</td><td>0</td><td>2020-09-13 12:26:40</td></tr>
+                    <tr><td>UTC+8 (China)</td><td>+28800</td><td>2020-09-13 20:26:40</td></tr>
+                    <tr><td>UTC+9 (Japan)</td><td>+32400</td><td>2020-09-13 21:26:40</td></tr>
+                    <tr><td>UTC+5:30 (India)</td><td>+19800</td><td>2020-09-13 17:56:40</td></tr>
+                    <tr><td>UTC−5</td><td>−18000</td><td>2020-09-13 07:26:40</td></tr>
+                </tbody>
+            </table>
 
             <h3>Common Timestamp Formats</h3>
             <p>The same instant can be written several ways. Unix time is the storage-friendly form; ISO 8601 is the interchange form used by most APIs; HTTP-date appears in protocol headers. Converting between them does not change the instant, only the notation.</p>
@@ -186,10 +230,13 @@
                 </tbody>
             </table>
 
-            <h3>Converting Without a Tool</h3>
-            <p>Two constants cover most quick checks: one day is 86400 seconds and a common year is 31536000 seconds. Dividing a timestamp by 86400 gives the number of days since the epoch, and the remainder is the time of day in seconds — so the hour is the remainder divided by 3600.</p>
+            <h3>Where 10 Digits and 13 Digits Come From</h3>
+            <p>Different stacks made different choices. Unix <code>time()</code>, Java's <code>System.currentTimeMillis()</code>, and MySQL's <code>UNIX_TIMESTAMP()</code> all return <strong>seconds</strong>, so they yield 10-digit values. JavaScript's <code>Date.now()</code>, .NET's <code>DateTimeOffset.ToUnixTimeMilliseconds()</code>, and Go's <code>time.Now().UnixMilli()</code> return <strong>milliseconds</strong>, yielding 13-digit values. When two systems both store "user registered at" and disagree by a factor of 1000, the API contract simply never specified the unit. Documenting the unit in the field name — <code>created_at_ms</code> — prevents the whole class of bug.</p>
 
-            <p>Offsets are then simple additions: UTC+8 adds 28800 seconds to the UTC rendering and UTC−5 subtracts 18000, with half-hour zones following the same rule. That is why most systems store offsets in minutes rather than hours.</p>
+            <h3>Code-Level Pitfalls</h3>
+            <p>The browser and Node both work in <strong>milliseconds internally</strong>, so a second-level timestamp must be multiplied before it is handed to the Date constructor: <code>new Date(1700000000)</code> yields 1970-01-20, while <code>new Date(1700000000 * 1000)</code> correctly gives 2023-11-14T22:13:20Z. Go the other way with <code>Math.floor(Date.now() / 1000)</code>. Python defaults the other way, which is why cross-language bugs cluster here: <code>datetime.datetime.utcfromtimestamp(1700000000)</code> gives 2023-11-14T22:13:20Z, <code>time.time()</code> is a float in seconds, and <code>int(time.time() * 1000)</code> is the millisecond form.</p>
+            <p>Database column types are the next trap. MySQL's <code>TIMESTAMP</code> stores <strong>seconds</strong> with timezone conversion applied on write and read, so it carries UTC semantics; <code>DATETIME</code> stores the <strong>literal date and time</strong> with no conversion, which suits opening hours or birthdays. Pushing a 13-digit millisecond value into a <code>TIMESTAMP</code> column exceeds its range and is silently truncated or rejected — a frequent cause of "the time is wrong" reports that never mention milliseconds at all. JDBC types such as <code>java.sql.Timestamp</code> add their own millisecond-versus-nanosecond precision differences on top.</p>
+            <p>The remaining trap is treating a wall-clock time as UTC. A <code>datetime-local</code> input yields a naive local time with no zone attached, so something has to decide which zone it means before it is stored as a timestamp. Skipping that step is what produces a drift of several hours in cross-timezone features. Converting the suspect value back to a readable date and comparing it line by line against the log and the database row is the fastest way to localise the mismatch.</p>
 
             <h3>Practical Notes</h3>
             <ul>
@@ -198,17 +245,25 @@
                 <li>Store timestamps in UTC and convert only for display; daylight saving rules change far more often than your storage format will.</li>
                 <li>When a value looks about a thousand times too large or too small, the unit is almost always the cause.</li>
                 <li>A date string without a zone cannot be converted unambiguously, so always record the offset or the Z suffix when storing text.</li>
+                <li>Diagnose in order: confirm the magnitude looks right, then confirm the digit count, and only then chase the timezone.</li>
             </ul>
 
             <h3>Frequently Asked Questions</h3>
-            <p><strong>How do I tell seconds from milliseconds?</strong> Count the digits. In the 2020s a second-level timestamp has 10 digits and a millisecond-level one has 13. The tool defaults to a boundary of 100000000000, and you can force a unit manually.</p>
-            <p><strong>Why do timestamps look different across timezones?</strong> A timestamp is an absolute instant and is timezone-independent. Only the human-readable representation changes. The tool shows local and UTC side by side so you can verify.</p>
-            <p><strong>What is the 2038 problem?</strong> Signed 32-bit storage overflows after 2038-01-19T03:14:07Z. Use 64-bit fields and the issue disappears.</p>
-            <p><strong>Do leap seconds affect Unix time?</strong> No. Unix time counts 86400-second days and does not insert leap seconds, which is why day arithmetic on timestamps is exact in UTC.</p>
-            <p><strong>Can a timestamp be negative?</strong> Yes. Negative values represent instants before 1 January 1970 and are handled the same way.</p>
+            <h3>Why do some APIs return 10 digits and others 13?</h3>
+            <p>Because they come from different runtimes. Unix <code>time()</code>, Java's <code>System.currentTimeMillis()</code>, and MySQL's <code>UNIX_TIMESTAMP()</code> produce seconds (10 digits), while JavaScript's <code>Date.now()</code>, .NET's <code>ToUnixTimeMilliseconds()</code>, and Go's <code>UnixMilli()</code> produce milliseconds (13 digits). Storing both in one column without recording the unit produces values that differ by 1000×. Name the unit explicitly — <code>created_at_ms</code> — or document it in the API contract.</p>
+            <h3>Where does the 10^11 boundary come from, and how are edge values classified?</h3>
+            <p>The constant is derived by asking how long a second-level timestamp would take to reach 1e11: roughly <strong>3169 years</strong>, so the year <strong>5138</strong>. Meanwhile 1e11 milliseconds is only about 1157 days — <strong>3 March 1973</strong> — a value that has existed for decades. Hence "≥ 1e11 means milliseconds". At the edge: <strong>99999999999</strong> sits just below and is read as seconds, giving 5138-11-16T09:46:39Z; <strong>100000000000</strong> equals the boundary and is read as milliseconds, giving 1973-03-03T09:46:40Z; <strong>100000000001</strong> is read as milliseconds, giving 1973-03-03T09:46:40.001Z. If your data really does contain a millisecond timestamp below 1e11 (anything before 1973), automatic detection fails and you must force the unit.</p>
+            <h3>Why does Unix time exclude leap seconds, and where did they go?</h3>
+            <p>Unix time's design goal is that a day is always 86400 seconds, which keeps date arithmetic deterministic; inserting a leap second would break that invariant. The seconds are not discarded — POSIX folds each leap second into an adjacent second, usually the preceding or following one, and leaves the exact placement to each implementation. A Unix timestamp therefore counts <strong>uniform seconds</strong> and can drift <strong>tens of seconds</strong> from atomic time. That gap is irrelevant for everyday scheduling but matters for timestamping, clock discipline, and any comparison against a reference clock.</p>
+            <h3>What do MySQL's DATETIME and TIMESTAMP actually store?</h3>
+            <p><code>TIMESTAMP</code> stores <strong>seconds since the epoch</strong> with automatic timezone conversion on both write and read, spanning roughly 1970 to 2038 — it carries UTC semantics. <code>DATETIME</code> stores the <strong>literal date and time</strong> with no conversion and reaches back to the year 1000, which makes it the right choice for data with no timezone meaning such as business hours. For precision plus range, use <code>DATETIME(3)</code> or store milliseconds in a <code>BIGINT</code>. Writing a 13-digit millisecond value into a <code>TIMESTAMP</code> column overruns the supported range and is truncated or rejected outright.</p>
+            <h3>Why does new Date(1700000000) need dividing by 1000 in Node?</h3>
+            <p>JavaScript's Date represents instants in milliseconds internally, and the constructor argument is milliseconds too, so 1700000000 is interpreted as a moment in January 1970 rather than 2023. Use <code>new Date(1700000000 * 1000)</code> for 2023-11-14T22:13:20Z, and <code>Math.floor(date.getTime() / 1000)</code> to go back to seconds. Python inverts the convention, which is why this is such a common cross-language bug: <code>time.time()</code> returns float seconds, <code>datetime.utcfromtimestamp()</code> assumes seconds, and only the multiplied form gives milliseconds.</p>
+            <h3>What should I watch for when turning a timestamp into "N days ago"?</h3>
+            <p>Subtract the current timestamp <em>first</em> — dividing the target alone tells you its distance from the epoch, not from now. Then <strong>round down</strong>: a gap of 23 hours and 59 minutes is not yet a day, and rounding to nearest would display it as "1 day ago". Across a daylight saving transition <strong>one day is not 86400 seconds</strong> — it is 23 or 25 hours in local time — so fixed-86400 arithmetic drifts by an hour twice a year. And if you anchor to a fixed baseline such as "today at midnight", make sure the baseline uses the same timezone convention as the target, otherwise a morning entry already reads as a full day elapsed.</p>
 
             <h3>Related Reading</h3>
-            <p>For day and week arithmetic around a given date, use the <a href="/en/calculators/date-calc">Date Calculator</a>; for background on offsets and working-day rules, see our <a href="/blog/en/date-calculation-tips">date calculation guide</a>. Timezone offsets behave like any other unit shift, which the <a href="/en/calculators/unit-converter">Unit Converter</a> illustrates for non-time quantities.</p>
+            <p>For day and week arithmetic around a given date, use the <a href="/en/calculators/date-calc">Date Calculator</a>; for background on offsets and working-day rules, see our <a href="/blog/en/date-calculation-tips">date calculation guide</a>.</p>
         </section>
 
 </main>

@@ -48,52 +48,23 @@
 }
 </script>
 <script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-        {
-            "@type": "Question",
-            "name": "Are the start and end dates included in the count?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes. The range includes both the start date and the end date. Any weekday inside the range is counted. For example, from 2026-08-03 (Monday) to 2026-08-07 (Friday) there are 5 working days; if you want only the gap between them, shift the start or end by one day."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "Which 2026 public holidays does the tool exclude?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "The tool's preset uses China's 2026 statutory holidays published by the State Council: New Year 3 days, Spring Festival 9 days, Qingming 3 days, Labour Day 5 days, Dragon Boat 3 days, Mid-Autumn 3 days, National Day 7 days — 33 days in total. Tick \"Exclude 2026 public holidays\" and weekdays falling on those dates are removed automatically; those falling on a weekend are already covered by the weekend exclusion and are not double-counted."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "Does the tool count make-up workdays (weekend shifted to a workday)?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "No, not automatically. Make-up workdays (e.g. 2026-02-14, 5-9, 10-10, which are Saturdays) are still treated as weekends by the tool. The tool only supports excluding dates, not adding them back, so if your range crosses such a make-up workday it will undercount by one working day — verify against the official schedule manually."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "How different are working days from calendar days, and why does it matter?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "The gap comes mostly from weekends (about 2/7 of the total) plus public holidays. In May 2026, for example, there are 31 calendar days but only 18 working days — a 13-day difference. Contract clauses like \"pay within X business days\" or \"deliver in 30 business days\" badly overestimate progress if counted in calendar days."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "How do I use it for leave or annual-leave approval?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "5 days of annual leave that span a weekend actually occupy 7 calendar days but 5 working days. For a contract \"20 business days from today\", the end date from the tool minus one day is the final working day. Adjust by half-days or sick/personal leave rules per your company policy."
-            }
-        }
-    ]
-}
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            { "@type": "Question", "name": "Does the count include both the start and end dates?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, both ends are included — any day that is a working day counts as 1. For example 2026-08-03 (Mon) to 2026-08-07 (Fri) is 5 working days; if you only want the gap between, shift the start or end by one day." } },
+            { "@type": "Question", "name": "Which 2026 public holidays get deducted?", "acceptedAnswer": { "@type": "Answer", "text": "The tool has New Year (3), Spring Festival (9), Qingming (3), Labour (5), Dragon Boat (3), Mid-Autumn (3) and National Day (7) built in — 33 days total per the State Council notice. Once \"Exclude 2026 public holidays\" is ticked, the weekday holidays among those 33 days are auto-removed from the working-day count; those on a weekend are already in the weekend exclusion and are not double-counted." } },
+            { "@type": "Question", "name": "Are make-up workdays (Saturday shifts) counted?", "acceptedAnswer": { "@type": "Answer", "text": "Not automatically. A make-up workday (e.g. Feb 14, May 9, Oct 10 in 2026, all Saturdays) is still treated as a weekend by the tool. The tool currently supports \"exclude\" but not \"add back\", so a range crossing such a day will be 1 working day short — check against the official holiday arrangement manually." } },
+            { "@type": "Question", "name": "How big is the gap between working days and calendar days, and why does it matter?", "acceptedAnswer": { "@type": "Answer", "text": "The gap comes mainly from weekends (about 2/7 of all days) plus holidays. In May 2026, for instance, there are 31 calendar days but only 18 working days — a 13-day difference. Contracts that say \"arrives within X working days\" or \"deliver in 30 working days\" will be badly overestimated and underestimate breach risk if you count calendar days — always use the working-day convention for scheduling and approval." } },
+            { "@type": "Question", "name": "How do I use it for leave or annual-vacation approval?", "acceptedAnswer": { "@type": "Answer", "text": "Five days of annual leave across a weekend actually occupies 7 calendar days but only 5 working days; a contract reading \"20 working days from today\" — the end date from this tool minus 1 day is the final working day. For half-day precision or sick/personal leave distinctions, fine-tune on top of the result per company policy." } },
+            { "@type": "Question", "name": "Why doesn't the tool handle make-up workdays automatically, and how do I correct for it?", "acceptedAnswer": { "@type": "Answer", "text": "Because the tool's convention is Monday-to-Friday, and a make-up workday is by definition a weekend day turned into a working day. Adding them in automatically would diverge from how most company HR and finance systems define a working day, which makes reconciliation harder rather than easier. The manual correction is simple: take the tool's total, count the make-up workdays inside your range, then add them. There are 6 in 2026, listed in the table above. For 2026-09-14 to 2026-10-10 the tool returns 14 working days; that range holds two make-up days (Sep 20 and Oct 10), so real attendance is " } },
+            { "@type": "Question", "name": "How do I calculate a construction deadline that crosses the Spring Festival?", "acceptedAnswer": { "@type": "Answer", "text": "Split the window into pre-holiday, holiday and post-holiday segments, and write down both numbers — the calendar-day count and the working-day count. Take 2026-02-09 to 2026-02-27: 19 calendar days, less 4 weekend days and the 6 weekday Spring Festival days, leaves 9 working days. A contract that only says \"deliver between Feb 9 and Feb 27\" without stating the convention lets each side compute its own answer; only \"9 working days, extended by public holidays\" is actually enforceable. Do not forget that Sat Feb 14 is normally a make-up workday — if it falls in your range, add one more day." } },
+            { "@type": "Question", "name": "Why do I have to work on Sep 20 and Oct 10 for the 2026 National Day holiday?", "acceptedAnswer": { "@type": "Answer", "text": "This is the balancing arrangement triggered because the 7-day National Day break spans a weekend. Oct 1 (Thu) to Oct 7 (Wed) already consumes a full working week; without make-up days, employees would effectively be giving up two extra weekend shifts after the holiday, and the State Council's rule is that the total statutory holiday days for the year must not shrink because of the shifting. So two weekend days, Sep 20 and Oct 10, are designated as working days. For project planning this matters: the real capacity around National Day depends not just on October's working-day count but on whethe" } },
+            { "@type": "Question", "name": "The range includes both ends — is \"next Monday to next Friday\" 5 days or 6?", "acceptedAnswer": { "@type": "Answer", "text": "It is 5 working days, not 6. Including both ends means Monday and Friday each count once, giving 5. The \"6 day\" answer usually comes from two mistakes: counting an extra day at each end, or counting the weekend inside the range. Set the start to the Monday and the end to the Friday (2026-08-03 to 2026-08-07) and the tool returns 5 directly. If you actually need Monday to the following Monday — a full week — that is 6 working days. This distinction is a frequent source of error in \"deliver every Monday\" type arrangements." } },
+            { "@type": "Question", "name": "How does the working-day count affect year-end bonus tax withholding?", "acceptedAnswer": { "@type": "Answer", "text": "Withholding on salary income uses the cumulative withholding method: tax for the month = cumulative income − cumulative tax-exempt income − cumulative deduction (CNY 5,000 per month) × the withholding rate − cumulative special deductions. The key point is the accrual period for \"income\". If the year-end bonus is paid in one lump in January, cumulative income jumps in that month while the monthly deduction still only counts CNY 5,000 (special and additional special deductions are made up in full through to December). Using this tool to confirm how many working days January has is therefore abou" } },
+            { "@type": "Question", "name": "How is counting overtime days different from counting working days?", "acceptedAnswer": { "@type": "Answer", "text": "They run in opposite directions and must not be mixed up. Working-day counting answers \"how many days in this range can I actually work\" and is used for scheduling, leave and deadlines. Overtime conversion answers \"how many extra days have I already worked\" and feeds pay, and it must split weekday overtime from rest-day overtime — weekday overtime is typically paid at 1.5× (or a contracted multiple), while rest-day overtime has its own two treatments. A typical case: an employee has 22 working days in September, attends all 22, and additionally works 1 day on Sat Oct 10 (a make-up workday). Th" } }
+        ]
+    }
 </script>
 
 <script type="application/ld+json">
@@ -231,6 +202,44 @@
 </table>
 <p>In 2026 there are <strong>33 official holiday days</strong> in total (5 more than the 28 in 2025). Of these, the "weekday holidays" that fall on Monday–Friday are auto-deducted by the tool; those that fall on a weekend are already covered by the regular weekend exclusion and are not double-counted.</p>
 
+<h2>Make-up workdays: why the tool does not add them back automatically</h2>
+<p>In 2026 there are <strong>6 make-up workdays</strong> — Saturdays or Sundays that the State Council has shifted into working days. The logic is balancing: when a long holiday spans a weekend, another weekend day is pulled in to compensate, so the total number of statutory holiday days for the year does not shrink. For an employee, a make-up workday is a real day at the desk, no different from any other; but for most date tools it is simply a weekend date, so it gets swept up by the "exclude weekends" rule.</p>
+<p>This tool's convention is <strong>exclude only, never add back</strong>, so those 6 days are not counted automatically. A range that spans them will therefore come up short. This is a deliberate convention rather than a bug: if make-up days were added in by default, the result would diverge from how most company HR and finance systems define a working day (Monday to Friday), making reconciliation harder rather than easier.</p>
+<table class="ref-table">
+  <thead><tr><th>Make-up date</th><th>Festival</th><th>Month</th><th>Effect on the working-day count</th></tr></thead>
+  <tbody>
+    <tr><td>2026-01-04</td><td>New Year</td><td>January</td><td>a weekend day, already excluded; add 1 manually if you actually worked</td></tr>
+    <tr><td>2026-02-14</td><td>Spring Festival</td><td>February</td><td>a weekend day, already excluded; add 1 manually if you actually worked</td></tr>
+    <tr><td>2026-02-28</td><td>Spring Festival</td><td>February</td><td>a weekend day, already excluded; add 1 manually if you actually worked</td></tr>
+    <tr><td>2026-05-09</td><td>Labour Day</td><td>May</td><td>a weekend day, already excluded; add 1 manually if you actually worked</td></tr>
+    <tr><td>2026-09-20</td><td>National Day</td><td>September</td><td>a weekend day, already excluded; add 1 manually if you actually worked</td></tr>
+    <tr><td>2026-10-10</td><td>National Day</td><td>October</td><td>a weekend day, already excluded; add 1 manually if you actually worked</td></tr>
+  </tbody>
+</table>
+<p>To correct it properly: take the tool's working-day total, count how many make-up workdays fall inside the range, then add them. For 2026-09-14 to 2026-10-10 the tool returns <strong>14 working days</strong>; the range contains two make-up days (Sep 20 and Oct 10), so the real number of days worked is <strong>16</strong>. Writing that adjustment into a contract annex or a schedule is far more defensible than explaining it after the fact.</p>
+
+<h2>Month-by-month working-day ledger for 2026</h2>
+<p>The table below breaks 2026 into its 12 months so you can look up "how many usable days does this month actually have". The Working days column counts Monday to Friday, Weekday holidays counts the statutory days that fall on a weekday (these are what the tool deducts), and the last column is the result once holiday exclusion is ticked. Across the full year there are 365 calendar days, 104 weekend days and 261 working days, of which 19 are weekday holidays — leaving <strong>242 working days</strong>.</p>
+<table class="ref-table">
+  <thead><tr><th>Month</th><th>Calendar days</th><th>Weekend days</th><th>Working days</th><th>Weekday holidays</th><th>Net working days</th></tr></thead>
+  <tbody>
+    <tr><td>January</td><td>31</td><td>9</td><td>22</td><td>2</td><td>20</td></tr>
+    <tr><td>February</td><td>28</td><td>8</td><td>20</td><td>6</td><td>14</td></tr>
+    <tr><td>March</td><td>31</td><td>9</td><td>22</td><td>0</td><td>22</td></tr>
+    <tr><td>April</td><td>30</td><td>8</td><td>22</td><td>1</td><td>21</td></tr>
+    <tr><td>May</td><td>31</td><td>10</td><td>21</td><td>3</td><td>18</td></tr>
+    <tr><td>June</td><td>30</td><td>8</td><td>22</td><td>1</td><td>21</td></tr>
+    <tr><td>July</td><td>31</td><td>8</td><td>23</td><td>0</td><td>23</td></tr>
+    <tr><td>August</td><td>31</td><td>10</td><td>21</td><td>0</td><td>21</td></tr>
+    <tr><td>September</td><td>30</td><td>8</td><td>22</td><td>1</td><td>21</td></tr>
+    <tr><td>October</td><td>31</td><td>9</td><td>22</td><td>5</td><td>17</td></tr>
+    <tr><td>November</td><td>30</td><td>9</td><td>21</td><td>0</td><td>21</td></tr>
+    <tr><td>December</td><td>31</td><td>8</td><td>23</td><td>0</td><td>23</td></tr>
+    <tr><td><strong>Year</strong></td><td><strong>365</strong></td><td><strong>104</strong></td><td><strong>261</strong></td><td><strong>19</strong></td><td><strong>242</strong></td></tr>
+  </tbody>
+</table>
+<p>The three months most likely to be underestimated: <strong>February</strong> has only 14 working days (6 of the 9 Spring Festival days fall on a weekday), the lowest of the year; <strong>October</strong> has only 17 (5 of the 7 National Day days fall on a weekday); and <strong>May</strong> has 18. Spreading an annual budget, quarterly milestones or a utilisation review across these monthly figures is far more accurate than dividing the calendar days evenly.</p>
+
 <h2>Counting rules and conventions</h2>
 <table class="ref-table">
   <thead><tr><th>Rule</th><th>This tool's convention</th><th>Note</th></tr></thead>
@@ -242,12 +251,15 @@
   </tbody>
 </table>
 
-<h2>Four real examples (matching the tool's default parameters)</h2>
+<h2>Seven real examples (matching the tool's default parameters)</h2>
 <ol>
   <li><strong>Ordinary month (no holiday)</strong>: 2026-03-01 to 2026-03-31 is 31 days with 9 weekends, <strong>working days = 22</strong> (same whether or not holidays are excluded, since March has no public holiday).</li>
   <li><strong>Spanning Qingming</strong>: 2026-04-01 to 2026-04-30 is 30 days with 8 weekends; without holiday exclusion you get 22 working days, with exclusion the 1 weekday holiday on Apr 6 (Mon) is removed, giving <strong>21 working days</strong>.</li>
   <li><strong>Spanning the Labour Day long break</strong>: 2026-05-01 to 2026-05-31 is 31 days with 10 weekends; without exclusion 21 working days, with exclusion May 1, May 4 and May 5 (3 weekday holidays) are removed, giving <strong>18 working days</strong> — a "31-day" month with only 18 workable days.</li>
   <li><strong>National Day golden week</strong>: 2026-10-01 to 2026-10-08 is 8 days, of which Oct 1–Oct 7 are the National Day holiday; without exclusion you get 6 working days, with exclusion only Oct 8 (Thu) remains, giving <strong>1 working day</strong> — almost no effective working days during the long break.</li>
+  <li><strong>Delivery window across the Spring Festival</strong>: 2026-02-09 (Mon) to 2026-02-27 (Fri) is 19 calendar days with 4 weekend days (Feb 14, 21, 22 and 28); 6 of the Spring Festival days (Feb 16, 17, 18, 19, 20 and 23) fall on a weekday, so with holiday exclusion ticked the result is <strong>9 working days</strong>. If colleagues also worked Sat Feb 14 — a make-up workday before the festival — the real attendance is 10 days. This is why deadlines that straddle the Spring Festival are the most contested: 19 calendar days sounds generous, but only 9 are usable.</li>
+  <li><strong>Second-half review window</strong>: 2026-07-01 to 2026-12-31 is 184 calendar days with 52 weekend days. Only two holiday periods fall inside it (Mid-Autumn on Sep 25, and National Day Oct 1–7), and 6 of those days fall on a weekday (Sep 25, Oct 1, 2, 5, 6 and 7), giving <strong>126 working days</strong> with exclusion ticked. Note that the range contains two make-up workdays, Sep 20 and Oct 10, both treated as weekends by the tool — if you worked both, add 2 manually.</li>
+  <li><strong>Back-solving a 20-working-day deadline</strong>: a contract reads "delivery within 20 working days of Aug 3". August has no statutory holiday, so counting from 2026-08-03 the 20th working day is <strong>2026-08-28 (Fri)</strong>. That range (Aug 3–Aug 28) spans 26 calendar days with 6 weekend days. In other words the contract allows 26 calendar days but only 20 workable ones, so a single day of leave pushes the deadline.</li>
 </ol>
 
 <h2>Workday Calculator FAQ</h2>
@@ -256,9 +268,17 @@
 <h3>Are make-up workdays (Saturday shifts) counted?</h3><p>Not automatically. A make-up workday (e.g. Feb 14, May 9, Oct 10 in 2026, all Saturdays) is still treated as a weekend by the tool. The tool currently supports "exclude" but not "add back", so a range crossing such a day will be 1 working day short — check against the official holiday arrangement manually.</p>
 <h3>How big is the gap between working days and calendar days, and why does it matter?</h3><p>The gap comes mainly from weekends (about 2/7 of all days) plus holidays. In May 2026, for instance, there are 31 calendar days but only 18 working days — a 13-day difference. Contracts that say "arrives within X working days" or "deliver in 30 working days" will be badly overestimated and underestimate breach risk if you count calendar days — always use the working-day convention for scheduling and approval.</p>
 <h3>How do I use it for leave or annual-vacation approval?</h3><p>Five days of annual leave across a weekend actually occupies 7 calendar days but only 5 working days; a contract reading "20 working days from today" — the end date from this tool minus 1 day is the final working day. For half-day precision or sick/personal leave distinctions, fine-tune on top of the result per company policy.</p>
+<h3>Why doesn't the tool handle make-up workdays automatically, and how do I correct for it?</h3><p>Because the tool's convention is Monday-to-Friday, and a make-up workday is by definition a weekend day turned into a working day. Adding them in automatically would diverge from how most company HR and finance systems define a working day, which makes reconciliation harder rather than easier. The manual correction is simple: take the tool's total, count the make-up workdays inside your range, then add them. There are 6 in 2026, listed in the table above. For 2026-09-14 to 2026-10-10 the tool returns 14 working days; that range holds two make-up days (Sep 20 and Oct 10), so real attendance is 16 days. Put that adjustment in a contract annex or schedule rather than explaining it later.</p>
+<h3>How do I calculate a construction deadline that crosses the Spring Festival?</h3><p>Split the window into pre-holiday, holiday and post-holiday segments, and write down both numbers — the calendar-day count and the working-day count. Take 2026-02-09 to 2026-02-27: 19 calendar days, less 4 weekend days and the 6 weekday Spring Festival days, leaves <strong>9 working days</strong>. A contract that only says "deliver between Feb 9 and Feb 27" without stating the convention lets each side compute its own answer; only "9 working days, extended by public holidays" is actually enforceable. Do not forget that Sat Feb 14 is normally a make-up workday — if it falls in your range, add one more day.</p>
+<h3>Why do I have to work on Sep 20 and Oct 10 for the 2026 National Day holiday?</h3><p>This is the balancing arrangement triggered because the 7-day National Day break spans a weekend. Oct 1 (Thu) to Oct 7 (Wed) already consumes a full working week; without make-up days, employees would effectively be giving up two extra weekend shifts after the holiday, and the State Council's rule is that the total statutory holiday days for the year must not shrink because of the shifting. So two weekend days, Sep 20 and Oct 10, are designated as working days. For project planning this matters: the real capacity around National Day depends not just on October's working-day count but on whether work was actually scheduled on those two make-up days.</p>
+<h3>The range includes both ends — is "next Monday to next Friday" 5 days or 6?</h3><p>It is 5 working days, not 6. Including both ends means Monday and Friday each count once, giving 5. The "6 day" answer usually comes from two mistakes: counting an extra day at each end, or counting the weekend inside the range. Set the start to the Monday and the end to the Friday (2026-08-03 to 2026-08-07) and the tool returns 5 directly. If you actually need Monday to the following Monday — a full week — that is 6 working days. This distinction is a frequent source of error in "deliver every Monday" type arrangements.</p>
+<h3>How does the working-day count affect year-end bonus tax withholding?</h3><p>Withholding on salary income uses the cumulative withholding method: tax for the month = cumulative income − cumulative tax-exempt income − cumulative deduction (CNY 5,000 per month) × the withholding rate − cumulative special deductions. The key point is the accrual period for "income". If the year-end bonus is paid in one lump in January, cumulative income jumps in that month while the monthly deduction still only counts CNY 5,000 (special and additional special deductions are made up in full through to December). Using this tool to confirm how many working days January has is therefore about aligning the payroll month with the tax month — 2026 has <strong>20 working days</strong> in January, since New Year takes out two weekday days (Jan 1 and Jan 2), which tells you the actual paid day count to reconcile against attendance. The working-day count aligns payroll with attendance; it does not compute the tax itself.</p>
+<h3>How is counting overtime days different from counting working days?</h3><p>They run in opposite directions and must not be mixed up. <strong>Working-day counting</strong> answers "how many days in this range can I actually work" and is used for scheduling, leave and deadlines. <strong>Overtime conversion</strong> answers "how many extra days have I already worked" and feeds pay, and it must split weekday overtime from rest-day overtime — weekday overtime is typically paid at 1.5× (or a contracted multiple), while rest-day overtime has its own two treatments. A typical case: an employee has 22 working days in September, attends all 22, and additionally works 1 day on Sat Oct 10 (a make-up workday). That extra day increases neither September's nor October's working-day count (October is a weekend month either way) — it enters payroll separately as overtime hours or days. So use this tool for scheduling and a dedicated overtime calculator for pay conversion.</p>
 
 <h2>How to read the result</h2>
 <p>The tool returns the working-day count after removing weekends (and optional holidays), plus three breakdowns: total calendar days, weekend days, and the number of holidays excluded. Use it to plan schedules, check attendance, and estimate approval and logistics time. For more complex date math (add N months, compute age), pair it with the <a href="/en/calculators/date-calc">Date Calculator</a>; for overtime pay conversion, see the <a href="/en/calculators/overtime">Overtime Calculator</a>.</p>
+<p>Reading the three breakdowns together is far more useful than looking at "working days = X" alone. <strong>Total calendar days</strong> tells you how much real time a plan or contract consumes, <strong>weekend days</strong> are fixed losses that always get deducted, and <strong>holidays excluded</strong> are the extra deduction caused by policy changes in the current year. The ratios between them tell you whether a schedule is too aggressive: if a task promised as "7-day delivery" only has 3 usable working days, then a single day of leave breaks the deadline. Raise the extension or add resources at that point rather than explaining the slip afterwards.</p>
+<p>When "Exclude 2026 public holidays" is ticked, it is worth checking the <strong>excluded holiday list</strong> the tool reports. A date in that list that falls on a weekend was already removed by the weekend rule and is not deducted twice; a date you did not expect there (for example an overlap between a custom entry and the built-in list) means the same day was entered twice. For ranges that cross a year boundary, or that need dates beyond December 2026, the built-in table does not cover the next year's holiday schedule — add those dates yourself in the custom holiday field.</p>
 </section>
     </main>
 
