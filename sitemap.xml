@@ -27,7 +27,7 @@
   </url>
   <url>
     <loc>https://www.calc-tools.top/</loc>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -804,7 +804,7 @@
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en'/>
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en'/>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -890,24 +890,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.calc-tools.top/en/calculators/fraction-calculator</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/fraction-calculator'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/fraction-calculator'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/fraction-calculator'/>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.calc-tools.top/en/calculators/fuel-cost</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/fuel-cost'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/fuel-cost'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/fuel-cost'/>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.calc-tools.top/en/calculators/housing-fund</loc>
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/housing-fund'/>
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/housing-fund'/>
@@ -930,7 +912,7 @@
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators'/>
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators'/>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -957,15 +939,6 @@
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/overtime'/>
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/overtime'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/overtime'/>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.calc-tools.top/en/calculators/ovulation</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/ovulation'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/ovulation'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/ovulation'/>
     <lastmod>2026-09-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -1016,15 +989,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.calc-tools.top/en/image/base64</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/image/base64'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/image/base64'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/image/base64'/>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.calc-tools.top/en/image/color-contrast</loc>
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/image/color-contrast'/>
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/image/color-contrast'/>
@@ -1034,29 +998,11 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.calc-tools.top/en/image/image-crop</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/image/image-crop'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/image/image-crop'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/image/image-crop'/>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.calc-tools.top/en/image</loc>
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/image'/>
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/image'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/image'/>
-    <lastmod>2026-09-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.calc-tools.top/en/image/resize</loc>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/image/resize'/>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/image/resize'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/image/resize'/>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1092,7 +1038,7 @@
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/text'/>
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/text'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/text'/>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1223,24 +1169,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.calc-tools.top/zh/calculators/fraction-calculator</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/fraction-calculator'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/fraction-calculator'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/fraction-calculator'/>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.calc-tools.top/zh/calculators/fuel-cost</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/fuel-cost'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/fuel-cost'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/fuel-cost'/>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.calc-tools.top/zh/calculators/housing-fund</loc>
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/housing-fund'/>
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/housing-fund'/>
@@ -1263,7 +1191,7 @@
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators'/>
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators'/>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1290,15 +1218,6 @@
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/overtime'/>
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/overtime'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/overtime'/>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.calc-tools.top/zh/calculators/ovulation</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/calculators/ovulation'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/calculators/ovulation'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/calculators/ovulation'/>
     <lastmod>2026-09-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -1349,15 +1268,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.calc-tools.top/zh/image/base64</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/image/base64'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/image/base64'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/image/base64'/>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.calc-tools.top/zh/image/color-contrast</loc>
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/image/color-contrast'/>
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/image/color-contrast'/>
@@ -1367,29 +1277,11 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.calc-tools.top/zh/image/image-crop</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/image/image-crop'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/image/image-crop'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/image/image-crop'/>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.calc-tools.top/zh/image</loc>
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/image'/>
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/image'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/image'/>
-    <lastmod>2026-09-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.calc-tools.top/zh/image/resize</loc>
-    <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/image/resize'/>
-    <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/image/resize'/>
-    <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/image/resize'/>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1425,7 +1317,7 @@
     <xhtml:link rel='alternate' hreflang='zh-CN' href='https://www.calc-tools.top/zh/text'/>
     <xhtml:link rel='alternate' hreflang='en' href='https://www.calc-tools.top/en/text'/>
     <xhtml:link rel='alternate' hreflang='x-default' href='https://www.calc-tools.top/en/text'/>
-    <lastmod>2026-09-30</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

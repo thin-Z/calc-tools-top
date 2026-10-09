@@ -30,7 +30,7 @@
 | `audit-narrow-overflow.mjs` | 本地 CI 链 | 全站 390px 横向溢出 + 卡片结构缺陷审计（GitHub Actions 不含此作业，需本地 `npm run ci` / `ci:quick`）；**2026-09-30 起 `ci`/`ci:quick` 以 `--block-overflow` 接线 = 溢出阻断、缺陷与加载错误仅告警** | 自动（ci / ci:quick） |
 | `check-embed.mjs` | verify #27 | embed 可嵌入性门禁（XFO 冲突 / frame-ancestors / 接线） | 自动 |
 | `check-redirects.mjs` | verify #24 | 重定向门禁（通配须置末 + companion） | 自动 |
-| `check-sitemap.mjs` | verify #28 | sitemap 健康门禁（无死链 + noindex 不进 + 规模下界；2026-10-09 缩面后下界 168） | 自动 |
+| `check-sitemap.mjs` | verify #28 | sitemap 健康门禁（无死链 + noindex 不进 + 规模下界；2026-10-09 缩面后下界 210 → 168 → **156**，与 `noindex-list.json` 联动） | 自动 |
 | `apply-noindex.mjs` | 手动 + `--check` 可门禁 | 最小可行站缩面执行器：按 `noindex-list.json` 注入/移除 noindex。⚠️ 写**源文件**（sitemap 生成侧按 meta 跳过）；⚠️ 生成型页面的注入点须在生成器内部，否则被覆盖 | 手动（`node scripts/apply-noindex.mjs` / `--remove` / `--check`） |
 | `check-sitemap-coverage.mjs` | verify #33 | sitemap 反向覆盖门禁：页面存在但漏收录 sitemap 检测 + 豁免清单 stale 检测（判据用文件系统推导，不用 ID 白名单；配置 scripts/sitemap-exclusions.json，每条须带 reason） | 自动 |
 | `check-asset-version.mjs` | verify #34 | 资源版本戳门禁：dist 内所有本地静态资源引用（HTML href/src + dist/js 动态字面量）必须带 `?v=<构建戳>`，且 vercel.json 未对 `/sw.js` 长缓存（2026-09-13 新增） | 自动 |

@@ -6,7 +6,7 @@
 
 | 部分 | 说明 |
 |------|------|
-| 前端 | 纯静态 HTML/CSS/JS（无框架），`zh/`、`en/` 双语，`blog/` 博客（**dist 222 页**（实测 2026-09-29）；**51 工具 ×2 语言 = 102 工具页**，栏目分布 `calculators 28 / image 8 / text 15`（`tools.json` 的 `dir` 已与语义分类对齐），其中 4 个 stub 存根工具（discount / age-calc / password-strength / keyword-density）共 8 页 noindex → sitemap 工具 URL 94；+ 80 博客 + 16 标签聚合页 + 结构页/首页；sitemap 总 210 条。**滚动数字以 vault `.workbuddy/memory/todo-list.md` 基准行为唯一事实源**） |
+| 前端 | 纯静态 HTML/CSS/JS（无框架），`zh/`、`en/` 双语，`blog/` 博客（**dist 222 页**（实测 2026-09-29）；**51 工具 ×2 语言 = 102 工具页**，栏目分布 `calculators 28 / image 8 / text 15`（`tools.json` 的 `dir` 已与语义分类对齐），其中 4 个 stub 存根工具（discount / age-calc / password-strength / keyword-density）共 8 页 noindex → sitemap 工具 URL 94；+ 80 博客 + 16 标签聚合页 + 结构页/首页；**sitemap 总 156 条**（2026-10-09 最小可行站缩面：noindex 清单共 54 页 = 19 工具×2 + 16 tags，**展示面 51 − 合并 4 − noindex 19 = 28**）。**滚动数字以 vault `.workbuddy/memory/todo-list.md` 基准行为唯一事实源**） |
 | 构建 | Vercel `buildCommand = node scripts/build.mjs`，`outputDirectory = dist`（复制站点 → GA4/AdSense 注入 → 版本号 → 卫生转换 → CSS 压缩 → CMP 横幅） |
 | API | `api/likes.js`（点赞）、`api/clicks.js`（点击），Node Serverless Function |
 | 存储 | **Vercel KV（Upstash Redis）**，点赞/点击计数 + 限速/防刷均存于此 |
@@ -104,7 +104,7 @@ KV_URL / KV_REDIS_URL
 | `check-redirects.mjs` | 重定向门禁：通配 `/(.*).html` 须置于末尾 + 每条 `.html` 规则须有无 `.html` companion（`cleanUrls` 会先剥离 `.html`）（verify-site [24] 调用） | `node scripts/check-redirects.mjs` |
 | `check-tool-template.mjs` | 4.2 工具页模板一致性门禁（与 `tool-template-baseline.json` 交叉校验：新增违规/基线过期均 FAIL）（verify-site [23] 调用） | `node scripts/check-tool-template.mjs` |
 | `check-embed.mjs` | embed 可嵌入性门禁：全站 `X-Frame-Options` 不得为 DENY + `/embed` 的 CSP `frame-ancestors` 须恰为 `*` + `/embed` 须显式覆盖 `X-Frame-Options` 为单值 `ALLOWALL` + `/embed` 之后不得再有规则下发 `X-Frame-Options` + `embed.html`↔`js/embed.js` 接线 + 嵌入态广告保护（verify-site [27] 调用） | `node scripts/check-embed.mjs` |
-| `check-sitemap.mjs` | sitemap 健康门禁：无死链 + noindex 页不进 sitemap + 条数规模下界（verify-site [28] 调用；2026-10-09 缩面后下界 210 → **168**，与 `noindex-list.json` 联动） | `node scripts/check-sitemap.mjs` |
+| `check-sitemap.mjs` | sitemap 健康门禁：无死链 + noindex 页不进 sitemap + 条数规模下界（verify-site [28] 调用；2026-10-09 缩面后下界 210 →168 → **156**，与 `noindex-list.json` 联动。**调整此值必须先确认是主动缩面还是意外丢页**） | `node scripts/check-sitemap.mjs` |
 | `apply-noindex.mjs` | **最小可行站缩面执行器**（2026-10-09 新增）：按 `scripts/noindex-list.json`（SSOT，每条须带 `reason`）给源 HTML 注入 / 移除 `<meta name="robots" content="noindex">`。**页文件不删，只让Google 逐步退出索引**，可一键回滚。⚠️ noindex 必须写进**源文件**（生成侧 `generate-sitemap.ps1` 与门禁 `check-sitemap-coverage.mjs` 均从源码按 meta 跳过），只在 dist 注入会让 sitemap 收录 noindex 页 → GSC 报 "Submitted URL marked noindex"。⚠️ **生成型页面（tags/栏目页）的注入点必须在生成器内部**（见 `generate-tag-pages.mjs`），事后改产物会被下一次运行静默覆盖 | `node scripts/apply-noindex.mjs` / `--remove`（回滚）/ `--check`（门禁校验漂移） |
 | `check-sitemap-coverage.mjs` | sitemap 反向覆盖门禁：页面存在但漏收录 sitemap 检测 + 豁免清单 stale 检测（判据用文件系统推导期望集，不用 TOOL_IDS/BLOG_IDS 白名单；豁免配置 scripts/sitemap-exclusions.json，每条须带 reason），防"页面写好了却永不被发现"（verify-site [33] 调用，2026-09-10 新增） | `node scripts/check-sitemap-coverage.mjs` |
 | `check-asset-version.mjs` | 资源版本戳门禁：`/js`、`/css`、`/assets` 为 `immutable` 一年缓存，故 dist 内**所有**本地静态资源引用（HTML `href`/`src` + `dist/js` 内动态加载字面量）必须带 `?v=<构建戳>`；另断言 `vercel.json` 未对 `/sw.js` 下长缓存。防「漏戳资源被钉死一年 → 页面首次打开样式错乱、Ctrl+F5 才恢复」（verify-site [34] 调用，2026-09-13 新增） | `node scripts/check-asset-version.mjs` |
