@@ -101,35 +101,43 @@ test.describe('R-4 首页「查看全部」分类筛选回归 (2026-09-15)', () 
   // password-strength / keyword-density —— 其落地页是 noindex 跳转壳页，见 tools.json 的 mergedInto），
   // 故各分类计数相应 −1：finance 13→12、life 7→6、utility 7→6（health 无变化）。
   const CASES = [
-    { cat: 'finance', zh: '财务计算', allow: ['finance', 'shopping'], expectCount: 12 },
-    { cat: 'health', zh: '健康计算', allow: ['health'], expectCount: 5 },
-    // life 区块 = life + travel 两个 tag（首页实为 6 个），只按 life 单 tag 筛会漏 2 个
-    { cat: 'life', zh: '生活 · 出行', allow: ['life', 'travel'], expectCount: 6 },
-    { cat: 'utility', zh: '实用工具', allow: ['utility'], expectCount: 6 },
+    // 2026-10-09 最小可行站缩面第二批（3b222e0）后计数从数据源重推导：
+    //   展示面 28 = tools.json 51 − 合并 4 − noindex 19；被砍 pregnancy/ovulation（health）·
+    //   unit-converter/fuel-cost/fraction-calculator（utility/life）· currency-converter（finance）· random-gen。
+    //   判据 = tools.json 的 categories ∩ allow，不是手填常数（手填必随缩面漂移）。
+    { cat: 'finance', zh: '财务计算', allow: ['finance', 'shopping'], expectCount: 10 },
+    { cat: 'health', zh: '健康计算', allow: ['health'], expectCount: 3 },
+    // life 区块 = life + travel 两个 tag，只按 life 单 tag 筛会漏
+    { cat: 'life', zh: '生活 · 出行', allow: ['life', 'travel'], expectCount: 3 },
+    { cat: 'utility', zh: '实用工具', allow: ['utility'], expectCount: 1 },
   ];
 
   // dir 归位回归（2026-09-16）：color-contrast/regex-tester/markdown-preview/simplified-traditional
   // 曾目录属 calculators、标签属 image/text，造成「图片工具筛选只剩 1 个」的困惑与筛选死角。
-  // 归位后：/zh|en/image = 8（与首页图片工具区块一致）、/zh|en/text = 14（与文字工具区块一致），
-  // calculators 页 25 个工具全部属于四个子区块，不再出现 image/text chip。
-  // ⚠️ 2026-09-20：text 15→14（keyword-density 已合并）、calculators 28→25（discount / age-calc /
-  //    password-strength 已合并）；image 8 无变化。
+  // 归位后三个目录计数必须与首页对应区块一致：
+  //⚠️ 2026-09-20：text 15→14（keyword-density 已合并）、calculators 28→25（discount / age-calc /
+  //    password-strength 已合并）。
+  // ⚠️ 2026-10-09 缩面第二批（3b222e0，展示面 47→28）：image 8→2（砍 compress/convert/color-picker/
+  //    image-crop/resize/base64 中的 image 类）、text 14→10（砍 case-converter/url-encode/text-diff/
+  //    regex-tester）、calculators 25→16（砍 currency-converter/pregnancy/unit-converter/random-gen/
+  //    password-gen/qr-generator/fraction-calculator/ovulation/fuel-cost）。
+  //    注：base64 属 image dir、base64-encode 属 text dir（两者是不同工具，勿混）。
   for (const lang of ['zh', 'en']) {
     test('[' + lang + '] 图片/文字工具目录归位：栏目页数量与首页区块一致', async ({ page }) => {
       // 本用例含 3 次页面导航，8 并行 + 全量套件时易触 45s 默认超时（09-16 CI 抖动实测），标记 slow
       test.slow();
       await page.goto('/' + lang + '/image/', { waitUntil: 'load' });
       await dismissCmp(page);
-      await expect(page.locator('.tool-grid .tool-card-wrap')).toHaveCount(8);
+      await expect(page.locator('.tool-grid .tool-card-wrap')).toHaveCount(2);
       await expect(page.locator('.tool-grid .tool-card[href*="/color-contrast"]')).toHaveCount(1);
 
       await page.goto('/' + lang + '/text/', { waitUntil: 'load' });
       await dismissCmp(page);
-      await expect(page.locator('.tool-grid .tool-card-wrap')).toHaveCount(14);
+      await expect(page.locator('.tool-grid .tool-card-wrap')).toHaveCount(10);
 
       await page.goto('/' + lang + '/calculators/', { waitUntil: 'load' });
       await dismissCmp(page);
-      await expect(page.locator('.tool-grid .tool-card-wrap')).toHaveCount(25);
+      await expect(page.locator('.tool-grid .tool-card-wrap')).toHaveCount(16);
       const strayChips = await page.$$eval('.category-chip', (els) =>
         els.filter((c) => ['image', 'text'].indexOf(c.getAttribute('data-cat-key')) !== -1).length);
       expect(strayChips, 'calculators 页不应再出现图片/文字筛选 chip').toBe(0);
@@ -191,10 +199,16 @@ test.describe('R-4 首页「查看全部」分类筛选回归 (2026-09-15)', () 
     });
 
     test('[' + lang + '] 无 cat 参数 / 非法 cat 回落为全量', async ({ page }) => {
+      // 本用例含 3 次页面导航，全量套件并行时易触 45s 默认超时 → 标记 slow（三倍超时）。
+      // 10-09 实测：未标记时该用例在 en 上flaky（首跑超时、重试通过）。
+      // 与上方「目录归位」用例同因同治—— flaky 靠重试掩盖 = 假绿，须标slow 修根因。
+      test.slow();
       await page.goto('/' + lang + '/calculators', { waitUntil: 'load' });
       await dismissCmp(page);
       const all = await page.locator('.tool-grid .tool-card-wrap:not(.filtered-out)').count();
-      expect(all, '无参数应展示全量').toBeGreaterThan(13);
+      // 精确值而非toBeGreaterThan：缩面后 calculators 展示集 = 16，原 `>13` 只剩 3 个余量
+      // （侥幸通过 = 假绿）。2026-10-09 起与上方 dir 断言同源推导，改手填常数必随缩面漂移。
+      expect(all, '无参数应展示 calculators 全量展示集（16）').toBe(16);
 
       await page.goto('/' + lang + '/calculators?cat=__invalid__', { waitUntil: 'load' });
       await dismissCmp(page);
