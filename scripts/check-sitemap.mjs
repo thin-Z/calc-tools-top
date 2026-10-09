@@ -13,7 +13,11 @@
  *   1. sitemap.xml 良构（含 <urlset> 与至少 1 个 <loc>）
  *   2. 每个 <loc> 能映射到真实源文件（无死链）
  *   3. sitemap 中不含 noindex 页（info 输出被跳过的数量）
- *   4. sitemap 条数与预期规模量级一致（防整表丢失/回归，阈值下界 200）
+ *   4. sitemap 条数与预期规模量级一致（防整表丢失/回归，阈值下界见 MIN_URLS）
+ *
+ * 2026-10-09缩面：AdSense 二次驳回 Low value content → 老板拍板「转最小可行站」，
+ *   scripts/noindex-list.json 列出 42 页（13 工具×2 + 16 tags）不再进 sitemap，
+ *   loc由 210 降至 168，故MIN_URLS 同步下调。**调整此值必须先确认是主动缩面还是意外丢页**。
  *
  * 用法：node scripts/check-sitemap.mjs
  * 退出码：0 = 通过；1 = 存在阻断项
@@ -26,7 +30,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const SITEMAP = path.join(ROOT, 'sitemap.xml');
 const BASE = 'https://www.calc-tools.top';
-const MIN_URLS = 200;
+const MIN_URLS = 168;
 
 const failures = [];
 function fail(msg) { failures.push(msg); }

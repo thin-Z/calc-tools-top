@@ -4,6 +4,8 @@
 import { readFileSync, readdirSync, existsSync } from 'fs';
 import { join, dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
+// 展示面判据与首页/栏目页生成器共用同一实现（2026-10-09 缩面后必须共用，否则各算一套会漂移）
+import { isVisibleTool } from './lib/tool-card.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -98,17 +100,26 @@ function check(name, a, b) {
   }
 }
 
-// 「展示集」= 全量集 − 已合并工具。已合并工具（tools.json 里带 mergedInto）落地页是
+// 「展示集」= 全量集 − 已合并工具 − 已 noindex 工具。已合并工具（tools.json 里带 mergedInto）落地页是
 // noindex 跳转壳页：磁盘上存在、配置与数据层保留（旧 URL 重定向 + 「最近使用」按 id 取值），
 // 但**不得出现在首页卡片等展示面**（2026-09-20：原 discount/age-calc/password-strength/
 // keyword-density 4 条曾出现在首页热门位与分类网格中，导致内链权重导给 noindex 页）。
+//
+// 2026-10-09 最小可行站缩面：展示面再排除 scripts/noindex-list.json 里的工具
+//（13 个被砍工具双语页全部 noindex）。判据复用 scripts/lib/tool-card.mjs 的 isVisibleTool ——
+// 与首页/栏目页生成器**同一份实现**，避免门禁与生成器各算一套而漂移。
 const mergedSet = new Set(toolsJson.filter((t) => t.mergedInto).map((t) => t.slug));
-const visibleSet = new Set([...toolsJsonSet].filter((s) => !mergedSet.has(s)));
+const noindexedSet = new Set(
+  [...toolsJson]
+    .filter((t) => !t.mergedInto && !isVisibleTool(t))
+    .map((t) => t.slug)
+);
+const visibleSet = new Set([...toolsJsonSet].filter((s) => !mergedSet.has(s) && !noindexedSet.has(s)));
 
 check(`tools.json(${toolsJsonSet.size}) vs 磁盘zh(${diskZh.size})`, toolsJsonSet, diskZh);
 check(`tools.json(${toolsJsonSet.size}) vs 磁盘en(${diskEn.size})`, toolsJsonSet, diskEn);
-check(`tools.json−已合并(${visibleSet.size}) vs 首页zh(${homeZh.size})`, visibleSet, homeZh);
-check(`tools.json−已合并(${visibleSet.size}) vs 首页en(${homeEn.size})`, visibleSet, homeEn);
+check(`展示集(${visibleSet.size}= ${toolsJsonSet.size}−合并${mergedSet.size}−noindex${noindexedSet.size}) vs 首页zh(${homeZh.size})`, visibleSet, homeZh);
+check(`展示集(${visibleSet.size}) vs 首页en(${homeEn.size})`, visibleSet, homeEn);
 check(`tools.json(${toolsJsonSet.size}) vs 配置(${configSet.size})`, toolsJsonSet, configSet);
 check(`tools.json(${toolsJsonSet.size}) vs TOOLS_DATA(${toolsDataKeys.size})`, toolsJsonSet, toolsDataKeys);
 check(`tools.json(${toolsJsonSet.size}) vs TOOL_KEYWORDS_ZH(${kwKeys.size})`, toolsJsonSet, kwKeys);

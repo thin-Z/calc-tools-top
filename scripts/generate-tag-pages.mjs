@@ -21,6 +21,25 @@ const SITE = 'https://www.calc-tools.top';
 // 任一语言聚合项数 >=1 即生成落地页，确保被链接的分类都有页面，杜绝 404 死链。
 const THRESHOLD = 1;
 
+//最小可行站缩面（2026-10-09）：tags 聚合页被列入 noindex 清单。
+// ⚠️ 注入点**必须在生成器内部**—— 本文件每次运行都会整体重写 tags/*.html，
+// 事后用脚本改产物会被下一次运行静默覆盖（09 批次踩过一次：apply-noindex 注入了，
+// 跑一次 build 就被generate-tag-pages 抹掉，表现为"门禁报漏收录 16页"）。
+// 同源机制见 scripts/noindex-list.json 与 scripts/apply-noindex.mjs。
+const NOINDEX_LIST_PATH = join(root, 'scripts', 'noindex-list.json');
+let noindexPaths = new Set();
+try {
+  if (existsSync(NOINDEX_LIST_PATH)) {
+    const parsed = JSON.parse(readFileSync(NOINDEX_LIST_PATH, 'utf8'));
+    noindexPaths = new Set((Array.isArray(parsed.noindex) ? parsed.noindex : []).map((it) => it.path));
+  }
+} catch (e) {
+  console.error(`[tag]读取 noindex 清单失败（${e.message}）→ tags 页将不注入 noindex，请检查 scripts/noindex-list.json`);
+}
+function isNoindexTarget(relPath) {
+  return noindexPaths.has(relPath);
+}
+
 const LABELS = {
   zh: { finance: '财务', health: '健康', life: '生活', shopping: '购物', travel: '出行', utility: '工具', image: '图片', text: '文字' },
   en: { finance: 'Finance', health: 'Health', life: 'Lifestyle', shopping: 'Shopping', travel: 'Travel', utility: 'Utility', image: 'Image', text: 'Text' },
@@ -93,7 +112,7 @@ function articleItemHtml(a, lang, cat) {
           </article>`;
 }
 
-function buildPage({ lang, cat, tools, articles, header, footer }) {
+function buildPage({ lang, cat, tools, articles, header, footer, noindex = false }) {
   const dispLabel = (EMOJI[cat] || '') + ' ' + LABELS[lang][cat];
   const plain = LABELS[lang][cat];
   const zhUrl = `${SITE}/tags/${cat}`;
@@ -170,7 +189,7 @@ ${catLinks}
 <html lang="${titleLang}">
 <head>
     <meta charset="UTF-8">
-<script src="/js/theme-init.js"></script>
+${noindex ? '    <meta name="robots" content="noindex">\n' : ''}<script src="/js/theme-init.js"></script>
 <script src="/js/theme-toggle.js" defer></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${esc(title)}</title>
@@ -248,8 +267,8 @@ function generate() {
       continue;
     }
 
-    const zhHtml = buildPage({ lang: 'zh', cat, tools: tZh, articles: aZh, header: headerZh, footer: footerZh });
-    const enHtml = buildPage({ lang: 'en', cat, tools: tEn, articles: aEn, header: headerEn, footer: footerEn });
+    const zhHtml = buildPage({ lang: 'zh', cat, tools: tZh, articles: aZh, header: headerZh, footer: footerZh, noindex: isNoindexTarget(`tags/${cat}.html`) });
+    const enHtml = buildPage({ lang: 'en', cat, tools: tEn, articles: aEn, header: headerEn, footer: footerEn, noindex: isNoindexTarget(`en/tags/${cat}.html`) });
 
     const zhDir = join(root, 'tags');
     const enDir = join(root, 'en/tags');

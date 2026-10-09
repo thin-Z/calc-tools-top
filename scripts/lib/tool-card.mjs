@@ -15,6 +15,10 @@
  * 共用同一份实现，杜绝再次漂移。
  */
 
+import { existsSync, readFileSync } from 'fs';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
+
 /**
  * 分类（tag）→ 首页区块 归属映射（一个分类映射到一个区块）。
  * 2026-09-15 收敛到本模块：首页（generate-home）与栏目页（generate-category-pages）
@@ -71,8 +75,48 @@ export function toolInSection(tool, section) {
  * 故展示面统一用本函数过滤（tools.json 里以 `mergedInto` 字段标记合并目标）。
  */
 export function isVisibleTool(tool) {
-  return !tool.mergedInto;
+  if (tool.mergedInto) return false;
+  if (NOINDEXED_SLUGS.has(tool.slug)) return false;
+  return true;
 }
+
+/**
+ * 最小可行站缩面（2026-10-09）：读 scripts/noindex-list.json 的工具清单，
+ * 让被砍工具**同时退出首页与栏目页入口**。
+ *
+ * 为何必须在这里做（而不是只改 noindex meta）：
+ *   用户从首页/栏目页点进一个 noindex 页 = 浪费抓取预算 + 体验断裂（页面留着但不再求收录）。
+ *   执行顺序 §4 明确要求「首页/栏目页隐藏被 noindex 的工具入口」。
+ *   `isVisibleTool` 是首页 + 栏目页**共用**的SSOT 过滤器（见 generate-home.mjs:131
+ *   与 generate-category-pages.mjs），此处一处改两处生效，不会漂移。
+ *
+ * 路径判定：用 `noindex/{dir}/{slug}.html` 与 `noindex/en/{dir}/{slug}.html` 双向配对，
+ * 只标记**双语都在清单里**的工具 —— 单语在清单属配置错误，不应隐藏整页。
+ */
+const NOINDEXED_SLUGS = (() => {
+  try {
+    const listPath = join(dirname(fileURLToPath(import.meta.url)), '..', 'noindex-list.json');
+    if (!existsSync(listPath)) return new Set();
+    const parsed = JSON.parse(readFileSync(listPath, 'utf8'));
+    const paths = new Set((Array.isArray(parsed.noindex) ? parsed.noindex : []).map((it) => it.path));
+    const zh = new Set();
+    for (const p of paths) {
+      const m = /^zh\/[^/]+\/([^/]+)\.html$/.exec(p);
+      if (m) zh.add(m[1]);
+    }
+    // 双语配对校验：仅当 zh 与 en 同时在清单才隐藏
+    const both = new Set();
+    for (const slug of zh) {
+      if (paths.has(`en/calculators/${slug}.html`) || paths.has(`en/image/${slug}.html`) || paths.has(`en/text/${slug}.html`)) {
+        both.add(slug);
+      }
+    }
+    return both;
+  } catch (e) {
+    console.error(`[tool-card] 读取 noindex-list.json 失败（${e.message}）→ 被砍工具仍会出现在首页/栏目页`);
+    return new Set();
+  }
+})();
 
 /** 分类中文/英文显示名（tag 徽章用） */
 export const TAG_LABELS = {

@@ -94,7 +94,7 @@ function generateToolKeywords() {
 // 默认热门工具集（与 site-home.js 的 DEFAULT_HOT_TOOLS 保持一致）
 // ⚠️ 只能放**未合并**的可见工具（isVisibleTool）——#5 原为 discount（已合并到 percentage-calc，
 //    落地页是 noindex 跳转壳页），2026-09-20 换为 housing-fund（公积金计算器：中文民生刚需、内容已加密）。
-const DEFAULT_HOT_TOOLS = ['mortgage', 'bmi', 'tax2026', 'color-picker', 'housing-fund', 'unit-converter', 'word-counter', 'json-formatter'];
+const DEFAULT_HOT_TOOLS = ['mortgage', 'bmi', 'tax2026', 'percentage-calc', 'housing-fund', 'electricity', 'word-counter', 'json-formatter'];
 
 // 按 site-home.js initHotTools 的 hot 卡结构生成：.hot-tool-card > hot-badge + hot-score + a.tool-card(.icon/.h3/.p) + tool-tags
 // score=0、无 trendBadge（新增用户默认态）；链接用 cleanUrl（与主卡片一致，initHotTools 重渲染时按用户数据覆盖）。

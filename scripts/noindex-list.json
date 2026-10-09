@@ -1,0 +1,73 @@
+{
+  "_comment": "最小可行站缩面 noindex 清单（SSOT）。每条必须带 reason（门禁强制）。语义 = 页文件仍在、可一键回滚，只是让 Google 逐步退出索引。决策依据：deliverables/software-company/2026-10-09-缩面定案逐项核验.md（AdSense 10-01 二次驳回 Low value content → 熔断线 2 触发 → 老板 10-05拍板转最小可行站）。",
+  "_meta": {
+    "decidedAt": "2026-10-09",
+    "sitemapEffect": "生成侧 scripts/generate-sitemap.ps1 与门禁 scripts/check-sitemap-coverage.mjs 均按 <meta name=robots noindex> 自动跳过 → 缩面后 sitemap 由 210 条降至约 168 条",
+    "howToRollback": "删除本文件对应条目后重跑 node scripts/apply-noindex.mjs（--remove 移除已注入的 meta）并重跑 generate-sitemap.ps1 + npm run build",
+    "scope": "只列本批（13 工具 + tags）。工具归属未定的那批（14 个）见 pending 段，未做处置。"
+  },
+  "noindex": [
+    { "path": "zh/calculators/currency-converter.html", "reason": "缩面砍除：需实时汇率，静态站结构性做不了（GSC 90 天零曝光）" },
+    { "path": "en/calculators/currency-converter.html", "reason": "缩面砍除：需实时汇率，静态站结构性做不了（GSC 90 天零曝光）" },
+    { "path": "zh/calculators/pregnancy.html", "reason": "缩面砍除：YMYL 医疗内容，静态站难给权威度，风险高于收益（GSC 90 天零曝光）" },
+    { "path": "en/calculators/pregnancy.html", "reason": "缩面砍除：YMYL 医疗内容，静态站难给权威度，风险高于收益（GSC 90 天零曝光）" },
+    { "path": "zh/calculators/unit-converter.html", "reason": "缩面砍除：通用换算与本站金融/民生定位弱相关（GSC 90 天零曝光）" },
+    { "path": "en/calculators/unit-converter.html", "reason": "缩面砍除：通用换算与本站金融/民生定位弱相关（GSC 90 天零曝光）" },
+
+    { "path": "zh/image/compress.html", "reason": "缩面砍除：图片类工具 AdSense 变现最低 + 90 天零曝光" },
+    { "path": "en/image/compress.html", "reason": "缩面砍除：图片类工具 AdSense 变现最低 + 90 天零曝光" },
+    { "path": "zh/image/convert.html", "reason": "缩面砍除：图片类工具 AdSense 变现最低 + 90 天零曝光" },
+    { "path": "en/image/convert.html", "reason": "缩面砍除：图片类工具 AdSense 变现最低 + 90 天零曝光" },
+    { "path": "zh/image/color-picker.html", "reason": "缩面砍除：图片类工具 AdSense 变现最低 + 90 天零曝光" },
+    { "path": "en/image/color-picker.html", "reason": "缩面砍除：图片类工具 AdSense 变现最低 + 90 天零曝光" },
+
+    { "path": "zh/calculators/random-gen.html", "reason": "缩面砍除：泛用工具、搜索意图弱（GSC 90 天零曝光）" },
+    { "path": "en/calculators/random-gen.html", "reason": "缩面砍除：泛用工具、搜索意图弱（GSC 90 天零曝光）" },
+    { "path": "zh/calculators/password-gen.html", "reason": "缩面砍除：泛用工具、搜索意图弱（GSC 90 天零曝光）" },
+    { "path": "en/calculators/password-gen.html", "reason": "缩面砍除：泛用工具、搜索意图弱（GSC 90 天零曝光）" },
+    { "path": "zh/calculators/qr-generator.html", "reason": "缩面砍除：泛用工具、搜索意图弱（GSC 90 天零曝光）" },
+    { "path": "en/calculators/qr-generator.html", "reason": "缩面砍除：泛用工具、搜索意图弱（GSC 90 天零曝光）" },
+
+    { "path": "zh/text/case-converter.html", "reason": "缩面砍除：开发者小众，90 天 ≤2 曝光" },
+    { "path": "en/text/case-converter.html", "reason": "缩面砍除：开发者小众，90 天 ≤2 曝光" },
+    { "path": "zh/text/url-encode.html", "reason": "缩面砍除：开发者小众，90 天 ≤2 曝光" },
+    { "path": "en/text/url-encode.html", "reason": "缩面砍除：开发者小众，90 天 ≤2 曝光" },
+    { "path": "zh/text/text-diff.html", "reason": "缩面砍除：开发者小众，90 天 ≤2 曝光" },
+    { "path": "en/text/text-diff.html", "reason": "缩面砍除：开发者小众，90 天 ≤2 曝光" },
+    { "path": "zh/text/regex-tester.html", "reason": "缩面砍除：开发者小众，90 天 ≤2 曝光" },
+    { "path": "en/text/regex-tester.html", "reason": "缩面砍除：开发者小众，90 天 ≤2 曝光" },
+
+    { "path": "tags/finance.html", "reason": "缩面砍除：模板化聚合薄页，易被判low value（GSC 无展示数据）" },
+    { "path": "en/tags/finance.html", "reason": "缩面砍除：模板化聚合薄页，易被判 low value（GSC 无展示数据）" },
+    { "path": "tags/health.html", "reason": "缩面砍除：模板化聚合薄页，易被判 low value（GSC 无展示数据）" },
+    { "path": "en/tags/health.html", "reason": "缩面砍除：模板化聚合薄页，易被判 low value（GSC 无展示数据）" },
+    { "path": "tags/image.html", "reason": "缩面砍除：模板化聚合薄页，易被判 low value（GSC 无展示数据）" },
+    { "path": "en/tags/image.html", "reason": "缩面砍除：模板化聚合薄页，易被判 low value（GSC 无展示数据）" },
+    { "path": "tags/life.html", "reason": "缩面砍除：模板化聚合薄页，易被判 low value（GSC 无展示数据）" },
+    { "path": "en/tags/life.html", "reason": "缩面砍除：模板化聚合薄页，易被判 low value（GSC 无展示数据）" },
+    { "path": "tags/shopping.html", "reason": "缩面砍除：模板化聚合薄页，易被判 low value（GSC 无展示数据）" },
+    { "path": "en/tags/shopping.html", "reason": "缩面砍除：模板化聚合薄页，易被判 low value（GSC 无展示数据）" },
+    { "path": "tags/text.html", "reason": "缩面砍除：模板化聚合薄页，易被判 low value（GSC 无展示数据）" },
+    { "path": "en/tags/text.html", "reason": "缩面砍除：模板化聚合薄页，易被判 low value（GSC 无展示数据）" },
+    { "path": "tags/travel.html", "reason": "缩面砍除：模板化聚合薄页，易被判 low value（GSC 无展示数据）" },
+    { "path": "en/tags/travel.html", "reason": "缩面砍除：模板化聚合薄页，易被判 low value（GSC 无展示数据）" },
+    { "path": "tags/utility.html", "reason": "缩面砍除：模板化聚合薄页，易被判 low value（GSC 无展示数据）" },
+    { "path": "en/tags/utility.html", "reason": "缩面砍除：模板化聚合薄页，易被判 low value（GSC 无展示数据）" }
+  ],
+  "pending": [
+    { "slug": "badge-maker", "dir": "image", "zhChars": 3971, "enWords": 2903, "note": "GSC 曝光 31 / 位次 6.0；全站视觉投入最多的一页；AdSense 变现最低。方案 T3 列为待定，老板 10-09 决定：砍" },
+    { "slug": "base64", "dir": "image", "zhChars": 1660, "enWords": 947, "note": "与 base64-encode 疑似重复页（GSC 90 天零曝光）；B 批加密判定为重叠风险项" },
+    { "slug": "base64-encode", "dir": "text", "zhChars": 3337, "enWords": 3489, "note": "B2 批加密过（zh 3337 汉字 / en 3489 词，全站最厚之一）；GSC 有提交记录、无展示数据" },
+    { "slug": "color-contrast", "dir": "image", "zhChars": 2658, "enWords": 1977, "note": "B2 批加密过；与站级对比度门禁同主题" },
+    { "slug": "compress-decompress", "dir": "text", "zhChars": 3252, "enWords": 2361, "note": "B 批加密过" },
+    { "slug": "fraction-calculator", "dir": "calculators", "zhChars": 1259, "enWords": 1162, "note": "全站最薄工具页之一（zh 1259 < A 批 2000 门槛）；另有 fraction-decimal-table.html 独立页" },
+    { "slug": "fuel-cost", "dir": "calculators", "zhChars": 2389, "enWords": 1621, "note": "GSC 曝光 7 / 位次 6.5；民生刚需；S21 刚修过校验" },
+    { "slug": "html-stripper", "dir": "text", "zhChars": 3001, "enWords": 2240, "note": "B 批加密过" },
+    { "slug": "image-crop", "dir": "image", "zhChars": 1829, "enWords": 1109, "note": "图片类，变现最低" },
+    { "slug": "markdown-preview", "dir": "text", "zhChars": 2727, "enWords": 1864, "note": "B 批加密过；开发者刚需" },
+    { "slug": "ovulation", "dir": "calculators", "zhChars": 3012, "enWords": 2104, "note": "B 批加密过；与 pregnancy 同属女性健康，但pregnancy 因 YMYL 已砍" },
+    { "slug": "resize", "dir": "image", "zhChars": 1757, "enWords": 1051, "note": "图片类，变现最低" },
+    { "slug": "simplified-traditional", "dir": "text", "zhChars": 2801, "enWords": 1780, "note": "简繁转换，中文刚需场景" },
+    { "slug": "uuid-generator", "dir": "text", "zhChars": 2763, "enWords": 1961, "note": "开发者刚需；10-04 GSC 判定已收录" }
+  ]
+}
