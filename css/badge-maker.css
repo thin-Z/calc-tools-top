@@ -805,6 +805,39 @@ body.is-fullscreen .preview-card{ display:flex; flex-direction:column; min-heigh
 /* 站点 <main> 默认 1280px + 48px 内边距会挤压沉浸式工具，在此放开 */
 body:has(.badge-maker-root) > main{ max-width:none; padding:0; width:100%; }
 
+/* [2026-10-12 修复] 正文区宽度回归站点容器（对齐站内主流）：
+   上一条把 <main> 放开为全宽/零内边距，是给沉浸式三栏工作区用的；但 .tool-content
+   是 <main> 的**直属子**卡片，会被一并拉到整屏宽（实测 1440px）——表现为正文卡横跨
+   整屏、h3/表格撑到 1382px，而段落被 --measure 限在 680px，三者参差。
+   （同源问题见 10-01 W3-9：点赞条也曾通栏 1440px）
+   基准选择：实测站内 88 个含 .tool-content 的页面里，**54 个（主流）卡片=|main 内容宽|
+   =1280−48=1232px**（如 mortgage/timestamp/car-loan/color-contrast），34 个经 .tool-page
+   收窄为 800px；且 10-05 C3 修复注释明确「卡片保持全宽」（因正文含多张宽数据表）。
+   → 本页对齐**主流 1232px**（而非少数派的 800px），并按站点 main 响应式阶梯
+     （默认 24px / ≤768 16px / ≤480 12px 左右内边距）恢复呼吸边距。 */
+body:has(.badge-maker-root) > main > .tool-content{
+  max-width: calc(1280px - 2 * var(--space-5));
+  width: calc(100% - 2 * var(--space-5));
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (max-width: 768px){
+  body:has(.badge-maker-root) > main > .tool-content{ width: calc(100% - 2 * var(--space-4)); }
+}
+@media (max-width: 480px){
+  body:has(.badge-maker-root) > main > .tool-content{ width: calc(100% - 2 * var(--space-3)); }
+}
+/* [2026-10-12] 表格单元格断词兜底（窄屏必需）：
+   站点对 .ref-table th/td 设 `overflow-wrap:anywhere`（原意防英文长串撑破窄屏表格）。
+   在 1232px 桌面容器下实测**不影响**（表格 1174px、7 列每列 ~168px，「2mm」完整）；
+   但 ≤480 窄屏（卡片 ~366px）下 anywhere 仍会切断短 token（实测 69 处，如 "2mm"→"2m"/"m"）。
+   覆盖为 break-word：短 token 保持完整，长无空格串（本页仅 summary_large_image）必要时仍可断。
+   实测（1440/390 × zh/en × 亮暗）：数据断行 0 · 破框 0 · 页面横向溢出 0。 */
+body:has(.badge-maker-root) > main > .tool-content .ref-table th,
+body:has(.badge-maker-root) > main > .tool-content .ref-table td{
+  overflow-wrap: break-word;
+}
+
 /* 站点集成：工具顶栏（.topbar）一律不做 sticky。
    基础规则是 `position:sticky; top:0; z-index:60`（单文件版设计），在 `@media (min-width:1024px)`
    里才被改成 static。站点环境必须全局置 static（含窄屏）：
