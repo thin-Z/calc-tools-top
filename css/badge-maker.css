@@ -827,16 +827,16 @@ body:has(.badge-maker-root) > main > .tool-content{
 @media (max-width: 480px){
   body:has(.badge-maker-root) > main > .tool-content{ width: calc(100% - 2 * var(--space-3)); }
 }
-/* [2026-10-12] 表格单元格断词兜底（窄屏必需）：
-   站点对 .ref-table th/td 设 `overflow-wrap:anywhere`（原意防英文长串撑破窄屏表格）。
-   在 1232px 桌面容器下实测**不影响**（表格 1174px、7 列每列 ~168px，「2mm」完整）；
-   但 ≤480 窄屏（卡片 ~366px）下 anywhere 仍会切断短 token（实测 69 处，如 "2mm"→"2m"/"m"）。
-   覆盖为 break-word：短 token 保持完整，长无空格串（本页仅 summary_large_image）必要时仍可断。
-   实测（1440/390 × zh/en × 亮暗）：数据断行 0 · 破框 0 · 页面横向溢出 0。 */
-body:has(.badge-maker-root) > main > .tool-content .ref-table th,
-body:has(.badge-maker-root) > main > .tool-content .ref-table td{
-  overflow-wrap: break-word;
-}
+/* [2026-10-12 修正] 此处**不再覆盖** `overflow-wrap`，沿用站点对 .ref-table 的
+   `anywhere`。曾试过覆盖为 `break-word`「让窄屏短 token 不被切断」，实测证明是**回归**：
+   `break-word` **不参与 min-content 计算**（`anywhere` 参与）→ 本页 7 列表格的
+   最小内容宽被撑到 **496px**，在 ≤480 卡片 366px 内 → `scrollWidth 498 > clientWidth 308`
+   → 右侧 2 列被裁、窄屏**数据不可见**（截图实证）；而基线页 mortgage/timestamp 因
+   `anywhere` 可把单字压列，表格 scrollWidth == clientWidth，**不溢出**。
+   → 取舍：站点原意「防长串撑破窄屏表格」优先；窄屏逐字换行属**全站既有**现象
+     （实测基线 mortgage `td` 断行 35/35、timestamp 36/43，本页 62/162 反而更轻），
+     且数据完整可读 > 换行整齐。桌面 1232px 下 `anywhere` 本就不触发
+     （实测 th 0/31、td 0/162 单行），故本条覆盖在两侧都无收益。 */
 
 /* 站点集成：工具顶栏（.topbar）一律不做 sticky。
    基础规则是 `position:sticky; top:0; z-index:60`（单文件版设计），在 `@media (min-width:1024px)`
