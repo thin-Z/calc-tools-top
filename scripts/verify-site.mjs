@@ -798,6 +798,22 @@ if (gwTheme !== 0 || gwLang !== 0 || inlineSwitch !== 0) {
   }
 }
 
+// ---------- 37. 死样式门禁（S28，2026-10-13 新建） ----------
+// 命门：删元素后 CSS 残留规则**不报错、不崩溃**，4 个静态门禁 + ci:quick 全绿均不报
+//（S28 实证：删 .brand-text 后残留 body.is-fullscreen .topbar .brand-text 规则，
+//  靠提交后 grep 线上 CSS 才发现），且随工具合并/缩面持续累积。
+// 采用**趋势基线**而非期望 0（存量 58 个多为 09-20 合并 / 10-09 缩面遗留，清理非本门禁职责）：
+// 新增即红、下降则提示可收紧基线；另内置 3 条装置自检 + 「结果为 0 判定探测器失效」，
+// 防止正则退化造成的「永远 PASS」假绿。
+{
+  try {
+    execFileSync(process.execPath, [path.join(ROOT, 'scripts', 'check-dead-selectors.mjs')], { stdio: 'inherit', cwd: ROOT });
+    console.log('[37] 死样式门禁 (check-dead-selectors 趋势基线): ✓');
+  } catch (e) {
+    fail('[dead-selectors] scripts/check-dead-selectors.mjs 退出码非 0（新增死样式超基线 58，或装置自检失败 / 探测器失效。死样式不报错不崩溃，只误导后人并在删元素时残留，2026-10-13 新增）');
+  }
+}
+
 // ---------- 汇总 ----------
 if (failures.length) {
   console.error(`\n❌ verify-site 失败 ${failures.length} 项：`);

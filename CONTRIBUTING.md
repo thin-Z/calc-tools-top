@@ -37,14 +37,14 @@ node scripts/build.mjs
 # 0) 提交前深度审查（第一步；含跨文件一致性自动检查）
 npm run audit:pre
 
-# 1) 集成校验（36 项断言）
+# 1) 集成校验（37 项断言）
 node scripts/verify-site.mjs
 
 # 2) a11y 必须按 CI 通道跑（默认 msedge 会假绿）+ 亮暗双主题
 E2E_CHANNEL=chromium node scripts/audit-a11y.mjs
 ```
 
-**集成校验 36 项断言**（`verify-site.mjs`）：header/footer 字节一致 / JSON-LD / AdSense 唯一性 / 断链 / 浮动控件 / GA4 不变量 / CSP 无内联脚本 / 无内联事件 / CSP 头 / 懒加载 / alt / SRI / a11y 结构 / SEO / 无 var / 首页三源同步 / 搜索升级 / P0 门禁 / canonical-hreflang / JS 语法 / a11y 全站扫描 / 工具页模板一致性(#23) / 重定向顺序(#24) / CSP 委托层可达性(#25) / 文档同步(#26) / embed 可嵌入性(#27) / sitemap×noindex 交叉(#28) / dist 卫生门禁(#29，防 P0-3 构建产物泄漏复发) / csp-events 解耦(#30，事件委托层与 AdSense 片段解耦 + 全页覆盖) / 设计系统门禁(#31，裸 checkbox/radio 只降不升，基线 scripts/design-baseline.json) / 全局契约门禁(#32，window.copyText+window.showError 契约完整 + runtime-head 注入 csp-events) / sitemap 反向覆盖门禁(#33，页面存在但漏收录 sitemap 检测 + 豁免清单 stale 检测，2026-09-10 新增) / 资源版本戳门禁(#34，immutable 长缓存下所有本地资源引用必须带 `?v=`，2026-09-13 新增) / 令牌纪律门禁(#35，box-shadow 值型令牌与字面 length 混排 → 单层 length 超上限被静默丢弃，2026-09-23 新增)/ **自定义属性引用门禁（#36，自引用/循环引用 + 无定义且无回退的 `var()` 引用，期望均 0；令牌引用自身属计算值阶段非法 → 计算值为空且**不回退** `:root`，消费处整条声明被浏览器静默丢弃，2026-09-27 新增）**。
+**集成校验 37 项断言**（`verify-site.mjs`）：header/footer 字节一致 / JSON-LD / AdSense 唯一性 / 断链 / 浮动控件 / GA4 不变量 / CSP 无内联脚本 / 无内联事件 / CSP 头 / 懒加载 / alt / SRI / a11y 结构 / SEO / 无 var / 首页三源同步 / 搜索升级 / P0 门禁 / canonical-hreflang / JS 语法 / a11y 全站扫描 / 工具页模板一致性(#23) / 重定向顺序(#24) / CSP 委托层可达性(#25) / 文档同步(#26) / embed 可嵌入性(#27) / sitemap×noindex 交叉(#28) / dist 卫生门禁(#29，防 P0-3 构建产物泄漏复发) / csp-events 解耦(#30，事件委托层与 AdSense 片段解耦 + 全页覆盖) / 设计系统门禁(#31，裸 checkbox/radio 只降不升，基线 scripts/design-baseline.json) / 全局契约门禁(#32，window.copyText+window.showError 契约完整 + runtime-head 注入 csp-events) / sitemap 反向覆盖门禁(#33，页面存在但漏收录 sitemap 检测 + 豁免清单 stale 检测，2026-09-10 新增) / 资源版本戳门禁(#34，immutable 长缓存下所有本地资源引用必须带 `?v=`，2026-09-13 新增) / 令牌纪律门禁(#35，box-shadow 值型令牌与字面 length 混排 → 单层 length 超上限被静默丢弃，2026-09-23 新增)/ **自定义属性引用门禁（#36，自引用/循环引用 + 无定义且无回退的 `var()` 引用，期望均 0；令牌引用自身属计算值阶段非法 → 计算值为空且**不回退** `:root`，消费处整条声明被浏览器静默丢弃，2026-09-27 新增）**。 / **死样式门禁(#37，CSS class 选择器在 dist 全量 HTML + JS 词级均无对应元素 = 死样式；删元素后的残留不报错不崩溃、4 个静态门禁 + ci:quick 全绿不报（S28 实证），故用趋势基线 58：新增即红、下降提示可收紧；内置 3 条装置自检 + 「结果为 0 即探测器失效」硬失败防永远 PASS，2026-10-13 新增)**。
 
 - **全绿（exit 0）才能提交**。这是项目硬规则。
 - a11y 全站扫描（#22）**默认跳过**（需浏览器），启用：`E2E_A11Y=1 node scripts/audit-a11y.mjs`（本地需 playwright + msedge）。
@@ -106,7 +106,7 @@ curl -I https://www.calc-tools.top/js/web-vitals-report.js
 | 文件 | 用途 |
 |------|------|
 | `scripts/build.mjs` | Vercel 构建入口 |
-| `scripts/verify-site.mjs` | 集成校验 **36 项**（2026-10-02 实测） |
+| `scripts/verify-site.mjs` | 集成校验 **37 项**（2026-10-13 实测） |
 | `scripts/audit-a11y.mjs` | 全站 axe 扫描 |
 | `includes/adsense-head.html` | GA4/AdSense 注入单源 |
 | `tools.json`（仓库根） | 工具权威数据源（**51 条** = 28 calculators + 8 image + 15 text；其中 4 条带 `mergedInto` → 展示集 **47**） |

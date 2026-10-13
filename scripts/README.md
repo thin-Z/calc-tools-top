@@ -12,7 +12,7 @@
 | 脚本 | 被谁引用 | 用途 | 触发方式 |
 |------|----------|------|----------|
 | `build.mjs` | Vercel build | 构建入口（复制→注入→卫生→压缩） | 自动 |
-| `verify-site.mjs` | CI / 本地 | 集成校验 36 项断言（#27 embed / #28 sitemap / #29 dist 卫生 / #30 csp-events 解耦 / #31 设计系统门禁 / #32 全局契约门禁 / #33 sitemap 反向覆盖 / #34 资源版本戳 / #35 令牌纪律 / #36 自定义属性引用 R2，2026-09-02 / 2026-09-09 / 2026-09-13 / 2026-09-23 / 2026-09-27 新增） | 自动 |
+| `verify-site.mjs` | CI / 本地 | 集成校验 37 项断言（#27 embed / #28 sitemap / #29 dist 卫生 / #30 csp-events 解耦 / #31 设计系统门禁 / #32 全局契约门禁 / #33 sitemap 反向覆盖 / #34 资源版本戳 / #35 令牌纪律 / #36 自定义属性引用 R2，2026-09-02 / 2026-09-09 / 2026-09-13 / 2026-09-23 / 2026-09-27 新增） | 自动 |
 | `check-jsonld.mjs` | verify #2 | JSON-LD 5 项断言 | 自动 |
 | `check-links.js` | verify #4 | 断链检查 | 自动 |
 | `seo-batch-audit.mjs` | verify #14 | SEO 批量审计 | 自动 |
@@ -21,6 +21,7 @@
 | `check-p0-gate.mjs` | verify #19 | P0 门禁（裸色/emoji/孤儿变体选择符/紫） | 自动 |
 | `check-token-discipline.mjs` | verify #35 | 令牌纪律门禁（8 条规则）。R1：box-shadow 值型令牌 `--shadow-*` 与字面 length 混排 → 单层 length 超上限 4，整条声明被浏览器静默丢弃（`--shadow-color-*` 为颜色型，不得当值型展开）。R3–R9 令牌阶梯纪律七条：字号 `--fs-*` / 行高 `--lh-*` / 间距 `--space-*` / 圆角 `--radius-*` / 动效时长 `--dur-*` / z-index `--z-*` / 字重 `--fw-*`，每条含**两条独立信号**——计数只降不升（基线 BASELINES，低于基线只提示不自动改）+ 白名单外**新值**独立阻断（防「旧值换新值」的等价交换：计数可纹丝不动），并用 LEGACY_UNKNOWN 冻结词表区分「存量待迁移」与「新增违规」。白名单范围与计数口径同口径（`whitelistScope`），防合法值被误伤。另有**属性口径自检** `validatePropCoverage()`（与 `validateRules()` 同模式：模块加载即跑、不符即 exit 1）**三条**守卫断言（判据**全部静态**，不取自被测正则）：**(a) 基数下限** —— 每个有 fixture 的规则声明 `mustMin` / `mustNotMin`（当前 R5 19/7、R6 9/8、R7 4/5，**恰等于实际条数 → 删 1 条即红**）；下限字段缺失亦硬失败，防 `n < undefined` 恒 false 的静默放行。**(b) 属性族完整性** —— 凡 `propFamily: true`（**静态声明**，R5 / R6 / R7）的规则**必须**有非空 fixture，判据**与 prop 正则当前形态无关**。**(c) 属性族 × 探针交叉校验** —— `propFamily` 规则须在 `PROP_FAMILY_PROBE`（25 个真实属性名，硬编码、独立于 fixture）上命中 ≥2；反向：未声明 `propFamily` 却命中 ≥2 → 报「疑似漏标」。修的是两类绕过路径：① 掏空 fixture + 换回坏正则；② **整块删除 fixture + 退化正则** —— 旧版把「是不是属性族」用 `探针命中数 > 1` 从**被测正则**反推，属**循环前提**（退化正则只命中 1 个 → 被判「单属性」→ 完整性断言被跳过 → 无条目可比 → exit 0 全绿）；收口轮改为**静态声明 + 静态期望 ≥2** 后堵住（2026-09-28） | 自动 |
 | `check-var-refs.mjs` | verify #36 | 自定义属性引用门禁 R2：R2-a1 自引用/循环引用 + R2-a2 无定义且无回退的 `var()` 引用，期望均为 0。自引用属计算值阶段非法 → 令牌计算值为空且不回退 `:root`，消费处整条声明被静默丢弃（暗色标签底板消失 / 点赞配色丢失）。注入点（JS `setProperty` / HTML 内联）由门禁自推导进白名单 | 自动 |
+| `check-dead-selectors.mjs` | verify #37 | 死样式门禁：趋势基线（存量 58，新增即红、下降提示可收紧）。删元素后的 CSS 残留不报错不崩溃，静态门禁全绿不报（S28 实证），随工具合并/缩面持续累积。三层假阳性防护：dist 全量 HTML 逐文件解析 class 属性 + JS 词级（含 dist/js）+ EXEMPT。内置 3 条装置自检与「结果为 0 即探测器失效」硬失败，防永远 PASS | 自动 |
 | `check-canonical.mjs` | verify #20 | canonical/hreflang | 自动 |
 | `check-js-syntax.mjs` | verify #21 | JS 语法门禁 | 自动 |
 | `check-csp-fns.mjs` | verify #7/8/9 | CSP 函数级断言 | 自动 |
