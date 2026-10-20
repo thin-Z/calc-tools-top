@@ -156,6 +156,71 @@ function inlineNoneToHidden(html) {
     });
 }
 
+/* S34（2026-10-20）：ref-table 窄屏卡片化 —— 构建期给单元格注入 data-label。
+   为什么在构建期做：源 HTML 有 331 张 ref-table / 6876 个单元格，手工维护 data-label
+   不现实且改表头必然忘记同步；dist 是线上产物，注入在这里既不动源文件也自动覆盖新页。
+   安全降级：任何一张表只要出现「表头缺失 / 某行单元格数与表头对不上 / 标签取不到」
+   就不打 data-cards 标记 → CSS 不卡片化，该表退回原有横向表格行为（宁可不改，也不出错位标签）。 */
+function stripTagsToText(s) {
+  return s.replace(/<[^>]*>/g, ' ')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#0*39;/g, "'")
+    .replace(/&amp;/gi, '&')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function escapeAttr(s) {
+  return s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+let tableLabelStats = { tables: 0, labelled: 0, skipped: 0, cells: 0 };
+
+function injectTableLabels(html) {
+  if (!html.includes('ref-table')) return html;
+  const tableRe = /<table\b[^>]*class=["'][^"']*\bref-table\b[^"']*["'][^>]*>[\s\S]*?<\/table>/gi;
+  return html.replace(tableRe, (table) => {
+    tableLabelStats.tables++;
+    if (/\bdata-cards\s*=/.test(table)) { tableLabelStats.skipped++; return table; }
+
+    const theadM = table.match(/<thead\b[^>]*>([\s\S]*?)<\/thead>/i);
+    if (!theadM) { tableLabelStats.skipped++; return table; }
+    const ths = [...theadM[1].matchAll(/<th\b[^>]*>([\s\S]*?)<\/th>/gi)].map((m) => stripTagsToText(m[1]));
+    if (!ths.length) { tableLabelStats.skipped++; return table; }
+
+    const bodyM = table.match(/(<tbody\b[^>]*>)([\s\S]*?)(<\/tbody>)/i);
+    if (!bodyM) { tableLabelStats.skipped++; return table; }
+
+    let broken = false;
+    let cells = 0;
+    const newBody = bodyM[2].replace(/<tr\b[^>]*>[\s\S]*?<\/tr>/gi, (row) => {
+      let ci = 0;
+      const filled = row.replace(/<td\b([^>]*)>/gi, (m, attrs) => {
+        const spanM = /colspan\s*=\s*["']?\s*(\d+)/i.exec(attrs);
+        const span = spanM ? Number(spanM[1]) : 1;
+        const label = ths[ci] || '';
+        const nextIdx = ci + span;
+        ci = nextIdx;
+        if (!label) { broken = true; return m; }
+        cells++;
+        return `<td${attrs} data-label="${escapeAttr(label)}">`;
+      });
+      if (ci !== ths.length) broken = true;
+      return filled;
+    });
+    if (broken) { tableLabelStats.skipped++; return table; }
+
+    tableLabelStats.labelled++;
+    tableLabelStats.cells += cells;
+    return table
+      .replace(/^<table\b/i, '<table data-cards="1"')
+      .replace(bodyM[0], bodyM[1] + newBody + bodyM[3]);
+  });
+}
+
 let cleanupCount = 0;
 walkHtml(dist, (f) => {
   const raw = readFileSync(f);
@@ -508,13 +573,14 @@ walkHtml(dist, (f) => {
   const raw = readFileSync(f);
   let text = raw.toString('utf8');
   if (raw[0] === 0xef && raw[1] === 0xbb && raw[2] === 0xbf) text = text.slice(1);
-  const newText = inlineNoneToHidden(lazyImages(ensureCharsetFirst(text)));
+  const newText = injectTableLabels(inlineNoneToHidden(lazyImages(ensureCharsetFirst(text))));
   if (newText !== text) {
     writeFileSync(f, newText, 'utf8');
     hygieneCount++;
   }
 });
 console.log(`[build] 卫生转换(去BOM/charset置首/懒加载/inline→hidden): ${hygieneCount} 个文件`);
+console.log(`[build] ref-table 卡片化标注: 表 ${tableLabelStats.tables} | 已标注 ${tableLabelStats.labelled}（${tableLabelStats.cells} 格）| 降级 ${tableLabelStats.skipped}`);
 
 // 5) CSS 压缩（P3-1）：移除注释并折叠空白，减小传输体积
 // L3：同时重写 @import url('./tokens.css') → @import url('./tokens.css?v=STAMP')，防止 immutable 缓存下子资源滞留

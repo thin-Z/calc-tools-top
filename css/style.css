@@ -4553,8 +4553,13 @@ mark {
 [data-theme="dark"] .ref-table tbody tr:nth-child(even){ background: var(--surface-dark); }
 [data-theme="dark"] .ref-table td,[data-theme="dark"] .ref-table th { color: var(--text-on-dark); border-color: var(--surface-dark-2); }
 /* 2026-09-10 工具页正文参考表占满卡片宽度：.ref-table 的 460px 上限只服务独立对照表页 fraction-decimal-table，
-   该页表在 .tool-container 内不受此覆盖影响；工具页 .tool-content 内的多列数据表需占满可用宽度。 */
-.tool-content .ref-table { max-width: none; }
+   该页表在 .tool-container 内不受此覆盖影响；工具页 .tool-content 内的多列数据表需占满可用宽度。
+   2026-10-20（S34）：补 .seo-content —— 实测 332 个 ref-table 中有 36 个落在 .seo-content 内，
+   其中 compress-decompress / html-stripper / text-diff（zh+en 共 6 页）的多列数据表被 460px 卡住，
+   1440 桌面下 7 列挤进 460px，实测「Deflate」被拆成 De/fla/te、「Adler-32」拆成 Adl/er-/32。
+   fraction-decimal-table 仍不受影响（其表在 .tool-container 内）。 */
+.tool-content .ref-table,
+.seo-content .ref-table { max-width: none; }
 /* 2026-09-07 工具详情页骨架统一：相关工具上移后与后邻控件间距 + page-header 渐变标题下图标着色。
    2026-09-10：相关工具卡→工具模块间距 2rem 偏挤，加宽到 3rem（tool-form 与 upload-zone 同步，保持同一设计意图）。 */
 .related-tools + .tool-form { margin-top: 3rem; }
@@ -4806,5 +4811,58 @@ mark {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
+    }
+}
+
+/* ==================================================================
+   S34（2026-10-20）：.ref-table 窄屏卡片化
+   问题：≤768px 下多列数据表在自动表格布局里把短值逐字拆开 —— 390px 实测
+   tax2026 的「8,1000 元」被拆成 8/1/0/0/0 五行竖排（35/35 格全部 ≥3 行），
+   compress-decompress 单格最多 28 行。
+   方案：≤768px 时把「构建期已注入 data-label 的表」转成竖排卡片（每格标签在上、
+   值在下），彻底脱离列宽竞争。只命中 [data-cards="1"]，未注入成功的表保持原行为
+   （安全降级：宁可不卡片化，也不出现空标签）。
+   注意：不走「改 overflow-wrap」那条路：中文列的 min-content 天然就是 1 个字宽，
+      改 break-word 对 CJK 无改善，且实测 768px 会产生 88px 文档级溢出
+      （2026-10-12 首证回归、2026-10-20 二次实证），两次均已撤销。
+   ================================================================== */
+@media (max-width: 768px) {
+    .ref-table[data-cards="1"] {
+        display: block;
+        width: 100%;
+        max-width: none;
+        overflow-x: visible;
+    }
+    .ref-table[data-cards="1"] thead { display: none; }
+    .ref-table[data-cards="1"] tbody { display: block; }
+    .ref-table[data-cards="1"] tbody tr {
+        display: block;
+        margin-bottom: var(--space-3);
+        padding: var(--space-1) 0;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        background: var(--bg-card);
+    }
+    .ref-table[data-cards="1"] tbody tr:nth-child(even) { background: var(--bg-card); }
+    .ref-table[data-cards="1"] td {
+        display: block;
+        padding: var(--space-1) var(--space-3);
+        border: none;
+        border-bottom: 1px solid var(--border-soft);
+        text-align: left;
+    }
+    .ref-table[data-cards="1"] td:last-child { border-bottom: none; }
+    .ref-table[data-cards="1"] td::before {
+        content: attr(data-label);
+        display: block;
+        margin-bottom: 0.1rem;
+        font-size: var(--fs-xs);
+        font-weight: 700;
+        color: var(--text-secondary);
+    }
+    /* 暗色：主题靠 [data-theme="dark"] 规则覆盖而非令牌重定义，卡片底色须显式给出 */
+    [data-theme="dark"] .ref-table[data-cards="1"] tbody tr,
+    [data-theme="dark"] .ref-table[data-cards="1"] tbody tr:nth-child(even) {
+        background: var(--surface-dark);
     }
 }
