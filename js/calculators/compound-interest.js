@@ -23,6 +23,14 @@ function doCalculate() {
     document.getElementById('totalInterest').textContent = interest.toFixed(2);
     document.getElementById('interestRate').textContent = (interest / principal * 100).toFixed(1);
     document.getElementById('resultArea').classList.remove('hidden');
+
+    // C8 历史记录：仅存浏览器本地，不上传
+    if (window.CalcHistory) {
+        CalcHistory.save('compound-interest', {
+            label: '¥' + final.toFixed(2) + ' · ' + principal + ' @ ' + rate + '% × ' + years + 'y',
+            inputs: { principal: principal, rate: rate, years: years, freq: freq }
+        });
+    }
 }
 
 /**
@@ -36,3 +44,18 @@ function resetForm() {
     document.getElementById('compoundFreq').value = '12';
     document.getElementById('resultArea').classList.add('hidden');
 }
+
+// C8 历史记录回填：恢复输入并重算
+(function () {
+    document.addEventListener('DOMContentLoaded', function () {
+        if (!window.CalcHistory) return;
+        CalcHistory.setRestorer('compound-interest', function (inputs) {
+            if (!inputs) return;
+            document.getElementById('principal').value = inputs.principal;
+            document.getElementById('annualRate').value = inputs.rate;
+            document.getElementById('years').value = inputs.years;
+            document.getElementById('compoundFreq').value = inputs.freq;
+            doCalculate();
+        });
+    });
+})();

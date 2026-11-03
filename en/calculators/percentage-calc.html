@@ -37,7 +37,8 @@
 
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script>
-    <script src="/js/calculators/percentage-calc.js" defer></script>
+    <script src="/js/calc-history.js" defer></script>
+     <script src="/js/calculators/percentage-calc.js" defer></script>
     <script type="application/ld+json">
     {
     "@context": "https://schema.org",
@@ -157,6 +158,10 @@
         <div class="result-card hidden" id="resultArea" tabindex="0">
             <div class="st-2"><p id="percentResult" class="st-28"></p></div>
         </div>
+
+
+            <!-- Calculator history (stored locally in your browser only) -->
+            <div class="calc-history hidden" data-calc-history="percentage-calc"></div>
 
         
 

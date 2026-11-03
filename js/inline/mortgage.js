@@ -35,6 +35,17 @@ let chartInstance = null;
             const resultArea = document.getElementById('resultArea');
             resultArea.classList.remove('hidden');
 
+            // C8 历史记录：仅存浏览器本地，不上传
+            if (window.CalcHistory) {
+                CalcHistory.save('mortgage', {
+                    label: (result.method === 'equal-payment'
+                        ? '¥' + formatNumber(result.monthlyPayment) + '/月'
+                        : '¥' + formatNumber(result.firstPayment) + '~')
+                        + ' · ' + (amount / 10000) + '万 @ ' + rate + '% × ' + years + '年',
+                    inputs: { amount: document.getElementById('loanAmount').value, rate: rate, years: years, method: method }
+                });
+            }
+
             const monthlyLabel = document.getElementById('monthlyLabel');
             const monthlyValue = document.getElementById('monthlyValue');
 
@@ -134,6 +145,17 @@ let chartInstance = null;
 
         // Auto-calculate on page load
         document.addEventListener('DOMContentLoaded', function() {
-            
+            // C8 历史记录回填：恢复输入并重算
+            if (window.CalcHistory) {
+                CalcHistory.setRestorer('mortgage', function (inputs) {
+                    if (!inputs) return;
+                    document.getElementById('loanAmount').value = inputs.amount;
+                    document.getElementById('annualRate').value = inputs.rate;
+                    document.getElementById('loanYears').value = inputs.years;
+                    document.getElementById('repaymentMethod').value = inputs.method;
+                    doCalculate();
+                });
+            }
+
             setTimeout(doCalculate, 100);
         });

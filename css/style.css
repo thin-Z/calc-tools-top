@@ -601,9 +601,10 @@ main {
     gap: var(--space-3);
     margin-bottom: var(--space-3);
 }
-.calc-history-head h3 {
+.calc-history-title {
     margin: 0;
     font-size: var(--fs-md);
+    font-weight: 600;
     color: var(--text-primary);
 }
 .calc-history-clear {
@@ -662,8 +663,13 @@ main {
     cursor: pointer;
     transition: border-color var(--dur-fast) ease, color var(--dur-fast) ease, background var(--dur-fast) ease;
 }
-.calc-history-restore { color: var(--primary); }
+/* 按钮文字用 --primary-hover（#0056CC）：--primary #007AFF on white 仅 4.0:1，
+   不达 WCAG AA 4.5:1（axe color-contrast serious 实证），hover 态才回品牌蓝。
+   dark 下 --primary-hover 解析为深蓝（on 深底更差）→ 用 dark 专用亮蓝（≈5.9:1） */
+.calc-history-restore { color: var(--primary-hover); }
+[data-theme="dark"] .calc-history-restore { color: var(--link-color-elevated); }
 .calc-history-restore:hover {
+    color: var(--primary);
     border-color: var(--primary);
     background: var(--primary-light);
 }

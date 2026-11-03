@@ -152,7 +152,9 @@
 
         var head = document.createElement('div');
         head.className = 'calc-history-head';
-        var title = document.createElement('h3');
+        // 标题用 p 而非 h3 —— 避免 h1 之后直接出现 h3 打破 heading-order（a11y）
+        var title = document.createElement('p');
+        title.className = 'calc-history-title';
         title.textContent = t.title;
         title.setAttribute('aria-label', t.ariaTitle);
         head.appendChild(title);

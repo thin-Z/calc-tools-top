@@ -50,6 +50,17 @@ function doCalculate() {
     
     document.getElementById('percentResult').innerHTML = result;
     document.getElementById('resultArea').classList.remove('hidden');
+
+    // C8 历史记录：仅存浏览器本地，不上传
+    if (window.CalcHistory) {
+        var _tmp = document.createElement('div');
+        _tmp.innerHTML = result;
+        CalcHistory.save('percentage-calc', {
+            label: document.getElementById('percentMode').options[document.getElementById('percentMode').selectedIndex].text
+                + ' · ' + val1 + ', ' + val2 + ' → ' + _tmp.textContent.trim(),
+            inputs: { mode: mode, v1: val1, v2: val2 }
+        });
+    }
 }
 
 /**
@@ -62,3 +73,17 @@ function resetForm() {
     document.getElementById('resultArea').classList.add('hidden');
     document.getElementById('percentResult').innerHTML = '';
 }
+
+// C8 历史记录回填：恢复模式与输入并重算
+(function () {
+    document.addEventListener('DOMContentLoaded', function () {
+        if (!window.CalcHistory) return;
+        CalcHistory.setRestorer('percentage-calc', function (inputs) {
+            if (!inputs) return;
+            document.getElementById('percentMode').value = inputs.mode;
+            document.getElementById('percentVal1').value = inputs.v1;
+            document.getElementById('percentVal2').value = inputs.v2;
+            doCalculate();
+        });
+    });
+})();

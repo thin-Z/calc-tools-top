@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="../../css/style.css">
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script>
+    <script src="/js/calc-history.js" defer></script>
     <script src="/js/calculators/compound-interest.js" defer></script>
     <script type="application/ld+json">{
     "@context": "https://schema.org",
@@ -98,6 +99,10 @@
 
         <div class="tool-form"><div class="form-group"><label>本金（元）</label><input type="number" id="principal" value="100000" min="1" step="100"></div><div class="form-group"><label>年利率（%）</label><input type="number" id="annualRate" value="5" min="0" step="0.1"></div><div class="form-group"><label>投资年限</label><input type="number" id="years" value="10" min="1" max="50" step="1"></div><div class="form-group"><label>复利频率</label><select id="compoundFreq"><option value="1">每年</option><option value="4">每季度</option><option value="12" selected>每月</option></select></div><div class="form-actions"><button type="button" class="btn btn-primary" data-csp-click="doCalculate">计算</button><button type="reset" class="btn btn-secondary" data-csp-click="resetForm">重置</button></div></div>
         <div class="result-card hidden" id="resultArea" tabindex="0"><div class="st-2"><p class="st-4">复利终值</p><p class="st-23"><span id="finalAmount"></span> 元</p><hr><p>总收益：<span id="totalInterest"></span> 元</p><p>收益率：<span id="interestRate"></span>%</p></div></div>
+
+            <!-- C8 历史记录（仅存浏览器本地，不上传） -->
+            <div class="calc-history hidden" data-calc-history="compound-interest"></div>
+
         
         <div class="tool-content">
     <h2>复利计算器使用指南</h2>
