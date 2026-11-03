@@ -583,6 +583,97 @@ main {
     border-top: 1px solid var(--border);
 }
 
+/* ===== C8 计算器历史记录（localStorage，仅本地不上传） ===== */
+.calc-history {
+    max-width: none;
+    margin: 0 auto var(--space-6);
+    padding: var(--space-4) var(--space-5);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+.calc-history.hidden { display: none; }
+.calc-history-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-bottom: var(--space-3);
+}
+.calc-history-head h3 {
+    margin: 0;
+    font-size: var(--fs-md);
+    color: var(--text-primary);
+}
+.calc-history-clear {
+    border: none;
+    background: none;
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--fs-sm);
+    color: var(--text-secondary);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: color var(--dur-fast) ease, background var(--dur-fast) ease;
+}
+.calc-history-clear:hover {
+    color: var(--danger);
+    background: var(--bg-muted);
+}
+.calc-history-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+.calc-history-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+}
+.calc-history-label {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: var(--fs-sm);
+    color: var(--text-primary);
+}
+.calc-history-time {
+    flex: 0 0 auto;
+    font-size: var(--fs-sm);
+    color: var(--text-secondary);
+}
+.calc-history-restore,
+.calc-history-del {
+    flex: 0 0 auto;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--fs-sm);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: border-color var(--dur-fast) ease, color var(--dur-fast) ease, background var(--dur-fast) ease;
+}
+.calc-history-restore { color: var(--primary); }
+.calc-history-restore:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+.calc-history-del { color: var(--text-secondary); }
+.calc-history-del:hover { color: var(--text-primary); border-color: var(--text-secondary); }
+@media (max-width: 480px) {
+    .calc-history-item { flex-wrap: wrap; }
+    .calc-history-label { flex-basis: 100%; }
+}
+
 /* ===== 图表区域 ===== */
 .chart-container {
     max-width: none;

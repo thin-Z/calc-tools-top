@@ -31,6 +31,14 @@ let chartInstance = null;
             const lang = getLang();
             const labels = i18n[lang];
 
+            // C8 历史记录：仅存浏览器本地，不上传（与页面隐私口径一致）
+            if (window.CalcHistory) {
+                CalcHistory.save('bmi', {
+                    label: 'BMI ' + result.bmi + ' · ' + height + 'cm / ' + weight + 'kg',
+                    inputs: { height: height, weight: weight }
+                });
+            }
+
             // Show result area
             const resultArea = document.getElementById("resultArea");
             resultArea.classList.remove('hidden');
@@ -200,6 +208,15 @@ let chartInstance = null;
 
         // 页面加载后自动计算
         document.addEventListener("DOMContentLoaded", function() {
-            
+            // C8 历史记录回填：恢复输入并重算
+            if (window.CalcHistory) {
+                CalcHistory.setRestorer('bmi', function (inputs) {
+                    if (!inputs) return;
+                    document.getElementById("height").value = inputs.height;
+                    document.getElementById("weight").value = inputs.weight;
+                    doCalculate();
+                });
+            }
+
             setTimeout(doCalculate, 100);
         });
