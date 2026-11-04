@@ -44,7 +44,16 @@ function toggleMode() {
             document.getElementById('resultA').style.display = 'block';
             document.getElementById('resultB').classList.add('hidden');
             document.getElementById('resultArea').classList.remove('hidden');
+
+        // C8 历史记录：仅存浏览器本地，不上传
+            if (window.CalcHistory) {
+                CalcHistory.save('date-calc', {
+                    label: (getLang() === 'zh' ? '加减天数' : 'Add days') + ': ' + startDate + ' ' + (days >= 0 ? '+' : '') + days + ' → ' + result,
+                    inputs: { mode: 'A', startDate: startDate, days: days }
+                });
+            }
         }
+
 
         function calcModeB() {
             const startDate = document.getElementById('startDateB').value;
@@ -61,6 +70,14 @@ function toggleMode() {
             document.getElementById('resultB').classList.remove('hidden');
             document.getElementById('resultC').classList.add('hidden');
             document.getElementById('resultArea').classList.remove('hidden');
+
+        // C8 历史记录：仅存浏览器本地，不上传
+            if (window.CalcHistory) {
+                CalcHistory.save('date-calc', {
+                    label: (getLang() === 'zh' ? '日期差' : 'Diff') + ': ' + startDate + ' → ' + endDate + ' = ' + diff,
+                    inputs: { mode: 'B', startDate: startDate, endDate: endDate }
+                });
+            }
         }
 
         function calcModeC() {
@@ -96,6 +113,14 @@ function toggleMode() {
             document.getElementById('resultB').classList.add('hidden');
             document.getElementById('resultC').classList.remove('hidden');
             document.getElementById('resultArea').classList.remove('hidden');
+
+        // C8 历史记录：仅存浏览器本地，不上传
+            if (window.CalcHistory) {
+                CalcHistory.save('date-calc', {
+                    label: (getLang() === 'zh' ? '年龄' : 'Age') + ': ' + birthDate + ' → ' + ageText,
+                    inputs: { mode: 'C', birthDate: birthDate }
+                });
+            }
         }
 
         function resetForm() {
@@ -109,6 +134,25 @@ function toggleMode() {
 
         // Auto-set today on page load
         document.addEventListener("DOMContentLoaded", function() {
+            // C8 历史记录回填：按模式恢复输入并重算
+            if (window.CalcHistory) {
+                CalcHistory.setRestorer('date-calc', function (inputs) {
+                    if (!inputs) return;
+                    if (inputs.mode === 'A') {
+                        document.getElementById('startDateA').value = inputs.startDate;
+                        document.getElementById('daysInput').value = inputs.days;
+                        calcModeA();
+                    } else if (inputs.mode === 'B') {
+                        document.getElementById('startDateB').value = inputs.startDate;
+                        document.getElementById('endDate').value = inputs.endDate;
+                        calcModeB();
+                    } else if (inputs.mode === 'C') {
+                        document.getElementById('birthDate').value = inputs.birthDate;
+                        calcModeC();
+                    }
+                });
+            }
+
             
             const today = todayStr();
             document.getElementById('startDateA').value = today;

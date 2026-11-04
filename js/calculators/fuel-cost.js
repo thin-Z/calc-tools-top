@@ -24,7 +24,29 @@ function doCalculate() {
     document.getElementById('totalCost').textContent = totalCost.toFixed(2);
     document.getElementById('costPerKm').textContent = costPerKm.toFixed(2);
     document.getElementById('resultArea').classList.remove('hidden');
+
+    // C8 历史记录：仅存浏览器本地，不上传
+    if (window.CalcHistory) {
+        CalcHistory.save('fuel-cost', {
+            label: '¥' + totalCost.toFixed(2) + ' · ' + distance + 'km 油耗' + fuelPer100 + ' 油价' + pricePerLiter,
+            inputs: { distance: distance, fuelPer100: fuelPer100, pricePerLiter: pricePerLiter }
+        });
+    }
 }
+
+// C8 历史记录回填：恢复输入并重算
+(function () {
+    document.addEventListener('DOMContentLoaded', function () {
+        if (!window.CalcHistory) return;
+        CalcHistory.setRestorer('fuel-cost', function (inputs) {
+            if (!inputs) return;
+            document.getElementById('distance').value = inputs.distance;
+            document.getElementById('fuelPer100').value = inputs.fuelPer100;
+            document.getElementById('pricePerLiter').value = inputs.pricePerLiter;
+            doCalculate();
+        });
+    });
+})();
 
 /**
  * 重置油耗表单并隐藏结果区。

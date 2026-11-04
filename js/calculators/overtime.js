@@ -24,7 +24,30 @@ function doCalculate() {
     document.getElementById('holidayPay').textContent = holidayPay.toFixed(2);
     document.getElementById('totalOvertimePay').textContent = total.toFixed(2);
     document.getElementById('resultArea').classList.remove('hidden');
+
+    // C8 历史记录：仅存浏览器本地，不上传
+    if (window.CalcHistory) {
+        CalcHistory.save('overtime', {
+            label: '¥' + total.toFixed(2) + ' · 月薪' + salary + '（' + weekday + '/' + weekend + '/' + holiday + 'h）',
+            inputs: { salary: salary, weekday: weekday, weekend: weekend, holiday: holiday }
+        });
+    }
 }
+
+// C8 历史记录回填：恢复输入并重算
+(function () {
+    document.addEventListener('DOMContentLoaded', function () {
+        if (!window.CalcHistory) return;
+        CalcHistory.setRestorer('overtime', function (inputs) {
+            if (!inputs) return;
+            document.getElementById('monthlySalary').value = inputs.salary;
+            document.getElementById('weekdayOvertime').value = inputs.weekday;
+            document.getElementById('weekendOvertime').value = inputs.weekend;
+            document.getElementById('holidayOvertime').value = inputs.holiday;
+            doCalculate();
+        });
+    });
+})();
 
 /**
  * 重置加班费表单并隐藏结果区。

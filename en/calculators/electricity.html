@@ -37,6 +37,7 @@
 
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script>
+    <script src="/js/calc-history.js" defer></script>
     <script src="/js/calculators/electricity.js" defer></script>
     <script type="application/ld+json">
     {
@@ -143,6 +144,9 @@
         <div class="result-card hidden" id="resultArea" tabindex="0">
             <div class="st-2"><p class="st-4">Daily Consumption</p><p class="st-50"><span id="dailyKwh"></span> kWh</p><hr class="st-7"><p>Monthly: <span id="monthlyKwh"></span> kWh</p><p>Monthly Cost: $<span id="monthlyCost"></span></p></div>
         </div>
+
+            <!-- Calculator history (stored locally in your browser only) -->
+            <div class="calc-history hidden" data-calc-history="electricity"></div>
 
         
 

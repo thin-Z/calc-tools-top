@@ -37,6 +37,7 @@
 
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script>
+    <script src="/js/calc-history.js" defer></script>
     <script src="/js/calculators/overtime.js" defer></script>
     <script type="application/ld+json">
     {
@@ -149,6 +150,9 @@
         <div class="result-card hidden" id="resultArea" tabindex="0">
             <div class="st-2"><p class="st-4">Total Overtime Pay</p><p class="st-55">$<span id="totalOvertimePay"></span></p><hr class="st-7"><p>Weekday: $<span id="weekdayPay"></span> (1.5x)</p><p>Weekend: $<span id="weekendPay"></span> (2x)</p><p>Holiday: $<span id="holidayPay"></span> (3x)</p><p>Hourly Rate: $<span id="hourlyRate"></span></p></div>
         </div>
+
+            <!-- Calculator history (stored locally in your browser only) -->
+            <div class="calc-history hidden" data-calc-history="overtime"></div>
 
         
 

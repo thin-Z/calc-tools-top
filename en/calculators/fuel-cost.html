@@ -38,6 +38,7 @@
 
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script>
+    <script src="/js/calc-history.js" defer></script>
     <script src="/js/calculators/fuel-cost.js" defer></script>
     <script type="application/ld+json">
     {
@@ -150,6 +151,9 @@
         <div class="result-card hidden" id="resultArea" tabindex="0">
             <div class="st-2"><p class="st-4">Total Fuel Used</p><p class="st-22"><span id="fuelUsed"></span> L</p><hr class="st-7"><p>Total Cost: $<span id="totalCost"></span></p><p>Cost per km: $<span id="costPerKm"></span></p></div>
         </div>
+
+            <!-- Calculator history (stored locally in your browser only) -->
+            <div class="calc-history hidden" data-calc-history="fuel-cost"></div>
 
         
 

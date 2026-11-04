@@ -27,7 +27,30 @@ function doCalculate() {
     document.getElementById('monthlyKwh').textContent = monthlyKwh.toFixed(2);
     document.getElementById('monthlyCost').textContent = monthlyCost.toFixed(2);
     document.getElementById('resultArea').classList.remove('hidden');
+
+    // C8 历史记录：仅存浏览器本地，不上传
+    if (window.CalcHistory) {
+        CalcHistory.save('electricity', {
+            label: '¥' + monthlyCost.toFixed(2) + '/月 · ' + power + 'W × ' + hours + 'h × ' + days + '天 @ ' + rate + '元',
+            inputs: { power: power, hours: hours, days: days, rate: rate }
+        });
+    }
 }
+
+// C8 历史记录回填：恢复输入并重算
+(function () {
+    document.addEventListener('DOMContentLoaded', function () {
+        if (!window.CalcHistory) return;
+        CalcHistory.setRestorer('electricity', function (inputs) {
+            if (!inputs) return;
+            document.getElementById('power').value = inputs.power;
+            document.getElementById('hours').value = inputs.hours;
+            document.getElementById('days').value = inputs.days;
+            document.getElementById('rate').value = inputs.rate;
+            doCalculate();
+        });
+    });
+})();
 
 /**
  * 重置电费表单并隐藏结果区。

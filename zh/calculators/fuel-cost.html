@@ -37,6 +37,7 @@
     <link rel="stylesheet" href="../../css/style.css">
     <script src="/js/i18n.js" defer></script>
     <script src="/js/like.js" defer></script>
+    <script src="/js/calc-history.js" defer></script>
     <script src="/js/calculators/fuel-cost.js" defer></script>
     <script type="application/ld+json">
     {
@@ -149,6 +150,9 @@
         <div class="result-card hidden" id="resultArea" tabindex="0">
             <div class="st-2"><p class="st-4">总加油量</p><p class="st-22"><span id="fuelUsed"></span> 升</p><hr class="st-7"><p>油费总计：<span id="totalCost"></span> 元</p><p>每公里成本：<span id="costPerKm"></span> 元/km</p></div>
         </div>
+
+            <!-- C8 历史记录（仅存浏览器本地，不上传） -->
+            <div class="calc-history hidden" data-calc-history="fuel-cost"></div>
 
         
 

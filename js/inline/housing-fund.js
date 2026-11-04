@@ -16,6 +16,15 @@ let chartInstance = null;
             const labels = i18n[lang];
 
             document.getElementById('resultArea').classList.remove('hidden');
+
+            // C8 历史记录：仅存浏览器本地，不上传
+            if (window.CalcHistory) {
+                CalcHistory.save('housing-fund', {
+                    label: '¥' + formatNumber(result.monthlyPayment) + '/月 · ' + amount + '元 @ ' + rate + '% × ' + years + '年',
+                    inputs: { amount: amount, rate: rate, years: years }
+                });
+            }
+
             document.getElementById('monthlyValue').textContent = '¥' + formatNumber(result.monthlyPayment);
             document.getElementById('totalPaymentValue').textContent = '¥' + formatNumber(result.totalPayment);
             document.getElementById('totalInterestValue').textContent = '¥' + formatNumber(result.totalInterest);
@@ -69,6 +78,17 @@ let chartInstance = null;
 
         // Auto-calculate on page load
         document.addEventListener('DOMContentLoaded', function() {
+            // C8 历史记录回填：恢复输入并重算
+            if (window.CalcHistory) {
+                CalcHistory.setRestorer('housing-fund', function (inputs) {
+                    if (!inputs) return;
+                    document.getElementById('fundAmount').value = inputs.amount;
+                    document.getElementById('fundRate').value = inputs.rate;
+                    document.getElementById('fundYears').value = inputs.years;
+                    doCalculate();
+                });
+            }
+
             
             setTimeout(doCalculate, 100);
         });

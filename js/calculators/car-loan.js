@@ -24,7 +24,30 @@ function doCalculate() {
     document.getElementById("carLoanAmount").textContent = loanAmt.toFixed(0);
     document.getElementById("carTotalInterest").textContent = totalInterest.toFixed(2);
     document.getElementById('resultArea').classList.remove('hidden');
+
+    // C8 历史记录：仅存浏览器本地，不上传
+    if (window.CalcHistory) {
+        CalcHistory.save('car-loan', {
+            label: '¥' + monthly.toFixed(2) + '/月 · ' + price + '万 首付' + downPct + '% @ ' + rate + '% × ' + years + '年',
+            inputs: { price: price, downPct: downPct, rate: rate, years: years }
+        });
+    }
 }
+
+// C8 历史记录回填：恢复输入并重算
+(function () {
+    document.addEventListener('DOMContentLoaded', function () {
+        if (!window.CalcHistory) return;
+        CalcHistory.setRestorer('car-loan', function (inputs) {
+            if (!inputs) return;
+            document.getElementById('carPrice').value = inputs.price;
+            document.getElementById('downPayment').value = inputs.downPct;
+            document.getElementById('carRate').value = inputs.rate;
+            document.getElementById('carYears').value = inputs.years;
+            doCalculate();
+        });
+    });
+})();
 /**
  * 重置车贷表单为默认值并隐藏结果区。
  * @returns {void} 无返回值。
