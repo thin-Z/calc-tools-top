@@ -8,13 +8,18 @@
  * @returns {void} 无返回值；车价或首付缺失时弹出提示并中断。
  */
 function doCalculate() {
+    const isEn = typeof getLang === 'function' && getLang() === 'en';
+    // 单位分支：zh 页车价单位=万元（×10000 转元）；en 页车价单位=美元（不换算）。
+    // 背景：en 页结果区静态 $ 前缀 + FAQ 以 $30,000 车价示例，此前一律 ×10000 导致
+    // en 默认计算结果荒谬（$6,246,854/月，正确值 ≈ $624.69，见 en 页 FAQ 自证）。
+    const unitMult = isEn ? 1 : 10000;
     const price = parseFloat(document.getElementById("carPrice").value);
     const downPct = parseFloat(document.getElementById("downPayment").value);
     const rate = parseFloat(document.getElementById("carRate").value);
     const years = parseInt(document.getElementById("carYears").value, 10);
     if (!price || !downPct) { window.showError("请填写完整信息"); return; }
-    const downAmt = price * downPct / 100 * 10000;
-    const loanAmt = price * 10000 - downAmt;
+    const downAmt = price * downPct / 100 * unitMult;
+    const loanAmt = price * unitMult - downAmt;
     const mr = rate / 100 / 12;
     const months = years * 12;
     const monthly = loanAmt * mr * Math.pow(1 + mr, months) / (Math.pow(1 + mr, months) - 1);
@@ -28,8 +33,8 @@ function doCalculate() {
     // C8 历史记录：仅存浏览器本地，不上传
     if (window.CalcHistory) {
         CalcHistory.save('car-loan', {
-            label: (typeof getLang === 'function' && getLang() === 'en')
-                ? '¥' + monthly.toFixed(2) + '/mo · car ' + price + '×10k, down ' + downPct + '% @ ' + rate + '% × ' + years + 'y'
+            label: isEn
+                ? '$' + monthly.toFixed(2) + '/mo · car $' + price + ', down ' + downPct + '% @ ' + rate + '% × ' + years + 'y'
                 : '¥' + monthly.toFixed(2) + '/月 · ' + price + '万 首付' + downPct + '% @ ' + rate + '% × ' + years + '年',
             inputs: { price: price, downPct: downPct, rate: rate, years: years }
         });
