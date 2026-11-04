@@ -20,7 +20,7 @@ let chartInstance = null;
             // C8 历史记录：仅存浏览器本地，不上传
             if (window.CalcHistory) {
                 CalcHistory.save('housing-fund', {
-                    label: '¥' + formatNumber(result.monthlyPayment) + '/月 · ' + amount + '元 @ ' + rate + '% × ' + years + '年',
+                    label: '¥' + formatNumber(result.monthlyPayment) + (getLang() === 'en' ? '/mo · ¥' + amount + ' @ ' + rate + '% × ' + years + 'y' : '/月 · ' + amount + '元 @ ' + rate + '% × ' + years + '年'),
                     inputs: { amount: amount, rate: rate, years: years }
                 });
             }

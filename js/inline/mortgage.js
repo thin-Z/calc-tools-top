@@ -37,11 +37,12 @@ let chartInstance = null;
 
             // C8 历史记录：仅存浏览器本地，不上传
             if (window.CalcHistory) {
+                var isEn = getLang() === 'en';
+                var payText = result.method === 'equal-payment'
+                    ? '¥' + formatNumber(result.monthlyPayment) + (isEn ? '/mo' : '/月')
+                    : '¥' + formatNumber(result.firstPayment) + '~';
                 CalcHistory.save('mortgage', {
-                    label: (result.method === 'equal-payment'
-                        ? '¥' + formatNumber(result.monthlyPayment) + '/月'
-                        : '¥' + formatNumber(result.firstPayment) + '~')
-                        + ' · ' + (amount / 10000) + '万 @ ' + rate + '% × ' + years + '年',
+                    label: payText + ' · ' + (amount / 10000) + (isEn ? '×10k @ ' : '万 @ ') + rate + '% × ' + years + (isEn ? 'y' : '年'),
                     inputs: { amount: document.getElementById('loanAmount').value, rate: rate, years: years, method: method }
                 });
             }

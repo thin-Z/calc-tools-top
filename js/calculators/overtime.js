@@ -28,7 +28,9 @@ function doCalculate() {
     // C8 历史记录：仅存浏览器本地，不上传
     if (window.CalcHistory) {
         CalcHistory.save('overtime', {
-            label: '¥' + total.toFixed(2) + ' · 月薪' + salary + '（' + weekday + '/' + weekend + '/' + holiday + 'h）',
+            label: (typeof getLang === 'function' && getLang() === 'en')
+                ? '¥' + total.toFixed(2) + ' · salary ' + salary + ' (' + weekday + '/' + weekend + '/' + holiday + 'h OT)'
+                : '¥' + total.toFixed(2) + ' · 月薪' + salary + '（' + weekday + '/' + weekend + '/' + holiday + 'h）',
             inputs: { salary: salary, weekday: weekday, weekend: weekend, holiday: holiday }
         });
     }

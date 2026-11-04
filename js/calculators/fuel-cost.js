@@ -28,7 +28,9 @@ function doCalculate() {
     // C8 历史记录：仅存浏览器本地，不上传
     if (window.CalcHistory) {
         CalcHistory.save('fuel-cost', {
-            label: '¥' + totalCost.toFixed(2) + ' · ' + distance + 'km 油耗' + fuelPer100 + ' 油价' + pricePerLiter,
+            label: (typeof getLang === 'function' && getLang() === 'en')
+                ? '¥' + totalCost.toFixed(2) + ' · ' + distance + 'km, ' + fuelPer100 + 'L/100km, ¥' + pricePerLiter + '/L'
+                : '¥' + totalCost.toFixed(2) + ' · ' + distance + 'km 油耗' + fuelPer100 + ' 油价' + pricePerLiter,
             inputs: { distance: distance, fuelPer100: fuelPer100, pricePerLiter: pricePerLiter }
         });
     }

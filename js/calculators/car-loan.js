@@ -28,7 +28,9 @@ function doCalculate() {
     // C8 历史记录：仅存浏览器本地，不上传
     if (window.CalcHistory) {
         CalcHistory.save('car-loan', {
-            label: '¥' + monthly.toFixed(2) + '/月 · ' + price + '万 首付' + downPct + '% @ ' + rate + '% × ' + years + '年',
+            label: (typeof getLang === 'function' && getLang() === 'en')
+                ? '¥' + monthly.toFixed(2) + '/mo · car ' + price + '×10k, down ' + downPct + '% @ ' + rate + '% × ' + years + 'y'
+                : '¥' + monthly.toFixed(2) + '/月 · ' + price + '万 首付' + downPct + '% @ ' + rate + '% × ' + years + '年',
             inputs: { price: price, downPct: downPct, rate: rate, years: years }
         });
     }

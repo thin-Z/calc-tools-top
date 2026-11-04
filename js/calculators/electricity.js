@@ -31,7 +31,9 @@ function doCalculate() {
     // C8 历史记录：仅存浏览器本地，不上传
     if (window.CalcHistory) {
         CalcHistory.save('electricity', {
-            label: '¥' + monthlyCost.toFixed(2) + '/月 · ' + power + 'W × ' + hours + 'h × ' + days + '天 @ ' + rate + '元',
+            label: (typeof getLang === 'function' && getLang() === 'en')
+                ? '¥' + monthlyCost.toFixed(2) + '/mo · ' + power + 'W × ' + hours + 'h × ' + days + 'd @ ¥' + rate
+                : '¥' + monthlyCost.toFixed(2) + '/月 · ' + power + 'W × ' + hours + 'h × ' + days + '天 @ ' + rate + '元',
             inputs: { power: power, hours: hours, days: days, rate: rate }
         });
     }
