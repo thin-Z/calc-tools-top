@@ -17,7 +17,7 @@ function doCalculate() {
     const downPct = parseFloat(document.getElementById("downPayment").value);
     const rate = parseFloat(document.getElementById("carRate").value);
     const years = parseInt(document.getElementById("carYears").value, 10);
-    if (!price || !downPct) { window.showError("请填写完整信息"); return; }
+    if (!price || !downPct) { window.showError((typeof getLang === 'function' && getLang() === 'en') ? 'Please fill in all fields' : "请填写完整信息"); return; }
     const downAmt = price * downPct / 100 * unitMult;
     const loanAmt = price * unitMult - downAmt;
     const mr = rate / 100 / 12;

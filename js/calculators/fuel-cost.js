@@ -14,7 +14,7 @@ function doCalculate() {
     // 负油价是 truthy，会一路算出负账（负总油费 / 负每公里成本），用户无从察觉。
     const priceRaw = document.getElementById('pricePerLiter').value;
     const pricePerLiter = priceRaw.trim() === '' ? 0 : parseFloat(priceRaw);
-    if (!(distance > 0) || !(fuelPer100 > 0)) { window.showError('请输入大于 0 的行驶距离和油耗'); return; }
+    if (!(distance > 0) || !(fuelPer100 > 0)) { window.showError((typeof getLang === 'function' && getLang() === 'en') ? 'Distance and fuel consumption must be greater than 0' : '请输入大于 0 的行驶距离和油耗'); return; }
     // 油价允许 0（不算钱），但负数一律拦。
     if (!(pricePerLiter >= 0)) { window.showError('油价不能为负数 / Price per liter must not be negative'); return; }
     const fuelUsed = distance * fuelPer100 / 100;

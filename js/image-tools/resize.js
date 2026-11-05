@@ -65,7 +65,7 @@
 
     function loadFile(file) {
         if (file.size > MAX_FILE_SIZE) {
-            window.showError('文件大小超过 50MB 限制。');
+            window.showError((typeof getLang === 'function' && getLang() === 'en') ? 'File size exceeds the 50MB limit.' : '文件大小超过 50MB 限制。');
             return;
         }
 
@@ -112,13 +112,13 @@
         let newHeight = parseInt(document.getElementById('heightInput').value, 10);
 
         if (!newWidth || !newHeight || newWidth < 1 || newHeight < 1) {
-            window.showError('请输入有效的宽度和高度（至少 1px）。');
+            window.showError((typeof getLang === 'function' && getLang() === 'en') ? 'Enter a valid width and height (at least 1px).' : '请输入有效的宽度和高度（至少 1px）。');
             return;
         }
 
         // Cap at reasonable size
         if (newWidth > 10000 || newHeight > 10000) {
-            window.showError('尺寸不能超过 10000px。');
+            window.showError((typeof getLang === 'function' && getLang() === 'en') ? 'Size cannot exceed 10000px.' : '尺寸不能超过 10000px。');
             return;
         }
 

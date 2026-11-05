@@ -40,7 +40,7 @@
 
     function loadFile(file) {
         if (file.size > MAX_FILE_SIZE) {
-            window.showError('文件大小超过 50MB 限制。');
+            window.showError((typeof getLang === 'function' && getLang() === 'en') ? 'File size exceeds the 50MB limit.' : '文件大小超过 50MB 限制。');
             return;
         }
 

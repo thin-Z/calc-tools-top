@@ -73,7 +73,7 @@ function doConvert() {
 function copyBase64Result() {
     var content = document.getElementById('resultArea').textContent;
     if (!content) {
-        window.showError('请先转换数据');
+        window.showError((typeof getLang === 'function' && getLang() === 'en') ? 'No data converted yet' : '请先转换数据');
         return;
     }
     if (navigator.clipboard) {

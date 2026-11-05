@@ -175,7 +175,7 @@
         var a = parseFraction(n1, d1);
         var b = parseFraction(n2, d2);
         if (!a || !b) {
-            showError('分子或分母不合法（分母不能为 0）');
+            showError((typeof getLang === 'function' && getLang() === 'en') ? 'Invalid numerator or denominator (denominator cannot be 0)' : '分子或分母不合法（分母不能为 0）');
             return;
         }
 
@@ -186,7 +186,7 @@
         else if (op === 'multiply') r = multiplyFractions(a, b);
         else if (op === 'divide') r = divideFractions(a, b);
         if (!r) {
-            showError('除数不能为 0');
+            showError((typeof getLang === 'function' && getLang() === 'en') ? 'Divisor cannot be 0' : '除数不能为 0');
             return;
         }
 

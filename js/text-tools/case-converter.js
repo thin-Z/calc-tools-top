@@ -90,7 +90,7 @@ function copyResult() {
     var resultArea = document.getElementById('resultArea');
     var text = resultArea.textContent;
     if (!text) {
-        window.showError('请先生成转换结果');
+        window.showError((typeof getLang === 'function' && getLang() === 'en') ? 'No result generated yet' : '请先生成转换结果');
         return;
     }
 

@@ -16,7 +16,7 @@ function doCalculate() {
     const rateRaw = document.getElementById('rate').value;
     const days = daysRaw.trim() === '' ? 30 : parseFloat(daysRaw);
     const rate = rateRaw.trim() === '' ? 0.6 : parseFloat(rateRaw);
-    if (!(power > 0) || !(hours > 0)) { window.showError('请输入大于 0 的功率和使用时间'); return; }
+    if (!(power > 0) || !(hours > 0)) { window.showError((typeof getLang === 'function' && getLang() === 'en') ? 'Power and hours must be greater than 0' : '请输入大于 0 的功率和使用时间'); return; }
     // 天数须为正数（0 天无意义）；电价允许 0（免费用电），但负电价会算出负电费。
     if (!(days > 0)) { window.showError('使用天数需为大于 0 的数字 / Days must be a positive number'); return; }
     if (!(rate >= 0)) { window.showError('电价不能为负数 / Rate must not be negative'); return; }
