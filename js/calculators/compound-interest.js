@@ -27,7 +27,10 @@ function doCalculate() {
     // C8 历史记录：仅存浏览器本地，不上传
     if (window.CalcHistory) {
         CalcHistory.save('compound-interest', {
-            label: '¥' + final.toFixed(2) + ' · ' + principal + ' @ ' + rate + '% × ' + years + 'y',
+            // label 双语化（同 11-04 car-loan 模式）：en 页 Principal ($) 为美元语义，历史 label 用 $；zh 分支文本零变化
+            label: (typeof getLang === 'function' && getLang() === 'en')
+                ? '$' + final.toFixed(2) + ' · ' + principal + ' @ ' + rate + '% × ' + years + 'y'
+                : '¥' + final.toFixed(2) + ' · ' + principal + ' @ ' + rate + '% × ' + years + 'y',
             inputs: { principal: principal, rate: rate, years: years, freq: freq }
         });
     }
